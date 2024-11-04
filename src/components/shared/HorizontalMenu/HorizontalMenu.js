@@ -21,6 +21,9 @@ function HorizontalMenu() {
   const categories = useGetAllCategories({ query: `showOnNavbar=Yes` });
   const chaiCategories = useGetAllChildCategories({ query: `showOnNavbar=Yes` });
 
+  console.log(process.env.NEXT_BASE_URL, "process.env.BASE_URL");
+
+
   const subcategories = useGetAllSubCategories({
     query: `category=${activeCategory}`,
     activeCategory,
