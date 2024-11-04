@@ -1,0 +1,94 @@
+[
+  {
+    "title": "Customer Satisfaction Survey",
+    "description": "We appreciate your feedback! Please take a moment to share your thoughts on our products and services.",
+    "questions": [
+      {
+        "question": "Which of the following features do you find most useful? (Select all that apply)",
+        "answer": "",
+        "id": 1,
+        "questionType": "multiple_choice",
+        "options": ["Search functionality", "User-friendly interface", "Customization options", "Integration with other platforms"]
+      },
+      {
+        "question": "Please rate your experience with our support team:",
+        "answer": {
+          "0": {
+            "Excellent": false,
+            "Good": false,
+            "Fair": false,
+            "Poor": false
+          },
+          "1": {
+            "Excellent": false,
+            "Good": false,
+            "Fair": false,
+            "Poor": false
+          },
+          "2": {
+            "Excellent": false,
+            "Good": false,
+            "Fair": false,
+            "Poor": false
+          },
+          "3": {
+            "Excellent": false,
+            "Good": false,
+            "Fair": false,
+            "Poor": false
+          }
+        },
+        "id": 2,
+        "questionType": "checkbox_grid",
+        "options": {
+          "columnLabels": ["Friendliness", "Knowledge", "Responsiveness", "Effectiveness"],
+          "rowLabels": ["Excellent", "Good", "Fair", "Poor"]
+        }
+      },
+      {
+        "question": "On a scale of 1 to 10, how likely are you to continue using our services?",
+        "answer": "",
+        "id": 3,
+        "questionType": "linear_scale",
+        "options": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
+      },
+      {
+        "question": "Which country are you located in?",
+        "answer": "",
+        "id": 4,
+        "questionType": "dropdown",
+        "options": [
+          "United States", "Canada", "United Kingdom", "Australia", "Germany", "France", "Japan", "China", "Brazil", "India"
+        ]
+      },
+      {
+        "question": "Please prioritize the following areas of improvement for our services:",
+        "answer": "",
+        "id": 5,
+        "questionType": "ranking",
+        "options": [
+          { "id": 1, "title": "Customer support" },
+          { "id": 2, "title": "Product quality" },
+          { "id": 3, "title": "Speed of delivery" },
+          { "id": 4, "title": "Website performance" },
+          { "id": 5, "title": "Payment process" }
+        ]
+      },
+      {
+        "question": "What suggestions do you have to enhance our user experience?",
+        "answer": "",
+        "id": 6,
+        "questionType": "sort_text"
+      },
+      {
+        "question": "Where do you see our company in the next five years?",
+        "answer": "",
+        "id": 7,
+        "questionType": "long_text"
+      }
+    ]
+  }
+]
+// Marketing Team
+// Product Feedback
+// Online Form 
