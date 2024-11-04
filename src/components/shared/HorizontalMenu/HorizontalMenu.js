@@ -20,13 +20,18 @@ function HorizontalMenu() {
   const [isHover, setIsHover] = useState(false);
   const categories = useGetAllCategories({ query: `showOnNavbar=Yes` });
   const chaiCategories = useGetAllChildCategories({ query: `showOnNavbar=Yes` });
+  const [currentSubCategories, setCurrentSubCategories] = useState([]);
 
   console.log(process.env.NEXT_BASE_URL, "process.env.BASE_URL");
 
 
+  // const subcategories = useGetAllSubCategories({
+  //   query: `category=${activeCategory}`,
+  //   activeCategory,
+  // });
   const subcategories = useGetAllSubCategories({
-    query: `category=${activeCategory}`,
-    activeCategory,
+    // query: `category=${activeCategory}`,
+    // activeCategory,
   });
 
   useEffect(() => {
@@ -37,7 +42,14 @@ function HorizontalMenu() {
       return;
     }
     setCategoryImage(currentCategory.categoryBanner);
+
+    const currentSubCategoriesData = subcategories.filter(
+      (subcategory) => subcategory.category === currentCategory.slug
+    );
+    setCurrentSubCategories(currentSubCategoriesData);
   }, [activeCategory]);
+
+
 
   console.log(activeCategory, "activeCategory");
   return (
@@ -81,7 +93,7 @@ function HorizontalMenu() {
       </header>
 
       <SubcategoryMenu
-        subcategories={subcategories}
+        subcategories={currentSubCategories}
         setActiveCategory={setActiveCategory}
         isHover={isHover}
         setIsHover={setIsHover}
