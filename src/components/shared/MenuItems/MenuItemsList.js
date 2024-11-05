@@ -559,9 +559,16 @@ function MenuItemsList({ userRole }) {
 `, // Replace with the actual SVG icon
       list: [
         {
-          title: "View All Sliders",
-          path: "view-all-sliders",
-          isAllowed: isAllowedRoute("view-all-sliders"),
+          title: "View All Bag Banners",
+          path: "view-all-bag-banners",
+          isAllowed: isAllowedRoute("view-all-bag-banners"),
+          icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M490.7 350.1L342.5 100.8c-9.7-16.8-27.3-26.9-46.5-26.9H216.5c-19.2 0-36.8 10.2-46.5 26.9L21.3 350.1c-9.7 16.8-9.7 37.1 0 53.8l46.5 80.4c9.7 16.8 27.3 26.9 46.5 26.9h293.9c19.2 0 36.8-10.2 46.5-26.9l46.5-80.4c9.8-16.8 9.8-37.1 0-53.8zm-259.1 86.2H154.9L242 249.2l88.2 152.6h-98.6zm116.5-58.5l-50-86.5 50-86.5 85.4 150.2-85.4 22.8zM300.1 137.1L385.5 288H273.5l-58.5-101.4L300.1 137.1zM112.3 390.3l50.1-86.5 50.1 86.5H112.3z"/></svg>
+`,
+        },
+        {
+          title: "View All Shoes Banners",
+          path: "view-all-shoes-banners",
+          isAllowed: isAllowedRoute("view-all-shoes-banners"),
           icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M490.7 350.1L342.5 100.8c-9.7-16.8-27.3-26.9-46.5-26.9H216.5c-19.2 0-36.8 10.2-46.5 26.9L21.3 350.1c-9.7 16.8-9.7 37.1 0 53.8l46.5 80.4c9.7 16.8 27.3 26.9 46.5 26.9h293.9c19.2 0 36.8-10.2 46.5-26.9l46.5-80.4c9.8-16.8 9.8-37.1 0-53.8zm-259.1 86.2H154.9L242 249.2l88.2 152.6h-98.6zm116.5-58.5l-50-86.5 50-86.5 85.4 150.2-85.4 22.8zM300.1 137.1L385.5 288H273.5l-58.5-101.4L300.1 137.1zM112.3 390.3l50.1-86.5 50.1 86.5H112.3z"/></svg>
 `,
         },

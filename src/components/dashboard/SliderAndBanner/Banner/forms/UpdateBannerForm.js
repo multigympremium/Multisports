@@ -108,7 +108,7 @@ export default function UpdateBannerForm({ targetId, isShow, setIsShow }) {
       setThumbnailPreview(null);
     }
     
-    ;
+    
 
     fetchTestimonial();
   }, [targetId, axiosSecure, isShow]);
