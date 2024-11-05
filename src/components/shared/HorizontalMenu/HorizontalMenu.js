@@ -29,7 +29,7 @@ function HorizontalMenu() {
   //   query: `category=${activeCategory}`,
   //   activeCategory,
   // });
-  const subcategories = useGetAllSubCategories({
+  const subcategories =  useGetAllSubCategories({
     // query: `category=${activeCategory}`,
     // activeCategory,
   });
