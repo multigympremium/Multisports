@@ -17,7 +17,7 @@
     endpoint: `https://s3.${process.env.AWS_REGION}.amazonaws.com`,
     // endpoint: `https://${process.env.AWS_S3_BUCKET_NAME}.${process.env.AWS_REGION}.digitaloceanspaces.com`,
     // endpoint: `https://mgpwebaps.s3.eu-north-1.amazonaws.com`,
-    // forcePathStyle: true,
+    forcePathStyle: true,
     // s3ForcePathStyle: true
 
   });

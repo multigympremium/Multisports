@@ -20,7 +20,8 @@ import { backendUrl } from "../../../../../Constants";
 
 async function Page({ params, search }) { 
 
- const res_products = await fetch(`${backendUrl}/products?search=${params.id}`);
+ const res_products = await fetch(`${backendUrl}/products?search=${params.id}`, {cache: 'force-cache', // Only fetch once and cache it
+  revalidate: 60});
  const products = await res_products.json();
   return (
     <div className="flex flex-col h-screen">

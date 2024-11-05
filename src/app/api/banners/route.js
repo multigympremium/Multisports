@@ -1,4 +1,5 @@
 import connectDB from "@/dbConfig/dbConfig";
+import { uploadFile } from "@/helpers/aws-s3";
 import BannerModel from "@/models/BannerModel/BannerModel";
 import { NextResponse } from "next/server";
 
@@ -31,12 +32,30 @@ export async function GET(req) {
 // Handle POST request
 export async function POST(req) {
   try {
-    const { title, subtitle, shortDescription, image, key } = await req.json();
 
-    if (!title || !subtitle || !shortDescription || !image || !key) {
+    const formData = await req.formData();
+
+    const title = formData.get("title");
+    const subtitle = formData.get("subtitle");
+    const shortDescription = formData.get("shortDescription");
+    const image = formData.get("image");
+
+    if (!title || !subtitle || !shortDescription) {
       return NextResponse.json(
         { success: false, message: "Required fields missing" },
         { status: 400 }
+      );
+    }
+
+
+
+    let thumbnailUrl = "";
+    if (image && image.size > 0) {
+      thumbnailUrl = `${Date.now()}-${image.name.replace(/\s/g, "-")}`;
+      const thumbnailResult = await uploadFile(
+        image,
+        thumbnailUrl,
+        image.type
       );
     }
 
@@ -44,8 +63,7 @@ export async function POST(req) {
       title,
       subtitle,
       shortDescription,
-      image,
-      key,
+      image : thumbnailUrl
     };
 
     const bannerResult = await BannerModel.create(bannerData);

@@ -112,6 +112,8 @@ export async function DELETE(req, { params }) {
       );
     }
 
+    await deleteFile(deletedTestimonial.image);
+
     return NextResponse.json(
       { success: true, message: "Testimonial deleted" },
       { status: 200 }
