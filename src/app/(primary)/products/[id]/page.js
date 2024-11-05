@@ -2,6 +2,7 @@
 
 import ProductsArea from "@/components/Products/ProductsArea";
 import ProductSidebar from "@/components/Products/ProductSidebar/ProductSidebar";
+import { backendUrl } from "../../../../../Constants";
 // import ActiveLink from "@/components/shared/ActiveLink";
 // import FilterRadioInput from "@/components/shared/FilterRadioInput";
 // import GroupLink from "@/components/shared/GroupLink";
@@ -19,7 +20,7 @@ import ProductSidebar from "@/components/Products/ProductSidebar/ProductSidebar"
 
 async function Page({ params, search }) { 
 
- const res_products = await fetch(`http://localhost:3000/api/products?search=${params.id}`);
+ const res_products = await fetch(`${backendUrl}/products?search=${params.id}`);
  const products = await res_products.json();
   return (
     <div className="flex flex-col h-screen">
