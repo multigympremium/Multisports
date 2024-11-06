@@ -38,7 +38,7 @@ const Footer = () => {
 
   return (
     <div className="poppins border-t mt-12">
-      <footer className="flex flex-wrap p-10    w-[96%] mx-auto justify-center md:justify-between items-start gap-8  text-left">
+      <footer className="flex flex-col  md:flex-row p-10  w-[96%] mx-auto justify-center md:justify-between items-start md:gap-8 gap-5  text-left">
         <aside>
           <h6 className="footer-title text-lg font-bold mb-4 text-black">
             CONTACT US
@@ -231,12 +231,12 @@ const Footer = () => {
       </footer>
 
       <div className="mx-auto w-[95%]">
-        <footer className="footer flex justify-between items-center py-3  border-t   px-5 text-center text-xl">
+        <footer className="footer flex flex-col md:flex-row justify-between items-center py-3  border-t px-5 text-center text-xl">
           <p className="text-base">
             © {currentYear} MULTI Sports Premium All Rights Reserved
           </p>
           {/* icons */}
-          <nav className="flex gap-3 ">
+          <nav className="flex gap-3">
             <a
               href="https://www.facebook.com/MultiGymPremium"
               target="_blank"
