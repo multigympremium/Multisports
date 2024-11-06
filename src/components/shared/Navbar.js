@@ -2,19 +2,85 @@
 import { AuthContext } from "@/providers/AuthProvider";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
-import { FaRegUser } from "react-icons/fa6";
-import { MdOutlineStore } from "react-icons/md";
-import { FaRegHeart } from "react-icons/fa";
 import { BsCart } from "react-icons/bs";
-import { MdMenu } from "react-icons/md";
-import { CiSearch } from "react-icons/ci";
+import { IoIosSearch } from "react-icons/io";
+
+import { FaRegHeart } from "react-icons/fa";
+import { FaRegUser } from "react-icons/fa6";
+import { MdMenu, MdOutlineStore } from "react-icons/md";
+import Wishlist from "./Cards/Wishlist/Wishlist";
 import BgBlurModal from "./Modal/BgBlurModal";
 import Cart from "./cart/Cart";
-import Wishlist from "./Cards/Wishlist/Wishlist";
 const Navbar = () => {
+  const placeholders = ['Shorts', 'Watch', 'Shirt'];
+  const [placeholderText, setPlaceholderText] = useState("");
+  const [placeholderIndex, setPlaceholderIndex] = useState(0);
+  const [charIndex, setCharIndex] = useState(0);
+  const [isTyping, setIsTyping] = useState(true);
+  const [isFocused, setIsFocused] = useState(false);
+  const SearchBar = () => {
+
+
+    useEffect(() => {
+      if (isFocused) return;
+
+      let typingTimeout;
+
+      if (isTyping) {
+        
+        if (charIndex < placeholders[placeholderIndex].length) {
+          typingTimeout = setTimeout(() => {
+            setPlaceholderText((prev) => prev + placeholders[placeholderIndex][charIndex]);
+            setCharIndex((prev) => prev + 1);
+          }, 300);
+        } else {
+          setIsTyping(false);
+          setTimeout(() => setIsTyping(false), 2000);
+        }
+      } else {
+        
+        if (charIndex > 0) {
+          typingTimeout = setTimeout(() => {
+            setPlaceholderText((prev) => prev.slice(0, -1));
+            setCharIndex((prev) => prev - 1);
+          }, 150); 
+        } else {
+          
+          setIsTyping(true);
+          setPlaceholderIndex((prev) => (prev + 1) % placeholders.length);
+        }
+      }
+
+      return () => clearTimeout(typingTimeout);
+    }, [charIndex, isTyping, placeholderIndex, placeholders, isFocused]);
+
+    const handleFocus = () => {
+      setIsFocused(true);
+    };
+
+    const handleBlur = (e) => {
+      if (e.target.value.length === 0) {
+        setIsFocused(false);
+      }
+    };
+
+    return (
+      <div className="bg-gray-100 rounded-full px-3 w-[70%] md:py-2 py-1 md:gap-2 gap-1 flex-row-reverse justify-between flex">
+        <input
+          type="text"
+          className="outline-none w-full bg-gray-100"
+          placeholder={!isFocused ? `Search for "${placeholderText}"` : ""}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+        />
+        <IoIosSearch className="text-2xl text-gray-400" />
+      </div>
+    );
+  };
+
   const {
     userRole,
     logOut,
@@ -29,8 +95,8 @@ const Navbar = () => {
     userRole === "Administrator"
       ? "/dashboard/admin/view_and_edit_admin_information"
       : userRole === "Survey Creator"
-      ? "/dashboard/company/creator_profile"
-      : "/dashboard/user/participant_profile";
+        ? "/dashboard/company/creator_profile"
+        : "/dashboard/user/participant_profile";
 
 
 
@@ -95,66 +161,82 @@ const Navbar = () => {
   }, []);
   return (
     <>
-    <header
-      className="flex flex-wrap lg:justify-start lg:flex-nowrap w-full items-center z-50 top-0 left-0 text-sm  transition-all duration-500 relative bg-white border-b py-3"
-      id="header"
-    >
-      <div className="navbar w-[94%] mx-auto ">
-        <div className="navbar-start">
-          <div className="flex items-center gap-4">
-            <div role="button" className="" id="menu_icon">
-              <MdMenu className="text-3xl" />
-            </div>
-            <h3 className="text-xl font-bold">ALL SPORTS</h3>
-            <div>
-              <Link href="/" className="flex justify-center items-center ">
-                <Image
-                  className="w-28 mix-blend-multiply dark:mix-blend-normal"
-                  width={400}
-                  height={400}
-                  src={"https://multisports.shop/images/site_setting/multi-sports_vi6P5.png"}
-                  alt="logo"
-                />{" "}
-              </Link>
+      <header
+        className="flex flex-wrap lg:justify-start lg:flex-nowrap w-full items-center z-50 top-0 left-0 text-sm  transition-all duration-500 relative bg-white border-b "
+        id="header"
+      >
+        <div className="navbar w-[94%] mx-auto ">
+          <div className="navbar-start">
+            <div className="flex items-center gap-3">
+              <div role="button" className="" id="menu_icon">
+                <MdMenu className="text-2xl" />
+              </div>
+              <div>
+                <Link href="/" className="flex justify-center items-center ">
+                  <Image
+                    className="w-28 mix-blend-multiply dark:mix-blend-normal"
+                    width={400}
+                    height={400}
+                    src={"https://multisports.shop/images/site_setting/multi-sports_vi6P5.png"}
+                    alt="logo"
+                  />{" "}
+                </Link>
+              </div>
             </div>
           </div>
+
+          {/* <label class="input input-bordered flex items-center gap-2 w-full">
+            <input
+              type="text"
+              class=""
+              placeholder="I'm in the market for..."
+            />
+            <button className="hover:bg-gray-300 p-1 rounded">
+              <CiSearch size={30} />
+            </button>
+          </label> */}
+
+          <SearchBar></SearchBar>
+
+          {/* Menu */}
+          <div className="navbar-end flex items-center gap-1 md:gap-3">
+            {/* My Store */}
+            <div className="flex items-center justify-center flex-col gap-1 md:p-3 p-1 rounded">
+              <MdOutlineStore className="md:text-2xl text-base text-gray-600 hover:text-blue-500 hover:scale-110 cursor-pointer transition-all" />
+              <span className="hidden md:block">My Store</span>
+            </div>
+
+            {/* Wishlist */}
+            <div
+              className="flex items-center justify-center flex-col gap-1 md:p-3 p-1 rounded"
+              onClick={() => setIsShowWishlist(true)}
+            >
+              <FaRegHeart className="md:text-2xl text-base text-gray-600 hover:text-pink-500 hover:scale-110 cursor-pointer transition-all" />
+              <span className="hidden md:block">Wishlist</span>
+            </div>
+
+            {/* Cart */}
+            <div
+              onClick={() => setIsShowModal(true)}
+              className="flex items-center justify-center flex-col gap-1 md:p-3 p-1 rounded"
+            >
+              <BsCart className="md:text-2xl text-base text-gray-600 hover:text-orange-500 hover:scale-110 cursor-pointer transition-all" />
+              <span className="hidden md:block">Cart</span>
+              {/* <div className="badge badge-primary badge-lg">{totalItems}</div> */}
+            </div>
+
+            {/* Sign In */}
+            <Link href="/login">
+              <div className="flex items-center justify-center flex-col gap-1 md:p-3 p-1 rounded">
+                <FaRegUser className="md:text-2xl text-base text-gray-600 hover:text-blue-500 hover:scale-110 cursor-pointer transition-all" />
+                <span className="hidden md:block">Sign In</span>
+              </div>
+            </Link>
+          </div>
+
         </div>
 
-        <label class="input input-bordered flex items-center gap-2 w-full">
-          <input
-            type="text"
-            class="grow"
-            placeholder="I'm in the market for..."
-          />
-          <button className="hover:bg-gray-300 p-1 rounded">
-            <CiSearch size={30} />
-          </button>
-        </label>
-
-        <div className="navbar-end flex items-center gap-6">
-          <Link href="/login">
-            <div className="flex items-center justify-center flex-col gap-1 hover:bg-gray-200 p-3 rounded">
-              <FaRegUser className="text-2xl" />
-              Sign In
-            </div>
-          </Link>
-          <div className="flex items-center justify-center flex-col gap-1 hover:bg-gray-200 p-3 rounded">
-            <MdOutlineStore className="text-2xl" />
-            My Store
-          </div>
-          <div className="flex items-center justify-center flex-col gap-1 hover:bg-gray-200 p-3 rounded" onClick={()=> setIsShowWishlist(true)}>
-            <FaRegHeart className="text-2xl" />
-            Wishlist
-          </div>
-          <div onClick={()=> setIsShowModal(true)} className="flex items-center justify-center flex-col gap-1 hover:bg-gray-200 p-3 rounded">
-            <BsCart className="text-2xl" />
-            Cart
-            <div className="badge badge-primary badge-lg">{totalItems}</div>
-          </div>
-        </div>
-      </div>
-
-    </header>
+      </header>
       <BgBlurModal isShowModal={isShowModal} setIsShowModal={setIsShowModal}>
         <Cart isShow={isShowModal} setIsShow={setIsShowModal} />
       </BgBlurModal>
