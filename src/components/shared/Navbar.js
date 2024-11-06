@@ -14,6 +14,7 @@ import { CiSearch } from "react-icons/ci";
 import BgBlurModal from "./Modal/BgBlurModal";
 import Cart from "./cart/Cart";
 import Wishlist from "./Cards/Wishlist/Wishlist";
+import { FaHeart } from "react-icons/fa";
 const Navbar = () => {
   const {
     userRole,
@@ -29,8 +30,8 @@ const Navbar = () => {
     userRole === "Administrator"
       ? "/dashboard/admin/view_and_edit_admin_information"
       : userRole === "Survey Creator"
-      ? "/dashboard/company/creator_profile"
-      : "/dashboard/user/participant_profile";
+        ? "/dashboard/company/creator_profile"
+        : "/dashboard/user/participant_profile";
 
 
 
@@ -95,66 +96,92 @@ const Navbar = () => {
   }, []);
   return (
     <>
-    <header
-      className="flex flex-wrap lg:justify-start lg:flex-nowrap w-full items-center z-50 top-0 left-0 text-sm  transition-all duration-500 relative bg-white border-b py-3"
-      id="header"
-    >
-      <div className="navbar w-[94%] mx-auto ">
-        <div className="navbar-start">
-          <div className="flex items-center gap-4">
-            <div role="button" className="" id="menu_icon">
-              <MdMenu className="text-3xl" />
-            </div>
-            <h3 className="text-xl font-bold">ALL SPORTS</h3>
-            <div>
-              <Link href="/" className="flex justify-center items-center ">
-                <Image
-                  className="w-28 mix-blend-multiply dark:mix-blend-normal"
-                  width={400}
-                  height={400}
-                  src={"https://multisports.shop/images/site_setting/multi-sports_vi6P5.png"}
-                  alt="logo"
-                />{" "}
-              </Link>
+      <header
+        className="flex flex-wrap lg:justify-start lg:flex-nowrap w-full items-center z-50 top-0 left-0 text-sm  transition-all duration-500 relative bg-white border-b "
+        id="header"
+      >
+        <div className="navbar w-[94%] mx-auto ">
+          <div className="navbar-start">
+            <div className="flex items-center gap-4">
+              <div role="button" className="" id="menu_icon">
+                <MdMenu className="text-3xl" />
+              </div>
+              <h3 className="text-xl font-bold">ALL SPORTS</h3>
+              <div>
+                <Link href="/" className="flex justify-center items-center ">
+                  <Image
+                    className="w-28 mix-blend-multiply dark:mix-blend-normal"
+                    width={400}
+                    height={400}
+                    src={"https://multisports.shop/images/site_setting/multi-sports_vi6P5.png"}
+                    alt="logo"
+                  />{" "}
+                </Link>
+              </div>
             </div>
           </div>
+
+          {/* <label class="input input-bordered flex items-center gap-2 w-full">
+            <input
+              type="text"
+              class=""
+              placeholder="I'm in the market for..."
+            />
+            <button className="hover:bg-gray-300 p-1 rounded">
+              <CiSearch size={30} />
+            </button>
+          </label> */}
+
+          <div className="border rounded-xl px-3 w-[50%] py-1 flex justify-between">
+            <input
+              type="text"
+              class="outline-none w-full"
+              placeholder="I'm in the market for..."
+            />
+            <CiSearch className="text-3xl" />
+            {/* <button className="hover:bg-gray-300 p-1 rounded">
+            </button> */}
+          </div>
+
+          {/* Menu */}
+          <div className="navbar-end flex items-center gap-5">
+            {/* My Store */}
+            <div className="flex items-center justify-center flex-col gap-1 p-3 rounded">
+              <MdOutlineStore className="text-2xl text-gray-600 hover:text-blue-500 hover:scale-110 cursor-pointer transition-all" />
+              My Store
+            </div>
+
+            {/* Wishlist */}
+            <div
+              className="flex items-center justify-center flex-col gap-1 p-3 rounded"
+              onClick={() => setIsShowWishlist(true)}
+            >
+              <FaRegHeart className="text-2xl text-gray-600 hover:text-pink-500 hover:scale-110 cursor-pointer transition-all" />
+              Wishlist
+            </div>
+
+            {/* Cart */}
+            <div
+              onClick={() => setIsShowModal(true)}
+              className="flex items-center justify-center flex-col gap-1 p-3 rounded"
+            >
+              <BsCart className="text-2xl text-gray-600 hover:text-orange-500 hover:scale-110 cursor-pointer transition-all" />
+              Cart
+              {/* <div className="badge badge-primary badge-lg">{totalItems}</div> */}
+            </div>
+
+            {/* Sign In */}
+            <Link href="/login">
+              <div className="flex items-center justify-center flex-col gap-1 p-3 rounded">
+                <FaRegUser className="text-2xl text-gray-600 hover:text-blue-500 hover:scale-110 cursor-pointer transition-all" />
+                Sign In
+              </div>
+            </Link>
+          </div>
+
         </div>
 
-        <label class="input input-bordered flex items-center gap-2 w-full">
-          <input
-            type="text"
-            class="grow"
-            placeholder="I'm in the market for..."
-          />
-          <button className="hover:bg-gray-300 p-1 rounded">
-            <CiSearch size={30} />
-          </button>
-        </label>
-
-        <div className="navbar-end flex items-center gap-6">
-          <Link href="/login">
-            <div className="flex items-center justify-center flex-col gap-1 hover:bg-gray-200 p-3 rounded">
-              <FaRegUser className="text-2xl" />
-              Sign In
-            </div>
-          </Link>
-          <div className="flex items-center justify-center flex-col gap-1 hover:bg-gray-200 p-3 rounded">
-            <MdOutlineStore className="text-2xl" />
-            My Store
-          </div>
-          <div className="flex items-center justify-center flex-col gap-1 hover:bg-gray-200 p-3 rounded" onClick={()=> setIsShowWishlist(true)}>
-            <FaRegHeart className="text-2xl" />
-            Wishlist
-          </div>
-          <div onClick={()=> setIsShowModal(true)} className="flex items-center justify-center flex-col gap-1 hover:bg-gray-200 p-3 rounded">
-            <BsCart className="text-2xl" />
-            Cart
-            <div className="badge badge-primary badge-lg">{totalItems}</div>
-          </div>
-        </div>
-      </div>
-
-    </header>
+      </header>
       <BgBlurModal isShowModal={isShowModal} setIsShowModal={setIsShowModal}>
         <Cart isShow={isShowModal} setIsShow={setIsShowModal} />
       </BgBlurModal>
