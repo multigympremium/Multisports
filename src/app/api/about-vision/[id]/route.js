@@ -35,7 +35,7 @@ export async function PUT(req, { params }) {
 
     if (!existingVision) {
       return NextResponse.json(
-        { success: false, message: "Banner already exists" },
+        { success: false, message: "Item already exists" },
         { status: 400 }
       );
     }

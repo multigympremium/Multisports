@@ -21,7 +21,7 @@ const TestimonialSchema = new mongoose.Schema(
 );
 
 const AboutVisionModel =
-  mongoose.models.testimonials ||
-  mongoose.model("about_vision", TestimonialSchema);
+  mongoose.models.about_visions ||
+  mongoose.model("about_visions", TestimonialSchema);
 
 export default AboutVisionModel;

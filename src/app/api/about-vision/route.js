@@ -39,7 +39,9 @@ export async function POST(req) {
     const description = formData.get("description");
     const image = formData.get("image");
 
-    if (!title || !description || !description) {
+    console.log(title, description);
+
+    if (!title || !description) {
       return NextResponse.json(
         { success: false, message: "Required fields missing" },
         { status: 400 }
@@ -60,15 +62,14 @@ export async function POST(req) {
 
     const insertData = {
       title,
-      subtitle,
       description,
       image : thumbnailUrl
     };
 
-    const bannerResult = await AboutVisionModel.create(insertData);
+    const insertResult = await AboutVisionModel.create(insertData);
 
     return NextResponse.json(
-      { success: true, data: bannerResult },
+      { success: true, data: insertResult },
       { status: 200 }
     );
   } catch (error) {

@@ -140,7 +140,7 @@ export default function AboutUsSection({
   return (
     <div className="w-full bg-white  p-8 rounded-md">
       {/* Testimonial Edit Form */}
-      <h1 className="text-2xl font-bold mb-4">About Us Section</h1>
+      <h1 className="text-2xl font-bold mb-4">About Section</h1>
       <form onSubmit={handleSubmit}>
         <div className="grid grid-cols-2 gap-4 mb-8" > 
         {/* Left Column - Image Upload */}
