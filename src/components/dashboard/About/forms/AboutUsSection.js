@@ -2,6 +2,7 @@
 import CustomEditor from "@/components/shared/CustomEditor/CustomEditor";
 import DragEditUploadImageInput from "@/components/shared/DragEditUploadImageInput";
 import useAxiosSecure from "@/Hook/useAxiosSecure";
+import { get, set } from "mongoose";
 import { useState, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import Swal from "sweetalert2";
@@ -16,9 +17,10 @@ export default function AboutUsSection({
   const [description, setDescription] = useState("");
   const [thumbnail, setThumbnail] = useState(null);
   const [thumbnailPreview, setThumbnailPreview] = useState(null);
-  const [file_key, setFile_key] = useState(null);
-  const [file_url, setFile_url] = useState(null);
-  const [progress, setProgress] = useState(0);
+  const [sideImage, setSideImage] = useState(null);
+  const [sideImagePreview, setSideImagePreview] = useState(null);
+  const [bannerImage, setBannerImage] = useState(null);
+  const [bannerImagePreview, setBannerImagePreview] = useState(null);
 
   const axiosSecure = useAxiosSecure();
 
@@ -46,22 +48,45 @@ export default function AboutUsSection({
   }, [testimonialId, axiosSecure, isShow]);
 
   // Dropzone for thumbnail upload
-  const onDropThumbnail = (acceptedFiles) => {
+  const onDropBanner = (acceptedFiles) => {
     // Set the state with the URL
 
-    const thumbnailPreview = URL.createObjectURL(acceptedFiles[0]);
+    const bannerImagePreview = URL.createObjectURL(acceptedFiles[0]);
 
-    setThumbnailPreview(thumbnailPreview);
+    setBannerImagePreview(bannerImagePreview);
 
 
-    setThumbnail(acceptedFiles[0]);
+    setBannerImage(acceptedFiles[0]);
+  };
+
+
+  // Dropzone for thumbnail upload
+  const onDropSideImage = (acceptedFiles) => {
+    // Set the state with the URL
+
+    const sideImagePreview = URL.createObjectURL(acceptedFiles[0]);
+
+    setSideImagePreview(sideImagePreview);
+
+
+    setSideImage(acceptedFiles[0]);
   };
 
   const {
-    getRootProps: getThumbnailRootProps,
-    getInputProps: getThumbnailInputProps,
+    getRootProps: getBannerRootProps,
+    getInputProps: getBannerInputProps,
   } = useDropzone({
-    onDrop: onDropThumbnail,
+    onDrop: onDropBanner,
+    accept: "image/*",
+    multiple: false,
+  });
+
+
+  const {
+    getRootProps: getSideImageRootProps,
+    getInputProps: getSideImageInputProps,
+  } = useDropzone({
+    onDrop: onDropSideImage,
     accept: "image/*",
     multiple: false,
   });
@@ -115,35 +140,37 @@ export default function AboutUsSection({
   return (
     <div className="w-full bg-white  p-8 rounded-md">
       {/* Testimonial Edit Form */}
-      <h1 className="text-2xl font-bold mb-4">Vision Section</h1>
+      <h1 className="text-2xl font-bold mb-4">About Us Section</h1>
       <form onSubmit={handleSubmit}>
         <div className="grid grid-cols-2 gap-4 mb-8" > 
         {/* Left Column - Image Upload */}
         <div className="relative">
-          <label className="block text-gray-700 mb-2">Image *</label>
+          <label className="block text-gray-700 mb-2">Banner Image *</label>
           <DragEditUploadImageInput
-            getRootProps={getThumbnailRootProps}
-            getInputProps={getThumbnailInputProps}
-            image={thumbnail}
-            imagePreview={thumbnailPreview}
+            getRootProps={getBannerRootProps}
+            getInputProps={getBannerInputProps}
+            image={bannerImage}
+            imagePreview={bannerImagePreview}
           />
 
-          {progress > 0 && progress < 100 && (
-            <div className="w-full h-full absolute top-0 left-0 bg-black bg-opacity-50 font-bold text-xl flex justify-center items-center">
-              <progress
-                className="progress progress-accent w-56"
-                value={progress}
-                max="100"
-              ></progress>
-              {Math.floor(progress)}%
-            </div>
-          )}
+         
+        </div>
+        <div className="relative">
+          <label className="block text-gray-700 mb-2">Side Image *</label>
+          <DragEditUploadImageInput
+            getRootProps={getSideImageRootProps}
+            getInputProps={getSideImageInputProps}
+            image={sideImage}
+            imagePreview={sideImagePreview}
+          />
+
+         
         </div>
 
         {/* Right Column - Form Inputs */}
-        <div className="space-y-4 mb-6">
+        <div className="space-y-4 mb-6 col-span-full">
           <div>
-            <label className="block text-gray-700">title *</label>
+            <label className="block text-gray-700">Title *</label>
             <input
               type="text"
               value={title}
@@ -153,7 +180,8 @@ export default function AboutUsSection({
             />
           </div>
           
-          <div className="mb-8">
+        </div>
+          <div className="mb-8 col-span-full">
             <label className="block text-gray-700">Description *</label>
             <CustomEditor
               value={description}
@@ -164,7 +192,6 @@ export default function AboutUsSection({
 
 
           </div>
-        </div>
 
 
         </div>
