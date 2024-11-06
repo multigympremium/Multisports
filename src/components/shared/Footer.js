@@ -2,7 +2,7 @@
 
 import moment from "moment/moment";
 import Link from "next/link";
-import { FaPhoneAlt } from "react-icons/fa";
+import { FaFacebook, FaInstagram, FaLinkedin, FaPhoneAlt, FaPinterest, FaTiktok, FaYoutube } from "react-icons/fa";
 import { FiMail } from "react-icons/fi";
 import { ImLocation } from "react-icons/im";
 
@@ -68,63 +68,7 @@ const Footer = () => {
               </span>{" "}
               info@multigympremium.com
             </p>
-            {/* icons */}
-            {/* <nav className="flex gap-3 mt-5 ">
-              <a
-                href="https://www.facebook.com/MultiGymPremium"
-                target="_blank"
-                className="rounded-full bg-gray-300 p-2 hover:bg-blue-300 "
-                rel="noopener noreferrer"
-                aria-label="Facebook"
-              >
-                <FaFacebook size={25} class />
-              </a>
-              <a
-                href="https://www.instagram.com/multigym.premium"
-                target="_blank"
-                className="rounded-full bg-gray-300 p-2 hover:bg-blue-300 "
-                rel="noopener noreferrer"
-                aria-label="Instagram"
-              >
-                <FaInstagram size={25} class />
-              </a>
-              <a
-                href="https://www.linkedin.com/company/multigympremium"
-                target="_blank"
-                className="rounded-full bg-gray-300 p-2 hover:bg-blue-300 "
-                rel="noopener noreferrer"
-                aria-label="LinkedIn"
-              >
-                <FaLinkedin size={25} class />
-              </a>
-              <a
-                href="https://www.pinterest.com/multigympremium"
-                target="_blank"
-                className="rounded-full bg-gray-300 p-2 hover:bg-blue-300 "
-                rel="noopener noreferrer"
-                aria-label="Pinterest"
-              >
-                <FaPinterest size={25} class />
-              </a>
-              <a
-                href="https://www.tiktok.com/@multigympremium"
-                target="_blank"
-                className="rounded-full bg-gray-300 p-2 hover:bg-blue-300 "
-                rel="noopener noreferrer"
-                aria-label="TikTok"
-              >
-                <FaTiktok size={25} class />
-              </a>
-              <a
-                href="https://www.youtube.com/@MultiGymPremium"
-                target="_blank"
-                className="rounded-full bg-gray-300 p-2 hover:bg-blue-300 "
-                rel="noopener noreferrer"
-                aria-label="YouTube"
-              >
-                <FaYoutube size={25} class />
-              </a>
-            </nav> */}
+
           </div>
         </aside>
         <nav>
@@ -286,11 +230,68 @@ const Footer = () => {
         </nav>
       </footer>
 
-      <div className="mx-auto">
-        <footer className="footer flex justify-center items-center py-3  border-t   px-5 text-center text-xl">
+      <div className="mx-auto w-[95%]">
+        <footer className="footer flex justify-between items-center py-3  border-t   px-5 text-center text-xl">
           <p className="text-base">
             © {currentYear} MULTI Sports Premium All Rights Reserved
           </p>
+          {/* icons */}
+          <nav className="flex gap-3 ">
+            <a
+              href="https://www.facebook.com/MultiGymPremium"
+              target="_blank"
+              className=""
+              rel="noopener noreferrer"
+              aria-label="Facebook"
+            >
+              <FaFacebook className="text-lg" />
+            </a>
+            <a
+              href="https://www.instagram.com/multigym.premium"
+              target="_blank"
+              className=""
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+            >
+              <FaInstagram className="text-lg" />
+            </a>
+            <a
+              href="https://www.linkedin.com/company/multigympremium"
+              target="_blank"
+              className=""
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+            >
+              <FaLinkedin className="text-lg" />
+            </a>
+            <a
+              href="https://www.pinterest.com/multigympremium"
+              target="_blank"
+              className=""
+              rel="noopener noreferrer"
+              aria-label="Pinterest"
+            >
+              <FaPinterest className="text-lg" />
+            </a>
+            <a
+              href="https://www.tiktok.com/@multigympremium"
+              target="_blank"
+              className=""
+              rel="noopener noreferrer"
+              aria-label="TikTok"
+            >
+              <FaTiktok className="text-lg" />
+            </a>
+            <a
+              href="https://www.youtube.com/@MultiGymPremium"
+              target="_blank"
+              className=""
+              rel="noopener noreferrer"
+              aria-label="YouTube"
+            >
+              <FaYoutube className="text-lg" />
+            </a>
+          </nav>
         </footer>
       </div>
     </div>
