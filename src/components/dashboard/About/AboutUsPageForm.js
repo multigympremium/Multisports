@@ -2,6 +2,7 @@
 // pages/about.js
 import React, { useState } from "react";
 import VisionSection from "./forms/VisionSection";
+import MissionSection from "./forms/MissionSection";
 
 export default function AboutUsPageForm() {
   const [formData, setFormData] = useState({
@@ -24,33 +25,7 @@ export default function AboutUsPageForm() {
       <VisionSection />
 
       {/* Mission Section */}
-      <div className="mb-8">
-        <h2 className="text-2xl font-semibold">Mission Section</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-          <div>
-            <label className="block font-medium mb-2">Mission Image</label>
-            <input type="file" className="border rounded w-full p-2" />
-          </div>
-          <div>
-            <label className="block font-medium mb-2">Mission Title</label>
-            <input
-              type="text"
-              className="border rounded w-full p-2"
-              name="mission"
-              value={formData.mission}
-              onChange={handleChange}
-            />
-            <label className="block font-medium mb-2">
-              Mission Description
-            </label>
-            <textarea
-              className="border rounded w-full p-2"
-              name="missionDescription"
-              onChange={handleChange}
-            ></textarea>
-          </div>
-        </div>
-      </div>
+      <MissionSection />
 
       {/* About Us Section */}
       <div>

@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import Swal from "sweetalert2";
 
-export default function VisionSection({
+export default function MissionSection({
   testimonialId,
   isShow,
   setIsShow,
@@ -115,7 +115,7 @@ export default function VisionSection({
   return (
     <div className="w-full bg-white  p-8 rounded-md">
       {/* Testimonial Edit Form */}
-      <h1 className="text-2xl font-bold mb-4">Vision Section</h1>
+      <h1 className="text-2xl font-bold mb-4">Mission Section</h1>
       <form onSubmit={handleSubmit}>
         <div className="grid grid-cols-2 gap-4 mb-8" > 
         {/* Left Column - Image Upload */}

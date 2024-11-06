@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import Swal from "sweetalert2";
 
-export default function VisionSection({
+export default function AboutUsSection({
   testimonialId,
   isShow,
   setIsShow,
