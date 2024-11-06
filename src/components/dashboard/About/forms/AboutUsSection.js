@@ -21,6 +21,7 @@ export default function AboutUsSection({
   const [sideImagePreview, setSideImagePreview] = useState(null);
   const [bannerImage, setBannerImage] = useState(null);
   const [bannerImagePreview, setBannerImagePreview] = useState(null);
+  const [targetId, setTargetId] = useState("");
 
   const axiosSecure = useAxiosSecure();
 
@@ -28,24 +29,26 @@ export default function AboutUsSection({
   useEffect(() => {
     const fetchTestimonial = async () => {
       try {
-        const res = await axiosSecure.get(`/about-vision/${testimonialId}`);
-        const data = res?.data?.data;
+        const res = await axiosSecure.get(`/about-us/${targetId}`);
 
-        // Set form values with the testimonial data
-        setTitle(data?.title);
-        setDesignation(data?.designation);
-        setRating(data?.rating);
-        setDescription(data?.description);
-        setThumbnailPreview(data?.image); // Show the existing image
-        setFile_url(data?.image); // Use the existing image URL
-        setFile_key(data?.key);
+        if(res.status === 200 || res.status === 201) {
+            
+            const data = res?.data?.data[0];
+    
+            // Set form values with the testimonial data
+            setTitle(data?.title);
+            setDescription(data?.description);
+            setSideImagePreview(data?.sideImage); //
+            setBannerImagePreview(data?.bannerImage); //
+            setTargetId(data?._id)
+        }
       } catch (error) {
         console.error("Error fetching testimonial:", error);
       }
     };
 
     fetchTestimonial();
-  }, [testimonialId, axiosSecure, isShow]);
+  }, [axiosSecure]);
 
   // Dropzone for thumbnail upload
   const onDropBanner = (acceptedFiles) => {
@@ -91,41 +94,54 @@ export default function AboutUsSection({
     multiple: false,
   });
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+  
+    console.log({title, description, thumbnail});
     
-
-
+  
+  
     const formData = new FormData();
     formData.append("title", title);
-    formData.append("designation", designation);
-    formData.append("rating", rating);
     formData.append("description", description);
-    formData.append("image", thumbnail);
-
+    formData.append("sideImage", sideImage);
+    formData.append("bannerImage", bannerImage);
+  
     
     try {
-      const res = await axiosSecure.put(
-        `/testimonials/${testimonialId}`,
-        formData
-      );
-
-      console.log(res);
-
-      if (res.status === 200 || res.status === 201) {
-        Swal.fire({
-          title: "Success!",
-          text: "Testimonial updated successfully",
-          icon: "success",
-          confirmButtonText: "Ok",
-        });
-        localStorage.removeItem("file_key");
-        setFile_key(null);
-        setThumbnailPreview(null);
-        setThumbnail(null);
-        setIsShow(false);
-      }
+  
+        if(targetId){
+            const res = await axiosSecure.put(
+              `/about-us/${targetId}`,
+              formData
+            );
+            if (res.status === 200 || res.status === 201) {
+              Swal.fire({
+                title: "Success!",
+                text: "About Us updated successfully",
+                icon: "success",
+                confirmButtonText: "Ok",
+              });
+            }
+            
+        }else {
+           const res = await axiosSecure.post(
+                `/about-us`,
+                formData
+            );
+            if (res.status === 200 || res.status === 201) {
+              Swal.fire({
+                title: "Success!",
+                text: "About Us Created successfully",
+                icon: "success",
+                confirmButtonText: "Ok",
+              });
+            }
+  
+        }
+  
+     
+  
     } catch (err) {
       console.error(err);
       Swal.fire({
@@ -185,7 +201,7 @@ export default function AboutUsSection({
             <label className="block text-gray-700">Description *</label>
             <CustomEditor
               value={description}
-              onChange={(e) => setDescription(e.target.value)}
+              setValue={setDescription}
               className="w-full p-2 border rounded min-h-[250px]"
               required
              />
