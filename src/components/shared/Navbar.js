@@ -169,9 +169,9 @@ const Navbar = () => {
           <div className="navbar-start">
             <div className="flex items-center gap-3">
               <div role="button" className="" id="menu_icon">
-                <MdMenu className="text-3xl" />
+                <MdMenu className="text-2xl" />
               </div>
-              <h3 className="text-xl font-bold">ALL SPORTS</h3>
+              // <h3 className="text-xl font-bold">ALL SPORTS</h3>
               <div>
                 <Link href="/" className="flex justify-center items-center ">
                   <Image
