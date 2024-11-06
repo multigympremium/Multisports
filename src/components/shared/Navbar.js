@@ -2,20 +2,85 @@
 import { AuthContext } from "@/providers/AuthProvider";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
-import { FaRegUser } from "react-icons/fa6";
-import { MdOutlineStore } from "react-icons/md";
-import { FaRegHeart } from "react-icons/fa";
 import { BsCart } from "react-icons/bs";
-import { MdMenu } from "react-icons/md";
-import { CiSearch } from "react-icons/ci";
+import { IoIosSearch } from "react-icons/io";
+
+import { FaRegHeart } from "react-icons/fa";
+import { FaRegUser } from "react-icons/fa6";
+import { MdMenu, MdOutlineStore } from "react-icons/md";
+import Wishlist from "./Cards/Wishlist/Wishlist";
 import BgBlurModal from "./Modal/BgBlurModal";
 import Cart from "./cart/Cart";
-import Wishlist from "./Cards/Wishlist/Wishlist";
-import { FaHeart } from "react-icons/fa";
 const Navbar = () => {
+  const placeholders = ['Shorts', 'Watch', 'Shirt'];
+  const [placeholderText, setPlaceholderText] = useState("");
+  const [placeholderIndex, setPlaceholderIndex] = useState(0);
+  const [charIndex, setCharIndex] = useState(0);
+  const [isTyping, setIsTyping] = useState(true);
+  const [isFocused, setIsFocused] = useState(false); // Track input focus state
+  const SearchBar = () => {
+
+
+    useEffect(() => {
+      if (isFocused) return; // Stop animation if input is focused
+
+      let typingTimeout;
+
+      if (isTyping) {
+        // Typing effect: Add one character at a time
+        if (charIndex < placeholders[placeholderIndex].length) {
+          typingTimeout = setTimeout(() => {
+            setPlaceholderText((prev) => prev + placeholders[placeholderIndex][charIndex]);
+            setCharIndex((prev) => prev + 1);
+          }, 300); // Slowed typing speed
+        } else {
+          setIsTyping(false); // Pause before deleting
+          setTimeout(() => setIsTyping(false), 2000); // Longer pause at end of word
+        }
+      } else {
+        // Deleting effect: Remove one character at a time
+        if (charIndex > 0) {
+          typingTimeout = setTimeout(() => {
+            setPlaceholderText((prev) => prev.slice(0, -1));
+            setCharIndex((prev) => prev - 1);
+          }, 150); // Slowed deleting speed
+        } else {
+          // Move to the next word and restart typing
+          setIsTyping(true);
+          setPlaceholderIndex((prev) => (prev + 1) % placeholders.length);
+        }
+      }
+
+      return () => clearTimeout(typingTimeout);
+    }, [charIndex, isTyping, placeholderIndex, placeholders, isFocused]);
+
+    const handleFocus = () => {
+      setIsFocused(true); // Stop placeholder animation immediately when focused
+    };
+
+    const handleBlur = (e) => {
+      if (e.target.value.length === 0) {
+        setIsFocused(false); // Resume placeholder animation if input is empty
+      }
+    };
+
+    return (
+      <div className="bg-gray-100 rounded-full px-3 w-[70%] py-2 gap-2 flex-row-reverse justify-between flex">
+        <input
+          type="text"
+          className="outline-none w-full bg-gray-100"
+          placeholder={!isFocused ? `Search for "${placeholderText}"` : ""}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+        />
+        <IoIosSearch className="text-2xl text-gray-400" />
+      </div>
+    );
+  };
+
   const {
     userRole,
     logOut,
@@ -102,7 +167,7 @@ const Navbar = () => {
       >
         <div className="navbar w-[94%] mx-auto ">
           <div className="navbar-start">
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
               <div role="button" className="" id="menu_icon">
                 <MdMenu className="text-3xl" />
               </div>
@@ -132,19 +197,10 @@ const Navbar = () => {
             </button>
           </label> */}
 
-          <div className="border rounded-xl px-3 w-[50%] py-1 flex justify-between">
-            <input
-              type="text"
-              class="outline-none w-full"
-              placeholder="I'm in the market for..."
-            />
-            <CiSearch className="text-3xl" />
-            {/* <button className="hover:bg-gray-300 p-1 rounded">
-            </button> */}
-          </div>
+          <SearchBar></SearchBar>
 
           {/* Menu */}
-          <div className="navbar-end flex items-center gap-5">
+          <div className="navbar-end flex items-center gap-3">
             {/* My Store */}
             <div className="flex items-center justify-center flex-col gap-1 p-3 rounded">
               <MdOutlineStore className="text-2xl text-gray-600 hover:text-blue-500 hover:scale-110 cursor-pointer transition-all" />
