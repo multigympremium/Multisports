@@ -1,7 +1,8 @@
+import ViewAllBlogs from "@/components/dashboard/Blogs/ViewAllBlogs/ViewAllBlogs";
 import React from "react";
 
 function page() {
-  return <div> View All Blogs</div>;
+  return <ViewAllBlogs />;
 }
 
 export default page;
