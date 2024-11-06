@@ -7,18 +7,13 @@ import { useDropzone } from "react-dropzone";
 import Swal from "sweetalert2";
 
 export default function MissionSection({
-  testimonialId,
-  isShow,
-  setIsShow,
 }) {
   // State management for form fields
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [thumbnail, setThumbnail] = useState(null);
   const [thumbnailPreview, setThumbnailPreview] = useState(null);
-  const [file_key, setFile_key] = useState(null);
-  const [file_url, setFile_url] = useState(null);
-  const [progress, setProgress] = useState(0);
+  const [targetId, setTargetId] = useState("");
 
   const axiosSecure = useAxiosSecure();
 
@@ -26,24 +21,25 @@ export default function MissionSection({
   useEffect(() => {
     const fetchTestimonial = async () => {
       try {
-        const res = await axiosSecure.get(`/about-vision/${testimonialId}`);
-        const data = res?.data?.data;
+        const res = await axiosSecure.get(`/about-mission/${targetId}`);
 
-        // Set form values with the testimonial data
-        setTitle(data?.title);
-        setDesignation(data?.designation);
-        setRating(data?.rating);
-        setDescription(data?.description);
-        setThumbnailPreview(data?.image); // Show the existing image
-        setFile_url(data?.image); // Use the existing image URL
-        setFile_key(data?.key);
+        if(res.status === 200 || res.status === 201) {
+            
+            const data = res?.data?.data[0];
+    
+            // Set form values with the testimonial data
+            setTitle(data?.title);
+            setDescription(data?.description);
+            setThumbnailPreview(data?.image); //
+            setTargetId(data?._id)
+        }
       } catch (error) {
         console.error("Error fetching testimonial:", error);
       }
     };
 
     fetchTestimonial();
-  }, [testimonialId, axiosSecure, isShow]);
+  }, [axiosSecure]);
 
   // Dropzone for thumbnail upload
   const onDropThumbnail = (acceptedFiles) => {
@@ -66,52 +62,64 @@ export default function MissionSection({
     multiple: false,
   });
 
-  // Handle form submission
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    
+ // Handle form submission
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  console.log({title, description, thumbnail});
+  
 
 
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append("designation", designation);
-    formData.append("rating", rating);
-    formData.append("description", description);
-    formData.append("image", thumbnail);
+  const formData = new FormData();
+  formData.append("title", title);
+  formData.append("description", description);
+  formData.append("image", thumbnail);
 
-    
-    try {
-      const res = await axiosSecure.put(
-        `/testimonials/${testimonialId}`,
-        formData
-      );
+  
+  try {
 
-      console.log(res);
+      if(targetId){
+          const res = await axiosSecure.put(
+            `/about-mission/${targetId}`,
+            formData
+          );
+          if (res.status === 200 || res.status === 201) {
+            Swal.fire({
+              title: "Success!",
+              text: "About Mission updated successfully",
+              icon: "success",
+              confirmButtonText: "Ok",
+            });
+          }
+          
+      }else {
+         const res = await axiosSecure.post(
+              `/about-mission`,
+              formData
+          );
+          if (res.status === 200 || res.status === 201) {
+            Swal.fire({
+              title: "Success!",
+              text: "About Mission Created successfully",
+              icon: "success",
+              confirmButtonText: "Ok",
+            });
+          }
 
-      if (res.status === 200 || res.status === 201) {
-        Swal.fire({
-          title: "Success!",
-          text: "Testimonial updated successfully",
-          icon: "success",
-          confirmButtonText: "Ok",
-        });
-        localStorage.removeItem("file_key");
-        setFile_key(null);
-        setThumbnailPreview(null);
-        setThumbnail(null);
-        setIsShow(false);
       }
-    } catch (err) {
-      console.error(err);
-      Swal.fire({
-        title: "Error!",
-        text: "Something went wrong!",
-        icon: "error",
-        confirmButtonText: "Ok",
-      });
-    }
-  };
 
+   
+
+  } catch (err) {
+    console.error(err);
+    Swal.fire({
+      title: "Error!",
+      text: "Something went wrong!",
+      icon: "error",
+      confirmButtonText: "Ok",
+    });
+  }
+};
   return (
     <div className="w-full bg-white  p-8 rounded-md">
       {/* Testimonial Edit Form */}
@@ -128,16 +136,7 @@ export default function MissionSection({
             imagePreview={thumbnailPreview}
           />
 
-          {progress > 0 && progress < 100 && (
-            <div className="w-full h-full absolute top-0 left-0 bg-black bg-opacity-50 font-bold text-xl flex justify-center items-center">
-              <progress
-                className="progress progress-accent w-56"
-                value={progress}
-                max="100"
-              ></progress>
-              {Math.floor(progress)}%
-            </div>
-          )}
+          
         </div>
 
         {/* Right Column - Form Inputs */}
@@ -157,7 +156,7 @@ export default function MissionSection({
             <label className="block text-gray-700">Description *</label>
             <CustomEditor
               value={description}
-              onChange={(e) => setDescription(e.target.value)}
+            setValue={setDescription}
               className="w-full p-2 border rounded min-h-[250px]"
               required
              />
