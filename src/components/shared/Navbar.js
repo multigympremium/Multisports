@@ -20,35 +20,35 @@ const Navbar = () => {
   const [placeholderIndex, setPlaceholderIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
   const [isTyping, setIsTyping] = useState(true);
-  const [isFocused, setIsFocused] = useState(false); // Track input focus state
+  const [isFocused, setIsFocused] = useState(false);
   const SearchBar = () => {
 
 
     useEffect(() => {
-      if (isFocused) return; // Stop animation if input is focused
+      if (isFocused) return;
 
       let typingTimeout;
 
       if (isTyping) {
-        // Typing effect: Add one character at a time
+        
         if (charIndex < placeholders[placeholderIndex].length) {
           typingTimeout = setTimeout(() => {
             setPlaceholderText((prev) => prev + placeholders[placeholderIndex][charIndex]);
             setCharIndex((prev) => prev + 1);
-          }, 300); // Slowed typing speed
+          }, 300);
         } else {
-          setIsTyping(false); // Pause before deleting
-          setTimeout(() => setIsTyping(false), 2000); // Longer pause at end of word
+          setIsTyping(false);
+          setTimeout(() => setIsTyping(false), 2000);
         }
       } else {
-        // Deleting effect: Remove one character at a time
+        
         if (charIndex > 0) {
           typingTimeout = setTimeout(() => {
             setPlaceholderText((prev) => prev.slice(0, -1));
             setCharIndex((prev) => prev - 1);
-          }, 150); // Slowed deleting speed
+          }, 150); 
         } else {
-          // Move to the next word and restart typing
+          
           setIsTyping(true);
           setPlaceholderIndex((prev) => (prev + 1) % placeholders.length);
         }
@@ -58,17 +58,17 @@ const Navbar = () => {
     }, [charIndex, isTyping, placeholderIndex, placeholders, isFocused]);
 
     const handleFocus = () => {
-      setIsFocused(true); // Stop placeholder animation immediately when focused
+      setIsFocused(true);
     };
 
     const handleBlur = (e) => {
       if (e.target.value.length === 0) {
-        setIsFocused(false); // Resume placeholder animation if input is empty
+        setIsFocused(false);
       }
     };
 
     return (
-      <div className="bg-gray-100 rounded-full px-3 w-[70%] py-2 gap-2 flex-row-reverse justify-between flex">
+      <div className="bg-gray-100 rounded-full px-3 w-[70%] md:py-2 py-1 md:gap-2 gap-1 flex-row-reverse justify-between flex">
         <input
           type="text"
           className="outline-none w-full bg-gray-100"
@@ -171,7 +171,6 @@ const Navbar = () => {
               <div role="button" className="" id="menu_icon">
                 <MdMenu className="text-2xl" />
               </div>
-              // <h3 className="text-xl font-bold">ALL SPORTS</h3>
               <div>
                 <Link href="/" className="flex justify-center items-center ">
                   <Image
@@ -200,37 +199,37 @@ const Navbar = () => {
           <SearchBar></SearchBar>
 
           {/* Menu */}
-          <div className="navbar-end flex items-center gap-3">
+          <div className="navbar-end flex items-center gap-1 md:gap-3">
             {/* My Store */}
-            <div className="flex items-center justify-center flex-col gap-1 p-3 rounded">
-              <MdOutlineStore className="text-2xl text-gray-600 hover:text-blue-500 hover:scale-110 cursor-pointer transition-all" />
-              My Store
+            <div className="flex items-center justify-center flex-col gap-1 md:p-3 p-1 rounded">
+              <MdOutlineStore className="md:text-2xl text-base text-gray-600 hover:text-blue-500 hover:scale-110 cursor-pointer transition-all" />
+              <span className="hidden md:block">My Store</span>
             </div>
 
             {/* Wishlist */}
             <div
-              className="flex items-center justify-center flex-col gap-1 p-3 rounded"
+              className="flex items-center justify-center flex-col gap-1 md:p-3 p-1 rounded"
               onClick={() => setIsShowWishlist(true)}
             >
-              <FaRegHeart className="text-2xl text-gray-600 hover:text-pink-500 hover:scale-110 cursor-pointer transition-all" />
-              Wishlist
+              <FaRegHeart className="md:text-2xl text-base text-gray-600 hover:text-pink-500 hover:scale-110 cursor-pointer transition-all" />
+              <span className="hidden md:block">Wishlist</span>
             </div>
 
             {/* Cart */}
             <div
               onClick={() => setIsShowModal(true)}
-              className="flex items-center justify-center flex-col gap-1 p-3 rounded"
+              className="flex items-center justify-center flex-col gap-1 md:p-3 p-1 rounded"
             >
-              <BsCart className="text-2xl text-gray-600 hover:text-orange-500 hover:scale-110 cursor-pointer transition-all" />
-              Cart
+              <BsCart className="md:text-2xl text-base text-gray-600 hover:text-orange-500 hover:scale-110 cursor-pointer transition-all" />
+              <span className="hidden md:block">Cart</span>
               {/* <div className="badge badge-primary badge-lg">{totalItems}</div> */}
             </div>
 
             {/* Sign In */}
             <Link href="/login">
-              <div className="flex items-center justify-center flex-col gap-1 p-3 rounded">
-                <FaRegUser className="text-2xl text-gray-600 hover:text-blue-500 hover:scale-110 cursor-pointer transition-all" />
-                Sign In
+              <div className="flex items-center justify-center flex-col gap-1 md:p-3 p-1 rounded">
+                <FaRegUser className="md:text-2xl text-base text-gray-600 hover:text-blue-500 hover:scale-110 cursor-pointer transition-all" />
+                <span className="hidden md:block">Sign In</span>
               </div>
             </Link>
           </div>
