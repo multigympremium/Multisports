@@ -1,6 +1,7 @@
 "use client";
 // pages/about.js
 import React, { useState } from "react";
+import VisionSection from "./forms/VisionSection";
 
 export default function AboutUsPageForm() {
   const [formData, setFormData] = useState({
@@ -20,31 +21,7 @@ export default function AboutUsPageForm() {
   return (
     <div className="container mx-auto p-4">
       {/* Vision Section */}
-      <div className="mb-8">
-        <h2 className="text-2xl font-semibold">Vision Section</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-          <div>
-            <label className="block font-medium mb-2">Vision Image</label>
-            <input type="file" className="border rounded w-full p-2" />
-          </div>
-          <div>
-            <label className="block font-medium mb-2">Vision Title</label>
-            <input
-              type="text"
-              className="border rounded w-full p-2"
-              name="vision"
-              value={formData.vision}
-              onChange={handleChange}
-            />
-            <label className="block font-medium mb-2">Vision Description</label>
-            <textarea
-              className="border rounded w-full p-2"
-              name="visionDescription"
-              onChange={handleChange}
-            ></textarea>
-          </div>
-        </div>
-      </div>
+      <VisionSection />
 
       {/* Mission Section */}
       <div className="mb-8">
