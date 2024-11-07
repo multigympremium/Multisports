@@ -1,17 +1,129 @@
 "use client";
-import { useEffect } from "react";
+import useAxiosSecure from "@/Hook/useAxiosSecure";
+import { set } from "mongoose";
+import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import Swal from "sweetalert2";
 
 export default function WebsiteThemeColorForm() {
   const { register, handleSubmit, getValues, setValue, watch } = useForm();
+  const [targetId, setTargetId] = useState("");
+  const [isExistData, setIsExistData] = useState(false);
+  const axiosSecure = useAxiosSecure();
 
-  const onSubmit = (data) => {
-    console.log(data);
-    // Handle form submission, e.g., send data to an API
+  
+
+  console.log(watch("primaryColor"), watch("secondaryColor"), watch("tertiaryColor"), watch("titleColor"), watch("paragraphColor"), watch("borderColor"));
+
+  function getContrastingColor(color) {
+    let r, g, b;
+
+    if(color){
+      if (color.startsWith('#')) {
+        // Hex format
+        color = color.slice(1);
+        r = parseInt(color.slice(0, 2), 16);
+        g = parseInt(color.slice(2, 4), 16);
+        b = parseInt(color.slice(4, 6), 16);
+      } else if (color.startsWith('rgb')) {
+        // RGB format
+        [r, g, b] = color.match(/\d+/g).map(Number);
+      } else {
+        throw new Error('Unsupported color format');
+      }
+    
+      // Calculate brightness
+      const brightness = (0.2126 * r + 0.7152 * g + 0.0722 * b);
+      return brightness > 128 ? '#000000' : '#FFFFFF';
+
+    }else {
+      return "#000000"
+    }
+  
+  }
+
+
+  const onSubmit = async (data) => {
+    console.log(data, "data");
+    try {
+  
+      if(targetId){
+          const res = await axiosSecure.put(
+            `/website-theme-color/${targetId}`,
+            data
+          );
+          if (res.status === 200 || res.status === 201) {
+            Swal.fire({
+              title: "Success!",
+              text: "About Us updated successfully",
+              icon: "success",
+              confirmButtonText: "Ok",
+            });
+          }
+          
+      }else {
+         const res = await axiosSecure.post(
+              `/website-theme-color`,
+              data
+          );
+          if (res.status === 200 || res.status === 201) {
+            Swal.fire({
+              title: "Success!",
+              text: "About Us Created successfully",
+              icon: "success",
+              confirmButtonText: "Ok",
+            });
+          }
+
+      }
+
+   
+
+  } catch (err) {
+    console.error(err);
+    Swal.fire({
+      title: "Error!",
+      text: err.message,
+      icon: "error",
+      confirmButtonText: "Ok",
+    });
+  }
   };
 
-  // Set default colors on mount
   useEffect(() => {
+    const fetchTestimonial = async () => {
+      try {
+        const firstResData = await axiosSecure.get(`/website-theme-color`);
+        const res = await axiosSecure.get(`/website-theme-color/${firstResData?.data?.data[0]?._id}`);
+
+        if(res.status === 200 || res.status === 201) {
+            
+            const data = res?.data?.data;
+
+            console.log(data, "data");
+    
+            // Set form values with the testimonial data
+            for(let key in data){
+              console.log(key, data[key], "data[key]");
+                setValue(key, data[key]);
+            }
+            setTargetId(data?._id)
+            
+        }else {
+          handleDefaultColor()
+        }
+      } catch (error) {
+        handleDefaultColor()
+        console.error("Error fetching testimonial:", error);
+      }
+    };
+
+    fetchTestimonial();
+
+
+  }, [axiosSecure, setValue ]);
+
+  const handleDefaultColor = useCallback(() => {
     setValue("primaryColor", "#20124d");
     setValue("secondaryColor", "#5c1036");
     setValue("tertiaryColor", "#20124d");
@@ -19,29 +131,6 @@ export default function WebsiteThemeColorForm() {
     setValue("paragraphColor", "#741b47");
     setValue("borderColor", "#e06666");
   }, [setValue]);
-
-  console.log(watch("primaryColor"), watch("secondaryColor"), watch("tertiaryColor"), watch("titleColor"), watch("paragraphColor"), watch("borderColor"));
-
-  function getContrastingColor(color) {
-    let r, g, b;
-  
-    if (color.startsWith('#')) {
-      // Hex format
-      color = color.slice(1);
-      r = parseInt(color.slice(0, 2), 16);
-      g = parseInt(color.slice(2, 4), 16);
-      b = parseInt(color.slice(4, 6), 16);
-    } else if (color.startsWith('rgb')) {
-      // RGB format
-      [r, g, b] = color.match(/\d+/g).map(Number);
-    } else {
-      throw new Error('Unsupported color format');
-    }
-  
-    // Calculate brightness
-    const brightness = (0.2126 * r + 0.7152 * g + 0.0722 * b);
-    return brightness > 128 ? '#000000' : '#FFFFFF';
-  }
 
   return (
     <div className="flex justify-center mt-10">

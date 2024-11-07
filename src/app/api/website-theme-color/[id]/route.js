@@ -29,7 +29,7 @@ export async function GET(req, { params }) {
 // PUT Request: Update brand by ID
 export async function PUT(req, { params }) {
   const id = params?.id;
-  const formData = await req.formData();
+  const requestData = await req.json();
 
   const existingData = await WebsiteThemeColorModel.findById(id);
   if (!existingData) {
@@ -39,23 +39,10 @@ export async function PUT(req, { params }) {
     );
   }
 
-  const unitName = formData.get("unitName");
-
-  if (!unitName) {
-    return NextResponse.json(
-      { success: false, message: "Required fields missing" },
-      { status: 400 }
-    );
-  }
-
-  const submitData = {
-    unitName,
-  };
-
   try {
     const updatedBrand = await WebsiteThemeColorModel.findByIdAndUpdate(
       id,
-      submitData,
+      requestData,
       {
         new: true,
         runValidators: true,
