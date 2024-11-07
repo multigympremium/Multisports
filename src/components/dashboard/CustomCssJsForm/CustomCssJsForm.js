@@ -1,19 +1,100 @@
 "use client";
-import { useState } from "react";
+import useAxiosSecure from "@/Hook/useAxiosSecure";
+import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
 export default function CustomCSSJSForm() {
   const [customCSS, setCustomCSS] = useState("");
   const [headerScript, setHeaderScript] = useState("");
   const [footerScript, setFooterScript] = useState("");
+  const [targetId, setTargetId] = useState("");
+  const axiosSecure = useAxiosSecure()
 
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log({
+    const data = {
       customCSS,
       headerScript,
       footerScript,
+    };
+    console.log(data, "data");
+    try {
+  
+      if(targetId){
+          const res = await axiosSecure.put(
+            `/website-theme-color/${targetId}`,
+            data
+          );
+          if (res.status === 200 || res.status === 201) {
+            Swal.fire({
+              title: "Success!",
+              text: "About Us updated successfully",
+              icon: "success",
+              confirmButtonText: "Ok",
+            });
+          }
+          
+      }else {
+         const res = await axiosSecure.post(
+              `/website-theme-color`,
+              data
+          );
+          if (res.status === 200 || res.status === 201) {
+            Swal.fire({
+              title: "Success!",
+              text: "About Us Created successfully",
+              icon: "success",
+              confirmButtonText: "Ok",
+            });
+          }
+
+      }
+
+   
+
+  } catch (err) {
+    console.error(err);
+    Swal.fire({
+      title: "Error!",
+      text: err.message,
+      icon: "error",
+      confirmButtonText: "Ok",
     });
+  }
   };
+
+  useEffect(() => {
+    const fetchTestimonial = async () => {
+      try {
+        const firstResData = await axiosSecure.get(`/website-theme-color`);
+        const res = await axiosSecure.get(`/website-theme-color/${firstResData?.data?.data[0]?._id}`);
+
+        if(res.status === 200 || res.status === 201) {
+            
+            const data = res?.data?.data;
+
+            console.log(data, "data");
+    
+            // Set form values with the testimonial data
+
+            // setCustomCSS(data.)
+            
+            setTargetId(data?._id)
+            
+        }else {
+          handleDefaultColor()
+        }
+      } catch (error) {
+        handleDefaultColor()
+        console.error("Error fetching testimonial:", error);
+      }
+    };
+
+    fetchTestimonial();
+
+
+  }, [axiosSecure ]);
 
   return (
     <div className="min-h-screen  bg-gray-100  p-5">
