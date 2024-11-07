@@ -16,7 +16,7 @@ export default function SocialMediaLinksForm() {
   
       if(targetId){
           const res = await axiosSecure.put(
-            `/website-theme-color/${targetId}`,
+            `/social-link/${targetId}`,
             data
           );
           if (res.status === 200 || res.status === 201) {
@@ -30,7 +30,7 @@ export default function SocialMediaLinksForm() {
           
       }else {
          const res = await axiosSecure.post(
-              `/website-theme-color`,
+              `/social-link`,
               data
           );
           if (res.status === 200 || res.status === 201) {
@@ -60,8 +60,8 @@ export default function SocialMediaLinksForm() {
   useEffect(() => {
     const fetchTestimonial = async () => {
       try {
-        const firstResData = await axiosSecure.get(`/website-theme-color`);
-        const res = await axiosSecure.get(`/website-theme-color/${firstResData?.data?.data[0]?._id}`);
+        const firstResData = await axiosSecure.get(`/social-link`);
+        const res = await axiosSecure.get(`/social-link/${firstResData?.data?.data[0]?._id}`);
 
         if(res.status === 200 || res.status === 201) {
             
