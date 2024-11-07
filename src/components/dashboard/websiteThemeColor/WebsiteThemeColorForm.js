@@ -3,6 +3,7 @@ import useAxiosSecure from "@/Hook/useAxiosSecure";
 import { set } from "mongoose";
 import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 
 export default function WebsiteThemeColorForm() {
@@ -21,15 +22,27 @@ export default function WebsiteThemeColorForm() {
     if(color){
       if (color.startsWith('#')) {
         // Hex format
-        color = color.slice(1);
-        r = parseInt(color.slice(0, 2), 16);
-        g = parseInt(color.slice(2, 4), 16);
-        b = parseInt(color.slice(4, 6), 16);
+
+        if (color.length < 4) {
+          // #rgb format
+          color = color.slice(1);
+          r = parseInt(color.slice(0, 1), 16);
+          g = parseInt(color.slice(1, 2), 16);
+          b = parseInt(color.slice(2, 3), 16);
+
+          return "#000" 
+        } else {
+          // #rrggbb format
+          color = color.slice(1);
+          r = parseInt(color.slice(0, 2), 16);
+          g = parseInt(color.slice(2, 4), 16);
+          b = parseInt(color.slice(4, 6), 16);
+        }
       } else if (color.startsWith('rgb')) {
         // RGB format
         [r, g, b] = color.match(/\d+/g).map(Number);
       } else {
-        throw new Error('Unsupported color format');
+        return "#000000"
       }
     
       // Calculate brightness
@@ -147,11 +160,13 @@ export default function WebsiteThemeColorForm() {
               <label className="block text-sm font-medium text-gray-700">
                 {color.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}:
               </label>
-                <label
+                <input
+                  type={"text"}
                   className="h-10 w-full rounded flex justify-center items-center text-gray-600"
                   style={{ background: getValues(color), color: getContrastingColor(getValues(color)) }}
-                  htmlFor={color}
-                >{ getValues(color)}</label>
+                  // htmlFor={color}
+                  {...register(color, { onChange: (e) => setValue(color, e.target.value) })}
+                 />
               <input
                 type="color"
                 {...register(color, { onChange: (e) => setValue(color, e.target.value) })}
@@ -165,16 +180,16 @@ export default function WebsiteThemeColorForm() {
         </div>
 
         {/* Buttons */}
-        <div className="flex justify-between mt-6">
-          <button
+        <div className="flex mt-6">
+          {/* <button
             type="button"
             className="bg-red-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-red-600"
           >
             Cancel
-          </button>
+          </button> */}
           <button
             type="submit"
-            className="bg-blue-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-blue-600"
+            className="bg-blue-500 text-white w-full font-semibold py-2 px-4 rounded-md hover:bg-blue-600"
           >
             Update Color
           </button>
