@@ -162,7 +162,7 @@ export default function WebsiteThemeColorForm() {
               </label>
                 <input
                   type={"text"}
-                  className="h-10 w-full rounded flex justify-center items-center text-gray-600"
+                  className="h-10 w-full px-2 rounded flex justify-center items-center text-gray-600"
                   style={{ background: getValues(color), color: getContrastingColor(getValues(color)) }}
                   // htmlFor={color}
                   {...register(color, { onChange: (e) => setValue(color, e.target.value) })}
