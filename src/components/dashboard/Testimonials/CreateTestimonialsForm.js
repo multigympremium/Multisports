@@ -21,17 +21,17 @@ export default function CreateTestimonialsForm() {
 
   const axiosSecure = useAxiosSecure();
 
- // Dropzone for thumbnail upload
- const onDropThumbnail = (acceptedFiles) => {
-  // Set the state with the URL
+  // Dropzone for thumbnail upload
+  const onDropThumbnail = (acceptedFiles) => {
+    // Set the state with the URL
 
-  const thumbnailPreview = URL.createObjectURL(acceptedFiles[0]);
+    const thumbnailPreview = URL.createObjectURL(acceptedFiles[0]);
 
-  setThumbnailPreview(thumbnailPreview);
+    setThumbnailPreview(thumbnailPreview);
 
 
-  setThumbnail(acceptedFiles[0]);
-};
+    setThumbnail(acceptedFiles[0]);
+  };
 
   const {
     getRootProps: getThumbnailRootProps,
@@ -95,13 +95,60 @@ export default function CreateTestimonialsForm() {
   };
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto py-2">
       {/* Testimonial Entry Form */}
-      <h1 className="text-2xl font-bold mb-4">Testimonial Entry Form</h1>
-      <form className="grid grid-cols-2 gap-4" onSubmit={handleSubmit}>
+      <h1 className="text-2xl font-semibold mb-4">Testimonial Entry Form</h1>
+      <form className="" onSubmit={handleSubmit}>
+        <div className="space-y-4">
+          <div>
+            <label className="block text-gray-700">Customer Name </label>
+            <input
+              type="text"
+              value={customerName}
+              onChange={(e) => setCustomerName(e.target.value)}
+              className="globalInput mt-2"
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-gray-700">Designation</label>
+            <input
+              type="text"
+              value={designation}
+              onChange={(e) => setDesignation(e.target.value)}
+              className="globalInput mt-2"
+            />
+          </div>
+          <div>
+            <label className="block text-gray-700">Rating </label>
+            <select
+              value={rating}
+              onChange={(e) => setRating(e.target.value)}
+              className="globalInput mt-2"
+              required
+            >
+              <option value="">Select One</option>
+              <option value="1">1 Star</option>
+              <option value="2">2 Stars</option>
+              <option value="3">3 Stars</option>
+              <option value="4">4 Stars</option>
+              <option value="5">5 Stars</option>
+            </select>
+          </div>
+          <div>
+            <label className="block text-gray-700">Description </label>
+            <textarea
+              value={description}
+              
+              onChange={(e) => setDescription(e.target.value)}
+              className="globalInput mt-2 resize-none min-h-[50px]"
+              required
+            ></textarea>
+          </div>
+        </div>
         {/* Left Column - Image Upload */}
-        <div className="relative">
-          <label className="block text-gray-700 mb-2">Customer Image *</label>
+        <div className="relative my-4">
+          <label className="block text-gray-700 mb-2">Customer Image</label>
           <DragUploadImageInput
             getRootProps={getThumbnailRootProps}
             getInputProps={getThumbnailInputProps}
@@ -121,59 +168,11 @@ export default function CreateTestimonialsForm() {
           )}
         </div>
 
-        {/* Right Column - Form Inputs */}
-        <div className="space-y-4">
-          <div>
-            <label className="block text-gray-700">Customer Name *</label>
-            <input
-              type="text"
-              value={customerName}
-              onChange={(e) => setCustomerName(e.target.value)}
-              className="w-full p-2 border rounded"
-              required
-            />
-          </div>
-          <div>
-            <label className="block text-gray-700">Designation</label>
-            <input
-              type="text"
-              value={designation}
-              onChange={(e) => setDesignation(e.target.value)}
-              className="w-full p-2 border rounded"
-            />
-          </div>
-          <div>
-            <label className="block text-gray-700">Rating *</label>
-            <select
-              value={rating}
-              onChange={(e) => setRating(e.target.value)}
-              className="w-full p-2 border rounded"
-              required
-            >
-              <option value="">Select One</option>
-              <option value="1">1 Star</option>
-              <option value="2">2 Stars</option>
-              <option value="3">3 Stars</option>
-              <option value="4">4 Stars</option>
-              <option value="5">5 Stars</option>
-            </select>
-          </div>
-          <div>
-            <label className="block text-gray-700">Description *</label>
-            <textarea
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              className="w-full p-2 border rounded min-h-[250px]"
-              required
-            ></textarea>
-          </div>
-        </div>
-
         {/* Save Button */}
         <div className="col-span-2">
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white p-2 rounded"
+            className="w-full btn bg-blue-500 text-white p-2 rounded-xl hover:bg-blue-600"
           >
             Save Testimonial
           </button>
