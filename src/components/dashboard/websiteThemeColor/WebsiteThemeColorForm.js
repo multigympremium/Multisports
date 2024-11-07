@@ -1,12 +1,47 @@
 "use client";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 export default function WebsiteThemeColorForm() {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, getValues, setValue, watch } = useForm();
+
   const onSubmit = (data) => {
     console.log(data);
-    // Handle the form submission, e.g., send data to your API
+    // Handle form submission, e.g., send data to an API
   };
+
+  // Set default colors on mount
+  useEffect(() => {
+    setValue("primaryColor", "#20124d");
+    setValue("secondaryColor", "#5c1036");
+    setValue("tertiaryColor", "#20124d");
+    setValue("titleColor", "#38761d");
+    setValue("paragraphColor", "#741b47");
+    setValue("borderColor", "#e06666");
+  }, [setValue]);
+
+  console.log(watch("primaryColor"), watch("secondaryColor"), watch("tertiaryColor"), watch("titleColor"), watch("paragraphColor"), watch("borderColor"));
+
+  function getContrastingColor(color) {
+    let r, g, b;
+  
+    if (color.startsWith('#')) {
+      // Hex format
+      color = color.slice(1);
+      r = parseInt(color.slice(0, 2), 16);
+      g = parseInt(color.slice(2, 4), 16);
+      b = parseInt(color.slice(4, 6), 16);
+    } else if (color.startsWith('rgb')) {
+      // RGB format
+      [r, g, b] = color.match(/\d+/g).map(Number);
+    } else {
+      throw new Error('Unsupported color format');
+    }
+  
+    // Calculate brightness
+    const brightness = (0.2126 * r + 0.7152 * g + 0.0722 * b);
+    return brightness > 128 ? '#000000' : '#FFFFFF';
+  }
 
   return (
     <div className="flex justify-center mt-10">
@@ -16,83 +51,28 @@ export default function WebsiteThemeColorForm() {
       >
         <h2 className="text-xl font-bold mb-4">Update Website Theme Color</h2>
         <div className="grid grid-cols-2 gap-4">
-          {/* Primary Color */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Primary Color:
-            </label>
-            <input
-              type="text"
-              {...register("primaryColor")}
-              defaultValue="#20124d"
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-            />
-          </div>
 
-          {/* Secondary Color */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Secondary Color:
-            </label>
-            <input
-              type="text"
-              {...register("secondaryColor")}
-              defaultValue="#5c1036"
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-            />
-          </div>
-
-          {/* Tertiary Color */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Tertiary Color:
-            </label>
-            <input
-              type="text"
-              {...register("tertiaryColor")}
-              defaultValue="#20124d"
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-            />
-          </div>
-
-          {/* Title Color */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Title Color:
-            </label>
-            <input
-              type="text"
-              {...register("titleColor")}
-              defaultValue="#38761d"
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-            />
-          </div>
-
-          {/* Paragraph Color */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Paragraph Color:
-            </label>
-            <input
-              type="text"
-              {...register("paragraphColor")}
-              defaultValue="#741b47"
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-            />
-          </div>
-
-          {/* Border Color */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Border Color:
-            </label>
-            <input
-              type="text"
-              {...register("borderColor")}
-              defaultValue="#e06666"
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-            />
-          </div>
+          {/* Color inputs */}
+          {["primaryColor", "secondaryColor", "tertiaryColor", "titleColor", "paragraphColor", "borderColor"].map((color) => (
+            <div key={color}>
+              <label className="block text-sm font-medium text-gray-700">
+                {color.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}:
+              </label>
+                <label
+                  className="h-10 w-full rounded flex justify-center items-center text-gray-600"
+                  style={{ background: getValues(color), color: getContrastingColor(getValues(color)) }}
+                  htmlFor={color}
+                >{ getValues(color)}</label>
+              <input
+                type="color"
+                {...register(color, { onChange: (e) => setValue(color, e.target.value) })}
+                id={color}
+                hidden={true}
+                className=" block w-0 h-0 opacity-0 overflow-hidden border border-gray-300 rounded-md"
+              />
+              
+            </div>
+          ))}
         </div>
 
         {/* Buttons */}
