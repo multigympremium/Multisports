@@ -1,13 +1,94 @@
 "use client";
+import useAxiosSecure from "@/Hook/useAxiosSecure";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import Swal from "sweetalert2";
 
 export default function SeoForm() {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, setValue, formState: { errors } } = useForm();
+  const [targetId, setTargetId] = useState("");
+  const axiosSecure = useAxiosSecure();
 
-  const onSubmit = (data) => {
-    console.log(data);
-    // Send data to API for processing
+
+  const onSubmit = async (data) => {
+    console.log(data, "data");
+    try {
+  
+      if(targetId){
+          const res = await axiosSecure.put(
+            `/social-link/${targetId}`,
+            data
+          );
+          if (res.status === 200 || res.status === 201) {
+            Swal.fire({
+              title: "Success!",
+              text: "About Us updated successfully",
+              icon: "success",
+              confirmButtonText: "Ok",
+            });
+          }
+          
+      }else {
+         const res = await axiosSecure.post(
+              `/social-link`,
+              data
+          );
+          if (res.status === 200 || res.status === 201) {
+            Swal.fire({
+              title: "Success!",
+              text: "About Us Created successfully",
+              icon: "success",
+              confirmButtonText: "Ok",
+            });
+          }
+
+      }
+
+   
+
+  } catch (err) {
+    console.error(err);
+    Swal.fire({
+      title: "Error!",
+      text: err.message,
+      icon: "error",
+      confirmButtonText: "Ok",
+    });
+  }
   };
+
+  useEffect(() => {
+    const fetchTestimonial = async () => {
+      try {
+        const firstResData = await axiosSecure.get(`/social-link`);
+        const res = await axiosSecure.get(`/social-link/${firstResData?.data?.data[0]?._id}`);
+
+        if(res.status === 200 || res.status === 201) {
+            
+            const data = res?.data?.data;
+
+            console.log(data, "data");
+    
+            // Set form values with the testimonial data
+            for(let key in data){
+              console.log(key, data[key], "data[key]");
+                setValue(key, data[key]);
+            }
+            setTargetId(data?._id)
+            
+        }else {
+          handleDefaultColor()
+        }
+      } catch (error) {
+        handleDefaultColor()
+        console.error("Error fetching testimonial:", error);
+      }
+    };
+
+    fetchTestimonial();
+
+
+  }, [axiosSecure, setValue ]);
 
   return (
     <div className="flex justify-center mt-10">
