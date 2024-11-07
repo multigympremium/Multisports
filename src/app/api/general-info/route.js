@@ -20,10 +20,12 @@ export async function GET(req, res) {
 // Handle POST request
 export async function POST(req, res) {
   try {
-    const {company_name, phone, email, description, address, google_map_link, play_store_link, app_store_link, trade_license, tin_no, min_no, footer_copyright} = req.body;
+    const {company_name, phone, email, description, address, google_map_link, play_store_link, app_store_link, trade_license, tin_no, bin_no, footer_copyright} = await req.json();
+
+    console.log(company_name, phone, email, description, address, trade_license, tin_no, bin_no, footer_copyright) 
 
 
-    if (!company_name || !phone || !email || !description || !address || !google_map_link || !play_store_link || !app_store_link || !trade_license || !tin_no || !min_no || !footer_copyright) {
+    if (!company_name || !phone || !email || !description || !address || !trade_license || !tin_no || !bin_no || !footer_copyright) {
       return NextResponse.json(
         { success: false, message: "Required fields missing" },
         { status: 400 }
@@ -42,7 +44,7 @@ export async function POST(req, res) {
       app_store_link,
       trade_license,
       tin_no,
-      min_no,
+      bin_no,
       footer_copyright,
     };
 

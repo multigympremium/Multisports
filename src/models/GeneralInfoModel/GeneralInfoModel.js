@@ -37,7 +37,7 @@ const SchemaModel = new mongoose.Schema(
     tin_no: {
       type: String,
     },
-    min_no: {
+    bin_no: {
       type: String,
     },
     footer_copyright: {

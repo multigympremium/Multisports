@@ -4,35 +4,111 @@
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Swal from "sweetalert2";
+import useAxiosSecure from "@/Hook/useAxiosSecure";
+import { useEffect, useState } from "react";
 
 // Zod schema for form validation
 const schema = z.object({
-  companyName: z.string().nonempty("Company Name is required"),
-  phoneNo: z.string().nonempty("Phone Number is required"),
-  companyEmail: z.string().email("Invalid email").nonempty("Email is required"),
-  shortDescription: z.string().nonempty("Short Description is required"),
-  companyAddress: z.string().nonempty("Company Address is required"),
-  googleMapLink: z.string().url("Invalid Google Map Link").optional(),
-  playStoreLink: z.string().url("Invalid Play Store Link").optional(),
-  appStoreLink: z.string().url("Invalid App Store Link").optional(),
-  tradeLicenseNo: z.string().nonempty("Trade License No is required"),
-  tinNo: z.string().nonempty("TIN No is required"),
-  binNo: z.string().nonempty("BIN No is required"),
-  footerText: z.string().nonempty("Footer Text is required"),
+  company_name: z.string().nonempty("Company Name is required"),
+  phone: z.string().nonempty("Phone Number is required"),
+  email: z.string().email("Invalid email").nonempty("Email is required"),
+  description: z.string().nonempty("Short Description is required"),
+  address: z.string().nonempty("Company Address is required"),
+  google_map_link: z.string().optional(),
+  play_store_link: z.string().optional(),
+  app_store_link: z.string().optional(),
+  trade_license: z.string().nonempty("Trade License No is required"),
+  tin_no: z.string().nonempty("TIN No is required"),
+  bin_no: z.string().nonempty("BIN No is required"),
+  footer_copyright: z.string().nonempty("Footer Text is required"),
 });
 
 const GeneralInfoForm = () => {
+  const axiosSecure = useAxiosSecure();
+  const [targetId, setTargetId] = useState("");
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(schema),
   });
 
-  const onSubmit = (data) => {
-    console.log("Form Data:", data);
+  const onSubmit = async (data) => {
+    console.log(data, "data");
+    try {
+  
+      if(targetId){
+          const res = await axiosSecure.put(
+            `/general-info/${targetId}`,
+            data
+          );
+          if (res.status === 200 || res.status === 201) {
+            Swal.fire({
+              title: "Success!",
+              text: "About Us updated successfully",
+              icon: "success",
+              confirmButtonText: "Ok",
+            });
+          }
+          
+      }else {
+         const res = await axiosSecure.post(
+              `/general-info`,
+              data
+          );
+          if (res.status === 200 || res.status === 201) {
+            Swal.fire({
+              title: "Success!",
+              text: "About Us Created successfully",
+              icon: "success",
+              confirmButtonText: "Ok",
+            });
+          }
+
+      }
+
+   
+
+  } catch (err) {
+    console.error(err);
+    Swal.fire({
+      title: "Error!",
+      text: err.message,
+      icon: "error",
+      confirmButtonText: "Ok",
+    });
+  }
   };
+
+  useEffect(() => {
+    const fetchTestimonial = async () => {
+      try {
+        const res = await axiosSecure.get(`/general-info/${targetId}`);
+
+        if(res.status === 200 || res.status === 201) {
+            
+            const data = res?.data?.data[0];
+    
+            // Set form values with the testimonial data
+            for(let key in data){
+                setValue(key, data[key]);
+            }
+            setTargetId(data?._id)
+        }
+      } catch (error) {
+        console.error("Error fetching testimonial:", error);
+      }
+    };
+
+    fetchTestimonial();
+  }, [axiosSecure]);
+
+
+
+  
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
@@ -42,16 +118,16 @@ const GeneralInfoForm = () => {
       {/* Company Name */}
       <div>
         <label className="block text-sm font-medium text-gray-700">
-          Company Name
+          Company Name *
         </label>
         <input
           type="text"
-          {...register("companyName")}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          {...register("company_name")}
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm py-2 border px-3"
         />
-        {errors.companyName && (
+        {errors.company_name && (
           <span className="text-red-600 text-sm">
-            {errors.companyName.message}
+            {errors.company_name.message}
           </span>
         )}
       </div>
@@ -59,31 +135,31 @@ const GeneralInfoForm = () => {
       {/* Phone Number */}
       <div>
         <label className="block text-sm font-medium text-gray-700">
-          Phone Number
+          Phone Number *
         </label>
         <input
           type="text"
-          {...register("phoneNo")}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          {...register("phone")}
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm py-2 border px-3"
         />
-        {errors.phoneNo && (
-          <span className="text-red-600 text-sm">{errors.phoneNo.message}</span>
+        {errors.phone && (
+          <span className="text-red-600 text-sm">{errors.phone.message}</span>
         )}
       </div>
 
       {/* Company Email */}
       <div>
         <label className="block text-sm font-medium text-gray-700">
-          Company Email
+          Company Email *
         </label>
         <input
           type="email"
-          {...register("companyEmail")}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          {...register("email")}
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm py-2 border px-3"
         />
-        {errors.companyEmail && (
+        {errors.email && (
           <span className="text-red-600 text-sm">
-            {errors.companyEmail.message}
+            {errors.email.message}
           </span>
         )}
       </div>
@@ -91,15 +167,15 @@ const GeneralInfoForm = () => {
       {/* Short Description */}
       <div>
         <label className="block text-sm font-medium text-gray-700">
-          Short Description
+          Short Description *
         </label>
         <textarea
-          {...register("shortDescription")}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          {...register("description")}
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm py-2 border px-3"
         />
-        {errors.shortDescription && (
+        {errors.description && (
           <span className="text-red-600 text-sm">
-            {errors.shortDescription.message}
+            {errors.description.message}
           </span>
         )}
       </div>
@@ -107,16 +183,16 @@ const GeneralInfoForm = () => {
       {/* Company Address */}
       <div>
         <label className="block text-sm font-medium text-gray-700">
-          Company Address
+          Company Address *
         </label>
         <input
           type="text"
-          {...register("companyAddress")}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          {...register("address")}
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm py-2 border px-3"
         />
-        {errors.companyAddress && (
+        {errors.address && (
           <span className="text-red-600 text-sm">
-            {errors.companyAddress.message}
+            {errors.address.message}
           </span>
         )}
       </div>
@@ -128,12 +204,12 @@ const GeneralInfoForm = () => {
         </label>
         <input
           type="text"
-          {...register("googleMapLink")}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          {...register("google_map_link")}
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm py-2 border px-3"
         />
-        {errors.googleMapLink && (
+        {errors.google_map_link && (
           <span className="text-red-600 text-sm">
-            {errors.googleMapLink.message}
+            {errors.google_map_link.message}
           </span>
         )}
       </div>
@@ -145,12 +221,12 @@ const GeneralInfoForm = () => {
         </label>
         <input
           type="text"
-          {...register("playStoreLink")}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          {...register("play_store_link")}
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm py-2 border px-3"
         />
-        {errors.playStoreLink && (
+        {errors.play_store_link && (
           <span className="text-red-600 text-sm">
-            {errors.playStoreLink.message}
+            {errors.play_store_link.message}
           </span>
         )}
       </div>
@@ -165,12 +241,12 @@ const GeneralInfoForm = () => {
         </label>
         <input
           type="text"
-          {...register("appStoreLink")}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          {...register("app_store_link")}
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm py-2 border px-3"
         />
-        {errors.appStoreLink && (
+        {errors.app_store_link && (
           <span className="text-red-600 text-sm">
-            {errors.appStoreLink.message}
+            {errors.app_store_link.message}
           </span>
         )}
       </div>
@@ -178,16 +254,16 @@ const GeneralInfoForm = () => {
       {/* Trade License No */}
       <div>
         <label className="block text-sm font-medium text-gray-700">
-          Trade License No
+          Trade License No *
         </label>
         <input
           type="text"
-          {...register("tradeLicenseNo")}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          {...register("trade_license")}
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm py-2 border px-3"
         />
-        {errors.tradeLicenseNo && (
+        {errors.trade_license && (
           <span className="text-red-600 text-sm">
-            {errors.tradeLicenseNo.message}
+            {errors.trade_license.message}
           </span>
         )}
       </div>
@@ -195,46 +271,46 @@ const GeneralInfoForm = () => {
       {/* TIN No */}
       <div>
         <label className="block text-sm font-medium text-gray-700">
-          TIN No
+          TIN No *
         </label>
         <input
           type="text"
-          {...register("tinNo")}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          {...register("tin_no")}
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm py-2 border px-3"
         />
-        {errors.tinNo && (
-          <span className="text-red-600 text-sm">{errors.tinNo.message}</span>
+        {errors.tin_no && (
+          <span className="text-red-600 text-sm">{errors.tin_no.message}</span>
         )}
       </div>
 
       {/* BIN No */}
       <div>
         <label className="block text-sm font-medium text-gray-700">
-          BIN No
+          BIN No *
         </label>
         <input
           type="text"
-          {...register("binNo")}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          {...register("bin_no")}
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm py-2 border px-3"
         />
-        {errors.binNo && (
-          <span className="text-red-600 text-sm">{errors.binNo.message}</span>
+        {errors.bin_no && (
+          <span className="text-red-600 text-sm">{errors.bin_no.message}</span>
         )}
       </div>
 
       {/* Footer Copyright Text */}
       <div>
         <label className="block text-sm font-medium text-gray-700">
-          Footer Copyright Text
+          Footer Copyright Text *
         </label>
         <input
           type="text"
-          {...register("footerText")}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          {...register("footer_copyright")}
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm py-2 border px-3"
         />
-        {errors.footerText && (
+        {errors.footer_copyright && (
           <span className="text-red-600 text-sm">
-            {errors.footerText.message}
+            {errors.footer_copyright.message}
           </span>
         )}
       </div>
