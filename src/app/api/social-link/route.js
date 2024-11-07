@@ -22,25 +22,24 @@ export async function POST(req, res) {
   try {
     const requestData = await req.json();
 
-    const {primaryColor, secondaryColor, tertiaryColor, titleColor, paragraphColor, borderColor} = requestData;
+    // const {facebook, twitter, instagram, linkedin, messenger, whatsapp, telegram, youtube, tiktok, pinterest, viber} = requestData;
 
-    if (!primaryColor || !secondaryColor || !tertiaryColor || !titleColor || !paragraphColor || !borderColor) {
-      return NextResponse.json(
-        { success: false, message: "Required fields missing" },
-        { status: 400 }
-      );
-    }
 
-    const submitData = {
-      primaryColor,
-      secondaryColor,
-      tertiaryColor,
-      titleColor,
-      paragraphColor, 
-      borderColor
-    };
+    // const submitData = {
+    //   facebook,
+    //   twitter,
+    //   instagram,
+    //   linkedin,
+    //   messenger,
+    //   whatsapp,
+    //   telegram,
+    //   youtube,
+    //   tiktok,
+    //   pinterest,  
+    //   viber
+    // };
 
-    const insertResult = await SocialLinkModel.create(submitData);
+    const insertResult = await SocialLinkModel.create(requestData);
 
     if (insertResult) {
       return NextResponse.json({ success: true }, { status: 200 });
