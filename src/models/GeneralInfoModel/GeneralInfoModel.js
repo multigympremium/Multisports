@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const productSizeSchema = new mongoose.Schema(
+const SchemaModel = new mongoose.Schema(
   {
     company_name: {
       type: String,
@@ -49,6 +49,6 @@ const productSizeSchema = new mongoose.Schema(
 
 const GeneralInfoModel =
   mongoose.models.general_info ||
-  mongoose.model("general_info", productSizeSchema);
+  mongoose.model("general_info", SchemaModel);
 
 export default GeneralInfoModel;
