@@ -30,10 +30,12 @@ export async function POST(req, res) {
       footerJs
     };
 
-    const insertResult = await CustomCssAndJsModel.create(submitData);
+    console.log(submitData, "submitData")
+
+    const insertResult = await CustomCssAndJsModel.create(requestData);
 
     if (insertResult) {
-      return NextResponse.json({ success: true }, { status: 200 });
+      return NextResponse.json({ success: true, data: insertResult }, { status: 200 });
     }
   } catch (error) {
     console.log(error);

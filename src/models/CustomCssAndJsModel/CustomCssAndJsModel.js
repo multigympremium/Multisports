@@ -4,15 +4,12 @@ const TestimonialSchema = new mongoose.Schema(
   {
     css: {
       type: String,
-      required: true,
     },
     headerJs: {
       type: String,
-      required: true,
     },
     footerJs: {
-      type: String, // Storing the URL of the uploaded image
-      required: true,
+      type: String, 
     },
   },
   {

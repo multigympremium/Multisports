@@ -1,5 +1,6 @@
 "use client";
 import useAxiosSecure from "@/Hook/useAxiosSecure";
+import { set } from "mongoose";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 
@@ -14,16 +15,16 @@ export default function CustomCSSJSForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = {
-      customCSS,
-      headerScript,
-      footerScript,
+      css: customCSS,
+      headerJs: headerScript,
+      footerJs: footerScript,
     };
     console.log(data, "data");
     try {
   
       if(targetId){
           const res = await axiosSecure.put(
-            `/website-theme-color/${targetId}`,
+            `/custom-css-js/${targetId}`,
             data
           );
           if (res.status === 200 || res.status === 201) {
@@ -37,7 +38,7 @@ export default function CustomCSSJSForm() {
           
       }else {
          const res = await axiosSecure.post(
-              `/website-theme-color`,
+              `/custom-css-js`,
               data
           );
           if (res.status === 200 || res.status === 201) {
@@ -67,8 +68,10 @@ export default function CustomCSSJSForm() {
   useEffect(() => {
     const fetchTestimonial = async () => {
       try {
-        const firstResData = await axiosSecure.get(`/website-theme-color`);
-        const res = await axiosSecure.get(`/website-theme-color/${firstResData?.data?.data[0]?._id}`);
+        const firstResData = await axiosSecure.get(`/custom-css-js`);
+        const res = await axiosSecure.get(`/custom-css-js/${firstResData?.data?.data[0]?._id}`);
+
+        console.log(firstResData, res, "res ljlj")
 
         if(res.status === 200 || res.status === 201) {
             
@@ -78,15 +81,16 @@ export default function CustomCSSJSForm() {
     
             // Set form values with the testimonial data
 
-            // setCustomCSS(data.)
+            setCustomCSS(data.css)
+            setHeaderScript(data.headerJs)
+            setFooterScript(data.footerJs)
+
+            console.log(data?._id, "targetId useEffect")
             
             setTargetId(data?._id)
             
-        }else {
-          handleDefaultColor()
         }
       } catch (error) {
-        handleDefaultColor()
         console.error("Error fetching testimonial:", error);
       }
     };
@@ -95,6 +99,8 @@ export default function CustomCSSJSForm() {
 
 
   }, [axiosSecure ]);
+
+  console.log(targetId, "targetId")
 
   return (
     <div className="min-h-screen  bg-gray-100  p-5">
