@@ -10,6 +10,9 @@ import toast from "react-hot-toast";
 import useAxiosSecure from "@/Hook/useAxiosSecure";
 import DeleteCloudImage from "@/config/DeleteCloudImage/DeleteCloudImage";
 import CellImage from "@/components/shared/ImageComponents/CellImage";
+import { FiEdit3 } from "react-icons/fi";
+import { AiOutlineDelete } from "react-icons/ai";
+
 
 export default function ViewAllTestimonials() {
   // Testimonials data
@@ -52,6 +55,7 @@ export default function ViewAllTestimonials() {
 
   // Search state
   const [searchTerm, setSearchTerm] = useState("");
+  const [loading  , setLoading] = useState(false);
 
   // Get current items (testimonials)
   const currentTestimonials =
@@ -104,8 +108,8 @@ export default function ViewAllTestimonials() {
   };
 
   return (
-    <div className="container mx-auto p-6">
-      <h1 className="text-2xl font-bold mb-6">Testimonials</h1>
+    <div className="container mx-auto py-3">
+      <h1 className="text-2xl font-semibold mb-6">Testimonials</h1>
 
       {/* Search Bar */}
       <div className="mb-4">
@@ -114,74 +118,84 @@ export default function ViewAllTestimonials() {
           placeholder="Search by customer name..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="border border-gray-300 p-2 rounded w-full"
+          className="globalInput"
         />
       </div>
 
       {/* Testimonials Table */}
       <div className="overflow-x-auto">
-        <table className="min-w-full bg-white border border-gray-300">
-          <thead>
-            <tr className="text-left border-b bg-gray-100">
-              <th className="p-2">SL</th>
-              <th className="p-2">Image</th>
-              <th className="p-2">Customer</th>
-              <th className="p-2">Designation</th>
-              <th className="p-2">Rating</th>
-              <th className="p-2">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {currentTestimonials.length > 0 ? (
-              currentTestimonials.map((testimonial, index) => (
-                <tr key={testimonial.id} className="border-b">
-                  <td className="p-2">{index + 1}</td>
-                  <td className="p-2">
-                    
-
-                        <CellImage
-                        width={400}
-                        height={400}
-                        src={testimonial?.image}
-                      alt={testimonial?.customerName}
-                      />
-                  </td>
-                  <td className="p-2">{testimonial?.customerName}</td>
-                  <td className="p-2">{testimonial?.designation}</td>
-                  <td className="p-2">
-                    {"★".repeat(testimonial?.rating)}{" "}
-                    {"☆".repeat(5 - testimonial?.rating)}
-                  </td>
-                  <td className="p-2">
-                    <button
-                      className="text-yellow-500"
-                      onClick={() => handleEdit(testimonial._id)}
-                    >
-                      <FiEdit />
-                    </button>
-                    <button
-                      className="text-red-500 ml-4"
-                      onClick={() =>
-                        handleDelete({
-                          id: testimonial?._id,
-                          file_key: testimonial?.key,
-                        })
+        <div className="border rounded-xl py-1">
+          <table className="min-w-full bg-white border-gray-300">
+            <thead className="">
+              <tr className="text-left border-b">
+                <td className="p-2 pl-4">SL</td>
+                <td className="p-2">Image</td>
+                <td className="p-2">Customer</td>
+                <td className="p-2">Designation</td>
+                <td className="p-2">Rating</td>
+                <td className="p-2">Action</td>
+              </tr>
+            </thead>
+            <tbody>
+              {currentTestimonials.length > 0 ? (
+                currentTestimonials.map((testimonial, index) => (
+                  <tr key={testimonial.id} className="">
+                    <td className="p-2 pl-5">{index + 1}</td>
+                    <td className="p-2">
+                      {
+                        testimonial?.image ? (
+                          <CellImage
+                            width={400}
+                            height={400}
+                            src={testimonial.image}
+                            alt={testimonial.customerName}
+                            loading="lazy"
+                          />
+                        ) : (
+                          <div className="py-6 px-3">
+                            <span className="loading loading-spinner text-gray-400 loading-sm"></span>
+                          </div>
+                        )
                       }
-                    >
-                      Delete
-                    </button>
+                    </td>
+
+                    <td className="p-2">{testimonial?.customerName}</td>
+                    <td className="p-2">{testimonial?.designation}</td>
+                    <td className="p-2">
+                      {"★".repeat(testimonial?.rating)}{" "}
+                      {"☆".repeat(5 - testimonial?.rating)}
+                    </td>
+                    <td className="p-2">
+                      <button
+                        className="text-blue-500 text-xl"
+                        onClick={() => handleEdit(testimonial._id)}
+                      >
+                        <FiEdit3 />
+                      </button>
+                      <button
+                        className="text-red-500 ml-4"
+                        onClick={() =>
+                          handleDelete({
+                            id: testimonial?._id,
+                            file_key: testimonial?.key,
+                          })
+                        }
+                      >
+                        <AiOutlineDelete className="text-xl" />
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="7" className="text-center p-32">
+                    No testimonials available.
                   </td>
                 </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="7" className="text-center p-4">
-                  No testimonials available.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <BgBlurModal isShowModal={isShowModal} setIsShowModal={setIsShowModal}>

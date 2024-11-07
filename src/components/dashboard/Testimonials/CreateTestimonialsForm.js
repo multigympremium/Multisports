@@ -5,11 +5,13 @@ import UploadFile from "@/config/Upload/UploadFile";
 import useAxiosSecure from "@/Hook/useAxiosSecure";
 import { useState } from "react";
 import { useDropzone } from "react-dropzone";
+import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 
 export default function CreateTestimonialsForm() {
   // State management for form fields
   const [customerName, setCustomerName] = useState("");
+  const [loading, setLoading] = useState(false);
   const [designation, setDesignation] = useState("");
   const [rating, setRating] = useState("");
   const [description, setDescription] = useState("");
@@ -45,6 +47,7 @@ export default function CreateTestimonialsForm() {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const newTestimonial = {
       customerName,
       designation,
@@ -66,23 +69,22 @@ export default function CreateTestimonialsForm() {
       console.log(res);
 
       if (res.status === 200 || res.status === 201) {
-        Swal.fire({
-          title: "Success!",
-          text: "Product created successfully",
-          icon: "success",
-          confirmButtonText: "Ok",
-        });
+        toast.success("Testimonial created successfully");
         localStorage.removeItem("file_key");
         setFile_key(null);
+        setCustomerName("");
+        setDesignation("");
+        setRating("");
+        setDescription("");
+        setThumbnailPreview("");
+        setThumbnail(null);
+
       }
     } catch (err) {
       console.error(err);
-      Swal.fire({
-        title: "Error!",
-        text: "Something went wrong!",
-        icon: "error",
-        confirmButtonText: "Ok",
-      });
+      toast.error("Something went wrong !");
+    } finally {
+      setLoading(false);
     }
 
     // Clear form fields
@@ -97,7 +99,7 @@ export default function CreateTestimonialsForm() {
   return (
     <div className="container mx-auto py-2">
       {/* Testimonial Entry Form */}
-      <h1 className="text-2xl font-semibold mb-4">Testimonial Entry Form</h1>
+      <h1 className="text-2xl font-semibold mb-8">Testimonial Entry Form</h1>
       <form className="" onSubmit={handleSubmit}>
         <div className="space-y-4">
           <div>
@@ -139,7 +141,7 @@ export default function CreateTestimonialsForm() {
             <label className="block text-gray-700">Description </label>
             <textarea
               value={description}
-              
+
               onChange={(e) => setDescription(e.target.value)}
               className="globalInput mt-2 resize-none min-h-[50px]"
               required
@@ -174,7 +176,7 @@ export default function CreateTestimonialsForm() {
             type="submit"
             className="w-full btn bg-blue-500 text-white p-2 rounded-xl hover:bg-blue-600"
           >
-            Save Testimonial
+            {!loading ? <span>Save Testimonial</span> : <span className="flex items-center gap-2">Saving .. <span className="loading loading-spinner loading-sm"></span></span>}
           </button>
         </div>
       </form>
