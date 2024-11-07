@@ -43,7 +43,7 @@ export async function POST(req) {
     const image = formData.get("metaOgImage");
 
 
-    console.log(title, description);
+    
 
     if (!metaTitle || !metaDescription || !metaKeywords || !metaOgTitle || !metaOgDescription) {
       return NextResponse.json(

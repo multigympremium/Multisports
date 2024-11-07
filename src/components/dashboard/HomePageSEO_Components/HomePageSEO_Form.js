@@ -1,23 +1,57 @@
 "use client";
+import DragEditUploadImageInput from "@/components/shared/DragEditUploadImageInput";
 import useAxiosSecure from "@/Hook/useAxiosSecure";
 import { useEffect, useState } from "react";
+import { useDropzone } from "react-dropzone";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 
 export default function SeoForm() {
   const { register, handleSubmit, setValue, formState: { errors } } = useForm();
   const [targetId, setTargetId] = useState("");
+  const [thumbnail, setThumbnail] = useState(null);
+  const [thumbnailPreview, setThumbnailPreview] = useState(null);
+
+
+  const onDropThumbnail = (acceptedFiles) => {
+    const file = acceptedFiles[0];
+    const previewUrl = URL.createObjectURL(file);
+    setThumbnailPreview(previewUrl);
+    setThumbnail(acceptedFiles[0]);
+  };
+
+
+
+
+  const {
+    getRootProps: getBannerRootProps,
+    getInputProps: getBannerInputProps,
+  } = useDropzone({
+    onDrop: onDropThumbnail,
+    accept: "image/*",
+    multiple: false,
+  });
+
+  
   const axiosSecure = useAxiosSecure();
 
 
   const onSubmit = async (data) => {
     console.log(data, "data");
+
+    const formData = new FormData();
+    formData.append("metaTitle", data.metaTitle);
+    formData.append("metaDescription", data.metaDescription);
+    formData.append("metaKeywords", data.metaKeywords);
+    formData.append("metaOgTitle", data.metaOgTitle);
+    formData.append("metaOgDescription", data.metaOgDescription);
+    formData.append("metaOgImage", thumbnail);
     try {
   
       if(targetId){
           const res = await axiosSecure.put(
-            `/social-link/${targetId}`,
-            data
+            `/website-seo/${targetId}`,
+            formData
           );
           if (res.status === 200 || res.status === 201) {
             Swal.fire({
@@ -30,8 +64,8 @@ export default function SeoForm() {
           
       }else {
          const res = await axiosSecure.post(
-              `/social-link`,
-              data
+              `/website-seo`,
+              formData
           );
           if (res.status === 200 || res.status === 201) {
             Swal.fire({
@@ -60,8 +94,8 @@ export default function SeoForm() {
   useEffect(() => {
     const fetchTestimonial = async () => {
       try {
-        const firstResData = await axiosSecure.get(`/social-link`);
-        const res = await axiosSecure.get(`/social-link/${firstResData?.data?.data[0]?._id}`);
+        const firstResData = await axiosSecure.get(`/website-seo`);
+        const res = await axiosSecure.get(`/website-seo/${firstResData?.data?.data[0]?._id}`);
 
         if(res.status === 200 || res.status === 201) {
             
@@ -74,6 +108,7 @@ export default function SeoForm() {
               console.log(key, data[key], "data[key]");
                 setValue(key, data[key]);
             }
+            setThumbnailPreview(data?.metaOgImage)
             setTargetId(data?._id)
             
         }else {
@@ -108,7 +143,6 @@ export default function SeoForm() {
             <input
               type="text"
               {...register("metaTitle")}
-              defaultValue="Online Ecommerce Shopping"
               className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
             />
           </div>
@@ -120,7 +154,6 @@ export default function SeoForm() {
             <input
               type="text"
               {...register("metaKeywords")}
-              defaultValue="ecommerce, shopping, online"
               className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
             />
           </div>
@@ -131,7 +164,6 @@ export default function SeoForm() {
             </label>
             <textarea
               {...register("metaDescription")}
-              defaultValue="Shop the latest trends at Fejmo, your go-to destination for online fashion and lifestyle shopping..."
               className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
               rows="4"
             />
@@ -150,7 +182,6 @@ export default function SeoForm() {
             <input
               type="text"
               {...register("metaOgTitle")}
-              defaultValue="Online Ecommerce Shopping"
               className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
             />
           </div>
@@ -161,7 +192,6 @@ export default function SeoForm() {
             </label>
             <textarea
               {...register("metaOgDescription")}
-              defaultValue=""
               placeholder="Write Meta OG Description Here"
               className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
               rows="4"
@@ -172,11 +202,7 @@ export default function SeoForm() {
             <label className="block text-sm font-medium text-gray-700">
               Meta OG Image
             </label>
-            <input
-              type="file"
-              {...register("metaOgImage")}
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-            />
+            <DragEditUploadImageInput getRootProps={getBannerRootProps} getInputProps={getBannerInputProps} image={thumbnail} imagePreview={thumbnailPreview} />
           </div>
         </div>
 
