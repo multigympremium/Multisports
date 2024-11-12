@@ -1,4 +1,4 @@
-import { lazy, Suspense, useState } from "react";
+import React , { lazy, Suspense, useState } from "react";
 // import { lazy } from "react";
 import { createBrowserRouter } from "react-router-dom";
 import Root from "../Root";
@@ -8,11 +8,12 @@ import PublicRoute from "./src/routes/PublicRoute";
 import Login_Register from "../pages/LoginAndRegister/Login_Registration";
 import HomePage from "../pages/OtherPage/Home/HomePage";
 import DashboardChildrenRoutes from "./src/DashboardChildrenRoutes";
+import PrivateRoute from "./src/routes/PrivateRoute";
 const ProductPage = lazy(() => import("../components/Home/Products/ProductPage"));
 
 // Continue for other components...
 
-const Root_Dashboard = lazy(() => import("../pages/Dashboard/Root"));
+import Root_Dashboard from "../pages/Dashboard/Root";
 
 const GlobalLoading = lazy(() => import("../components library/GlobalLoading"));
 
@@ -64,9 +65,14 @@ const AllRoutes = () => {
 
         // <Rootdashboard />
         <Suspense fallback={<GlobalLoading />}>
-          <Root_Dashboard />
+          
+        <PrivateRoute>
+        <Root_Dashboard />
+
+      </PrivateRoute>
         </Suspense>
       ),
+      
 
       // errorElement: <Error404></Error404>,
       children: dashboardChildrenRoutes,

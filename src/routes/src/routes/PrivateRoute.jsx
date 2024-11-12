@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useAuth } from "../../../providers/AuthProvider";
 import { useNavigate } from "react-router-dom";
 
@@ -24,7 +24,8 @@ function PrivateRoute({ children }) {
 
   console.log("user private", user);
 
-  return <>{user && <div>{children}</div>}</>;
+  // return <>{user && <div>{children}</div>}</>;
+  return <>{<div>{children}</div>}</>;
 }
 
 export default PrivateRoute;

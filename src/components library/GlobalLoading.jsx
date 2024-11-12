@@ -1,4 +1,5 @@
 import { ColorRing } from "react-loader-spinner";
+import React from "react";
 
 function GlobalLoading() {
   return (

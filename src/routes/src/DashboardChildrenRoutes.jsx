@@ -1,5 +1,5 @@
 
-import { lazy, Suspense } from "react";
+import React , { lazy, Suspense } from "react";
 import GlobalLoading from "../../components library/GlobalLoading";
 const ProductPage = lazy(() => import( "../../components/Home/Products/ProductPage"));
 const PrivateRoute = lazy(() => import( "./routes/PrivateRoute"));

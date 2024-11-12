@@ -1,4 +1,4 @@
-"use client";
+
 import {
   GithubAuthProvider,
   GoogleAuthProvider,
@@ -10,7 +10,7 @@ import {
 } from "firebase/auth";
 
 import PropTypes from "prop-types";
-import { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import auth from "../firebase/firebase.config";
 import useAxiosSecure from "../Hook/useAxiosSecure";
 
