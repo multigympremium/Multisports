@@ -10,11 +10,18 @@ import {
 } from "firebase/auth";
 
 import PropTypes from "prop-types";
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import auth from "../firebase/firebase.config";
-import useAxiosSecure from "@/Hook/useAxiosSecure";
+import useAxiosSecure from "../Hook/useAxiosSecure";
+
 
 export const AuthContext = createContext(null);
+
+
+
+export const useAuth = () => {
+  return useContext(AuthContext);
+};
 
 const googleProvider = new GoogleAuthProvider();
 const githubProvider = new GithubAuthProvider();

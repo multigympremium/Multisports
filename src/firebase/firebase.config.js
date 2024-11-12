@@ -1,16 +1,25 @@
-
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
+
+
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyDkolXb9xaQfqSS9M1o9PGDYd15Fa_2GeM",
-    authDomain: "universalsurvey-b3ad3.firebaseapp.com",
-    projectId: "universalsurvey-b3ad3",
-    storageBucket: "universalsurvey-b3ad3.appspot.com",
-    messagingSenderId: "891875308503",
-    appId: "1:891875308503:web:dbeafcf1e5e8ae8ed11192"
+  // apiKey: import.meta.env.REACT_APP_FIREBASE_API_KEY,
+  // authDomain: import.meta.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  // projectId: import.meta.env.REACT_APP_FIREBASE_PROJECT_ID,
+  // storageBucket: import.meta.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  // messagingSenderId: import.meta.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  // appId: import.meta.env.REACT_APP_FIREBASE_APP_ID
+
+  apiKey: import.meta.env.VITE_apiKey,
+  authDomain: import.meta.env.VITE_authDomain,
+  projectId: import.meta.env.VITE_projectId,
+  storageBucket: import.meta.env.VITE_storageBucket,
+  messagingSenderId: import.meta.env.VITE_messagingSenderId,
+  appId: import.meta.env.VITE_appId
+
 
 };
 

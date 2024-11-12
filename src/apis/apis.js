@@ -1,1 +1,1 @@
-export const baseImageUrl = process.env.SPACES_URL;
+export const baseImageUrl = import.meta.env.SPACES_URL;

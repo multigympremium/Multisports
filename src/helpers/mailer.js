@@ -3,12 +3,12 @@ import nodemailer from "nodemailer";
 const sendMail = async (to, subject, text, html) => {
   try {
     const transporter = nodemailer.createTransport({
-      host: process.env.MAILTRAP_HOST,
-      port: process.env.MAILTRAP_PORT,
+      host: import.meta.env.MAILTRAP_HOST,
+      port: import.meta.env.MAILTRAP_PORT,
       secure: false, // true for port 465, false for other ports
       auth: {
-        user: process.env.MAILTRAP_USERNAME,
-        pass: process.env.MAILTRAP_PASSWORD,
+        user: import.meta.env.MAILTRAP_USERNAME,
+        pass: import.meta.env.MAILTRAP_PASSWORD,
       },
     });
 

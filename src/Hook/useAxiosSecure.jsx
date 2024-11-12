@@ -1,12 +1,10 @@
 import axios from "axios";
-import { backendUrl } from "../../Constants";
 export const axiosSecure = axios.create({
-  baseURL: backendUrl ? backendUrl : "https://king-prawn-app-qkhg8.ondigitalocean.app/api",
-  // baseURL: "http://localhost:3000/api",
+  // baseURL: backendUrl ? backendUrl : "https://king-prawn-app-qkhg8.ondigitalocean.app/api",
+  baseURL: import.meta.env.VITE_BACKEND_URL + "/api",
   // timeout: 30000
 });
 const useAxiosSecure = () => {
-  console.log(backendUrl, "process.env.BASE_URL");
   return axiosSecure;
 };
 
