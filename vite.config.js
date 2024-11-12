@@ -12,9 +12,4 @@ export default defineConfig({
   server: {
     historyApiFallback: true,
   },
-  // resolve: {
-  //   alias: {
-  //   "@": path.resolve(__dirname, "./src"),
-  // },
-// }
 });

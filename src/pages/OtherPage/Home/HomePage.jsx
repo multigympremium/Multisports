@@ -17,8 +17,8 @@ export const metadata = {
 const HomePage = () => {
   return (
     <>
-      <Navbar />
-      <HorizontalMenu />
+      
+      
       <Banner />
       <PopularProducts />
       <NewArrivals />
@@ -27,7 +27,6 @@ const HomePage = () => {
       <TrendyBags />
 
       <Brands />
-      <Footer />
     </>
   );
 };

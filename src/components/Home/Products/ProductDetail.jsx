@@ -1,11 +1,11 @@
 "use client"
-import useAxiosPublic from '../../../../useAxiosPublic';
+import useAxiosPublic from '../../../Hook/useAxiosPublic';
 import React, { useContext, useEffect, useState } from 'react';
 import 'react-inner-image-zoom/lib/InnerImageZoom/styles.min.css';
 import InnerImageZoom from 'react-inner-image-zoom';
 import CustomImage from '../../../shared/ImageComponents/CustomImage';
-import { AuthContext } from '@/providers/AuthProvider';
-import ActiveDescBtn from '../dashboard/ManageProduct/productSharedComponents/ActiveDescBtn';
+import { AuthContext } from '../../../providers/AuthProvider';
+import ActiveDescBtn from '../../../components/dashboard/ManageProduct/productSharedComponents/ActiveDescBtn';
 const ProductDetail = ({targetId, isShowDetail}) => {
   const [product, setProduct] = useState({});
   const [selectedImage, setSelectedImage] = useState(product?.thumbnail || "");

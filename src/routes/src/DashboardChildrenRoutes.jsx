@@ -1,6 +1,7 @@
 
 import { lazy, Suspense } from "react";
 import GlobalLoading from "../../components library/GlobalLoading";
+const ProductPage = lazy(() => import( "../../components/Home/Products/ProductPage"));
 const PrivateRoute = lazy(() => import( "./routes/PrivateRoute"));
 const Change_Password = lazy(() => import( "../../pages/User_Dashboard/Change_Password"));
 const UserRoleList = lazy(() => import( "../../components/dashboard/SystemUsers/UserRoleList"));
@@ -842,6 +843,7 @@ function DashboardChildrenRoutes() {
         </Suspense>
       ),
     },
+    
     {
       // path: "smscampaign",
       path: "promotional-banner",

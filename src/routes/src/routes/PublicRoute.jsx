@@ -16,10 +16,10 @@ function PublicRoute({ children }) {
 
     console.log("user 654546", get_user());
 
-    if (get_user()) {
-      router("/dashboard", { scroll: true, replace: true });
-      location.reload();
-    }
+    // if (get_user()) {
+    //   router("/dashboard", { scroll: true, replace: true });
+    //   location.reload();
+    // }
   }, [router, user]);
 
   console.log("user public", user);

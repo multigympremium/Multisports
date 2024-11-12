@@ -8,6 +8,7 @@ import PublicRoute from "./src/routes/PublicRoute";
 import Login_Register from "../pages/LoginAndRegister/Login_Registration";
 import HomePage from "../pages/OtherPage/Home/HomePage";
 import DashboardChildrenRoutes from "./src/DashboardChildrenRoutes";
+const ProductPage = lazy(() => import("../components/Home/Products/ProductPage"));
 
 // Continue for other components...
 
@@ -20,7 +21,7 @@ const AllRoutes = () => {
   const dashboardChildrenRoutes = DashboardChildrenRoutes();
   const routes = createBrowserRouter([
     {
-      path: "",
+      path: "/",
       element: (
         // <Root />
         <Root />
@@ -33,9 +34,23 @@ const AllRoutes = () => {
             // <PublicRoute>
             // </PublicRoute>
             // <Login />
-            <PublicRoute>
+            // <PublicRoute>
+            // </PublicRoute>
               <HomePage />
-            </PublicRoute>
+          ),
+        },
+        {
+          // path: "addworkout",
+          path: "products/:id",
+          // path: isPermittedRoute("addworkout"),
+          element: (
+            // <PrivateRoute>
+            //   <Addworkout />
+            // </PrivateRoute>
+            <Suspense fallback={<GlobalLoading />}>
+                <ProductPage />
+              
+            </Suspense>
           ),
         },
       ],

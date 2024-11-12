@@ -1,7 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
-import PlusOrMinus from "./PlusOrMinus";
-import { usePathname } from "next/navigation";
+import {  useState } from "react";
 import { FaArrowDown, FaArrowUp } from "react-icons/fa";
 
 function GroupLink({ children, groupName, icon, ...rest }) {

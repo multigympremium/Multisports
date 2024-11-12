@@ -1,5 +1,5 @@
-"use client";
-import Link, { useLocation } from "react-router-dom";
+
+import  {Link, useLocation } from "react-router-dom";
 
 function ActiveLink({ href, children, isSubRoute = true }) {
   const pathname = useLocation().pathname;

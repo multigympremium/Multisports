@@ -1,9 +1,8 @@
-"use client";
-import useGetAllProducts from "../../../Hook/GetDataHook/useGetAllProducts";
+
 import React, { useState } from "react";
-import ProductCardWithGallery from "@/shared/Cards/CardWithGallery/ProductCardWithGallery";
 import BgBlurModal from "../../../shared/Modal/BgBlurModal";
 import ProductDetail from "./ProductDetail";
+import ProductCardWithGallery from "../../../shared/Cards/CardWithGallery/ProductCardWithGallery";
 
 function ProductsArea({ slug, sizeFilter, colorFilter, brandFilter, products }) {
   const [targetId, setTargetId] = useState("");
