@@ -349,7 +349,7 @@ const Cart = ({ isShow, setIsShow }) => {
 
   return (
     <div
-      className={`w-[550px] h-screen bg-white rounded-lg shadow-lg p-4 absolute top-0 right-0 z-50 transition-all duration-500 pr-10 pl-5 flex flex-col ${
+      className={`w-full min-w-[40%] max-w-[60%] bg-white h-screen rounded-lg shadow-lg p-4 absolute top-0 right-0 z-50 transition-all duration-500 pr-10 pl-5 flex flex-col ${
         isShow ? "translate-x-0" : "translate-x-full"
       }`}
     >

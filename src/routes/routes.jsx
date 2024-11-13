@@ -7,6 +7,8 @@ const Error404 = lazy(() => import("../pages/default/Error404"));
 import HomePage from "../pages/OtherPage/Home/HomePage";
 import DashboardChildrenRoutes from "./src/DashboardChildrenRoutes";
 import PrivateRoute from "./src/routes/PrivateRoute";
+const CheckoutPage = lazy(() => import(  "../components/Home/checkout/CheckoutPage"));
+const CartPage = lazy(() => import(  "../components/Home/cart/CartPage"));
 const ProductPage = lazy(() => import("../components/Home/Products/ProductPage"));
 
 // Continue for other components...
@@ -109,6 +111,34 @@ const AllRoutes = () => {
             // </PrivateRoute>
             <Suspense fallback={<GlobalLoading />}>
                 <SendOTP />
+              
+            </Suspense>
+          ),
+        },
+        {
+          // path: "addworkout",
+          path: "checkout",
+          // path: isPermittedRoute("addworkout"),
+          element: (
+            // <PrivateRoute>
+            //   <Addworkout />
+            // </PrivateRoute>
+            <Suspense fallback={<GlobalLoading />}>
+                <CheckoutPage />
+              
+            </Suspense>
+          ),
+        },
+        {
+          // path: "addworkout",
+          path: "cart",
+          // path: isPermittedRoute("addworkout"),
+          element: (
+            // <PrivateRoute>
+            //   <Addworkout />
+            // </PrivateRoute>
+            <Suspense fallback={<GlobalLoading />}>
+                <CartPage />
               
             </Suspense>
           ),

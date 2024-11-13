@@ -41,6 +41,9 @@ export default function CardGallerySide({ gallery = [], thumbnailImage = '' }) {
 
   return (
     <>
+    {
+      gallery &&
+      gallery.length > 0 &&
       <Swiper
         style={{
           "--swiper-navigation-color": "#fff",
@@ -54,8 +57,7 @@ export default function CardGallerySide({ gallery = [], thumbnailImage = '' }) {
         className="card_gallery"
         watchSlidesProgress={true}
       >
-        {gallery &&
-          gallery.length > 0 &&
+        {
           gallery.map((item, index) => (
             <SwiperSlide key={index}>
               <CustomImage
@@ -70,22 +72,27 @@ export default function CardGallerySide({ gallery = [], thumbnailImage = '' }) {
           
             }
 
-            {
-              !(gallery &&
-              gallery.length > 0 )&&  (
-                <SwiperSlide>
-              
-               <CustomImage
-                imageKey={thumbnailImage}
-                alt={"image"}
-                className="h-[350px] w-full object-cover"
-                width={600}
-                height={500}
-              />
-            </SwiperSlide>
-              )
-            }
       </Swiper>
+    }
+    {
+      !(gallery &&
+      gallery.length > 0 )&&  (
+        <SwiperSlide>
+      
+       <CustomImage
+        imageKey={thumbnailImage}
+        alt={"image"}
+        className="h-[350px] w-full object-cover"
+        width={600}
+        height={500}
+      />
+    </SwiperSlide>
+      )
+    }
+
+    {
+      gallery &&
+      gallery.length > 0 && 
       <Swiper
         onSwiper={setThumbsSwiper}
         spaceBetween={10}
@@ -117,22 +124,24 @@ export default function CardGallerySide({ gallery = [], thumbnailImage = '' }) {
         // </SwiperSlide>
         }
 
-         {
-              !(gallery &&
-              gallery.length > 0 )&&  (
-                <SwiperSlide>
-              
-               <CustomImage
-                imageKey={thumbnailImage}
-                alt={"image"}
-                className="h-[350px] w-full object-cover"
-                width={600}
-                height={500}
-              />
-            </SwiperSlide>
-              )
-            }
       </Swiper>
+    }
+    {
+         !(gallery &&
+         gallery.length > 0 )&&  (
+           <SwiperSlide>
+         
+          <CustomImage
+           imageKey={thumbnailImage}
+           alt={"image"}
+           className="h-[350px] w-full object-cover"
+           width={600}
+           height={500}
+         />
+       </SwiperSlide>
+         )
+       }
+      
     </>
   );
 }

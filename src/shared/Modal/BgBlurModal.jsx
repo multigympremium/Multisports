@@ -18,11 +18,11 @@ function BgBlurModal({
     <div
       id="modalBackdrop"
       onClick={handleClose}
-      className={`fixed top-0 left-0 w-screen h-screen grid place-items-center overflow-auto py-6 z-[99] backdrop-blur-lg bg-opacity-10 bg-black transition-all duration-500 ${
+      className={`fixed top-0 left-0 w-screen h-screen overflow-auto z-[99] backdrop-blur-lg bg-opacity-10 bg-black transition-all duration-500 ${
         isShowModal ? "opacity-100 visible" : "opacity-0 invisible"
       }`}
     >
-      <div className="relative bg-white p-6 rounded shadow-lg z-10 w-full max-w-[800px] mx-auto">
+      <div className="relative rounded shadow-lg z-10 w-full mx-auto">
         {children}
       </div>
     </div>
