@@ -1,5 +1,4 @@
-"use client"
-import React from "react";
+
 import RecommendedProductCard from "../../../shared/Cards/RecomendedCard/RecommendedProductCard";
 import useGetAllProducts from "../../../Hook/GetDataHook/useGetAllProducts";
 

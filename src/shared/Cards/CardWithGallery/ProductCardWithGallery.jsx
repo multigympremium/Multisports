@@ -12,7 +12,7 @@ export default function ProductCardWithGallery({ product , setTargetId, setIsSho
     <div className="max-w-xs bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 p-4 relative">
       {/* Product Image */}
 
-      <CardGallerySide gallery={product?.gallery} />
+      <CardGallerySide gallery={product?.gallery} thumbnailImage={product?.thumbnail} />
 
       <WishlistIcon item={product} />
 

@@ -60,7 +60,6 @@ export default function ProductCreateForm() {
   const categories = useGetAllCategories({});
   const subcategories = useGetAllSubCategories({});
   const childCategories = useGetAllChildCategories({});
-  const modelOfBrand = useGetAllModelOfBrands({});
   const productBrands = useGetAllProductBrands({});
   const productColors = useGetAllProductColors({});
   const productFlags = useGetAllProductFlag({});
@@ -136,7 +135,6 @@ export default function ProductCreateForm() {
       color: productColor.join(","),
       size: productSize.join(","),
       flag: productFlagValue,
-      model: modelOfBrandValue,
       subcategory: subcategory,
       childCategory: childCategory,
     });
@@ -159,11 +157,10 @@ export default function ProductCreateForm() {
     formData.append("thumbnail", thumbnail); // If it's a file, ensure it's a `File` object
     // formData.append("gallery", gallery);
     formData.append("category", category);
-    formData.append("brand", brandValue);
-    formData.append("color", productColor.join(","));
-    formData.append("size", productSize.join(","));
-    formData.append("flag", productFlagValue);
-    formData.append("model", modelOfBrandValue);
+    formData.append("brandValue", brandValue);
+    formData.append("productColorValue", productColor.join(","));
+    formData.append("productSizeValue", productSize.join(","));
+    formData.append("productFlagValue", productFlagValue);
     formData.append("subcategory", subcategory);
     formData.append("childCategory", childCategory);
 
@@ -488,27 +485,7 @@ export default function ProductCreateForm() {
               </select>
             </div>
 
-            {/* Select Subcategory */}
-            <div className="mb-4">
-              <label className="block text-gray-700 font-bold mb-2">
-                Select Model Of Brand *
-              </label>
-              <select
-                value={modelOfBrandValue}
-                onChange={(e) => setModelOfBrandValue(e.target.value)}
-                className="w-full p-2 border rounded-md"
-                required
-              >
-                <option value="">Select One</option>
-                {modelOfBrand?.length > 0 &&
-                  modelOfBrand.map((item, index) => (
-                    <option value={item.slug} key={item._id}>
-                      {item?.modelName}
-                    </option>
-                  ))}
-                {/* Add more subcategories dynamically if needed */}
-              </select>
-            </div>
+           
 
             {/* Select Subcategory */}
             <div className="mb-4">
