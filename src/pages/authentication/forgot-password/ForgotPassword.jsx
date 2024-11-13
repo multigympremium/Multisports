@@ -1,11 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import { MdOutlineKeyboardBackspace } from "react-icons/md";
-import useAxiosPublic from "../../../../useAxiosPublic";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 import Swal from "sweetalert2";
-import { useRouter } from "next/navigation";
+import useAxiosPublic from "../../../Hook/useAxiosPublic";
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,7 +15,7 @@ export default function ForgotPassword() {
   const [passwordError, setPasswordError] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
 
-  const router = useRouter();
+  const router = useNavigate();
 
   const axiosPublic = useAxiosPublic();
 
@@ -49,7 +48,7 @@ export default function ForgotPassword() {
             confirmButtonText: "Ok",
           });
 
-          router.push("/login");
+          router("/login");
         }
       }
     } catch (error) {

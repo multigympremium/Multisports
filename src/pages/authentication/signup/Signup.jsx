@@ -17,7 +17,6 @@ export default function SignUpPage() {
   const [subscribe, setSubscribe] = useState(false);
   const axiosPublic = useAxiosPublic();
   const router = useNavigate();
-  const pathName = useLocation().pathname;
 
   const handleSignUp = async (e) => {
     e.preventDefault();

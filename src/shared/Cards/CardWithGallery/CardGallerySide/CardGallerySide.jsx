@@ -17,7 +17,7 @@ import { FreeMode, Navigation, Thumbs, Zoom } from "swiper/modules";
 import CustomImage from "../../../ImageComponents/CustomImage";
 
 export default function CardGallerySide({ gallery = [], thumbnailImage = '' }) {
-  // const [thumbsSwiper, setThumbsSwiper] = useState([]);
+  const [thumbsSwiper, setThumbsSwiper] = useState([]);
 
   console.log(gallery, "gallery");
 
@@ -48,7 +48,7 @@ export default function CardGallerySide({ gallery = [], thumbnailImage = '' }) {
         }}
         spaceBetween={10}
         navigation={true}
-        // thumbs={{ swiper: thumbsSwiper }}
+        thumbs={{ swiper: thumbsSwiper }}
         zoom={true}
         modules={[FreeMode, Navigation, Thumbs, Zoom]}
         className="card_gallery"
@@ -87,10 +87,11 @@ export default function CardGallerySide({ gallery = [], thumbnailImage = '' }) {
             }
       </Swiper>
       <Swiper
-        // onSwiper={setThumbsSwiper}
+        onSwiper={setThumbsSwiper}
         spaceBetween={10}
         slidesPerView={4}
         freeMode={true}
+        watchSlidesProgress={true}
         modules={[FreeMode, Navigation, Thumbs]}
         className="card_gallery"
       >

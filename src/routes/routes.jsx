@@ -4,8 +4,6 @@ import { createBrowserRouter } from "react-router-dom";
 import Root from "../Root";
 const Error404 = lazy(() => import("../pages/default/Error404"));
 
-import PublicRoute from "./src/routes/PublicRoute";
-import Login_Register from "../pages/LoginAndRegister/Login_Registration";
 import HomePage from "../pages/OtherPage/Home/HomePage";
 import DashboardChildrenRoutes from "./src/DashboardChildrenRoutes";
 import PrivateRoute from "./src/routes/PrivateRoute";
@@ -14,11 +12,11 @@ const ProductPage = lazy(() => import("../components/Home/Products/ProductPage")
 // Continue for other components...
 
 const Root_Dashboard = lazy(() => import( "../pages/Dashboard/Root"))
-const SignUpPage = lazy(() => import( "../pages/authentication/signup/page"));
-const Login = lazy(() => import( "../pages/authentication/login/page"));
-const ForgotPassword = lazy(() => import( "../pages/authentication/forgot-password/page"));
-const VerifyOTP = lazy(() => import( "../pages/authentication/verify-otp/page"));
-const SendOTP = lazy(() => import( "../pages/authentication/send-otp/page"));
+const SignUpPage = lazy(() => import( "../pages/authentication/signup/Signup"));
+const Login = lazy(() => import( "../pages/authentication/login/Login"));
+const ForgotPassword = lazy(() => import( "../pages/authentication/forgot-password/ForgotPassword"));
+const VerifyOTP = lazy(() => import( "../pages/authentication/verify-otp/VerifyOTP"));
+const SendOTP = lazy(() => import( "../pages/authentication/send-otp/SendOTP"));
 
 const GlobalLoading = lazy(() => import("../components library/GlobalLoading"));
 
