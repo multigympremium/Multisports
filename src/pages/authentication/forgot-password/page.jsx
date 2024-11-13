@@ -6,7 +6,7 @@ import useAxiosPublic from "../../../../useAxiosPublic";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
-export default function Page() {
+export default function ForgotPassword() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");

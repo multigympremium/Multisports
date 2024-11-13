@@ -13,7 +13,12 @@ const ProductPage = lazy(() => import("../components/Home/Products/ProductPage")
 
 // Continue for other components...
 
-import Root_Dashboard from "../pages/Dashboard/Root";
+const Root_Dashboard = lazy(() => import( "../pages/Dashboard/Root"))
+const SignUpPage = lazy(() => import( "../pages/authentication/signup/page"));
+const Login = lazy(() => import( "../pages/authentication/login/page"));
+const ForgotPassword = lazy(() => import( "../pages/authentication/forgot-password/page"));
+const VerifyOTP = lazy(() => import( "../pages/authentication/verify-otp/page"));
+const SendOTP = lazy(() => import( "../pages/authentication/send-otp/page"));
 
 const GlobalLoading = lazy(() => import("../components library/GlobalLoading"));
 
@@ -38,6 +43,76 @@ const AllRoutes = () => {
             // <PublicRoute>
             // </PublicRoute>
               <HomePage />
+          ),
+        },
+        {
+          // path: "addworkout",
+          path: "signup",
+          // path: isPermittedRoute("addworkout"),
+          element: (
+            // <PrivateRoute>
+            //   <Addworkout />
+            // </PrivateRoute>
+            <Suspense fallback={<GlobalLoading />}>
+                <SignUpPage />
+              
+            </Suspense>
+          ),
+        },
+        {
+          // path: "addworkout",
+          path: "login",
+          // path: isPermittedRoute("addworkout"),
+          element: (
+            // <PrivateRoute>
+            //   <Addworkout />
+            // </PrivateRoute>
+            <Suspense fallback={<GlobalLoading />}>
+                <Login />
+              
+            </Suspense>
+          ),
+        },
+        {
+          // path: "addworkout",
+          path: "forgot-password",
+          // path: isPermittedRoute("addworkout"),
+          element: (
+            // <PrivateRoute>
+            //   <Addworkout />
+            // </PrivateRoute>
+            <Suspense fallback={<GlobalLoading />}>
+                <ForgotPassword />
+              
+            </Suspense>
+          ),
+        },
+        {
+          // path: "addworkout",
+          path: "verify-otp",
+          // path: isPermittedRoute("addworkout"),
+          element: (
+            // <PrivateRoute>
+            //   <Addworkout />
+            // </PrivateRoute>
+            <Suspense fallback={<GlobalLoading />}>
+                <VerifyOTP />
+              
+            </Suspense>
+          ),
+        },
+        {
+          // path: "addworkout",
+          path: "send-otp",
+          // path: isPermittedRoute("addworkout"),
+          element: (
+            // <PrivateRoute>
+            //   <Addworkout />
+            // </PrivateRoute>
+            <Suspense fallback={<GlobalLoading />}>
+                <SendOTP />
+              
+            </Suspense>
           ),
         },
         {

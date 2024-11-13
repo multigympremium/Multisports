@@ -1,18 +1,17 @@
 "use client";
 import { useEffect, useState } from "react";
 import { MdOutlineKeyboardBackspace } from "react-icons/md";
-import { useRouter } from "next/navigation";
 import OTPInput from "react-otp-input";
-import useAxiosPublic from "../../../../useAxiosPublic";
 import { useTimer } from "react-timer-hook";
 import toast from "react-hot-toast";
 
-import { Link } from "react-router-dom";
-export default function Page() {
+import { Link, useNavigate } from "react-router-dom";
+import useAxiosPublic from "../../../Hook/useAxiosPublic";
+export default function VerifyOTP() {
   const [otp, setOtp] = useState("");
   const axiosPublic = useAxiosPublic();
   const [isActiveOtpInput, setIsActiveOtpInput] = useState(false);
-  const router = useRouter();
+  const router = useNavigate();
   const [userEmail, setUserEmail] = useState("");
   const [otp_expiryDate, setOtp_expiryDate] = useState("");
   const [otp_limitation_time, setOtp_limitation_time] = useState("");
@@ -105,11 +104,11 @@ export default function Page() {
       {/* Back Arrow */}
       <div className="  w-full">
         <img
-          src={"/d.png"}
+          src={"/logo.png"}
           width={300}
           height={300}
           alt="dot"
-          className="mx-auto"
+          className="mx-auto mt-10"
         />
 
         <div className="w-full py-5">

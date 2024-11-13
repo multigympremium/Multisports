@@ -224,7 +224,7 @@ const Navbar = () => {
             </div>
 
             {/* Sign In */}
-            <Link href="/login">
+            <Link to="/login">
               <div className="flex items-center justify-center flex-col gap-1 md:p-3 p-1 rounded">
                 <FaRegUser className="md:text-2xl text-base text-gray-600 hover:text-blue-500 hover:scale-110 cursor-pointer transition-all" />
                 <span className="hidden md:block">Sign In</span>

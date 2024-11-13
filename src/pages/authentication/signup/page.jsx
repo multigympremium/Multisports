@@ -1,11 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
-import {Link} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import { MdOutlineKeyboardBackspace } from "react-icons/md";
 import { IoEyeOutline } from "react-icons/io5";
 import { IoEyeOffOutline } from "react-icons/io5";
-import useAxiosPublic from "../../../../useAxiosPublic";
-import { usePathname, useRouter } from "next/navigation";
+import useAxiosPublic from "../../../Hook/useAxiosPublic";
 
 export default function SignUpPage() {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -17,8 +16,8 @@ export default function SignUpPage() {
   const [passwordError, setPasswordError] = useState("");
   const [subscribe, setSubscribe] = useState(false);
   const axiosPublic = useAxiosPublic();
-  const router = useRouter();
-  const pathName = usePathname();
+  const router = useNavigate();
+  const pathName = useLocation().pathname;
 
   const handleSignUp = async (e) => {
     e.preventDefault();
@@ -44,7 +43,7 @@ export default function SignUpPage() {
       console.log(res);
       if (res.status === 200 || res.status === 201) {
         localStorage.setItem("user", JSON.stringify(res.data.user));
-        router.push("/");
+        router("/");
       }
     } catch (error) {
       console.log(error);
@@ -104,22 +103,22 @@ export default function SignUpPage() {
       {/* Back Arrow */}
       <div className="  w-full">
         <img
-          src={"/d.png"}
+          src={"/logo.png"}
           width={300}
           height={300}
           alt="dot"
           className="mx-auto"
         />
 
-        <div className="w-full py-5 absolute top-5 left-8">
-          <Link to="/">
-            <button className="flex items-center justify-center rounded-full shadow-lg w-[50px] h-[50px] bg-white ml-10">
-              <MdOutlineKeyboardBackspace size={30} />
-            </button>
-          </Link>
-        </div>
+<div className="w-full py-5 absolute top-5 left-8">
+        <Link to="/">
+          <button className="flex items-center justify-center rounded-full shadow-lg w-[50px] h-[50px] bg-white ml-10">
+            <MdOutlineKeyboardBackspace size={30} />
+          </button>
+        </Link>
+      </div>
 
-        <div className=" rounded-lg p-8  h-full mt-8 mx-auto ">
+        <div className=" rounded-lg p-8  h-full mt-4 mx-auto ">
           <form className="mt-6 bg-white p-3 w-[94%] mx-auto">
             {/* Email Input */}
             <div className="mb-4 border-b border-gray-200 pb-5">
