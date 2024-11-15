@@ -13,6 +13,8 @@ import PropTypes from "prop-types";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import auth from "../firebase/firebase.config";
 import useAxiosSecure from "../Hook/useAxiosSecure";
+import toast from "react-hot-toast";
+import useAxiosPublic from "../Hook/useAxiosPublic";
 
 
 export const AuthContext = createContext(null);
@@ -38,6 +40,7 @@ const AuthProvider = ({ children }) => {
 
   const [cartItems, setCartItems] = useState([]);
   const axiosSecure = useAxiosSecure();
+  const axiosPublic = useAxiosPublic();
 
 
 
@@ -133,12 +136,25 @@ const AuthProvider = ({ children }) => {
     setWishlist(storedWishlist);
   }, []);
 
-  const addToWishlist = (product) => {
+  const addToWishlist = async (product) => {
     const existingProduct = wishlist.find((item) => item._id === product._id);
+
     if (!existingProduct) {
       const updatedWishlist = [...wishlist, product];
       setWishlist(updatedWishlist);
       localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
+      try {
+  
+        const res = await axiosPublic.get(`/products/wish-count/${product?._id}`);
+  
+        if(res.status === 200 || res.status === 201){
+          toast.success("Added to wishlist!");
+        }
+        
+      } catch (error) {
+        console.log(error)
+        toast.error("Error adding to wishlist!");
+      }
     }
   };
 
