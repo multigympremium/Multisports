@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import useAxiosSecure from '../../../Hook/useAxiosSecure';
 import Swal from 'sweetalert2';
+import useGetAllDistrict from '../../../Hook/GetPublicDataHook/useGetAllDistrict';
 
 
 
@@ -345,6 +346,8 @@ const ShippingForm = ({setShippingAddress}) => {
     deliveryType: 'Home',
   });
 
+  const district = useGetAllDistrict({})
+
   const [subdistricts, setSubdistricts] = useState([]);
 
   const [errors, setErrors] = useState({});
@@ -355,8 +358,8 @@ const ShippingForm = ({setShippingAddress}) => {
     const { name, value } = e.target;
 
     if(name === "district"){
-        const district = bangladeshSubdistricts.find(district => district.district === value);
-        setSubdistricts(district.subdistricts);
+        const subdistrictArray = district.find(district => district.district === value);
+        setSubdistricts(subdistrictArray.subdistricts);
     }
 
 
@@ -489,8 +492,8 @@ const ShippingForm = ({setShippingAddress}) => {
               className="border p-2 w-full rounded"
             >
               <option value="">Select District/City Name</option>
-              {bangladeshDistricts.map((district, index) => (
-                <option key={index} value={district}>{district}</option>
+              {district.length > 0 && district.map((item, index) => (
+                <option key={index} value={item.district}>{item.district}</option>
               ))}
               {/* Add more options as necessary */}
             </select>

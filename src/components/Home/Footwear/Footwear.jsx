@@ -1,18 +1,18 @@
 
 import React from "react";
 import FootwearProductsArea from "./components/FootwearProductsArea/FootwearProductsArea";
+import FootwearSliders from "./components/FootwearSliders";
+import useGetAllShoesBanners from "../../../Hook/GetPublicDataHook/useGetAllShoesBanners";
 
 function Footwear(props) {
+  const shoes = useGetAllShoesBanners({});
   return (
     <>
       <div className="w-full">
-        <img
-          src={"/shoes_banner.png"}
-          width={1200}
-          height={500}
-          alt=""
-          className="h-[500px] w-full object-contain"
-        />
+        {
+          shoes?.length > 0 && 
+        <FootwearSliders data={shoes} />
+        }
       </div>
 
       <FootwearProductsArea />

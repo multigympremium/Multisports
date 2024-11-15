@@ -1,18 +1,19 @@
 
 import React from "react";
 import TrendyBagsProductsArea from "./components/TrendyBagsProductsArea/TrendyBagsProductsArea";
+import useGetAllBagBanners from "../../../Hook/GetPublicDataHook/useGetAllBagBanners";
+import BagSliders from "./components/BagSliders";
 
 function TrendyBags() {
+  const banners = useGetAllBagBanners({})
   return (
     <>
       <div className="w-full">
-        <img
-          src={"/bags.png"}
-          width={1200}
-          height={500}
-          alt=""
-          className="h-[500px] w-full object-contain"
-        />
+      {
+          banners?.length > 0 &&
+        
+         <BagSliders data={banners} />
+        }
       </div>
 
       <TrendyBagsProductsArea />

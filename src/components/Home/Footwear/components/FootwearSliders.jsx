@@ -10,13 +10,12 @@ import "./css/banner.module.css";
 
 // import required modules
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
-import useGetAllBanners from "../../../Hook/GetPublicDataHook/useGetAllBanners";
-import CustomImage from "../../../shared/ImageComponents/CustomImage";
+import CustomImage from "../../../../shared/ImageComponents/CustomImage";
 
 
-export default function Banner() {
+export default function FootwearSliders({data}) {
 
-  const banners = useGetAllBanners({})
+  
   return (
     <>
     <Swiper
@@ -31,10 +30,10 @@ export default function Banner() {
         }}
         
         modules={[Navigation, Pagination, Autoplay]}
-        className="home_banner"
+        className="footwear_banner"
       >
     {
-      banners?.length > 0 && banners.map((banner, index) => (
+      data?.length > 0 && data.map((banner, index) => (
         <SwiperSlide key={index}>
           <div className="w-full h-[85dvh]">
             <CustomImage

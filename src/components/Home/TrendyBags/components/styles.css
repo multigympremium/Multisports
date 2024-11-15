@@ -1,9 +1,9 @@
-.exclusive_collection .swiper {
+.bag_banner .swiper {
   width: 100%;
   height: 100%;
 }
 
-.exclusive_collection .swiper-slide {
+.bag_banner .swiper-slide {
   text-align: center;
   font-size: 18px;
   background: #fff;
@@ -14,7 +14,7 @@
   align-items: center;
 }
 
-.exclusive_collection .swiper-slide img {
+.bag_banner .swiper-slide img {
   display: block;
   width: 100%;
   height: 100%;
