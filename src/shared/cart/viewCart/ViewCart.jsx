@@ -2,7 +2,7 @@
 import React, { useContext } from 'react'
 import CartItemComponent from '../CartItemComponent'
 import { IoHome } from 'react-icons/io5'
-import { AuthContext } from '@/providers/AuthProvider';
+import { AuthContext } from '../../../providers/AuthProvider'
 
 export default function ViewCart() {
     const { cartItems, removeFromCart, updateCartQuantity, totalPrice } =

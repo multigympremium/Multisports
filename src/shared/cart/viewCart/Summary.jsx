@@ -1,8 +1,7 @@
 "use client"
-import useAxiosPublic from '../../../../useAxiosPublic';
-import { AuthContext } from '@/providers/AuthProvider';
-import Link from 'react-router-dom';
-import { useRouter } from 'next/navigation';
+import useAxiosPublic from '../../../Hook/useAxiosPublic';
+import { AuthContext } from '../../../providers/AuthProvider';
+import  {Link, useNavigate } from 'react-router-dom';
 import { useContext } from 'react'
 import Swal from 'sweetalert2';
 
@@ -12,7 +11,7 @@ export default function Summary({isCart = false, shippingAddress = null, cartIte
 
     const discount = 17.4;
     const axiosSecure = useAxiosPublic();
-    const router = useRouter();
+    const router = useNavigate();
 
 
     const submitOrder = async () => {
@@ -26,7 +25,7 @@ export default function Summary({isCart = false, shippingAddress = null, cartIte
             console.log(response);
 
             if (response.data.success) {
-               return router.push("/success")
+               return router("/success")
             }
 
             Swal.fire({
