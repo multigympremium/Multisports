@@ -1,130 +1,44 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import useGetAllDistrict from "../../../Hook/GetDataHook/useGetAllDistrict";
+import BgBlurModal from "../../../shared/Modal/BgBlurModal";
+import AddDistrict from "./Forms/AddDistrict";
+import EditDistrict from "./Forms/EditDistrict";
+import Swal from "sweetalert2";
+import useAxiosSecure from "../../../Hook/useAxiosSecure";
+import toast from "react-hot-toast";
 
 export default function UpazilaThanaList() {
-  const initialData = [
-    {
-      id: 1,
-      district: "Comilla",
-      upazilaEnglish: "Debidwar",
-      upazilaBangla: "দেবিদ্বার",
-      website: "debidwar.comilla.gov.bd",
-    },
-    {
-      id: 2,
-      district: "Comilla",
-      upazilaEnglish: "Barura",
-      upazilaBangla: "বরুড়া",
-      website: "barura.comilla.gov.bd",
-    },
-    {
-      id: 3,
-      district: "Comilla",
-      upazilaEnglish: "Brahmanpara",
-      upazilaBangla: "ব্রাহ্মণপাড়া",
-      website: "brahmanpara.comilla.gov.bd",
-    },
-    {
-      id: 4,
-      district: "Comilla",
-      upazilaEnglish: "Chandina",
-      upazilaBangla: "চান্দিনা",
-      website: "chandina.comilla.gov.bd",
-    },
-    {
-      id: 5,
-      district: "Comilla",
-      upazilaEnglish: "Chouddagram",
-      upazilaBangla: "চৌদ্দগ্রাম",
-      website: "chouddagram.comilla.gov.bd",
-    },
-    {
-      id: 6,
-      district: "Comilla",
-      upazilaEnglish: "Daudkandi",
-      upazilaBangla: "দাউদকান্দি",
-      website: "daudkandi.comilla.gov.bd",
-    },
-    {
-      id: 7,
-      district: "Comilla",
-      upazilaEnglish: "Homna",
-      upazilaBangla: "হোমনা",
-      website: "homna.comilla.gov.bd",
-    },
-    {
-      id: 8,
-      district: "Comilla",
-      upazilaEnglish: "Laksam",
-      upazilaBangla: "লাকসাম",
-      website: "laksam.comilla.gov.bd",
-    },
-    {
-      id: 9,
-      district: "Comilla",
-      upazilaEnglish: "Muradnagar",
-      upazilaBangla: "মুরাদনগর",
-      website: "muradnagar.comilla.gov.bd",
-    },
-    {
-      id: 10,
-      district: "Comilla",
-      upazilaEnglish: "Nangalkot",
-      upazilaBangla: "নাঙ্গলকোট",
-      website: "nangalkot.comilla.gov.bd",
-    },
-    {
-      id: 11,
-      district: "Comilla",
-      upazilaEnglish: "Comilla Sadar",
-      upazilaBangla: "কুমিল্লা সদর",
-      website: "comillasadar.comilla.gov.bd",
-    },
-    {
-      id: 12,
-      district: "Comilla",
-      upazilaEnglish: "Meghna",
-      upazilaBangla: "মেঘনা",
-      website: "meghna.comilla.gov.bd",
-    },
-    {
-      id: 13,
-      district: "Comilla",
-      upazilaEnglish: "Monoharganj",
-      upazilaBangla: "মনোহরগঞ্জ",
-      website: "monoharganj.comilla.gov.bd",
-    },
-    {
-      id: 14,
-      district: "Comilla",
-      upazilaEnglish: "Sadar South",
-      upazilaBangla: "সদর দক্ষিণ",
-      website: "sadarsouth.comilla.gov.bd",
-    },
-    {
-      id: 15,
-      district: "Comilla",
-      upazilaEnglish: "Titas",
-      upazilaBangla: "তিতাস",
-      website: "titas.comilla.gov.bd",
-    },
-    // Add more entries as necessary
-  ];
 
-  const [data, setData] = useState(initialData);
+  const axiosSecure = useAxiosSecure();
+
+  const [isAddModel, setIsAddModel] = useState(false)
+  const [isEditModel, setIsEditModel] = useState(false)
+  const [isDeleted, setIsDeleted] = useState(false)
+  const district = useGetAllDistrict({ isShowModal: isAddModel , isEdited: isEditModel, isDeleted })
+
+  console.log(district, "districtdf ")
+
+  const [data, setData] = useState(district);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(15);
   const [searchTerm, setSearchTerm] = useState("");
+  const [targetId, setTargetId] = useState("");
 
   // Pagination Logic
+
   const totalPages = Math.ceil(data.length / itemsPerPage);
   const startIdx = (currentPage - 1) * itemsPerPage;
   const currentData = data.slice(startIdx, startIdx + itemsPerPage);
 
+  console.log(district, currentData, "currentData", data);
+
+  
+
   // Handle Search
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
-    const filteredData = initialData.filter(
+    const filteredData = district.filter(
       (item) =>
         item.upazilaEnglish
           .toLowerCase()
@@ -136,29 +50,65 @@ export default function UpazilaThanaList() {
   };
 
   const handleEdit = (id) => {
-    alert(`Edit action triggered for ID: ${id}`);
+    setTargetId(id);
+    setIsEditModel(true);
   };
 
-  const handleDelete = (id) => {
-    alert(`Delete action triggered for ID: ${id}`);
+  const handleDelete = async (id) => {
+    try {
+      Swal.fire({
+        title: "Are you sure you want to delete this member?",
+        text: "This action cannot be undone!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Yes, delete it!",
+        cancelButtonText: "No, cancel!",
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          try {
+            const res = await axiosSecure.delete(`/district/${id}`);
+            console.log(res, "res");
+            if (res.status === 200 || res.status === 201) {
+              setIsDeleted((prev) => !prev);
+
+              toast.success("Brand deleted successfully!");
+            }
+          } catch (error) {
+            console.log(error, "error");
+            toast.error("Error deleting user!");
+          }
+        }
+      });
+    } catch (error) {
+      console.log(error, "error");
+      toast.error("Error deleting brand!");
+    }
+    console.log(`Delete brand with ID: ${id}`);
   };
+
+  useEffect(() => {
+    setData(district);
+  }, [district]);
 
   return (
+    <>
     <div className="min-h-screen bg-gray-100 p-10">
       <div className="max-w-7xl mx-auto bg-white p-8 shadow-md rounded-md">
-        <h1 className="text-2xl font-bold mb-5">Upazila & Thana List</h1>
+        <h1 className="text-2xl font-bold mb-5">Districts List</h1>
 
         {/* Search Input */}
         <div className="mb-4 flex justify-between items-center">
           <input
             type="text"
-            placeholder="Search by Upazila/Thana (English or Bangla)..."
+            placeholder="Search by District ..."
             value={searchTerm}
             onChange={handleSearch}
             className="w-1/2 p-2 border rounded-md"
           />
-          <button className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-700">
-            + Add Upazila/Thana
+          <button className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-700" onClick={()=> setIsAddModel(true)}>
+            + Add District
           </button>
         </div>
 
@@ -168,9 +118,7 @@ export default function UpazilaThanaList() {
             <tr className="bg-gray-200">
               <th className="p-2 border">SL</th>
               <th className="p-2 border">District</th>
-              <th className="p-2 border">Upazila/Thana (English)</th>
-              <th className="p-2 border">Upazila/Thana (Bangla)</th>
-              <th className="p-2 border">Website</th>
+              <th className="p-2 border">Subdistricts</th>
               <th className="p-2 border">Action</th>
             </tr>
           </thead>
@@ -180,28 +128,18 @@ export default function UpazilaThanaList() {
                 <tr key={item.id} className="border-b">
                   <td className="p-2 border">{startIdx + index + 1}</td>
                   <td className="p-2 border">{item.district}</td>
-                  <td className="p-2 border">{item.upazilaEnglish}</td>
-                  <td className="p-2 border">{item.upazilaBangla}</td>
-                  <td className="p-2 border">
-                    <a
-                      href={`https://${item.website}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-600 hover:underline"
-                    >
-                      {item.website}
-                    </a>
-                  </td>
+                  <td className="p-2 border">{item.subdistricts.join(",").length > 50 ? item?.subdistricts.join(",").slice(0,50) + "..." : item.subdistricts.join(",")}</td>
+                  
                   <td className="p-2 border">
                     <button
                       className="bg-yellow-500 text-white py-1 px-2 rounded-md hover:bg-yellow-700 mr-2"
-                      onClick={() => handleEdit(item.id)}
+                      onClick={() => handleEdit(item._id)}
                     >
                       Edit
                     </button>
                     <button
                       className="bg-red-500 text-white py-1 px-2 rounded-md hover:bg-red-700"
-                      onClick={() => handleDelete(item.id)}
+                      onClick={() => handleDelete(item._id)}
                     >
                       Delete
                     </button>
@@ -242,5 +180,13 @@ export default function UpazilaThanaList() {
         </div>
       </div>
     </div>
+
+    <BgBlurModal isShowModal={isAddModel} setIsShowModal={setIsAddModel}>
+      <AddDistrict setIsShowModal={setIsAddModel} isShowModal={isAddModel} />
+    </BgBlurModal>
+    <BgBlurModal isShowModal={isEditModel} setIsShowModal={setIsEditModel}>
+      <EditDistrict setIsShowModal={setIsEditModel} isShowModal={isEditModel} targetId={targetId} />
+    </BgBlurModal>
+    </>
   );
 }
