@@ -8,7 +8,7 @@ import useGetAllProductColors from "../../../Hook/GetDataHook/useGetAllProductCo
 import useGetAllProductFlag from "../../../Hook/GetDataHook/useGetAllProductFlag";
 import useGetAllSubCategories from "../../../Hook/GetDataHook/useGetAllSubCategories";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import Switch from "react-switch";
 import ActiveDescBtn from "./productSharedComponents/ActiveDescBtn";
@@ -17,11 +17,13 @@ import Swal from "sweetalert2";
 import DragEditUploadImageInput from "../../../shared/DragEditUploadImageInput";
 import useGetAllCategories from "../../../Hook/GetDataHook/useGetAllCategories";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
+import { IoCloseCircleOutline } from "react-icons/io5";
 
 
 export default function EditProductForm({
   targetId,
   setIsShowModal,
+
   isShowModal,
 }) {
   // States for the form fields
@@ -49,7 +51,6 @@ export default function EditProductForm({
   const [category, setCategory] = useState("");
   const [subcategory, setSubcategory] = useState("");
   const [childCategory, setChildCategory] = useState("");
-  const [modelOfBrandValue, setModelOfBrandValue] = useState("");
   const [productColorValue, setProductColorValue] = useState("");
   const [productFlagValue, setProductFlagValue] = useState("");
   const [brandValue, setBrandValue] = useState("");
@@ -58,10 +59,12 @@ export default function EditProductForm({
 
   const [activeDescription, setActiveDescription] = useState("full_desc");
 
+  const [productSize, setProductSize] = useState([]);
+  const [productColor, setProductColor] = useState([]);
+
   const categories = useGetAllCategories({});
   const subcategories = useGetAllSubCategories({});
   const childCategories = useGetAllChildCategories({});
-  const modelOfBrand = useGetAllModelOfBrands({});
   const productBrands = useGetAllProductBrands({});
   const productColors = useGetAllProductColors({});
   const productFlags = useGetAllProductFlag({});
@@ -96,13 +99,14 @@ export default function EditProductForm({
         setProductColorValue(resData.productColorValue);
         setProductSizeValue(resData.productSizeValue);
         setProductFlagValue(resData.productFlagValue);
-        setModelOfBrandValue(resData.modelOfBrandValue);
         setSubcategory(resData.subcategory);
         setChildCategory(resData.childCategory);
         setThumbnailPreview(resData.thumbnail);
         setGalleryPreview(resData.gallery);
         setIsNew(resData.isNew);
         setIsRecommended(resData.isRecommended);
+        setProductColor(resData.productColorValue);
+        setProductSize(resData.productSizeValue);
 
         for (const galleryItem of resData.gallery) {
           setGalleryItemIds((prev) => [...prev, galleryItem._id]);
@@ -192,7 +196,6 @@ export default function EditProductForm({
       color: productColorValue,
       size: productSizeValue,
       flag: productFlagValue,
-      model: modelOfBrandValue,
       subcategory: subcategory,
       childCategory: childCategory,
     });
@@ -212,16 +215,16 @@ export default function EditProductForm({
     formData.append("metaDescription", metaDescription);
     formData.append("specialOffer", specialOffer);
     formData.append("hasVariants", hasVariants);
-    formData.append("thumbnail", thumbnail); // If it's a file, ensure it's a `File` object
+    formData.append("thumbnail",  thumbnail || thumbnailPreview); // If it's a file, ensure it's a `File` object
     // formData.append("gallery", gallery);
     formData.append("category", category);
-    formData.append("brand", brandValue);
-    formData.append("color", productColorValue);
-    formData.append("size", productSizeValue);
-    formData.append("flag", productFlagValue);
-    formData.append("model", modelOfBrandValue);
+    formData.append("brandValue", brandValue);
+    formData.append("productColorValue", productColor.join(","));
+    formData.append("productSizeValue", productSize.join(","));
+    formData.append("productFlagValue", productFlagValue);
     formData.append("subcategory", subcategory);
     formData.append("childCategory", childCategory);
+    formData.append("galleryItemIds", galleryItemIds);
 
     // If `gallery` is an array of files, you can loop through it and append each file:
 
@@ -236,11 +239,11 @@ export default function EditProductForm({
       });
     }
 
-    if (Array.isArray(galleryItemIds)) {
-      galleryItemIds.forEach((id, index) => {
-        formData.append(`galleryItemIds`, id);
-      });
-    }
+    // if (Array.isArray(galleryItemIds)) {
+    //   galleryItemIds.forEach((id, index) => {
+    //     formData.append(`galleryItemIds`, id);
+    //   });
+    // }
 
     try {
       const res = await axiosSecure.put(`/products/${targetId}`, formData);
@@ -253,7 +256,10 @@ export default function EditProductForm({
           confirmButtonText: "Ok",
         });
       }
+
       setIsShowModal(false);
+      
+      handleCloseModal()
     } catch (err) {
       Swal.fire({
         title: "Error!",
@@ -264,7 +270,7 @@ export default function EditProductForm({
     }
   };
 
-  const handleCloseModal = () => {
+  const handleCloseModal = useCallback( () => {
     setIsShowModal(false);
     setProductTitle("");
     setShortDescription("");
@@ -284,12 +290,65 @@ export default function EditProductForm({
     setProductColorValue("");
     setProductSizeValue("");
     setProductFlagValue("");
-    setModelOfBrandValue("");
     setSubcategory("");
     setChildCategory("");
     setThumbnailPreview("");
     setGalleryPreview([]);
     setGalleryItemIds([]);
+    setProductColor([]);
+    setProductSize([]);
+    setGallery([])
+  },[]);
+
+  useEffect(() => {
+    setProductTitle("");
+    setShortDescription("");
+    setFullDescription("");
+    setPrice(0);
+    setDiscountPrice(0);
+    setRewardPoints(0);
+    setStock(0);
+    setProductCode("");
+    setMetaTitle("");
+    setMetaKeywords("");
+    setMetaDescription("");
+    setSpecialOffer(false);
+    setHasVariants(false);
+    setCategory("");
+    setBrandValue("");
+    setProductColorValue("");
+    setProductSizeValue("");
+    setProductFlagValue("");
+    setSubcategory("");
+    setChildCategory("");
+    setThumbnailPreview("");
+    setGalleryPreview([]);
+    setGalleryItemIds([]);
+    setProductColor([]);
+    setProductSize([]);
+    setGallery([])
+  }, [isShowModal])
+
+
+  console.log(galleryItemIds, "productTitle");
+
+
+
+  const handleColorChange = (e) => {
+    const { name, value } = e.target;
+    setProductColorValue(value);
+
+    if(value !== ""){
+    setProductColor((prev)=> prev.includes(value) ? prev : [...prev, value]);
+    }
+  };
+  const handleSizeChange = (e) => {
+    const { name, value } = e.target;
+    setProductSizeValue(value);
+
+    if(value !== ""){
+    setProductSize((prev)=> prev.includes(value) ? prev : [...prev, value]);
+    }
   };
 
   return (
@@ -558,27 +617,7 @@ export default function EditProductForm({
               </select>
             </div>
 
-            {/* Select Subcategory */}
-            <div className="mb-4">
-              <label className="block text-gray-700 font-bold mb-2">
-                Select Model Of Brand *
-              </label>
-              <select
-                value={modelOfBrandValue}
-                onChange={(e) => setModelOfBrandValue(e.target.value)}
-                className="w-full p-2 border rounded-md"
-                required
-              >
-                <option value="">Select One</option>
-                {modelOfBrand?.length > 0 &&
-                  modelOfBrand.map((item, index) => (
-                    <option value={item.slug} key={item._id}>
-                      {item?.modelName}
-                    </option>
-                  ))}
-                {/* Add more subcategories dynamically if needed */}
-              </select>
-            </div>
+            
 
             {/* Select Subcategory */}
             <div className="mb-4">
@@ -587,7 +626,7 @@ export default function EditProductForm({
               </label>
               <select
                 value={productColorValue}
-                onChange={(e) => setProductColorValue(e.target.value)}
+                onChange={handleColorChange}
                 className="w-full p-2 border rounded-md"
                 required
               >
@@ -600,6 +639,16 @@ export default function EditProductForm({
                   ))}
                 {/* Add more subcategories dynamically if needed */}
               </select>
+
+              <ul className="flex gap-3 mt-3 items-center">
+                {
+                  productColor?.length > 0 &&
+                  productColor.map((item, index) => (
+                    <li key={item._id} className="px-3 py-1 border border-black text-sm capitalize relative rounded-lg" >{item}
+                    <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 "><IoCloseCircleOutline size={25} /></span>
+                    </li>
+                ))}
+              </ul>
             </div>
 
             {/* Select Subcategory */}
@@ -631,7 +680,7 @@ export default function EditProductForm({
               </label>
               <select
                 value={productSizeValue}
-                onChange={(e) => setProductSizeValue(e.target.value)}
+                onChange={handleSizeChange}
                 className="w-full p-2 border rounded-md"
                 required
               >
@@ -644,6 +693,15 @@ export default function EditProductForm({
                   ))}
                 {/* Add more subcategories dynamically if needed */}
               </select>
+            <ul className="flex gap-3 mt-3 items-center">
+                {
+                  productSize?.length > 0 &&
+                  productSize.map((item, index) => (
+                    <li key={item._id} className="px-3 py-1 border border-black text-sm capitalize relative rounded" >{item}
+                    <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 "><IoCloseCircleOutline size={25} /></span>
+                    </li>
+                ))}
+              </ul>
             </div>
           </div>
 
