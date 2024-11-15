@@ -64,20 +64,20 @@ const ProductDetail = ({targetId, isShowDetail}) => {
   
 
   return (
-    <div className="w-full max-w-[60%] max-h-screen overflow-auto mx-auto py-8 px-4 bg-white shadow-md rounded-md" style={{scrollbarWidth: "thin"}}>
+    <div className="w-full max-h-screen overflow-auto mx-auto py-8 px-4 bg-white shadow-md rounded-md mt-14" style={{scrollbarWidth: "thin"}}>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Product Images */}
         <div className='relative'>
 
 
           
-<div className='flex justify-center items-center'>
+<div className='flex justify-center items-center min-h-[250px]'>
 
 <InnerImageZoom src={selectedImage} zoomSrc={selectedImage}
   width={450}
   hasSpacer={true} />
 </div>
-          <div className="flex mt-4 space-x-4">
+          <div className="flex mt-4 space-x-4 w-full overflow-auto min-h-[100px]">
             {product?.gallery?.length > 0 && product?.gallery.map((image, index) => (
               <div key={index} onClick={() => setSelectedImage(`https://mgpwebaps.s3.eu-north-1.amazonaws.com/multi-sports/${image.image}` )}>
 

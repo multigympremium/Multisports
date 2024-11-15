@@ -1,49 +1,18 @@
 "use client";
-import React, { useRef, useState } from "react";
-// Import Swiper React components
+import React, { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-
-// Import Swiper styles
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
-
-import "./styles.css";
-
-// import required modules
 import { FreeMode, Navigation, Thumbs, Zoom } from "swiper/modules";
-
 import CustomImage from "../../../ImageComponents/CustomImage";
 
-export default function CardGallerySide({ gallery = [], thumbnailImage = '' }) {
-  const [thumbsSwiper, setThumbsSwiper] = useState([]);
-
-  console.log(gallery, "gallery");
-
-  const images = [
-    {
-      image:
-        "https://i.pinimg.com/564x/58/ac/ca/58acca94f0313e0f56c2b0aab45c9257.jpg",
-      alt: "Image 1",
-    },
-    {
-      image:
-        "https://i.pinimg.com/736x/88/39/9d/88399dd0cf22868e42d67e9f712e9c3a.jpg",
-      alt: "Image 2",
-    },
-    {
-      image:
-        "https://i.pinimg.com/564x/8a/fb/ff/8afbffd853cca7a3096c6d9a4ecde588.jpg",
-      alt: "Image 2",
-    },
-  ];
+export default function CardGallerySide({ gallery, thumbnailImage = '' }) {
+  const [thumbsSwiper, setThumbsSwiper] = useState(null);
 
   return (
     <>
-    {
-      gallery &&
-      gallery.length > 0 &&
       <Swiper
         style={{
           "--swiper-navigation-color": "#fff",
@@ -51,97 +20,48 @@ export default function CardGallerySide({ gallery = [], thumbnailImage = '' }) {
         }}
         spaceBetween={10}
         navigation={true}
-        thumbs={{ swiper: thumbsSwiper }}
+        thumbs={thumbsSwiper ? { swiper: thumbsSwiper } : undefined} // Only pass thumbs if thumbsSwiper is set
         zoom={true}
         modules={[FreeMode, Navigation, Thumbs, Zoom]}
-        className="card_gallery"
+        className="card_gallery min-h-[170px] mt-8"
         watchSlidesProgress={true}
       >
-        {
-          gallery.map((item, index) => (
-            <SwiperSlide key={index}>
-              <CustomImage
-                imageKey={item?.image}
-                alt={"image"}
-                className="h-[350px] w-full object-cover"
-                width={600}
-                height={500}
-              />
-            </SwiperSlide>
-          ))
-          
-            }
-
+        {gallery.map((item, index) => (
+          <SwiperSlide key={index}>
+            <CustomImage
+              imageKey={item?.image}
+              alt={"image"}
+              className="h-[350px] w-full object-cover"
+              width={600}
+              height={500}
+            />
+          </SwiperSlide>
+        ))}
       </Swiper>
-    }
-    {
-      !(gallery &&
-      gallery.length > 0 )&&  (
-        <SwiperSlide>
-      
-       <CustomImage
-        imageKey={thumbnailImage}
-        alt={"image"}
-        className="h-[350px] w-full object-cover"
-        width={600}
-        height={500}
-      />
-    </SwiperSlide>
-      )
-    }
 
-    {
-      gallery &&
-      gallery.length > 0 && 
-      <Swiper
-        onSwiper={setThumbsSwiper}
-        spaceBetween={10}
-        slidesPerView={4}
-        freeMode={true}
-        watchSlidesProgress={true}
-        modules={[FreeMode, Navigation, Thumbs]}
-        className="card_gallery"
-      >
-        {gallery &&
-          gallery.length > 0 &&
-          gallery.map((item, index) => (
+      {gallery && gallery.length > 0 && (
+        <Swiper
+          onSwiper={setThumbsSwiper}  // Set the thumbsSwiper instance here
+          spaceBetween={10}
+          slidesPerView={4}
+          freeMode={true}
+          watchSlidesProgress={true}
+          modules={[FreeMode, Thumbs]}
+          className="card_gallery_thumbs"
+        >
+          {gallery.map((item, index) => (
             <SwiperSlide key={index}>
               <CustomImage
                 imageKey={item.image}
-                alt={"image"}
+                alt={"thumbnail"}
                 className="h-[150px] w-full object-cover"
                 width={600}
                 height={500}
               />
-            </SwiperSlide> 
-          ))
-        //   : 
-        //   <SwiperSlide>
-          
-        //   <div className="h-[350px] w-full object-cover">
-        //     No Image Available
-        //   </div>
-        // </SwiperSlide>
-        }
-
-      </Swiper>
-    }
-    {
-         !(gallery &&
-         gallery.length > 0 )&&  (
-           <SwiperSlide>
-         
-          <CustomImage
-           imageKey={thumbnailImage}
-           alt={"image"}
-           className="h-[350px] w-full object-cover"
-           width={600}
-           height={500}
-         />
-       </SwiperSlide>
-         )
-       }
-      
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      )}
     </>
   );
 }

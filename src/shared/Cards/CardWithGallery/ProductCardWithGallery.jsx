@@ -5,14 +5,36 @@ import { AuthContext } from "../../../providers/AuthProvider";
 import { useContext } from "react";
 import WishlistIcon from "../Wishlist/WishlistIcon";
 import { FaEye } from "react-icons/fa";
+import CustomImage from "../../ImageComponents/CustomImage";
 
 export default function ProductCardWithGallery({ product , setTargetId, setIsShowDetail }) {
   const { addToCart } = useContext(AuthContext);
+
+  console.log(product?.gallery, "product?.gallery");
   return (
+    <>
     <div className="max-w-xs bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 p-4 relative">
       {/* Product Image */}
 
-      <CardGallerySide gallery={product?.gallery} thumbnailImage={product?.thumbnail} />
+      <div className="min-h-[250px] w-full">
+
+      {
+        product?.gallery && product?.gallery?.length > 0 ?
+        <CardGallerySide gallery={product?.gallery} thumbnailImage={product?.thumbnail} />
+
+        : 
+        <CustomImage
+        imageKey={product?.thumbnail}
+        alt={"image"}
+        className="h-[350px] w-full object-cover"
+        width={600}
+        height={500}
+      />
+      }
+      </div>
+
+
+      
 
       <WishlistIcon item={product} />
 
@@ -56,6 +78,10 @@ export default function ProductCardWithGallery({ product , setTargetId, setIsSho
           ADD TO CART
         </button>
       </div>
+
+
     </div>
+    
+    </>
   );
 }
