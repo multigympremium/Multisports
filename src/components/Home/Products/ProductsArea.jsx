@@ -20,11 +20,17 @@ function ProductsArea({ slug, sizeFilter, colorFilter, brandFilter, query }) {
 
   return (
     <>
-    <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 ">
-      {products && products?.length > 0 &&
+    <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 ">
+      {products && products?.length > 0 ?
         products.map((product, index) => (
           <ProductCardWithGallery key={index} product={product} setTargetId={setTargetId} setIsShowDetail={setIsShowDetail} />
-        ))}
+        )): 
+        (
+          <div className="flex justify-center items-center h-screen col-span-full">
+            <h1 className="text-2xl font-bold">No Products Found</h1>
+          </div>
+        )
+        }
     </div>
     <BgBlurModal isShowModal={isShowDetail} setIsShowModal={setIsShowDetail}>
       <ProductDetail targetId={targetId} setIsShowDetail={setIsShowDetail} isShowDetail={isShowDetail} />

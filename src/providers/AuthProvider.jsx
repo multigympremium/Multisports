@@ -279,6 +279,7 @@ const AuthProvider = ({ children }) => {
     addToCart,
     updateCartQuantity,
     cartItems,
+    setCartItems,
     totalItems,
     totalPrice,
     addToWishlist,

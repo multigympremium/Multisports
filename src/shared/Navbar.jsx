@@ -221,11 +221,11 @@ const Navbar = () => {
             {/* Cart */}
             <div
               onClick={() => setIsShowModal(true)}
-              className="flex items-center justify-center flex-col gap-1 md:p-3 p-1 rounded"
+              className="flex items-center justify-center flex-col gap-1 md:p-3 p-1 rounded relative"
             >
               <BsCart className="md:text-2xl text-base text-gray-600 hover:text-orange-500 hover:scale-110 cursor-pointer transition-all" />
               <span className="hidden md:block">Cart</span>
-              {/* <div className="badge badge-primary badge-lg">{totalItems}</div> */}
+              <div className="badge badge-primary badge-lg absolute top-0 -right-2">{totalItems}</div>
             </div>
 
             {/* Sign In */}

@@ -10,7 +10,7 @@ const ProductDetail = ({targetId, isShowDetail}) => {
   const [product, setProduct] = useState({});
   const [selectedImage, setSelectedImage] = useState(product?.thumbnail || "");
   const axiosPublic = useAxiosPublic()
-  const { cartItems, removeFromCart, addToCart , updateCartQuantity, totalPrice } =
+  const { cartItems, removeFromCart, addToCart , updateCartQuantity, totalPrice, setCartItems } =
     useContext(AuthContext);
 
     const [activeDescription, setActiveDescription] = useState("full_desc");
@@ -61,10 +61,14 @@ const ProductDetail = ({targetId, isShowDetail}) => {
 
   },[ targetId, isShowDetail, axiosPublic])
 
+  useEffect(()=> {
+    setQuantity(cartItems.find(item => item._id === targetId)?.quantity)
+  }, [cartItems,targetId])
+
   
 
   return (
-    <div className="w-full max-h-screen overflow-auto mx-auto py-8 px-4 bg-white shadow-md rounded-md mt-14" style={{scrollbarWidth: "thin"}}>
+    <div className="w-full max-h-screen overflow-auto mx-auto py-8 px-4 bg-white shadow-md rounded-md mt-24" style={{scrollbarWidth: "thin"}}>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Product Images */}
         <div className='relative'>
@@ -131,7 +135,7 @@ const ProductDetail = ({targetId, isShowDetail}) => {
           >
             -
           </button>
-          <span className="mx-2">{cartItems && cartItems.find(item => item._id === targetId)?.quantity}</span>
+          <span className="mx-2">{cartItems && cartItems.find(item => item._id === targetId)?.quantity || 0}</span>
           <button
             className="px-2 py-1 bg-gray-300 rounded"
             onClick={() => increaseQuantity(product._id)}
