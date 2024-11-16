@@ -10,7 +10,6 @@ import CustomImage from "../../ImageComponents/CustomImage";
 export default function ProductCardWithGallery({ product , setTargetId, setIsShowDetail }) {
   const { addToCart } = useContext(AuthContext);
 
-  console.log(product?.gallery, "product?.gallery");
   return (
     <>
     <div className="max-w-xs bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 p-4 relative">

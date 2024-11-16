@@ -3,6 +3,7 @@ import React , { lazy, Suspense } from "react";
 import GlobalLoading from "../../components library/GlobalLoading";
 const ProductPage = lazy(() => import( "../../components/Home/Products/ProductPage"));
 const PrivateRoute = lazy(() => import( "./routes/PrivateRoute"));
+const CancelOrders = lazy(() => import( "../../components/dashboard/ManageOrders/CancelOrders"));
 const Change_Password = lazy(() => import( "../../pages/User_Dashboard/Change_Password"));
 const UserRoleList = lazy(() => import( "../../components/dashboard/SystemUsers/UserRoleList"));
 const ViewAllBlogs = lazy(() => import( "../../components/dashboard/Blogs/ViewAllBlogs/ViewAllBlogs"));
@@ -221,6 +222,22 @@ function DashboardChildrenRoutes() {
         <Suspense fallback={<GlobalLoading />}>
           <PrivateRoute>
             <ApprovedOrders />
+          </PrivateRoute>
+        </Suspense>
+      ),
+    },
+    {
+      // path: "workout-routine",
+      path: "cancelled-orders",
+      // path: isPermittedRoute("workout-routine"),
+      element: (
+        // <PrivateRoute>
+        //   <Visitor />
+        // </PrivateRoute>
+        // <Workout_routine />
+        <Suspense fallback={<GlobalLoading />}>
+          <PrivateRoute>
+            <CancelOrders />
           </PrivateRoute>
         </Suspense>
       ),

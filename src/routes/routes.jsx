@@ -7,9 +7,11 @@ const Error404 = lazy(() => import("../pages/default/Error404"));
 import HomePage from "../pages/OtherPage/Home/HomePage";
 import DashboardChildrenRoutes from "./src/DashboardChildrenRoutes";
 import PrivateRoute from "./src/routes/PrivateRoute";
-const CheckoutPage = lazy(() => import(  "../components/Home/checkout/CheckoutPage"));
-const CartPage = lazy(() => import(  "../components/Home/cart/CartPage"));
-const ProductPage = lazy(() => import("../components/Home/Products/ProductPage"));
+import CartPage from "../components/Home/cart/CartPage";
+import CheckoutPage from "../components/Home/checkout/CheckoutPage";
+import Success from "../components/Home/success/Success";
+import Cancel from "../components/Home/cancel/Cancel";
+import ProductPage from "../components/Home/Products/ProductPage";
 
 // Continue for other components...
 
@@ -123,10 +125,8 @@ const AllRoutes = () => {
             // <PrivateRoute>
             //   <Addworkout />
             // </PrivateRoute>
-            <Suspense fallback={<GlobalLoading />}>
+           
                 <CheckoutPage />
-              
-            </Suspense>
           ),
         },
         {
@@ -137,10 +137,8 @@ const AllRoutes = () => {
             // <PrivateRoute>
             //   <Addworkout />
             // </PrivateRoute>
-            <Suspense fallback={<GlobalLoading />}>
+            
                 <CartPage />
-              
-            </Suspense>
           ),
         },
         {
@@ -148,13 +146,32 @@ const AllRoutes = () => {
           path: "products/:id",
           // path: isPermittedRoute("addworkout"),
           element: (
+            
+                <ProductPage />
+          ),
+        },
+        {
+          // path: "addworkout",
+          path: "success",
+          // path: isPermittedRoute("addworkout"),
+          element: (
             // <PrivateRoute>
             //   <Addworkout />
             // </PrivateRoute>
-            <Suspense fallback={<GlobalLoading />}>
-                <ProductPage />
-              
-            </Suspense>
+                <Success />
+            
+          ),
+        },
+        {
+          // path: "addworkout",
+          path: "cancel",
+          // path: isPermittedRoute("addworkout"),
+          element: (
+            // <PrivateRoute>
+            //   <Addworkout />
+            // </PrivateRoute>
+                <Cancel />
+            
           ),
         },
       ],

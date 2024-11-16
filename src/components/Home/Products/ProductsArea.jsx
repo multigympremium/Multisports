@@ -3,15 +3,18 @@ import React, { useState } from "react";
 import BgBlurModal from "../../../shared/Modal/BgBlurModal";
 import ProductDetail from "./ProductDetail";
 import ProductCardWithGallery from "../../../shared/Cards/CardWithGallery/ProductCardWithGallery";
+import useGetAllProducts from "../../../Hook/GetPublicDataHook/useGetAllProducts";
 
-function ProductsArea({ slug, sizeFilter, colorFilter, brandFilter, products }) {
+function ProductsArea({ slug, sizeFilter, colorFilter, brandFilter, query }) {
   const [targetId, setTargetId] = useState("");
   const [isShowDetail, setIsShowDetail] = useState(false);
-  // const products = useGetAllProducts({
-  //   query: `search=${slug}&color=${colorFilter.join(
-  //     ","
-  //   )}&size=${sizeFilter.join(",")}&brand=${brandFilter.join(",")}`,
-  // });
+
+  console.log(query, "query")
+  const products = useGetAllProducts({
+    query: `search=${slug}&color=${colorFilter.join(
+      ","
+    )}&size=${sizeFilter.join(",")}&brand=${brandFilter.join(",")}&${query.includes("product=") ? "product="+query.split("=")[1] : ""}`,
+  });
 
   console.log(products, "products");
 

@@ -12,6 +12,7 @@ import Wishlist from "./Cards/Wishlist/Wishlist";
 import BgBlurModal from "./Modal/BgBlurModal";
 import Cart from "./cart/Cart";
 import { Link, useNavigate } from "react-router-dom";
+import ProductSearch from "../components/Home/Products/ProductSearch/ProductSearch";
 const Navbar = () => {
   const placeholders = ['Shorts', 'Watch', 'Shirt'];
   const [placeholderText, setPlaceholderText] = useState("");
@@ -19,7 +20,11 @@ const Navbar = () => {
   const [charIndex, setCharIndex] = useState(0);
   const [isTyping, setIsTyping] = useState(true);
   const [isFocused, setIsFocused] = useState(false);
-  const SearchBar = () => {
+  const router = useNavigate();
+  const [isShowModal, setIsShowModal] = useState(false);
+  const [isShowWishlist, setIsShowWishlist] = useState(false);
+  const [isShowSearch, setIsShowSearch] = useState(false);
+  const SearchBar = ({setIsShowSearch}) => {
 
 
     useEffect(() => {
@@ -56,7 +61,8 @@ const Navbar = () => {
     }, [charIndex, isTyping, placeholderIndex, placeholders, isFocused]);
 
     const handleFocus = () => {
-      setIsFocused(true);
+      // setIsFocused(true);
+      setIsShowSearch(true);
     };
 
     const handleBlur = (e) => {
@@ -73,6 +79,7 @@ const Navbar = () => {
           placeholder={!isFocused ? `Search for "${placeholderText}"` : ""}
           onFocus={handleFocus}
           onBlur={handleBlur}
+
         />
         <IoIosSearch className="text-2xl text-gray-400" />
       </div>
@@ -84,9 +91,7 @@ const Navbar = () => {
     logOut,
     totalItems
   } = useContext(AuthContext);
-  const router = useNavigate();
-  const [isShowModal, setIsShowModal] = useState(false);
-  const [isShowWishlist, setIsShowWishlist] = useState(false);
+ 
 
 
   const currentUserRoute =
@@ -194,7 +199,7 @@ const Navbar = () => {
             </button>
           </label> */}
 
-          <SearchBar></SearchBar>
+          <SearchBar setIsShowSearch={setIsShowSearch}></SearchBar>
 
           {/* Menu */}
           <div className="navbar-end flex items-center gap-1 md:gap-3">
@@ -240,6 +245,9 @@ const Navbar = () => {
       </BgBlurModal>
       <BgBlurModal isShowModal={isShowWishlist} setIsShowModal={setIsShowWishlist}>
         <Wishlist isShow={isShowWishlist} setIsShow={setIsShowWishlist} />
+      </BgBlurModal>
+      <BgBlurModal isShowModal={isShowSearch} setIsShowModal={setIsShowSearch}>
+        <ProductSearch isShow={isShowSearch} setIsShow={setIsShowSearch} />
       </BgBlurModal>
     </>
   );

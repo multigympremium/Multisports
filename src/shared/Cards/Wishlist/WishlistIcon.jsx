@@ -13,20 +13,9 @@ export default function WishlistIcon({item}) {
 
   const handleWishlist = async () => {
 
-    console.log(item, isLike, "item")
+    
 
-    try {
-
-      const res = await axiosPublic.get(`/whish-count/${item?._id}`);
-
-      if(res.status === 200 || res.status === 201){
-        toast.success("Added to wishlist!");
-      }
-      
-    } catch (error) {
-      console.log(error)
-      toast.error("Error adding to wishlist!");
-    }
+    
     
     setIsLike((prev)=> {
       if (prev) {

@@ -4,8 +4,8 @@ import { FiEdit, FiTrash2 } from "react-icons/fi";
 import useGetAllOrders from "../../../Hook/GetDataHook/useGetAllOrders";
 import BgBlurModal from "../../../shared/Modal/BgBlurModal";
 import OrderDetail from "./OrderDetail";
-import toast from "react-hot-toast";
 import Swal from "sweetalert2";
+import toast from "react-hot-toast";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
 
 // Sample pending orders data (could be fetched from API)
@@ -35,7 +35,7 @@ const initialData = [
   // Add more pending order data if needed
 ];
 
-export default function ApprovedOrders() {
+export default function CancelOrders() {
   // const [orders, setOrders] = useState(initialData);
   const axiosSecure = useAxiosSecure();
   const [searchTerm, setSearchTerm] = useState("");
@@ -46,7 +46,7 @@ export default function ApprovedOrders() {
   const [targetId, setTargetId] = useState(null);
   const [isDeleted, setIsDeleted] = useState(false);
 
-  const orders = useGetAllOrders({query:`status=Delivered`, isDeleted, isShowModal: isShowDetail,})
+  const orders = useGetAllOrders({query:`status=Cancelled`, isDeleted, isShowModal: isShowDetail})
 
   console.log(orders, "orders");
 
@@ -111,7 +111,7 @@ export default function ApprovedOrders() {
   return (
     <div className="min-h-screen bg-gray-100 p-10">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-2xl font-bold mb-5">Delivered Orders</h1>
+        <h1 className="text-2xl font-bold mb-5">Canceled Orders</h1>
 
         {/* Search Input */}
         <div className="mb-4">

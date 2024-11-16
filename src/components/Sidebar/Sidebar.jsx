@@ -96,7 +96,7 @@ const Sidebar = ({ isCollapsed }) => {
                       htmlFor={`collapse-${cat.title}`}
                       className="font-medium flex items-center gap-2 cursor-pointer pl-4"
                     >
-                      {/* {!isCollapsed && cat.icon} */}
+                      {!isCollapsed && cat.icon}
                       {!isCollapsed && cat.title}
                     </label>
                     <div className="collapse-content px-1 pt-2">
@@ -128,7 +128,7 @@ const Sidebar = ({ isCollapsed }) => {
                           }`}
                         >
                           {/* <span className="text-2xl">{item.icon}</span> */}
-                          {/* {item.icon} */}
+                          {item.icon}
                           {!isCollapsed && <span>{item.title}</span>}
                         </Link>
                       ))}

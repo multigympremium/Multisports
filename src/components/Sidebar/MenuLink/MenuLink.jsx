@@ -23,7 +23,7 @@ const MenuLink = ({ item, location, isCollapsed }) => {
           : "text-gray-700 hover:bg-gray-100 hover:text-gray-900"
       }`}
     >
-      {/* {item.icon} */}
+      {item.icon}
       {!isCollapsed && <span>{item.title}</span>}
     </Link>
   );

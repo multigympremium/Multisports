@@ -218,8 +218,14 @@ function MenuItemsList({ userRole }) {
           icon: <IoIosHome />,
         },
         {
-          title: "Approved Orders",
+          title: "Delivered Orders",
           path: "approved-orders",
+          isAllowed: isAllowedRoute("approved-orders"),
+          icon: <IoIosHome />,
+        },
+        {
+          title: "Cancelled Orders",
+          path: "cancelled-orders",
           isAllowed: isAllowedRoute("approved-orders"),
           icon: <IoIosHome />,
         },

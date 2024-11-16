@@ -3,10 +3,13 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import moment from 'moment';
-import { axiosSecure } from '../../../Hook/useAxiosSecure';
+import useAxiosSecure from '../../../Hook/useAxiosSecure';
 import CustomImage from '../../../shared/ImageComponents/CustomImage';
+import GlobalLoading from '../../../components library/GlobalLoading';
+import toast from 'react-hot-toast';
 
 export default function OrderDetail({id, isShow, setIsShow}) {
+  const axiosSecure = useAxiosSecure()
   
 
   const [order, setOrder] = useState(null);
@@ -19,6 +22,7 @@ export default function OrderDetail({id, isShow, setIsShow}) {
           const res = await axiosSecure.get(`/orders/${id}`);
           setOrder(res?.data?.data);
           setStatus(res?.data?.data?.status);
+          console.log(res?.data?.data, "res?.data?.data")
         } catch (error) {
           console.error('Error fetching order:', error);
         }
@@ -26,8 +30,12 @@ export default function OrderDetail({id, isShow, setIsShow}) {
 
     if (id) {
       fetchOrder();
+      console.log(isShow, "isShow", id)
     }
   }, [id, isShow]);
+  
+
+  
 
   
 
@@ -35,29 +43,29 @@ export default function OrderDetail({id, isShow, setIsShow}) {
     const newStatus = e.target.value;
     setStatus(newStatus);
     try {
-      await axios.put(`/api/orders/${id}`, { status: newStatus });
-      alert('Order status updated successfully');
+      await axiosSecure.put(`/orders/${id}`, { status: newStatus });
+      toast.success('Order status updated successfully!');
+      setIsShow(false);
     } catch (error) {
       console.error('Error updating status:', error);
     }
   };
 
-  if (!order) {
-    return <div>Loading...</div>;
-  }
+  
+  if(!order){ return <GlobalLoading />}
 
   return (
-    <div className="w-full max-w-[60%] h-screen overflow-auto mx-auto p-6 bg-white shadow-md">
+    <div className="w-full h-screen overflow-auto mx-auto p-6 bg-white shadow-md">
       <h2 className="text-2xl font-semibold mb-4">Order Details</h2>
 
       <div className='w-full grid grid-cols-2 gap-4'>
 
       <div className="mb-6">
         <h3 className="text-lg font-semibold">Order Information</h3>
-        <p><strong>Order ID:</strong> {order._id}</p>
-        <p><strong>Total:</strong> {order.total} BDT</p>
-        <p><strong>Payment Method:</strong> {order.payment_method}</p>
-        <p><strong>Order Date:</strong> {moment(order.createdAt).format('MMMM Do YYYY, h:mm:ss a')}</p>
+        <p><strong>Order ID:</strong> {order?._id}</p>
+        <p><strong>Total:</strong> {order?.total} BDT</p>
+        <p><strong>Payment Method:</strong> {order?.payment_method}</p>
+        <p><strong>Order Date:</strong> {moment(order?.createdAt).format('MMMM Do YYYY, h:mm:ss a')}</p>
         <p><strong>Status:</strong> 
           <select value={status} onChange={handleStatusChange} className="ml-2 border rounded">
             <option value="Pending">Pending</option>
@@ -78,9 +86,9 @@ export default function OrderDetail({id, isShow, setIsShow}) {
 
       <div className="mb-6">
         <h3 className="text-lg font-semibold">Products</h3>
-        {order.products.map((product, idx) => (
+        {order?.products.map((product, idx) => (
           <div key={idx} className="border py-2 rounded-md mb-4 flex gap-4 items-center">
-            <div className="relative w-[150px]">
+            <div className="relative w-[300px]">
         <CustomImage
           imageKey={product?.thumbnail}
           alt={"image"}

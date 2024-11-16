@@ -4,6 +4,9 @@ import useGetAllOrders from "../../../Hook/GetDataHook/useGetAllOrders";
 import { useState } from "react";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import OrderDetail from "./OrderDetail";
+import Swal from "sweetalert2";
+import useAxiosSecure from "../../../Hook/useAxiosSecure";
+import toast from "react-hot-toast";
 
 
 
@@ -11,13 +14,15 @@ import OrderDetail from "./OrderDetail";
 
 export default function AllOrders() {
   // const [orders, setOrders] = useState(initialData);
+  const axiosSecure = useAxiosSecure();
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [isShowDetail, setIsShowDetail] = useState(false);
   const [targetId, setTargetId] = useState(null);
+  const [isDeleted, setIsDeleted] = useState(false);
   const itemsPerPage = 5;
 
-  const orders = useGetAllOrders({})
+  const orders = useGetAllOrders({isDeleted, isShowModal: isShowDetail})
 
   console.log(orders, "orders");
 
@@ -36,18 +41,60 @@ export default function AllOrders() {
     setCurrentPage(page);
   };
 
-  // const totalPending = orders
-  //   .filter((order) => order.status === "Pending")
-  //   .reduce((acc, order) => acc + order.total, 0);
-  // const totalApproved = orders
-  //   .filter((order) => order.status === "Approved")
-  //   .reduce((acc, order) => acc + order.total, 0);
-  // const totalDelivered = orders
-  //   .filter((order) => order.status === "Delivered")
-  //   .reduce((acc, order) => acc + order.total, 0);
-  // const totalCancelled = orders
-  //   .filter((order) => order.status === "Cancelled")
-  //   .reduce((acc, order) => acc + order.total, 0);
+  const handleDelete = async (id) => {
+    try {
+      Swal.fire({
+        title: "Are you sure you want to delete this member?",
+        text: "This action cannot be undone!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Yes, delete it!",
+        cancelButtonText: "No, cancel!",
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          try {
+            const res = await axiosSecure.delete(`/orders/${id}`);
+            console.log(res, "res");
+            if (res.status === 200 || res.status === 201) {
+              setIsDeleted((prev) => !prev);
+              toast.success("Category deleted successfully!");
+            }
+          } catch (error) {
+            console.log(error, "error");
+            toast.error("Error deleting Item!");
+          }
+        }
+      });
+    } catch (error) {
+      console.log(error, "error");
+      toast.error("Error deleting category!");
+    }
+    console.log(`Delete category with ID: ${id}`);
+  };
+
+  
+  const totalPending = parseFloat(
+    orders
+      .filter((order) => order.status === "Pending")
+      .reduce((acc, order) => acc + order.total, 0)
+  );
+  const totalApproved = parseFloat(
+    orders
+      .filter((order) => order.status === "Approved")
+      .reduce((acc, order) => acc + order.total, 0)
+  );
+  const totalDelivered = parseFloat(
+    orders
+      .filter((order) => order.status === "Delivered")
+      .reduce((acc, order) => acc + order.total, 0)
+  );
+  const totalCancelled = parseFloat(
+    orders
+      .filter((order) => order.status === "Cancelled")
+      .reduce((acc, order) => acc + order.total, 0)
+  );
 
   return (
     <div className="min-h-screen bg-gray-100 p-10">
@@ -56,23 +103,23 @@ export default function AllOrders() {
         <div className="grid grid-cols-4 gap-4 mb-8">
           <div className="bg-white p-4 shadow-md rounded-md">
             <h3 className="text-lg font-bold">Total Pending Orders</h3>
-            {/* <p className="text-2xl mt-2">৳ {totalPending.toFixed(2)}</p> */}
-            <p className="text-2xl mt-2">৳ 0</p>
+            <p className="text-2xl mt-2">৳ {totalPending.toFixed(2)}</p>
+            {/* <p className="text-2xl mt-2">৳ 0</p> */}
           </div>
           <div className="bg-white p-4 shadow-md rounded-md">
             <h3 className="text-lg font-bold">Total Approved Orders</h3>
-            {/* <p className="text-2xl mt-2">৳ {totalApproved.toFixed(2)}</p> */}
-            <p className="text-2xl mt-2">৳ 0</p>
+            <p className="text-2xl mt-2">৳ {totalApproved.toFixed(2)}</p>
+            {/* <p className="text-2xl mt-2">৳ 0</p> */}
           </div>
           <div className="bg-white p-4 shadow-md rounded-md">
             <h3 className="text-lg font-bold">Total Delivered Orders</h3>
-            {/* <p className="text-2xl mt-2">৳ {totalDelivered.toFixed(2)} 0</p> */}
-            <p className="text-2xl mt-2">৳  0</p>
+            <p className="text-2xl mt-2">৳ {totalDelivered.toFixed(2)} 0</p>
+            {/* <p className="text-2xl mt-2">৳ 0</p> */}
           </div>
           <div className="bg-white p-4 shadow-md rounded-md">
             <h3 className="text-lg font-bold">Total Cancelled Orders</h3>
-            {/* <p className="text-2xl mt-2">৳ {totalCancelled.toFixed(2)}0</p> */}
-            <p className="text-2xl mt-2">৳ 0</p>
+            <p className="text-2xl mt-2">৳ {totalCancelled.toFixed(2)}0</p>
+            {/* <p className="text-2xl mt-2">৳ 0</p> */}
           </div>
         </div>
 
@@ -123,7 +170,7 @@ export default function AllOrders() {
                       <button className="text-yellow-500 hover:text-yellow-700" onClick={()=> {setIsShowDetail(true); setTargetId(order._id)}}>
                         <FiEdit />
                       </button>
-                      <button className="text-red-500 hover:text-red-700">
+                      <button className="text-red-500 hover:text-red-700" onClick={()=> handleDelete(order._id)}>
                         <FiTrash2 />
                       </button>
                     </div>

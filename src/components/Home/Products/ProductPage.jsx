@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { FaUser } from "react-icons/fa";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useParams, useSearchParams } from "react-router-dom";
 import useGetAllProductBrands from "../../../Hook/GetDataHook/useGetAllProductBrands";
 import useGetAllSubCategories from "../../../Hook/GetDataHook/useGetAllSubCategories";
 import useGetAllProductColors from "../../../Hook/GetDataHook/useGetAllProductColors";
@@ -14,6 +14,8 @@ import ProductsArea from "./ProductsArea";
 
 function ProductPage() {
     const params = useParams()
+    const location = useLocation()
+    console.log(location, "searchParams")
   const [brandFilter, setBrandFilter] = useState([]);
   const [colorFilter, setColorFilter] = useState([]);
   const [sizeFilter, setSizesFilter] = useState([]);
@@ -146,6 +148,7 @@ function ProductPage() {
             sizeFilter={sizeFilter}
             colorFilter={colorFilter}
             brandFilter={brandFilter}
+            query={location.search}
           />
         </div>
       </div>
