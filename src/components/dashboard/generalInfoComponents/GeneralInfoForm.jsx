@@ -194,7 +194,7 @@ const GeneralInfoForm = () => {
           type="submit"
           className="customSaveButton shadow-xl flex items-center"
         >
-          {loading ? <>Updating <span className="loading loading-spinner ml-2  loading-xs"></span></>:"Update Info"}
+          {loading ? <><span className="loading loading-spinner mr-2  loading-xs"></span>Updating ..</>:"Update Info"}
         </button>
         <button
           type="button"
