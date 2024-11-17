@@ -7,7 +7,6 @@ import { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
-import { set } from "react-hook-form";
 
 export default function ChildCategoryCreateForm() {
   const [category, setCategory] = useState("");
@@ -15,29 +14,66 @@ export default function ChildCategoryCreateForm() {
   const [childCategoryName, setChildCategoryName] = useState("");
   const [childCategoryIcon, setChildCategoryIcon] = useState(null);
   const [childCategoryIconPreview, setChildCategoryIconPreview] = useState("");
-
   const [slug, setSlug] = useState("");
+  const [errors, setErrors] = useState({});
+  
   const categories = useGetAllCategories({});
-  const subcategories = useGetAllSubCategories({query: `category=${category}`,});
+  const subcategories = useGetAllSubCategories({ query: `category=${category}` });
 
   const axiosSecure = useAxiosSecure();
 
+  // Maximum allowed file size in bytes (e.g., 5MB)
+  const MAX_FILE_SIZE = 5 * 1024 * 1024;
+
   const onDropIcon = (acceptedFiles) => {
     const file = acceptedFiles[0]; // Assuming one file for simplicity
+
+    // Check file size
+    if (file.size > MAX_FILE_SIZE) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        icon: "File size exceeds 5MB limit",
+      }));
+      return;
+    }
 
     // Create a local URL for the dropped image
     const previewUrl = URL.createObjectURL(file);
     // Set the state with the URL
     setChildCategoryIconPreview(previewUrl);
-    setChildCategoryIcon(acceptedFiles[0]);
+    setChildCategoryIcon(file);
+    setErrors((prevErrors) => {
+      const { icon, ...rest } = prevErrors; // Remove any existing icon error
+      return rest;
+    });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission logic here
 
+    // Reset errors before validation
+    setErrors({});
+
+    // Basic validation for required fields
+    let validationErrors = {};
+
+    if (!category) validationErrors.category = "Category is required.";
+    if (!subcategory) validationErrors.subcategory = "Subcategory is required.";
+    if (!childCategoryName) validationErrors.childCategoryName = "Child Category Name is required.";
+    if (!slug) validationErrors.slug = "Slug is required.";
+    if (!childCategoryIcon) validationErrors.childCategoryIcon = "Child Category Icon is required.";
+    if (childCategoryIcon && childCategoryIcon.size > MAX_FILE_SIZE) {
+      validationErrors.icon = "File size exceeds 5MB limit.";
+    }
+
+    // If there are validation errors, update the state and prevent form submission
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
+    // Create FormData and append values
     const formData = new FormData();
-
     formData.append("category", category);
     formData.append("subcategory", subcategory);
     formData.append("childCategoryName", childCategoryName);
@@ -47,8 +83,6 @@ export default function ChildCategoryCreateForm() {
     try {
       const res = await axiosSecure.post("/child-categories", formData);
 
-      console.log(res);
-
       if (res.status === 200 || res.status === 201) {
         Swal.fire({
           title: "Success!",
@@ -57,11 +91,13 @@ export default function ChildCategoryCreateForm() {
           confirmButtonText: "Ok",
         });
 
+        // Reset form fields after successful submission
         setCategory("");
         setSubcategory("");
         setChildCategoryName("");
         setChildCategoryIcon(null);
         setChildCategoryIconPreview("");
+        setSlug("");
       }
     } catch (err) {
       console.error(err);
@@ -99,14 +135,12 @@ export default function ChildCategoryCreateForm() {
         <form onSubmit={handleSubmit}>
           {/* Select Category */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">
-              Select Category *
-            </label>
+            <label className="block text-gray-700 font-bold mb-2">Select Category *</label>
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
               className="w-full p-2 border rounded-md"
-              required
+              
             >
               <option value="">Select One</option>
               {categories?.length > 0 &&
@@ -116,18 +150,17 @@ export default function ChildCategoryCreateForm() {
                   </option>
                 ))}
             </select>
+            {errors.category && <p className="text-red-500 text-xs">{errors.category}</p>}
           </div>
 
           {/* Select Subcategory */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">
-              Select Subcategory *
-            </label>
+            <label className="block text-gray-700 font-bold mb-2">Select Subcategory *</label>
             <select
               value={subcategory}
               onChange={(e) => setSubcategory(e.target.value)}
               className="w-full p-2 border rounded-md"
-              required
+              
             >
               <option value="">Select One</option>
               {subcategories?.length > 0 &&
@@ -136,8 +169,8 @@ export default function ChildCategoryCreateForm() {
                     {item?.subcategoryName}
                   </option>
                 ))}
-              {/* Add more subcategories dynamically if needed */}
             </select>
+            {errors.subcategory && <p className="text-red-500 text-xs">{errors.subcategory}</p>}
           </div>
 
           {/* Child Category Name */}
@@ -149,11 +182,14 @@ export default function ChildCategoryCreateForm() {
               onChange={(e) => handleSubcategoryNameInput(e.target.value)}
               className="w-full p-2 border rounded-md"
               placeholder="Child Category Title"
-              required
+              
             />
+            {errors.childCategoryName && (
+              <p className="text-red-500 text-xs">{errors.childCategoryName}</p>
+            )}
           </div>
 
-          {/* slug Name */}
+          {/* Slug */}
           <div className="mb-4">
             <label className="block text-gray-700 font-bold mb-2">Slug *</label>
             <input
@@ -162,22 +198,21 @@ export default function ChildCategoryCreateForm() {
               onChange={(e) => handleSlug(e.target.value)}
               className="w-full p-2 border rounded-md"
               placeholder="Subcategory Title"
-              required
+              
             />
+            {errors.slug && <p className="text-red-500 text-xs">{errors.slug}</p>}
           </div>
 
           {/* Child Category Icon */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">
-              Child Category Icon
-            </label>
-
+            <label className="block text-gray-700 font-bold mb-2">Child Category Icon</label>
             <DragUploadImageInput
               getRootProps={getIconRootProps}
               getInputProps={getIconInputProps}
               image={childCategoryIcon}
               imagePreview={childCategoryIconPreview}
             />
+            {errors.icon && <p className="text-red-500 text-xs">{errors.icon}</p>}
           </div>
 
           {/* Submit Button */}

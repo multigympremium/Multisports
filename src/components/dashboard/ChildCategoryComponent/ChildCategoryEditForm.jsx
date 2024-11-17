@@ -1,9 +1,7 @@
 "use client";
 import EditFormImage from "../../../shared/ImageComponents/EditFormImage";
-
 import useGetAllCategories from "../../../Hook/GetDataHook/useGetAllCategories";
 import useGetAllSubCategories from "../../../Hook/GetDataHook/useGetAllSubCategories";
-
 import { useState, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import { FiUploadCloud } from "react-icons/fi";
@@ -21,9 +19,15 @@ export default function ChildCategoryEditForm({
   const [childCategoryIcon, setChildCategoryIcon] = useState(null);
   const [childCategoryIconPreview, setChildCategoryIconPreview] = useState("");
   const [slug, setSlug] = useState("");
+  const [error, setError] = useState("");
+  const [categoryError, setCategoryError] = useState("");
+  const [subcategoryError, setSubcategoryError] = useState("");
+  const [nameError, setNameError] = useState("");
+  const [slugError, setSlugError] = useState("");
+  const [iconError, setIconError] = useState("");
+
   const categories = useGetAllCategories({});
   const subcategories = useGetAllSubCategories({});
-
   const axiosSecure = useAxiosSecure();
 
   useEffect(() => {
@@ -33,8 +37,6 @@ export default function ChildCategoryEditForm({
         const category = res?.data?.data;
 
         // Populate form fields with existing category data
-
-        console.log(category, "category");
         setChildCategoryName(category.childCategoryName);
         setCategory(category.category);
         setSubcategory(category.subcategory);
@@ -63,20 +65,58 @@ export default function ChildCategoryEditForm({
     const previewUrl = URL.createObjectURL(file);
     // Set the state with the URL
     setChildCategoryIconPreview(previewUrl);
-    setChildCategoryIcon(acceptedFiles[0]);
+    setChildCategoryIcon(file);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission logic here
+
+    // Reset all error states
+    setCategoryError("");
+    setSubcategoryError("");
+    setNameError("");
+    setSlugError("");
+    setIconError("");
+
+    // Custom validation
+    let isValid = true;
+
+    if (!category) {
+      setCategoryError("Category is required.");
+      isValid = false;
+    }
+
+    if (!subcategory) {
+      setSubcategoryError("Subcategory is required.");
+      isValid = false;
+    }
+
+    if (!childCategoryName) {
+      setNameError("Child category name is required.");
+      isValid = false;
+    }
+
+    if (!slug) {
+      setSlugError("Slug is required.");
+      isValid = false;
+    }
+
+    if (childCategoryIcon && childCategoryIcon.size > 5 * 1024 * 1024) {
+      setIconError("The image size should not exceed 5MB.");
+      isValid = false;
+    }
+
+    if (!isValid) {
+      return;
+    }
+
+    setError(""); // Reset error
 
     const formData = new FormData();
-
     formData.append("category", category);
     formData.append("subcategory", subcategory);
     formData.append("childCategoryName", childCategoryName);
-    if (childCategoryIcon)
-      formData.append("image", childCategoryIcon);
+    if (childCategoryIcon) formData.append("image", childCategoryIcon);
     formData.append("slug", slug);
 
     try {
@@ -85,12 +125,10 @@ export default function ChildCategoryEditForm({
         formData
       );
 
-      console.log(res);
-
       if (res.status === 200 || res.status === 201) {
         Swal.fire({
           title: "Success!",
-          text: "Category created successfully",
+          text: "Category updated successfully",
           icon: "success",
           confirmButtonText: "Ok",
         });
@@ -132,12 +170,18 @@ export default function ChildCategoryEditForm({
     setChildCategoryName("");
     setChildCategoryIcon(null);
     setChildCategoryIconPreview("");
+    setCategoryError("");
+    setSubcategoryError("");
+    setNameError("");
+    setSlugError("");
+    setIconError("");
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-10">
+    <div className="min-h-screen bg-gray-100 p-10 w-full max-w-[800px]">
       <div className="max-w-4xl mx-auto bg-white p-8 shadow-md rounded-md">
         <h1 className="text-2xl font-bold mb-5">Child Category Create Form</h1>
+        {error && <p className="text-red-500 mb-4">{error}</p>}
         <form onSubmit={handleSubmit}>
           {/* Select Category */}
           <div className="mb-4">
@@ -148,7 +192,7 @@ export default function ChildCategoryEditForm({
               value={category}
               onChange={(e) => setCategory(e.target.value)}
               className="w-full p-2 border rounded-md"
-              required
+              
             >
               <option value="">Select One</option>
               {categories?.length > 0 &&
@@ -162,6 +206,7 @@ export default function ChildCategoryEditForm({
                   </option>
                 ))}
             </select>
+            {categoryError && <p className="text-red-500">{categoryError}</p>}
           </div>
 
           {/* Select Subcategory */}
@@ -173,7 +218,7 @@ export default function ChildCategoryEditForm({
               value={subcategory}
               onChange={(e) => setSubcategory(e.target.value)}
               className="w-full p-2 border rounded-md"
-              required
+              
             >
               <option value="">Select One</option>
               {subcategories?.length > 0 &&
@@ -186,8 +231,8 @@ export default function ChildCategoryEditForm({
                     {item?.subcategoryName}
                   </option>
                 ))}
-              {/* Add more subcategories dynamically if needed */}
             </select>
+            {subcategoryError && <p className="text-red-500">{subcategoryError}</p>}
           </div>
 
           {/* Child Category Name */}
@@ -199,8 +244,9 @@ export default function ChildCategoryEditForm({
               onChange={(e) => handleSubcategoryNameInput(e.target.value)}
               className="w-full p-2 border rounded-md"
               placeholder="Child Category Title"
-              required
+              
             />
+            {nameError && <p className="text-red-500">{nameError}</p>}
           </div>
 
           {/* slug Name */}
@@ -211,9 +257,10 @@ export default function ChildCategoryEditForm({
               value={slug}
               onChange={(e) => handleSlug(e.target.value)}
               className="w-full p-2 border rounded-md"
-              placeholder="Subcategory Title"
-              required
+              placeholder="Slug"
+              
             />
+            {slugError && <p className="text-red-500">{slugError}</p>}
           </div>
 
           {/* Child Category Icon */}
@@ -241,16 +288,23 @@ export default function ChildCategoryEditForm({
                   <p className="text-xl">Drag and drop a file here or click</p>
                 </>
               )}
+               {iconError && <p className="text-red-500">{iconError}</p>}
             </div>
           </div>
 
-          {/* Submit Button */}
-          <div className="flex justify-end mt-4">
+          <div className="flex justify-between">
+            <button
+              type="button"
+              onClick={handleCloseModal}
+              className="px-4 py-2 bg-gray-500 text-white rounded-md"
+            >
+              Close
+            </button>
             <button
               type="submit"
-              className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+              className="px-4 py-2 bg-blue-500 text-white rounded-md"
             >
-              Save Child Category
+              Save Changes
             </button>
           </div>
         </form>
