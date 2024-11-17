@@ -76,7 +76,7 @@ export default function ChildCategoryEditForm({
     formData.append("subcategory", subcategory);
     formData.append("childCategoryName", childCategoryName);
     if (childCategoryIcon)
-      formData.append("childCategoryIcon", childCategoryIcon);
+      formData.append("image", childCategoryIcon);
     formData.append("slug", slug);
 
     try {

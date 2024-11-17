@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
+import { set } from "react-hook-form";
 
 export default function ChildCategoryCreateForm() {
   const [category, setCategory] = useState("");
@@ -40,7 +41,7 @@ export default function ChildCategoryCreateForm() {
     formData.append("category", category);
     formData.append("subcategory", subcategory);
     formData.append("childCategoryName", childCategoryName);
-    formData.append("childCategoryIcon", childCategoryIcon);
+    formData.append("image", childCategoryIcon);
     formData.append("slug", slug);
 
     try {
@@ -55,6 +56,12 @@ export default function ChildCategoryCreateForm() {
           icon: "success",
           confirmButtonText: "Ok",
         });
+
+        setCategory("");
+        setSubcategory("");
+        setChildCategoryName("");
+        setChildCategoryIcon(null);
+        setChildCategoryIconPreview("");
       }
     } catch (err) {
       console.error(err);

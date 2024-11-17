@@ -1,7 +1,6 @@
 "use client";
+
 import EditFormImage from "../../../shared/ImageComponents/EditFormImage";
-
-
 import { useState, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import { FiUploadCloud } from "react-icons/fi";
@@ -14,6 +13,7 @@ export default function SubcategoryEditForm({
   isShowModal,
 }) {
   const axiosSecure = useAxiosSecure();
+
   const [category, setCategory] = useState("");
   const [subcategoryName, setSubcategoryName] = useState("");
   const [subcategoryIcon, setSubcategoryIcon] = useState(null);
@@ -23,6 +23,8 @@ export default function SubcategoryEditForm({
   const [categories, setCategories] = useState([]);
   const [slug, setSlug] = useState("");
 
+  const [errors, setErrors] = useState({});
+
   // Fetch category data when component mounts
   useEffect(() => {
     async function fetchCategoryData() {
@@ -30,16 +32,12 @@ export default function SubcategoryEditForm({
         const res = await axiosSecure.get(`/subcategories/${subcategoryId}`);
         const category = res?.data?.data;
 
-        // Populate form fields with existing category data
-
-        console.log(category, "category");
         setCategory(category.category);
         setSubcategoryName(category.subcategoryName);
         setSlug(category.slug);
 
-        // For existing images, display preview from the server
-        setSubcategoryIconPreview(category.subcategoryIcon); // Assuming you have a URL for the icon
-        setSubcategoryImagePreview(category.subcategoryImage); // Assuming you have a URL for the banner
+        setSubcategoryIconPreview(category.subcategoryIcon);
+        setSubcategoryImagePreview(category.subcategoryImage);
       } catch (error) {
         console.error("Error fetching category data:", error);
       }
@@ -54,42 +52,70 @@ export default function SubcategoryEditForm({
     }
   }, [subcategoryId, axiosSecure, isShowModal]);
 
-  const onDropIcon = (acceptedFiles) => {
-    // Process the files
-    const file = acceptedFiles[0]; // Assuming one file for simplicity
+  // Fetch all categories
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res = await axiosSecure.get("/categories");
+        if (res.status === 200 || res.status === 201) {
+          setCategories(res.data.data);
+        }
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
 
-    // Create a local URL for the dropped image
+    fetchCategories();
+  }, [axiosSecure]);
+
+  // Handle custom validation
+  const validateForm = () => {
+    const errors = {};
+    if (!category) errors.category = "Category is required";
+    if (!subcategoryName) errors.subcategoryName = "Subcategory name is required";
+    if (!slug) errors.slug = "Slug is required";
+
+    setErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const onDropIcon = (acceptedFiles) => {
+    const file = acceptedFiles[0];
     const previewUrl = URL.createObjectURL(file);
 
-    // Set the state with the URL
     setSubcategoryIconPreview(previewUrl);
-
     setSubcategoryIcon(acceptedFiles[0]);
   };
 
   const onDropImage = (acceptedFiles) => {
-    // Process the files
-    const file = acceptedFiles[0]; // Assuming one file for simplicity
-
-    // Create a local URL for the dropped image
+    const file = acceptedFiles[0];
     const previewUrl = URL.createObjectURL(file);
-    // Set the state with the URL
+
     setSubcategoryImagePreview(previewUrl);
     setSubcategoryImage(acceptedFiles[0]);
   };
 
+  const handleSubcategoryNameInput = (input) => {
+    const sanitizedInput = input.replace(/[^a-zA-Z0-9]/g, "_");
+    setSlug(sanitizedInput);
+    setSubcategoryName(input);
+  };
+
+  const handleSlug = (input) => {
+    const sanitizedInput = input.replace(/[^a-zA-Z0-9]/g, "_");
+    setSlug(sanitizedInput);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission logic here
-    console.log(category, subcategoryName, subcategoryIcon, subcategoryImage);
+
+    if (!validateForm()) return;
 
     const formData = new FormData();
-
     formData.append("category", category);
     formData.append("subcategoryName", subcategoryName);
     if (subcategoryIcon) formData.append("subcategoryIcon", subcategoryIcon);
     if (subcategoryImage) formData.append("subcategoryImage", subcategoryImage);
-
     formData.append("slug", slug);
 
     try {
@@ -98,13 +124,11 @@ export default function SubcategoryEditForm({
         formData
       );
 
-      console.log(res);
-
       if (res.status === 200 || res.status === 201) {
         handleCloseModal();
         Swal.fire({
           title: "Success!",
-          text: "Category created successfully",
+          text: "Subcategory updated successfully",
           icon: "success",
           confirmButtonText: "Ok",
         });
@@ -142,40 +166,13 @@ export default function SubcategoryEditForm({
     setSubcategoryImage(null);
     setSubcategoryIconPreview("");
     setSubcategoryImagePreview("");
-  };
-
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const res = await axiosSecure.get("/categories");
-        console.log(res, "res", res?.data?.data);
-        if (res.status === 200 || res.status === 201) {
-          setCategories(res.data.data);
-        }
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-        throw new Error("Failed to fetch categories");
-      }
-    };
-
-    fetchCategories();
-  }, [axiosSecure]);
-
-  const handleSubcategoryNameInput = (input) => {
-    const sanitizedInput = input.replace(/[^a-zA-Z0-9]/g, "_");
-    setSlug(sanitizedInput);
-    setSubcategoryName(input);
-  };
-
-  const handleSlug = (input) => {
-    const sanitizedInput = input.replace(/[^a-zA-Z0-9]/g, "_");
-    setSlug(sanitizedInput);
+    setErrors({})
   };
 
   return (
     <div className="w-[80%] bg-gray-100 p-10">
       <div className="max-w-4xl mx-auto bg-white p-8 shadow-md rounded-md">
-        <h1 className="text-2xl font-bold mb-5">Subcategory Create Form</h1>
+        <h1 className="text-2xl font-bold mb-5">Edit Subcategory</h1>
         <form onSubmit={handleSubmit}>
           {/* Select Category */}
           <div className="mb-4">
@@ -186,30 +183,37 @@ export default function SubcategoryEditForm({
               value={category}
               onChange={(e) => setCategory(e.target.value)}
               className="w-full p-2 border rounded-md"
-              required
             >
+              <option value="">Select Category</option>
               {categories?.map((category, index) => (
                 <option key={index} value={category?.slug}>
                   {category.categoryName}
                 </option>
               ))}
             </select>
+            {errors.category && (
+              <p className="text-red-500 text-sm">{errors.category}</p>
+            )}
           </div>
 
           {/* Subcategory Name */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">Name *</label>
+            <label className="block text-gray-700 font-bold mb-2">
+              Subcategory Name *
+            </label>
             <input
               type="text"
               value={subcategoryName}
               onChange={(e) => handleSubcategoryNameInput(e.target.value)}
               className="w-full p-2 border rounded-md"
               placeholder="Subcategory Title"
-              required
             />
+            {errors.subcategoryName && (
+              <p className="text-red-500 text-sm">{errors.subcategoryName}</p>
+            )}
           </div>
 
-          {/* slug Name */}
+          {/* Slug */}
           <div className="mb-4">
             <label className="block text-gray-700 font-bold mb-2">Slug *</label>
             <input
@@ -217,9 +221,11 @@ export default function SubcategoryEditForm({
               value={slug}
               onChange={(e) => handleSlug(e.target.value)}
               className="w-full p-2 border rounded-md"
-              placeholder="Subcategory Title"
-              required
+              placeholder="Slug"
             />
+            {errors.slug && (
+              <p className="text-red-500 text-sm">{errors.slug}</p>
+            )}
           </div>
 
           {/* Subcategory Icon */}
@@ -233,13 +239,10 @@ export default function SubcategoryEditForm({
             >
               <input {...getIconInputProps()} />
               {subcategoryIcon || subcategoryIconPreview ? (
-                <>
-                  <EditFormImage
-                    imageObject={subcategoryIcon}
-                    imagePreview={subcategoryIconPreview}
-                  />
-                  <p>{subcategoryIcon ? subcategoryIcon.name : ""}</p>
-                </>
+                <EditFormImage
+                  imageObject={subcategoryIcon}
+                  imagePreview={subcategoryIconPreview}
+                />
               ) : (
                 <>
                   <FiUploadCloud size={60} />
@@ -260,13 +263,10 @@ export default function SubcategoryEditForm({
             >
               <input {...getImageInputProps()} />
               {subcategoryImage || subcategoryImagePreview ? (
-                <>
-                  <EditFormImage
-                    imageObject={subcategoryImage}
-                    imagePreview={subcategoryImagePreview}
-                  />
-                  <p>{subcategoryImage ? subcategoryImage.name : ""}</p>
-                </>
+                <EditFormImage
+                  imageObject={subcategoryImage}
+                  imagePreview={subcategoryImagePreview}
+                />
               ) : (
                 <>
                   <FiUploadCloud size={60} />
@@ -277,21 +277,12 @@ export default function SubcategoryEditForm({
           </div>
 
           {/* Submit Button */}
-          <div className="flex justify-end">
-            <button
-              type="button"
-              onClick={() => setIsShowModal(false)}
-              className="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 mr-4"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700"
-            >
-              Save Subcategory
-            </button>
-          </div>
+          <button
+            type="submit"
+            className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+          >
+            Update Subcategory
+          </button>
         </form>
       </div>
     </div>
