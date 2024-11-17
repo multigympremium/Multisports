@@ -2,7 +2,7 @@ import SocialMediaLinksForm from "../../../components/dashboard/SocialMediaLinkC
 
 export default function SocialMedia() {
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+    <div className="flex items-center justify-center">
       <SocialMediaLinksForm />
     </div>
   );

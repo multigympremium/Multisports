@@ -11,16 +11,17 @@ export default function WebsiteThemeColorForm() {
   const { register, handleSubmit, getValues, setValue, watch } = useForm();
   const [targetId, setTargetId] = useState("");
   const [isExistData, setIsExistData] = useState(false);
+  const [loading, setLoading] = useState(false)
   const axiosSecure = useAxiosSecure();
 
-  
+
 
   console.log(watch("primaryColor"), watch("secondaryColor"), watch("tertiaryColor"), watch("titleColor"), watch("paragraphColor"), watch("borderColor"));
 
   function getContrastingColor(color) {
     let r, g, b;
 
-    if(color){
+    if (color) {
       if (color.startsWith('#')) {
         // Hex format
 
@@ -31,7 +32,7 @@ export default function WebsiteThemeColorForm() {
           g = parseInt(color.slice(1, 2), 16);
           b = parseInt(color.slice(2, 3), 16);
 
-          return "#000" 
+          return "#000"
         } else {
           // #rrggbb format
           color = color.slice(1);
@@ -45,63 +46,66 @@ export default function WebsiteThemeColorForm() {
       } else {
         return "#000000"
       }
-    
+
       // Calculate brightness
       const brightness = (0.2126 * r + 0.7152 * g + 0.0722 * b);
       return brightness > 128 ? '#000000' : '#FFFFFF';
 
-    }else {
+    } else {
       return "#000000"
     }
-  
+
   }
 
 
   const onSubmit = async (data) => {
+    setLoading(true)
     console.log(data, "data");
     try {
-  
-      if(targetId){
-          const res = await axiosSecure.put(
-            `/website-theme-color/${targetId}`,
-            data
-          );
-          if (res.status === 200 || res.status === 201) {
-            Swal.fire({
-              title: "Success!",
-              text: "About Us updated successfully",
-              icon: "success",
-              confirmButtonText: "Ok",
-            });
-          }
-          
-      }else {
-         const res = await axiosSecure.post(
-              `/website-theme-color`,
-              data
-          );
-          if (res.status === 200 || res.status === 201) {
-            Swal.fire({
-              title: "Success!",
-              text: "About Us Created successfully",
-              icon: "success",
-              confirmButtonText: "Ok",
-            });
-          }
+
+      if (targetId) {
+        const res = await axiosSecure.put(
+          `/website-theme-color/${targetId}`,
+          data
+        );
+        if (res.status === 200 || res.status === 201) {
+          Swal.fire({
+            title: "Success!",
+            text: "About Us updated successfully",
+            icon: "success",
+            confirmButtonText: "Ok",
+          });
+        }
+
+      } else {
+        const res = await axiosSecure.post(
+          `/website-theme-color`,
+          data
+        );
+        if (res.status === 200 || res.status === 201) {
+          Swal.fire({
+            title: "Success!",
+            text: "About Us Created successfully",
+            icon: "success",
+            confirmButtonText: "Ok",
+          });
+        }
 
       }
 
-   
 
-  } catch (err) {
-    console.error(err);
-    Swal.fire({
-      title: "Error!",
-      text: err.message,
-      icon: "error",
-      confirmButtonText: "Ok",
-    });
-  }
+
+    } catch (err) {
+      console.error(err);
+      Swal.fire({
+        title: "Error!",
+        text: err.message,
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -110,20 +114,20 @@ export default function WebsiteThemeColorForm() {
         const firstResData = await axiosSecure.get(`/website-theme-color`);
         const res = await axiosSecure.get(`/website-theme-color/${firstResData?.data?.data[0]?._id}`);
 
-        if(res.status === 200 || res.status === 201) {
-            
-            const data = res?.data?.data;
+        if (res.status === 200 || res.status === 201) {
 
-            console.log(data, "data");
-    
-            // Set form values with the testimonial data
-            for(let key in data){
-              console.log(key, data[key], "data[key]");
-                setValue(key, data[key]);
-            }
-            setTargetId(data?._id)
-            
-        }else {
+          const data = res?.data?.data;
+
+          console.log(data, "data");
+
+          // Set form values with the testimonial data
+          for (let key in data) {
+            console.log(key, data[key], "data[key]");
+            setValue(key, data[key]);
+          }
+          setTargetId(data?._id)
+
+        } else {
           handleDefaultColor()
         }
       } catch (error) {
@@ -135,7 +139,7 @@ export default function WebsiteThemeColorForm() {
     fetchTestimonial();
 
 
-  }, [axiosSecure, setValue ]);
+  }, [axiosSecure, setValue]);
 
   const handleDefaultColor = useCallback(() => {
     setValue("primaryColor", "#20124d");
@@ -161,13 +165,13 @@ export default function WebsiteThemeColorForm() {
               <label className="block text-sm font-medium text-gray-700">
                 {color.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}:
               </label>
-                <input
-                  type={"text"}
-                  className="h-10 w-full px-2 rounded flex justify-center items-center text-gray-600"
-                  style={{ background: getValues(color), color: getContrastingColor(getValues(color)) }}
-                  // htmlFor={color}
-                  {...register(color, { onChange: (e) => setValue(color, e.target.value) })}
-                 />
+              <input
+                type={"text"}
+                className="h-10 w-full px-2 rounded flex justify-center items-center text-gray-600"
+                style={{ background: getValues(color), color: getContrastingColor(getValues(color)) }}
+                // htmlFor={color}
+                {...register(color, { onChange: (e) => setValue(color, e.target.value) })}
+              />
               <input
                 type="color"
                 {...register(color, { onChange: (e) => setValue(color, e.target.value) })}
@@ -175,7 +179,7 @@ export default function WebsiteThemeColorForm() {
                 hidden={true}
                 className=" block w-0 h-0 opacity-0 overflow-hidden border border-gray-300 rounded-md"
               />
-              
+
             </div>
           ))}
         </div>
@@ -192,7 +196,7 @@ export default function WebsiteThemeColorForm() {
             type="submit"
             className="bg-blue-500 text-white w-full font-semibold py-2 px-4 rounded-md hover:bg-blue-600"
           >
-            Update Color
+            {loading ? <><span className="loading loading-spinner mr-2  loading-xs"></span>Updating ..</> : "Update color"}
           </button>
         </div>
       </form>
