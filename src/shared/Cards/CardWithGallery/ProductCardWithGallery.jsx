@@ -37,6 +37,13 @@ export default function ProductCardWithGallery({ product , setTargetId, setIsSho
 
       <WishlistIcon item={product} />
 
+      <p className="text-sm mb-4 space-x-2"> {
+          product?.productColorValue &&  product?.productColorValue.map((item, index)=> (
+
+            <span className="h-6 w-6 rounded inline-block" key={index} style={{background: item}}></span>
+          ))
+          } </p>
+
       {/* Rating */}
       <div onClick={()=> {setIsShowDetail(true); setTargetId(product._id)}} className="flex justify-center items-center mt-2 py-4 bg-black bg-opacity-20 opacity-100 text-white group-hover:opacity-100 group-hover:visible">
         <FaEye size={20} />
@@ -64,7 +71,7 @@ export default function ProductCardWithGallery({ product , setTargetId, setIsSho
       </div>
 
       {/* Price and Button */}
-      <div className="mt-4">
+      {/* <div className="mt-4">
         <div className="flex justify-between items-center">
           <span className="text-xl font-bold text-gray-900">
             ₹{product?.price}
@@ -76,7 +83,7 @@ export default function ProductCardWithGallery({ product , setTargetId, setIsSho
         <button onClick={()=> addToCart(product) } className="w-full border border-black text-neutral-900 text-sm font-bold py-2 mt-2 rounded-lg hover:bg-neutral-900 hover:text-white transition duration-300">
           ADD TO CART
         </button>
-      </div>
+      </div> */}
 
 
     </div>

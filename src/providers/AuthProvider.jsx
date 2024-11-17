@@ -46,10 +46,10 @@ const AuthProvider = ({ children }) => {
 
 
   // Update quantity
-  const updateCartQuantity = (id, quantity) => {
+  const updateCartQuantity = (id, quantity, color, size) => {
     setCartItems((prevItems) => {
       const itemInCart = prevItems.map((item) =>
-        item._id === id ? { ...item, quantity } : item
+        item._id === id && item.color === color && item.size === size ? { ...item, quantity } : item
       );
 
       const totalPriceInfo = itemInCart.reduce(
@@ -72,10 +72,15 @@ const AuthProvider = ({ children }) => {
   };
 
   // Add item to cart
-  const addToCart = (product) => {
+  const addToCart = (product, color, size) => {
     console.log(product, "product")
     setCartItems((prevItems) => {
-      const itemInCart = prevItems.find((item) => item?._id === product?._id);
+      const itemInCart = prevItems.find((item) => {
+        if(item?._id === product?._id && item.color === product.color && item.size === product.size){
+          return item;
+        }
+        
+      });
       if (itemInCart) {
         
       const itemInTheCart = prevItems.map((item) =>
@@ -98,19 +103,70 @@ const AuthProvider = ({ children }) => {
         setTotalPrice(totalPriceInfo);
         return itemInTheCart
       }
-      updateCartQuantity(product?._id, 1);
-      localStorage.setItem(
-        "cartItems",
-        JSON.stringify([...prevItems, { ...product, quantity: 1 }])
-      );
-      return [...prevItems, { ...product, quantity: 1 }];
+      else{
+        const itemInTheCart = [...prevItems, { ...product, quantity: 1 }];
+
+        const totalPriceInfo = itemInTheCart.reduce(
+          (acc, item) => acc + item.price * item.quantity,
+          0
+        );
+        const totalItemsInfo = itemInTheCart.reduce(
+          (acc, item) => acc + item.quantity,
+          0
+        );
+  
+        setTotalItems(totalItemsInfo);
+  
+        setTotalPrice(totalPriceInfo);
+        return itemInTheCart
+      }
+      // updateCartQuantity(product?._id, 1);
+      // localStorage.setItem(
+      //   "cartItems",
+      //   JSON.stringify([...prevItems, { ...product, quantity: 1 }])
+      // );
+      // return [...prevItems, { ...product, quantity: 1 }];
     });
+    // if(color && size && product && product.color === color && product.size === size){
+
+    // }else if(color && size && product && product.color !== color && product.size !== size){
+    //   setCartItems((prevItems) => {
+    //     const itemInCart = prevItems.find((item) => item?._id === product?._id);
+    //     if (itemInCart) {
+          
+    //     const itemInTheCart = [...prevItems, { ...product, quantity: 1 }];
+  
+    //       const totalPriceInfo = itemInTheCart.reduce(
+    //         (acc, item) => acc + item.price * item.quantity,
+    //         0
+    //       );
+    //       const totalItemsInfo = itemInTheCart.reduce(
+    //         (acc, item) => acc + item.quantity,
+    //         0
+    //       );
+    
+    //       setTotalItems(totalItemsInfo);
+    
+    //       setTotalPrice(totalPriceInfo);
+    //       return itemInTheCart
+    //     }
+    //     updateCartQuantity(product?._id, 1);
+    //     localStorage.setItem(
+    //       "cartItems",
+    //       JSON.stringify([...prevItems, { ...product, quantity: 1 }])
+    //     );
+    //     return [...prevItems, { ...product, quantity: 1 }];
+    //   });
+
+    // } else {
+    //   toast.error("Please select color and size");
+    // }
   };
 
   // Remove item from cart
-  const removeFromCart = (id) => {
+  const removeFromCart = (id, color, size) => {
     setCartItems((prevItems) => {
-      const itemInCart = prevItems.filter((item) => item._id !== id);
+      const itemInCart = prevItems.filter((item) => item._id !== id && item.color !== color && item.size !== size);
       const totalPriceInfo = itemInCart.reduce(
         (acc, item) => acc + item.price * item.quantity,
         0

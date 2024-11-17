@@ -2,7 +2,7 @@ import React , { lazy, Suspense, useState } from "react";
 // import { lazy } from "react";
 import { createBrowserRouter } from "react-router-dom";
 import Root from "../Root";
-const Error404 = lazy(() => import("../pages/default/Error404"));
+import Error404 from "../pages/default/Error404";
 
 import HomePage from "../pages/OtherPage/Home/HomePage";
 import DashboardChildrenRoutes from "./src/DashboardChildrenRoutes";
@@ -15,14 +15,14 @@ import ProductPage from "../components/Home/Products/ProductPage";
 
 // Continue for other components...
 
-const Root_Dashboard = lazy(() => import( "../pages/Dashboard/Root"))
-const SignUpPage = lazy(() => import( "../pages/authentication/signup/Signup"));
-const Login = lazy(() => import( "../pages/authentication/login/Login"));
-const ForgotPassword = lazy(() => import( "../pages/authentication/forgot-password/ForgotPassword"));
-const VerifyOTP = lazy(() => import( "../pages/authentication/verify-otp/VerifyOTP"));
-const SendOTP = lazy(() => import( "../pages/authentication/send-otp/SendOTP"));
+import Root_Dashboard from  "../pages/Dashboard/Root"
+import SignUpPage from  "../pages/authentication/signup/Signup";
+import Login from  "../pages/authentication/login/Login";
+import ForgotPassword from  "../pages/authentication/forgot-password/ForgotPassword";
+import VerifyOTP from  "../pages/authentication/verify-otp/VerifyOTP";
+import SendOTP from  "../pages/authentication/send-otp/SendOTP";
 
-const GlobalLoading = lazy(() => import("../components library/GlobalLoading"));
+import GlobalLoading from "../components library/GlobalLoading";
 
 const AllRoutes = () => {
   // const [permissionData, setPermissionData] = useState([]);
@@ -55,10 +55,8 @@ const AllRoutes = () => {
             // <PrivateRoute>
             //   <Addworkout />
             // </PrivateRoute>
-            <Suspense fallback={<GlobalLoading />}>
+            
                 <SignUpPage />
-              
-            </Suspense>
           ),
         },
         {
@@ -69,10 +67,8 @@ const AllRoutes = () => {
             // <PrivateRoute>
             //   <Addworkout />
             // </PrivateRoute>
-            <Suspense fallback={<GlobalLoading />}>
+            
                 <Login />
-              
-            </Suspense>
           ),
         },
         {
@@ -83,10 +79,8 @@ const AllRoutes = () => {
             // <PrivateRoute>
             //   <Addworkout />
             // </PrivateRoute>
-            <Suspense fallback={<GlobalLoading />}>
+            
                 <ForgotPassword />
-              
-            </Suspense>
           ),
         },
         {
@@ -97,10 +91,8 @@ const AllRoutes = () => {
             // <PrivateRoute>
             //   <Addworkout />
             // </PrivateRoute>
-            <Suspense fallback={<GlobalLoading />}>
+            
                 <VerifyOTP />
-              
-            </Suspense>
           ),
         },
         {
@@ -111,10 +103,8 @@ const AllRoutes = () => {
             // <PrivateRoute>
             //   <Addworkout />
             // </PrivateRoute>
-            <Suspense fallback={<GlobalLoading />}>
+           
                 <SendOTP />
-              
-            </Suspense>
           ),
         },
         {
@@ -184,13 +174,11 @@ const AllRoutes = () => {
         // </PrivateRoute>
 
         // <Rootdashboard />
-        <Suspense fallback={<GlobalLoading />}>
-          
+        
         <PrivateRoute>
         <Root_Dashboard />
 
       </PrivateRoute>
-        </Suspense>
       ),
       
 
