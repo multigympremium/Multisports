@@ -15,7 +15,7 @@ import ProductPage from "../components/Home/Products/ProductPage";
 
 // Continue for other components...
 
-import Root_Dashboard from  "../pages/Dashboard/Root"
+const Root_Dashboard = lazy(() => import(  "../pages/Dashboard/Root"))
 import SignUpPage from  "../pages/authentication/signup/Signup";
 import Login from  "../pages/authentication/login/Login";
 import ForgotPassword from  "../pages/authentication/forgot-password/ForgotPassword";
@@ -174,11 +174,15 @@ const AllRoutes = () => {
         // </PrivateRoute>
 
         // <Rootdashboard />
-        
+
+        <Suspense fallback={<GlobalLoading />}>
         <PrivateRoute>
         <Root_Dashboard />
 
       </PrivateRoute>
+
+        </Suspense>
+        
       ),
       
 

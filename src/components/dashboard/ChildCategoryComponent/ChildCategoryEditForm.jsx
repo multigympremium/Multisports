@@ -173,7 +173,7 @@ export default function ChildCategoryEditForm({
     setCategoryError("");
     setSubcategoryError("");
     setNameError("");
-    setSlugError("");
+    setSlugError(""); 
     setIconError("");
   };
 
