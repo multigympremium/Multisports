@@ -109,9 +109,6 @@ const GeneralInfoForm = () => {
   }, [axiosSecure]);
 
 
-
-
-
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       {/* Section 1: General Information */}

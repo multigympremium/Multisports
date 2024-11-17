@@ -107,7 +107,7 @@ export default function SocialMediaLinksForm() {
     <div className="w-full">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="w-full p-6 rounded-lg"
+        className="w-full p-6 pt-0 rounded-lg"
       >
         <h2 className="text-3xl font-semibold mb-9">Update Social Media Links</h2>
         <div className="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-4 lg:gap-5">
