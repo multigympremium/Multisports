@@ -11,7 +11,7 @@ function DragEditUploadImageInput({
   return (
     <div
       {...getRootProps()}
-      className="p-5 border-dashed border-2 flex justify-center items-center min-h-[200px]"
+      className="p-5 border-dashed mt-2 rounded-2xl bg-white border-neutral-400 border-2 flex justify-center items-center min-h-[200px]"
     >
       <input {...getInputProps()} />
       <div className="text-center flex justify-center items-center flex-col">

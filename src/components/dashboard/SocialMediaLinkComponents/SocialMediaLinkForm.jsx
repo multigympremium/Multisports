@@ -107,19 +107,20 @@ export default function SocialMediaLinksForm() {
     <div className="w-full">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="w-full   p-6 rounded-lg"
+        className="w-full p-6 rounded-lg"
       >
         <h2 className="text-3xl font-semibold mb-9">Update Social Media Links</h2>
-        <div className="grid grid-cols-1 gap-3  md:grid-cols-2 md:gap-4 lg:gap-5">
+        <div className="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-4 lg:gap-5">
           {/* Facebook */}
           <div>
             <label className="block text-sm font-medium text-gray-700">
-            <span className="flex items-center gap-2"><BsFacebook />Facebook Page Link</span>
+              <span className="flex items-center gap-2"><BsFacebook />Facebook Page Link</span>
             </label>
             <input
               type="text"
               {...register("facebook")}
               className="customInput"
+              
             />
           </div>
 
@@ -132,116 +133,124 @@ export default function SocialMediaLinksForm() {
               type="text"
               {...register("twitter")}
               className="customInput"
+              
             />
           </div>
 
           {/* Instagram */}
           <div>
             <label className="block text-sm font-medium text-gray-700">
-            <span className="flex items-center gap-2"><BsInstagram />Instagram Link</span>
+              <span className="flex items-center gap-2"><BsInstagram />Instagram Link</span>
             </label>
             <input
               type="text"
               {...register("instagram")}
               className="customInput"
+              
             />
           </div>
 
           {/* LinkedIn */}
           <div>
             <label className="block text-sm font-medium text-gray-700">
-            <span className="flex items-center gap-2"><TfiLinkedin />LinkedIn Profile</span>
+              <span className="flex items-center gap-2"><TfiLinkedin />LinkedIn Profile</span>
             </label>
             <input
               type="text"
               {...register("linkedin")}
               className="customInput"
+              
             />
           </div>
 
           {/* Messenger */}
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              <span className="flex items-center gap-2"><FaFacebookMessenger  />Messenger</span>
+              <span className="flex items-center gap-2"><FaFacebookMessenger />Messenger</span>
             </label>
             <input
               type="text"
               {...register("messenger")}
               className="customInput"
+              
             />
           </div>
 
           {/* WhatsApp */}
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              <span className="flex items-center gap-2"><BsWhatsapp  />WhatsApp</span>
+              <span className="flex items-center gap-2"><BsWhatsapp />WhatsApp</span>
             </label>
             <input
               type="text"
               {...register("whatsapp")}
               className="customInput"
+              
             />
           </div>
 
           {/* Telegram */}
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              <span className="flex items-center gap-2"><LiaTelegramPlane  />Telegram</span>
+              <span className="flex items-center gap-2"><LiaTelegramPlane />Telegram</span>
             </label>
             <input
               type="text"
               {...register("telegram")}
               className="customInput"
+              
             />
           </div>
 
           {/* YouTube */}
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              
-              <span className="flex items-center gap-2"><TbBrandYoutubeFilled   />YouTube Channel Link</span>
+              <span className="flex items-center gap-2"><TbBrandYoutubeFilled />YouTube Channel Link</span>
             </label>
             <input
               type="text"
               {...register("youtube")}
               className="customInput"
+              
             />
           </div>
 
           {/* TikTok */}
           <div>
             <label className="block text-sm font-medium text-gray-700">
-            <span className="flex items-center gap-2"><FaTiktok/>Tiktok</span>
+              <span className="flex items-center gap-2"><FaTiktok />TikTok</span>
             </label>
             <input
               type="text"
               {...register("tiktok")}
               className="customInput"
+              
             />
           </div>
 
           {/* Pinterest */}
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              
-              <span className="flex items-center gap-2"><TfiPinterest/>Pinterest Link</span>
+              <span className="flex items-center gap-2"><TfiPinterest />Pinterest Link</span>
             </label>
             <input
               type="text"
               {...register("pinterest")}
               className="customInput"
+              
             />
           </div>
 
           {/* Viber */}
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              <span className="flex items-center gap-2"><FaViber/>Viber</span>
+              <span className="flex items-center gap-2"><FaViber />Viber</span>
             </label>
             <input
               type="text"
               {...register("viber")}
               className="customInput"
+              
             />
           </div>
         </div>
@@ -258,10 +267,18 @@ export default function SocialMediaLinksForm() {
             type="submit"
             className="customSaveButton"
           >
-            {loading ? <><span className="loading loading-spinner mr-2  loading-xs"></span>Updating ..</> : "Update info"}
+            {loading ? (
+              <>
+                <span className="loading loading-spinner mr-2 loading-xs"></span>
+                Updating ..
+              </>
+            ) : (
+              "Update info"
+            )}
           </button>
         </div>
       </form>
+
     </div>
   );
 }
