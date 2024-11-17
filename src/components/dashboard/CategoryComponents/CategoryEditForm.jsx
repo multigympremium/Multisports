@@ -1,12 +1,12 @@
 "use client";
 import EditFormImage from "../../../shared/ImageComponents/EditFormImage";
-
-
 import { useState, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import { FiUploadCloud } from "react-icons/fi";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
+
+const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB
 
 export default function CategoryEditForm({
   categoryId,
@@ -20,9 +20,9 @@ export default function CategoryEditForm({
   const [categoryIcon, setCategoryIcon] = useState(null);
   const [categoryIconImagePreview, setCategoryIconImagePreview] = useState("");
   const [categoryBanner, setCategoryBanner] = useState(null);
-  const [categoryBannerImagePreview, setCategoryBannerImagePreview] =
-    useState("");
+  const [categoryBannerImagePreview, setCategoryBannerImagePreview] = useState("");
   const [slug, setSlug] = useState("");
+  const [errors, setErrors] = useState({});
 
   // Fetch category data when component mounts
   useEffect(() => {
@@ -30,17 +30,12 @@ export default function CategoryEditForm({
       try {
         const res = await axiosSecure.get(`/categories/${categoryId}`);
         const category = res?.data?.data;
-        // Populate form fields with existing category data
-
-        console.log(category, "category");
         setCategoryName(category.categoryName);
         setFeatureCategory(category.featureCategory);
         setShowOnNavbar(category.showOnNavbar);
         setSlug(category.slug);
-
-        // For existing images, display preview from the server
-        setCategoryIconImagePreview(category.categoryIcon); // Assuming you have a URL for the icon
-        setCategoryBannerImagePreview(category.categoryBanner); // Assuming you have a URL for the banner
+        setCategoryIconImagePreview(category.categoryIcon);
+        setCategoryBannerImagePreview(category.categoryBanner);
       } catch (error) {
         console.error("Error fetching category data:", error);
       }
@@ -57,26 +52,96 @@ export default function CategoryEditForm({
 
   const onDropIcon = (acceptedFiles) => {
     const file = acceptedFiles[0];
+    if (file.size > MAX_FILE_SIZE) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        categoryIcon: "File size must be less than 2MB.",
+      }));
+      return;
+    }
     const previewUrl = URL.createObjectURL(file);
     setCategoryIconImagePreview(previewUrl);
-    setCategoryIcon(acceptedFiles[0]);
+    setCategoryIcon(file);
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      categoryIcon: "",
+    })); // Clear the error after valid file
   };
 
   const onDropBanner = (acceptedFiles) => {
     const file = acceptedFiles[0];
+    if (file.size > MAX_FILE_SIZE) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        categoryBanner: "File size must be less than 2MB.",
+      }));
+      return;
+    }
     const previewUrl = URL.createObjectURL(file);
     setCategoryBannerImagePreview(previewUrl);
-    setCategoryBanner(acceptedFiles[0]);
+    setCategoryBanner(file);
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      categoryBanner: "",
+    })); // Clear the error after valid file
+  };
+
+  const validateForm = () => {
+    let isValid = true;
+    let validationErrors = {};
+
+    // Validate Category Name
+    if (!categoryName) {
+      validationErrors.categoryName = "Category Name is required.";
+      isValid = false;
+    }
+
+    // Validate Slug
+    if (!slug) {
+      validationErrors.slug = "Slug is required.";
+      isValid = false;
+    }
+
+    // Validate Feature Category
+    if (!featureCategory) {
+      validationErrors.featureCategory = "Feature Category selection is required.";
+      isValid = false;
+    }
+
+    // Validate Show on Navbar
+    if (!showOnNavbar) {
+      validationErrors.showOnNavbar = "Show on Navbar selection is required.";
+      isValid = false;
+    }
+
+    // Validate category icon file size
+    if (categoryIcon && categoryIcon.size > MAX_FILE_SIZE) {
+      validationErrors.categoryIcon = "Category Icon file size must be less than 2MB.";
+      isValid = false;
+    }
+
+    // Validate category banner file size
+    if (categoryBanner && categoryBanner.size > MAX_FILE_SIZE) {
+      validationErrors.categoryBanner = "Category Banner file size must be less than 2MB.";
+      isValid = false;
+    }
+
+    setErrors(validationErrors);
+    return isValid;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validateForm()) {
+      return;
+    }
+
     const formData = new FormData();
     formData.append("categoryName", categoryName);
     formData.append("featureCategory", featureCategory);
     formData.append("showOnNavbar", showOnNavbar);
-    if (categoryIcon) formData.append("categoryIcon", categoryIcon); // Only append if a new file was uploaded
-    if (categoryBanner) formData.append("categoryBanner", categoryBanner); // Only append if a new file was uploaded
+    if (categoryIcon) formData.append("categoryIcon", categoryIcon);
+    if (categoryBanner) formData.append("categoryBanner", categoryBanner);
     formData.append("slug", slug);
 
     try {
@@ -95,17 +160,13 @@ export default function CategoryEditForm({
     }
   };
 
-  const { getRootProps: getIconRootProps, getInputProps: getIconInputProps } =
-    useDropzone({
-      onDrop: onDropIcon,
-      accept: "image/*",
-      multiple: false,
-    });
+  const { getRootProps: getIconRootProps, getInputProps: getIconInputProps } = useDropzone({
+    onDrop: onDropIcon,
+    accept: "image/*",
+    multiple: false,
+  });
 
-  const {
-    getRootProps: getBannerRootProps,
-    getInputProps: getBannerInputProps,
-  } = useDropzone({
+  const { getRootProps: getBannerRootProps, getInputProps: getBannerInputProps } = useDropzone({
     onDrop: onDropBanner,
     accept: "image/*",
     multiple: false,
@@ -127,10 +188,11 @@ export default function CategoryEditForm({
     setCategoryBannerImagePreview("");
     setCategoryBanner(null);
     setCategoryIcon(null);
+    setErrors({});
   };
 
   return (
-    <div className=" w-[80%] bg-gray-100 p-10">
+    <div className="w-[80%] bg-gray-100 p-10">
       <div className="w-full mx-auto bg-white p-8 shadow-md rounded-md">
         <h1 className="text-2xl font-bold mb-5">Edit Category</h1>
         <form onSubmit={handleSubmit}>
@@ -143,25 +205,27 @@ export default function CategoryEditForm({
               onChange={(e) => handleSlug(e.target.value)}
               className="w-full p-2 border rounded-md"
               placeholder="Category Name"
-              required
+              // required
             />
+            {errors.categoryName && <p className="text-red-500 text-xs">{errors.categoryName}</p>}
           </div>
+
+          {/* Slug */}
           <div className="mb-4">
             <label className="block text-gray-700 font-bold mb-2">Slug *</label>
             <input
               type="text"
               value={slug}
               className="w-full p-2 border rounded-md"
-              placeholder="Category Name"
-              required
+              placeholder="Category Slug"
+              // required
             />
+            {errors.slug && <p className="text-red-500 text-xs">{errors.slug}</p>}
           </div>
 
           {/* Category Icon */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">
-              Category Icon
-            </label>
+            <label className="block text-gray-700 font-bold mb-2">Category Icon</label>
             <div
               {...getIconRootProps()}
               className="w-full p-4 border-dashed min-h-[200px] flex flex-col items-center justify-center border-2 border-gray-300 rounded-md text-center cursor-pointer"
@@ -169,10 +233,7 @@ export default function CategoryEditForm({
               <input {...getIconInputProps()} />
               {categoryIconImagePreview ? (
                 <>
-                  <EditFormImage
-                    imageObject={categoryIcon}
-                    imagePreview={categoryIconImagePreview}
-                  />
+                  <EditFormImage imageObject={categoryIcon} imagePreview={categoryIconImagePreview} />
                   <p>{categoryIcon ? categoryIcon.name : "Current Icon"}</p>
                 </>
               ) : (
@@ -182,13 +243,12 @@ export default function CategoryEditForm({
                 </>
               )}
             </div>
+            {errors.categoryIcon && <p className="text-red-500 text-xs">{errors.categoryIcon}</p>}
           </div>
 
           {/* Category Banner */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">
-              Category Banner
-            </label>
+            <label className="block text-gray-700 font-bold mb-2">Category Banner</label>
             <div
               {...getBannerRootProps()}
               className="w-full p-4 border-dashed min-h-[200px] flex flex-col items-center justify-center border-2 border-gray-300 rounded-md text-center cursor-pointer"
@@ -196,13 +256,8 @@ export default function CategoryEditForm({
               <input {...getBannerInputProps()} />
               {categoryBannerImagePreview ? (
                 <>
-                  <EditFormImage
-                    imageObject={categoryBanner}
-                    imagePreview={categoryBannerImagePreview}
-                  />
-                  <p>
-                    {categoryBanner ? categoryBanner.name : "Current Banner"}
-                  </p>
+                  <EditFormImage imageObject={categoryBanner} imagePreview={categoryBannerImagePreview} />
+                  <p>{categoryBanner ? categoryBanner.name : "Current Banner"}</p>
                 </>
               ) : (
                 <>
@@ -211,56 +266,46 @@ export default function CategoryEditForm({
                 </>
               )}
             </div>
+            {errors.categoryBanner && <p className="text-red-500 text-xs">{errors.categoryBanner}</p>}
           </div>
 
           {/* Feature Category */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">
-              Feature Category
-            </label>
+            <label className="block text-gray-700 font-bold mb-2">Feature Category *</label>
             <select
               value={featureCategory}
               onChange={(e) => setFeatureCategory(e.target.value)}
               className="w-full p-2 border rounded-md"
+              // required
             >
-              <option value="">Select One</option>
+              <option value="">Select Feature Category</option>
               <option value="Yes">Yes</option>
               <option value="No">No</option>
             </select>
+            {errors.featureCategory && <p className="text-red-500 text-xs">{errors.featureCategory}</p>}
           </div>
 
           {/* Show on Navbar */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">
-              Show On Navbar
-            </label>
+            <label className="block text-gray-700 font-bold mb-2">Show on Navbar *</label>
             <select
               value={showOnNavbar}
               onChange={(e) => setShowOnNavbar(e.target.value)}
               className="w-full p-2 border rounded-md"
+              // required
             >
               <option value="Yes">Yes</option>
               <option value="No">No</option>
             </select>
+            {errors.showOnNavbar && <p className="text-red-500 text-xs">{errors.showOnNavbar}</p>}
           </div>
 
-          {/* Submit Button */}
-          <div className="flex justify-end">
-            <button
-              type="button"
-              className="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 mr-4"
-              onClick={() => handleCloseModal()}
-            >
-              Cancel
-            </button>
-
-            <button
-              type="submit"
-              className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700"
-            >
-              Update Category
-            </button>
-          </div>
+          <button
+            type="submit"
+            className="w-full py-2 bg-blue-600 text-white font-bold rounded-md"
+          >
+            Save Changes
+          </button>
         </form>
       </div>
     </div>

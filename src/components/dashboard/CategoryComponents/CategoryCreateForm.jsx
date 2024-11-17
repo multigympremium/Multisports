@@ -1,6 +1,5 @@
 "use client";
 
-
 import { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { FiUploadCloud } from "react-icons/fi";
@@ -18,65 +17,77 @@ export default function CategoryCreateForm() {
   const [categoryBannerImagePreview, setCategoryBannerImagePreview] =
     useState("");
   const [slug, setSlug] = useState("");
+  const [errors, setErrors] = useState({}); // To track validation errors
+
+  const MAX_FILE_SIZE_MB = 2;
 
   const onDropIcon = (acceptedFiles) => {
-    // Process the files
-    const file = acceptedFiles[0]; // Assuming one file for simplicity
-
-    // Create a local URL for the dropped image
+    const file = acceptedFiles[0];
+    if (file.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
+      setErrors((prev) => ({
+        ...prev,
+        categoryIcon: `File size must be less than ${MAX_FILE_SIZE_MB} MB.`,
+      }));
+      return;
+    }
     const previewUrl = URL.createObjectURL(file);
-
-    // Set the state with the URL
     setCategoryIconImagePreview(previewUrl);
-
-    setCategoryIcon(acceptedFiles[0]);
+    setCategoryIcon(file);
+    setErrors((prev) => ({ ...prev, categoryIcon: "" })); // Clear error
   };
 
   const onDropBanner = (acceptedFiles) => {
-    // Process the files
-    const file = acceptedFiles[0]; // Assuming one file for simplicity
-
-    // Create a local URL for the dropped image
+    const file = acceptedFiles[0];
+    if (file.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
+      setErrors((prev) => ({
+        ...prev,
+        categoryBanner: `File size must be less than ${MAX_FILE_SIZE_MB} MB.`,
+      }));
+      return;
+    }
     const previewUrl = URL.createObjectURL(file);
-    // Set the state with the URL
     setCategoryBannerImagePreview(previewUrl);
-    setCategoryBanner(acceptedFiles[0]);
+    setCategoryBanner(file);
+    setErrors((prev) => ({ ...prev, categoryBanner: "" })); // Clear error
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+    if (!categoryName.trim())
+      newErrors.categoryName = "Category Name is required.";
+    if (!slug.trim()) newErrors.slug = "Slug is required.";
+    if (!featureCategory)
+      newErrors.featureCategory = "Feature Category is required.";
+    if (!showOnNavbar)
+      newErrors.showOnNavbar = "Show On Navbar selection is required.";
+    return newErrors;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission logic here
-    console.log({
-      categoryName,
-      featureCategory,
-      showOnNavbar,
-      categoryIcon,
-      categoryBanner,
-    });
+    const validationErrors = validateForm();
 
-    const submitData = {
-      categoryName,
-      featureCategory,
-      showOnNavbar,
-      categoryIcon,
-      categoryBanner,
-    };
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      Swal.fire({
+        title: "Error!",
+        text: "Please fix the validation errors.",
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+      return;
+    }
 
     const formData = new FormData();
-
     formData.append("categoryName", categoryName);
     formData.append("featureCategory", featureCategory);
     formData.append("showOnNavbar", showOnNavbar);
-    formData.append("categoryIcon", categoryIcon);
-    formData.append("categoryBanner", categoryBanner);
+    if (categoryIcon) formData.append("categoryIcon", categoryIcon);
+    if (categoryBanner) formData.append("categoryBanner", categoryBanner);
     formData.append("slug", slug);
 
     try {
       const res = await axiosSecure.post("/categories", formData);
-
-      console.log(res);
-      handleCloseModal();
-
       if (res.status === 200 || res.status === 201) {
         Swal.fire({
           title: "Success!",
@@ -84,6 +95,7 @@ export default function CategoryCreateForm() {
           icon: "success",
           confirmButtonText: "Ok",
         });
+        handleCloseModal();
       }
     } catch (err) {
       console.error(err);
@@ -94,6 +106,22 @@ export default function CategoryCreateForm() {
         confirmButtonText: "Ok",
       });
     }
+  };
+
+  const handleSlug = (input) => {
+    const sanitizedInput = input.replace(/[^a-zA-Z0-9]/g, "_");
+    setSlug(sanitizedInput);
+    setCategoryName(input);
+  };
+
+  const handleCloseModal = () => {
+    setCategoryName("");
+    setFeatureCategory("");
+    setShowOnNavbar("");
+    setCategoryIcon(null);
+    setCategoryBanner(null);
+    setSlug("");
+    setErrors({});
   };
 
   const { getRootProps: getIconRootProps, getInputProps: getIconInputProps } =
@@ -112,21 +140,6 @@ export default function CategoryCreateForm() {
     multiple: false,
   });
 
-  const handleSlug = (input) => {
-    const sanitizedInput = input.replace(/[^a-zA-Z0-9]/g, "_");
-    setSlug(sanitizedInput);
-    setCategoryName(input);
-  };
-
-  const handleCloseModal = () => {
-    setCategoryName("");
-    setFeatureCategory("");
-    setShowOnNavbar("");
-    setCategoryIcon(null);
-    setCategoryBanner(null);
-    setSlug("");
-  };
-
   return (
     <div className="min-h-screen w-full bg-gray-100 p-10">
       <div className="w-full mx-auto bg-white p-8 shadow-md rounded-md">
@@ -141,24 +154,31 @@ export default function CategoryCreateForm() {
               onChange={(e) => handleSlug(e.target.value)}
               className="w-full p-2 border rounded-md"
               placeholder="Category Name"
-              required
             />
+            {errors.categoryName && (
+              <p className="text-red-500 text-sm">{errors.categoryName}</p>
+            )}
           </div>
+
+          {/* Slug */}
           <div className="mb-4">
             <label className="block text-gray-700 font-bold mb-2">Slug *</label>
             <input
               type="text"
               value={slug}
               className="w-full p-2 border rounded-md"
-              placeholder="Category Name"
-              required
+              placeholder="Slug"
+              readOnly
             />
+            {errors.slug && (
+              <p className="text-red-500 text-sm">{errors.slug}</p>
+            )}
           </div>
 
           {/* Category Icon */}
           <div className="mb-4">
             <label className="block text-gray-700 font-bold mb-2">
-              Category Icon
+              Category Icon (Optional)
             </label>
             <div
               {...getIconRootProps()}
@@ -182,12 +202,15 @@ export default function CategoryCreateForm() {
                 </>
               )}
             </div>
+            {errors.categoryIcon && (
+              <p className="text-red-500 text-sm">{errors.categoryIcon}</p>
+            )}
           </div>
 
           {/* Category Banner */}
           <div className="mb-4">
             <label className="block text-gray-700 font-bold mb-2">
-              Category Banner
+              Category Banner (Optional)
             </label>
             <div
               {...getBannerRootProps()}
@@ -211,6 +234,9 @@ export default function CategoryCreateForm() {
                 </>
               )}
             </div>
+            {errors.categoryBanner && (
+              <p className="text-red-500 text-sm">{errors.categoryBanner}</p>
+            )}
           </div>
 
           {/* Feature Category */}
@@ -224,34 +250,38 @@ export default function CategoryCreateForm() {
               className="w-full p-2 border rounded-md"
             >
               <option value="">Select One</option>
-              <option value="Yes">Yes</option>
-              <option value="No">No</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
             </select>
+            {errors.featureCategory && (
+              <p className="text-red-500 text-sm">{errors.featureCategory}</p>
+            )}
           </div>
 
-          {/* Show on Navbar */}
+          {/* Show On Navbar */}
           <div className="mb-4">
             <label className="block text-gray-700 font-bold mb-2">
-              Show On Navbar
+              Show on Navbar
             </label>
             <select
               value={showOnNavbar}
               onChange={(e) => setShowOnNavbar(e.target.value)}
               className="w-full p-2 border rounded-md"
             >
-              <option value="">Select One</option>
               <option value="Yes">Yes</option>
               <option value="No">No</option>
             </select>
+            {errors.showOnNavbar && (
+              <p className="text-red-500 text-sm">{errors.showOnNavbar}</p>
+            )}
           </div>
 
-          {/* Submit Button */}
-          <div className="flex justify-end">
+          <div className="mt-6 flex justify-end">
             <button
               type="submit"
-              className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+              className="bg-blue-500 text-white p-2 rounded-md"
             >
-              Save Category
+              Create Category
             </button>
           </div>
         </form>
