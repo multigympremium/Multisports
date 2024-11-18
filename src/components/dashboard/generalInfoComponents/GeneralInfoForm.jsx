@@ -258,7 +258,7 @@ const GeneralInfoForm = () => {
 
       {/* Submit Buttons */}
       <div className="flex justify-end space-x-4">
-        <button type="submit" className="customSaveButton shadow-xl flex items-center">
+        <button type="submit" disabled={loading} className="customSaveButton shadow-xl flex items-center">
           {loading ? (
             <>
               <span className="loading loading-spinner mr-2  loading-xs"></span>Updating ..
