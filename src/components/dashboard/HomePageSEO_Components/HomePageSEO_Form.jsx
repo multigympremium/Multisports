@@ -12,7 +12,7 @@ export default function SeoForm() {
   const [targetId, setTargetId] = useState("");
   const [thumbnail, setThumbnail] = useState(null);
   const [thumbnailPreview, setThumbnailPreview] = useState(null);
-
+  const [loading, setLoading] = useState(false);
 
   const onDropThumbnail = (acceptedFiles) => {
     const file = acceptedFiles[0];
@@ -33,11 +33,12 @@ export default function SeoForm() {
     multiple: false,
   });
 
-  
+
   const axiosSecure = useAxiosSecure();
 
 
   const onSubmit = async (data) => {
+    setLoading(true)
     console.log(data, "data");
 
     const formData = new FormData();
@@ -48,48 +49,47 @@ export default function SeoForm() {
     formData.append("metaOgDescription", data.metaOgDescription);
     formData.append("metaOgImage", thumbnail);
     try {
-  
-      if(targetId){
-          const res = await axiosSecure.put(
-            `/website-seo/${targetId}`,
-            formData
-          );
-          if (res.status === 200 || res.status === 201) {
-            Swal.fire({
-              title: "Success!",
-              text: "About Us updated successfully",
-              icon: "success",
-              confirmButtonText: "Ok",
-            });
-          }
-          
-      }else {
-         const res = await axiosSecure.post(
-              `/website-seo`,
-              formData
-          );
-          if (res.status === 200 || res.status === 201) {
-            Swal.fire({
-              title: "Success!",
-              text: "About Us Created successfully",
-              icon: "success",
-              confirmButtonText: "Ok",
-            });
-          }
+
+      if (targetId) {
+        const res = await axiosSecure.put(
+          `/website-seo/${targetId}`,
+          formData
+        );
+        if (res.status === 200 || res.status === 201) {
+          Swal.fire({
+            title: "Success!",
+            text: "About Us updated successfully",
+            icon: "success",
+            confirmButtonText: "Ok",
+          });
+        }
+
+      } else {
+        const res = await axiosSecure.post(
+          `/website-seo`,
+          formData
+        );
+        if (res.status === 200 || res.status === 201) {
+          Swal.fire({
+            title: "Success!",
+            text: "About Us Created successfully",
+            icon: "success",
+            confirmButtonText: "Ok",
+          });
+        }
 
       }
-
-   
-
-  } catch (err) {
-    console.error(err);
-    Swal.fire({
-      title: "Error!",
-      text: err.message,
-      icon: "error",
-      confirmButtonText: "Ok",
-    });
-  }
+    } catch (err) {
+      console.error(err);
+      Swal.fire({
+        title: "Error!",
+        text: err.message,
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -98,21 +98,21 @@ export default function SeoForm() {
         const firstResData = await axiosSecure.get(`/website-seo`);
         const res = await axiosSecure.get(`/website-seo/${firstResData?.data?.data[0]?._id}`);
 
-        if(res.status === 200 || res.status === 201) {
-            
-            const data = res?.data?.data;
+        if (res.status === 200 || res.status === 201) {
 
-            console.log(data, "data");
-    
-            // Set form values with the testimonial data
-            for(let key in data){
-              console.log(key, data[key], "data[key]");
-                setValue(key, data[key]);
-            }
-            setThumbnailPreview(data?.metaOgImage)
-            setTargetId(data?._id)
-            
-        }else {
+          const data = res?.data?.data;
+
+          console.log(data, "data");
+
+          // Set form values with the testimonial data
+          for (let key in data) {
+            console.log(key, data[key], "data[key]");
+            setValue(key, data[key]);
+          }
+          setThumbnailPreview(data?.metaOgImage)
+          setTargetId(data?._id)
+
+        } else {
           handleDefaultColor()
         }
       } catch (error) {
@@ -124,105 +124,112 @@ export default function SeoForm() {
     fetchTestimonial();
 
 
-  }, [axiosSecure, setValue ]);
+  }, [axiosSecure, setValue]);
 
   return (
-    <div className="flex justify-center mt-10">
+    <div className="w-full ">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="w-full max-w-6xl bg-white p-6 rounded-lg shadow-md grid grid-cols-1 lg:grid-cols-2 gap-6"
+        className="w-full p-6 pt-0 rounded-lg space-y-6"
       >
         {/* Meta SEO Section */}
-        <div>
-          <h2 className="text-xl font-bold mb-4">
-            Search Engine Optimization for HomePage
-          </h2>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">
-              Meta Title
-            </label>
-            <input
-              type="text"
-              {...register("metaTitle")}
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-            />
-          </div>
+        <div className="space-y-4">
+          <h2 className="text-3xl mb-9 header font-semibold">Search Engine Optimization for HomePage</h2>
 
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">
-              Meta Keywords
-            </label>
-            <input
-              type="text"
-              {...register("metaKeywords")}
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-            />
-          </div>
+          <div className="space-y-4">
+            <div className="flex flex-col">
+              <label className="block text-sm font-medium text-gray-700">Meta Title</label>
+              <input
+                type="text"
+                {...register("metaTitle")}
+                className="customInput"
 
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">
-              Meta Description
-            </label>
-            <textarea
-              {...register("metaDescription")}
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-              rows="4"
-            />
+              />
+            </div>
+
+            <div className="flex flex-col">
+              <label className="block text-sm font-medium text-gray-700">Meta Keywords</label>
+              <input
+                type="text"
+                {...register("metaKeywords")}
+                className="customInput"
+
+              />
+            </div>
+
+            <div className="flex flex-col">
+              <label className="block text-sm font-medium text-gray-700">Meta Description</label>
+              <textarea
+                {...register("metaDescription")}
+                className="customInput resize-none"
+                rows="4"
+
+              />
+            </div>
           </div>
         </div>
 
         {/* Meta Open Graph Section */}
-        <div>
-          <h2 className="text-xl font-bold mb-4">
-            Meta Open Graph for HomePage
-          </h2>
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">
-              Meta OG Title
-            </label>
-            <input
-              type="text"
-              {...register("metaOgTitle")}
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-            />
-          </div>
+        <div className="space-y-4">
+          {/* <h2 className="text-2xl font-semibold text-gray-800">Meta Open Graph for HomePage</h2> */}
 
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">
-              Meta OG Description
-            </label>
-            <textarea
-              {...register("metaOgDescription")}
-              placeholder="Write Meta OG Description Here"
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-              rows="4"
-            />
-          </div>
+          <div className="space-y-4">
+            <div className="flex flex-col">
+              <label className="block text-sm font-medium text-gray-700">Meta Open Graph Title</label>
+              <input
+                type="text"
+                {...register("metaOgTitle")}
+                className="customInput"
 
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">
-              Meta OG Image
-            </label>
-            <DragEditUploadImageInput getRootProps={getBannerRootProps} getInputProps={getBannerInputProps} image={thumbnail} imagePreview={thumbnailPreview} />
+              />
+            </div>
+
+            <div className="flex flex-col">
+              <label className="block text-sm font-medium text-gray-700">Meta Open Graph Description</label>
+              <textarea
+                {...register("metaOgDescription")}
+
+                className="customInput resize-none"
+                rows="4"
+              />
+            </div>
+
+            <div className="flex flex-col">
+              <label className="block text-sm font-medium text-gray-700">Meta Open Graph Image</label>
+              <DragEditUploadImageInput
+                getRootProps={getBannerRootProps}
+                getInputProps={getBannerInputProps}
+                image={thumbnail}
+                imagePreview={thumbnailPreview}
+              />
+            </div>
           </div>
         </div>
 
         {/* Action Buttons */}
-        <div className="col-span-2 flex justify-end mt-6">
+        <div className="flex justify-end gap-6 mt-6">
           <button
             type="button"
-            className="bg-red-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-red-600 mr-4"
+            className="customCancelButton"
           >
             Cancel
           </button>
           <button
+            disabled={loading}
             type="submit"
-            className="bg-blue-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-blue-600"
+            className="customSaveButton"
           >
-            Update Info
+            {loading ? (
+              <>
+                <span className="loading loading-spinner mr-2 loading-xs"></span>Updating..
+              </>
+            ) : (
+              "Update Info"
+            )}
           </button>
         </div>
       </form>
+
     </div>
   );
 }

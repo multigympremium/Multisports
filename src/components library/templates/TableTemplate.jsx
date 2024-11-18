@@ -20,7 +20,7 @@ const body =
                     </tr>
                 ))}
             </tbody>
-        </table>
+        </table> 
         {/* use  Mpagination for pagination and MtableLoading for table loading    */}
     </section>
 

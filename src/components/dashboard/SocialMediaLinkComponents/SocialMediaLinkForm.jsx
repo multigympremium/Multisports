@@ -4,58 +4,69 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
+import { FaFacebookMessenger, FaPinterest, FaSquareFacebook, FaSquareInstagram, FaSquareXTwitter, FaViber } from "react-icons/fa6";
+import { BsFacebook, BsInstagram, BsLinkedin, BsTwitterX, BsWhatsapp } from "react-icons/bs";
+import { TfiLinkedin, TfiPinterest } from "react-icons/tfi";
+import { LiaTelegramPlane } from "react-icons/lia";
+import { TbBrandYoutubeFilled } from "react-icons/tb";
+import { FaTiktok } from "react-icons/fa";
+
 
 export default function SocialMediaLinksForm() {
   const { register, handleSubmit, setValue, formState: { errors } } = useForm();
   const [targetId, setTargetId] = useState("");
+  const [loading, setLoading] = useState(false);
   const axiosSecure = useAxiosSecure();
 
 
   const onSubmit = async (data) => {
+    setLoading(true);
     console.log(data, "data");
     try {
-  
-      if(targetId){
-          const res = await axiosSecure.put(
-            `/social-link/${targetId}`,
-            data
-          );
-          if (res.status === 200 || res.status === 201) {
-            Swal.fire({
-              title: "Success!",
-              text: "About Us updated successfully",
-              icon: "success",
-              confirmButtonText: "Ok",
-            });
-          }
-          
-      }else {
-         const res = await axiosSecure.post(
-              `/social-link`,
-              data
-          );
-          if (res.status === 200 || res.status === 201) {
-            Swal.fire({
-              title: "Success!",
-              text: "About Us Created successfully",
-              icon: "success",
-              confirmButtonText: "Ok",
-            });
-          }
+
+      if (targetId) {
+        const res = await axiosSecure.put(
+          `/social-link/${targetId}`,
+          data
+        );
+        if (res.status === 200 || res.status === 201) {
+          Swal.fire({
+            title: "Success!",
+            text: "About Us updated successfully",
+            icon: "success",
+            confirmButtonText: "Ok",
+          });
+        }
+
+      } else {
+        const res = await axiosSecure.post(
+          `/social-link`,
+          data
+        );
+        if (res.status === 200 || res.status === 201) {
+          Swal.fire({
+            title: "Success!",
+            text: "About Us Created successfully",
+            icon: "success",
+            confirmButtonText: "Ok",
+          });
+        }
 
       }
 
-   
 
-  } catch (err) {
-    console.error(err);
-    Swal.fire({
-      title: "Error!",
-      text: err.message,
-      icon: "error",
-      confirmButtonText: "Ok",
-    });
-  }
+
+    } catch (err) {
+      console.error(err);
+      Swal.fire({
+        title: "Error!",
+        text: err.message,
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+    } finally {
+      setLoading(false)
+    }
   };
 
   useEffect(() => {
@@ -64,20 +75,20 @@ export default function SocialMediaLinksForm() {
         const firstResData = await axiosSecure.get(`/social-link`);
         const res = await axiosSecure.get(`/social-link/${firstResData?.data?.data[0]?._id}`);
 
-        if(res.status === 200 || res.status === 201) {
-            
-            const data = res?.data?.data;
+        if (res.status === 200 || res.status === 201) {
 
-            console.log(data, "data");
-    
-            // Set form values with the testimonial data
-            for(let key in data){
-              console.log(key, data[key], "data[key]");
-                setValue(key, data[key]);
-            }
-            setTargetId(data?._id)
-            
-        }else {
+          const data = res?.data?.data;
+
+          console.log(data, "data");
+
+          // Set form values with the testimonial data
+          for (let key in data) {
+            console.log(key, data[key], "data[key]");
+            setValue(key, data[key]);
+          }
+          setTargetId(data?._id)
+
+        } else {
           handleDefaultColor()
         }
       } catch (error) {
@@ -89,166 +100,186 @@ export default function SocialMediaLinksForm() {
     fetchTestimonial();
 
 
-  }, [axiosSecure, setValue ]);
+  }, [axiosSecure, setValue]);
 
 
   return (
-    <div className="flex justify-center mt-10 w-full">
+    <div className="w-full">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="w-full max-w-[1000px]  bg-white p-6 rounded-lg shadow-md"
+        className="w-full p-6 pt-0 rounded-lg"
       >
-        <h2 className="text-xl font-bold mb-4">Update Social Media Links</h2>
-        <div className="grid grid-cols-2 gap-4">
+        <h2 className="text-3xl font-semibold header mb-9">Update Social Media Links</h2>
+        <div className="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-4 lg:gap-5">
           {/* Facebook */}
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              Facebook Page Link:
+              <span className="flex items-center gap-2"><BsFacebook />Facebook Page Link</span>
             </label>
             <input
               type="text"
               {...register("facebook")}
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+              className="customInput"
+
             />
           </div>
 
           {/* Twitter */}
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              Twitter Link:
+              <span className="flex items-center gap-2"><BsTwitterX />Twitter Link</span>
             </label>
             <input
               type="text"
               {...register("twitter")}
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+              className="customInput"
+
             />
           </div>
 
           {/* Instagram */}
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              Instagram Link:
+              <span className="flex items-center gap-2"><BsInstagram />Instagram Link</span>
             </label>
             <input
               type="text"
               {...register("instagram")}
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+              className="customInput"
+
             />
           </div>
 
           {/* LinkedIn */}
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              LinkedIn Profile:
+              <span className="flex items-center gap-2"><TfiLinkedin />LinkedIn Profile</span>
             </label>
             <input
               type="text"
               {...register("linkedin")}
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+              className="customInput"
+
             />
           </div>
 
           {/* Messenger */}
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              Messenger:
+              <span className="flex items-center gap-2"><FaFacebookMessenger />Messenger</span>
             </label>
             <input
               type="text"
               {...register("messenger")}
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+              className="customInput"
+
             />
           </div>
 
           {/* WhatsApp */}
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              WhatsApp:
+              <span className="flex items-center gap-2"><BsWhatsapp />WhatsApp</span>
             </label>
             <input
               type="text"
               {...register("whatsapp")}
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+              className="customInput"
+
             />
           </div>
 
           {/* Telegram */}
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              Telegram:
+              <span className="flex items-center gap-2"><LiaTelegramPlane />Telegram</span>
             </label>
             <input
               type="text"
               {...register("telegram")}
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+              className="customInput"
+
             />
           </div>
 
           {/* YouTube */}
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              YouTube Channel Link:
+              <span className="flex items-center gap-2"><TbBrandYoutubeFilled />YouTube Channel Link</span>
             </label>
             <input
               type="text"
               {...register("youtube")}
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+              className="customInput"
+
             />
           </div>
 
           {/* TikTok */}
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              TikTok Link:
+              <span className="flex items-center gap-2"><FaTiktok />TikTok</span>
             </label>
             <input
               type="text"
               {...register("tiktok")}
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+              className="customInput"
+
             />
           </div>
 
           {/* Pinterest */}
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              Pinterest Link:
+              <span className="flex items-center gap-2"><TfiPinterest />Pinterest Link</span>
             </label>
             <input
               type="text"
               {...register("pinterest")}
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+              className="customInput"
+
             />
           </div>
 
           {/* Viber */}
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              Viber:
+              <span className="flex items-center gap-2"><FaViber />Viber</span>
             </label>
             <input
               type="text"
               {...register("viber")}
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+              className="customInput"
+
             />
           </div>
         </div>
 
         {/* Buttons */}
-        <div className="flex justify-between mt-6">
+        <div className="flex justify-end gap-5 mt-8">
           <button
             type="button"
-            className="bg-red-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-red-600"
+            className="customCancelButton"
           >
             Cancel
           </button>
           <button
+            disabled={loading}
             type="submit"
-            className="bg-blue-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-blue-600"
+            className="customSaveButton"
           >
-            Update Info
+            {loading ? (
+              <>
+                <span className="loading loading-spinner mr-2 loading-xs"></span>
+                Updating ..
+              </>
+            ) : (
+              "Update info"
+            )}
           </button>
         </div>
       </form>
+
     </div>
   );
 }
