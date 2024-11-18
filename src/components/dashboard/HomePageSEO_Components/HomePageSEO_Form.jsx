@@ -130,11 +130,11 @@ export default function SeoForm() {
     <div className="w-full ">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="w-full p-6 rounded-lg space-y-6"
+        className="w-full p-6 pt-0 rounded-lg space-y-6"
       >
         {/* Meta SEO Section */}
         <div className="space-y-4">
-          <h2 className="text-3xl mb-9 font-semibold text-gray-800">Search Engine Optimization for HomePage</h2>
+          <h2 className="text-3xl mb-9 header font-semibold">Search Engine Optimization for HomePage</h2>
 
           <div className="space-y-4">
             <div className="flex flex-col">
@@ -143,7 +143,7 @@ export default function SeoForm() {
                 type="text"
                 {...register("metaTitle")}
                 className="customInput"
-                
+
               />
             </div>
 
@@ -153,7 +153,7 @@ export default function SeoForm() {
                 type="text"
                 {...register("metaKeywords")}
                 className="customInput"
-                
+
               />
             </div>
 
@@ -163,7 +163,7 @@ export default function SeoForm() {
                 {...register("metaDescription")}
                 className="customInput resize-none"
                 rows="4"
-                
+
               />
             </div>
           </div>
@@ -180,7 +180,7 @@ export default function SeoForm() {
                 type="text"
                 {...register("metaOgTitle")}
                 className="customInput"
-                
+
               />
             </div>
 
@@ -188,7 +188,7 @@ export default function SeoForm() {
               <label className="block text-sm font-medium text-gray-700">Meta Open Graph Description</label>
               <textarea
                 {...register("metaOgDescription")}
-                
+
                 className="customInput resize-none"
                 rows="4"
               />
@@ -215,6 +215,7 @@ export default function SeoForm() {
             Cancel
           </button>
           <button
+            disabled={loading}
             type="submit"
             className="customSaveButton"
           >

@@ -109,7 +109,7 @@ export default function SocialMediaLinksForm() {
         onSubmit={handleSubmit(onSubmit)}
         className="w-full p-6 pt-0 rounded-lg"
       >
-        <h2 className="text-3xl font-semibold mb-9">Update Social Media Links</h2>
+        <h2 className="text-3xl font-semibold header mb-9">Update Social Media Links</h2>
         <div className="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-4 lg:gap-5">
           {/* Facebook */}
           <div>
@@ -120,7 +120,7 @@ export default function SocialMediaLinksForm() {
               type="text"
               {...register("facebook")}
               className="customInput"
-              
+
             />
           </div>
 
@@ -133,7 +133,7 @@ export default function SocialMediaLinksForm() {
               type="text"
               {...register("twitter")}
               className="customInput"
-              
+
             />
           </div>
 
@@ -146,7 +146,7 @@ export default function SocialMediaLinksForm() {
               type="text"
               {...register("instagram")}
               className="customInput"
-              
+
             />
           </div>
 
@@ -159,7 +159,7 @@ export default function SocialMediaLinksForm() {
               type="text"
               {...register("linkedin")}
               className="customInput"
-              
+
             />
           </div>
 
@@ -172,7 +172,7 @@ export default function SocialMediaLinksForm() {
               type="text"
               {...register("messenger")}
               className="customInput"
-              
+
             />
           </div>
 
@@ -185,7 +185,7 @@ export default function SocialMediaLinksForm() {
               type="text"
               {...register("whatsapp")}
               className="customInput"
-              
+
             />
           </div>
 
@@ -198,7 +198,7 @@ export default function SocialMediaLinksForm() {
               type="text"
               {...register("telegram")}
               className="customInput"
-              
+
             />
           </div>
 
@@ -211,7 +211,7 @@ export default function SocialMediaLinksForm() {
               type="text"
               {...register("youtube")}
               className="customInput"
-              
+
             />
           </div>
 
@@ -224,7 +224,7 @@ export default function SocialMediaLinksForm() {
               type="text"
               {...register("tiktok")}
               className="customInput"
-              
+
             />
           </div>
 
@@ -237,7 +237,7 @@ export default function SocialMediaLinksForm() {
               type="text"
               {...register("pinterest")}
               className="customInput"
-              
+
             />
           </div>
 
@@ -250,7 +250,7 @@ export default function SocialMediaLinksForm() {
               type="text"
               {...register("viber")}
               className="customInput"
-              
+
             />
           </div>
         </div>
@@ -264,6 +264,7 @@ export default function SocialMediaLinksForm() {
             Cancel
           </button>
           <button
+            disabled={loading}
             type="submit"
             className="customSaveButton"
           >

@@ -74,9 +74,9 @@ const Sidebar = ({ isCollapsed }) => {
         isCollapsed ? "w-[80px] hidden md:block" : "w-[280px] md:w-[270px]"
       } bg-white shadow-lg transition-all duration-300`}
     >
-      <div className="flex flex-col items-center mb-6">
+      <div className="flex flex-col items-start mb-6">
         {!isCollapsed && (
-          <img src={logo} alt="Logo" className="w-20 h-20 mb-4" />
+          <img src='https://multisports.shop/images/site_setting/multi-sports_vi6P5.png' alt="Logo" className="w-[80%]  mb-4" />
         )}
       </div>
 
@@ -123,7 +123,7 @@ const Sidebar = ({ isCollapsed }) => {
                           to={"/dashboard/" + item.path}
                           className={`flex items-center text-[24px] gap-2 p-2 rounded-lg transition-colors mb-3 ${
                             isActiveLink(item.path, location.pathname)
-                              ? "bg-[#eba21c] text-white shadow"
+                              ? "bg-red-300 text-white shadow"
                               : "text-gray-700 hover:bg-gray-100 hover:text-gray-900"
                           }`}
                         >
@@ -142,7 +142,7 @@ const Sidebar = ({ isCollapsed }) => {
       <div className="mt-auto">
         <button
           onClick={handleLogOut}
-          className="w-full p-3 flex items-center justify-center gap-2 rounded-lg bg-red-600 text-white hover:bg-red-700 transition-colors"
+          className="w-full p-3 flex font-semibold items-center justify-center gap-2 rounded-lg bg-[#E68923] text-white hover:bg-[#c7751e] transition-colors"
         >
           <CiLogout size={24} />
           {!isCollapsed && <span>Log Out</span>}

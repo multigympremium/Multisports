@@ -156,7 +156,7 @@ export default function WebsiteThemeColorForm() {
         onSubmit={handleSubmit(onSubmit)}
         className="w-full  p-6 pt-0"
       >
-        <h2 className="text-3xl font-semibold mb-9">Update Website Theme Color</h2>
+        <h2 className="text-3xl header font-semibold mb-9">Update Website Theme Color</h2>
         <div className="grid grid-cols-1 gap-4">
 
           {/* Color inputs */}

@@ -17,7 +17,7 @@
   }
   
   .customInput:focus {
-    border-color: #7aa191; 
+    border-color: #0e9e8b; 
    
   }
 
@@ -27,7 +27,7 @@
     font-weight: 600;
     border-radius: 1rem; 
     color: white;
-    background-color: #22c55e;
+    background-color: #087D6D;
     transition: background-color 0.3s ease, box-shadow 0.3s ease; 
     --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
     --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);
@@ -35,7 +35,7 @@
   }
   
   .customSaveButton:hover {
-    background-color: #16a34a; 
+    background-color: #086357; 
     /* box-shadow: 4px 6px 8px rgba(0, 0, 0, 0.1);  */
   }
   
@@ -44,7 +44,7 @@
     font-weight: 600; 
     border-radius: 1rem; 
     color: white;
-    background-color: #ef4444; 
+    background-color: #E68923; 
     transition: background-color 0.3s ease, box-shadow 0.3s ease; 
     --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
     --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);
@@ -52,10 +52,14 @@
   }
   
   .customCancelButton:hover {
-    background-color: #dc2626; 
+    background-color: #b16c23; 
     /* box-shadow: 4px 6px 8px rgba(0, 0, 0, 0.1);  */
   }
-  
-  
-  
+/* ....................................... */
+
+/* Headings */
+
+.header{
+/* color: #2E3190; */
+}
   
