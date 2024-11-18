@@ -110,7 +110,7 @@ export default function CustomCSSJSForm() {
   return (
     <div className="">
       <div className="p-6 pt-0">
-        <h1 className="text-3xl font-semibold mb-8">Custom CSS & JS Form</h1>
+        <h1 className="text-3xl font-semibold header mb-8">Custom CSS & JS Form</h1>
         <form
           onSubmit={handleSubmit}
           className=""
@@ -169,6 +169,7 @@ export default function CustomCSSJSForm() {
               </button>
               <button
                 type="submit"
+                disabled={loading}
                 className="customSaveButton"
               >
                 {loading ? (

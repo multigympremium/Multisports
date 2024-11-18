@@ -20,7 +20,7 @@ export default function SocialChatAndScript() {
   return (
     <div className=" p-6 pt-0">
       <div className="w-full">
-        <h2 className="text-3xl font-semibold mb-9">
+        <h2 className="text-3xl header font-semibold mb-9">
           Social Login & Chat Scripts
         </h2>
         <div className="flex">
@@ -41,8 +41,8 @@ export default function SocialChatAndScript() {
                 <li
                   key={tab}
                   className={`cursor-pointer p-3 rounded-2xl text-gray-700 transition-colors duration-200 ${selectedTab === tab
-                      ? "bg-green-500 text-white font-semibold"
-                      : "hover:bg-green-100"
+                    ? "bg-[#087D6D] text-white font-semibold"
+                    : "hover:bg-[#087d6d1a]"
                     }`}
                   onClick={() => handleTabClick(tab)}
                 >
@@ -92,6 +92,7 @@ export default function SocialChatAndScript() {
 
               {/* Update Button */}
               <button
+                
                 type="submit"
                 className="customSaveButton"
               >

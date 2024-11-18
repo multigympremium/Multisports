@@ -17,10 +17,10 @@ const MenuLink = ({ item, location, isCollapsed }) => {
   return (
     <Link
       to={"/dashboard/" + item.path}
-      className={`flex items-center gap-2 p-2 rounded-lg transition-colors ${
+      className={`flex items-center gap-2 p-2 pl-5 rounded-xl transition-colors ${
         isActiveLink(item.path, location.pathname)
-          ? "bg-[#eba21c] text-white shadow"
-          : "text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+          ? "bg-[#087D6D] text-white shadow"
+          : "text-gray-700 hover:bg-[#087d6d13] hover:text-gray-900"
       }`}
     >
       {item.icon}

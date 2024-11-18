@@ -120,7 +120,7 @@ const GeneralInfoForm = () => {
             type="text"
             {...register("company_name")}
             className="customInput"
-            
+
           />
           {errors.company_name && (
             <span className="text-red-600 text-sm">{errors.company_name.message}</span>
@@ -132,7 +132,7 @@ const GeneralInfoForm = () => {
             type="text"
             {...register("phone")}
             className="customInput"
-            
+
           />
           {errors.phone && <span className="text-red-600 text-sm">{errors.phone.message}</span>}
         </div>
@@ -142,7 +142,7 @@ const GeneralInfoForm = () => {
             type="email"
             {...register("email")}
             className="customInput"
-            
+
           />
           {errors.email && <span className="text-red-600 text-sm">{errors.email.message}</span>}
         </div>
@@ -152,7 +152,7 @@ const GeneralInfoForm = () => {
             type="text"
             {...register("description")}
             className="customInput"
-            
+
           />
           {errors.description && (
             <span className="text-red-600 text-sm">{errors.description.message}</span>
@@ -164,7 +164,7 @@ const GeneralInfoForm = () => {
             type="text"
             {...register("address")}
             className="customInput"
-            
+
           />
           {errors.address && <span className="text-red-600 text-sm">{errors.address.message}</span>}
         </div>
@@ -176,7 +176,7 @@ const GeneralInfoForm = () => {
             type="text"
             {...register("google_map_link")}
             className="customInput"
-            
+
           />
           {errors.google_map_link && (
             <span className="text-red-600 text-sm">{errors.google_map_link.message}</span>
@@ -188,7 +188,7 @@ const GeneralInfoForm = () => {
             type="text"
             {...register("play_store_link")}
             className="customInput"
-            
+
           />
           {errors.play_store_link && (
             <span className="text-red-600 text-sm">{errors.play_store_link.message}</span>
@@ -200,7 +200,7 @@ const GeneralInfoForm = () => {
             type="text"
             {...register("app_store_link")}
             className="customInput"
-            
+
           />
           {errors.app_store_link && (
             <span className="text-red-600 text-sm">{errors.app_store_link.message}</span>
@@ -214,7 +214,7 @@ const GeneralInfoForm = () => {
             type="text"
             {...register("trade_license")}
             className="customInput"
-            
+
           />
           {errors.trade_license && (
             <span className="text-red-600 text-sm">{errors.trade_license.message}</span>
@@ -226,7 +226,7 @@ const GeneralInfoForm = () => {
             type="text"
             {...register("tin_no")}
             className="customInput"
-            
+
           />
           {errors.tin_no && <span className="text-red-600 text-sm">{errors.tin_no.message}</span>}
         </div>
@@ -236,7 +236,7 @@ const GeneralInfoForm = () => {
             type="text"
             {...register("bin_no")}
             className="customInput"
-            
+
           />
           {errors.bin_no && <span className="text-red-600 text-sm">{errors.bin_no.message}</span>}
         </div>
@@ -248,7 +248,7 @@ const GeneralInfoForm = () => {
             type="text"
             {...register("footer_copyright")}
             className="customInput"
-            
+
           />
           {errors.footer_copyright && (
             <span className="text-red-600 text-sm">{errors.footer_copyright.message}</span>
@@ -257,19 +257,21 @@ const GeneralInfoForm = () => {
       </div>
 
       {/* Submit Buttons */}
-      <div className="flex justify-end space-x-4">
-        <button type="submit" disabled={loading} className="customSaveButton shadow-xl flex items-center">
-          {loading ? (
-            <>
-              <span className="loading loading-spinner mr-2  loading-xs"></span>Updating ..
-            </>
-          ) : (
-            "Update Info"
-          )}
-        </button>
-        <button type="button" className="customCancelButton">
-          Cancel
-        </button>
+      <div className="flex justify-end ">
+        <div className="flex  flex-row-reverse gap-5">
+          <button type="submit" disabled={loading} className="customSaveButton shadow-xl flex items-center">
+            {loading ? (
+              <>
+                <span className="loading loading-spinner mr-2  loading-xs"></span>Updating ..
+              </>
+            ) : (
+              "Update Info"
+            )}
+          </button>
+          <button type="button" className="customCancelButton">
+            Cancel
+          </button>
+        </div>
       </div>
     </form>
 
