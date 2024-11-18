@@ -151,41 +151,41 @@ export default function WebsiteThemeColorForm() {
   }, [setValue]);
 
   return (
-    <div className="flex justify-center mt-10">
+    <div className="flex justify-center">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="w-full max-w-lg bg-white p-6 rounded-lg shadow-md"
+        className="w-full  p-6 pt-0"
       >
-        <h2 className="text-xl font-bold mb-4">Update Website Theme Color</h2>
-        <div className="grid grid-cols-2 gap-4">
+        <h2 className="text-3xl font-semibold mb-9">Update Website Theme Color</h2>
+        <div className="grid grid-cols-1 gap-4">
 
           {/* Color inputs */}
           {["primaryColor", "secondaryColor", "tertiaryColor", "titleColor", "paragraphColor", "borderColor"].map((color) => (
             <div key={color}>
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm  font-medium  text-gray-700">
                 {color.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}:
               </label>
               <input
                 type={"text"}
-                className="h-10 w-full px-2 rounded flex justify-center items-center text-gray-600"
+                className="customInput"
                 style={{ background: getValues(color), color: getContrastingColor(getValues(color)) }}
                 // htmlFor={color}
                 {...register(color, { onChange: (e) => setValue(color, e.target.value) })}
               />
-              <input
+              {/* <input
                 type="color"
                 {...register(color, { onChange: (e) => setValue(color, e.target.value) })}
                 id={color}
                 hidden={true}
                 className=" block w-0 h-0 opacity-0 overflow-hidden border border-gray-300 rounded-md"
-              />
+              /> */}
 
             </div>
           ))}
         </div>
 
         {/* Buttons */}
-        <div className="flex mt-6">
+        <div className="flex justify-end  mt-8">
           {/* <button
             type="button"
             className="bg-red-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-red-600"
@@ -193,8 +193,9 @@ export default function WebsiteThemeColorForm() {
             Cancel
           </button> */}
           <button
+            disabled={loading}
             type="submit"
-            className="bg-blue-500 text-white w-full font-semibold py-2 px-4 rounded-md hover:bg-blue-600"
+            className="customSaveButton"
           >
             {loading ? <><span className="loading loading-spinner mr-2  loading-xs"></span>Updating ..</> : "Update color"}
           </button>

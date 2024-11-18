@@ -18,14 +18,15 @@ export default function SocialChatAndScript() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-10">
-      <div className="w-full mx-auto bg-white shadow-md rounded-lg">
+    <div className=" p-6 pt-0">
+      <div className="w-full">
+        <h2 className="text-3xl font-semibold mb-9">
+          Social Login & Chat Scripts
+        </h2>
         <div className="flex">
           {/* Left-side Tabs */}
-          <div className="w-1/4 p-5 border-r">
-            <h2 className="text-lg font-bold mb-4">
-              Social Login & Chat Scripts
-            </h2>
+          <div className="w-1/4 pr-5 border-r border-gray-300">
+
             <ul>
               {[
                 "Google Analytic",
@@ -39,32 +40,34 @@ export default function SocialChatAndScript() {
               ].map((tab) => (
                 <li
                   key={tab}
-                  className={`cursor-pointer p-3 mb-2 rounded-md text-gray-700 ${
-                    selectedTab === tab
-                      ? "bg-blue-500 text-white"
-                      : "hover:bg-blue-100"
-                  }`}
+                  className={`cursor-pointer p-3 rounded-2xl text-gray-700 transition-colors duration-200 ${selectedTab === tab
+                      ? "bg-green-500 text-white font-semibold"
+                      : "hover:bg-green-100"
+                    }`}
                   onClick={() => handleTabClick(tab)}
                 >
                   {tab}
                 </li>
+
+
+
               ))}
             </ul>
           </div>
 
           {/* Right-side Form */}
-          <div className="w-3/4 p-5">
+          <div className="w-3/4 pl-8 pt-0">
             <form onSubmit={handleSubmit}>
-              <h3 className="text-xl font-bold mb-4">{selectedTab}</h3>
+              <h3 className="text-2xl text-gray-700 mb-6">{selectedTab}</h3>
 
               {selectedTab === "Google Analytic" && (
                 <>
-                  <div className="mb-4">
-                    <label className="block text-gray-700 font-bold mb-2">
+                  <div className="mb-6">
+                    <label className="block text-gray-700  ">
                       Allow Google Analytic
                     </label>
                     <select
-                      className="w-full p-2 border rounded-md"
+                      className="customInput select"
                       onChange={(e) => console.log(e.target.value)}
                     >
                       <option>Disable Google Analytic</option>
@@ -72,15 +75,15 @@ export default function SocialChatAndScript() {
                     </select>
                   </div>
 
-                  <div className="mb-4">
-                    <label className="block text-gray-700 font-bold mb-2">
+                  <div className="mb-6">
+                    <label className="block text-gray-700  ">
                       Analytic Tracking ID
                     </label>
                     <input
                       type="text"
                       value={analyticID}
                       onChange={(e) => setAnalyticID(e.target.value)}
-                      className="w-full p-2 border rounded-md"
+                      className="customInput"
                       placeholder="UA-XXXXXXXXX-X"
                     />
                   </div>
@@ -90,7 +93,7 @@ export default function SocialChatAndScript() {
               {/* Update Button */}
               <button
                 type="submit"
-                className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+                className="customSaveButton"
               >
                 Update
               </button>
