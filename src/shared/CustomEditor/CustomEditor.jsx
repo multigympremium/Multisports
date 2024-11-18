@@ -7,12 +7,11 @@ const ReactQuill = lazy(() => import("react-quill"), { ssr: false });
 const CustomEditor = ({ value, setValue }) => {
   return (
     <Suspense fallback={<div>Loading...</div>} >
-
-    <div className="w-full mb-4">
+    <div className="w-full border pb-10 px-4 pt-4 rounded-2xl border-gray-300">
       <ReactQuill
         value={value}
         onChange={setValue}
-        style={{ height: "300px", marginBottom: "20px" }}
+        style={{ height: "300px", marginBottom: "20px"}}
       />
     </div>
     </Suspense>

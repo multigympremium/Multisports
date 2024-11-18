@@ -10,6 +10,7 @@ import useAxiosSecure from "../../../Hook/useAxiosSecure";
 
 export default function ChildCategoryCreateForm() {
   const [category, setCategory] = useState("");
+  const [loading , setLoading] = useState(false);
   const [subcategory, setSubcategory] = useState("");
   const [childCategoryName, setChildCategoryName] = useState("");
   const [childCategoryIcon, setChildCategoryIcon] = useState(null);
@@ -50,6 +51,7 @@ export default function ChildCategoryCreateForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true)
 
     // Reset errors before validation
     setErrors({});
@@ -69,6 +71,7 @@ export default function ChildCategoryCreateForm() {
     // If there are validation errors, update the state and prevent form submission
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
+      setLoading(false);
       return;
     }
 
@@ -107,6 +110,8 @@ export default function ChildCategoryCreateForm() {
         icon: "error",
         confirmButtonText: "Ok",
       });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -129,17 +134,17 @@ export default function ChildCategoryCreateForm() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-10">
-      <div className="max-w-4xl mx-auto bg-white p-8 shadow-md rounded-md">
-        <h1 className="text-2xl font-bold mb-5">Child Category Create Form</h1>
+    <div className="p-6 pt-0">
+      <div className="">
+        <h1 className="text-3xl header font-semibold mb-9">Child Category Create Form</h1>
         <form onSubmit={handleSubmit}>
           {/* Select Category */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">Select Category *</label>
+            <label className="block text-gray-700 font-semibold mb-2">Select Category </label>
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="w-full p-2 border rounded-md"
+              className="select customInput"
               
             >
               <option value="">Select One</option>
@@ -150,16 +155,16 @@ export default function ChildCategoryCreateForm() {
                   </option>
                 ))}
             </select>
-            {errors.category && <p className="text-red-500 text-xs">{errors.category}</p>}
+            {errors.category && <p className="text-red-500 text-xs mt-1 ml-2">{errors.category}</p>}
           </div>
 
           {/* Select Subcategory */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">Select Subcategory *</label>
+            <label className="block text-gray-700 font-semibold">Select Subcategory </label>
             <select
               value={subcategory}
               onChange={(e) => setSubcategory(e.target.value)}
-              className="w-full p-2 border rounded-md"
+              className="select customInput"
               
             >
               <option value="">Select One</option>
@@ -170,58 +175,66 @@ export default function ChildCategoryCreateForm() {
                   </option>
                 ))}
             </select>
-            {errors.subcategory && <p className="text-red-500 text-xs">{errors.subcategory}</p>}
+            {errors.subcategory && <p className="text-red-500 text-xs mt-1 ml-2">{errors.subcategory}</p>}
           </div>
 
           {/* Child Category Name */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">Name *</label>
+            <label className="block text-gray-700 font-semibold">Name </label>
             <input
               type="text"
               value={childCategoryName}
               onChange={(e) => handleSubcategoryNameInput(e.target.value)}
-              className="w-full p-2 border rounded-md"
+              className="customInput"
               placeholder="Child Category Title"
               
             />
             {errors.childCategoryName && (
-              <p className="text-red-500 text-xs">{errors.childCategoryName}</p>
+              <p className="text-red-500 text-xs mt-1 ml-2">{errors.childCategoryName}</p>
             )}
           </div>
 
           {/* Slug */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">Slug *</label>
+            <label className="block text-gray-700 font-semibold">Slug </label>
             <input
               type="text"
               value={slug}
               onChange={(e) => handleSlug(e.target.value)}
-              className="w-full p-2 border rounded-md"
+              className="customInput"
               placeholder="Subcategory Title"
               
             />
-            {errors.slug && <p className="text-red-500 text-xs">{errors.slug}</p>}
+            {errors.slug && <p className="text-red-500 text-xs mt-1 ml-2">{errors.slug}</p>}
           </div>
 
           {/* Child Category Icon */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">Child Category Icon</label>
+            <label className="block text-gray-700 font-semibold mb-2">Child Category Icon</label>
             <DragUploadImageInput
               getRootProps={getIconRootProps}
               getInputProps={getIconInputProps}
               image={childCategoryIcon}
               imagePreview={childCategoryIconPreview}
             />
-            {errors.icon && <p className="text-red-500 text-xs">{errors.icon}</p>}
+            {errors.icon && <p className="text-red-500 text-xs mt-1 ml-2">{errors.icon}</p>}
           </div>
 
           {/* Submit Button */}
           <div className="flex justify-end mt-4">
             <button
               type="submit"
-              className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+              disabled={loading}
+              className="customSaveButton"
             >
-              Save Child Category
+              {loading ? (
+              <>
+                <span className="loading loading-spinner mr-2  loading-xs"></span>Saving ..
+              </>
+            ) : (
+              "Save Child Category"
+            )}
+              
             </button>
           </div>
         </form>

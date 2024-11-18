@@ -8,6 +8,7 @@ import useAxiosSecure from "../../../Hook/useAxiosSecure";
 
 export default function CategoryCreateForm() {
   const axiosSecure = useAxiosSecure();
+  const [loading , setLoading] = useState(false);
   const [categoryName, setCategoryName] = useState("");
   const [featureCategory, setFeatureCategory] = useState("");
   const [showOnNavbar, setShowOnNavbar] = useState("Yes");
@@ -65,6 +66,7 @@ export default function CategoryCreateForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const validationErrors = validateForm();
 
     if (Object.keys(validationErrors).length > 0) {
@@ -75,6 +77,7 @@ export default function CategoryCreateForm() {
         icon: "error",
         confirmButtonText: "Ok",
       });
+      setLoading(false);
       return;
     }
 
@@ -105,6 +108,8 @@ export default function CategoryCreateForm() {
         icon: "error",
         confirmButtonText: "Ok",
       });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -141,18 +146,18 @@ export default function CategoryCreateForm() {
   });
 
   return (
-    <div className="min-h-screen w-full bg-gray-100 p-10">
-      <div className="w-full mx-auto bg-white p-8 shadow-md rounded-md">
-        <h1 className="text-2xl font-bold mb-5">Category Create Form</h1>
+    <div className="w-full p-6 pt-0">
+      <div className="">
+        <h1 className="text-3xl font-semibold mb-9">Category Create Form</h1>
         <form onSubmit={handleSubmit}>
           {/* Category Name */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">Name *</label>
+            <label className="block text-gray-700 font-semibold">Name </label>
             <input
               type="text"
               value={categoryName}
               onChange={(e) => handleSlug(e.target.value)}
-              className="w-full p-2 border rounded-md"
+              className="customInput"
               placeholder="Category Name"
             />
             {errors.categoryName && (
@@ -162,11 +167,11 @@ export default function CategoryCreateForm() {
 
           {/* Slug */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">Slug *</label>
+            <label className="block text-gray-700 font-semibold ">Slug </label>
             <input
               type="text"
               value={slug}
-              className="w-full p-2 border rounded-md"
+              className="customInput"
               placeholder="Slug"
               readOnly
             />
@@ -177,12 +182,12 @@ export default function CategoryCreateForm() {
 
           {/* Category Icon */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">
+            <label className="block text-gray-700 font-semibold mb-2">
               Category Icon (Optional)
             </label>
             <div
               {...getIconRootProps()}
-              className="w-full p-4 border-dashed min-h-[200px] flex flex-col items-center justify-center border-2 border-gray-300 rounded-md text-center cursor-pointer"
+              className="w-full p-4 border-dashed min-h-[200px] flex flex-col items-center justify-center border-2 border-gray-300 rounded-2xl text-center cursor-pointer"
             >
               <input {...getIconInputProps()} />
               {categoryIcon ? (
@@ -209,12 +214,12 @@ export default function CategoryCreateForm() {
 
           {/* Category Banner */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">
+            <label className="block text-gray-700 font-semibold mb-2">
               Category Banner (Optional)
             </label>
             <div
               {...getBannerRootProps()}
-              className="w-full p-4 border-dashed min-h-[200px] flex flex-col items-center justify-center border-2 border-gray-300 rounded-md text-center cursor-pointer"
+              className="w-full p-4 border-dashed min-h-[200px] flex flex-col items-center justify-center border-2 border-gray-300 rounded-2xl text-center cursor-pointer"
             >
               <input {...getBannerInputProps()} />
               {categoryBanner ? (
@@ -241,13 +246,13 @@ export default function CategoryCreateForm() {
 
           {/* Feature Category */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">
+            <label className="block text-gray-700 font-semibold">
               Feature Category
             </label>
             <select
               value={featureCategory}
               onChange={(e) => setFeatureCategory(e.target.value)}
-              className="w-full p-2 border rounded-md"
+              className="customInput select"
             >
               <option value="">Select One</option>
               <option value="yes">Yes</option>
@@ -260,13 +265,13 @@ export default function CategoryCreateForm() {
 
           {/* Show On Navbar */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">
+            <label className="block text-gray-700 font-semibold">
               Show on Navbar
             </label>
             <select
               value={showOnNavbar}
               onChange={(e) => setShowOnNavbar(e.target.value)}
-              className="w-full p-2 border rounded-md"
+              className="customInput select"
             >
               <option value="Yes">Yes</option>
               <option value="No">No</option>
@@ -278,10 +283,17 @@ export default function CategoryCreateForm() {
 
           <div className="mt-6 flex justify-end">
             <button
+            disabled={loading}
               type="submit"
-              className="bg-blue-500 text-white p-2 rounded-md"
+              className="customSaveButton"
             >
-              Create Category
+              {loading ? (
+              <>
+                <span className="loading loading-spinner mr-2  loading-xs"></span>Creating ..
+              </>
+            ) : (
+              "Create Category"
+            )}
             </button>
           </div>
         </form>
