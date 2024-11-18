@@ -117,13 +117,13 @@ function MenuItemsList({ userRole }) {
       icon: <IoIosHome />, // Replace with the actual SVG icon
       list: [
         {
-          title: "Create Categories",
+          title: "Create",
           path: "create-categories",
           isAllowed: isAllowedRoute("create-categories"),
           icon: <IoIosHome />, // Replace with the actual SVG icon
         },
         {
-          title: "View All Categories",
+          title: "View All",
           path: "view-all-categories",
           isAllowed: isAllowedRoute("view-all-categories"),
           icon: <IoIosHome />,
@@ -136,13 +136,13 @@ function MenuItemsList({ userRole }) {
       icon: <IoIosHome />, // Replace with the actual SVG icon
       list: [
         {
-          title: "Create Child Categories",
+          title: "Create",
           path: "create-child-categories",
           isAllowed: isAllowedRoute("create-child-categories"),
           icon: <IoIosHome />, // Replace with the actual SVG icon
         },
         {
-          title: "View All Child Categories",
+          title: "View All",
           path: "view-all-child-categories",
           isAllowed: isAllowedRoute("view-all-child-categories"),
           icon: <IoIosHome />,
@@ -156,13 +156,13 @@ function MenuItemsList({ userRole }) {
       icon: <IoIosHome />, // Replace with the actual SVG icon
       list: [
         {
-          title: "Create Subcategories",
+          title: "Create",
           path: "create-subcategories",
           isAllowed: isAllowedRoute("create-subcategories"),
           icon: <IoIosHome />, // Replace with the actual SVG icon
         },
         {
-          title: "View All Subcategories",
+          title: "View All",
           path: "view-all-subcategories",
           isAllowed: isAllowedRoute("view-all-subcategories"),
           icon: <IoIosHome />,
