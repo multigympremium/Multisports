@@ -5,11 +5,16 @@ import { FiEdit, FiTrash2 } from "react-icons/fi";
 import Modal from "../../../shared/Modal/Modal";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
+import { IoAddCircle } from "react-icons/io5";
+import { FaRetweet } from "react-icons/fa6";
+import { HiArrowCircleDown, HiArrowCircleUp } from "react-icons/hi";
 
 import CreateSizeForm from "./Forms/CreateModelBrandForm";
 import EditSizeForm from "./Forms/EditSizeForm";
 import useGetAllProductSizes from "../../../Hook/GetDataHook/useGetAllProductSizes";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
+import DeleteButton from "../../../components library/DeleteButton";
+import EditButton from "../../../components library/EditButton";
 
 const ProductSize = () => {
   // State management
@@ -106,18 +111,18 @@ const ProductSize = () => {
 
   return (
     <>
-      <div className="container mx-auto p-4">
-        <div className="flex justify-between items-center mb-4">
-          <h1 className="text-2xl font-bold">Size List</h1>
-          <div>
+      <div className="container mx-auto p-6 pt-0">
+        <div className="flex justify-between mb-9 items-center">
+          <h1 className="text-3xl header font-semibold ">Size List</h1>
+          <div className="flex gap-4">
             <button
-              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mr-2"
+              className="customSaveButton"
               onClick={() => setIsShowModal(true)}
             >
-              Add New Size
+              <span className="flex items-center gap-1"><IoAddCircle />  Add New Size</span>
             </button>
-            <button className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
-              Rearrange Brand
+            <button className="customCancelButton">
+              <span className="flex items-center gap-1"><FaRetweet /> Rearrange Brand</span>
             </button>
           </div>
         </div>
@@ -126,55 +131,45 @@ const ProductSize = () => {
         {loading ? (
           <div className="text-center">Loading...</div>
         ) : (
-          <div className="overflow-x-auto relative shadow-md sm:rounded-lg">
+          <div className="overflow-x-auto relative shadow-sm sm:rounded-lg">
             <table className="w-full text-sm text-left text-gray-500">
               <thead className="bg-gray-100">
                 <tr>
-                  <th
-                    className="border p-2 text-left cursor-pointer"
+                  <td
+                    className="border flex justify-center items-center gap-2 text-lg p-2 text-center cursor-pointer"
                     onClick={() => handleSort("id")}
                   >
-                    SL{" "}
+                    Serial no {"   "}
                     {sortConfig.key === "id" &&
-                      (sortConfig.direction === "asc" ? "🔼" : "🔽")}
-                  </th>
-                  <th
-                    className="border p-2 text-left cursor-pointer"
+                      (sortConfig.direction === "asc" ? <HiArrowCircleUp className="text-[#087D6D] "/>: <HiArrowCircleDown  className="text-[#E68923]" />)}
+                  </td>
+                  <td
+                    className="border text-lg p-2 text-center cursor-pointer"
                     onClick={() => handleSort("brandName")}
                   >
                     Name
                     {sortConfig.key === "sizeName" &&
                       (sortConfig.direction === "asc" ? "🔼" : "🔽")}
-                  </th>
+                  </td>
 
-                  <th className="border p-2 text-left cursor-pointer">
+                  <td className="border text-lg p-2 text-center cursor-pointer">
                     Created At
-                  </th>
-                  <th className="border p-2 text-left">Action</th>
+                  </td>
+                  <td className="border text-lg p-2 text-center">Action</td>
                 </tr>
               </thead>
               <tbody>
-                {paginatedData()?.length > 0 &&  paginatedData().map((item, index) => (
+                {paginatedData()?.length > 0 && paginatedData().map((item, index) => (
                   <tr key={item._id} className="border-b">
-                    <td className="border p-2">
+                    <td className="border p-2 text-center">
                       {index + 1 + currentPage * itemsPerPage}
                     </td>
-                    <td className="border p-2">{item.sizeName}</td>
-                    <td className="border p-2">{item.createdAt}</td>
+                    <td className="border p-2 text-center"><span className="border border-[#087d6d3a] p-1 px-2 rounded-lg bg font-semibold uppercase">{item.sizeName}</span></td>
+                    <td className="border p-2 text-center">{item.createdAt}</td>
                     <td className="border p-2">
-                      <div className="flex space-x-2">
-                        <button
-                          className="text-yellow-500 hover:text-yellow-700"
-                          onClick={() => handleEdit(item._id)}
-                        >
-                          <FiEdit />
-                        </button>
-                        <button
-                          className="text-red-500 hover:text-red-700"
-                          onClick={() => handleDelete(item._id)}
-                        >
-                          <FiTrash2 />
-                        </button>
+                      <div className="flex justify-center gap-2">
+                        <EditButton onClick={() => handleEdit(item._id)} />
+                        <DeleteButton onClick={() => handleDelete(item._id)} />
                       </div>
                     </td>
                   </tr>

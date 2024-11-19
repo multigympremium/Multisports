@@ -4,6 +4,7 @@ import { useDropzone } from "react-dropzone";
 
 export default function CreatePromoCodeForm() {
   const [promoIcon, setPromoIcon] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [effectiveDate, setEffectiveDate] = useState("");
@@ -27,6 +28,7 @@ export default function CreatePromoCodeForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoading(!loading);
 
     // Handle form submission logic here (e.g., API call to save the promo code)
     const promoData = {
@@ -46,15 +48,15 @@ export default function CreatePromoCodeForm() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-10">
-      <div className="max-w-7xl mx-auto bg-white p-8 shadow-md rounded-md">
-        <h1 className="text-2xl font-bold mb-5">Promo Code Entry Form</h1>
+    <div className="p-6 pt-0">
+      <div className="">
+        <p className="text-3xl header font-semibold mb-9">Promo Code Entry Form</p>
 
         <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-3 gap-4">
             {/* Promo Icon Upload */}
             <div>
-              <label className="block font-bold mb-2">Promo Icon</label>
+              <label className="block font-semibold mb-2">Promo Icon</label>
               <div
                 {...getRootProps()}
                 className="w-full p-4 border-dashed border-2 border-gray-300 rounded-md text-center cursor-pointer"
@@ -70,12 +72,12 @@ export default function CreatePromoCodeForm() {
 
             {/* Title Input */}
             <div className="col-span-2">
-              <label className="block font-bold mb-2">Title *</label>
+              <label className="block font-semibold">Title</label>
               <input
                 type="text"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="w-full p-2 border rounded-md"
+                className="customInput"
                 placeholder="Enter Promo Title"
                 required
               />
@@ -83,11 +85,11 @@ export default function CreatePromoCodeForm() {
 
             {/* Description */}
             <div className="col-span-3">
-              <label className="block font-bold mb-2">Short Description</label>
+              <label className="block font-semibold ">Short Description</label>
               <textarea
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                className="w-full p-2 border rounded-md"
+                className="customInput resize-none"
                 rows="3"
                 placeholder="Enter Promo Description"
               />
@@ -95,35 +97,35 @@ export default function CreatePromoCodeForm() {
 
             {/* Effective Date */}
             <div>
-              <label className="block font-bold mb-2">Effective Date *</label>
+              <label className="block font-semibold ">Effective Date </label>
               <input
                 type="date"
                 value={effectiveDate}
                 onChange={(e) => setEffectiveDate(e.target.value)}
-                className="w-full p-2 border rounded-md"
+                className="customInput"
                 required
               />
             </div>
 
             {/* Expiry Date */}
             <div>
-              <label className="block font-bold mb-2">Expiry Date *</label>
+              <label className="block font-semibold ">Expiry Date </label>
               <input
                 type="date"
                 value={expiryDate}
                 onChange={(e) => setExpiryDate(e.target.value)}
-                className="w-full p-2 border rounded-md"
+                className="customInput"
                 required
               />
             </div>
 
             {/* Promo Type */}
             <div>
-              <label className="block font-bold mb-2">Type *</label>
+              <label className="block font-semibold ">Type </label>
               <select
                 value={type}
                 onChange={(e) => setType(e.target.value)}
-                className="w-full p-2 border rounded-md"
+                className="customInput"
                 required
               >
                 <option value="">Select Type</option>
@@ -134,12 +136,12 @@ export default function CreatePromoCodeForm() {
 
             {/* Promo Value */}
             <div>
-              <label className="block font-bold mb-2">Value *</label>
+              <label className="block font-semibold ">Value </label>
               <input
                 type="number"
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
-                className="w-full p-2 border rounded-md"
+                className="customInput"
                 placeholder="Enter Promo Value"
                 required
               />
@@ -147,26 +149,26 @@ export default function CreatePromoCodeForm() {
 
             {/* Minimum Order Amount */}
             <div>
-              <label className="block font-bold mb-2">
+              <label className="block font-semibold ">
                 Minimum Order Amount
               </label>
               <input
                 type="number"
                 value={minOrderAmount}
                 onChange={(e) => setMinOrderAmount(e.target.value)}
-                className="w-full p-2 border rounded-md"
+                className="customInput"
                 placeholder="Enter Minimum Order Amount"
               />
             </div>
 
             {/* Promo Code */}
             <div>
-              <label className="block font-bold mb-2">Code *</label>
+              <label className="block font-semibold ">Code</label>
               <input
                 type="text"
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
-                className="w-full p-2 border rounded-md"
+                className="customInput"
                 placeholder="Enter Promo Code"
                 required
               />
@@ -174,12 +176,21 @@ export default function CreatePromoCodeForm() {
           </div>
 
           {/* Save Button */}
-          <button
-            type="submit"
-            className="bg-blue-500 text-white mt-5 py-2 px-4 rounded-md hover:bg-blue-700"
-          >
-            Save Promo Code
-          </button>
+          <div className="flex justify-end mt-6">
+            <button
+              type="submit"
+              className="customSaveButton"
+            >
+
+              {loading ? (
+                <>
+                  <span className="loading loading-spinner mr-2  loading-xs"></span>Saving Promo Code ..
+                </>
+              ) : (
+                "Save Promo Code"
+              )}
+            </button>
+          </div>
 
           {/* Success Message */}
           {message && <p className="mt-4 text-green-500">{message}</p>}
