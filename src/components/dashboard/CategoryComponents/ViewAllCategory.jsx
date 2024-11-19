@@ -19,19 +19,6 @@ export default function CategoryList() {
   const [isEdited, setIsEdited] = useState(false);
   const [categoryId, setCategoryId] = useState("");
 
-  const paginatedData = useCallback(() => {
-    const offset = currentPage * itemsPerPage;
-    console.log(categories, "categories", offset, offset + itemsPerPage);
-    return categories.slice(offset, offset + itemsPerPage);
-  }, [currentPage, itemsPerPage, categories]);
-
-  const handleSort = (key) => {
-    let direction = "asc";
-    if (sortConfig.key === key && sortConfig.direction === "asc") {
-      direction = "desc";
-    }
-    setSortConfig({ key, direction });
-  };
 
   const sortedCategories = useCallback(() => {
     const sortedData = [...categories];
@@ -46,6 +33,22 @@ export default function CategoryList() {
     });
     return sortedData;
   }, [categories, sortConfig]);
+
+  const paginatedData = useCallback(() => {
+    const offset = currentPage * itemsPerPage;
+    console.log(categories, "categories", offset, offset + itemsPerPage);
+    return sortedCategories().slice(offset, offset + itemsPerPage);
+  }, [currentPage, itemsPerPage, categories, sortedCategories]);
+
+  const handleSort = (key) => {
+    let direction = "asc";
+    if (sortConfig.key === key && sortConfig.direction === "asc") {
+      direction = "desc";
+    }
+    setSortConfig({ key, direction });
+  };
+
+  
 
   const handlePageClick = (pageNumber) => {
     setCurrentPage(pageNumber);

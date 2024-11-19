@@ -20,20 +20,6 @@ export default function ChildCategoryList() {
   const [targetId, setTargetId] = useState("");
   const childCategories = useGetAllChildCategories({ isEdited, isDeleted });
 
-  const paginatedData = useCallback(() => {
-    const offset = currentPage * itemsPerPage;
-
-    return childCategories.slice(offset, offset + itemsPerPage);
-  }, [currentPage, itemsPerPage, childCategories]);
-
-  const handleSort = (key) => {
-    let direction = "asc";
-    if (sortConfig.key === key && sortConfig.direction === "asc") {
-      direction = "desc";
-    }
-    setSortConfig({ key, direction });
-  };
-
   const sortedchildCategories = useCallback(() => {
     const sortedData = [...childCategories];
     sortedData.sort((a, b) => {
@@ -47,6 +33,22 @@ export default function ChildCategoryList() {
     });
     return sortedData;
   }, [childCategories, sortConfig]);
+
+  const paginatedData = useCallback(() => {
+    const offset = currentPage * itemsPerPage;
+
+    return sortedchildCategories().slice(offset, offset + itemsPerPage);
+  }, [currentPage, itemsPerPage,  sortedchildCategories]);
+
+  const handleSort = (key) => {
+    let direction = "asc";
+    if (sortConfig.key === key && sortConfig.direction === "asc") {
+      direction = "desc";
+    }
+    setSortConfig({ key, direction });
+  };
+
+
 
   const handlePageClick = (pageNumber) => {
     setCurrentPage(pageNumber);

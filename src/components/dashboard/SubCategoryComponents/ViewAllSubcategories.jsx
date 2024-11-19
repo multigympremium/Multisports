@@ -19,19 +19,7 @@ export default function SubcategoryList() {
   const [isEdited, setIsEdited] = useState(false);
   const [subcategoryId, setSubCategoryId] = useState("");
 
-  const paginatedData = useCallback(() => {
-    const offset = currentPage * itemsPerPage;
-    console.log(subcategories, "subcategories", offset, offset + itemsPerPage);
-    return subcategories.slice(offset, offset + itemsPerPage);
-  }, [currentPage, itemsPerPage, subcategories]);
 
-  const handleSort = (key) => {
-    let direction = "asc";
-    if (sortConfig.key === key && sortConfig.direction === "asc") {
-      direction = "desc";
-    }
-    setSortConfig({ key, direction });
-  };
 
   const sortedsubCategories = useCallback(() => {
     const sortedData = [...subcategories];
@@ -46,6 +34,23 @@ export default function SubcategoryList() {
     });
     return sortedData;
   }, [subcategories, sortConfig]);
+
+
+
+  const paginatedData = useCallback(() => {
+    const offset = currentPage * itemsPerPage;
+    return sortedsubCategories().slice(offset, offset + itemsPerPage);
+  }, [currentPage, itemsPerPage, sortedsubCategories]);
+
+  const handleSort = (key) => {
+    let direction = "asc";
+    if (sortConfig.key === key && sortConfig.direction === "asc") {
+      direction = "desc";
+    }
+    setSortConfig({ key, direction });
+  };
+
+  
 
   const handlePageClick = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -126,10 +131,10 @@ export default function SubcategoryList() {
               </th>
               <th
                 className="border p-2 text-left cursor-pointer"
-                onClick={() => handleSort("categoryName")}
+                onClick={() => handleSort("subcategoryName")}
               >
                 Name{" "}
-                {sortConfig.key === "categoryName" &&
+                {sortConfig.key === "subcategoryName" &&
                   (sortConfig.direction === "asc" ? "🔼" : "🔽")}
               </th>
               <th className="border p-2 text-left">Icon</th>
