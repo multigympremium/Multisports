@@ -33,6 +33,47 @@ root.style.setProperty("--border-color", theme.borderColor || "#cbd5e0");
     fetchTheme();
   }, [axiosPublic]);
 
+
+  useEffect(() => {
+    const applyCustomCode = async () => {
+      const response = await axiosPublic.get("/custom-css-js")
+      if (response.status === 200 || response.status === 201) {
+        const  data  = await response.data.data[0];
+
+        console.log(data, "css jss")
+
+        if (data) {
+          // Apply Custom CSS
+          const style = document.createElement("style");
+          style.id = "custom-css";
+          style.innerHTML = data.css;
+          document.head.appendChild(style);
+
+          // Apply Header Script
+          const headerScript = document.createElement("script");
+          headerScript.id = "header-script";
+          headerScript.innerHTML = data.headerJs;
+          document.head.appendChild(headerScript);
+
+          // Apply Footer Script
+          const footerScript = document.createElement("script");
+          footerScript.id = "footer-script";
+          footerScript.innerHTML = data.footerJs;
+          document.body.appendChild(footerScript);
+        }
+      }
+    };
+
+    applyCustomCode();
+
+    return () => {
+      // Clean up old scripts/styles on re-render
+      document.getElementById("custom-css")?.remove();
+      document.getElementById("header-script")?.remove();
+      document.getElementById("footer-script")?.remove();
+    };
+  }, []);
+
   const content = useGetSeo({});
   return (
     <>

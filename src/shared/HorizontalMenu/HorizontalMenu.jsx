@@ -23,7 +23,6 @@ function HorizontalMenu() {
   const chaiCategories = useGetAllChildCategories({ query: `showOnNavbar=Yes` });
   const [currentSubCategories, setCurrentSubCategories] = useState([]);
 
-  console.log(import.meta.env.NEXT_BASE_URL, "import.meta.env.BASE_URL");
 
 
   // const subcategories = useGetAllSubCategories({
