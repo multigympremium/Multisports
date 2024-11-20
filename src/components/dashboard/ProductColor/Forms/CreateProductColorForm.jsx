@@ -61,43 +61,43 @@ export default function CreateProductColorForm({
   };
 
   return (
-    <div className="w-[80%] bg-gray-100 p-10">
-      <div className="w-full mx-auto bg-white p-8 shadow-md rounded-md">
-        <h1 className="text-2xl font-bold mb-5">Create productColor Form</h1>
+    <div className="w-[30%] rounded-2xl bg-gray-100 p-10">
+      <div className="w-full mx-auto ">
+        <h1 className="text-2xl font-semibold text-center mb-9">Create Product Color </h1>
         <form onSubmit={handleSubmit}>
           {/* Model Name */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">
-              Product Color Code *
+            <label className="block text-gray-700 text-sm">
+              Product Color Code 
             </label>
             <input
               type="text"
               value={productColor}
               onChange={(e) => setProductColor(e.target.value)}
-              className="w-full p-2 border rounded-md"
-              placeholder="Model Name"
+              className="customInput"
+              // placeholder="Product Color Code "
               required
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">
-              Product Color Name *
+            <label className="block text-gray-700 text-sm">
+              Product Color Name 
             </label>
             <input
               type="text"
               value={productColorName}
               onChange={(e) => setProductColorName(e.target.value)}
-              className="w-full p-2 border rounded-md"
-              placeholder="Model Name"
+              className="customInput"
+              // placeholder="Product Color Name "
               required
             />
           </div>
 
           {/* Submit Button */}
-          <div className="flex justify-end mt-4">
+          <div className="flex justify-end mt-6 gap-3">
             <button
               type="button"
-              className="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 mr-4"
+              className="customCancelButton"
               onClick={() => handleCloseModal()}
             >
               Cancel
@@ -105,9 +105,9 @@ export default function CreateProductColorForm({
 
             <button
               type="submit"
-              className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+              className="customSaveButton w-full"
             >
-              Save product Color
+              Save Product Color
             </button>
           </div>
         </form>

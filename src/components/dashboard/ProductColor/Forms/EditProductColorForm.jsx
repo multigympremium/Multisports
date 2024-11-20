@@ -71,49 +71,49 @@ export default function EditProductColorForm({
   };
 
   return (
-    <div className="w-[80%] bg-gray-100 p-10">
-      <div className="w-full mx-auto bg-white p-8 shadow-md rounded-md">
-        <h1 className="text-2xl font-bold mb-5">Edit Product Color Form</h1>
+    <div className="w-[30%] rounded-2xl bg-gray-100 p-10">
+      <div className="w-full mx-auto ">
+        <h1 className="text-2xl font-semibold mb-9">Edit Product Color Form</h1>
         <form onSubmit={handleSubmit}>
           {/* Model Name */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">
-              Product Color Code *
+            <label className="block text-gray-700 text-sm ">
+              Product Color Code 
             </label>
             <input
               type="text"
               value={productColor}
               onChange={(e) => setProductColor(e.target.value)}
-              className="w-full p-2 border rounded-md"
+              className="customInput"
               placeholder="Model Name"
               required
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">
-              Product Color Name *
+            <label className="block text-gray-700 text-sm ">
+              Product Color Name 
             </label>
             <input
               type="text"
               value={productColorName}
               onChange={(e) => setProductColorName(e.target.value)}
-              className="w-full p-2 border rounded-md"
+              className="customInput"
               placeholder="Model Name"
               required
             />
           </div>
 
-          <div className="flex justify-end mt-4 gap-6">
+          <div className="flex mt-6 gap-3">
             <button
               type="button"
-              className="w-full p-3 bg-gray-500 text-white font-bold rounded-md"
+              className="customCancelButton"
               onClick={() => handleCloseModal()}
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="w-full p-3 bg-blue-500 text-white font-bold rounded-md"
+              className="customSaveButton w-full"
             >
               Update Size Name
             </button>
