@@ -9,6 +9,12 @@ module.exports = {
     extend: {
       colors: {
         "custom-gray": "#cfcfcf",
+        primary: "var(--primary-color)",
+        secondary: "var(--secondary-color)",
+        tertiary: "var(--tertiary-color)",
+        title: "var(--title-color)",
+        paragraph: "var(--paragraph-color)",
+        border: "var(--border-color)",
       },
     },
   },

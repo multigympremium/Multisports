@@ -3,7 +3,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
 import Swal from "sweetalert2";
-import logo from "../../assets/logo.png";
 import { CiLogout } from "react-icons/ci";
 import "./Sidebar.css";
 import MenuLink from "./MenuLink/MenuLink";
