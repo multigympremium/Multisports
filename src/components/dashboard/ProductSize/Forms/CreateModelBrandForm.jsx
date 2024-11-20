@@ -56,30 +56,30 @@ export default function CreateSizeForm({ isShowModal, setIsShowModal }) {
   };
 
   return (
-    <div className="w-[80%] bg-gray-100 p-10">
-      <div className="w-full mx-auto bg-white p-8 shadow-md rounded-md">
-        <h1 className="text-2xl font-bold mb-5">Create sizeName Form</h1>
+    <div className="w-[30%] bg-gray-100 p-10 rounded-2xl">
+      <div className="w-full mx-auto">
+        <h1 className="text-2xl font-semibold text-center text-gray-700 mb-9">New Size</h1>
         <form onSubmit={handleSubmit}>
           {/* Model Name */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">
-              Size Name *
+            <label className="block text-gray-700 font-bold">
+              {/* Size Name * */}
             </label>
             <input
               type="text"
               value={sizeName}
               onChange={(e) => setSizeName(e.target.value)}
-              className="w-full p-2 border rounded-md"
-              placeholder="Model Name"
+              className="customInput"
+              placeholder="Size Name"
               required
             />
           </div>
 
           {/* Submit Button */}
-          <div className="flex justify-end mt-4">
+          <div className="flex gap-4 justify-end mt-4">
             <button
               type="button"
-              className="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 mr-4"
+              className="customCancelButton"
               onClick={() => handleCloseModal()}
             >
               Cancel
@@ -87,9 +87,9 @@ export default function CreateSizeForm({ isShowModal, setIsShowModal }) {
 
             <button
               type="submit"
-              className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+              className="customSaveButton w-full"
             >
-              Save sizeName
+              Save Size Name
             </button>
           </div>
         </form>

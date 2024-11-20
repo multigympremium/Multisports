@@ -68,36 +68,36 @@ export default function EditSizeForm({
   };
 
   return (
-    <div className="w-[80%] bg-gray-100 p-10">
-      <div className="w-full mx-auto bg-white p-8 shadow-md rounded-md">
-        <h1 className="text-2xl font-bold mb-5">Edit Size Name Form</h1>
+    <div className="w-[30%] rounded-2xl bg-gray-100 p-10">
+      <div className="w-full mx-auto ">
+        <h1 className="text-2xl text-center text-gray-700 font-semibold mb-9">Edit Size Name</h1>
         <form onSubmit={handleSubmit}>
           {/* Model Name */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">
-              Size Name *
+            <label className="block text-gray-700 font-semibold">
+              {/* Size Name */}
             </label>
             <input
               type="text"
               value={sizeName}
               onChange={(e) => setSizeName(e.target.value)}
-              className="w-full p-2 border rounded-md"
-              placeholder="Model Name"
+              className="customInput"
+              placeholder="Size Name"
               required
             />
           </div>
 
-          <div className="flex justify-end mt-4 gap-6">
+          <div className="flex justify-end mt-5 gap-4">
             <button
               type="button"
-              className="w-full p-3 bg-gray-500 text-white font-bold rounded-md"
+              className="customCancelButton"
               onClick={() => handleCloseModal()}
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="w-full p-3 bg-blue-500 text-white font-bold rounded-md"
+              className="customSaveButton w-full"
             >
               Update Size Name
             </button>

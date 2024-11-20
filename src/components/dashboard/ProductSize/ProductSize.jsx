@@ -15,6 +15,7 @@ import useGetAllProductSizes from "../../../Hook/GetDataHook/useGetAllProductSiz
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
 import DeleteButton from "../../../components library/DeleteButton";
 import EditButton from "../../../components library/EditButton";
+import TableSkeleton from "../../../components library/TableSkeleton";
 
 const ProductSize = () => {
   // State management
@@ -129,7 +130,7 @@ const ProductSize = () => {
 
         {/* Loading Spinner */}
         {loading ? (
-          <div className="text-center">Loading...</div>
+          <div><TableSkeleton></TableSkeleton></div>
         ) : (
           <div className="overflow-x-auto relative shadow-sm sm:rounded-lg">
             <table className="w-full text-sm text-left text-gray-500">
