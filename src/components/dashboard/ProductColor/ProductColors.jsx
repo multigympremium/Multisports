@@ -13,6 +13,9 @@ import useAxiosSecure from "../../../Hook/useAxiosSecure";
 import TableSkeleton from "../../../components library/TableSkeleton";
 import { IoAddCircle } from "react-icons/io5";
 import { FaRetweet } from "react-icons/fa6";
+import EditButton from "../../../components library/EditButton";
+import DeleteButton from "../../../components library/DeleteButton";
+import { HiArrowCircleDown, HiArrowCircleUp } from "react-icons/hi";
 
 const ProductColors = () => {
   // State management
@@ -129,66 +132,56 @@ const ProductColors = () => {
         {loading ? (
           <TableSkeleton />
         ) : (
-          <div className="overflow-x-auto relative shadow-md sm:rounded-lg">
+          <div className="overflow-x-auto relative shadow sm:rounded-lg">
             <table className="w-full text-sm text-left text-gray-500">
               <thead className="bg-gray-100">
-                <tr>
-                  <th
-                    className="border p-2 text-left cursor-pointer"
+                <tr className="text-lg">
+                  <td
+                    className="border flex justify-center items-center gap-2 text-lg p-2 text-center cursor-pointer"
                     onClick={() => handleSort("id")}
                   >
-                    SL{" "}
+                    SL{"  "}
                     {sortConfig.key === "id" &&
-                      (sortConfig.direction === "asc" ? "🔼" : "🔽")}
-                  </th>
-                  <th
-                    className="border p-2 text-left cursor-pointer"
+                      (sortConfig.direction === "asc" ?<HiArrowCircleUp className="text-[#087D6D] "/>: <HiArrowCircleDown  className="text-[#E68923]" />)}
+                  </td>
+                  <td
+                    className="border p-2 text-center cursor-pointer"
                     onClick={() => handleSort("productColor")}
                   >
-                    Color Code
+                    Color Code {"  "}
                     {sortConfig.key === "productColor" &&
                       (sortConfig.direction === "asc" ? "🔼" : "🔽")}
-                  </th>
-                  <th
-                    className="border p-2 text-left cursor-pointer"
+                  </td>
+                  <td
+                    className="border p-2 text-center cursor-pointer"
                     onClick={() => handleSort("productColorName")}
                   >
-                    Color Name
+                    Color Name 
                     {sortConfig.key === "productColorName" &&
                       (sortConfig.direction === "asc" ? "🔼" : "🔽")}
-                  </th>
+                  </td>
 
-                  <th className="border p-2 text-left">Action</th>
+                  <td className="border p-2 text-center">Action</td>
                 </tr>
               </thead>
               <tbody>
                 {paginatedData()?.length > 0 && paginatedData().map((item, index) => (
                   <tr key={item._id} className="border-b">
-                    <td className="border p-2">
+                    <td className="border text-center p-2">
                       {index + 1 + currentPage * itemsPerPage}
                     </td>
-                    <td className="border p-2">
+                    <td className="border text-center p-2">
                       {item.productColor}{" "}
                       <span
                         className={` min-w-14 h-3 rounded inline-block`}
                         style={{ backgroundColor: item.productColor }}
                       ></span>
                     </td>
-                    <td className="border p-2">{item.productColorName}</td>
+                    <td className="border p-2  text-center">{item.productColorName}</td>
                     <td className="border p-2">
-                      <div className="flex space-x-2">
-                        <button
-                          className="text-yellow-500 hover:text-yellow-700"
-                          onClick={() => handleEdit(item._id)}
-                        >
-                          <FiEdit />
-                        </button>
-                        <button
-                          className="text-red-500 hover:text-red-700"
-                          onClick={() => handleDelete(item._id)}
-                        >
-                          <FiTrash2 />
-                        </button>
+                      <div className="flex justify-center space-x-2">
+                        <EditButton onClick={() => handleEdit(item._id)}></EditButton>
+                        <DeleteButton onClick={() => handleDelete(item._id)}></DeleteButton>
                       </div>
                     </td>
                   </tr>
