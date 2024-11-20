@@ -1,10 +1,12 @@
 "use client";
 
 import moment from "moment/moment";
+import { useEffect, useState } from "react";
 import { FaFacebook, FaInstagram, FaLinkedin, FaPhoneAlt, FaPinterest, FaTiktok, FaYoutube } from "react-icons/fa";
 import { FiMail } from "react-icons/fi";
 import { ImLocation } from "react-icons/im";
 import { Link } from "react-router-dom";
+import useGetSocialLink from "../Hook/GetPublicDataHook/useGetSocialLink";
 
 const Footer = () => {
   const currentYear = moment().format("YYYY"); // Using moment.js
@@ -35,6 +37,34 @@ const Footer = () => {
       },
     },
   };
+
+  const [socialLinks, setSocialLinks] = useState([]);
+
+  const content = useGetSocialLink({});
+
+  useEffect(() => {
+    let initialData = [];
+    if (content) {
+      for (let key in content) {
+        const newObj = {};
+
+        if (key === "_id") continue;
+        if (key === "__v") continue;
+        if (key === "updatedAt") continue;
+        if (key === "createdAt") continue;
+        if (content[key] === "") continue;
+
+        newObj.link = content[key];
+        newObj.name = key;
+
+        console.log(newObj, "newObj");
+        initialData.push(newObj);
+      }
+      setSocialLinks(initialData);
+    }
+  }, [content]);
+
+  console.log(socialLinks, "socialLinks");
 
   return (
     <div className="poppins border-t mt-12">
@@ -189,44 +219,21 @@ const Footer = () => {
           <h6 className="footer-title text-lg font-bold mb-4 text-black">
             Social
           </h6>
-          <div className="flex flex-col gap-3 text-slate-600 text-base">
-            <Link
-              to={"#"}
-              className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300"
-            >
-              Facebook
-            </Link>
-            {/* <Link
-              to={"#"}
-              className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300"
-            >
-              LinkedIn
-            </Link> */}
-            <Link
-              to={"#"}
-              className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300"
-            >
-              Youtube
-            </Link>
-            <Link
-              to={"#"}
-              className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300"
-            >
-              Instagram
-            </Link>
-            <Link
-              to={"#"}
-              className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300"
-            >
-              Tiktok
-            </Link>
-            <Link
-              to={"#"}
-              className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300"
-            >
-              Twitter
-            </Link>
-          </div>
+            <div className="flex flex-col gap-4 text-slate-600 text-md">
+                {socialLinks.length > 0 &&
+                  socialLinks.map((item, index) => {
+                    return (
+                      <Link
+                        href={`${item.link}`}
+                        className=" hover:translate-x-3 hover:text-blue-500 transition-all duration-300 flex gap-4 items-center capitalize"
+                        key={index}
+                      >
+                        {item.name}
+                      </Link>
+                    );
+                  })}
+              </div>
+          
         </nav>
       </footer>
 
