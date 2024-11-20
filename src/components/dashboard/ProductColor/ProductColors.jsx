@@ -10,6 +10,9 @@ import CreateProductColorForm from "./Forms/CreateProductColorForm";
 import EditProductColorForm from "./Forms/EditProductColorForm";
 import useGetAllProductColors from "../../../Hook/GetDataHook/useGetAllProductColors";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
+import TableSkeleton from "../../../components library/TableSkeleton";
+import { IoAddCircle } from "react-icons/io5";
+import { FaRetweet } from "react-icons/fa6";
 
 const ProductColors = () => {
   // State management
@@ -106,25 +109,25 @@ const ProductColors = () => {
 
   return (
     <>
-      <div className="container mx-auto p-4">
-        <div className="flex justify-between items-center mb-4">
-          <h1 className="text-2xl font-bold">Color List</h1>
-          <div>
+      <div className="container mx-auto p-6 pt-0">
+        <div className="flex justify-between items-center mb-9">
+          <h1 className="text-3xl header font-semibold">Color List</h1>
+          <div className="flex gap-4">
             <button
-              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mr-2"
+              className="customSaveButton"
               onClick={() => setIsShowModal(true)}
             >
-              Add New Color
+              <span className="flex items-center gap-1"><IoAddCircle />  Add New Color</span>
             </button>
-            <button className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
-              Rearrange Brand
+            <button className="customCancelButton">
+              <span className="flex items-center gap-1"><FaRetweet /> Rearrange Brand</span>
             </button>
           </div>
         </div>
 
         {/* Loading Spinner */}
         {loading ? (
-          <div className="text-center">Loading...</div>
+          <TableSkeleton />
         ) : (
           <div className="overflow-x-auto relative shadow-md sm:rounded-lg">
             <table className="w-full text-sm text-left text-gray-500">
@@ -159,7 +162,7 @@ const ProductColors = () => {
                 </tr>
               </thead>
               <tbody>
-                {paginatedData()?.length > 0 &&  paginatedData().map((item, index) => (
+                {paginatedData()?.length > 0 && paginatedData().map((item, index) => (
                   <tr key={item._id} className="border-b">
                     <td className="border p-2">
                       {index + 1 + currentPage * itemsPerPage}
