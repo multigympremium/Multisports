@@ -7,6 +7,7 @@ import { FiMail } from "react-icons/fi";
 import { ImLocation } from "react-icons/im";
 import { Link } from "react-router-dom";
 import useGetSocialLink from "../Hook/GetPublicDataHook/useGetSocialLink";
+import useGetGeneralInfo from "../Hook/GetPublicDataHook/useGetGeneralInfo";
 
 const Footer = () => {
   const currentYear = moment().format("YYYY"); // Using moment.js
@@ -41,6 +42,7 @@ const Footer = () => {
   const [socialLinks, setSocialLinks] = useState([]);
 
   const content = useGetSocialLink({});
+  const info = useGetGeneralInfo({});
 
   useEffect(() => {
     let initialData = [];
@@ -77,8 +79,7 @@ const Footer = () => {
             <div className="flex gap-2 items-center">
               <FaPhoneAlt className="text-slate-600" />
               <h2 className="font-normal flex gap-3 ">
-                <p>+8801313-197435</p>
-                <p>+8801313-197427</p>
+                <p>{info.phone}</p>
               </h2>
             </div>
             <div className="flex  gap-2 items-start mt-3 text-lg">
@@ -86,17 +87,16 @@ const Footer = () => {
                 <ImLocation className="text-base text-slate-600 mt-1" />
               </div>
               <div className="text-slate-600">
-                <p className="font-semibold text-base">MULTI Sports Premium</p>
-                <p>24/1, 24/2 (3rd & 4th floor), Ring Road</p>
-                <p>Shia Masjid Mor, Mohammadpur</p>
-                <p>Dhaka 1207</p>
+                <p className="font-semibold text-base">{info.company_name}</p>
+                <p className="max-w-sm">{info.address}</p>
+
               </div>
             </div>
             <p className="text-slate-600 flex  gap-2 items-center mt-3 text-base">
               <span className="font-bold">
                 <FiMail className="text-base text-slate-600" />
               </span>{" "}
-              info@multigympremium.com
+              {info.email}
             </p>
 
           </div>
@@ -219,13 +219,13 @@ const Footer = () => {
           <h6 className="footer-title text-lg font-bold mb-4 text-black">
             Social
           </h6>
-            <div className="flex flex-col gap-4 text-slate-600 text-md">
+            <div className="flex flex-col gap-3 text-slate-600 text-md">
                 {socialLinks.length > 0 &&
                   socialLinks.map((item, index) => {
                     return (
                       <Link
                         href={`${item.link}`}
-                        className=" hover:translate-x-3 hover:text-blue-500 transition-all duration-300 flex gap-4 items-center capitalize"
+                        className=" hover:translate-x-3 hover:text-blue-500 transition-all duration-300 flex gap-2 items-center capitalize"
                         key={index}
                       >
                         {item.name}
@@ -240,64 +240,64 @@ const Footer = () => {
       <div className="mx-auto w-[95%]">
         <footer className="footer flex flex-col md:flex-row justify-between items-center py-3  border-t px-5 text-center text-xl">
           <p className="text-base">
-            © {currentYear} MULTI Sports Premium All Rights Reserved
+            {info.footer_copyright}
           </p>
           {/* icons */}
           <nav className="flex gap-3">
-            <a
-              to="https://www.facebook.com/MultiGymPremium"
+            <Link
+              to={content.facebook}
               target="_blank"
               className=""
               rel="noopener noreferrer"
               aria-label="Facebook"
             >
               <FaFacebook className="text-lg" />
-            </a>
-            <a
-              to="https://www.instagram.com/multigym.premium"
+            </Link>
+            <Link
+              to={content.instagram}
               target="_blank"
               className=""
               rel="noopener noreferrer"
               aria-label="Instagram"
             >
               <FaInstagram className="text-lg" />
-            </a>
-            <a
-              to="https://www.linkedin.com/company/multigympremium"
+            </Link>
+            <Link
+              to={content.linkedin}
               target="_blank"
               className=""
               rel="noopener noreferrer"
               aria-label="LinkedIn"
             >
               <FaLinkedin className="text-lg" />
-            </a>
-            <a
-              to="https://www.pinterest.com/multigympremium"
+            </Link>
+            <Link
+              to={content.pinterest}
               target="_blank"
               className=""
               rel="noopener noreferrer"
               aria-label="Pinterest"
             >
               <FaPinterest className="text-lg" />
-            </a>
-            <a
-              to="https://www.tiktok.com/@multigympremium"
+            </Link>
+            <Link
+              to={content.tiktok}
               target="_blank"
               className=""
               rel="noopener noreferrer"
               aria-label="TikTok"
             >
               <FaTiktok className="text-lg" />
-            </a>
-            <a
-              to="https://www.youtube.com/@MultiGymPremium"
+            </Link>
+            <Link
+              to={content.youtube}
               target="_blank"
               className=""
               rel="noopener noreferrer"
               aria-label="YouTube"
             >
               <FaYoutube className="text-lg" />
-            </a>
+            </Link>
           </nav>
         </footer>
       </div>

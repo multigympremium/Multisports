@@ -88,11 +88,17 @@ const GeneralInfoForm = () => {
   useEffect(() => {
     const fetchTestimonial = async () => {
       try {
-        const res = await axiosSecure.get(`/general-info/${targetId}`);
+
+        const res1 = await axiosSecure.get(`/general-info`);
+        const existingData = res1?.data?.data[0];
+        console.log(existingData, "existingData");
+        const res = await axiosSecure.get(`/general-info/${existingData._id}`);
 
         if (res.status === 200 || res.status === 201) {
 
-          const data = res?.data?.data[0];
+          const data = res?.data?.data;
+
+          console.log(data, "data");
 
           // Set form values with the testimonial data
           for (let key in data) {
