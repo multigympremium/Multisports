@@ -106,27 +106,27 @@ export default function EditProductFlagForm({
   };
 
   return (
-    <div className="w-[80%] bg-gray-100 p-10">
-      <div className="w-full mx-auto bg-white p-8 shadow-md rounded-md">
-        <h1 className="text-2xl font-bold mb-5">Edit Flag Form</h1>
+    <div className="w-[30%] rounded-2xl bg-gray-100 p-10">
+      <div className="w-full mx-auto ">
+        <h1 className="text-2xl font-semibold mb-7">Edit Flag Form</h1>
         <form onSubmit={handleSubmit}>
           {/* Model Name */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">
-              Flag Name *
+            <label className="block text-gray-700">
+              Flag Name 
             </label>
             <input
               type="text"
               value={flagName}
               onChange={(e) => setFlagName(e.target.value)}
-              className="w-full p-2 border rounded-md"
+              className="customInput"
               placeholder="Model Name"
               required
             />
           </div>
 
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">Icon *</label>
+            <label className="block text-gray-700 mb-2">Icon </label>
 
             <DragEditUploadImageInput
               getRootProps={getIconRootProps}
@@ -136,17 +136,17 @@ export default function EditProductFlagForm({
             />
           </div>
 
-          <div className="flex justify-end mt-4 gap-6">
+          <div className="flex mt-7 gap-4">
             <button
               type="button"
-              className="w-full p-3 bg-gray-500 text-white font-bold rounded-md"
+              className="customCancelButton"
               onClick={() => handleCloseModal()}
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="w-full p-3 bg-blue-500 text-white font-bold rounded-md"
+              className="w-full customSaveButton"
             >
               Update Flag
             </button>
