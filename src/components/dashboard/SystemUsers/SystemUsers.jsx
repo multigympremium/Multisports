@@ -1,8 +1,12 @@
 "use client";
 // pages/system-users.js
 import { useState } from "react";
+import BgBlurModal from "../../../shared/Modal/BgBlurModal";
+import SystemUserRegistration from "../MemberRegistration/SystemUserRegistration";
+import useGetAllSystemUsers from "../../../Hook/GetDataHook/useGetAllSystemUsers";
 
 export default function SystemUsers() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   // Sample data
   const [users, setUsers] = useState([
     {
@@ -34,6 +38,8 @@ export default function SystemUsers() {
     },
   ]);
 
+  const systemUsers = useGetAllSystemUsers({});
+
   // Toggle Admin or SuperAdmin status
   const toggleAdminStatus = (id) => {
     setUsers(
@@ -52,7 +58,7 @@ export default function SystemUsers() {
     <div className="container mx-auto px-4 py-6">
       <h1 className="text-2xl font-bold mb-4">System Users List</h1>
       <div className="flex justify-between mb-4">
-        <button className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">
+        <button className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded" onClick={() => setIsModalOpen(true)}>
           + Add New User
         </button>
       </div>
@@ -65,30 +71,20 @@ export default function SystemUsers() {
             <th className="p-2 border">Email</th>
             <th className="p-2 border">Phone</th>
             <th className="p-2 border">Address</th>
-            <th className="p-2 border">Account Created</th>
             <th className="p-2 border">User Type</th>
             <th className="p-2 border">Action</th>
           </tr>
         </thead>
         <tbody>
-          {users.map((user, index) => (
+          {systemUsers?.length > 0 && systemUsers.map((user, index) => (
             <tr key={user.id} className="border-b">
               <td className="p-2 border">{index + 1}</td>
-              <td className="p-2 border">{user.name}</td>
+              <td className="p-2 border">{user.username}</td>
               <td className="p-2 border">{user.email}</td>
-              <td className="p-2 border">{user.phone}</td>
+              <td className="p-2 border">{user.contact_no}</td>
               <td className="p-2 border">{user.address}</td>
-              <td className="p-2 border">{user.accountCreated}</td>
               <td className="p-2 border">
-                {user.userType === "SuperAdmin" ? (
-                  <span className="bg-red-500 text-white px-2 py-1 rounded">
-                    SuperAdmin
-                  </span>
-                ) : (
-                  <span className="bg-green-500 text-white px-2 py-1 rounded">
-                    User
-                  </span>
-                )}
+                {user.role}
               </td>
               <td className="p-2 border">
                 <button
@@ -115,6 +111,10 @@ export default function SystemUsers() {
           ))}
         </tbody>
       </table>
+
+      <BgBlurModal isShowModal={isModalOpen} setIsShowModal={setIsModalOpen}>
+        <SystemUserRegistration isShow={isModalOpen} setIsShow={setIsModalOpen} />
+      </BgBlurModal>
     </div>
   );
 }

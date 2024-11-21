@@ -32,7 +32,6 @@ function DragUploadImageInput({
                   alt="subcategoryIcon"
                   width={200}
                   height={200}
-                  objectFit="contain"
                 />
               ))}
             </div>
