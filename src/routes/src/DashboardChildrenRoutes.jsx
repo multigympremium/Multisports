@@ -1,6 +1,8 @@
 
 import React , { lazy, Suspense } from "react";
 import GlobalLoading from "../../components library/GlobalLoading";
+const UserPermission = lazy(() => import(   "../../components/dashboard/UserPermission/Userpermission"));
+const StaffRole = lazy(() => import(  "../../components/dashboard/UserPermission/StaffRole"));
 const ProductPage = lazy(() => import( "../../components/Home/Products/ProductPage"));
 const PrivateRoute = lazy(() => import( "./routes/PrivateRoute"));
 const CancelOrders = lazy(() => import( "../../components/dashboard/ManageOrders/CancelOrders"));
@@ -693,6 +695,21 @@ function DashboardChildrenRoutes() {
       ),
     },
     {
+      // path: "track-diet-progress",
+      path: "permission-routes",
+      // path: isPermittedRoute("track-diet-progress"),
+      element: (
+        // <PrivateRoute>
+        //   <TrackDietProgress />
+        // </PrivateRoute>
+        <Suspense fallback={<GlobalLoading />}>
+          <PrivateRoute>
+            <UserPermission />
+          </PrivateRoute>
+        </Suspense>
+      ),
+    },
+    {
       // path: "schedule-classes",
       path: "payment-history",
       // path: isPermittedRoute("schedule-classes"),
@@ -1204,7 +1221,8 @@ function DashboardChildrenRoutes() {
         // </PrivateRoute>
         <Suspense fallback={<GlobalLoading />}>
           <PrivateRoute>
-            <UserRoleList />
+            {/* <UserRoleList /> */}
+            <StaffRole />
           </PrivateRoute>
         </Suspense>
       ),
