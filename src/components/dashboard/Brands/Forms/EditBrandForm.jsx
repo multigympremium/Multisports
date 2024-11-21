@@ -174,19 +174,19 @@ export default function EditBrandForm({
   };
 
   return (
-    <div className="w-[80%] bg-gray-100 p-10">
-      <div className="w-full mx-auto bg-white p-8 shadow-md rounded-md">
-        <h1 className="text-2xl font-bold mb-5">Child Category Edit Form</h1>
+    <div className="w-[50%] bg-gray-100 rounded-2xl p-10 py-7">
+      <div className="w-full mx-auto ">
+        <h1 className="text-2xl font-semibold mb-7">Child Category Edit Form</h1>
         <form onSubmit={handleSubmit}>
           {/* Select Category */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">
-              Select Category *
+            <label className="block text-gray-700">
+              Select Category 
             </label>
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="w-full p-2 border rounded-md"
+              className="select customInput"
               required
             >
               <option value="">Select One</option>
@@ -201,13 +201,13 @@ export default function EditBrandForm({
 
           {/* Select Subcategory */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">
-              Select Subcategory *
+            <label className="block text-gray-700 ">
+              Select Subcategory 
             </label>
             <select
               value={subcategory}
               onChange={(e) => setSubcategory(e.target.value)}
-              className="w-full p-2 border rounded-md"
+              className="select customInput"
               required
             >
               <option value="">Select One</option>
@@ -222,12 +222,12 @@ export default function EditBrandForm({
 
           {/* Child Category Name */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">Name *</label>
+            <label className="block text-gray-700 ">Name</label>
             <input
               type="text"
               value={brandName}
               onChange={(e) => handleSubcategoryNameInput(e.target.value)}
-              className="w-full p-2 border rounded-md"
+              className="customInput"
               placeholder="Child Category Title"
               required
             />
@@ -235,12 +235,12 @@ export default function EditBrandForm({
 
           {/* Slug */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">Slug *</label>
+            <label className="block text-gray-700 ">Slug </label>
             <input
               type="text"
               value={slug}
               onChange={(e) => handleSlug(e.target.value)}
-              className="w-full p-2 border rounded-md"
+              className="customInput"
               placeholder="Slug"
               required
             />
@@ -260,14 +260,14 @@ export default function EditBrandForm({
 
           {/* Brand Name */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">
-              Brand Name *
+            <label className="block text-gray-700">
+              Brand Name
             </label>
             <input
               type="text"
               value={brandName}
               onChange={(e) => setBrandName(e.target.value)}
-              className="w-full p-2 border rounded-md"
+              className="customInput"
               placeholder="Brand Name"
               required
             />
@@ -275,7 +275,7 @@ export default function EditBrandForm({
 
           {/* Logo */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">Logo *</label>
+            <label className="block text-gray-700">Logo</label>
 
             <DragEditUploadImageInput
               getRootProps={getLogoRootProps}
@@ -287,8 +287,8 @@ export default function EditBrandForm({
 
           {/* Banner */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">
-              Banner *
+            <label className="block text-gray-700">
+              Banner
             </label>
 
             <DragEditUploadImageInput
@@ -299,17 +299,17 @@ export default function EditBrandForm({
             />
           </div>
 
-          <div className="flex justify-end mt-4 gap-6">
+          <div className="flex mt-5 justify-end gap-4">
             <button
               type="button"
-              className="w-full p-3 bg-gray-500 text-white font-bold rounded-md"
+              className="customCancelButton"
               onClick={() => handleCloseModal()}
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="w-full p-3 bg-blue-500 text-white font-bold rounded-md"
+              className="customSaveButton"
             >
               Update Category
             </button>

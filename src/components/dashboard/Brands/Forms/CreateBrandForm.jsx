@@ -152,19 +152,19 @@ export default function CreateBrandForm({ isShowModal, setIsShowModal }) {
   };
 
   return (
-    <div className="w-[80%] bg-gray-100 p-10">
-      <div className="w-full mx-auto bg-white p-8 shadow-md rounded-md">
-        <h1 className="text-2xl font-bold mb-5">Child Category Create Form</h1>
+    <div className="w-[50%] bg-gray-100 rounded-2xl p-10 py-6">
+      <div className="w-full mx-auto">
+        <h1 className="text-2xl font-semibold mb-7">Child Category Create Form</h1>
         <form onSubmit={handleSubmit}>
           {/* Select Category */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">
-              Select Category *
+            <label className="block text-gray-700">
+              Select Category
             </label>
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="w-full p-2 border rounded-md"
+              className="customInput select"
               required
             >
               <option value="" selected disabled>
@@ -181,13 +181,13 @@ export default function CreateBrandForm({ isShowModal, setIsShowModal }) {
 
           {/* Select Subcategory */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">
-              Select Subcategory *
+            <label className="block text-gray-700">
+              Select Subcategory
             </label>
             <select
               value={subcategory}
               onChange={(e) => setSubcategory(e.target.value)}
-              className="w-full p-2 border rounded-md"
+              className="customInput select"
               required
             >
               <option value="" selected disabled>
@@ -205,13 +205,13 @@ export default function CreateBrandForm({ isShowModal, setIsShowModal }) {
 
           {/* Select Subcategory */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">
-              Select Child Category *
+            <label className="block text-gray-700">
+              Select Child Category 
             </label>
             <select
               value={childCategory}
               onChange={(e) => setChildCategory(e.target.value)}
-              className="w-full p-2 border rounded-md"
+              className="customInput select"
             >
               <option value="" selected disabled>
                 Select One
@@ -228,12 +228,12 @@ export default function CreateBrandForm({ isShowModal, setIsShowModal }) {
 
           {/* Child Category Name */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">Name *</label>
+            <label className="block text-gray-700">Name </label>
             <input
               type="text"
               value={brandName}
               onChange={(e) => handleBrandNameInput(e.target.value)}
-              className="w-full p-2 border rounded-md"
+              className="customInput"
               placeholder="Child Category Title"
               required
             />
@@ -241,12 +241,12 @@ export default function CreateBrandForm({ isShowModal, setIsShowModal }) {
 
           {/* slug Name */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">Slug *</label>
+            <label className="block text-gray-700">Slug </label>
             <input
               type="text"
               value={slug}
               onChange={(e) => handleSlug(e.target.value)}
-              className="w-full p-2 border rounded-md"
+              className="customInput"
               placeholder="Subcategory Title"
               required
             />
@@ -265,7 +265,7 @@ export default function CreateBrandForm({ isShowModal, setIsShowModal }) {
 
           {/* Logo */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">Logo</label>
+            <label className="block text-gray-700 mb-2">Logo</label>
 
             <DragUploadImageInput
               getRootProps={getIconRootProps}
@@ -277,7 +277,7 @@ export default function CreateBrandForm({ isShowModal, setIsShowModal }) {
 
           {/* Banner */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">Banner</label>
+            <label className="block text-gray-700 mb-2">Banner</label>
 
             <DragUploadImageInput
               getRootProps={getBannerRootProps}
@@ -288,10 +288,10 @@ export default function CreateBrandForm({ isShowModal, setIsShowModal }) {
           </div>
 
           {/* Submit Button */}
-          <div className="flex justify-end mt-4">
+          <div className="flex justify-end mt-5 gap-4">
             <button
               type="button"
-              className="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 mr-4"
+              className="customCancelButton"
               onClick={() => handleCloseModal()}
             >
               Cancel
@@ -299,7 +299,7 @@ export default function CreateBrandForm({ isShowModal, setIsShowModal }) {
 
             <button
               type="submit"
-              className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+              className="customSaveButton"
             >
               Save Child Category
             </button>
