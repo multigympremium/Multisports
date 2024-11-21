@@ -8,7 +8,12 @@ import useGetAllProductBrands from "../../../Hook/GetDataHook/useGetAllProductBr
 import CellImage from "../../../shared/ImageComponents/CellImage";
 import Swal from "sweetalert2";
 import EditBrandForm from "./Forms/EditBrandForm";
-
+import TableSkeleton from "../../../components library/TableSkeleton";
+import { IoAddCircle } from "react-icons/io5";
+import { FaRetweet } from "react-icons/fa6";
+import DeleteButton from "../../../components library/DeleteButton";
+import EditButton from "../../../components library/EditButton";
+import { HiArrowCircleDown, HiArrowCircleUp } from "react-icons/hi";
 const ProductBrands = () => {
   // State management
   const [Brands, setBrands] = useState([]);
@@ -102,115 +107,109 @@ const ProductBrands = () => {
 
   return (
     <>
-      <div className="container mx-auto p-4">
-        <div className="flex justify-between items-center mb-4">
-          <h1 className="text-2xl font-bold">Brand List</h1>
-          <div>
+      <div className="container mx-auto p-6 pt-0">
+        <div className="flex justify-between items-center mb-9">
+          <h1 className="text-3xl header font-semibold">Brand List</h1>
+          <div className="flex gap-4">
             <button
-              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mr-2"
+              className="customSaveButton"
               onClick={() => setIsShowModal(true)}
             >
-              Add New Brand
+              <span className="flex items-center gap-1"><IoAddCircle />  Add New Brand</span>
             </button>
-            <button className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
-              Rearrange Brand
+            <button className="customCancelButton">
+              <span className="flex items-center gap-1"><FaRetweet /> Rearrange Brand</span>
             </button>
           </div>
         </div>
 
         {/* Loading Spinner */}
         {loading ? (
-          <div className="text-center">Loading...</div>
+          <div><TableSkeleton></TableSkeleton></div>
         ) : (
           <div className="overflow-x-auto relative shadow-md sm:rounded-lg">
-            <table className="w-full text-sm text-left text-gray-500">
-              <thead className="bg-gray-100">
+            <table className="w-full text-sm text-center text-gray-500">
+              <thead className="bg-gray-100 text-lg">
                 <tr>
-                  <th
-                    className="border p-2 text-left cursor-pointer"
+                  <td
+                    className="border flex justify-center items-center gap-2 text-lg p-2 text-center cursor-pointer"
                     onClick={() => handleSort("id")}
                   >
                     SL{" "}
                     {sortConfig.key === "id" &&
-                      (sortConfig.direction === "asc" ? "🔼" : "🔽")}
-                  </th>
-                  <th
-                    className="border p-2 text-left cursor-pointer"
+                      (sortConfig.direction === "asc" ? <HiArrowCircleUp className="text-[#087D6D] "/>: <HiArrowCircleDown className="text-[#E68923]" />)}
+                  </td>
+                  <td
+                    className="border p-2 text-center cursor-pointer"
                     onClick={() => handleSort("brandName")}
                   >
                     Name{" "}
                     {sortConfig.key === "brandName" &&
                       (sortConfig.direction === "asc" ? "🔼" : "🔽")}
-                  </th>
-                  <th className="border p-2 text-left">Logo</th>
-                  <th className="border p-2 text-left">Banner</th>
-                  <th
-                    className="border p-2 text-left cursor-pointer"
+                  </td>
+                  <td className="border p-2 text-center">Logo</td>
+                  <td className="border p-2 text-center">Banner</td>
+                  <td
+                    className="border p-2 text-center cursor-pointer"
                     onClick={() => handleSort("category")}
                   >
                     Category{" "}
                     {sortConfig.key === "category" &&
                       (sortConfig.direction === "asc" ? "🔼" : "🔽")}
-                  </th>
-                  <th
-                    className="border p-2 text-left cursor-pointer"
+                  </td>
+                  <td
+                    className="border p-2 text-center cursor-pointer"
                     onClick={() => handleSort("subcategory")}
                   >
                     Subcategory{" "}
                     {sortConfig.key === "subcategory" &&
                       (sortConfig.direction === "asc" ? "🔼" : "🔽")}
-                  </th>
-                  <th
-                    className="border p-2 text-left cursor-pointer"
+                  </td>
+                  <td
+                    className="border p-2 text-center cursor-pointer"
                     onClick={() => handleSort("slug")}
                   >
                     Slug{" "}
                     {sortConfig.key === "slug" &&
                       (sortConfig.direction === "asc" ? "🔼" : "🔽")}
-                  </th>
-                  <th className="border p-2 text-left">Action</th>
+                  </td>
+                  <td className="border p-2 text-center">Action</td>
                 </tr>
               </thead>
               <tbody>
-                {paginatedData()?.length > 0 &&  paginatedData().map((brand, index) => (
+                {paginatedData()?.length > 0 && paginatedData().map((brand, index) => (
                   <tr key={brand.id} className="border-b">
                     <td className="border p-2">
                       {index + 1 + currentPage * itemsPerPage}
                     </td>
                     <td className="border p-2">{brand.brandName}</td>
-                    <td className="border p-2">
-                      <CellImage
-                        width={400}
-                        height={400}
-                        src={brand.logo}
-                        alt="Logo"
-                      />
+                    <td className="border p-2 flex justify-center">
+                      <div className="rounded-full border border-gray-200 max-w-20 overflow-hidden">
+                        <CellImage
+                          width={400}
+                          height={400}
+                          src={brand.logo}
+                          alt="Logo"
+                        />
+                      </div>
                     </td>
-                    <td className="border p-2">
-                      <CellImage
-                        width={400}
-                        height={400}
-                        src={brand.banner}
-                        alt="Banner"
-                      />
+                    <td className="border p-2 ">
+                      <div>
+                        <CellImage
+                          width={400}
+                          height={400}
+                          src={brand.banner}
+                          alt="Banner"
+                        />
+                      </div>
                     </td>
-                    <td className="border p-2">{brand.category}</td>
+                    <td className="border p-2"><span className="border p-2 rounded-xl border-[#087d6d2d] font-semibold">{brand.category}</span></td>
                     <td className="border p-2">{brand.subcategory}</td>
                     <td className="border p-2">{brand.slug}</td>
                     <td className="border p-2">
-                      <div className="flex space-x-2">
-                        <button
-                          className="text-yellow-500 hover:text-yellow-700"
-                          onClick={() => handleEdit(brand._id)}
-                        >
-                          <FiEdit />
-                        </button>
-                        <button
-                          className="text-red-500 hover:text-red-700"
-                          onClick={() => handleDelete(brand._id)}
-                        >
-                          <FiTrash2 />
-                        </button>
+                      <div className="flex justify-center space-x-2">
+                        <EditButton onClick={() => handleEdit(brand._id)}></EditButton>
+                        <DeleteButton onClick={() => handleDelete(brand._id)}></DeleteButton>
                       </div>
                     </td>
                   </tr>
