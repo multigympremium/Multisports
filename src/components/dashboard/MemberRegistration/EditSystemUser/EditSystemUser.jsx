@@ -1,17 +1,17 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+
 import toast from "react-hot-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import * as z from "zod";
-import moment from "moment/moment";
-import useAxiosSecure from "../../../Hook/useAxiosSecure";
-import { AuthContext } from "../../../providers/AuthProvider";
-import MemberRegisterInput from "./MemberRegisterInput/MemberRegisterInput";
-import MemberRegisterSelect from "./MemberRegisterSelect/MemberRegisterSelect";
-import DragUploadImageInput from "../../../shared/DragUploadImageInput";
-import { useDropzone } from "react-dropzone";
-import useGetDepartments from "../../../Hook/GetDepartments/useGetDepartments";
 
+import * as z from "zod";
+import Swal from "sweetalert2";
+import DragEditUploadImageInput from "../../../../shared/DragEditUploadImageInput";
+import { useDropzone } from "react-dropzone";
+import useAxiosSecure from "../../../../Hook/useAxiosSecure";
+import MemberRegisterSelect from "../MemberRegisterSelect/MemberRegisterSelect";
+import MemberRegisterInput from "../MemberRegisterInput/MemberRegisterInput";
+import useGetDepartments from "../../../../Hook/GetDepartments/useGetDepartments";
 
 
 const schema = z.object({
@@ -25,25 +25,18 @@ const schema = z.object({
   address: z.string().optional(),
   gender: z.string().nonempty({ message: "Please select your gender" }),
   status: z.string().optional(),
-  password: z
-    .string()
-    .min(8, { message: "Password must be at least 8 characters long" })
-    .regex(/[A-Z]/, { message: "Password must include at least one uppercase letter" })
-    .regex(/[a-z]/, { message: "Password must include at least one lowercase letter" })
-    .regex(/\d/, { message: "Password must include at least one number" })
-    .regex(/[@$!%*?&]/, { message: "Password must include at least one special character" }),
+  
 });
 
 
-
-
-function SystemUserRegistration({ setIsShow, isShow }) {
+function EditSystemUser({  setIsShow, isShow, targetId, }) {
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
 
   const axiosSecure = useAxiosSecure();
+  const departments = useGetDepartments();
 
   const {
     register,
@@ -55,8 +48,31 @@ function SystemUserRegistration({ setIsShow, isShow }) {
   } = useForm({
     resolver: zodResolver(schema),
   });
-  const { branch } = useContext(AuthContext);
-  const departments = useGetDepartments();
+
+  console.log(errors, "errors edit");
+
+  useEffect(() => {
+    const branch = ""
+    if (targetId) {
+      const fetchUserData = async () => {
+        try {
+          const response = await axiosSecure.get(`/users/system-user/${targetId}?${branch}`);
+          if (response?.status === 200) {
+            const data = response.data;
+            Object.keys(data).forEach((fieldName) => {
+              setValue(fieldName, data[fieldName]);
+            });
+          }
+
+          setImagePreview(response.data.photourl);
+        } catch (error) {
+          console.log(error);
+          toast.error("Failed to load user data");
+        }
+      };
+      fetchUserData();
+    }
+  }, [targetId, axiosSecure, setValue, isShow]);
 
   const onSubmit = async (data) => {
     // setLoading(true);
@@ -73,14 +89,13 @@ function SystemUserRegistration({ setIsShow, isShow }) {
     formData.append("address", data.address);
     formData.append("gender", data.gender);
     formData.append("status", data.status);
-    formData.append("password", data.password);
     formData.append("role", data.role);
-    formData.append("photourl", image);
+    formData.append("photourl", image ? image : imagePreview);
 
   
   
     try {
-      const response = await axiosSecure.post(`/users/system-user`, formData);
+      const response = await axiosSecure.put(`/users/system-user/${targetId}`, formData);
       if (response?.status === 200 || response?.status === 201) {
         toast.success("System User Registration successful!");
         setIsShow(false);
@@ -93,8 +108,7 @@ function SystemUserRegistration({ setIsShow, isShow }) {
       setLoading(false);
     }
   };
-  
-  
+
 
 
    // Dropzone for thumbnail and gallery
@@ -144,7 +158,6 @@ function SystemUserRegistration({ setIsShow, isShow }) {
 
 
 
-
   return (
     <article
       className={`w-full rounded-xl bg-white my-7 transition-all duration-500 ${isShow ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
@@ -168,7 +181,7 @@ function SystemUserRegistration({ setIsShow, isShow }) {
                Profile Image
             </label>
 
-            <DragUploadImageInput
+            <DragEditUploadImageInput
               getRootProps={getThumbnailRootProps}
               getInputProps={getThumbnailInputProps}
               image={image}
@@ -204,14 +217,7 @@ function SystemUserRegistration({ setIsShow, isShow }) {
           />
 
 
-          <MemberRegisterInput
-            type={"password"}
-            label={"Password*"}
-            register={register}
-            error={errors}
-            name={"password"}
-            isRequired={true}
-          />
+          
           <MemberRegisterInput
             type={"text"}
             label={"phone number*"}
@@ -314,4 +320,4 @@ function SystemUserRegistration({ setIsShow, isShow }) {
   );
 }
 
-export default SystemUserRegistration;
+export default EditSystemUser;

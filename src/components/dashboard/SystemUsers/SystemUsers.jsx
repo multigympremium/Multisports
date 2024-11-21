@@ -4,55 +4,62 @@ import { useState } from "react";
 import BgBlurModal from "../../../shared/Modal/BgBlurModal";
 import SystemUserRegistration from "../MemberRegistration/SystemUserRegistration";
 import useGetAllSystemUsers from "../../../Hook/GetDataHook/useGetAllSystemUsers";
+import EditSystemUser from "../MemberRegistration/EditSystemUser/EditSystemUser";
+import toast from "react-hot-toast";
+import Swal from "sweetalert2";
+import useAxiosSecure from "../../../Hook/useAxiosSecure";
 
 export default function SystemUsers() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  // Sample data
-  const [users, setUsers] = useState([
-    {
-      id: 1,
-      name: "Rana Khan",
-      email: "bdsohaq578@gmail.com",
-      phone: "01839950240",
-      address: "43/3 Abdul Haihid Rd., Jamtola, New Chashara",
-      accountCreated: "2024-02-28 09:08:01 pm",
-      userType: "SuperAdmin",
-    },
-    {
-      id: 2,
-      name: "Himel",
-      email: "himel.acca@gmail.com",
-      phone: "+8801670535004",
-      address: "43/3 Abdul Haihid Rd., Jamtola, New Chashara",
-      accountCreated: "2024-02-17 02:32:26 pm",
-      userType: "Admin",
-    },
-    {
-      id: 3,
-      name: "Barry Young",
-      email: "feby.tanot@mailinator.com",
-      phone: "+1 (603) 244-6779",
-      address: "Deserunt modi veniam",
-      accountCreated: "2024-01-30 08:58:11 pm",
-      userType: "User",
-    },
-  ]);
+  const [targetId, setTargetId] = useState(null);
+  const [isEditShowModel, setIsEditShowModel] = useState(false);
+  const [isDeleted, setIsDeleted] = useState(false);
 
-  const systemUsers = useGetAllSystemUsers({});
+  const axiosSecure = useAxiosSecure();
 
-  // Toggle Admin or SuperAdmin status
-  const toggleAdminStatus = (id) => {
-    setUsers(
-      users.map((user) =>
-        user.id === id
-          ? {
-              ...user,
-              userType: user.userType === "SuperAdmin" ? "User" : "SuperAdmin",
-            }
-          : user
-      )
-    );
+
+  const handleEdit = (id) => {
+    setTargetId(id);
+    setIsEditShowModel(true);
   };
+
+  const systemUsers = useGetAllSystemUsers({isDeleted, isEdited: isEditShowModel});
+
+  const handleDelete = async (id) => {
+    try {
+      Swal.fire({
+        title: "Are you sure you want to delete this member?",
+        text: "This action cannot be undone!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Yes, delete it!",
+        cancelButtonText: "No, cancel!",
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          try {
+            const res = await axiosSecure.delete(`/users/system-user/${id}`);
+            console.log(res, "res");
+            if (res.status === 200 || res.status === 201) {
+              setIsDeleted((prev) => !prev);
+
+              toast.success("Brand deleted successfully!");
+            }
+          } catch (error) {
+            console.log(error, "error");
+            toast.error("Error deleting user!");
+          }
+        }
+      });
+    } catch (error) {
+      console.log(error, "error");
+      toast.error("Error deleting brand!");
+    }
+    console.log(`Delete brand with ID: ${id}`);
+  };
+
+
 
   return (
     <div className="container mx-auto px-4 py-6">
@@ -86,25 +93,12 @@ export default function SystemUsers() {
               <td className="p-2 border">
                 {user.role}
               </td>
-              <td className="p-2 border">
-                <button
-                  onClick={() => toggleAdminStatus(user.id)}
-                  className={`${
-                    user.userType === "SuperAdmin"
-                      ? "bg-red-500"
-                      : "bg-green-500"
-                  } hover:${
-                    user.userType === "SuperAdmin"
-                      ? "bg-red-600"
-                      : "bg-green-600"
-                  } text-white px-2 py-1 rounded mr-2`}
-                >
-                  {user.userType === "SuperAdmin"
-                    ? "Revoke SuperAdmin"
-                    : "Make SuperAdmin"}
-                </button>
-                <button className="bg-yellow-500 hover:bg-yellow-600 text-white px-2 py-1 rounded">
+              <td className="p-2 border space-x-3">
+                <button className="bg-yellow-500 hover:bg-yellow-600 text-white px-2 py-1 rounded" onClick={() => handleEdit(user._id)}>
                   Edit
+                </button>
+                <button className="bg-green-700 hover:bg-yellow-600 text-white px-2 py-1 rounded" onClick={()=> handleDelete(user._id)} >
+                  Delete
                 </button>
               </td>
             </tr>
@@ -112,6 +106,9 @@ export default function SystemUsers() {
         </tbody>
       </table>
 
+      <BgBlurModal isShowModal={isEditShowModel} setIsShowModal={setIsEditShowModel}>
+        <EditSystemUser isShow={isEditShowModel} setIsShow={setIsEditShowModel} targetId={targetId} />
+      </BgBlurModal>
       <BgBlurModal isShowModal={isModalOpen} setIsShowModal={setIsModalOpen}>
         <SystemUserRegistration isShow={isModalOpen} setIsShow={setIsModalOpen} />
       </BgBlurModal>
