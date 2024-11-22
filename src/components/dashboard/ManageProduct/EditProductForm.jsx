@@ -352,25 +352,25 @@ export default function EditProductForm({
   };
 
   return (
-    <div className="w-[80%] mx-auto bg-gray-100 p-10">
-      <div className="w-full mx-auto bg-white p-8 shadow-md rounded-md">
-        <h1 className="text-2xl font-bold mb-5">Add New Product</h1>
+    <div className="w-[80%] mx-auto bg-gray-100 rounded-2xl p-10">
+      <div className="">
+        <h1 className="text-2xl font-semibold mb-9">Add New Product</h1>
         <form onSubmit={handleSubmit}>
           {/* Product Title */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">
-              Title *
+            <label className="block text-gray-700">
+              Title 
             </label>
             <input
               type="text"
               value={productTitle}
               onChange={(e) => setProductTitle(e.target.value)}
-              className="w-full p-2 border rounded-md"
+              className="customInput mb-4"
               placeholder="Enter Product Name Here"
               required
             />
           </div>
-          <div className={"flex items-center gap-6 mb-5"}>
+          <div className={"flex items-center  gap-6 mb-5"}>
             <ActiveDescBtn
               activeDescription={activeDescription}
               setActiveDescription={setActiveDescription}
@@ -401,7 +401,7 @@ export default function EditProductForm({
           {/* Short Description */}
           {activeDescription === "short_desc" && (
             <div className="mb-[4rem]">
-              <label className="block text-gray-700 text-2xl font-bold mb-6">
+              <label className="block text-gray-700 text-xl font-semibold mb-3">
                 Short Description
               </label>
 
@@ -415,13 +415,13 @@ export default function EditProductForm({
           {/* Full Description */}
           {activeDescription === "full_desc" && (
             <div className="mb-[4rem]">
-              <label className="block text-gray-700 font-bold mb-2 text-2xl">
+              <label className="block text-gray-700 font-semibold mb-3 text-xl">
                 Full Description
               </label>
               {/* <textarea
               value={fullDescription}
               onChange={(e) => setFullDescription(e.target.value)}
-              className="w-full p-2 border rounded-md"
+              className="customInput"
               placeholder="Write Description Here"
               rows="6"
             /> */}
@@ -434,13 +434,13 @@ export default function EditProductForm({
           {/* Full Description */}
           {activeDescription === "specifications" && (
             <div className="mb-[4rem]">
-              <label className="block text-gray-700 font-bold mb-2 text-2xl">
+              <label className="block text-gray-700 font-semibold mb-3 text-xl">
                 Specifications
               </label>
               {/* <textarea
               value={fullDescription}
               onChange={(e) => setFullDescription(e.target.value)}
-              className="w-full p-2 border rounded-md"
+              className="customInput"
               placeholder="Write Description Here"
               rows="6"
             /> */}
@@ -453,13 +453,13 @@ export default function EditProductForm({
           {/* Full Description */}
           {activeDescription === "return_policy" && (
             <div className="mb-[4rem]">
-              <label className="block text-gray-700 font-bold mb-2 text-2xl">
+              <label className="block text-gray-700 font-semibold mb-3 text-xl">
                 Retrun Policy
               </label>
               {/* <textarea
               value={fullDescription}
               onChange={(e) => setFullDescription(e.target.value)}
-              className="w-full p-2 border rounded-md"
+              className="customInput"
               placeholder="Write Description Here"
               rows="6"
             /> */}
@@ -470,48 +470,48 @@ export default function EditProductForm({
           {/* Price, Discount Price, Reward Points, Stock */}
           <div className="grid grid-cols-4 gap-4 mb-4">
             <div>
-              <label className="block text-gray-700 font-bold mb-2">
-                Price (BDT) *
+              <label className="block text-gray-700 ">
+                Price (BDT) 
               </label>
               <input
                 type="number"
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
-                className="w-full p-2 border rounded-md"
+                className="customInput"
                 required
               />
             </div>
             <div>
-              <label className="block text-gray-700 font-bold mb-2">
+              <label className="block text-gray-70">
                 Discount Price
               </label>
               <input
                 type="number"
                 value={discountPrice}
                 onChange={(e) => setDiscountPrice(e.target.value)}
-                className="w-full p-2 border rounded-md"
+                className="customInput"
               />
             </div>
             <div>
-              <label className="block text-gray-700 font-bold mb-2">
+              <label className="block text-gray-70">
                 Reward Points
               </label>
               <input
                 type="number"
                 value={rewardPoints}
                 onChange={(e) => setRewardPoints(e.target.value)}
-                className="w-full p-2 border rounded-md"
+                className="customInput"
               />
             </div>
             <div>
-              <label className="block text-gray-700 font-bold mb-2">
+              <label className="block text-gray-70">
                 Stock
               </label>
               <input
                 type="number"
                 value={stock}
                 onChange={(e) => setStock(e.target.value)}
-                className="w-full p-2 border rounded-md"
+                className="customInput"
               />
             </div>
           </div>
@@ -519,27 +519,27 @@ export default function EditProductForm({
           <div className={"grid grid-cols-3 gap-4 mb-4"}>
             {/* Product Code */}
             <div className="mb-4">
-              <label className="block text-gray-700 font-bold mb-2">
+              <label className="block text-gray-70">
                 Product Code
               </label>
               <input
                 type="text"
                 value={productCode}
                 onChange={(e) => setProductCode(e.target.value)}
-                className="w-full p-2 border rounded-md"
+                className="customInput"
                 placeholder="Product Code"
               />
             </div>
 
             {/* Select Category */}
             <div className="mb-4">
-              <label className="block text-gray-700 font-bold mb-2">
-                Select Category *
+              <label className="block text-gray-70">
+                Select Category 
               </label>
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                className="w-full p-2 border rounded-md"
+                className=" customInput"
                 required
               >
                 <option value="">Select One</option>
@@ -554,13 +554,13 @@ export default function EditProductForm({
 
             {/* Select Subcategory */}
             <div className="mb-4">
-              <label className="block text-gray-700 font-bold mb-2">
-                Select Subcategory *
+              <label className="block text-gray-70">
+                Select Subcategory 
               </label>
               <select
                 value={subcategory}
                 onChange={(e) => setSubcategory(e.target.value)}
-                className="w-full p-2 border rounded-md"
+                className="customInput"
                 required
               >
                 <option value="">Select One</option>
@@ -576,13 +576,13 @@ export default function EditProductForm({
 
             {/* Select Subcategory */}
             <div className="mb-4">
-              <label className="block text-gray-700 font-bold mb-2">
-                Select Child Categories *
+              <label className="block text-gray-70">
+                Select Child Categories 
               </label>
               <select
                 value={childCategory}
                 onChange={(e) => setChildCategory(e.target.value)}
-                className="w-full p-2 border rounded-md"
+                className="customInput"
                 required
               >
                 <option value="">Select One</option>
@@ -597,13 +597,13 @@ export default function EditProductForm({
             </div>
             {/* Select Brand */}
             <div className="mb-4">
-              <label className="block text-gray-700 font-bold mb-2">
-                Select Brand *
+              <label className="block text-gray-70">
+                Select Brand 
               </label>
               <select
                 value={brandValue}
                 onChange={(e) => setBrandValue(e.target.value)}
-                className="w-full p-2 border rounded-md"
+                className="customInput"
                 required
               >
                 <option value="">Select One</option>
@@ -621,13 +621,13 @@ export default function EditProductForm({
 
             {/* Select Subcategory */}
             <div className="mb-4">
-              <label className="block text-gray-700 font-bold mb-2">
-                Select Product Color *
+              <label className="block text-gray-70">
+                Select Product Color 
               </label>
               <select
                 value={productColorValue}
                 onChange={handleColorChange}
-                className="w-full p-2 border rounded-md"
+                className="customInput"
                 required
               >
                 <option value="">Select One</option>
@@ -653,13 +653,13 @@ export default function EditProductForm({
 
             {/* Select Subcategory */}
             <div className="mb-4">
-              <label className="block text-gray-700 font-bold mb-2">
-                Select Product Flag*
+              <label className="block text-gray-70">
+                Select Product Flag
               </label>
               <select
                 value={productFlagValue}
                 onChange={(e) => setProductFlagValue(e.target.value)}
-                className="w-full p-2 border rounded-md"
+                className="customInput"
                 required
               >
                 <option value="">Select One</option>
@@ -675,13 +675,13 @@ export default function EditProductForm({
 
             {/* Select Subcategory */}
             <div className="mb-4">
-              <label className="block text-gray-700 font-bold mb-2">
-                Select Product Size*
+              <label className="block text-gray-70">
+                Select Product Size
               </label>
               <select
                 value={productSizeValue}
                 onChange={handleSizeChange}
-                className="w-full p-2 border rounded-md"
+                className="customInput"
                 required
               >
                 <option value="">Select One</option>
@@ -707,8 +707,8 @@ export default function EditProductForm({
 
           {/* File Upload for Thumbnail */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">
-              Product Thumbnail Image *
+            <label className="block text-gray-70">
+              Product Thumbnail Image 
             </label>
 
             <DragEditUploadImageInput
@@ -721,7 +721,7 @@ export default function EditProductForm({
 
           {/* Gallery */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">
+            <label className="block text-gray-70">
               Product Image Gallery
             </label>
 
@@ -734,7 +734,7 @@ export default function EditProductForm({
           </div>
 
           {/* Toggle for Special Offer */}
-          <div className="mb-4 flex items-center">
+          {/* <div className="mb-4 flex items-center">
             <label className="block text-gray-700 font-bold mr-2">
               Special Offer?
             </label>
@@ -745,7 +745,7 @@ export default function EditProductForm({
               offColor="#ccc"
               onColor="#00b894"
             />
-          </div>
+          </div> */}
 
           <SwitchInput
             label="Special Offer?"
@@ -762,40 +762,40 @@ export default function EditProductForm({
 
           {/* SEO Information */}
           <div className="mb-4 mt-6">
-            <h2 className="text-2xl font-bold mb-6 border-b border-gray-300">
+            <h2 className="text-xl  pb-3 mb-3 border-b border-gray-300">
               Product SEO Information (Optional)
             </h2>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-gray-700 font-bold mb-2">
+                <label className="block text-gray-70">
                   Meta Title
                 </label>
                 <input
                   type="text"
                   value={metaTitle}
                   onChange={(e) => setMetaTitle(e.target.value)}
-                  className="w-full p-2 border rounded-md"
+                  className="customInput"
                 />
               </div>
               <div>
-                <label className="block text-gray-700 font-bold mb-2">
+                <label className="block text-gray-70">
                   Meta Keywords
                 </label>
                 <input
                   type="text"
                   value={metaKeywords}
                   onChange={(e) => setMetaKeywords(e.target.value)}
-                  className="w-full p-2 border rounded-md"
+                  className="customInput"
                 />
               </div>
               <div className="col-span-2">
-                <label className="block text-gray-700 font-bold mb-2">
+                <label className="block text-gray-70">
                   Meta Description
                 </label>
                 <textarea
                   value={metaDescription}
                   onChange={(e) => setMetaDescription(e.target.value)}
-                  className="w-full p-2 border rounded-md"
+                  className="customInput resize-none"
                   rows="3"
                 />
               </div>
@@ -803,17 +803,17 @@ export default function EditProductForm({
           </div>
 
           {/* Buttons */}
-          <div className="flex justify-between">
+          <div className="flex justify-end gap-4 ">
             <button
               type="button"
-              className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-700"
+              className="customCancelButton"
               onClick={() => handleCloseModal()}
             >
               Cancel
             </button>
             <button
               type="submit"
-              className={`bg-blue-500 px-4 py-2 rounded-md hover:bg-neutral-800 text-white`}
+              className={`customSaveButton`}
             >
               Save Product
             </button>

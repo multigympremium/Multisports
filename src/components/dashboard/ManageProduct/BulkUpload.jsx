@@ -44,9 +44,9 @@ export default function BulkUpload() {
   });
 
   return (
-    <div className="min-h-screen bg-gray-100 p-10">
-      <div className="max-w-4xl mx-auto bg-white p-8 shadow-md rounded-md">
-        <h1 className="text-2xl font-bold mb-5">Upload Products from Excel</h1>
+    <div className="p-6 pt-0">
+      <div className="">
+        <h1 className="text-3xl font-semibold mb-9">Upload Products from Excel</h1>
         <div className="grid grid-cols-2 gap-4">
           {/* Left Side Image */}
           <div className="flex items-center justify-center">
@@ -78,7 +78,7 @@ export default function BulkUpload() {
             {/* File Dropzone */}
             <div
               {...getRootProps()}
-              className="mt-4 p-4 border-dashed border-2 border-gray-300 rounded-md text-center cursor-pointer"
+              className="mt-4 p-4 py-20 border-dashed border-2 border-gray-300 rounded-md text-center cursor-pointer"
             >
               <input {...getInputProps()} />
               {file ? (
@@ -92,7 +92,7 @@ export default function BulkUpload() {
             <button
               type="button"
               onClick={handleFileUpload}
-              className="bg-teal-500 text-white mt-4 py-2 px-4 rounded-md hover:bg-teal-700"
+              className="customSaveButton mt-7 mb-3"
             >
               Upload Products
             </button>

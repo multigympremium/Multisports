@@ -1,7 +1,8 @@
-"use client";
 import { useState, useEffect, useCallback } from "react";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
-
+import EditButton from "../../../components library/EditButton";
+import DeleteButton from "../../../components library/DeleteButton";
+import { HiArrowCircleDown, HiArrowCircleUp } from "react-icons/hi";
 import CellImage from "../../../shared/ImageComponents/CellImage";
 import toast from "react-hot-toast";
 import Modal from "../../../shared/Modal/Modal";
@@ -50,7 +51,7 @@ export default function SubcategoryList() {
     setSortConfig({ key, direction });
   };
 
-  
+
 
   const handlePageClick = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -115,72 +116,80 @@ export default function SubcategoryList() {
   }, [axiosSecure, isDeleted, isEdited]);
 
   return (
-    <div className="min-h-screen bg-gray-100 p-10">
-      <div className="max-w-6xl mx-auto bg-white p-8 shadow-md rounded-md">
-        <h1 className="text-2xl font-bold mb-5">Category List</h1>
+    <div className="p-6 pt-0">
+      <div className="">
+        <h1 className="text-3xl font-semibold mb-9">Category List</h1>
         <table className="min-w-full table-auto border-collapse">
-          <thead className="bg-gray-100">
+          <thead className="bg-gray-100 text-lg">
             <tr>
-              <th
-                className="border p-2 text-left cursor-pointer"
+              <td
+                className="border flex justify-center items-center gap-2 text-lg p-2 text-center cursor-pointer"
                 onClick={() => handleSort("id")}
               >
                 SL{" "}
                 {sortConfig.key === "id" &&
-                  (sortConfig.direction === "asc" ? "🔼" : "🔽")}
-              </th>
-              <th
-                className="border p-2 text-left cursor-pointer"
+                  (sortConfig.direction === "asc" ? <HiArrowCircleUp className="text-[#087D6D] " /> : <HiArrowCircleDown className="text-[#E68923]" />)}
+              </td>
+              <td
+                className="border p-2 text-center cursor-pointer"
                 onClick={() => handleSort("subcategoryName")}
               >
                 Name{" "}
                 {sortConfig.key === "subcategoryName" &&
                   (sortConfig.direction === "asc" ? "🔼" : "🔽")}
-              </th>
-              <th className="border p-2 text-left">Icon</th>
-              <th className="border p-2 text-left">Banner Image</th>
-              <th
-                className="border p-2 text-left cursor-pointer"
+              </td>
+              <td className="border p-2 text-center">Icon</td>
+              <td className="border p-2 text-center">Banner Image</td>
+              <td
+                className="border p-2 text-center cursor-pointer"
                 onClick={() => handleSort("slug")}
               >
                 Slug{" "}
                 {sortConfig.key === "slug" &&
                   (sortConfig.direction === "asc" ? "🔼" : "🔽")}
-              </th>
-              <th
-                className="border p-2 text-left cursor-pointer"
+              </td>
+              <td
+                className="border p-2 text-center cursor-pointer"
                 onClick={() => handleSort("featureCategory")}
               >
                 Featured{" "}
                 {sortConfig.key === "featureCategory" &&
                   (sortConfig.direction === "asc" ? "🔼" : "🔽")}
-              </th>
-              <th className="border p-2 text-left">Show On Navbar</th>
-              <th className="border p-2 text-left">Action</th>
+              </td>
+              <td className="border p-2 text-center">Show On Navbar</td>
+              <td className="border p-2 text-center">Action</td>
             </tr>
           </thead>
           <tbody>
-            {paginatedData()?.length > 0 &&  paginatedData().map((category, index) => (
-              <tr key={category.id} className="border-b">
+            {paginatedData()?.length > 0 && paginatedData().map((category, index) => (
+              <tr key={category.id} className="border-b text-center">
                 <td className="border p-2">
                   {index + 1 + currentPage * itemsPerPage}
                 </td>
                 <td className="border p-2">{category.subcategoryName}</td>
                 <td className="border p-2">
-                  <CellImage
-                    width={400}
-                    height={400}
-                    src={category.subcategoryIcon}
-                    alt="icon"
-                  />
+                  <div>
+                    <div className="border rounded-full overflow-hidden">
+                      <CellImage
+                        width={400}
+                        height={400}
+                        src={category.subcategoryIcon}
+                        alt="icon"
+                      />
+                    </div>
+                  </div>
                 </td>
                 <td className="border p-2">
-                  <CellImage
-                    width={400}
-                    height={400}
-                    src={category.subcategoryImage}
-                    alt="banner"
-                  />
+                  <div className="flex justify-center">
+                    <div>
+                      <CellImage
+                        width={400}
+                        height={400}
+                        src={category.subcategoryImage}
+                        alt="banner"
+                      />
+                    </div>
+                  </div>
                 </td>
                 <td className="border p-2">{category.slug}</td>
                 <td className="border p-2">
@@ -196,19 +205,9 @@ export default function SubcategoryList() {
                   {category.showOnNavbar ? "Yes" : "No"}
                 </td>
                 <td className="border p-2">
-                  <div className="flex space-x-2">
-                    <button
-                      className="text-yellow-500 hover:text-yellow-700"
-                      onClick={() => handleEdit(category._id)}
-                    >
-                      <FiEdit />
-                    </button>
-                    <button
-                      className="text-red-500 hover:text-red-700"
-                      onClick={() => handleDelete(category._id)}
-                    >
-                      <FiTrash2 />
-                    </button>
+                  <div className="flex  justify-center space-x-2">
+                    <EditButton onClick={() => handleEdit(category._id)} />
+                    <DeleteButton onClick={() => handleDelete(category._id)} />
                   </div>
                 </td>
               </tr>
@@ -224,11 +223,10 @@ export default function SubcategoryList() {
             <button
               key={pageIndex}
               onClick={() => handlePageClick(pageIndex)}
-              className={`px-3 py-1 border rounded-md ${
-                currentPage === pageIndex
-                  ? "bg-blue-500 text-white"
-                  : "hover:bg-gray-200"
-              }`}
+              className={`px-3 py-1 border rounded-md ${currentPage === pageIndex
+                ? "bg-blue-500 text-white"
+                : "hover:bg-gray-200"
+                }`}
             >
               {pageIndex + 1}
             </button>
