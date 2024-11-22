@@ -178,20 +178,20 @@ export default function ChildCategoryEditForm({
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-10 w-full max-w-[800px]">
-      <div className="max-w-4xl mx-auto bg-white p-8 shadow-md rounded-md">
-        <h1 className="text-2xl font-bold mb-5">Child Category Create Form</h1>
+    <div className="w-[50%] bg-gray-100 p-10 rounded-2xl">
+      <div className="">
+        <h1 className="text-2xl font-semibold mb-9">Child Category Create Form</h1>
         {error && <p className="text-red-500 mb-4">{error}</p>}
         <form onSubmit={handleSubmit}>
           {/* Select Category */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">
-              Select Category *
+            <label className="block text-gray-700">
+              Select Category 
             </label>
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="w-full p-2 border rounded-md"
+              className="select customInput"
               
             >
               <option value="">Select One</option>
@@ -211,13 +211,13 @@ export default function ChildCategoryEditForm({
 
           {/* Select Subcategory */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">
-              Select Subcategory *
+            <label className="block text-gray-700  ">
+              Select Subcategory 
             </label>
             <select
               value={subcategory}
               onChange={(e) => setSubcategory(e.target.value)}
-              className="w-full p-2 border rounded-md"
+              className="select customInput"
               
             >
               <option value="">Select One</option>
@@ -237,12 +237,12 @@ export default function ChildCategoryEditForm({
 
           {/* Child Category Name */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">Name *</label>
+            <label className="block text-gray-700 ">Name </label>
             <input
               type="text"
               value={childCategoryName}
               onChange={(e) => handleSubcategoryNameInput(e.target.value)}
-              className="w-full p-2 border rounded-md"
+              className="customInput"
               placeholder="Child Category Title"
               
             />
@@ -251,12 +251,12 @@ export default function ChildCategoryEditForm({
 
           {/* slug Name */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">Slug *</label>
+            <label className="block text-gray-700 ">Slug </label>
             <input
               type="text"
               value={slug}
               onChange={(e) => handleSlug(e.target.value)}
-              className="w-full p-2 border rounded-md"
+              className="customInput"
               placeholder="Slug"
               
             />
@@ -265,7 +265,7 @@ export default function ChildCategoryEditForm({
 
           {/* Child Category Icon */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">
+            <label className="block text-gray-700 mb-2">
               Child Category Icon
             </label>
 
@@ -292,17 +292,17 @@ export default function ChildCategoryEditForm({
             </div>
           </div>
 
-          <div className="flex justify-between">
+          <div className="flex justify-end gap-4">
             <button
               type="button"
               onClick={handleCloseModal}
-              className="px-4 py-2 bg-gray-500 text-white rounded-md"
+              className="customCancelButton"
             >
               Close
             </button>
             <button
               type="submit"
-              className="px-4 py-2 bg-blue-500 text-white rounded-md"
+              className="customSaveButton"
             >
               Save Changes
             </button>

@@ -194,7 +194,7 @@ const ProductBrands = () => {
                       </div>
                     </td>
                     <td className="border p-2 ">
-                      <div>
+                      <div className="flex justify-center">
                         <CellImage
                           width={400}
                           height={400}

@@ -192,18 +192,18 @@ export default function CategoryEditForm({
   };
 
   return (
-    <div className="w-[80%] bg-gray-100 p-10">
-      <div className="w-full mx-auto bg-white p-8 shadow-md rounded-md">
-        <h1 className="text-2xl font-bold mb-5">Edit Category</h1>
+    <div className="w-[50%] bg-gray-100 rounded-2xl p-10">
+      <div className="w-full mx-auto ">
+        <h1 className="text-2xl font-semibold mb-9">Edit Category</h1>
         <form onSubmit={handleSubmit}>
           {/* Category Name */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">Name *</label>
+            <label className="block text-gray-700 font-semibold ">Name </label>
             <input
               type="text"
               value={categoryName}
               onChange={(e) => handleSlug(e.target.value)}
-              className="w-full p-2 border rounded-md"
+              className="customInput"
               placeholder="Category Name"
               // required
             />
@@ -212,11 +212,11 @@ export default function CategoryEditForm({
 
           {/* Slug */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">Slug *</label>
+            <label className="block text-gray-700 font-semibold ">Slug </label>
             <input
               type="text"
               value={slug}
-              className="w-full p-2 border rounded-md"
+              className="customInput"
               placeholder="Category Slug"
               // required
             />
@@ -225,7 +225,7 @@ export default function CategoryEditForm({
 
           {/* Category Icon */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">Category Icon</label>
+            <label className="block text-gray-700 font-semibold mb-2">Category Icon</label>
             <div
               {...getIconRootProps()}
               className="w-full p-4 border-dashed min-h-[200px] flex flex-col items-center justify-center border-2 border-gray-300 rounded-md text-center cursor-pointer"
@@ -248,7 +248,7 @@ export default function CategoryEditForm({
 
           {/* Category Banner */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">Category Banner</label>
+            <label className="block text-gray-700 font-semibold mb-2">Category Banner</label>
             <div
               {...getBannerRootProps()}
               className="w-full p-4 border-dashed min-h-[200px] flex flex-col items-center justify-center border-2 border-gray-300 rounded-md text-center cursor-pointer"
@@ -271,11 +271,11 @@ export default function CategoryEditForm({
 
           {/* Feature Category */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">Feature Category *</label>
+            <label className="block text-gray-700 font-semibold">Feature Category </label>
             <select
               value={featureCategory}
               onChange={(e) => setFeatureCategory(e.target.value)}
-              className="w-full p-2 border rounded-md"
+              className="select customInput"
               // required
             >
               <option value="">Select Feature Category</option>
@@ -287,11 +287,11 @@ export default function CategoryEditForm({
 
           {/* Show on Navbar */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">Show on Navbar *</label>
+            <label className="block text-gray-700 font-semibold ">Show on Navbar </label>
             <select
               value={showOnNavbar}
               onChange={(e) => setShowOnNavbar(e.target.value)}
-              className="w-full p-2 border rounded-md"
+              className="select customInput"
               // required
             >
               <option value="Yes">Yes</option>
@@ -302,7 +302,7 @@ export default function CategoryEditForm({
 
           <button
             type="submit"
-            className="w-full py-2 bg-blue-600 text-white font-bold rounded-md"
+            className="customSaveButton w-full mt-3"
           >
             Save Changes
           </button>

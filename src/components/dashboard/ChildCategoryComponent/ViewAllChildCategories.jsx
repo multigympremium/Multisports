@@ -9,6 +9,9 @@ import Swal from "sweetalert2";
 import ChildCategoryEditForm from "./ChildCategoryEditForm";
 import useGetAllChildCategories from "../../../Hook/GetDataHook/useGetAllChildCategories";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
+import EditButton from "../../../components library/EditButton";
+import DeleteButton from "../../../components library/DeleteButton";
+import { HiArrowCircleDown, HiArrowCircleUp } from "react-icons/hi";
 
 export default function ChildCategoryList() {
   const [currentPage, setCurrentPage] = useState(0);
@@ -38,7 +41,7 @@ export default function ChildCategoryList() {
     const offset = currentPage * itemsPerPage;
 
     return sortedchildCategories().slice(offset, offset + itemsPerPage);
-  }, [currentPage, itemsPerPage,  sortedchildCategories]);
+  }, [currentPage, itemsPerPage, sortedchildCategories]);
 
   const handleSort = (key) => {
     let direction = "asc";
@@ -96,92 +99,90 @@ export default function ChildCategoryList() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-10">
-      <div className="max-w-6xl mx-auto bg-white p-8 shadow-md rounded-md">
-        <h1 className="text-2xl font-bold mb-5">Child Category List</h1>
+    <div className="p-6 pt-0">
+      <div className="">
+        <h1 className="text-3xl font-semibold header mb-9">Child Category List</h1>
         <table className="min-w-full table-auto border-collapse">
           <thead className="bg-gray-100">
             <tr>
-              <th
-                className="border p-2 text-left cursor-pointer"
+            
+              <td
+                className="border flex justify-center items-center gap-2 text-lg p-2 text-center cursor-pointer"
                 onClick={() => handleSort("id")}
               >
                 SL{" "}
                 {sortConfig.key === "id" &&
-                  (sortConfig.direction === "asc" ? "🔼" : "🔽")}
-              </th>
-              <th
-                className="border p-2 text-left cursor-pointer"
+                  (sortConfig.direction === "asc" ? <HiArrowCircleUp className="text-[#087D6D] " /> : <HiArrowCircleDown className="text-[#E68923]" />)}
+              </td>
+              <td className="border p-2 text-center text-lg">Icon</td>
+              <td
+                className="border p-2 text-center text-lg cursor-pointer"
                 onClick={() => handleSort("childCategoryName")}
               >
                 Name{" "}
                 {sortConfig.key === "childCategoryName" &&
                   (sortConfig.direction === "asc" ? "🔼" : "🔽")}
-              </th>
-              <th className="border p-2 text-left">Icon</th>
-              <th
-                className="border p-2 text-left"
+              </td>
+              
+              <td
+                className="border p-2 text-center text-lg"
                 onClick={() => handleSort("category")}
               >
-                category
+                Category
                 {sortConfig.key === "category" &&
                   (sortConfig.direction === "asc" ? "🔼" : "🔽")}
-              </th>
-              <th
-                className="border p-2 text-left"
+              </td>
+              <td
+                className="border p-2 text-center text-lg"
                 onClick={() => handleSort("subcategory")}
               >
                 Subcategory
                 {sortConfig.key === "subcategory" &&
                   (sortConfig.direction === "asc" ? "🔼" : "🔽")}
-              </th>
+              </td>
 
-              <th
-                className="border p-2 text-left cursor-pointer"
+              <td
+                className="border p-2 text-center text-lg cursor-pointer"
                 onClick={() => handleSort("slug")}
               >
                 Slug{" "}
                 {sortConfig.key === "slug" &&
                   (sortConfig.direction === "asc" ? "🔼" : "🔽")}
-              </th>
+              </td>
 
-              <th className="border p-2 text-left">Action</th>
+              <td className="border p-2 text-center text-lg">Action</td>
             </tr>
           </thead>
           <tbody>
-            {paginatedData()?.length > 0 &&  paginatedData().map((category, index) => (
-              <tr key={category.id} className="border-b">
+            {paginatedData()?.length > 0 && paginatedData().map((category, index) => (
+              <tr key={category.id} className="border-b text-center">
+                
                 <td className="border p-2">
                   {index + 1 + currentPage * itemsPerPage}
                 </td>
-                <td className="border p-2">{category.childCategoryName}</td>
                 <td className="border p-2">
-                  <CellImage
-                    width={400}
-                    height={400}
-                    src={category.childCategoryIcon}
-                    alt="icon"
-                  />
+                  <div className="flex justify-center ">
+                    <div className="rounded-full overflow-hidden border">
+                      <CellImage
+                        width={400}
+                        height={400}
+                        src={category.childCategoryIcon}
+                        alt="icon"
+                      />
+                    </div>
+                  </div>
                 </td>
 
+                <td className="border p-2">{category.childCategoryName}</td>
+                
                 <td className="border p-2">{category.category}</td>
                 <td className="border p-2">{category.subcategory}</td>
                 <td className="border p-2">{category.slug}</td>
 
                 <td className="border p-2">
-                  <div className="flex space-x-2">
-                    <button
-                      className="text-yellow-500 hover:text-yellow-700"
-                      onClick={() => handleEdit(category._id)}
-                    >
-                      <FiEdit />
-                    </button>
-                    <button
-                      className="text-red-500 hover:text-red-700"
-                      onClick={() => handleDelete(category._id)}
-                    >
-                      <FiTrash2 />
-                    </button>
+                  <div className="flex justify-center space-x-2">
+                    <EditButton onClick={() => handleEdit(category._id)} />
+                    <DeleteButton onClick={() => handleDelete(category._id)} />
                   </div>
                 </td>
               </tr>
@@ -197,11 +198,10 @@ export default function ChildCategoryList() {
             <button
               key={pageIndex}
               onClick={() => handlePageClick(pageIndex)}
-              className={`px-3 py-1 border rounded-md ${
-                currentPage === pageIndex
+              className={`px-3 py-1 border rounded-md ${currentPage === pageIndex
                   ? "bg-blue-500 text-white"
                   : "hover:bg-gray-200"
-              }`}
+                }`}
             >
               {pageIndex + 1}
             </button>

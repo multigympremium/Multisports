@@ -170,19 +170,19 @@ export default function SubcategoryEditForm({
   };
 
   return (
-    <div className="w-[80%] bg-gray-100 p-10">
-      <div className="max-w-4xl mx-auto bg-white p-8 shadow-md rounded-md">
-        <h1 className="text-2xl font-bold mb-5">Edit Subcategory</h1>
+    <div className="w-[50%] rounded-2xl bg-gray-100 p-10 pb-7">
+      <div className="">
+        <h1 className="text-3xl font-semibold mb-9">Edit Subcategory</h1>
         <form onSubmit={handleSubmit}>
           {/* Select Category */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">
-              Select Category *
+            <label className="block text-gray-700">
+              Select Category
             </label>
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="w-full p-2 border rounded-md"
+              className="select customInput"
             >
               <option value="">Select Category</option>
               {categories?.map((category, index) => (
@@ -198,14 +198,14 @@ export default function SubcategoryEditForm({
 
           {/* Subcategory Name */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">
-              Subcategory Name *
+            <label className="block text-gray-700 ">
+              Subcategory Name
             </label>
             <input
               type="text"
               value={subcategoryName}
               onChange={(e) => handleSubcategoryNameInput(e.target.value)}
-              className="w-full p-2 border rounded-md"
+              className="customInput"
               placeholder="Subcategory Title"
             />
             {errors.subcategoryName && (
@@ -215,12 +215,12 @@ export default function SubcategoryEditForm({
 
           {/* Slug */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">Slug *</label>
+            <label className="block text-gray-700 ">Slug </label>
             <input
               type="text"
               value={slug}
               onChange={(e) => handleSlug(e.target.value)}
-              className="w-full p-2 border rounded-md"
+              className="customInput"
               placeholder="Slug"
             />
             {errors.slug && (
@@ -230,7 +230,7 @@ export default function SubcategoryEditForm({
 
           {/* Subcategory Icon */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">
+            <label className="block text-gray-700 mb-2">
               Subcategory Icon
             </label>
             <div
@@ -254,7 +254,7 @@ export default function SubcategoryEditForm({
 
           {/* Subcategory Image */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">
+            <label className="block text-gray-700 mb-2">
               Subcategory Image
             </label>
             <div
@@ -277,12 +277,14 @@ export default function SubcategoryEditForm({
           </div>
 
           {/* Submit Button */}
-          <button
-            type="submit"
-            className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
-          >
-            Update Subcategory
-          </button>
+          <div className="flex justify-end mt-5">
+            <button
+              type="submit"
+              className="customSaveButton"
+            >
+              Update Subcategory
+            </button>
+          </div>
         </form>
       </div>
     </div>
