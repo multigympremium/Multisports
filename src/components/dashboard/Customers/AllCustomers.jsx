@@ -2,6 +2,9 @@
 import { useState } from "react";
 import { FiTrash2 } from "react-icons/fi";
 import { CSVLink } from "react-csv";
+import { IoIosSearch } from "react-icons/io";
+import { RxDownload } from "react-icons/rx";
+import DeleteButton from "../../../components library/DeleteButton";
 
 export default function CustomersList() {
   const initialCustomers = [
@@ -58,46 +61,48 @@ export default function CustomersList() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-100 p-10">
-      <div className="max-w-7xl mx-auto bg-white p-8 shadow-md rounded-md">
-        <h1 className="text-2xl font-bold mb-5">Customers List</h1>
-
+    <div className="p-6 pt-0">
+      <div className="">
+        <div className="flex items-center mb-9 justify-between">
+          <h1 className="text-3xl font-semibold ">Customers List</h1>
+          {/* Download as Excel (CSV) Button */}
+          <div className=" flex justify-end">
+            <CSVLink
+              data={customers}
+              headers={csvHeaders}
+              filename="customers_list.csv"
+              className="customSaveButton"
+            >
+               <span className="flex items-center gap-2"><RxDownload />
+               Download as Excel</span>
+            </CSVLink>
+          </div>
+        </div>
         {/* Search Input */}
-        <div className="mb-4">
+        <div className="bg-white border rounded-full px-3 mb-6 md:py-2 py-1 md:gap-2 gap-1 flex-row-reverse justify-between flex">
           <input
             type="text"
-            placeholder="Search by name or email..."
-            value={searchTerm}
+            className="outline-none w-full bg-white"
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full p-2 border rounded-md"
+            placeholder="Search here ..."
           />
+          <IoIosSearch className="text-2xl text-gray-400" />
         </div>
 
-        {/* Download as Excel (CSV) Button */}
-        <div className="mb-4 flex justify-end">
-          <CSVLink
-            data={customers}
-            headers={csvHeaders}
-            filename="customers_list.csv"
-            className="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-700"
-          >
-            Download as Excel
-          </CSVLink>
-        </div>
 
         {/* Customers Table */}
-        <table className="min-w-full table-auto border-collapse bg-white shadow-md rounded-md">
+        <table className="min-w-full table-auto border-collapse bg-white shadow rounded-md">
           <thead>
-            <tr className="bg-gray-200">
-              <th className="p-2 border">SL</th>
-              <th className="p-2 border">Name</th>
-              <th className="p-2 border">Email</th>
-              <th className="p-2 border">Phone</th>
-              <th className="p-2 border">Address</th>
-              <th className="p-2 border">Delete Request Submitted</th>
-              <th className="p-2 border">Wallet</th>
-              <th className="p-2 border">Created At</th>
-              <th className="p-2 border">Action</th>
+            <tr className="bg-gray-200 text-center">
+              <td className="p-2 border">SL</td>
+              <td className="p-2 border">Name</td>
+              <td className="p-2 border">Email</td>
+              <td className="p-2 border">Phone</td>
+              <td className="p-2 border">Address</td>
+              <td className="p-2 border">Delete Request Submitted</td>
+              <td className="p-2 border">Wallet</td>
+              <td className="p-2 border">Created At</td>
+              <td className="p-2 border">Action</td>
             </tr>
           </thead>
           <tbody>
@@ -115,12 +120,7 @@ export default function CustomersList() {
                   <td className="p-2 border">{customer.wallet}</td>
                   <td className="p-2 border">{customer.createdAt}</td>
                   <td className="p-2 border">
-                    <button
-                      className="text-red-500 hover:text-red-700"
-                      onClick={() => handleDelete(customer.id)}
-                    >
-                      <FiTrash2 />
-                    </button>
+                    <DeleteButton onClick={() => handleDelete(customer.id)}></DeleteButton>
                   </td>
                 </tr>
               ))

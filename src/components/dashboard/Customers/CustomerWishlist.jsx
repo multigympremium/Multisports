@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { IoIosSearch } from "react-icons/io";
 
 export default function CustomerWishlist() {
   const initialWishlist = [
@@ -39,39 +40,39 @@ export default function CustomerWishlist() {
   );
 
   return (
-    <div className="min-h-screen bg-gray-100 p-10">
-      <div className="max-w-7xl mx-auto bg-white p-8 shadow-md rounded-md">
-        <h1 className="text-2xl font-bold mb-5">WishList</h1>
+    <div className="p-6 pt-0">
+      <div className="">
+        <h1 className="text-3xl font-semibold mb-9">WishList</h1>
 
         {/* Search Input */}
-        <div className="mb-4">
+        <div className="bg-white border rounded-full px-3 mb-6 md:py-2 py-1 md:gap-2 gap-1 flex-row-reverse justify-between flex">
           <input
             type="text"
-            placeholder="Search by product, customer name, or email..."
-            value={searchTerm}
+            className="outline-none w-full bg-white"
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full p-2 border rounded-md"
+            placeholder="Search by product, customer name, or email..."
           />
+          <IoIosSearch className="text-2xl text-gray-400" />
         </div>
 
         {/* Wishlist Table */}
-        <table className="min-w-full table-auto border-collapse bg-white shadow-md rounded-md">
+        <table className="min-w-full table-auto border-collapse bg-white shadow rounded-md">
           <thead>
-            <tr className="bg-gray-200">
-              <th className="p-2 border">SL</th>
-              <th className="p-2 border">Category</th>
-              <th className="p-2 border">Image</th>
-              <th className="p-2 border">Product</th>
-              <th className="p-2 border">Customer Name</th>
-              <th className="p-2 border">Email</th>
-              <th className="p-2 border">Contact</th>
-              <th className="p-2 border">Created At</th>
+            <tr className="bg-gray-200 text-center">
+              <td className="p-2 border">SL</td>
+              <td className="p-2 border">Category</td>
+              <td className="p-2 border">Image</td>
+              <td className="p-2 border">Product</td>
+              <td className="p-2 border">Customer Name</td>
+              <td className="p-2 border">Email</td>
+              <td className="p-2 border">Contact</td>
+              <td className="p-2 border">Created At</td>
             </tr>
           </thead>
           <tbody>
             {filteredWishlist.length > 0 ? (
               filteredWishlist.map((item, index) => (
-                <tr key={item.id} className="border-b">
+                <tr key={item.id} className="border-b text-center">
                   <td className="p-2 border">{index + 1}</td>
                   <td className="p-2 border">{item.category}</td>
                   <td className="p-2 border">
