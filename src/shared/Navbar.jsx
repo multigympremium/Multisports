@@ -204,29 +204,29 @@ const Navbar = () => {
           {/* Menu */}
           <div className="navbar-end flex items-center gap-1 md:gap-3">
             {/* My Store */}
-            <div className="flex items-center justify-center flex-col gap-1 md:p-3 p-1 rounded">
+            <button className="flex items-center justify-center flex-col gap-1 md:p-3 p-1 rounded">
               <MdOutlineStore className="md:text-2xl text-base text-gray-600 hover:text-blue-500 hover:scale-110 cursor-pointer transition-all" />
               <span className="hidden md:block">My Store</span>
-            </div>
+            </button>
 
             {/* Wishlist */}
-            <div
+            <button
               className="flex items-center justify-center flex-col gap-1 md:p-3 p-1 rounded"
               onClick={() => setIsShowWishlist(true)}
             >
               <FaRegHeart className="md:text-2xl text-base text-gray-600 hover:text-pink-500 hover:scale-110 cursor-pointer transition-all" />
               <span className="hidden md:block">Wishlist</span>
-            </div>
+            </button>
 
             {/* Cart */}
-            <div
+            <button
               onClick={() => setIsShowModal(true)}
               className="flex items-center justify-center flex-col gap-1 md:p-3 p-1 rounded relative"
             >
               <BsCart className="md:text-2xl text-base text-gray-600 hover:text-orange-500 hover:scale-110 cursor-pointer transition-all" />
               <span className="hidden md:block">Cart</span>
               <div className="badge badge-primary badge-lg absolute top-0 -right-2">{totalItems}</div>
-            </div>
+            </button>
 
             {/* Sign In */}
             <Link to="/login">
