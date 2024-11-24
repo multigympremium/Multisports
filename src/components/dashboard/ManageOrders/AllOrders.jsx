@@ -7,9 +7,9 @@ import OrderDetail from "./OrderDetail";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
 import toast from "react-hot-toast";
-
-
-
+import { IoIosSearch } from "react-icons/io";
+import EditButton from "../../../components library/EditButton";
+import DeleteButton from "../../../components library/DeleteButton";
 
 
 export default function AllOrders() {
@@ -22,14 +22,14 @@ export default function AllOrders() {
   const [isDeleted, setIsDeleted] = useState(false);
   const itemsPerPage = 5;
 
-  const orders = useGetAllOrders({isDeleted, isShowModal: isShowDetail})
+  const orders = useGetAllOrders({ isDeleted, isShowModal: isShowDetail })
 
   console.log(orders, "orders");
 
   // Filter orders based on the search term
   const filteredOrders = orders.filter(
     (order) =>
-      order?.products.map(item => item.productTitle.toLowerCase().includes(searchTerm.toLowerCase()) )
+      order?.products.map(item => item.productTitle.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 
   // Pagination logic
@@ -74,7 +74,7 @@ export default function AllOrders() {
     console.log(`Delete category with ID: ${id}`);
   };
 
-  
+
   const totalPending = parseFloat(
     orders
       .filter((order) => order.status === "Pending")
@@ -97,63 +97,69 @@ export default function AllOrders() {
   );
 
   return (
-    <div className="min-h-screen bg-gray-100 p-10">
+    <div className="p-6 pt-0">
       <div className="max-w-7xl mx-auto">
         {/* Summary Cards */}
         <div className="grid grid-cols-4 gap-4 mb-8">
-          <div className="bg-white p-4 shadow-md rounded-md">
-            <h3 className="text-lg font-bold">Total Pending Orders</h3>
+          <div className="bg-[#087D6D] p-6 text-white font-semibold  rounded-2xl">
+            <h3 className="text-xl ">Total Delivered Orders</h3>
+            <p className="text-2xl mt-2">৳ {totalDelivered.toFixed(2)}</p>
+            {/* <p className="text-2xl mt-2">৳ 0</p> */}
+          </div>
+
+
+          <div className="bg-[#E68923] p-6 text-white font-semibold  rounded-2xl">
+            <h3 className="text-xl ">Total Pending Orders</h3>
             <p className="text-2xl mt-2">৳ {totalPending.toFixed(2)}</p>
             {/* <p className="text-2xl mt-2">৳ 0</p> */}
           </div>
-          <div className="bg-white p-4 shadow-md rounded-md">
-            <h3 className="text-lg font-bold">Total Approved Orders</h3>
+
+          <div className="bg-[#31B349] p-6 text-white font-semibold  rounded-2xl">
+            <h3 className="text-xl ">Total Approved Orders</h3>
             <p className="text-2xl mt-2">৳ {totalApproved.toFixed(2)}</p>
             {/* <p className="text-2xl mt-2">৳ 0</p> */}
           </div>
-          <div className="bg-white p-4 shadow-md rounded-md">
-            <h3 className="text-lg font-bold">Total Delivered Orders</h3>
-            <p className="text-2xl mt-2">৳ {totalDelivered.toFixed(2)} 0</p>
-            {/* <p className="text-2xl mt-2">৳ 0</p> */}
-          </div>
-          <div className="bg-white p-4 shadow-md rounded-md">
-            <h3 className="text-lg font-bold">Total Cancelled Orders</h3>
-            <p className="text-2xl mt-2">৳ {totalCancelled.toFixed(2)}0</p>
+
+
+
+          <div className="bg-[#EB1C24] p-6 text-white font-semibold  rounded-2xl">
+            <h3 className="text-xl ">Total Cancelled Orders</h3>
+            <p className="text-2xl mt-2">৳ {totalCancelled.toFixed(2)}</p>
             {/* <p className="text-2xl mt-2">৳ 0</p> */}
           </div>
         </div>
 
         {/* Search Input */}
-        <div className="mb-4">
+        <div className="bg-white border rounded-full px-3 mb-6 md:py-2 py-1 md:gap-2 gap-1 flex-row-reverse justify-between flex">
           <input
             type="text"
-            placeholder="Search by name or email..."
-            value={searchTerm}
+            className="outline-none w-full bg-white"
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full p-2 border rounded-md"
+            placeholder="Search here ..."
           />
+          <IoIosSearch className="text-2xl text-gray-400" />
         </div>
 
         {/* Orders Table */}
-        <table className="min-w-full table-auto border-collapse bg-white shadow-md rounded-md">
+        <table className="min-w-full table-auto border-collapse bg-white  rounded-md">
           <thead>
-            <tr className="bg-gray-200">
-              <th className="p-2 border">SL</th>
-              <th className="p-2 border">Order No</th>
-              <th className="p-2 border">Order Date</th>
-              <th className="p-2 border">Name</th>
-              <th className="p-2 border">Email</th>
-              <th className="p-2 border">Phone</th>
-              <th className="p-2 border">Status</th>
-              <th className="p-2 border">Payment</th>
-              <th className="p-2 border">Total</th>
-              <th className="p-2 border">Action</th>
+            <tr className="bg-gray-200 text-center">
+              <td className="p-2 border">SL</td>
+              <td className="p-2 border">Order No</td>
+              <td className="p-2 border">Order Date</td>
+              <td className="p-2 border">Name</td>
+              <td className="p-2 border">Email</td>
+              <td className="p-2 border">Phone</td>
+              <td className="p-2 border">Status</td>
+              <td className="p-2 border">Payment</td>
+              <td className="p-2 border">Total</td>
+              <td className="p-2 border">Action</td>
             </tr>
           </thead>
           <tbody>
             {orders.length > 0 ? (
               orders.map((order, index) => (
-                <tr key={order._id} className="border-b">
+                <tr key={order._id} className="border-b text-center">
                   <td className="p-2 border">
                     {index + 1 + (currentPage - 1) * itemsPerPage}
                   </td>
@@ -162,17 +168,14 @@ export default function AllOrders() {
                   <td className="p-2 border">{order?.shipping_address_id?.recipientName}</td>
                   <td className="p-2 border">{order?.shipping_address_id?.email || "N/A"}</td>
                   <td className="p-2 border">{order?.shipping_address_id?.contactNumber}</td>
-                  <td className="p-2 border">{order?.status}</td>
+                  <td className="p-2 border "><span className="bg-red-500 text-white  px-3 rounded-lg  py-1">{order?.status}</span></td>
                   <td className="p-2 border">{order?.payment_method}</td>
                   <td className="p-2 border">৳ {order?.total}</td>
                   <td className="p-2 border">
-                    <div className="flex space-x-2">
-                      <button className="text-yellow-500 hover:text-yellow-700" onClick={()=> {setIsShowDetail(true); setTargetId(order._id)}}>
-                        <FiEdit />
-                      </button>
-                      <button className="text-red-500 hover:text-red-700" onClick={()=> handleDelete(order._id)}>
-                        <FiTrash2 />
-                      </button>
+                    <div className="flex justify-center space-x-2">
+                      
+                      <EditButton onClick={() => { setIsShowDetail(true); setTargetId(order._id) }}/>
+                      <DeleteButton  onClick={() => handleDelete(order._id)}/>
                     </div>
                   </td>
                 </tr>

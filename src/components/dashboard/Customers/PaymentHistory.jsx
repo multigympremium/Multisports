@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { IoIosSearch } from "react-icons/io";
 
 export default function PaymentHistory() {
   const initialData = [
@@ -58,42 +59,43 @@ export default function PaymentHistory() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-10">
-      <div className="max-w-7xl mx-auto bg-white p-8 shadow-md rounded-md">
-        <h1 className="text-2xl font-bold mb-5">Order Payment History</h1>
+    <div className="p-6 pt-0">
+      <div className="">
+        <h1 className="text-3xl font-semibold mb-9">Order Payment History</h1>
 
         {/* Search Input */}
-        <div className="mb-4 flex justify-between items-center">
+
+        <div className="bg-white border rounded-full px-3 mb-6 md:py-2 py-1 md:gap-2 gap-1 flex-row-reverse justify-between flex">
           <input
             type="text"
+            className="outline-none w-full bg-white"
+            onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Search by transaction ID, bank tran ID, or payment method..."
-            value={searchTerm}
-            onChange={handleSearch}
-            className="w-full p-2 border rounded-md"
           />
+          <IoIosSearch className="text-2xl text-gray-400" />
         </div>
 
         {/* Payment History Table */}
-        <table className="min-w-full table-auto border-collapse bg-white shadow-md rounded-md">
+        <table className="min-w-full table-auto border-collapse bg-white shadow rounded-md">
           <thead>
-            <tr className="bg-gray-200">
-              <th className="p-2 border">SL</th>
-              <th className="p-2 border">Payment Through</th>
-              <th className="p-2 border">Transaction ID</th>
-              <th className="p-2 border">Card Type</th>
-              <th className="p-2 border">Card Brand</th>
-              <th className="p-2 border">Amount</th>
-              <th className="p-2 border">Store Amount</th>
-              <th className="p-2 border">Currency</th>
-              <th className="p-2 border">Bank Tran ID</th>
-              <th className="p-2 border">Datetime</th>
-              <th className="p-2 border">Status</th>
+            <tr className="bg-gray-200 text-center">
+              <td className="p-2 border">SL</td>
+              <td className="p-2 border">Payment Tdrough</td>
+              <td className="p-2 border">Transaction ID</td>
+              <td className="p-2 border">Card Type</td>
+              <td className="p-2 border">Card Brand</td>
+              <td className="p-2 border">Amount</td>
+              <td className="p-2 border">Store Amount</td>
+              <td className="p-2 border">Currency</td>
+              <td className="p-2 border">Bank Tran ID</td>
+              <td className="p-2 border">Datetime</td>
+              <td className="p-2 border">Status</td>
             </tr>
           </thead>
           <tbody>
             {currentData.length > 0 ? (
               currentData.map((item, index) => (
-                <tr key={item.id} className="border-b">
+                <tr key={item.id} className="border-b text-center">
                   <td className="p-2 border">{startIdx + index + 1}</td>
                   <td className="p-2 border">{item.paymentThrough}</td>
                   <td className="p-2 border">{item.transactionId}</td>
@@ -104,7 +106,7 @@ export default function PaymentHistory() {
                   <td className="p-2 border">{item.currency}</td>
                   <td className="p-2 border">{item.bankTranId}</td>
                   <td className="p-2 border">{item.datetime}</td>
-                  <td className="p-2 border">{item.status}</td>
+                  <td className="p-2 py-4 border"><span className="bg-[#31B349] text-white px-2 py-1 rounded-lg">{item.status}</span></td>
                 </tr>
               ))
             ) : (
