@@ -12,14 +12,14 @@ function AddDeliveryCharges({ setIsShowModal, isShowModal }) {
   const [subdistrictName, setSubdistrictName] = useState("");
   const [subdistricts, setSubdistricts] = useState([]);
   const [charge, setCharge] = useState("");
- 
+
   const district = useGetAllDistrict({})
 
 
- 
+
 
   const handleSubmit = async () => {
-    
+
 
     try {
       const response = await axiosSecure.post(
@@ -28,7 +28,7 @@ function AddDeliveryCharges({ setIsShowModal, isShowModal }) {
           district: districtName,
           subdistricts: subdistrictName,
           charge: charge,
-         
+
           branch: user?.branch || "shia",
         }
       );
@@ -41,7 +41,7 @@ function AddDeliveryCharges({ setIsShowModal, isShowModal }) {
         });
         setIsShowModal(false);
 
-        
+
         setDistrictName("");
         setSubdistrictName("");
         setCharge("");
@@ -60,7 +60,7 @@ function AddDeliveryCharges({ setIsShowModal, isShowModal }) {
   };
 
   useEffect(() => {
-    if(districtName === ""){
+    if (districtName === "") {
       setSubdistricts([]);
       return;
     }
@@ -69,59 +69,61 @@ function AddDeliveryCharges({ setIsShowModal, isShowModal }) {
 
   }, [district, districtName])
 
-  
+
 
   return (
-    <div className="bg-white p-5  md:p-8 rounded-xl w-full" >
+    <div className="bg-white p-5 mt-36  md:p-8 rounded-xl w-full" >
       <h3 className="text-2xl font-semibold mb-7 mt-3 text-nowrap">Add Question</h3>
       <div className="grid grid-cols-1 gap-4">
-        
-      <div>
-            <label className="block font-semibold mb-1">District/City *</label>
-            <select
-              name="district"
-              value={districtName}
-              onChange={(e)=> setDistrictName(e.target.value)}
-              className="border p-2 w-full rounded"
-            >
-              <option value="">Select District</option>
-              {district.length > 0 && district.map((item, index) => (
-                <option key={index} value={item.district}>{item.district}</option>
-              ))}
-              {/* Add more options as necessary */}
-            </select>
-            
-          </div>
 
-          {/* Area/Thana/Upazilla */}
-          <div>
-            <label className="block font-semibold mb-1">subdistrict *</label>
-            <select
-              name="area"
-              value={subdistrictName}
-              onChange={(e)=> setSubdistrictName(e.target.value)}
-              className="border p-2 w-full rounded"
-            >
-              <option value="">Select Area/Thana/Upazilla</option>
-              {
-               subdistricts?.length > 0 &&  subdistricts.map((subdistrict, index) => (
-                  <option key={index} value={subdistrict}>{subdistrict}</option>
-                ))
-              }
-              {/* Add more options as necessary */}
-            </select>
-            
-          </div>
-          <div className="w-full ">
-            <label className="block font-semibold mb-1">Charge *</label>
-            <input type="number" name="charge" id="charge" value={charge} onChange={(e) => setCharge(e.target.value)} className="outline-none border p-2 rounded-xl w-full focus:border-gray-300" />
-            
-          </div>
-       
+        <div>
+          <label className="block  mb-1">District/City </label>
+          <select
+            name="district"
+            value={districtName}
+            onChange={(e) => setDistrictName(e.target.value)}
+            className="select customInput"
+          >
+            <option value="">Select District</option>
+            {district.length > 0 && district.map((item, index) => (
+              <option key={index} value={item.district}>{item.district}</option>
+            ))}
+            {/* Add more options as necessary */}
+          </select>
+
+        </div>
+
+        {/* Area/Thana/Upazilla */}
+        <div>
+          <label className="block  mb-1">Subdistrict </label>
+          <select
+            name="area"
+            value={subdistrictName}
+            onChange={(e) => setSubdistrictName(e.target.value)}
+            className="select customInput"
+          >
+            <option value="">Select Area/Thana/Upazilla</option>
+            {
+              subdistricts?.length > 0 && subdistricts.map((subdistrict, index) => (
+                <option key={index} value={subdistrict}>{subdistrict}</option>
+              ))
+            }
+            {/* Add more options as necessary */}
+          </select>
+
+        </div>
+        <div className="w-full ">
+          <label className="block  mb-1">Charge </label>
+          <input type="number" name="charge" id="charge" value={charge} onChange={(e) => setCharge(e.target.value)} className="customInput" />
+
+        </div>
+
       </div>
-      <button className="font-semibold bg-blue-500 text-white hover:bg-blue-600 px-4 py-2 rounded-lg ml-auto block w-fit mt-12"  onClick={handleSubmit}>
-        Save
-      </button>
+      <div className="flex justify-end mt-9">
+        <button className="customSaveButton w-full" onClick={handleSubmit}>
+          Save
+        </button>
+      </div>
     </div>
   );
 }

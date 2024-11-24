@@ -10,6 +10,9 @@ import toast from "react-hot-toast";
 import useGetAllDeliveryCharge from "../../../Hook/GetDataHook/useGetAllDeliveryCharge";
 import AddDeliveryCharges from "./Forms/AddDeliveryCharges";
 import EditDeliveryCharges from "./Forms/EditDeliveryCharges";
+import { IoIosSearch } from "react-icons/io";
+import DeleteButton from "../../../components library/DeleteButton";
+import EditButton from "../../../components library/EditButton";
 
 export default function DeliveryCharges() {
 
@@ -18,7 +21,7 @@ export default function DeliveryCharges() {
   const [isAddModel, setIsAddModel] = useState(false)
   const [isEditModel, setIsEditModel] = useState(false)
   const [isDeleted, setIsDeleted] = useState(false)
-  const deliveryCharge = useGetAllDeliveryCharge({ isShowModal: isAddModel , isEdited: isEditModel, isDeleted })
+  const deliveryCharge = useGetAllDeliveryCharge({ isShowModal: isAddModel, isEdited: isEditModel, isDeleted })
 
   console.log(deliveryCharge, "deliveryChargedf ")
 
@@ -36,7 +39,7 @@ export default function DeliveryCharges() {
 
   console.log(deliveryCharge, currentData, "currentData", data);
 
-  
+
 
   // Handle Search
   const handleSearch = (e) => {
@@ -97,102 +100,97 @@ export default function DeliveryCharges() {
 
   return (
     <>
-    <div className="min-h-screen bg-gray-100 p-10">
-      <div className="max-w-7xl mx-auto bg-white p-8 shadow-md rounded-md">
-        <h1 className="text-2xl font-bold mb-5">Delivery Charges List</h1>
+      <div className="p-6 pt-0">
+        <div className="">
+          <div className="flex justify-between mb-9 items-center ">
+            <h1 className="text-3xl font-semibold ">Delivery Charges List</h1>
+            <button className="customSaveButton" onClick={() => setIsAddModel(true)}>
+              + Add delivery Charge
+            </button>
+          </div>
+          {/* Search Input */}
+          <div className="">
+            {/* Search Input */}
+            <div className="bg-white border rounded-full px-3 mb-6 md:py-2 py-1 md:gap-2 gap-1 flex-row-reverse justify-between flex">
+              <input
+                type="text"
+                className="outline-none w-full bg-white"
+                onChange={(e) => setSearchTerm(e.target.value)}
+                placeholder="Search here ..."
+              />
+              <IoIosSearch className="text-2xl text-gray-400" />
+            </div>
+          </div>
 
-        {/* Search Input */}
-        <div className="mb-4 flex justify-between items-center">
-          <input
-            type="text"
-            placeholder="Search by deliveryCharge ..."
-            value={searchTerm}
-            onChange={handleSearch}
-            className="w-1/2 p-2 border rounded-md"
-          />
-          <button className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-700" onClick={()=> setIsAddModel(true)}>
-            + Add delivery Charge
-          </button>
-        </div>
+          {/* Upazila Thana Table */}
+          <table className="min-w-full table-auto border-collapse bg-white shadow rounded-md">
+            <thead>
+              <tr className="bg-gray-200 text-center">
+                <td className="p-2 border">SL</td>
+                <td className="p-2 border">District</td>
+                <td className="p-2 border">Subdistricts</td>
+                <td className="p-2 border">Charges</td>
+                <td className="p-2 border">Action</td>
+              </tr>
+            </thead>
+            <tbody>
+              {currentData.length > 0 ? (
+                currentData.map((item, index) => (
+                  <tr key={item.id} className="border-b text-center">
+                    <td className="p-2 border">{startIdx + index + 1}</td>
+                    <td className="p-2 border">{item.district}</td>
+                    <td className="p-2 border">{item.subdistricts}</td>
+                    <td className="p-2 border text-green-600 font-bold text-center">{item.charge}</td>
 
-        {/* Upazila Thana Table */}
-        <table className="min-w-full table-auto border-collapse bg-white shadow-md rounded-md">
-          <thead>
-            <tr className="bg-gray-200">
-              <th className="p-2 border">SL</th>
-              <th className="p-2 border">District</th>
-              <th className="p-2 border">Subdistricts</th>
-              <th className="p-2 border">Charges</th>
-              <th className="p-2 border">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {currentData.length > 0 ? (
-              currentData.map((item, index) => (
-                <tr key={item.id} className="border-b">
-                  <td className="p-2 border">{startIdx + index + 1}</td>
-                  <td className="p-2 border">{item.district}</td>
-                  <td className="p-2 border">{item.subdistricts}</td>
-                  <td className="p-2 border text-blue-600 font-bold text-center">{item.charge}</td>
-                  
-                  <td className="p-2 border">
-                    <button
-                      className="bg-yellow-500 text-white py-1 px-2 rounded-md hover:bg-yellow-700 mr-2"
-                      onClick={() => handleEdit(item._id)}
-                    >
-                      Edit
-                    </button>
-                    <button
-                      className="bg-red-500 text-white py-1 px-2 rounded-md hover:bg-red-700"
-                      onClick={() => handleDelete(item._id)}
-                    >
-                      Delete
-                    </button>
+                    <td className="p-2 border space-x-2">
+                      
+                      <EditButton onClick={() => handleEdit(item._id)}></EditButton>
+                      <DeleteButton  onClick={() => handleDelete(item._id)}></DeleteButton>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="6" className="text-center p-4">
+                    No data available in the table
                   </td>
                 </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="6" className="text-center p-4">
-                  No data available in the table
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+              )}
+            </tbody>
+          </table>
 
-        {/* Pagination */}
-        <div className="flex justify-between items-center mt-6">
-          <button
-            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-            disabled={currentPage === 1}
-            className="bg-gray-300 py-2 px-4 rounded-md hover:bg-gray-400 disabled:opacity-50"
-          >
-            Previous
-          </button>
-          <span>
-            Page {currentPage} of {totalPages}
-          </span>
-          <button
-            onClick={() =>
-              setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-            }
-            disabled={currentPage === totalPages}
-            className="bg-gray-300 py-2 px-4 rounded-md hover:bg-gray-400 disabled:opacity-50"
-          >
-            Next
-          </button>
+          {/* Pagination */}
+          <div className="flex justify-between items-center mt-6">
+            <button
+              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}
+              className="bg-gray-300 py-2 px-4 rounded-md hover:bg-gray-400 disabled:opacity-50"
+            >
+              Previous
+            </button>
+            <span>
+              Page {currentPage} of {totalPages}
+            </span>
+            <button
+              onClick={() =>
+                setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+              }
+              disabled={currentPage === totalPages}
+              className="bg-gray-300 py-2 px-4 rounded-md hover:bg-gray-400 disabled:opacity-50"
+            >
+              Next
+            </button>
+          </div>
         </div>
       </div>
-    </div>
 
-    <BgBlurModal isShowModal={isAddModel} setIsShowModal={setIsAddModel}>
-      <AddDeliveryCharges setIsShowModal={setIsAddModel} isShowModal={isAddModel} />
-    </BgBlurModal>
-    
-    <BgBlurModal isShowModal={isEditModel} setIsShowModal={setIsEditModel}>
-      <EditDeliveryCharges setIsShowModal={setIsEditModel} isShowModal={isEditModel} targetId={targetId} />
-    </BgBlurModal>
+      <BgBlurModal isShowModal={isAddModel} setIsShowModal={setIsAddModel}>
+        <AddDeliveryCharges setIsShowModal={setIsAddModel} isShowModal={isAddModel} />
+      </BgBlurModal>
+
+      <BgBlurModal isShowModal={isEditModel} setIsShowModal={setIsEditModel}>
+        <EditDeliveryCharges setIsShowModal={setIsEditModel} isShowModal={isEditModel} targetId={targetId} />
+      </BgBlurModal>
     </>
   );
 }
