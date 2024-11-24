@@ -6,7 +6,7 @@ import HorizontalMenu from "./shared/HorizontalMenu/HorizontalMenu";
 import MetaTags from "./components/Home/MetaTags/MetaTags";
 import useGetSeo from "./Hook/GetPublicDataHook/useGetSeo";
 import useAxiosPublic from "./Hook/useAxiosPublic";
-
+import ReactGA from "react-ga4";
 import ReactPixel from "react-facebook-pixel"
 
 //This is Login Page Root only and 404 page Root use for Outlet Component
@@ -83,7 +83,17 @@ root.style.setProperty("--border-color", theme.borderColor || "#cbd5e0");
       ReactPixel.init(pixelId);
       ReactPixel.pageView(); // Track a page view
     }
+
+    ReactGA.initialize("G-2P4DFL43YR");
+    ReactGA.send({ hitType: "pageview", page: window.location.pathname , title: "Root.jsx" });
+
+    ReactGA.event({
+      category: "Product Visiting",
+      action: "Visiting",
+    });
+
   }, []);
+
 
   const content = useGetSeo({});
   return (
