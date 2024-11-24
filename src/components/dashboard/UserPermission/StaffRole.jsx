@@ -31,6 +31,8 @@ const StaffRole = () => {
     }
   };
 
+  
+
   const handleAddDepartment = async () => {
     if (editId) {
       // Update the department
