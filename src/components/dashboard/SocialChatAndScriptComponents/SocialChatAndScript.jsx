@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import FacebookPixelForm from "./Forms/FacebookPixelForm";
 
 export default function SocialChatAndScript() {
   const [selectedTab, setSelectedTab] = useState("Google Analytic");
@@ -57,10 +58,10 @@ export default function SocialChatAndScript() {
 
           {/* Right-side Form */}
           <div className="w-3/4 pl-8 pt-0">
+              {selectedTab === "Google Analytic" && (
             <form onSubmit={handleSubmit}>
               <h3 className="text-2xl text-gray-700 mb-6">{selectedTab}</h3>
 
-              {selectedTab === "Google Analytic" && (
                 <>
                   <div className="mb-6">
                     <label className="block text-gray-700  ">
@@ -88,17 +89,22 @@ export default function SocialChatAndScript() {
                     />
                   </div>
                 </>
-              )}
 
-              {/* Update Button */}
-              <button
-                
-                type="submit"
-                className="customSaveButton"
+            <button
+              type="submit"
+              className="customSaveButton w-full"
               >
-                Update
-              </button>
+              Update
+            </button>
             </form>
+            )}
+
+            
+              {selectedTab === "Facebook Pixel" && (
+                <FacebookPixelForm  />
+              )
+
+              }
           </div>
         </div>
       </div>

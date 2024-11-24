@@ -7,6 +7,8 @@ import MetaTags from "./components/Home/MetaTags/MetaTags";
 import useGetSeo from "./Hook/GetPublicDataHook/useGetSeo";
 import useAxiosPublic from "./Hook/useAxiosPublic";
 
+import ReactPixel from "react-facebook-pixel"
+
 //This is Login Page Root only and 404 page Root use for Outlet Component
 const Root = () => {
 
@@ -72,6 +74,15 @@ root.style.setProperty("--border-color", theme.borderColor || "#cbd5e0");
       document.getElementById("header-script")?.remove();
       document.getElementById("footer-script")?.remove();
     };
+  }, []);
+
+  useEffect(() => {
+    // Fetch the Pixel ID dynamically (from backend or settings)
+    const pixelId = localStorage.getItem('facebookPixelId'); // Example
+    if (pixelId) {
+      ReactPixel.init(pixelId);
+      ReactPixel.pageView(); // Track a page view
+    }
   }, []);
 
   const content = useGetSeo({});

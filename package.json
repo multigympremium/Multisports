@@ -37,6 +37,7 @@
     "react-chartjs-2": "^5.2.0",
     "react-csv": "^2.2.2",
     "react-dropzone": "^14.3.5",
+    "react-facebook-pixel": "^1.0.4",
     "react-hook-form": "^7.52.2",
     "react-hot-toast": "^2.4.1",
     "react-inner-image-zoom": "^3.0.2",
