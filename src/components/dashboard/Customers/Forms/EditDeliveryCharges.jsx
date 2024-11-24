@@ -92,17 +92,17 @@ function EditDeliveryCharges({ setIsShowModal, isShowModal , targetId}) {
   
 
   return (
-    <div className="bg-white p-5  md:p-8 rounded-xl w-full" >
+    <div className="bg-white p-5  md:p-8 rounded-xl mt-36 w-full" >
       <h3 className="text-2xl font-semibold mb-7 mt-3 text-nowrap">Add Question</h3>
       <div className="grid grid-cols-1 gap-4">
         
       <div>
-            <label className="block font-semibold mb-1">District/City *</label>
+            <label className="block mb-1">District/City </label>
             <select
               name="district"
               value={districtName}
               onChange={(e)=> setDistrictName(e.target.value)}
-              className="border p-2 w-full rounded"
+              className="customInput select"
             >
               <option value="">Select District</option>
               {district.length > 0 && district.map((item, index) => (
@@ -115,12 +115,12 @@ function EditDeliveryCharges({ setIsShowModal, isShowModal , targetId}) {
 
           {/* Area/Thana/Upazilla */}
           <div>
-            <label className="block font-semibold mb-1">subdistrict *</label>
+            <label className="block mb-1">Subdistrict </label>
             <select
               name="area"
               value={subdistrictName}
               onChange={(e)=> setSubdistrictName(e.target.value)}
-              className="border p-2 w-full rounded"
+              className="select customInput"
             >
               <option value="">Select Area/Thana/Upazilla</option>
               {
@@ -133,13 +133,13 @@ function EditDeliveryCharges({ setIsShowModal, isShowModal , targetId}) {
             
           </div>
           <div className="w-full ">
-            <label className="block font-semibold mb-1">Charge *</label>
-            <input type="number" name="charge" id="charge" value={charge} onChange={(e) => setCharge(e.target.value)} className="outline-none border p-2 rounded-xl w-full focus:border-gray-300" />
+            <label className="block mb-1">Charge </label>
+            <input type="number" name="charge" id="charge" value={charge} onChange={(e) => setCharge(e.target.value)} className="customInput" />
             
           </div>
        
       </div>
-      <button className="font-semibold bg-blue-500 text-white hover:bg-blue-600 px-4 py-2 rounded-lg ml-auto block w-fit mt-12"  onClick={handleSubmit}>
+      <button className="w-full customSaveButton mt-10"  onClick={handleSubmit}>
         Save
       </button>
     </div>
