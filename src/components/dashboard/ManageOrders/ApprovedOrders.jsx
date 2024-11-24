@@ -7,6 +7,9 @@ import OrderDetail from "./OrderDetail";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
+import { IoIosSearch } from "react-icons/io";
+import EditButton from "../../../components library/EditButton";
+import DeleteButton from "../../../components library/DeleteButton";
 
 // Sample pending orders data (could be fetched from API)
 const initialData = [
@@ -109,41 +112,41 @@ export default function ApprovedOrders() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-10">
+    <div className="p-6 pt-0">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-2xl font-bold mb-5">Delivered Orders</h1>
+        <h1 className="text-3xl font-semibold mb-9">Delivered Orders</h1>
 
         {/* Search Input */}
-        <div className="mb-4">
+        <div className="bg-white border rounded-full px-3 mb-6 md:py-2 py-1 md:gap-2 gap-1 flex-row-reverse justify-between flex">
           <input
             type="text"
-            placeholder="Search by name or email..."
-            value={searchTerm}
+            className="outline-none w-full bg-white"
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full p-2 border rounded-md"
+            placeholder="Search here ..."
           />
+          <IoIosSearch className="text-2xl text-gray-400" />
         </div>
 
         {/* Orders Table */}
         <table className="min-w-full table-auto border-collapse bg-white shadow-md rounded-md">
           <thead>
             <tr className="bg-gray-200">
-              <th className="p-2 border">SL</th>
-              <th className="p-2 border">Order No</th>
-              <th className="p-2 border">Order Date</th>
-              <th className="p-2 border">Name</th>
-              <th className="p-2 border">Email</th>
-              <th className="p-2 border">Phone</th>
-              <th className="p-2 border">Status</th>
-              <th className="p-2 border">Payment</th>
-              <th className="p-2 border">Total</th>
-              <th className="p-2 border">Action</th>
+              <td className="p-2 border">SL</td>
+              <td className="p-2 border">Order No</td>
+              <td className="p-2 border">Order Date</td>
+              <td className="p-2 border">Name</td>
+              <td className="p-2 border">Email</td>
+              <td className="p-2 border">Phone</td>
+              <td className="p-2 border">Status</td>
+              <td className="p-2 border">Payment</td>
+              <td className="p-2 border">Total</td>
+              <td className="p-2 border">Action</td>
             </tr>
           </thead>
           <tbody>
             {orders.length > 0 ? (
               orders.map((order, index) => (
-                <tr key={order._id} className="border-b">
+                <tr key={order._id} className="text-center border-b">
                   <td className="p-2 border">
                     {index + 1 + (currentPage - 1) * itemsPerPage}
                   </td>
@@ -152,24 +155,20 @@ export default function ApprovedOrders() {
                   <td className="p-2 border">{order?.shipping_address_id?.recipientName}</td>
                   <td className="p-2 border">{order?.shipping_address_id?.email || "N/A"}</td>
                   <td className="p-2 border">{order?.shipping_address_id?.contactNumber}</td>
-                  <td className="p-2 border">{order?.status}</td>
+                  <td className="p-2 border "><span className="bg-red-500 text-white  px-3 rounded-lg  py-1">{order?.status}</span></td>
                   <td className="p-2 border">{order?.payment_method}</td>
                   <td className="p-2 border">৳ {order?.total}</td>
                   <td className="p-2 border">
-                    <div className="flex space-x-2">
-                      <button className="text-yellow-500 hover:text-yellow-700" onClick={()=> {setIsShowDetail(true); setTargetId(order._id)}}>
-                        <FiEdit />
-                      </button>
-                      <button className="text-red-500 hover:text-red-700" onClick={()=> handleDelete(order._id)}>
-                        <FiTrash2 />
-                      </button>
+                    <div className="flex justify-center space-x-2">
+                      <EditButton onClick={()=> {setIsShowDetail(true); setTargetId(order._id)}}></EditButton>
+                      <DeleteButton onClick={()=> handleDelete(order._id)}> </DeleteButton>
                     </div>
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="10" className="text-center p-4">
+                <td colSpan="10" className="text-center p-4 py-32">
                   No data available in table
                 </td>
               </tr>
