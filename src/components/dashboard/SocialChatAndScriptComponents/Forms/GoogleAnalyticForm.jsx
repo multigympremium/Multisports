@@ -1,9 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Swal from "sweetalert2";
-import useAxiosSecure from "../../../../Hook/useAxiosSecure";
-import { set } from "react-hook-form";
 
 export default function GoogleAnalyticForm() {
   const [isEnableAnalytic, setIsEnableAnalytic] = useState(false);
@@ -19,7 +16,7 @@ export default function GoogleAnalyticForm() {
     setTrackingID(googleAnalyticData?.trackingID);
     setIsEnableAnalytic(googleAnalyticData?.isEnableAnalytic);
 
-  }, []);  Login
+  }, []); 
 
 
   

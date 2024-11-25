@@ -18,6 +18,9 @@ export default function SignUpPage() {
   const [passwordError, setPasswordError] = useState("");
   const [subscribe, setSubscribe] = useState(false);
   const [recaptcha, setRecaptcha] = useState("");
+
+  const [ site_key ,setSite_key] = useState("");
+  const [ isRecaptcha , setIsRecaptcha] = useState(false);
   const axiosPublic = useAxiosPublic();
   const router = useNavigate();
 
@@ -125,6 +128,21 @@ export default function SignUpPage() {
 
 
   };
+
+  useEffect(() => {
+    const fetchShippingPolicy = async () => {
+      const response = await axiosPublic.get("/google-recaptcha");
+      const data = response?.data?.data;
+
+      console.log(data, "google recaptcha");
+
+      setSite_key(data[0]?.site_key);
+      setIsRecaptcha(data[0]?.isRecaptcha);
+     
+    };
+
+    fetchShippingPolicy();
+  }, [axiosPublic]);
 
   return (
     <div className="min-h-screen flex flex-col items-center w-[750px] relative mx-auto  ">
@@ -246,6 +264,13 @@ export default function SignUpPage() {
                 {passwordVisible ? <IoEyeOffOutline /> : <IoEyeOutline />}
               </button>
             </div>
+          {
+                isRecaptcha && site_key && (
+      
+                  <ReCAPTCHA sitekey={site_key} onChange={handleCaptcha}
+                  />
+                )
+              }
           </form>
           {/* Subscribe Checkbox */}
           {/* <div className="flex items-center mt-6 pl-8 text-lg ">
@@ -262,8 +287,6 @@ export default function SignUpPage() {
             </label>
           </div> */}
 
-          <ReCAPTCHA sitekey="6LfkOYkqAAAAAJQ2ZshMRP3sBGbo6hYCILnjgScY" onChange={handleCaptcha}
-  />
           <div className="mt-4 text-center text-sm text-gray-500 w-full flex flex-col gap-4 py-4 pb-10">
             <button
               type="submit"
