@@ -1,4 +1,5 @@
 
+import { useEffect } from "react";
 import Banner from "../../../components/Home/Banner/Banner";
 import Brands from "../../../components/Home/Brands/Brands";
 import ExclusiveCollection from "../../../components/Home/ExclusiveCollection/ExclusiveCollection";
@@ -8,9 +9,7 @@ import NewArrivals from "../../../components/Home/NewArrival/NewArrival";
 import PopularProducts from "../../../components/Home/PopularProducts/PopularProducts";
 import TrendyBags from "../../../components/Home/TrendyBags/TrendyBags";
 import useGetSeo from "../../../Hook/GetPublicDataHook/useGetSeo";
-import Footer from "../../../shared/Footer";
-import HorizontalMenu from "../../../shared/HorizontalMenu/HorizontalMenu";
-import Navbar from "../../../shared/Navbar";
+import ReactGA from "react-ga4";
 export const metadata = {
   title: "Universal Survey - Home",
   description:
@@ -18,6 +17,15 @@ export const metadata = {
 };
 const HomePage = () => {
   const content = useGetSeo({});
+
+  useEffect(() => {
+    ReactGA.send({ hitType: "pageview", page: window.location.pathname , title: "HomePage.jsx" });
+
+    ReactGA.event({
+      category: "content Visiting",
+      action: "Home ",
+    });
+  }, []);
   return (
     <>
       

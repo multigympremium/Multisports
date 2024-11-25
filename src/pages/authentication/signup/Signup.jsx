@@ -5,6 +5,8 @@ import { MdOutlineKeyboardBackspace } from "react-icons/md";
 import { IoEyeOutline } from "react-icons/io5";
 import { IoEyeOffOutline } from "react-icons/io5";
 import useAxiosPublic from "../../../Hook/useAxiosPublic";
+import ReCAPTCHA from "react-google-recaptcha";
+import toast from "react-hot-toast";
 
 export default function SignUpPage() {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -15,6 +17,7 @@ export default function SignUpPage() {
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [subscribe, setSubscribe] = useState(false);
+  const [recaptcha, setRecaptcha] = useState("");
   const axiosPublic = useAxiosPublic();
   const router = useNavigate();
 
@@ -35,6 +38,7 @@ export default function SignUpPage() {
       email,
       password,
       subscribe,
+      recaptcha,
     };
 
     try {
@@ -96,6 +100,31 @@ export default function SignUpPage() {
 
     validatePassword();
   }, [password, confirmPassword]);
+
+
+  const handleCaptcha = async(value) => {
+    console.log(value);
+
+    const submitData = {
+      token: value,
+    };
+
+    try {
+      const res = await axiosPublic.post("/users/verify-recaptcha", submitData);
+      console.log(res);
+      if (res.status === 200 || res.status === 201) {
+        setRecaptcha(value);
+         
+      }
+    } catch (error) {
+      console.log(error);
+
+      toast.error("Something went wrong!");
+    }
+
+
+
+  };
 
   return (
     <div className="min-h-screen flex flex-col items-center w-[750px] relative mx-auto  ">
@@ -219,7 +248,7 @@ export default function SignUpPage() {
             </div>
           </form>
           {/* Subscribe Checkbox */}
-          <div className="flex items-center mt-6 pl-8 text-lg ">
+          {/* <div className="flex items-center mt-6 pl-8 text-lg ">
             <input
               type="checkbox"
               id="subscribe"
@@ -231,12 +260,16 @@ export default function SignUpPage() {
               {`Yes, I'd like to get updates and news from`}
               <strong> dot.cards</strong> in my inbox.
             </label>
-          </div>
+          </div> */}
+
+          <ReCAPTCHA sitekey="6LfkOYkqAAAAAJQ2ZshMRP3sBGbo6hYCILnjgScY" onChange={handleCaptcha}
+  />
           <div className="mt-4 text-center text-sm text-gray-500 w-full flex flex-col gap-4 py-4 pb-10">
             <button
               type="submit"
-              className="block bg-black text-white text-center text-2xl py-3 rounded-lg font-semibold mb-4 hover:scale-[0.95] transition-all duration-300 w-[90%] mx-auto"
+              className="block bg-black text-white text-center text-2xl py-3 rounded-lg font-semibold mb-4 hover:scale-[0.95] transition-all duration-300 w-[90%] mx-auto disabled:opacity-20 disabled:cursor-not-allowed"
               onClick={handleSignUp}
+              disabled={recaptcha === ""}
             >
               Sign Up
             </button>

@@ -2,15 +2,11 @@
 import { useState } from "react";
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import { MdOutlineKeyboardBackspace } from "react-icons/md";
-import { IoEyeOutline } from "react-icons/io5";
-import { IoEyeOffOutline } from "react-icons/io5";
 import useAxiosPublic from "../../../Hook/useAxiosPublic";
+import toast from "react-hot-toast";
 
 export default function SendOTP() {
-  const [passwordVisible, setPasswordVisible] = useState(false);
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [subscribe, setSubscribe] = useState(false);
   const pathName = useLocation().pathname;
   const axiosPublic = useAxiosPublic();
   const router = useNavigate();
@@ -28,7 +24,7 @@ export default function SendOTP() {
         localStorage.setItem("userEmail", email);
         localStorage.setItem("otp_expiry", res?.data?.otp_expiry);
         localStorage.setItem("otp_limit_time", res?.data?.otp_limitation_time);
-        router.push("/verify-otp");
+        router("/verify-otp");
         toast.success("OTP sent successfully!", {
           duration: 2000,
           position: "top-right",

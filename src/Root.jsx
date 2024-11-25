@@ -84,13 +84,33 @@ root.style.setProperty("--border-color", theme.borderColor || "#cbd5e0");
       ReactPixel.pageView(); // Track a page view
     }
 
-    ReactGA.initialize("G-2P4DFL43YR");
-    ReactGA.send({ hitType: "pageview", page: window.location.pathname , title: "Root.jsx" });
+    const googleAnalytic = localStorage.getItem("googleAnalytic");
+    const googleAnalyticData = JSON.parse(googleAnalytic);
 
-    ReactGA.event({
-      category: "Product Visiting",
-      action: "Visiting",
-    });
+    console.log(googleAnalyticData, "googleAnalyticData");
+    if (googleAnalyticData?.isEnableAnalytic && googleAnalyticData?.trackingID) {
+      ReactGA.initialize(googleAnalyticData?.trackingID);
+
+      const scriptElem = document.createElement("script");
+      let scriptSrcElem = document.createElement("script");
+       scriptSrcElem.src =  `src="https://www.googletagmanager.com/gtag/js?id=G-2P4DFL43YR`;
+       scriptSrcElem.async = true;
+      //  `<script async src="https://www.googletagmanager.com/gtag/js?id=G-2P4DFL43YR"></script>`;
+      scriptElem.innerHTML = `window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2P4DFL43YR');`;
+
+
+  document.body.appendChild(scriptElem);
+  document.body.appendChild(scriptSrcElem);
+
+
+    }
+
+    ReactGA.initialize("G-2P4DFL43YR");
+    
 
   }, []);
 

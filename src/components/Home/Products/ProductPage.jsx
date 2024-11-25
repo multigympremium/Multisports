@@ -1,6 +1,6 @@
 
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaUser } from "react-icons/fa";
 import { useLocation, useParams, useSearchParams } from "react-router-dom";
 import useGetAllProductBrands from "../../../Hook/GetDataHook/useGetAllProductBrands";
@@ -11,6 +11,7 @@ import GroupLink from "../../../shared/GroupLink";
 import ActiveLink from "../../../shared/ActiveLink";
 import FilterRadioInput from "../../../shared/FilterRadioInput";
 import ProductsArea from "./ProductsArea";
+import ReactGA from "react-ga4";
 
 function ProductPage() {
     const params = useParams()
@@ -76,6 +77,15 @@ function ProductPage() {
         break;
     }
   };
+
+  useEffect(() => {
+    ReactGA.send({ hitType: "pageview", page: window.location.pathname , title: "ProductPage.jsx" });
+
+    ReactGA.event({
+      category: "Product Visiting",
+      action: "ProductPage ",
+    });
+  }, []);
 
   console.log(params, router, "search");
   return (

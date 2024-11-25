@@ -205,7 +205,7 @@ function MenuItemsList({ userRole }) {
       title: "Manage Orders",
       icon: <IoIosHome />, // Replace with the actual SVG icon
       list: [
-        {
+        { 
           title: "All Orders",
           path: "all-orders",
           isAllowed: isAllowedRoute("all-orders"),

@@ -7,39 +7,58 @@ import toast from "react-hot-toast";
 
 import { Link, useNavigate } from "react-router-dom";
 import useAxiosPublic from "../../../Hook/useAxiosPublic";
+import Swal from "sweetalert2";
 export default function VerifyOTP() {
   const [otp, setOtp] = useState("");
   const axiosPublic = useAxiosPublic();
   const [isActiveOtpInput, setIsActiveOtpInput] = useState(false);
   const router = useNavigate();
   const [userEmail, setUserEmail] = useState("");
-  const [otp_expiryDate, setOtp_expiryDate] = useState("");
-  const [otp_limitation_time, setOtp_limitation_time] = useState("");
 
-  const [otp_expiry, setOtp_expiry] = useState("");
+  
+  const [otp_expiry, setOtp_expiry] = useState(new Date().getTime());
+  const [otp_expiryDate, setOtp_expiryDate] = useState(new Date());
+  // let expiryTimestamp = null;
 
-  const expiryTimestamp =
-    new Date() < new Date(otp_expiry)
-      ? new Date(otp_expiry).getTime()
-      : new Date().getTime();
+  // if (!isNaN(new Date(otp_expiry).getTime())) {
+  //   expiryTimestamp =
+  //     new Date().getTime() < new Date(otp_expiry).getTime()
+  //       ? new Date(otp_expiry).getTime()
+  //       : new Date().getTime();
+  //   console.log(
+  //     expiryTimestamp,
+  //     "expiryTimestamp",
+  //     new Date(otp_expiry).getTime(),
+  //     new Date() > new Date(otp_expiry),
+  //     isNaN(new Date(otp_expiry).getTime())
+  //   );
+  // }
 
-  console.log(expiryTimestamp, otp_expiry, "otp_expiry");
   const {
-    totalSeconds,
+    // totalSeconds,
     seconds,
     minutes,
-    hours,
-    days,
-    isRunning,
-    start,
-    pause,
-    resume,
+    // hours,
+    // days,
+    // isRunning,
+    // start,
+    // pause,
+    // resume,
     restart,
   } = useTimer({
-    expiryTimestamp,
+    expiryTimestamp: otp_expiry,
+    // otp_expiry,
     onExpire: () => {
-      setIsActiveOtpInput(true);
-      setOtp("");
+      console.warn("onExpire called");
+
+      if (new Date().getTime() < new Date(otp_expiryDate).getTime()) {
+        setOtp_expiry(new Date(otp_expiryDate).getTime());
+        restart(new Date(otp_expiryDate).getTime());
+        console.log("restart");
+      } else {
+        setOtp_expiry(new Date().getTime());
+        console.log("end");
+      }
     },
   });
 
@@ -52,10 +71,10 @@ export default function VerifyOTP() {
       });
       console.log(res);
       if (res.status === 200 || res.status === 201) {
-        localStorage.setItem("otp_expiry", res?.data?.otp_expiry);
-        localStorage.setItem("otp_limit_time", res?.data?.otp_limitation_time);
+        sessionStorage.setItem("otp_expiry", res?.data?.otp_expiry);
+        sessionStorage.setItem("otp_limit_time", res?.data?.otp_limitation_time);
 
-        setOtp_limit_time(res?.data?.otp_limitation_time);
+        // setOtp_limit_time(res?.data?.otp_limitation_time);
         setOtp_expiry(res?.data?.otp_expiry);
 
         setOtp("");
@@ -74,13 +93,23 @@ export default function VerifyOTP() {
     // utils/validatePassword.js
 
     const validatePassword = async () => {
+      try {
       const res = await axiosPublic.post("/users/verify-otp", {
         otp,
         email: userEmail,
       });
       console.log(res);
       if (res.status === 200 || res.status === 201) {
-        router.push("/signup");
+        return router("/signup");
+      }
+      } catch (error) {
+        console.log(error);
+        Swal.fire({
+          title: "Oops...",
+          text: "Something went wrong!",
+          icon: "error",
+          confirmButtonText: "Try Again",
+        });
       }
     };
 
@@ -89,14 +118,19 @@ export default function VerifyOTP() {
     }
 
     const userEmailData = localStorage.getItem("userEmail");
-    const otp_expiryDateData = localStorage.getItem("otp_expiry") || "";
-    const otp_limitation_timeData =
-      localStorage.getItem("otp_limit_time") || "";
-
     setUserEmail(userEmailData);
-    setOtp_expiryDate(otp_expiryDateData);
-    setOtp_expiry(otp_expiryDateData);
-    setOtp_limitation_time(otp_limitation_timeData);
+    const otp_expiryDateData = sessionStorage.getItem("otp_expiry") || "";
+    // const otp_limitation_timeData =
+    //   sessionStorage.getItem("otp_limit_time") || "";
+
+    setOtp_expiryDate(new Date(otp_expiryDateData));
+
+    if (new Date().getTime() < new Date(otp_expiryDateData).getTime()) {
+      setOtp_expiry(new Date(otp_expiryDateData).getTime());
+      restart(new Date(otp_expiryDateData).getTime());
+    } else {
+      setOtp_expiry(new Date().getTime());
+    }
   }, [axiosPublic, router, otp, userEmail]);
 
   return (

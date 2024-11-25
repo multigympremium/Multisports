@@ -1,20 +1,26 @@
 "use client";
 import { useState } from "react";
-import {Link, useLocation} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import { MdOutlineKeyboardBackspace } from "react-icons/md";
 import { IoEyeOutline } from "react-icons/io5";
 import { IoEyeOffOutline } from "react-icons/io5";
 import useAxiosPublic from "../../../Hook/useAxiosPublic";
+import Swal from "sweetalert2";
+import toast from "react-hot-toast";
+import ReCAPTCHA from "react-google-recaptcha";
 
 export default function Login() {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [subscribe, setSubscribe] = useState(false);
+  const [recaptcha, setRecaptcha] = useState("")
   const pathName = useLocation().pathname;
   const axiosPublic = useAxiosPublic()
 
   console.log(pathName, "pathName");
+
+  const navigate = useNavigate()
 
    const handleSignUp = async (e) => {
     e.preventDefault();
@@ -29,13 +35,13 @@ export default function Login() {
       if (res.status === 200 || res.status === 201) {
         localStorage.setItem("user", JSON.stringify(res?.data?.user));
 
-        setUser(res?.data?.user);
+        // setUser(res?.data?.user);
 
         toast.success("User Logged In successfully!", {
           duration: 2000,
           position: "top-right",
         });
-        router.push("/setup");
+        navigate("/setup");
       }
     } catch (error) {
       console.log(error);
@@ -46,6 +52,31 @@ export default function Login() {
         confirmButtonText: "Try Again",
       });
     }
+  };
+
+
+  const handleCaptcha = async(value) => {
+    console.log(value);
+
+    const submitData = {
+      token: value,
+    };
+
+    try {
+      const res = await axiosPublic.post("/users/verify-recaptcha", submitData);
+      console.log(res);
+      if (res.status === 200 || res.status === 201) {
+        setRecaptcha(value);
+         
+      }
+    } catch (error) {
+      console.log(error);
+
+      toast.error("Something went wrong!");
+    }
+
+
+
   };
 
   return (
@@ -146,11 +177,15 @@ export default function Login() {
             </button>
           </Link>
         </div>
+
+        <ReCAPTCHA sitekey="6LfkOYkqAAAAAJQ2ZshMRP3sBGbo6hYCILnjgScY" onChange={handleCaptcha}
+  />
       </form>
       <div className="mt-4 text-center text-sm text-gray-500  w-full flex flex-col gap-4 py-4 pb-10">
         <button
           type="submit"
-          className="block bg-black text-white text-center text-2xl py-3 rounded-lg font-semibold mb-4 hover:scale-[0.95] transition-all duration-300 w-[94%] mx-auto"
+          disabled={recaptcha === ""}
+          className="block bg-black text-white text-center text-2xl py-3 rounded-lg font-semibold mb-4 hover:scale-[0.95] transition-all duration-300 w-[94%] mx-auto disabled:opacity-20"
         >
           Log In
         </button>
