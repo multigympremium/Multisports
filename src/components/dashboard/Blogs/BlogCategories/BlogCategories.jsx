@@ -5,13 +5,19 @@ import { FiEdit, FiTrash2 } from "react-icons/fi";
 import Modal from "../../../../shared/Modal/Modal";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
+import { FaRetweet } from "react-icons/fa";
 
 import CreateBlogCategoryForm from "./Forms/CreateBlogCategoryForm";
 import EditBlogCategoryForm from "./Forms/EditBlogCategoryForm";
 import useGetAllBlogCategories from "../../../../Hook/GetDataHook/useGetAllBlogCategories";
 import useAxiosSecure from "../../../../Hook/useAxiosSecure";
+import { IoMdAddCircle } from "react-icons/io";
+import DeleteButton from "../../../../components library/DeleteButton";
+import EditButton from "../../../../components library/EditButton";
+import { HiArrowCircleDown, HiArrowCircleUp } from "react-icons/hi";
+import TableSkeleton from "../../../../components library/TableSkeleton";
 
-const BlogCategories= () => {
+const BlogCategories = () => {
   // State management
 
   const [loading, setLoading] = useState(false);
@@ -106,75 +112,66 @@ const BlogCategories= () => {
 
   return (
     <>
-      <div className="container mx-auto p-4">
-        <div className="flex justify-between items-center mb-4">
-          <h1 className="text-2xl font-bold">Blog Category List</h1>
-          <div>
+      <div className="p-6 pt-0">
+        <div className="flex justify-between items-center mb-9">
+          <h1 className="text-3xl font-semibold">Blog Category List</h1>
+          <div className="flex gap-4">
             <button
-              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mr-2"
+              className="customSaveButton"
               onClick={() => setIsShowModal(true)}
             >
-              Add New Blog Category
+              <span className="flex items-center gap-1"><IoMdAddCircle />  Add New Size</span>
+
             </button>
-            <button className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
-              Rearrange Categories
+            <button className="customCancelButton">
+              <span className="flex items-center gap-1"><FaRetweet /> Rearrange Brand</span>
             </button>
           </div>
         </div>
 
         {/* Loading Spinner */}
         {loading ? (
-          <div className="text-center">Loading...</div>
+          <TableSkeleton></TableSkeleton>
         ) : (
-          <div className="overflow-x-auto relative shadow-md sm:rounded-lg">
-            <table className="w-full text-sm text-left text-gray-500">
-              <thead className="bg-gray-100">
+          <div className="overflow-x-auto relative shadow sm:rounded-lg">
+            <table className="w-full text-sm text-gray-500">
+              <thead className="bg-gray-100 text-center">
                 <tr>
-                  <th
-                    className="border p-2 text-left cursor-pointer"
+                  <td
+                    className="border flex justify-center items-center gap-2 text-lg p-2 text-center cursor-pointer"
                     onClick={() => handleSort("id")}
                   >
                     SL{" "}
                     {sortConfig.key === "id" &&
-                      (sortConfig.direction === "asc" ? "🔼" : "🔽")}
-                  </th>
-                  <th
-                    className="border p-2 text-left cursor-pointer"
+                      (sortConfig.direction === "asc" ? <HiArrowCircleUp className="text-[#087D6D] " /> : <HiArrowCircleDown className="text-[#E68923]" />)}
+                  </td>
+                  <td
+                    className="border p-2 cursor-pointer"
                     onClick={() => handleSort("brandName")}
                   >
                     Name
                     {sortConfig.key === "Blog CategoryName" &&
                       (sortConfig.direction === "asc" ? "🔼" : "🔽")}
-                  </th>
+                  </td>
 
-                  <th className="border p-2 text-left cursor-pointer">
+                  <td className="border p-2 cursor-pointer">
                     Created At
-                  </th>
-                  <th className="border p-2 text-left">Action</th>
+                  </td>
+                  <td className="border p-2 ">Action</td>
                 </tr>
               </thead>
               <tbody>
-                {paginatedData()?.length > 0 &&  paginatedData().map((item, index) => (
-                  <tr key={item._id} className="border-b">
+                {paginatedData()?.length > 0 && paginatedData().map((item, index) => (
+                  <tr key={item._id} className="border-b text-center">
                     <td className="border p-2">
                       {index + 1 + currentPage * itemsPerPage}
                     </td>
                     <td className="border p-2">{item.name}</td>
                     <td className="border p-2">{item.createdAt}</td>
-                    <td className="border p-2">
-                      <div className="flex space-x-2">
-                        <button
-                          className="text-yellow-500 hover:text-yellow-700"
-                          onClick={() => handleEdit(item._id)}
-                        >
-                          <FiEdit />
-                        </button>
-                        <button
-                          className="text-red-500 hover:text-red-700"
-                          onClick={() => handleDelete(item._id)}
-                        >
-                          <FiTrash2 />
-                        </button>
+                    <td className="border p-2 py-4">
+                      <div className="flex justify-center">
+                        <EditButton onClick={() => handleEdit(item._id)}></EditButton>
+                        <DeleteButton  onClick={() => handleDelete(item._id)}/>
                       </div>
                     </td>
                   </tr>

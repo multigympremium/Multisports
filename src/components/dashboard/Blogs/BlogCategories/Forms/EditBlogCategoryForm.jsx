@@ -68,38 +68,38 @@ export default function EditBlogCategoryForm({
   };
 
   return (
-    <div className="w-[80%] bg-gray-100 p-10">
-      <div className="w-full mx-auto bg-white p-8 shadow-md rounded-md">
-        <h1 className="text-2xl font-bold mb-5">Edit blogCategory Name Form</h1>
+    <div className="w-[30%] bg-gray-100 pb-8 rounded-2xl p-10">
+      <div className="">
+        <h1 className="text-2xl font-semibold mb-5">Edit blog Category Name Form</h1>
         <form onSubmit={handleSubmit}>
           {/* Model Name */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">
-              blogCategory Name *
+            <label className="block text-gray-700 ">
+              Blog Category Name 
             </label>
             <input
               type="text"
               value={blogCategoryName}
               onChange={(e) => setBlogCategoryName(e.target.value)}
-              className="w-full p-2 border rounded-md"
+              className="customInput"
               placeholder="Model Name"
               required
             />
           </div>
 
-          <div className="flex justify-end mt-4 gap-6">
+          <div className="flex justify-end mt-7 gap-4">
             <button
               type="button"
-              className="w-full p-3 bg-gray-500 text-white font-bold rounded-md"
+              className="customCancelButton"
               onClick={() => handleCloseModal()}
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="w-full p-3 bg-blue-500 text-white font-bold rounded-md"
+              className="w-full customSaveButton"
             >
-              Update blogCategory Name
+              Update
             </button>
           </div>
         </form>

@@ -8,6 +8,8 @@ import BlogEditForm from "./BlogEditForm";
 import Swal from "sweetalert2";
 import BgBlurModal from "../../../../shared/Modal/BgBlurModal";
 import useAxiosSecure from "../../../../Hook/useAxiosSecure";
+import EditButton from "../../../../components library/EditButton";
+import DeleteButton from "../../../../components library/DeleteButton";
 
 export default function ViewAllBlogs() {
   const [currentPage, setCurrentPage] = useState(0);
@@ -109,72 +111,66 @@ export default function ViewAllBlogs() {
   }, [axiosSecure, isDeleted, isEdited]);
 
   return (
-    <div className="min-h-screen bg-gray-100 p-10">
-      <div className="max-w-6xl mx-auto bg-white p-8 shadow-md rounded-md">
-        <h1 className="text-2xl font-bold mb-5">Blog List</h1>
+    <div className="p-6 pt-0">
+      <div className="">
+        <h1 className="text-3xl font-semibold mb-9">Blog List</h1>
         <table className="min-w-full table-auto border-collapse">
-          <thead className="bg-gray-100">
+          <thead className="bg-gray-100 text-center">
             <tr>
-              <th
-                className="border p-2 text-left cursor-pointer"
+              <td
+                className="border p-2  cursor-pointer"
                 onClick={() => handleSort("id")}
               >
                 SL{" "}
                 {sortConfig.key === "_id" &&
                   (sortConfig.direction === "asc" ? "🔼" : "🔽")}
-              </th>
-              <th
-                className="border p-2 text-left cursor-pointer"
+              </td>
+              <td
+                className="border p-2  cursor-pointer"
                 onClick={() => handleSort("writer")}
               >
                 Name{" "}
                 {sortConfig.key === "writer" &&
                   (sortConfig.direction === "asc" ? "🔼" : "🔽")}
-              </th>
-              <th
-                className="border p-2 text-left cursor-pointer"
+              </td>
+              <td
+                className="border p-2  cursor-pointer"
                 onClick={() => handleSort("title")}
               >
                 Title{" "}
                 {sortConfig.key === "title" &&
                   (sortConfig.direction === "asc" ? "🔼" : "🔽")}
-              </th>
-              <th className="border p-2 text-left">Image</th>
-             
-              <th className="border p-2 text-left">Action</th>
+              </td>
+              <td className="border p-2 ">Image</td>
+
+              <td className="border p-2 ">Action</td>
             </tr>
           </thead>
           <tbody>
-            {paginatedData()?.length > 0 &&  paginatedData().map((item, index) => (
-              <tr key={item.id} className="border-b">
+            {paginatedData()?.length > 0 && paginatedData().map((item, index) => (
+              <tr key={item.id} className="border-b text-center">
                 <td className="border p-2">
                   {index + 1 + currentPage * itemsPerPage}
                 </td>
                 <td className="border p-2">{item.writer}</td>
                 <td className="border p-2">{item.title}</td>
                 <td className="border p-2">
-                  <CellImage
-                    width={400}
-                    height={400}
-                    src={item.image}
-                    alt="icon"
-                  />
+                  <div className="flex justify-center">
+                    <div>
+                      <CellImage
+                        width={400}
+                        height={400}
+                        src={item.image}
+                        alt="icon"
+                      />
+                    </div>
+                  </div>
                 </td>
-              
+
                 <td className="border p-2">
-                  <div className="flex space-x-2">
-                    <button
-                      className="text-yellow-500 hover:text-yellow-700"
-                      onClick={() => handleEdit(item._id)}
-                    >
-                      <FiEdit />
-                    </button>
-                    <button
-                      className="text-red-500 hover:text-red-700"
-                      onClick={() => handleDelete(item._id)}
-                    >
-                      <FiTrash2 />
-                    </button>
+                  <div className="flex justify-center gap-2">
+                    <EditButton onClick={() => handleEdit(item._id)}/>
+                    <DeleteButton  onClick={() => handleDelete(item._id)} />
                   </div>
                 </td>
               </tr>
@@ -190,11 +186,10 @@ export default function ViewAllBlogs() {
             <button
               key={pageIndex}
               onClick={() => handlePageClick(pageIndex)}
-              className={`px-3 py-1 border rounded-md ${
-                currentPage === pageIndex
+              className={`px-3 py-1 border rounded-md ${currentPage === pageIndex
                   ? "bg-blue-500 text-white"
                   : "hover:bg-gray-200"
-              }`}
+                }`}
             >
               {pageIndex + 1}
             </button>
