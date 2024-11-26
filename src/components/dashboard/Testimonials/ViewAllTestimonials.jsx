@@ -12,6 +12,9 @@ import CellImage from "../../../shared/ImageComponents/CellImage";
 import { FiEdit3 } from "react-icons/fi";
 import { AiOutlineDelete } from "react-icons/ai";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
+import { IoIosSearch } from "react-icons/io";
+import DeleteButton from "../../../components library/DeleteButton";
+import EditButton from "../../../components library/EditButton";
 
 
 export default function ViewAllTestimonials() {
@@ -55,7 +58,7 @@ export default function ViewAllTestimonials() {
 
   // Search state
   const [searchTerm, setSearchTerm] = useState("");
-  const [loading  , setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   // Get current items (testimonials)
   const currentTestimonials =
@@ -87,7 +90,7 @@ export default function ViewAllTestimonials() {
             const res = await axiosSecure.delete(`/testimonials/${id}`);
             console.log(res, "res");
             if (res.status === 200 || res.status === 201) {
-              
+
               setIsDeleted((prev) => !prev);
 
               toast.success("Brand deleted successfully!");
@@ -106,26 +109,26 @@ export default function ViewAllTestimonials() {
   };
 
   return (
-    <div className="container mx-auto py-3">
-      <h1 className="text-2xl font-semibold mb-6">Testimonials</h1>
+    <div className="p-6 pt-0">
+      <h1 className="text-3xl font-semibold mb-9">Testimonials</h1>
 
-      {/* Search Bar */}
-      <div className="mb-4">
+      <div className="bg-white border rounded-full px-3 mb-6 md:py-2 py-1 md:gap-2 gap-1 flex-row-reverse justify-between flex">
         <input
           type="text"
-          placeholder="Search by customer name..."
           value={searchTerm}
+          className="outline-none w-full bg-white"
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="globalInput"
+          placeholder="Search by customer name..."
         />
+        <IoIosSearch className="text-2xl text-gray-400" />
       </div>
 
       {/* Testimonials Table */}
       <div className="overflow-x-auto">
-        <div className="border rounded-xl py-1">
-          <table className="min-w-full bg-white border-gray-300">
-            <thead className="">
-              <tr className="text-left border-b">
+        <div className=" rounded-xl py-1">
+          <table className="min-w-full table-auto border-collapse bg-white shadow rounded-md">
+            <thead className="bg-gray-200 text-center">
+              <tr className=" border-b">
                 <td className="p-2 pl-4">SL</td>
                 <td className="p-2">Image</td>
                 <td className="p-2">Customer</td>
@@ -137,18 +140,22 @@ export default function ViewAllTestimonials() {
             <tbody>
               {currentTestimonials.length > 0 ? (
                 currentTestimonials.map((testimonial, index) => (
-                  <tr key={testimonial.id} className="">
-                    <td className="p-2 pl-5">{index + 1}</td>
-                    <td className="p-2">
+                  <tr key={testimonial.id} className="text-center">
+                    <td className="p-2 border pl-5">{index + 1}</td>
+                    <td className="p-2 border">
                       {
                         testimonial?.image ? (
-                          <CellImage
-                            width={400}
-                            height={400}
-                            src={testimonial.image}
-                            alt={testimonial.customerName}
-                            loading="lazy"
-                          />
+                          <div className="flex justify-center">
+                            <div>
+                              <CellImage
+                                width={400}
+                                height={400}
+                                src={testimonial.image}
+                                alt={testimonial.customerName}
+                                loading="lazy"
+                              />
+                            </div>
+                          </div>
                         ) : (
                           <div className="py-6 px-3">
                             <span className="loading loading-spinner text-gray-400 loading-sm"></span>
@@ -157,30 +164,22 @@ export default function ViewAllTestimonials() {
                       }
                     </td>
 
-                    <td className="p-2">{testimonial?.customerName}</td>
-                    <td className="p-2">{testimonial?.designation}</td>
-                    <td className="p-2">
+                    <td className="p-2 border">{testimonial?.customerName}</td>
+                    <td className="p-2 border">{testimonial?.designation}</td>
+                    <td className="p-2 border">
                       {"★".repeat(testimonial?.rating)}{" "}
                       {"☆".repeat(5 - testimonial?.rating)}
                     </td>
-                    <td className="p-2">
-                      <button
-                        className="text-blue-500 text-xl"
-                        onClick={() => handleEdit(testimonial._id)}
-                      >
-                        <FiEdit3 />
-                      </button>
-                      <button
-                        className="text-red-500 ml-4"
-                        onClick={() =>
+                    <td className="p-2 border">
+                      <div className="flex justify-center gap-2">
+                        <EditButton onClick={() => handleEdit(testimonial._id)} />
+                        <DeleteButton onClick={() =>
                           handleDelete({
                             id: testimonial?._id,
                             file_key: testimonial?.key,
                           })
-                        }
-                      >
-                        <AiOutlineDelete className="text-xl" />
-                      </button>
+                        } />
+                      </div>
                     </td>
                   </tr>
                 ))

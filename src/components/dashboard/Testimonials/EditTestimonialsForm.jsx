@@ -116,13 +116,13 @@ export default function EditTestimonialsForm({
   };
 
   return (
-    <div className="w-full max-w-[60%] bg-white mx-auto p-8 shadow-md rounded-md">
+    <div className="w-full  bg-white mx-auto p-8 py-6 shadow-md rounded-md">
       {/* Testimonial Edit Form */}
-      <h1 className="text-2xl font-bold mb-4">Edit Testimonial Form</h1>
-      <form className="grid grid-cols-2 gap-4" onSubmit={handleSubmit}>
+      <h1 className="text-3xl font-semibold mb-7">Edit Testimonial Form</h1>
+      <form className="" onSubmit={handleSubmit}>
         {/* Left Column - Image Upload */}
         <div className="relative">
-          <label className="block text-gray-700 mb-2">Customer Image *</label>
+          <label className="block text-gray-700 mb-2">Customer Image </label>
           <DragEditUploadImageInput
             getRootProps={getThumbnailRootProps}
             getInputProps={getThumbnailInputProps}
@@ -142,15 +142,15 @@ export default function EditTestimonialsForm({
           )}
         </div>
 
-        {/* Right Column - Form Inputs */}
-        <div className="space-y-4">
+       
+        <div className="space-y-4 mt-5">
           <div>
-            <label className="block text-gray-700">Customer Name *</label>
+            <label className="block text-gray-700">Customer Name </label>
             <input
               type="text"
               value={customerName}
               onChange={(e) => setCustomerName(e.target.value)}
-              className="w-full p-2 border rounded"
+              className="customInput"
               required
             />
           </div>
@@ -160,15 +160,15 @@ export default function EditTestimonialsForm({
               type="text"
               value={designation}
               onChange={(e) => setDesignation(e.target.value)}
-              className="w-full p-2 border rounded"
+              className="customInput"
             />
           </div>
           <div>
-            <label className="block text-gray-700">Rating *</label>
+            <label className="block text-gray-700">Rating </label>
             <select
               value={rating}
               onChange={(e) => setRating(e.target.value)}
-              className="w-full p-2 border rounded"
+              className="customInput select"
               required
             >
               <option value="">Select One</option>
@@ -180,11 +180,11 @@ export default function EditTestimonialsForm({
             </select>
           </div>
           <div>
-            <label className="block text-gray-700">Description *</label>
+            <label className="block text-gray-700">Description </label>
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="w-full p-2 border rounded min-h-[250px]"
+              className="customInput resize-none"
               required
             ></textarea>
           </div>
@@ -194,7 +194,7 @@ export default function EditTestimonialsForm({
         <div className="col-span-2">
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white p-2 rounded"
+            className="w-full customSaveButton mt-4"
           >
             Save Changes
           </button>

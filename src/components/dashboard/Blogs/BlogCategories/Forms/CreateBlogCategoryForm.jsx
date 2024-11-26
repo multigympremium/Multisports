@@ -56,30 +56,30 @@ export default function CreateBlogCategoryForm({ isShowModal, setIsShowModal }) 
   };
 
   return (
-    <div className="w-[80%] bg-gray-100 p-10">
-      <div className="w-full mx-auto bg-white p-8 shadow-md rounded-md">
-        <h1 className="text-2xl font-bold mb-5">Create blogCategory Form</h1>
+    <div className="w-[30%] rounded-2xl bg-gray-100 pb-8 p-10">
+      <div className="">
+        <h1 className="text-2xl font-semibold mb-5">Create blog Category Form</h1>
         <form onSubmit={handleSubmit}>
           {/* Model Name */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">
-              Category Name *
+            <label className="block text-gray-700">
+              Category Name 
             </label>
             <input
               type="text"
               value={blogCategory}
               onChange={(e) => setBlogCategory(e.target.value)}
-              className="w-full p-2 border rounded-md"
+              className="customInput"
               placeholder="Model Name"
               required
             />
           </div>
 
           {/* Submit Button */}
-          <div className="flex justify-end mt-4">
+          <div className="flex justify-end gap-4  mt-7">
             <button
               type="button"
-              className="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 mr-4"
+              className="customCancelButton"
               onClick={() => handleCloseModal()}
             >
               Cancel
@@ -87,7 +87,7 @@ export default function CreateBlogCategoryForm({ isShowModal, setIsShowModal }) 
 
             <button
               type="submit"
-              className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+              className="customSaveButton w-full"
             >
               Save blogCategory
             </button>
