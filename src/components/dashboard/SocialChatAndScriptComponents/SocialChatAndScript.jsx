@@ -3,6 +3,7 @@ import { useState } from "react";
 import FacebookPixelForm from "./Forms/FacebookPixelForm";
 import GoogleAnalyticForm from "./Forms/GoogleAnalyticForm";
 import GoogleRecaptcha from "./Forms/GoogleRecaptcha";
+import SocialLoginForm from "./Forms/SocialLoginForm";
 
 export default function SocialChatAndScript() {
   const [selectedTab, setSelectedTab] = useState("Google Analytic");
@@ -75,6 +76,13 @@ export default function SocialChatAndScript() {
               {
                 selectedTab === "Google Recaptcha" && (
                   <GoogleRecaptcha isShow={selectedTab === "Google Recaptcha" } />
+                )
+              }
+
+
+              {
+                selectedTab === "Social Login" && (
+                  <SocialLoginForm isShow={selectedTab === "Social Login" } />
                 )
               }
           </div>
