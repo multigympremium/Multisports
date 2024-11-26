@@ -1,6 +1,9 @@
 "use client";
 import { useState } from "react";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
+import { IoIosSearch } from "react-icons/io";
+import EditButton from "../../../components library/EditButton";
+import DeleteButton from "../../../components library/DeleteButton";
 
 // Sample SMTP configurations (can be fetched from an API)
 const initialConfigurations = [
@@ -57,51 +60,54 @@ export default function EmailConfigurations() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-10">
-      <div className="max-w-7xl mx-auto bg-white p-8 shadow-md rounded-md">
-        <h1 className="text-2xl font-bold mb-5">SMTP Email Configurations</h1>
-
+    <div className="p-6 pt-0">
+      <div className="">
+        <div className="flex justify-between items-center mb-9">
+          <h1 className="text-3xl font-semibold">SMTP Email Configurations</h1>
+          <div className="flex justify-end">
+            <button
+              className="customSaveButton"
+              onClick={handleAddEmailServer}
+            >
+              + Add Email Server
+            </button>
+          </div>
+        </div>
         {/* Search Input */}
-        <div className="mb-4">
+        <div className="bg-white border rounded-full px-3 mb-6 md:py-2 py-1 md:gap-2 gap-1 flex-row-reverse justify-between flex">
           <input
             type="text"
-            placeholder="Search by host server or email..."
             value={searchTerm}
+            className="outline-none w-full bg-white"
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full p-2 border rounded-md"
+            placeholder="Search by title or description..."
           />
+          <IoIosSearch className="text-2xl text-gray-400" />
         </div>
 
-        {/* Add Email Server Button */}
-        <div className="mb-4 flex justify-end">
-          <button
-            className="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-700"
-            onClick={handleAddEmailServer}
-          >
-            + Add Email Server
-          </button>
-        </div>
+
+
 
         {/* Email Configurations Table */}
-        <table className="min-w-full table-auto border-collapse bg-white shadow-md rounded-md">
+        <table className="min-w-full table-auto border-collapse bg-white shadow rounded-md">
           <thead>
-            <tr className="bg-gray-200">
-              <th className="p-2 border">SL</th>
-              <th className="p-2 border">Host Server</th>
-              <th className="p-2 border">Port</th>
-              <th className="p-2 border">Email</th>
-              <th className="p-2 border">Password</th>
-              <th className="p-2 border">Mail From Name</th>
-              <th className="p-2 border">Mail From Email</th>
-              <th className="p-2 border">Encryption</th>
-              <th className="p-2 border">Status</th>
-              <th className="p-2 border">Action</th>
+            <tr className="bg-gray-200 text-center">
+              <td className="p-2 border">SL</td>
+              <td className="p-2 border">Host Server</td>
+              <td className="p-2 border">Port</td>
+              <td className="p-2 border">Email</td>
+              <td className="p-2 border">Password</td>
+              <td className="p-2 border">Mail From Name</td>
+              <td className="p-2 border">Mail From Email</td>
+              <td className="p-2 border">Encryption</td>
+              <td className="p-2 border">Status</td>
+              <td className="p-2 border">Action</td>
             </tr>
           </thead>
           <tbody>
             {filteredConfigurations.length > 0 ? (
               filteredConfigurations.map((config, index) => (
-                <tr key={config.id} className="border-b">
+                <tr key={config.id} className="border-b text-center">
                   <td className="p-2 border">{index + 1}</td>
                   <td className="p-2 border">{config.hostServer}</td>
                   <td className="p-2 border">{config.port}</td>
@@ -112,26 +118,18 @@ export default function EmailConfigurations() {
                   <td className="p-2 border">{config.encryption}</td>
                   <td className="p-2 border">
                     <span
-                      className={`px-2 py-1 rounded-md ${
-                        config.status === "Active"
-                          ? "bg-green-500 text-white"
-                          : "bg-gray-300 text-black"
-                      }`}
+                      className={`px-2 py-1 rounded-md ${config.status === "Active"
+                        ? "bg-[#A8CE3A] text-white"
+                        : "bg-red-500 text-white"
+                        }`}
                     >
                       {config.status}
                     </span>
                   </td>
-                  <td className="p-2 border">
-                    <div className="flex space-x-2">
-                      <button className="text-yellow-500 hover:text-yellow-700">
-                        <FiEdit />
-                      </button>
-                      <button
-                        className="text-red-500 hover:text-red-700"
-                        onClick={() => handleDelete(config.id)}
-                      >
-                        <FiTrash2 />
-                      </button>
+                  <td className="p-2 py-3 border">
+                    <div className="flex justify-center space-x-1">
+                      <EditButton></EditButton>
+                      <DeleteButton  onClick={() => handleDelete(config.id)}/>
                     </div>
                   </td>
                 </tr>

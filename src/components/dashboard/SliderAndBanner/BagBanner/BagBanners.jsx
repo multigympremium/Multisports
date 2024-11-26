@@ -10,6 +10,8 @@ import CreateBagBannerForm from "./forms/CreateBagBannerForm";
 import UpdateBagBannerForm from "./forms/UpdateBagBannerForm";
 import useGetAllBagBanners from "../../../../Hook/GetDataHook/useGetAllBagBanners";
 import useAxiosSecure from "../../../../Hook/useAxiosSecure";
+import DeleteButton from "../../../../components library/DeleteButton";
+import EditButton from "../../../../components library/EditButton";
 
 const BagBanners = () => {
   const [showModal, setShowModal] = useState(false);
@@ -50,7 +52,7 @@ const BagBanners = () => {
             const res = await axiosSecure.delete(`/bag-banners/${id}`);
             console.log(res, "res");
             if (res.status === 200 || res.status === 201) {
-              
+
               setIsDeleted((prev) => !prev);
 
               toast.success("Banner deleted successfully!");
@@ -69,38 +71,40 @@ const BagBanners = () => {
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <div className="flex justify-between items-center mb-4">
-        <h1 className="text-2xl font-bold">Bag Banner List</h1>
-        <div>
-          <button
-            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mr-2"
-            onClick={() => setShowModal(true)}
-          >
-            Add Bag Banner
-          </button>
+    <div className="p-6 pt-0">
+      <div className="">
+        <div className="flex justify-between mb-9 items-center">
+          <h1 className="text-3xl font-semibold ">Bag Banner List</h1>
+          <div>
+            <button
+              className="customSaveButton"
+              onClick={() => setShowModal(true)}
+            >
+              + Add Bag Banner
+            </button>
+          </div>
         </div>
       </div>
 
-      <div className="overflow-x-auto relative shadow-md sm:rounded-lg">
-        <table className="w-full text-sm text-left text-gray-500">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50">
+      <div className="">
+        <table className="min-w-full table-auto border-collapse bg-white shadow-md rounded-md">
+          <thead className="bg-gray-200 text-center">
             <tr>
-              <th scope="col" className="py-3 px-6">
+              <td scope="col" className="py-3 px-6">
                 SL
-              </th>
-              <th scope="col" className="py-3 px-6">
+              </td>
+              <td scope="col" className="py-3 px-6">
                 Image
-              </th>
-              <th scope="col" className="py-3 px-6">
+              </td>
+              <td scope="col" className="py-3 px-6">
                 Title
-              </th>
-              <th scope="col" className="py-3 px-6">
+              </td>
+              <td scope="col" className="py-3 px-6">
                 Subtitle
-              </th>
-              <th scope="col" className="py-3 px-6">
+              </td>
+              <td scope="col" className="py-3 px-6">
                 Action
-              </th>
+              </td>
             </tr>
           </thead>
           <tbody>
@@ -112,31 +116,23 @@ const BagBanners = () => {
               </tr>
             ) : (
               banners.map((slider, index) => (
-                <tr key={index} className="bg-white border-b">
-                  <td className="py-3 px-6">{index + 1}</td>
-                  <td className="py-3 px-6">
-                  <CellImage
+                <tr key={index} className="bg-white border-b text-center">
+                  <td className="py-3 border px-6">{index + 1}</td>
+                  <td className="py-3 px-6 border">
+                    <div className="flex justify-center">
+                      <CellImage
                         width={400}
                         height={400}
                         src={slider?.image}
-                      alt={slider?.title}
+                        alt={slider?.title}
                       />
+                    </div>
                   </td>
-                  <td className="py-3 px-6">{slider.title}</td>
-                  <td className="py-3 px-6">{slider.subtitle}</td>
-                  <td className="py-3 px-6">
-                    <button
-                      className="bg-yellow-400 text-white px-3 py-1 rounded hover:bg-yellow-500"
-                      onClick={() => handleEdit(slider._id)}
-                    >
-                      Edit
-                    </button>
-                    <button
-                      className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 ml-2"
-                      onClick={() => handleDelete(slider._id, slider.key)}
-                    >
-                      Delete
-                    </button>
+                  <td className="py-3 px-6 border">{slider.title}</td>
+                  <td className="py-3 px-6 border">{slider.subtitle}</td>
+                  <td className="py-3 space-x-2 px-6 border">
+                    <EditButton onClick={() => handleEdit(slider._id)}></EditButton>
+                    <DeleteButton onClick={() => handleDelete(slider._id, slider.key)} />
                   </td>
                 </tr>
               ))

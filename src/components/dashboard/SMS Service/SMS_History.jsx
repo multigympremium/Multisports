@@ -1,6 +1,8 @@
 "use client";
 import { useState } from "react";
 import { FiTrash2 } from "react-icons/fi";
+import { IoIosSearch } from "react-icons/io";
+import DeleteButton from "../../../components library/DeleteButton";
 
 // Sample SMS history data (could be fetched from an API)
 const initialSmsHistory = [
@@ -53,50 +55,54 @@ export default function SmsHistory() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-10">
-      <div className="max-w-7xl mx-auto bg-white p-8 shadow-md rounded-md">
-        <h1 className="text-2xl font-bold mb-5">View All SMS History</h1>
+    <div className="p-6 pt-0">
+      <div className="">
+        <div className="mb-9  flex justify-between">
+          <h1 className="text-3xl font-semibold">View All SMS History</h1>
+          <div className="flex  justify-end">
+            <button
+              className="customCancelButton"
+              onClick={handleRemoveAllBefore15Days}
+            >
+              Remove All SMS Before 15 Days
+            </button>
+          </div>
+        </div>
 
         {/* Search Input */}
-        <div className="mb-4">
+
+        <div className="bg-white border rounded-full px-3 mb-6 md:py-2 py-1 md:gap-2 gap-1 flex-row-reverse justify-between flex">
           <input
             type="text"
-            placeholder="Search by template or contact..."
             value={searchTerm}
+            className="outline-none w-full bg-white"
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full p-2 border rounded-md"
+            placeholder="Search by template or contact..."
           />
+          <IoIosSearch className="text-2xl text-gray-400" />
         </div>
 
-        {/* Remove All Button */}
-        <div className="mb-4 flex justify-end">
-          <button
-            className="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-700"
-            onClick={handleRemoveAllBefore15Days}
-          >
-            Remove All SMS Before 15 Days
-          </button>
-        </div>
+
 
         {/* SMS History Table */}
         <table className="min-w-full table-auto border-collapse bg-white shadow-md rounded-md">
           <thead>
-            <tr className="bg-gray-200">
-              <th className="p-2 border">SL</th>
-              <th className="p-2 border">SMS Template</th>
-              <th className="p-2 border">Sending Type</th>
-              <th className="p-2 border">Contact</th>
-              <th className="p-2 border">SMS Receivers</th>
-              <th className="p-2 border">Order Count Range</th>
-              <th className="p-2 border">Order Value Range</th>
-              <th className="p-2 border">Sent At</th>
-              <th className="p-2 border">Action</th>
+            <tr className="bg-gray-200 text-center">
+              <td className="p-2 border">SL</td>
+              <td className="p-2 border">SMS Template</td>
+              <td className="p-2 border">Sending Type</td>
+              <td className="p-2 border">Contact</td>
+              <td className="p-2 border">SMS Receivers</td>
+              <td className="p-2 border">Order Count Range</td>
+              <td className="p-2 border">Order Value Range</td>
+              <td className="p-2 border">Sent At</td>
+              <td className="p-2 border">Action</td>
             </tr>
           </thead>
           <tbody>
             {filteredHistory.length > 0 ? (
               filteredHistory.map((sms, index) => (
-                <tr key={sms.id} className="border-b">
+                <tr key={sms.id} className="border-b text-center">
                   <td className="p-2 border">{index + 1}</td>
                   <td className="p-2 border">{sms.template}</td>
                   <td className="p-2 border">{sms.sendingType}</td>
@@ -105,13 +111,8 @@ export default function SmsHistory() {
                   <td className="p-2 border">{sms.orderCountRange}</td>
                   <td className="p-2 border">{sms.orderValueRange}</td>
                   <td className="p-2 border">{sms.sentAt}</td>
-                  <td className="p-2 border">
-                    <button
-                      className="text-red-500 hover:text-red-700"
-                      onClick={() => handleDelete(sms.id)}
-                    >
-                      <FiTrash2 />
-                    </button>
+                  <td className="p-2 py-3 border">
+                    <DeleteButton onClick={() => handleDelete(sms.id)} />
                   </td>
                 </tr>
               ))

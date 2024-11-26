@@ -10,9 +10,9 @@ export default function EmailTemplates() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-10">
-      <div className="max-w-4xl mx-auto bg-white p-8 shadow-md rounded-md">
-        <h1 className="text-2xl font-bold mb-5">
+    <div className="p-6 pt-0">
+      <div className="">
+        <h1 className="text-3xl font-semibold mb-9">
           Choose Your Default Order Placed Mail Template
         </h1>
 
@@ -21,13 +21,13 @@ export default function EmailTemplates() {
           <div
             className={`border-2 rounded-md overflow-hidden cursor-pointer ${
               selectedTemplate === "Regular"
-                ? "border-green-500"
+                ? "border-[#087D6D]"
                 : "border-gray-200"
             }`}
             onClick={() => handleTemplateSelect("Regular")}
           >
             <div className="p-4 flex justify-between items-center bg-gray-100">
-              <div className="font-bold">Regular</div>
+              <div className="">Regular</div>
               <div>
                 <input
                   type="checkbox"
@@ -53,13 +53,13 @@ export default function EmailTemplates() {
           <div
             className={`border-2 rounded-md overflow-hidden cursor-pointer ${
               selectedTemplate === "Classic"
-                ? "border-green-500"
+                ? "border-[#087D6D]"
                 : "border-gray-200"
             }`}
             onClick={() => handleTemplateSelect("Classic")}
           >
             <div className="p-4 flex justify-between items-center bg-gray-100">
-              <div className="font-bold">Classic</div>
+              <div className="">Classic</div>
               <div>
                 <input
                   type="checkbox"
@@ -83,12 +83,12 @@ export default function EmailTemplates() {
         </div>
 
         {/* Save Button */}
-        <div className="mt-6">
+        <div className="mt-6 flex justify-end">
           <button
             onClick={() =>
               alert(`You have selected the ${selectedTemplate} template.`)
             }
-            className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-700"
+            className="customSaveButton"
           >
             Save Template
           </button>
