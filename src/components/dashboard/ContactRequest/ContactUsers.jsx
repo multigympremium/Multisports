@@ -1,5 +1,7 @@
 "use client";
 import { useState } from "react";
+import { IoIosSearch } from "react-icons/io";
+import DeleteButton from "../../../components library/DeleteButton";
 
 export default function ContactRequestsList() {
   // Sample data (replace with actual data from an API or database)
@@ -67,39 +69,39 @@ export default function ContactRequestsList() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-10">
-      <div className="max-w-7xl mx-auto bg-white p-8 shadow-md rounded-md">
-        <h1 className="text-2xl font-bold mb-5">Contact Requests List</h1>
+    <div className="p-6 pt-0">
+      <div className="">
+        <h1 className="text-3xl font-semibold mb-9">Contact Requests List</h1>
 
-        {/* Search Input */}
-        <div className="mb-4">
+       {/* Search Input */}
+       <div className="bg-white border rounded-full px-3 mb-6 md:py-2 py-1 md:gap-2 gap-1 flex-row-reverse justify-between flex">
           <input
             type="text"
-            placeholder="Search by name, email, or company..."
             value={searchTerm}
+            className="outline-none w-full bg-white"
             onChange={handleSearch}
-            className="w-full p-2 border rounded-md"
+            placeholder="Search by title or description..."
           />
+          <IoIosSearch className="text-2xl text-gray-400" />
         </div>
-
         {/* Contact Requests Table */}
-        <table className="min-w-full table-auto border-collapse bg-white shadow-md rounded-md">
+        <table className="min-w-full table-auto border-collapse bg-white shadow rounded-md">
           <thead>
-            <tr className="bg-gray-200">
-              <th className="p-2 border">SL</th>
-              <th className="p-2 border">Name</th>
-              <th className="p-2 border">Email</th>
-              <th className="p-2 border">Phone</th>
-              <th className="p-2 border">Company</th>
-              <th className="p-2 border">Message</th>
-              <th className="p-2 border">Status</th>
-              <th className="p-2 border">Action</th>
+            <tr className="bg-gray-200 text-center">
+              <td className="p-2 border">SL</td>
+              <td className="p-2 border">Name</td>
+              <td className="p-2 border">Email</td>
+              <td className="p-2 border">Phone</td>
+              <td className="p-2 border">Company</td>
+              <td className="p-2 border">Message</td>
+              <td className="p-2 border">Status</td>
+              <td className="p-2 border">Action</td>
             </tr>
           </thead>
           <tbody>
             {currentData.length > 0 ? (
               currentData.map((item, index) => (
-                <tr key={item.id} className="border-b">
+                <tr key={item.id} className="border-b text-center">
                   <td className="p-2 border">{startIdx + index + 1}</td>
                   <td className="p-2 border">{item.name}</td>
                   <td className="p-2 border">{item.email}</td>
@@ -110,17 +112,15 @@ export default function ContactRequestsList() {
                     <span
                       className={`inline-block px-3 py-1 rounded-full text-sm ${
                         item.status === "Served"
-                          ? "bg-green-200 text-green-800"
-                          : "bg-yellow-200 text-yellow-800"
+                          ? "bg-[#A8CE3A] text-white"
+                          : "bg-red-500 text-white"
                       }`}
                     >
                       {item.status}
                     </span>
                   </td>
-                  <td className="p-2 border">
-                    <button className="text-red-500 hover:underline">
-                      Delete
-                    </button>
+                  <td className="p-2 border ">
+                    <DeleteButton></DeleteButton>
                   </td>
                 </tr>
               ))

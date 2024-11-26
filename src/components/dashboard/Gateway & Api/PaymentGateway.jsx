@@ -55,16 +55,16 @@ export default function PaymentGateways() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-10">
-      <div className="max-w-7xl mx-auto bg-white p-8 shadow-md rounded-md">
-        <h1 className="text-2xl font-bold mb-5">SMS Gateway Configuration</h1>
+    <div className="p-6 pt-0">
+      <div className="">
+        <h1 className="text-3xl font-semibold mb-9">SMS Gateway Configuration</h1>
 
         <div className="grid grid-cols-3 gap-6">
           {gateways.map((gateway) => (
             <div
               key={gateway.id}
-              className={`border-2 rounded-md p-6 ${
-                gateway.isActive ? "border-green-500" : "border-gray-200"
+              className={`border-2 rounded-2xl p-6 ${
+                gateway.isActive ? "border-[#087D6D]" : "border-gray-200"
               }`}
             >
               {/* Logo */}
@@ -86,60 +86,60 @@ export default function PaymentGateways() {
 
               {/* API Endpoint */}
               <div className="mt-4">
-                <label className="block font-bold mb-2">API Endpoint</label>
+                <label className="block ">API Endpoint</label>
                 <input
                   type="text"
                   value={gateway.apiEndpoint}
                   onChange={(e) =>
                     handleUpdate(gateway.id, "apiEndpoint", e.target.value)
                   }
-                  className="w-full p-2 border rounded-md"
+                  className="customInput"
                 />
               </div>
 
               {/* API Key */}
               <div className="mt-4">
-                <label className="block font-bold mb-2">API Key</label>
+                <label className="block ">API Key</label>
                 <input
                   type="text"
                   value={gateway.apiKey}
                   onChange={(e) =>
                     handleUpdate(gateway.id, "apiKey", e.target.value)
                   }
-                  className="w-full p-2 border rounded-md"
+                  className="customInput"
                 />
               </div>
 
               {/* Secret Key */}
               <div className="mt-4">
-                <label className="block font-bold mb-2">Secret Key</label>
+                <label className="block ">Secret Key</label>
                 <input
                   type="text"
                   value={gateway.secretKey}
                   onChange={(e) =>
                     handleUpdate(gateway.id, "secretKey", e.target.value)
                   }
-                  className="w-full p-2 border rounded-md"
+                  className="customInput"
                 />
               </div>
 
               {/* Sender ID */}
               <div className="mt-4">
-                <label className="block font-bold mb-2">Sender ID</label>
+                <label className="block ">Sender ID</label>
                 <input
                   type="text"
                   value={gateway.senderID}
                   onChange={(e) =>
                     handleUpdate(gateway.id, "senderID", e.target.value)
                   }
-                  className="w-full p-2 border rounded-md"
+                  className="customInput"
                 />
               </div>
 
               {/* Update Button */}
-              <div className="mt-4">
+              <div className="mt-6">
                 <button
-                  className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-700"
+                  className="customSaveButton w-full"
                   onClick={() => alert(`Updated ${gateway.name} information!`)}
                 >
                   Update Info
