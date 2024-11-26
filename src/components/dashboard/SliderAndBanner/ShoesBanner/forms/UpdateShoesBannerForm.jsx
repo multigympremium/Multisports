@@ -111,13 +111,13 @@ export default function UpdateShoesBannerForm({ targetId, isShow, setIsShow }) {
   }, [targetId, axiosSecure, isShow]);
 
   return (
-    <div className="container mx-auto p-4 bg-white rounded-lg shadow-md">
+    <div className="p-8 bg-white rounded-2xl mt-9">
       {/* Testimonial Entry Form */}
-      <h1 className="text-2xl font-bold mb-4">Create Banner Form</h1>
-      <form className="grid grid-cols-2 gap-4" onSubmit={handleSubmit}>
+      <h1 className="text-3xl font-semibold mb-5">Create Banner Form</h1>
+      <form className="" onSubmit={handleSubmit}>
         {/* Left Column - Image Upload */}
         <div className="relative">
-          <label className="block text-gray-700 mb-2">Banner Image *</label>
+          <label className="block text-gray-700 mb-2">Banner Image </label>
           <DragEditUploadImageInput
             getRootProps={getThumbnailRootProps}
             getInputProps={getThumbnailInputProps}
@@ -137,34 +137,34 @@ export default function UpdateShoesBannerForm({ targetId, isShow, setIsShow }) {
           )}
         </div>
 
-        {/* Right Column - Form Inputs */}
-        <div className="space-y-4">
+        
+        <div className="space-y-4 mt-5">
           <div>
-            <label className="block text-gray-700">Title *</label>
+            <label className="block text-gray-700">Title </label>
             <input
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full p-2 border rounded"
+              className="customInput"
               required
             />
           </div>
           <div>
-            <label className="block text-gray-700">Subtitle *</label>
+            <label className="block text-gray-700">Subtitle </label>
             <input
               type="text"
               value={subtitle}
               onChange={(e) => setSubtitle(e.target.value)}
-              className="w-full p-2 border rounded"
+              className="customInput"
               required
             />
           </div>
           <div>
-            <label className="block text-gray-700">Short Description *</label>
+            <label className="block text-gray-700">Short Description </label>
             <textarea
               value={shortDescription}
               onChange={(e) => setShortDescription(e.target.value)}
-              className="w-full p-2 border rounded min-h-[250px]"
+              className="customInput resize-none"
               required
             ></textarea>
           </div>
@@ -174,7 +174,7 @@ export default function UpdateShoesBannerForm({ targetId, isShow, setIsShow }) {
         <div className="col-span-2">
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white p-2 rounded"
+            className="w-full customSaveButton mt-5"
           >
             Save
           </button>

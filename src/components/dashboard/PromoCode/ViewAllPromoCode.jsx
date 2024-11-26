@@ -1,6 +1,9 @@
 "use client";
 import { useState } from "react";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
+import { IoIosSearch } from "react-icons/io";
+import EditButton from "../../../components library/EditButton";
+import DeleteButton from "../../../components library/DeleteButton";
 
 // Sample promo code data (can be fetched from an API)
 const initialPromoCodes = [
@@ -59,41 +62,45 @@ export default function ViewAllPromoCode() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-10">
-      <div className="max-w-7xl mx-auto bg-white p-8 shadow-md rounded-md">
-        <h1 className="text-2xl font-bold mb-5">Promo Codes</h1>
+    <div className="p-6 pt-0">
+      <div className="">
+        <h1 className="text-3xl font-semibold mb-9">Promo Codes</h1>
 
         {/* Search Input */}
-        <div className="mb-4">
-          <input
-            type="text"
-            placeholder="Search by title or code..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full p-2 border rounded-md"
-          />
+        <div className="">
+          {/* Search Input */}
+          <div className="bg-white border rounded-full px-3 mb-6 md:py-2 py-1 md:gap-2 gap-1 flex-row-reverse justify-between flex">
+            <input
+              type="text"
+              value={searchTerm}
+              className="outline-none w-full bg-white"
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Search by title or code..."
+            />
+            <IoIosSearch className="text-2xl text-gray-400" />
+          </div>
         </div>
 
         {/* Promo Codes Table */}
-        <table className="min-w-full table-auto border-collapse bg-white shadow-md rounded-md">
+        <table className="min-w-full table-auto border-collapse bg-white shadow rounded-md">
           <thead>
-            <tr className="bg-gray-200">
-              <th className="p-2 border">SL</th>
-              <th className="p-2 border">Title</th>
-              <th className="p-2 border">Effective Date</th>
-              <th className="p-2 border">Expiry Date</th>
-              <th className="p-2 border">Type</th>
-              <th className="p-2 border">Value</th>
-              <th className="p-2 border">Min. Spend</th>
-              <th className="p-2 border">Code</th>
-              <th className="p-2 border">Status</th>
-              <th className="p-2 border">Action</th>
+            <tr className="bg-gray-200 text-center">
+              <td className="p-2 border">SL</td>
+              <td className="p-2 border">Title</td>
+              <td className="p-2 border">Effective Date</td>
+              <td className="p-2 border">Expiry Date</td>
+              <td className="p-2 border">Type</td>
+              <td className="p-2 border">Value</td>
+              <td className="p-2 border">Min. Spend</td>
+              <td className="p-2 border">Code</td>
+              <td className="p-2 border">Status</td>
+              <td className="p-2 border">Action</td>
             </tr>
           </thead>
           <tbody>
             {currentItems.length > 0 ? (
               currentItems.map((promo, index) => (
-                <tr key={promo.id} className="border-b">
+                <tr key={promo.id} className="border-b text-center">
                   <td className="p-2 border">
                     {index + 1 + (currentPage - 1) * itemsPerPage}
                   </td>
@@ -108,18 +115,17 @@ export default function ViewAllPromoCode() {
                   </td>
                   <td className="p-2 border">৳ {promo.minSpend.toFixed(2)}</td>
                   <td className="p-2 border">{promo.code}</td>
-                  <td className="p-2 border">{promo.status}</td>
-                  <td className="p-2 border">
-                    <div className="flex space-x-2">
-                      <button className="text-yellow-500 hover:text-yellow-700">
-                        <FiEdit />
-                      </button>
-                      <button
-                        className="text-red-500 hover:text-red-700"
-                        onClick={() => handleDelete(promo.id)}
-                      >
-                        <FiTrash2 />
-                      </button>
+                  <td
+
+                  >
+                    <span className={`text-white  p-2  rounded-xl py-1 ${promo.status === "Active" ? "bg-[#A8CE3A]" : "bg-red-500"
+                      }`}>{promo.status}</span>
+                  </td>
+
+                  <td className="p-2 border py-3">
+                    <div className="flex justify-center space-x-2">
+                      <EditButton></EditButton>
+                      <DeleteButton onClick={() => handleDelete(promo.id)}></DeleteButton>
                     </div>
                   </td>
                 </tr>
@@ -148,11 +154,10 @@ export default function ViewAllPromoCode() {
                 <button
                   key={index}
                   onClick={() => handlePageChange(index + 1)}
-                  className={`px-3 py-1 border rounded-md ${
-                    currentPage === index + 1
-                      ? "bg-blue-500 text-white"
-                      : "bg-gray-100"
-                  }`}
+                  className={`px-3 py-1 border rounded-md ${currentPage === index + 1
+                    ? "bg-blue-500 text-white"
+                    : "bg-gray-100"
+                    }`}
                 >
                   {index + 1}
                 </button>

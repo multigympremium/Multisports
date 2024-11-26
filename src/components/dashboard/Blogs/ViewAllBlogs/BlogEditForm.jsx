@@ -139,28 +139,28 @@ export default function BlogEditForm({
   };
 
   return (
-    <div className="w-full  p-10">
-    <div className="w-full mx-auto bg-white p-8 shadow-md rounded-md">
-      <h1 className="text-2xl font-bold mb-5">Blog Edit Form</h1>
+    <div className="w-full bg-white rounded-2xl p-10">
+    <div className="">
+      <h1 className="text-2xl font-semibold mb-5">Blog Edit Form</h1>
       <form onSubmit={handleSubmit}>
         {/* Blog Name */}
         <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2">Name *</label>
+          <label className="block text-gray-700 ">Name</label>
           <input
             type="text"
             value={writer}
             onChange={(e) => setWriter(e.target.value)}
-            className="w-full p-2 border rounded-md"
+            className="customInput"
             placeholder="Blog Name"
             required
           />
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2">title *</label>
+          <label className="block text-gray-700 ">title </label>
           <input
             type="text"
             value={title}
-            className="w-full p-2 border rounded-md"
+            className="customInput"
             placeholder="Blog Name"
             required
             onChange={(e) => handleSlug(e.target.value)}
@@ -169,11 +169,11 @@ export default function BlogEditForm({
 
 
         <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2">Slug *</label>
+          <label className="block text-gray-700 ">Slug</label>
           <input
             type="text"
             value={slug}
-            className="w-full p-2 border rounded-md"
+            className="customInput"
             placeholder="Slug"
             required
             onChange={(e) => setSlug(e.target.value)}
@@ -182,13 +182,13 @@ export default function BlogEditForm({
 
         {/*  Blog Category */}
         <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2">
+          <label className="block text-gray-700 ">
              Blog Category
           </label>
           <select
             value={blogCategory}
             onChange={(e) => setBlogCategory(e.target.value)}
-            className="w-full p-2 border rounded-md"
+            className="customInput select"
           >
             <option value="">Select One</option>
             {BlogCategories.map((category) => (
@@ -202,7 +202,7 @@ export default function BlogEditForm({
 
         {/* Blog Icon */}
         <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2">
+          <label className="block text-gray-700 ">
             Blog Thumbnail
           </label>
           <DragEditUploadImageInput
@@ -218,7 +218,7 @@ export default function BlogEditForm({
         
 
         <div className="mb-[4rem]">
-            <label className="block text-gray-700 text-2xl font-bold mb-6">
+            <label className="block text-gray-700 text-2xl  mb-4">
               Short Description
             </label>
 
@@ -228,7 +228,7 @@ export default function BlogEditForm({
             />
           </div>
         <div className="mb-[4rem]">
-            <label className="block text-gray-700 text-2xl font-bold mb-6">
+            <label className="block text-gray-700 text-2xl mb-4">
               Full Description
             </label>
 
@@ -240,41 +240,41 @@ export default function BlogEditForm({
 
 
           {/* SEO Information */}
-        <div className="mb-4 mt-6">
-          <h2 className="text-2xl font-bold mb-6 border-b border-gray-300">
+        <div className="mb-4 ">
+          <h2 className="text-2xl pb-4 mb-4 border-b border-gray-300">
              SEO Information (Optional)
           </h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-gray-700 font-bold mb-2">
+              <label className="block text-gray-700 ">
                 Meta Title
               </label>
               <input
                 type="text"
                 value={metaTitle}
                 onChange={(e) => setMetaTitle(e.target.value)}
-                className="w-full p-2 border rounded-md"
+                className="customInput"
               />
             </div>
             <div>
-              <label className="block text-gray-700 font-bold mb-2">
+              <label className="block text-gray-700 ">
                 Meta Keywords
               </label>
               <input
                 type="text"
                 value={metaKeywords}
                 onChange={(e) => setMetaKeywords(e.target.value)}
-                className="w-full p-2 border rounded-md"
+                className="customInput"
               />
             </div>
             <div className="col-span-2">
-              <label className="block text-gray-700 font-bold mb-2">
+              <label className="block text-gray-700 ">
                 Meta Description
               </label>
               <textarea
                 value={metaDescription}
                 onChange={(e) => setMetaDescription(e.target.value)}
-                className="w-full p-2 border rounded-md"
+                className="customInput resize-none"
                 rows="3"
               />
             </div>
@@ -285,7 +285,7 @@ export default function BlogEditForm({
         <div className="flex justify-end">
           <button
             type="submit"
-            className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+            className="customSaveButton"
           >
             Save Blog
           </button>

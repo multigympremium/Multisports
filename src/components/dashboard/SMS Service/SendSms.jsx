@@ -45,19 +45,19 @@ export default function SendSMS() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-10">
-      <div className="max-w-7xl mx-auto bg-white p-8 shadow-md rounded-md">
-        <h1 className="text-2xl font-bold mb-5">Send SMS</h1>
+    <div className="p-6 pt-0">
+      <div className="">
+        <h1 className="text-3xl font-semibold mb-9">Send SMS</h1>
 
         <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-2 gap-4">
             {/* Sending Type */}
             <div>
-              <label className="block font-bold mb-2">Sending Type *</label>
+              <label className="block  ">Sending Type </label>
               <select
                 value={sendingType}
                 onChange={(e) => setSendingType(e.target.value)}
-                className="w-full p-2 border rounded-md"
+                className="customInput select"
                 required
               >
                 <option value="Everyone">Everyone</option>
@@ -68,14 +68,14 @@ export default function SendSMS() {
             {/* Customer Contact No */}
             {sendingType === "Specific Customer" && (
               <div>
-                <label className="block font-bold mb-2">
+                <label className="block  ">
                   Customer Contact No
                 </label>
                 <input
                   type="text"
                   value={customerContactNo}
                   onChange={(e) => setCustomerContactNo(e.target.value)}
-                  className="w-full p-2 border rounded-md"
+                  className="customInput"
                   placeholder="Enter Customer Contact No"
                   required
                 />
@@ -84,7 +84,7 @@ export default function SendSMS() {
 
             {/* Select SMS Template */}
             <div>
-              <label className="block font-bold mb-2">
+              <label className="block  ">
                 Select SMS Template
               </label>
               <select
@@ -96,7 +96,7 @@ export default function SendSMS() {
                   );
                   setSmsDescription(selected ? selected.description : "");
                 }}
-                className="w-full p-2 border rounded-md"
+                className="customInput select"
               >
                 <option value="">Select One</option>
                 {smsTemplates.map((template) => (
@@ -109,13 +109,13 @@ export default function SendSMS() {
 
             {/* SMS Template Description */}
             <div>
-              <label className="block font-bold mb-2">
-                SMS Template Description *
+              <label className="block">
+                SMS Template Description
               </label>
               <textarea
                 value={smsDescription}
                 onChange={(e) => setSmsDescription(e.target.value)}
-                className="w-full p-2 border rounded-md"
+                className="customInput resize-none"
                 rows="3"
                 placeholder="Write SMS Here"
                 required
@@ -123,20 +123,20 @@ export default function SendSMS() {
             </div>
 
             {/* SMS Sending Criteria */}
-            <div className="col-span-2">
-              <h2 className="font-bold text-lg mb-3">
+            <div className="col-span-2 border-t pt-7 mt-3 border-gray-300">
+              <h2 className=" text-2xl mb-6">
                 SMS Sending Criteria (Optional)
               </h2>
               <div className="grid grid-cols-2 gap-4">
                 {/* Select Customer Type */}
-                <div>
-                  <label className="block font-bold mb-2">
+                <div className="col-span-2">
+                  <label className="block">
                     Select Customer Type
                   </label>
                   <select
                     value={customerType}
                     onChange={(e) => setCustomerType(e.target.value)}
-                    className="w-full p-2 border rounded-md"
+                    className="customInput select"
                   >
                     <option value="">Select One</option>
                     <option value="New">New Customer</option>
@@ -146,56 +146,56 @@ export default function SendSMS() {
 
                 {/* Min. Order */}
                 <div>
-                  <label className="block font-bold mb-2">
+                  <label className="block ">
                     Min. Order (Optional)
                   </label>
                   <input
                     type="number"
                     value={minOrder}
                     onChange={(e) => setMinOrder(e.target.value)}
-                    className="w-full p-2 border rounded-md"
+                    className="customInput"
                     placeholder="e.g. 20"
                   />
                 </div>
 
                 {/* Max. Order */}
                 <div>
-                  <label className="block font-bold mb-2">
+                  <label className="block ">
                     Max. Order (Optional)
                   </label>
                   <input
                     type="number"
                     value={maxOrder}
                     onChange={(e) => setMaxOrder(e.target.value)}
-                    className="w-full p-2 border rounded-md"
+                    className="customInput"
                     placeholder="e.g. 100"
                   />
                 </div>
 
                 {/* Minimum Order Value */}
                 <div>
-                  <label className="block font-bold mb-2">
+                  <label className="block">
                     Minimum Order Value (Optional)
                   </label>
                   <input
                     type="number"
                     value={minOrderValue}
                     onChange={(e) => setMinOrderValue(e.target.value)}
-                    className="w-full p-2 border rounded-md"
+                    className="customInput"
                     placeholder="e.g. 1000"
                   />
                 </div>
 
                 {/* Maximum Order Value */}
                 <div>
-                  <label className="block font-bold mb-2">
+                  <label className="block ">
                     Maximum Order Value (Optional)
                   </label>
                   <input
                     type="number"
                     value={maxOrderValue}
                     onChange={(e) => setMaxOrderValue(e.target.value)}
-                    className="w-full p-2 border rounded-md"
+                    className="customInput"
                     placeholder="e.g. 10000"
                   />
                 </div>
@@ -204,12 +204,14 @@ export default function SendSMS() {
           </div>
 
           {/* Send SMS Button */}
-          <button
-            type="submit"
-            className="bg-blue-500 text-white mt-5 py-2 px-4 rounded-md hover:bg-blue-700"
-          >
-            Send SMS
-          </button>
+          <div className="flex justify-end">
+            <button
+              type="submit"
+              className="customSaveButton mt-6"
+            >
+              Send SMS
+            </button>
+          </div>
 
           {/* Success/Info Message */}
           {message && <p className="mt-4 text-green-500">{message}</p>}

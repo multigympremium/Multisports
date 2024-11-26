@@ -1,5 +1,7 @@
 "use client";
 import { useState } from "react";
+import { IoIosSearch } from "react-icons/io";
+import DeleteButton from "../../../components library/DeleteButton";
 
 export default function SubscribedUsersList() {
   // Sample data (replace with your actual data or fetch from an API)
@@ -43,42 +45,49 @@ export default function SubscribedUsersList() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-10">
-      <div className="max-w-7xl mx-auto bg-white p-8 shadow-md rounded-md">
-        <h1 className="text-2xl font-bold mb-5">Subscribed Users List</h1>
+    <div className="p-6 pt-0">
+      <div className="">
+        <div className="flex mb-9 justify-between items-center">
+          <h1 className="text-3xl font-semibold">Subscribed Users List</h1>
+          {/* Download as Excel Button */}
+          <div className="mt-6">
+            <button className="customSaveButton">
+              Download As Excel
+            </button>
+          </div>
+        </div>
 
         {/* Search Input */}
-        <div className="mb-4">
+        <div className="bg-white border rounded-full px-3 mb-6 md:py-2 py-1 md:gap-2 gap-1 flex-row-reverse justify-between flex">
           <input
             type="text"
-            placeholder="Search by email..."
             value={searchTerm}
+            className="outline-none w-full bg-white"
             onChange={handleSearch}
-            className="w-full p-2 border rounded-md"
+            placeholder="Search by title or description..."
           />
+          <IoIosSearch className="text-2xl text-gray-400" />
         </div>
 
         {/* Subscribed Users Table */}
         <table className="min-w-full table-auto border-collapse bg-white shadow-md rounded-md">
           <thead>
-            <tr className="bg-gray-200">
-              <th className="p-2 border">SL</th>
-              <th className="p-2 border">Email</th>
-              <th className="p-2 border">Subscribed On</th>
-              <th className="p-2 border">Action</th>
+            <tr className="bg-gray-200 text-center">
+              <td className="p-2 border">SL</td>
+              <td className="p-2 border">Email</td>
+              <td className="p-2 border">Subscribed On</td>
+              <td className="p-2 border">Action</td>
             </tr>
           </thead>
           <tbody>
             {currentData.length > 0 ? (
               currentData.map((item, index) => (
-                <tr key={item.id} className="border-b">
+                <tr key={item.id} className="border-b text-center">
                   <td className="p-2 border">{startIdx + index + 1}</td>
                   <td className="p-2 border">{item.email}</td>
                   <td className="p-2 border">{item.subscribedOn}</td>
                   <td className="p-2 border">
-                    <button className="text-red-500 hover:underline">
-                      Delete
-                    </button>
+                    <DeleteButton></DeleteButton>
                   </td>
                 </tr>
               ))
@@ -115,12 +124,7 @@ export default function SubscribedUsersList() {
           </button>
         </div>
 
-        {/* Download as Excel Button */}
-        <div className="mt-6">
-          <button className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600">
-            Download As Excel
-          </button>
-        </div>
+
       </div>
     </div>
   );

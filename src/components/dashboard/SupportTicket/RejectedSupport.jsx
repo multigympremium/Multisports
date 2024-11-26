@@ -1,5 +1,7 @@
 "use client";
 import { useState } from "react";
+import { IoIosSearch } from "react-icons/io";
+import DeleteButton from "../../../components library/DeleteButton";
 
 export default function RejectedSupport() {
   // Sample data (replace this with your actual data or fetch from an API)
@@ -47,38 +49,39 @@ export default function RejectedSupport() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-10">
-      <div className="max-w-7xl mx-auto bg-white p-8 shadow-md rounded-md">
-        <h1 className="text-2xl font-bold mb-5">Support List</h1>
+    <div className="p-6 pt-0">
+      <div className="">
+        <h1 className="text-3xl font-semibold mb-9">Support List</h1>
 
         {/* Search Input */}
-        <div className="mb-4">
+        <div className="bg-white border rounded-full px-3 mb-6 md:py-2 py-1 md:gap-2 gap-1 flex-row-reverse justify-between flex">
           <input
             type="text"
-            placeholder="Search by ticket number, customer name, or subject..."
             value={searchTerm}
+            className="outline-none w-full bg-white"
             onChange={handleSearch}
-            className="w-full p-2 border rounded-md"
+            placeholder="Search by title or description..."
           />
+          <IoIosSearch className="text-2xl text-gray-400" />
         </div>
 
         {/* Support List Table */}
-        <table className="min-w-full table-auto border-collapse bg-white shadow-md rounded-md">
+        <table className="min-w-full table-auto border-collapse bg-white shadow rounded-md">
           <thead>
-            <tr className="bg-gray-200">
-              <th className="p-2 border">SL</th>
-              <th className="p-2 border">Ticket No</th>
-              <th className="p-2 border">Customer</th>
-              <th className="p-2 border">Subject</th>
-              <th className="p-2 border">Attachment</th>
-              <th className="p-2 border">Status</th>
-              <th className="p-2 border">Action</th>
+            <tr className="bg-gray-200 text-center">
+              <td className="p-2 border">SL</td>
+              <td className="p-2 border">Ticket No</td>
+              <td className="p-2 border">Customer</td>
+              <td className="p-2 border">Subject</td>
+              <td className="p-2 border">Attachment</td>
+              <td className="p-2 border">Status</td>
+              <td className="p-2 border">Action</td>
             </tr>
           </thead>
           <tbody>
             {currentData.length > 0 ? (
               currentData.map((item, index) => (
-                <tr key={item.id} className="border-b">
+                <tr key={item.id} className="border-b text-center">
                   <td className="p-2 border">{startIdx + index + 1}</td>
                   <td className="p-2 border">{item.ticketNo}</td>
                   <td className="p-2 border">{item.customer}</td>
@@ -91,11 +94,16 @@ export default function RejectedSupport() {
                       {item.attachment}
                     </a>
                   </td>
-                  <td className="p-2 border">{item.status}</td>
+                  <td
+                  >
+                    <span className={`p-1 px-2 text-white border rounded-xl ${item.status === "Pending" ? "bg-red-500" : "bg-[#A8CE3A]"
+                      }`}>
+                      {item.status}
+                    </span>
+                  </td>
+
                   <td className="p-2 border">
-                    <button className="text-red-500 hover:underline">
-                      Delete
-                    </button>
+                    <DeleteButton></DeleteButton>
                   </td>
                 </tr>
               ))

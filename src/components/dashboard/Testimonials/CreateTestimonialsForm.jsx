@@ -96,9 +96,9 @@ export default function CreateTestimonialsForm() {
   };
 
   return (
-    <div className="container mx-auto py-2">
+    <div className="p-6 pt-0">
       {/* Testimonial Entry Form */}
-      <h1 className="text-2xl font-semibold mb-8">Testimonial Entry Form</h1>
+      <h1 className="text-3xl font-semibold mb-9">Testimonial Entry Form</h1>
       <form className="" onSubmit={handleSubmit}>
         <div className="space-y-4">
           <div>
@@ -107,7 +107,7 @@ export default function CreateTestimonialsForm() {
               type="text"
               value={customerName}
               onChange={(e) => setCustomerName(e.target.value)}
-              className="globalInput mt-2"
+              className="customInput"
               required
             />
           </div>
@@ -117,7 +117,7 @@ export default function CreateTestimonialsForm() {
               type="text"
               value={designation}
               onChange={(e) => setDesignation(e.target.value)}
-              className="globalInput mt-2"
+              className="customInput"
             />
           </div>
           <div>
@@ -125,7 +125,7 @@ export default function CreateTestimonialsForm() {
             <select
               value={rating}
               onChange={(e) => setRating(e.target.value)}
-              className="globalInput mt-2"
+              className="customInput select"
               required
             >
               <option value="">Select One</option>
@@ -142,7 +142,7 @@ export default function CreateTestimonialsForm() {
               value={description}
 
               onChange={(e) => setDescription(e.target.value)}
-              className="globalInput mt-2 resize-none min-h-[50px]"
+              className="customInput resize-none"
               required
             ></textarea>
           </div>
@@ -173,7 +173,7 @@ export default function CreateTestimonialsForm() {
         <div className="col-span-2">
           <button
             type="submit"
-            className="w-full btn bg-blue-500 text-white p-2 rounded-xl hover:bg-blue-600"
+            className="customSaveButton w-full"
           >
             {!loading ? <span>Save Testimonial</span> : <span className="flex items-center gap-2">Saving .. <span className="loading loading-spinner loading-sm"></span></span>}
           </button>

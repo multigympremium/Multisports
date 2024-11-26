@@ -1,6 +1,9 @@
 "use client";
 import { useState } from "react";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
+import { IoIosSearch } from "react-icons/io";
+import EditButton from "../../../components library/EditButton";
+import DeleteButton from "../../../components library/DeleteButton";
 
 // Sample SMS templates data (can be fetched from an API)
 const initialTemplates = [
@@ -51,61 +54,56 @@ export default function SMSTemplates() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-10">
-      <div className="max-w-7xl mx-auto bg-white p-8 shadow-md rounded-md">
-        <h1 className="text-2xl font-bold mb-5">View All SMS Templates</h1>
-
+    <div className="p-6 pt-0">
+      <div className="">
+        <div className="mb-9 flex justify-between items-center ">
+          <h1 className="text-3xl font-semibold">View All SMS Templates</h1>
+          <div className="flex justify-end">
+            <button
+              className="customSaveButton"
+              onClick={handleCreateNewTemplate}
+            >
+              +   Create New Template
+            </button>
+          </div>
+        </div>
         {/* Search Input */}
-        <div className="mb-4">
+
+        <div className="bg-white border rounded-full px-3 mb-6 md:py-2 py-1 md:gap-2 gap-1 flex-row-reverse justify-between flex">
           <input
             type="text"
-            placeholder="Search by title or description..."
             value={searchTerm}
+            className="outline-none w-full bg-white"
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full p-2 border rounded-md"
+            placeholder="Search by title or description..."
           />
+          <IoIosSearch className="text-2xl text-gray-400" />
         </div>
 
-        {/* Create New Template Button */}
-        <div className="mb-4 flex justify-end">
-          <button
-            className="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-700"
-            onClick={handleCreateNewTemplate}
-          >
-            + Create New Template
-          </button>
-        </div>
 
         {/* SMS Templates Table */}
         <table className="min-w-full table-auto border-collapse bg-white shadow-md rounded-md">
           <thead>
-            <tr className="bg-gray-200">
-              <th className="p-2 border">SL</th>
-              <th className="p-2 border">Template Title</th>
-              <th className="p-2 border">Template Description</th>
-              <th className="p-2 border">Created At</th>
-              <th className="p-2 border">Action</th>
+            <tr className="bg-gray-200 text-center">
+              <td className="p-2 border">SL</td>
+              <td className="p-2 border">Template Title</td>
+              <td className="p-2 border">Template Description</td>
+              <td className="p-2 border">Created At</td>
+              <td className="p-2 border">Action</td>
             </tr>
           </thead>
           <tbody>
             {filteredTemplates.length > 0 ? (
               filteredTemplates.map((template, index) => (
-                <tr key={template.id} className="border-b">
+                <tr key={template.id} className="border-b text-center">
                   <td className="p-2 border">{index + 1}</td>
                   <td className="p-2 border">{template.title}</td>
                   <td className="p-2 border">{template.description}</td>
                   <td className="p-2 border">{template.createdAt}</td>
                   <td className="p-2 border">
-                    <div className="flex space-x-2">
-                      <button className="text-yellow-500 hover:text-yellow-700">
-                        <FiEdit />
-                      </button>
-                      <button
-                        className="text-red-500 hover:text-red-700"
-                        onClick={() => handleDelete(template.id)}
-                      >
-                        <FiTrash2 />
-                      </button>
+                    <div className="flex justify-center space-x-2">
+                      <EditButton />
+                      <DeleteButton onClick={() => handleDelete(template.id)}/>
                     </div>
                   </td>
                 </tr>
