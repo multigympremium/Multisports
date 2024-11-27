@@ -14,6 +14,8 @@ import { FaRetweet } from "react-icons/fa6";
 import DeleteButton from "../../../components library/DeleteButton";
 import EditButton from "../../../components library/EditButton";
 import { HiArrowCircleDown, HiArrowCircleUp } from "react-icons/hi";
+import toast from "react-hot-toast";
+import useAxiosSecure from "../../../Hook/useAxiosSecure";
 const ProductBrands = () => {
   // State management
   const [Brands, setBrands] = useState([]);
@@ -24,7 +26,7 @@ const ProductBrands = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [targetId, setTargetId] = useState("");
   const itemsPerPage = 10;
-
+  const axiosSecure = useAxiosSecure();
   // Sort configuration
   const [sortConfig, setSortConfig] = useState({ key: "id", direction: "asc" });
 

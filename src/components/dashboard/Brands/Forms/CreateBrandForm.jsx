@@ -154,7 +154,7 @@ export default function CreateBrandForm({ isShowModal, setIsShowModal }) {
   return (
     <div className="w-[50%] bg-gray-100 rounded-2xl p-10 py-6">
       <div className="w-full mx-auto">
-        <h1 className="text-2xl font-semibold mb-7">Child Category Create Form</h1>
+        <h1 className="text-2xl font-semibold mb-7">Create Brand</h1>
         <form onSubmit={handleSubmit}>
           {/* Select Category */}
           <div className="mb-4">
@@ -234,7 +234,7 @@ export default function CreateBrandForm({ isShowModal, setIsShowModal }) {
               value={brandName}
               onChange={(e) => handleBrandNameInput(e.target.value)}
               className="customInput"
-              placeholder="Child Category Title"
+              placeholder="Brand Name"
               required
             />
           </div>
@@ -247,7 +247,7 @@ export default function CreateBrandForm({ isShowModal, setIsShowModal }) {
               value={slug}
               onChange={(e) => handleSlug(e.target.value)}
               className="customInput"
-              placeholder="Subcategory Title"
+              placeholder="Brand Slug"
               required
             />
           </div>
@@ -301,7 +301,7 @@ export default function CreateBrandForm({ isShowModal, setIsShowModal }) {
               type="submit"
               className="customSaveButton"
             >
-              Save Child Category
+              Save Brand
             </button>
           </div>
         </form>
