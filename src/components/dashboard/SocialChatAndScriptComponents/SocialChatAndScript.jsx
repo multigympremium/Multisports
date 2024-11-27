@@ -6,6 +6,7 @@ import GoogleRecaptcha from "./Forms/GoogleRecaptcha";
 import SocialLoginForm from "./Forms/SocialLoginForm";
 import TawkToChatForm from "./Forms/TawkToChatForm";
 import CrispChatForm from "./Forms/CrispChatForm";
+import MessengerForm from "./Forms/MessengerForm";
 
 export default function SocialChatAndScript() {
   const [selectedTab, setSelectedTab] = useState("Google Analytic");
@@ -36,11 +37,10 @@ export default function SocialChatAndScript() {
             <ul>
               {[
                 "Google Analytic",
-                "Google Tag Manager",
                 "Facebook Pixel",
                 "Google Recaptcha",
                 "Social Login",
-                "Messenger Chat Plugin",
+                "Messenger",
                 "Tawk.to Live Chat",
                 "Crisp Live Chat",
               ].map((tab) => (
@@ -97,6 +97,11 @@ export default function SocialChatAndScript() {
               {
                 selectedTab === "Crisp Live Chat" && (
                   <CrispChatForm isShow={selectedTab === "Crisp Live Chat" } />
+                )
+              }
+              {
+                selectedTab === "Messenger" && (
+                  <MessengerForm isShow={selectedTab === "Messenger" } />
                 )
               }
           </div>
