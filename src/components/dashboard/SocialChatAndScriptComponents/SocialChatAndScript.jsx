@@ -64,7 +64,7 @@ export default function SocialChatAndScript() {
           {/* Right-side Form */}
           <div className="w-3/4 pl-8 pt-0">
               {selectedTab === "Google Analytic" && (
-                <GoogleAnalyticForm />
+                <GoogleAnalyticForm isShow={selectedTab === "Google Analytic"} />
             )}
 
 
