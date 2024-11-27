@@ -115,7 +115,7 @@ root.style.setProperty("--border-color", theme.borderColor || "#cbd5e0");
   }, []);
 
   useEffect(() => {
-    const fetchShippingPolicy = async () => {
+    const fetchTwakData = async () => {
       const response = await axiosPublic.get("/tawk-live-chat");
       const data = response?.data?.data[0];
 
@@ -133,7 +133,27 @@ root.style.setProperty("--border-color", theme.borderColor || "#cbd5e0");
       }
     };
 
-    fetchShippingPolicy();
+
+    const fetchCrispData = async () => {
+      const response = await axiosPublic.get("/crisp-live-chat");
+      const data = response?.data?.data[0];
+
+      // setTargetId(data[0]?._id);
+      // setIsEnabled(data[0]?.isEnabled);
+      
+      if(data?.isEnabled === "true") {
+        
+        
+
+        const scriptElem = document.createElement("script");
+        scriptElem.innerHTML = data?.code.replaceAll(`<script type="text/javascript">`, "").replaceAll(`</script>`, "");
+        
+        document.body.appendChild(scriptElem);
+      }
+    };
+
+    fetchTwakData();
+    fetchCrispData();
   }, [axiosPublic]);
 
 

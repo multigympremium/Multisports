@@ -5,6 +5,7 @@ import GoogleAnalyticForm from "./Forms/GoogleAnalyticForm";
 import GoogleRecaptcha from "./Forms/GoogleRecaptcha";
 import SocialLoginForm from "./Forms/SocialLoginForm";
 import TawkToChatForm from "./Forms/TawkToChatForm";
+import CrispChatForm from "./Forms/CrispChatForm";
 
 export default function SocialChatAndScript() {
   const [selectedTab, setSelectedTab] = useState("Google Analytic");
@@ -91,6 +92,11 @@ export default function SocialChatAndScript() {
               {
                 selectedTab === "Tawk.to Live Chat" && (
                   <TawkToChatForm isShow={selectedTab === "Tawk.to Live Chat" } />
+                )
+              }
+              {
+                selectedTab === "Crisp Live Chat" && (
+                  <CrispChatForm isShow={selectedTab === "Crisp Live Chat" } />
                 )
               }
           </div>
