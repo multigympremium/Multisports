@@ -9,8 +9,8 @@ export default function RemoveDemoProducts() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="bg-white rounded-lg shadow-lg p-8 flex items-center justify-between">
+    <div className="py-6 pt-0">
+      <div className=" flex items-center justify-between">
         {/* Image Section */}
         <div className="w-1/2">
           <img
@@ -24,7 +24,7 @@ export default function RemoveDemoProducts() {
 
         {/* Text and Button Section */}
         <div className="w-1/2 pl-6">
-          <h2 className="text-2xl font-bold mb-4">Remove Demo Products</h2>
+          <h2 className="text-3xl font-semibold mb-4">Remove Demo Products</h2>
           <p className="mb-6 text-gray-600">
             Demo products involve showcasing the features, benefits, and
             functionality of the products in a way that helps stakeholders
@@ -35,7 +35,7 @@ export default function RemoveDemoProducts() {
 
           <button
             onClick={handleRemove}
-            className="bg-red-500 hover:bg-red-600 text-white py-3 px-6 rounded-md flex items-center"
+            className="customCancelButton flex  items-center"
           >
             <svg
               className="w-5 h-5 mr-2"
