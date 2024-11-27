@@ -117,27 +117,17 @@ root.style.setProperty("--border-color", theme.borderColor || "#cbd5e0");
   useEffect(() => {
     const fetchShippingPolicy = async () => {
       const response = await axiosPublic.get("/tawk-live-chat");
-      const data = response?.data?.data;
+      const data = response?.data?.data[0];
 
       // setTargetId(data[0]?._id);
       // setIsEnabled(data[0]?.isEnabled);
       
-      if(data[0]?.isEnabled === "true") {
+      if(data?.isEnabled === "true") {
         
         console.log(data , "agsdfgs sfg sg  talk");
 
         const scriptElem = document.createElement("script");
-        scriptElem.innerHTML = `
-        var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-        (function(){
-        var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-        s1.async=true;
-        s1.src='https://embed.tawk.to/674609ab2480f5b4f5a461f9/1idkpbi66';
-        s1.charset='UTF-8';
-        s1.setAttribute('crossorigin','*');
-        s0.parentNode.insertBefore(s1,s0);
-        })();
-  `
+        scriptElem.innerHTML = data?.code.replaceAll(`<script type="text/javascript">`, "").replaceAll(`</script>`, "");
         
         document.body.appendChild(scriptElem);
       }

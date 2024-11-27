@@ -9,6 +9,7 @@ import { set } from "react-hook-form";
 const TawkToChatForm = ({isShow}) => {
   const [isEnabled, setIsEnabled] = useState(false);
   const [targetId, setTargetId] = useState("");
+  const [code, setCode] = useState("");
 
   const axiosSecure = useAxiosSecure();
 
@@ -20,6 +21,7 @@ const TawkToChatForm = ({isShow}) => {
 
       setTargetId(data[0]?._id);
       setIsEnabled(data[0]?.isEnabled);
+      setCode(data[0]?.code);
       console.log(data , "a");
     };
 
@@ -33,7 +35,8 @@ const TawkToChatForm = ({isShow}) => {
       if (targetId) {
       response = await axiosSecure.put(`/tawk-live-chat/${targetId}`, 
         {
-          isEnabled
+          isEnabled,
+          code
         });
 
         if(response.status === 200 || response.status === 201) {
@@ -49,7 +52,8 @@ const TawkToChatForm = ({isShow}) => {
       } else {
         
         response = await axiosSecure.post(`/tawk-live-chat`, {
-            isEnabled
+            isEnabled,
+            code
           });
 
             if(response.status === 200 || response.status === 201) {
@@ -99,6 +103,18 @@ const TawkToChatForm = ({isShow}) => {
                       <option value={false}>Disable Tawk.to Live Chat</option>
                       <option value={true}>Enable Tawk.to Live Chat</option>
                     </select>
+                  </div>
+
+                  <div className="mb-6">
+                    <label className="block text-gray-700  ">
+                      Tawk.to Code
+                    </label>
+                    <textarea
+                      value={code}
+                      onChange={(e) => setCode(e.target.value)}
+                      className="customInput min-h-[300px]"
+                      placeholder="Enter Tawk.to Live Chat ID"
+                    />
                   </div>
 
 
