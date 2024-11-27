@@ -10,6 +10,7 @@ import PopularProducts from "../../../components/Home/PopularProducts/PopularPro
 import TrendyBags from "../../../components/Home/TrendyBags/TrendyBags";
 import useGetSeo from "../../../Hook/GetPublicDataHook/useGetSeo";
 import ReactGA from "react-ga4";
+import FacebookChat from "../../../components/Home/FacebookChat/FacebookChat";
 export const metadata = {
   title: "Universal Survey - Home",
   description:
@@ -39,6 +40,8 @@ const HomePage = () => {
       <TrendyBags />
 
       <Brands />
+
+      <FacebookChat />
     </>
   );
 };

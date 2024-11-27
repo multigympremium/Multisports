@@ -4,6 +4,7 @@ import FacebookPixelForm from "./Forms/FacebookPixelForm";
 import GoogleAnalyticForm from "./Forms/GoogleAnalyticForm";
 import GoogleRecaptcha from "./Forms/GoogleRecaptcha";
 import SocialLoginForm from "./Forms/SocialLoginForm";
+import TawkToChatForm from "./Forms/TawkToChatForm";
 
 export default function SocialChatAndScript() {
   const [selectedTab, setSelectedTab] = useState("Google Analytic");
@@ -83,6 +84,13 @@ export default function SocialChatAndScript() {
               {
                 selectedTab === "Social Login" && (
                   <SocialLoginForm isShow={selectedTab === "Social Login" } />
+                )
+              }
+
+              
+              {
+                selectedTab === "Tawk.to Live Chat" && (
+                  <TawkToChatForm isShow={selectedTab === "Tawk.to Live Chat" } />
                 )
               }
           </div>
