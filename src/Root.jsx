@@ -80,9 +80,14 @@ root.style.setProperty("--border-color", theme.borderColor || "#cbd5e0");
 
     const fetchData = async () => {
       // Fetch the Pixel ID dynamically (from backend or settings)
-      const pixelId = localStorage.getItem('facebookPixelId'); // Example
-      if (pixelId) {
-        ReactPixel.init(pixelId);
+
+      const res = await axiosPublic.get("/facebook-pixel");
+      const facebookData = res?.data?.data[0];
+      // const pixelId = localStorage.getItem('facebookPixelId');
+      if (facebookData?.pixelId && facebookData?.isEnabled) {
+
+        console.log(facebookData, "facebookData");
+        ReactPixel.init(facebookData?.pixelId);
         ReactPixel.pageView(); // Track a page view
       }
   

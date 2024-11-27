@@ -15,7 +15,7 @@ export default function FacebookPixelForm({isShow}) {
 
   useEffect(() => {
     const fetchShippingPolicy = async () => {
-      const response = await axiosSecure.get("/tawk-live-chat");
+      const response = await axiosSecure.get("/facebook-pixel");
       const data = response?.data?.data;
 
       setTargetId(data[0]?._id);
@@ -32,7 +32,7 @@ export default function FacebookPixelForm({isShow}) {
     try {
       let response;
       if (targetId) {
-      response = await axiosSecure.put(`/tawk-live-chat/${targetId}`, 
+      response = await axiosSecure.put(`/facebook-pixel/${targetId}`, 
         {
           isEnabled,
           pixelId
@@ -50,7 +50,7 @@ export default function FacebookPixelForm({isShow}) {
       
       } else {
         
-        response = await axiosSecure.post(`/tawk-live-chat`, {
+        response = await axiosSecure.post(`/facebook-pixel`, {
             isEnabled,
             pixelId
           });
