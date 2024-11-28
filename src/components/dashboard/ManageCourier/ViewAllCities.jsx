@@ -1,13 +1,8 @@
-"use client";
+
 import { useState, useEffect, useCallback } from "react";
 
-import CellImage from "../../../shared/ImageComponents/CellImage";
-import toast from "react-hot-toast";
-import Swal from "sweetalert2";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
-import { HiArrowCircleDown, HiArrowCircleUp } from "react-icons/hi";
-import EditButton from "../../../components library/EditButton";
-import DeleteButton from "../../../components library/DeleteButton";
+import { Link } from "react-router-dom";
 
 export default function ViewAllCities() {
   const [currentPage, setCurrentPage] = useState(0);
@@ -15,9 +10,6 @@ export default function ViewAllCities() {
   const [courierCities, setCourierCities] = useState([]);
   const [sortConfig, setSortConfig] = useState({ key: "id", direction: "asc" });
   const axiosSecure = useAxiosSecure();
-  const [isDeleted, setIsDeleted] = useState(false);
-  const [isEdited, setIsEdited] = useState(false);
-  const [categoryId, setCategoryId] = useState("");
 
 
   const sortedcourierCities = useCallback(() => {
@@ -54,45 +46,7 @@ export default function ViewAllCities() {
     setCurrentPage(pageNumber);
   };
 
-  const handleEdit = (id) => {
-    setCategoryId(id);
-    setIsEdited(true);
-
-    console.log(`Edit category with ID: ${id}`);
-  };
-
-  const handleDelete = async (id) => {
-    try {
-      Swal.fire({
-        title: "Are you sure you want to delete this member?",
-        text: "This action cannot be undone!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#d33",
-        cancelButtonColor: "#3085d6",
-        confirmButtonText: "Yes, delete it!",
-        cancelButtonText: "No, cancel!",
-      }).then(async (result) => {
-        if (result.isConfirmed) {
-          try {
-            const res = await axiosSecure.delete(`/courierCities/${id}`);
-            console.log(res, "res");
-            if (res.status === 200 || res.status === 201) {
-              setIsDeleted((prev) => !prev);
-              toast.success("Category deleted successfully!");
-            }
-          } catch (error) {
-            console.log(error, "error");
-            toast.error("Error deleting Item!");
-          }
-        }
-      });
-    } catch (error) {
-      console.log(error, "error");
-      toast.error("Error deleting category!");
-    }
-    console.log(`Delete category with ID: ${id}`);
-  };
+  
 
   useEffect(() => {
     const fetchCourierCities = async () => {
@@ -109,12 +63,12 @@ export default function ViewAllCities() {
     };
 
     fetchCourierCities();
-  }, [axiosSecure, isDeleted, isEdited]);
+  }, [axiosSecure]);
 
   return (
     <div className="p-6 pt-0">
       <div className="">
-        <h1 className="text-3xl header font-semibold mb-9">Category List</h1>
+        <h1 className="text-3xl header font-semibold mb-9">City List</h1>
         <table className="min-w-full shadow table-auto border-collapse">
           <thead className="text-lg">
             <tr>
@@ -142,18 +96,21 @@ export default function ViewAllCities() {
                 {sortConfig.key === "city_id" &&
                   (sortConfig.direction === "asc" ? "🔼" : "🔽")}
               </td>
+
+              <td className="border p-2 text-center cursor-pointer">Action</td>
              
               
             </tr>
           </thead>
           <tbody>
-            {paginatedData()?.length > 0 && paginatedData().map((category, index) => (
-              <tr key={category.id} className="border-b text-center">
+            {paginatedData()?.length > 0 && paginatedData().map((item, index) => (
+              <tr key={item.id} className="border-b text-center">
                 <td className="border p-2 ">
                   {index + 1 + currentPage * itemsPerPage}
                 </td>
-                <td className="border p-2">{category.city_name}</td>
-                <td className="border p-2">{category.city_id}</td>
+                <td className="border p-2">{item.city_name}</td>
+                <td className="border p-2">{item.city_id}</td>
+                <td className="border p-2"><Link className="px-2 py-1 bg-green-600 rounded-md text-white hover:bg-green-500" to={`/dashboard/zones/${item.city_id}`}>View Zones</Link></td>
                
                
                 

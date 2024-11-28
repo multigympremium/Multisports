@@ -1474,7 +1474,7 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "userpermission",
-      path: "view-all-zones",
+      path: "zones/:city_id",
       // path: isPermittedRoute("userpermission"),
       element: (
         // <PrivateRoute>
@@ -1489,7 +1489,7 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "userpermission",
-      path: "view-all-areas",
+      path: "areas/:zone_id",
       // path: isPermittedRoute("userpermission"),
       element: (
         // <PrivateRoute>

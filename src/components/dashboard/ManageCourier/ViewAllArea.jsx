@@ -1,27 +1,23 @@
-"use client";
+
 import { useState, useEffect, useCallback } from "react";
 
-import CellImage from "../../../shared/ImageComponents/CellImage";
-import toast from "react-hot-toast";
-import Swal from "sweetalert2";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
-import { HiArrowCircleDown, HiArrowCircleUp } from "react-icons/hi";
-import EditButton from "../../../components library/EditButton";
-import DeleteButton from "../../../components library/DeleteButton";
+import { Link, useParams } from "react-router-dom";
 
 export default function ViewAllArea() {
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 10;
-  const [categories, setCategories] = useState([]);
+  const itemsPerPage = 30;
+  const [courierCities, setCourierCities] = useState([]);
   const [sortConfig, setSortConfig] = useState({ key: "id", direction: "asc" });
   const axiosSecure = useAxiosSecure();
-  const [isDeleted, setIsDeleted] = useState(false);
-  const [isEdited, setIsEdited] = useState(false);
-  const [categoryId, setCategoryId] = useState("");
+
+  const {zone_id} = useParams();
+
+  console.log(zone_id, "city id")
 
 
-  const sortedCategories = useCallback(() => {
-    const sortedData = [...categories];
+  const sortedcourierCities = useCallback(() => {
+    const sortedData = [...courierCities];
     sortedData.sort((a, b) => {
       if (a[sortConfig.key] < b[sortConfig.key]) {
         return sortConfig.direction === "asc" ? -1 : 1;
@@ -32,13 +28,13 @@ export default function ViewAllArea() {
       return 0;
     });
     return sortedData;
-  }, [categories, sortConfig]);
+  }, [courierCities, sortConfig]);
 
   const paginatedData = useCallback(() => {
     const offset = currentPage * itemsPerPage;
-    console.log(categories, "categories", offset, offset + itemsPerPage);
-    return sortedCategories().slice(offset, offset + itemsPerPage);
-  }, [currentPage, itemsPerPage, categories, sortedCategories]);
+    console.log(courierCities, "courierCities", offset, offset + itemsPerPage);
+    return sortedcourierCities().slice(offset, offset + itemsPerPage);
+  }, [currentPage, itemsPerPage, courierCities, sortedcourierCities]);
 
   const handleSort = (key) => {
     let direction = "asc";
@@ -54,155 +50,82 @@ export default function ViewAllArea() {
     setCurrentPage(pageNumber);
   };
 
-  const handleEdit = (id) => {
-    setCategoryId(id);
-    setIsEdited(true);
-
-    console.log(`Edit category with ID: ${id}`);
-  };
-
-  const handleDelete = async (id) => {
-    try {
-      Swal.fire({
-        title: "Are you sure you want to delete this member?",
-        text: "This action cannot be undone!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#d33",
-        cancelButtonColor: "#3085d6",
-        confirmButtonText: "Yes, delete it!",
-        cancelButtonText: "No, cancel!",
-      }).then(async (result) => {
-        if (result.isConfirmed) {
-          try {
-            const res = await axiosSecure.delete(`/categories/${id}`);
-            console.log(res, "res");
-            if (res.status === 200 || res.status === 201) {
-              setIsDeleted((prev) => !prev);
-              toast.success("Category deleted successfully!");
-            }
-          } catch (error) {
-            console.log(error, "error");
-            toast.error("Error deleting Item!");
-          }
-        }
-      });
-    } catch (error) {
-      console.log(error, "error");
-      toast.error("Error deleting category!");
-    }
-    console.log(`Delete category with ID: ${id}`);
-  };
+  
 
   useEffect(() => {
-    const fetchCategories = async () => {
+    const fetchCourierCities = async () => {
       try {
-        const res = await axiosSecure.get("/categories");
+        const res = await axiosSecure.get(`/courier/zones/${zone_id}`);
         console.log(res, "res", res?.data?.data);
         if (res.status === 200 || res.status === 201) {
-          setCategories(res.data.data);
+          setCourierCities(res.data?.data?.data?.data);
         }
       } catch (error) {
-        console.error("Error fetching categories:", error);
-        throw new Error("Failed to fetch categories");
+        console.error("Error fetching courierCities:", error);
+        throw new Error("Failed to fetch courierCities");
       }
     };
 
-    fetchCategories();
-  }, [axiosSecure, isDeleted, isEdited]);
+    fetchCourierCities();
+  }, [axiosSecure, zone_id]);
 
   return (
     <div className="p-6 pt-0">
+      <div className="breadcrumbs text-sm">
+  <ul>
+    <li><Link to={`/dashboard`}>Dashboard</Link></li>
+    <li><Link to={`/dashboard/view-all-cities`}>Cities</Link></li>
+    <li>Zones</li>
+  </ul>
+</div>
       <div className="">
-        <h1 className="text-3xl header font-semibold mb-9">Category List</h1>
+        <h1 className="text-3xl header font-semibold mb-9">Zone List</h1>
+
         <table className="min-w-full shadow table-auto border-collapse">
           <thead className="text-lg">
             <tr>
               <td
                 className="border flex justify-center items-center gap-2 text-lg p-2 text-center cursor-pointer"
-                onClick={() => handleSort("id")}
+                
               >
                 SL{" "}
-                {sortConfig.key === "id" &&
-                  (sortConfig.direction === "asc" ? <HiArrowCircleUp className="text-[#087D6D] " /> : <HiArrowCircleDown className="text-[#E68923]" />)}
+                
               </td>
               <td
                 className="border p-2 text-center cursor-pointer"
-                onClick={() => handleSort("categoryName")}
+                onClick={() => handleSort("zone_name")}
               >
-                Name{" "}
-                {sortConfig.key === "categoryName" &&
+                Zone Name{" "}
+                {sortConfig.key === "zone_name" &&
                   (sortConfig.direction === "asc" ? "🔼" : "🔽")}
               </td>
-              <td className="border p-2 text-center">Icon</td>
-              <td className="border p-2 text-center">Banner Image</td>
+              
               <td
                 className="border p-2 text-center cursor-pointer"
-                onClick={() => handleSort("slug")}
+                onClick={() => handleSort("zone_id")}
               >
-                Slug{" "}
-                {sortConfig.key === "slug" &&
+                Zone ID{" "}
+                {sortConfig.key === "zone_id" &&
                   (sortConfig.direction === "asc" ? "🔼" : "🔽")}
               </td>
-              <td
-                className="border p-2 text-center cursor-pointer"
-                onClick={() => handleSort("featureCategory")}
-              >
-                Featured{" "}
-                {sortConfig.key === "featureCategory" &&
-                  (sortConfig.direction === "asc" ? "🔼" : "🔽")}
-              </td>
-              <td className="border p-2 text-center">Show On Navbar</td>
-              <td className="border p-2 text-center">Action</td>
+              <td className="border p-2 text-center cursor-pointer">Action</td>
+              
             </tr>
           </thead>
           <tbody>
-            {paginatedData()?.length > 0 && paginatedData().map((category, index) => (
-              <tr key={category.id} className="border-b text-center">
+            {paginatedData()?.length > 0 && paginatedData().map((item, index) => (
+              <tr key={item.id} className="border-b text-center">
                 <td className="border p-2 ">
                   {index + 1 + currentPage * itemsPerPage}
                 </td>
-                <td className="border p-2">{category.categoryName}</td>
-                <td className="border p-2 flex justify-center">
-                  <div className="max-w-20 border rounded-full overflow-hidden">
-                    <CellImage
-                      width={400}
-                      height={400}
-                      src={category.categoryIcon}
-                      alt="icon"
-                    /></div>
-                </td>
-                <td className="border p-2">
-                  <div>
-                    <div className="flex justify-center">
-                      <CellImage
-                        width={400}
-                        height={400}
-                        src={category.categoryBanner}
-                        alt="banner"
-                      />
-                    </div>
-                  </div>
-                </td>
-                <td className="border p-2">{category.slug}</td>
-                <td className="border p-2">
-                  {category.featureCategory === "Yes" ? (
-                    <span className="bg-green-500 text-white px-2 py-1 rounded-md">
-                      Featured
-                    </span>
-                  ) : (
-                    <span>No</span>
-                  )}
-                </td>
-                <td className="border p-2">
-                  {category.showOnNavbar ? "Yes" : "No"}
-                </td>
-                <td className="border p-2">
-                  <div className="flex justify-center space-x-2">
-                    <EditButton onClick={() => handleEdit(category._id)} />
-                    <DeleteButton onClick={() => handleDelete(category._id)} />
-                  </div>
-                </td>
+                <td className="border p-2">{item.zone_name}</td>
+                <td className="border p-2">{item.zone_id}</td>
+
+                <td className="border p-2"><Link className="px-2 py-1 bg-green-600 rounded-md text-white hover:bg-green-500" to={`/dashboard/area/${item?.zone_id}`}>View Area</Link></td>
+
+               
+               
+                
               </tr>
             ))}
           </tbody>
@@ -211,7 +134,7 @@ export default function ViewAllArea() {
         {/* Pagination */}
         <div className="mt-5 flex justify-center space-x-2">
           {Array.from({
-            length: Math.ceil(categories.length / itemsPerPage),
+            length: Math.ceil(courierCities.length / itemsPerPage),
           }).map((_, pageIndex) => (
             <button
               key={pageIndex}
