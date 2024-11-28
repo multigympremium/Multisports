@@ -1,29 +1,19 @@
-"use client";
+
 import { useState, useEffect, useCallback } from "react";
 
-import CellImage from "../../../shared/ImageComponents/CellImage";
-import toast from "react-hot-toast";
-import Modal from "../../../shared/Modal/Modal";
-import Swal from "sweetalert2";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
-import { HiArrowCircleDown, HiArrowCircleUp } from "react-icons/hi";
-import EditButton from "../../../components library/EditButton";
-import DeleteButton from "../../../components library/DeleteButton";
-import EditStoreForm from "./forms/EditStoreForm";
+import { Link } from "react-router-dom";
 
-export default function ViewAllStore() {
+export default function ViewAllStores() {
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 10;
-  const [categories, setCategories] = useState([]);
+  const itemsPerPage = 30;
+  const [courierStore, setCourierStore] = useState([]);
   const [sortConfig, setSortConfig] = useState({ key: "id", direction: "asc" });
   const axiosSecure = useAxiosSecure();
-  const [isDeleted, setIsDeleted] = useState(false);
-  const [isEdited, setIsEdited] = useState(false);
-  const [categoryId, setCategoryId] = useState("");
 
 
-  const sortedCategories = useCallback(() => {
-    const sortedData = [...categories];
+  const sortedcourierStore = useCallback(() => {
+    const sortedData = [...courierStore];
     sortedData.sort((a, b) => {
       if (a[sortConfig.key] < b[sortConfig.key]) {
         return sortConfig.direction === "asc" ? -1 : 1;
@@ -34,13 +24,13 @@ export default function ViewAllStore() {
       return 0;
     });
     return sortedData;
-  }, [categories, sortConfig]);
+  }, [courierStore, sortConfig]);
 
   const paginatedData = useCallback(() => {
     const offset = currentPage * itemsPerPage;
-    console.log(categories, "categories", offset, offset + itemsPerPage);
-    return sortedCategories().slice(offset, offset + itemsPerPage);
-  }, [currentPage, itemsPerPage, categories, sortedCategories]);
+    console.log(courierStore, "courierStore", offset, offset + itemsPerPage);
+    return sortedcourierStore().slice(offset, offset + itemsPerPage);
+  }, [currentPage, itemsPerPage, courierStore, sortedcourierStore]);
 
   const handleSort = (key) => {
     let direction = "asc";
@@ -56,155 +46,97 @@ export default function ViewAllStore() {
     setCurrentPage(pageNumber);
   };
 
-  const handleEdit = (id) => {
-    setCategoryId(id);
-    setIsEdited(true);
-
-    console.log(`Edit category with ID: ${id}`);
-  };
-
-  const handleDelete = async (id) => {
-    try {
-      Swal.fire({
-        title: "Are you sure you want to delete this member?",
-        text: "This action cannot be undone!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#d33",
-        cancelButtonColor: "#3085d6",
-        confirmButtonText: "Yes, delete it!",
-        cancelButtonText: "No, cancel!",
-      }).then(async (result) => {
-        if (result.isConfirmed) {
-          try {
-            const res = await axiosSecure.delete(`/categories/${id}`);
-            console.log(res, "res");
-            if (res.status === 200 || res.status === 201) {
-              setIsDeleted((prev) => !prev);
-              toast.success("Category deleted successfully!");
-            }
-          } catch (error) {
-            console.log(error, "error");
-            toast.error("Error deleting Item!");
-          }
-        }
-      });
-    } catch (error) {
-      console.log(error, "error");
-      toast.error("Error deleting category!");
-    }
-    console.log(`Delete category with ID: ${id}`);
-  };
+  
 
   useEffect(() => {
-    const fetchCategories = async () => {
+    const fetchCourierStore = async () => {
       try {
-        const res = await axiosSecure.get("/categories");
+        const res = await axiosSecure.get("/courier/store");
         console.log(res, "res", res?.data?.data);
         if (res.status === 200 || res.status === 201) {
-          setCategories(res.data.data);
+          setCourierStore(res.data?.data?.data?.data);
         }
       } catch (error) {
-        console.error("Error fetching categories:", error);
-        throw new Error("Failed to fetch categories");
+        console.error("Error fetching courierStore:", error);
+        throw new Error("Failed to fetch courierStore");
       }
     };
 
-    fetchCategories();
-  }, [axiosSecure, isDeleted, isEdited]);
+    fetchCourierStore();
+  }, [axiosSecure]);
 
   return (
     <div className="p-6 pt-0">
       <div className="">
-        <h1 className="text-3xl header font-semibold mb-9">Category List</h1>
+        <h1 className="text-3xl header font-semibold mb-9">Store List</h1>
         <table className="min-w-full shadow table-auto border-collapse">
           <thead className="text-lg">
             <tr>
               <td
                 className="border flex justify-center items-center gap-2 text-lg p-2 text-center cursor-pointer"
-                onClick={() => handleSort("id")}
+                
               >
                 SL{" "}
-                {sortConfig.key === "id" &&
-                  (sortConfig.direction === "asc" ? <HiArrowCircleUp className="text-[#087D6D] " /> : <HiArrowCircleDown className="text-[#E68923]" />)}
+                
               </td>
               <td
                 className="border p-2 text-center cursor-pointer"
-                onClick={() => handleSort("categoryName")}
+                onClick={() => handleSort("store_name")}
               >
-                Name{" "}
-                {sortConfig.key === "categoryName" &&
-                  (sortConfig.direction === "asc" ? "🔼" : "🔽")}
-              </td>
-              <td className="border p-2 text-center">Icon</td>
-              <td className="border p-2 text-center">Banner Image</td>
-              <td
-                className="border p-2 text-center cursor-pointer"
-                onClick={() => handleSort("slug")}
-              >
-                Slug{" "}
-                {sortConfig.key === "slug" &&
+                Store Name{" "}
+                {sortConfig.key === "store_name" &&
                   (sortConfig.direction === "asc" ? "🔼" : "🔽")}
               </td>
               <td
                 className="border p-2 text-center cursor-pointer"
-                onClick={() => handleSort("featureCategory")}
+                onClick={() => handleSort("store_address")}
               >
-                Featured{" "}
-                {sortConfig.key === "featureCategory" &&
+                Store Address{" "}
+                {sortConfig.key === "store_address" &&
                   (sortConfig.direction === "asc" ? "🔼" : "🔽")}
               </td>
-              <td className="border p-2 text-center">Show On Navbar</td>
-              <td className="border p-2 text-center">Action</td>
+              <td
+                className="border p-2 text-center cursor-pointer"
+                onClick={() => handleSort("city_id")}
+              >
+                City ID{" "}
+                {sortConfig.key === "city_id" &&
+                  (sortConfig.direction === "asc" ? "🔼" : "🔽")}
+              </td>
+              <td
+                className="border p-2 text-center cursor-pointer"
+                onClick={() => handleSort("zone_id")}
+              >
+                Zone Id
+                {sortConfig.key === "zone_id" &&
+                  (sortConfig.direction === "asc" ? "🔼" : "🔽")}
+              </td>
+              <td
+                className="border p-2 text-center cursor-pointer"
+                onClick={() => handleSort("hub_id")}
+              >
+                Hub Id
+                {sortConfig.key === "hub_id" &&
+                  (sortConfig.direction === "asc" ? "🔼" : "🔽")}
+              </td>
+             
+              
             </tr>
           </thead>
           <tbody>
-            {paginatedData()?.length > 0 && paginatedData().map((category, index) => (
-              <tr key={category.id} className="border-b text-center">
+            {paginatedData()?.length > 0 && paginatedData().map((item, index) => (
+              <tr key={item.id} className="border-b text-center">
                 <td className="border p-2 ">
                   {index + 1 + currentPage * itemsPerPage}
                 </td>
-                <td className="border p-2">{category.categoryName}</td>
-                <td className="border p-2 flex justify-center">
-                  <div className="max-w-20 border rounded-full overflow-hidden">
-                    <CellImage
-                      width={400}
-                      height={400}
-                      src={category.categoryIcon}
-                      alt="icon"
-                    /></div>
-                </td>
-                <td className="border p-2">
-                  <div>
-                    <div className="flex justify-center">
-                      <CellImage
-                        width={400}
-                        height={400}
-                        src={category.categoryBanner}
-                        alt="banner"
-                      />
-                    </div>
-                  </div>
-                </td>
-                <td className="border p-2">{category.slug}</td>
-                <td className="border p-2">
-                  {category.featureCategory === "Yes" ? (
-                    <span className="bg-green-500 text-white px-2 py-1 rounded-md">
-                      Featured
-                    </span>
-                  ) : (
-                    <span>No</span>
-                  )}
-                </td>
-                <td className="border p-2">
-                  {category.showOnNavbar ? "Yes" : "No"}
-                </td>
-                <td className="border p-2">
-                  <div className="flex justify-center space-x-2">
-                    <EditButton onClick={() => handleEdit(category._id)} />
-                    <DeleteButton onClick={() => handleDelete(category._id)} />
-                  </div>
-                </td>
+                <td className="border p-2">{item.store_name}</td>
+                <td className="border p-2">{item.store_address}</td>
+                <td className="border p-2">{item.city_id}</td>
+                <td className="border p-2">{item.zone_id}</td>
+                <td className="border p-2">{item.hub_id}</td>
+               
+               
+                
               </tr>
             ))}
           </tbody>
@@ -213,7 +145,7 @@ export default function ViewAllStore() {
         {/* Pagination */}
         <div className="mt-5 flex justify-center space-x-2">
           {Array.from({
-            length: Math.ceil(categories.length / itemsPerPage),
+            length: Math.ceil(courierStore.length / itemsPerPage),
           }).map((_, pageIndex) => (
             <button
               key={pageIndex}
@@ -228,13 +160,7 @@ export default function ViewAllStore() {
           ))}
         </div>
       </div>
-      <Modal isShowModal={isEdited} setIsShowModal={setIsEdited}>
-        <EditStoreForm
-          categoryId={categoryId}
-          setIsShowModal={setIsEdited}
-          isShowModal={isEdited}
-        />
-      </Modal>
+     
     </div>
   );
 }

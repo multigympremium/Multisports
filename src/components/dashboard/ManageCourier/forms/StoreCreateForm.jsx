@@ -1,66 +1,32 @@
-"use client";
-
-import { useState } from "react";
-import { useDropzone } from "react-dropzone";
-import { FiUploadCloud } from "react-icons/fi";
+import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../../Hook/useAxiosSecure";
 
 export default function StoreCreateForm() {
   const axiosSecure = useAxiosSecure();
-  const [loading , setLoading] = useState(false);
-  const [categoryName, setCategoryName] = useState("");
-  const [featureCategory, setFeatureCategory] = useState("");
-  const [showOnNavbar, setShowOnNavbar] = useState("Yes");
-  const [categoryIcon, setCategoryIcon] = useState(null);
-  const [categoryIconImagePreview, setCategoryIconImagePreview] = useState("");
-  const [categoryBanner, setCategoryBanner] = useState(null);
-  const [categoryBannerImagePreview, setCategoryBannerImagePreview] =
-    useState("");
-  const [slug, setSlug] = useState("");
-  const [errors, setErrors] = useState({}); // To track validation errors
+  const [loading, setLoading] = useState(false);
+  const [name, setName] = useState("");
+  const [contact_name, setContact_name] = useState("");
+  const [contact_number, setContact_number] = useState("");
+  const [secondary_contact, setSecondary_contact] = useState("");
+  const [address, setAddress] = useState("");
+  const [city_id, setCity_id] = useState("");
+  const [zone_id, setZone_id] = useState("");
+  const [area_id, setArea_id] = useState("");
+  const [cities, setCities] = useState([]);
+  const [zones, setZones] = useState([]);
+  const [areas, setAreas] = useState([]);
+  const [errors, setErrors] = useState({});
 
-  const MAX_FILE_SIZE_MB = 2;
-
-  const onDropIcon = (acceptedFiles) => {
-    const file = acceptedFiles[0];
-    if (file.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
-      setErrors((prev) => ({
-        ...prev,
-        categoryIcon: `File size must be less than ${MAX_FILE_SIZE_MB} MB.`,
-      }));
-      return;
-    }
-    const previewUrl = URL.createObjectURL(file);
-    setCategoryIconImagePreview(previewUrl);
-    setCategoryIcon(file);
-    setErrors((prev) => ({ ...prev, categoryIcon: "" })); // Clear error
-  };
-
-  const onDropBanner = (acceptedFiles) => {
-    const file = acceptedFiles[0];
-    if (file.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
-      setErrors((prev) => ({
-        ...prev,
-        categoryBanner: `File size must be less than ${MAX_FILE_SIZE_MB} MB.`,
-      }));
-      return;
-    }
-    const previewUrl = URL.createObjectURL(file);
-    setCategoryBannerImagePreview(previewUrl);
-    setCategoryBanner(file);
-    setErrors((prev) => ({ ...prev, categoryBanner: "" })); // Clear error
-  };
-
+  // Validation logic
   const validateForm = () => {
     const newErrors = {};
-    if (!categoryName.trim())
-      newErrors.categoryName = "Category Name is required.";
-    if (!slug.trim()) newErrors.slug = "Slug is required.";
-    if (!featureCategory)
-      newErrors.featureCategory = "Feature Category is required.";
-    if (!showOnNavbar)
-      newErrors.showOnNavbar = "Show On Navbar selection is required.";
+    if (!name.trim()) newErrors.name = "Name is required.";
+    if (!contact_number.trim()) newErrors.contact_number = "Contact number is required.";
+    if (!address.trim()) newErrors.address = "Address is required.";
+    if (!city_id.trim()) newErrors.city_id = "Please select a city.";
+    if (!zone_id.trim()) newErrors.zone_id = "Please select a zone.";
+    if (!area_id.trim()) newErrors.area_id = "Please select an area.";
     return newErrors;
   };
 
@@ -81,16 +47,19 @@ export default function StoreCreateForm() {
       return;
     }
 
-    const formData = new FormData();
-    formData.append("categoryName", categoryName);
-    formData.append("featureCategory", featureCategory);
-    formData.append("showOnNavbar", showOnNavbar);
-    if (categoryIcon) formData.append("categoryIcon", categoryIcon);
-    if (categoryBanner) formData.append("categoryBanner", categoryBanner);
-    formData.append("slug", slug);
+    const submitData = {
+      name,
+      contact_name,
+      contact_number,
+      secondary_contact,
+      address,
+      city_id,
+      zone_id,
+      area_id,
+    };
 
     try {
-      const res = await axiosSecure.post("/categories", formData);
+      const res = await axiosSecure.post("/courier/store", submitData);
       if (res.status === 200 || res.status === 201) {
         Swal.fire({
           title: "Success!",
@@ -98,7 +67,16 @@ export default function StoreCreateForm() {
           icon: "success",
           confirmButtonText: "Ok",
         });
-        handleCloseModal();
+        // Reset form
+        setName("");
+        setContact_name("");
+        setContact_number("");
+        setSecondary_contact("");
+        setAddress("");
+        setCity_id("");
+        setZone_id("");
+        setArea_id("");
+        setErrors({});
       }
     } catch (err) {
       console.error(err);
@@ -113,187 +91,192 @@ export default function StoreCreateForm() {
     }
   };
 
-  const handleSlug = (input) => {
-    const sanitizedInput = input.replace(/[^a-zA-Z0-9]/g, "_");
-    setSlug(sanitizedInput);
-    setCategoryName(input);
-  };
+  useEffect(() => {
+    const fetchCities = async () => {
+      try {
+        const res = await axiosSecure.get("/courier/cities");
+        if (res.status === 200 || res.status === 201) {
+          setCities(res.data?.data?.data?.data);
+        }
+      } catch (error) {
+        console.error("Error fetching cities:", error);
+      }
+    };
 
-  const handleCloseModal = () => {
-    setCategoryName("");
-    setFeatureCategory("");
-    setShowOnNavbar("");
-    setCategoryIcon(null);
-    setCategoryBanner(null);
-    setSlug("");
-    setErrors({});
-  };
+    fetchCities();
+  }, [axiosSecure]);
 
-  const { getRootProps: getIconRootProps, getInputProps: getIconInputProps } =
-    useDropzone({
-      onDrop: onDropIcon,
-      accept: "image/*",
-      multiple: false,
-    });
+  useEffect(() => {
+    const fetchZones = async () => {
+      if (!city_id) return;
+      try {
+        const res = await axiosSecure.get(`/courier/zones/${city_id}`);
+        if (res.status === 200 || res.status === 201) {
+          setZones(res.data?.data?.data?.data);
+        }
+      } catch (error) {
+        console.error("Error fetching zones:", error);
+      }
+    };
 
-  const {
-    getRootProps: getBannerRootProps,
-    getInputProps: getBannerInputProps,
-  } = useDropzone({
-    onDrop: onDropBanner,
-    accept: "image/*",
-    multiple: false,
-  });
+    fetchZones();
+  }, [axiosSecure, city_id]);
+
+  useEffect(() => {
+    const fetchAreas = async () => {
+      if (!zone_id) return;
+      try {
+        const res = await axiosSecure.get(`/courier/area/${zone_id}`);
+        if (res.status === 200 || res.status === 201) {
+          setAreas(res.data?.data?.data?.data);
+        }
+      } catch (error) {
+        console.error("Error fetching areas:", error);
+      }
+    };
+
+    fetchAreas();
+  }, [axiosSecure, zone_id]);
+
+
+  console.log(city_id, zone_id, area_id, "city_id, zone_id, area_id")
 
   return (
     <div className="w-full p-6 pt-0">
-      <div className="">
-        <h1 className="text-3xl font-semibold mb-9">Category Create Form</h1>
+      <div>
+        <h1 className="text-3xl font-semibold mb-9">Store Create Form</h1>
         <form onSubmit={handleSubmit}>
-          {/* Category Name */}
+          {/* Name */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-semibold">Name </label>
+            <label className="block text-gray-700 font-semibold">Name</label>
             <input
               type="text"
-              value={categoryName}
-              onChange={(e) => handleSlug(e.target.value)}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               className="customInput"
-              placeholder="Category Name"
+              placeholder="Name"
             />
-            {errors.categoryName && (
-              <p className="text-red-500 text-sm">{errors.categoryName}</p>
-            )}
+            {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
           </div>
-
-          {/* Slug */}
+          {/* Name */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-semibold ">Slug </label>
+            <label className="block text-gray-700 font-semibold">Contact Name</label>
             <input
               type="text"
-              value={slug}
+              value={contact_name}
+              onChange={(e) => setContact_name(e.target.value)}
               className="customInput"
-              placeholder="Slug"
-              readOnly
+              placeholder="Name"
             />
-            {errors.slug && (
-              <p className="text-red-500 text-sm">{errors.slug}</p>
+            {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
+          </div>
+
+          {/* Contact Number */}
+          <div className="mb-4">
+            <label className="block text-gray-700 font-semibold">Contact Number</label>
+            <input
+              type="text"
+              value={contact_number}
+              onChange={(e) => setContact_number(e.target.value)}
+              className="customInput"
+              placeholder="Contact Number"
+            />
+            {errors.contact_number && (
+              <p className="text-red-500 text-sm">{errors.contact_number}</p>
+            )}
+          </div>
+          {/* Contact Number */}
+          <div className="mb-4">
+            <label className="block text-gray-700 font-semibold">Secondary Contact Number</label>
+            <input
+              type="text"
+              value={secondary_contact}
+              onChange={(e) => setSecondary_contact(e.target.value)}
+              className="customInput"
+              placeholder="Contact Number"
+            />
+            {errors.contact_number && (
+              <p className="text-red-500 text-sm">{errors.contact_number}</p>
             )}
           </div>
 
-          {/* Category Icon */}
+          {/* Address */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-semibold mb-2">
-              Category Icon (Optional)
-            </label>
-            <div
-              {...getIconRootProps()}
-              className="w-full p-4 border-dashed min-h-[200px] flex flex-col items-center justify-center border-2 border-gray-300 rounded-2xl text-center cursor-pointer"
-            >
-              <input {...getIconInputProps()} />
-              {categoryIcon ? (
-                <>
-                  <img
-                    src={categoryIconImagePreview}
-                    alt="categoryIcon"
-                    width={200}
-                    height={200}
-                  />
-                  <p>{categoryIcon.name}</p>
-                </>
-              ) : (
-                <>
-                  <FiUploadCloud size={60} />
-                  <p className="text-xl">Drag and drop a file here or click</p>
-                </>
-              )}
-            </div>
-            {errors.categoryIcon && (
-              <p className="text-red-500 text-sm">{errors.categoryIcon}</p>
-            )}
+            <label className="block text-gray-700 font-semibold">Address</label>
+            <input
+              type="text"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              className="customInput"
+              placeholder="Address"
+            />
+            {errors.address && <p className="text-red-500 text-sm">{errors.address}</p>}
           </div>
 
-          {/* Category Banner */}
+          {/* Cities */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-semibold mb-2">
-              Category Banner (Optional)
-            </label>
-            <div
-              {...getBannerRootProps()}
-              className="w-full p-4 border-dashed min-h-[200px] flex flex-col items-center justify-center border-2 border-gray-300 rounded-2xl text-center cursor-pointer"
-            >
-              <input {...getBannerInputProps()} />
-              {categoryBanner ? (
-                <>
-                  <img
-                    src={categoryBannerImagePreview}
-                    alt="categoryBanner"
-                    width={200}
-                    height={200}
-                  />
-                  <p>{categoryBanner.name}</p>
-                </>
-              ) : (
-                <>
-                  <FiUploadCloud size={60} />
-                  <p className="text-xl">Drag and drop a file here or click</p>
-                </>
-              )}
-            </div>
-            {errors.categoryBanner && (
-              <p className="text-red-500 text-sm">{errors.categoryBanner}</p>
-            )}
-          </div>
-
-          {/* Feature Category */}
-          <div className="mb-4">
-            <label className="block text-gray-700 font-semibold">
-              Feature Category
-            </label>
+            <label className="block text-gray-700 font-semibold">City</label>
             <select
-              value={featureCategory}
-              onChange={(e) => setFeatureCategory(e.target.value)}
-              className="customInput select"
+              value={city_id}
+              onChange={(e) => setCity_id(e.target.value)}
+              className="customInput"
             >
               <option value="">Select One</option>
-              <option value="yes">Yes</option>
-              <option value="no">No</option>
+              {cities.length > 0 && cities.map((city) => (
+                <option value={city?.city_id} key={city?.city_id}>
+                  {city?.city_name}
+                </option>
+              ))}
             </select>
-            {errors.featureCategory && (
-              <p className="text-red-500 text-sm">{errors.featureCategory}</p>
-            )}
+            {errors.city_id && <p className="text-red-500 text-sm">{errors.city_id}</p>}
           </div>
 
-          {/* Show On Navbar */}
+          {/* Zones */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-semibold">
-              Show on Navbar
-            </label>
+            <label className="block text-gray-700 font-semibold">Zone</label>
             <select
-              value={showOnNavbar}
-              onChange={(e) => setShowOnNavbar(e.target.value)}
-              className="customInput select"
+              value={zone_id}
+              onChange={(e) => setZone_id(e.target.value)}
+              className="customInput"
             >
-              <option value="Yes">Yes</option>
-              <option value="No">No</option>
+              <option value="">Select One</option>
+              {zones.length > 0 && zones.map((zone) => (
+                <option value={zone?.zone_id} key={zone?.zone_id}>
+                  {zone?.zone_name}
+                </option>
+              ))}
             </select>
-            {errors.showOnNavbar && (
-              <p className="text-red-500 text-sm">{errors.showOnNavbar}</p>
-            )}
+            {errors.zone_id && <p className="text-red-500 text-sm">{errors.zone_id}</p>}
+          </div>
+
+          {/* Areas */}
+          <div className="mb-4">
+            <label className="block text-gray-700 font-semibold">Area</label>
+            <select
+              value={area_id}
+              onChange={(e) => setArea_id(e.target.value)}
+              className="customInput"
+            >
+              <option value="">Select One</option>
+              {areas.length > 0 && areas.map((area) => (
+                <option value={area?.area_id} key={area?.area_id}>
+                  {area?.area_name}
+                </option>
+              ))}
+            </select>
+            {errors.area_id && <p className="text-red-500 text-sm">{errors.area_id}</p>}
           </div>
 
           <div className="mt-6 flex justify-end">
-            <button
-            disabled={loading}
-              type="submit"
-              className="customSaveButton"
-            >
+            <button disabled={loading} type="submit" className="customSaveButton">
               {loading ? (
-              <>
-                <span className="loading loading-spinner mr-2  loading-xs"></span>Creating ..
-              </>
-            ) : (
-              "Create Category"
-            )}
+                <>
+                  <span className="loading loading-spinner mr-2 loading-xs"></span>
+                  Creating...
+                </>
+              ) : (
+                "Create Store"
+              )}
             </button>
           </div>
         </form>

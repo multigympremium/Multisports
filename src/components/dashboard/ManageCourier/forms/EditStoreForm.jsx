@@ -1,10 +1,10 @@
 "use client";
-import EditFormImage from "../../../shared/ImageComponents/EditFormImage";
+import EditFormImage from "../../../../shared/ImageComponents/EditFormImage";
 import { useState, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import { FiUploadCloud } from "react-icons/fi";
 import Swal from "sweetalert2";
-import useAxiosSecure from "../../../Hook/useAxiosSecure";
+import useAxiosSecure from "../../../../Hook/useAxiosSecure";
 
 const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB
 

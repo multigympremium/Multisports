@@ -2,7 +2,7 @@
 import { useState, useEffect, useCallback } from "react";
 
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 export default function ViewAllArea() {
   const [currentPage, setCurrentPage] = useState(0);
@@ -10,6 +10,8 @@ export default function ViewAllArea() {
   const [courierCities, setCourierCities] = useState([]);
   const [sortConfig, setSortConfig] = useState({ key: "id", direction: "asc" });
   const axiosSecure = useAxiosSecure();
+
+  const navigate = useNavigate()
 
   const {zone_id} = useParams();
 
@@ -55,7 +57,7 @@ export default function ViewAllArea() {
   useEffect(() => {
     const fetchCourierCities = async () => {
       try {
-        const res = await axiosSecure.get(`/courier/zones/${zone_id}`);
+        const res = await axiosSecure.get(`/courier/area/${zone_id}`);
         console.log(res, "res", res?.data?.data);
         if (res.status === 200 || res.status === 201) {
           setCourierCities(res.data?.data?.data?.data);
@@ -69,17 +71,22 @@ export default function ViewAllArea() {
     fetchCourierCities();
   }, [axiosSecure, zone_id]);
 
+  const goBack = ()=> {
+    navigate(-1)
+  }
+
   return (
     <div className="p-6 pt-0">
       <div className="breadcrumbs text-sm">
   <ul>
     <li><Link to={`/dashboard`}>Dashboard</Link></li>
     <li><Link to={`/dashboard/view-all-cities`}>Cities</Link></li>
-    <li>Zones</li>
+    <li onClick={goBack} className="cursor-pointer">Zones</li>
+    <li>Area</li>
   </ul>
 </div>
       <div className="">
-        <h1 className="text-3xl header font-semibold mb-9">Zone List</h1>
+        <h1 className="text-3xl header font-semibold mb-9">Area List</h1>
 
         <table className="min-w-full shadow table-auto border-collapse">
           <thead className="text-lg">
@@ -95,7 +102,7 @@ export default function ViewAllArea() {
                 className="border p-2 text-center cursor-pointer"
                 onClick={() => handleSort("zone_name")}
               >
-                Zone Name{" "}
+                Area Name{" "}
                 {sortConfig.key === "zone_name" &&
                   (sortConfig.direction === "asc" ? "🔼" : "🔽")}
               </td>
@@ -104,11 +111,10 @@ export default function ViewAllArea() {
                 className="border p-2 text-center cursor-pointer"
                 onClick={() => handleSort("zone_id")}
               >
-                Zone ID{" "}
+                Area ID{" "}
                 {sortConfig.key === "zone_id" &&
                   (sortConfig.direction === "asc" ? "🔼" : "🔽")}
               </td>
-              <td className="border p-2 text-center cursor-pointer">Action</td>
               
             </tr>
           </thead>
@@ -118,10 +124,9 @@ export default function ViewAllArea() {
                 <td className="border p-2 ">
                   {index + 1 + currentPage * itemsPerPage}
                 </td>
-                <td className="border p-2">{item.zone_name}</td>
-                <td className="border p-2">{item.zone_id}</td>
+                <td className="border p-2">{item.area_name}</td>
+                <td className="border p-2">{item.area_id}</td>
 
-                <td className="border p-2"><Link className="px-2 py-1 bg-green-600 rounded-md text-white hover:bg-green-500" to={`/dashboard/area/${item?.zone_id}`}>View Area</Link></td>
 
                
                

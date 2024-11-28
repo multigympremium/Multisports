@@ -1,7 +1,8 @@
 
 import React , { lazy, Suspense } from "react";
 import GlobalLoading from "../../components library/GlobalLoading";
-const ViewAllStore = lazy(() => import(  "../../components/dashboard/ManageCourier/ViewAllStore"));
+const ViewAllStores = lazy(() => import(  "../../components/dashboard/ManageCourier/ViewAllStore"));
+const StoreCreateForm = lazy(() => import(  "../../components/dashboard/ManageCourier/forms/StoreCreateForm"));
 const ViewAllCities = lazy(() => import(  "../../components/dashboard/ManageCourier/ViewAllCities"));
 const ViewAllZones = lazy(() => import(  "../../components/dashboard/ManageCourier/ViewAllZones"));
 const ViewAllArea = lazy(() => import(  "../../components/dashboard/ManageCourier/ViewAllArea"));
@@ -1452,7 +1453,7 @@ function DashboardChildrenRoutes() {
         // </PrivateRoute>
         <Suspense fallback={<GlobalLoading />}>
           <PrivateRoute>
-            <ViewAllStore />
+            <ViewAllStores />
           </PrivateRoute>
         </Suspense>
       ),
@@ -1489,7 +1490,7 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "userpermission",
-      path: "areas/:zone_id",
+      path: "area/:zone_id",
       // path: isPermittedRoute("userpermission"),
       element: (
         // <PrivateRoute>
@@ -1498,6 +1499,21 @@ function DashboardChildrenRoutes() {
         <Suspense fallback={<GlobalLoading />}>
           <PrivateRoute>
             <ViewAllArea />
+          </PrivateRoute>
+        </Suspense>
+      ),
+    },
+    {
+      // path: "userpermission",
+      path: "create-store",
+      // path: isPermittedRoute("userpermission"),
+      element: (
+        // <PrivateRoute>
+        //   <SmsGroup />
+        // </PrivateRoute>
+        <Suspense fallback={<GlobalLoading />}>
+          <PrivateRoute>
+            <StoreCreateForm />
           </PrivateRoute>
         </Suspense>
       ),
