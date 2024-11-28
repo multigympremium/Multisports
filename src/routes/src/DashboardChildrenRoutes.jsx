@@ -1,6 +1,10 @@
 
 import React , { lazy, Suspense } from "react";
 import GlobalLoading from "../../components library/GlobalLoading";
+const ViewAllStore = lazy(() => import(  "../../components/dashboard/ManageCourier/ViewAllStore"));
+const ViewAllCities = lazy(() => import(  "../../components/dashboard/ManageCourier/ViewAllCities"));
+const ViewAllZones = lazy(() => import(  "../../components/dashboard/ManageCourier/ViewAllZones"));
+const ViewAllArea = lazy(() => import(  "../../components/dashboard/ManageCourier/ViewAllArea"));
 const UserPermission = lazy(() => import(   "../../components/dashboard/UserPermission/Userpermission"));
 const StaffRole = lazy(() => import(  "../../components/dashboard/UserPermission/StaffRole"));
 const ProductPage = lazy(() => import( "../../components/Home/Products/ProductPage"));
@@ -1434,6 +1438,66 @@ function DashboardChildrenRoutes() {
         <Suspense fallback={<GlobalLoading />}>
           <PrivateRoute>
             <BlogCreateForm />
+          </PrivateRoute>
+        </Suspense>
+      ),
+    },
+    {
+      // path: "userpermission",
+      path: "view-all-stores",
+      // path: isPermittedRoute("userpermission"),
+      element: (
+        // <PrivateRoute>
+        //   <SmsGroup />
+        // </PrivateRoute>
+        <Suspense fallback={<GlobalLoading />}>
+          <PrivateRoute>
+            <ViewAllStore />
+          </PrivateRoute>
+        </Suspense>
+      ),
+    },
+    {
+      // path: "userpermission",
+      path: "view-all-cities",
+      // path: isPermittedRoute("userpermission"),
+      element: (
+        // <PrivateRoute>
+        //   <SmsGroup />
+        // </PrivateRoute>
+        <Suspense fallback={<GlobalLoading />}>
+          <PrivateRoute>
+            <ViewAllCities />
+          </PrivateRoute>
+        </Suspense>
+      ),
+    },
+    {
+      // path: "userpermission",
+      path: "view-all-zones",
+      // path: isPermittedRoute("userpermission"),
+      element: (
+        // <PrivateRoute>
+        //   <SmsGroup />
+        // </PrivateRoute>
+        <Suspense fallback={<GlobalLoading />}>
+          <PrivateRoute>
+            <ViewAllZones />
+          </PrivateRoute>
+        </Suspense>
+      ),
+    },
+    {
+      // path: "userpermission",
+      path: "view-all-areas",
+      // path: isPermittedRoute("userpermission"),
+      element: (
+        // <PrivateRoute>
+        //   <SmsGroup />
+        // </PrivateRoute>
+        <Suspense fallback={<GlobalLoading />}>
+          <PrivateRoute>
+            <ViewAllArea />
           </PrivateRoute>
         </Suspense>
       ),

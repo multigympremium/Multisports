@@ -237,6 +237,43 @@ function MenuItemsList({ userRole }) {
         },
       ],
     },
+    // Orders
+    {
+      title: "Couriers",
+      icon: <IoIosHome />, // Replace with the actual SVG icon
+      list: [
+         {
+          title: "Store",
+          path: "view-all-stores",
+          isAllowed: isAllowedRoute("view-all-stores"),
+          icon: <IoIosHome />, // Replace with the actual SVG icon
+         },
+         {
+          title: "Cities",
+          path: "view-all-cities",
+          isAllowed: isAllowedRoute("view-all-stores"),
+          icon: <IoIosHome />, // Replace with the actual SVG icon
+         },
+         {
+          title: "Zones",
+          path: "view-all-zones",
+          isAllowed: isAllowedRoute("view-all-stores"),
+          icon: <IoIosHome />, // Replace with the actual SVG icon
+         },
+         {
+          title: "Areas",
+          path: "view-all-areas",
+          isAllowed: isAllowedRoute("view-all-stores"),
+          icon: <IoIosHome />, // Replace with the actual SVG icon
+         },
+        {
+          title: "Create Store",
+          path: "create-store",
+          isAllowed: isAllowedRoute("create-store"),
+          icon: <IoIosHome />,
+        },
+      ],
+    },
     // Customers
     {
       title: "Customers",
