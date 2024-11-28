@@ -154,14 +154,14 @@ export default function AboutUsSection({
   };
 
   return (
-    <div className="w-full bg-white  p-8 rounded-md">
+    <div className="">
       {/* Testimonial Edit Form */}
-      <h1 className="text-2xl font-bold mb-4">About Section</h1>
+      <h1 className="text-2xl font-semibold mb-7">About Section</h1>
       <form onSubmit={handleSubmit}>
-        <div className="grid grid-cols-2 gap-4 mb-8" > 
+        <div className="mb-4" > 
         {/* Left Column - Image Upload */}
         <div className="relative">
-          <label className="block text-gray-700 mb-2">Banner Image *</label>
+          <label className="block text-gray-700 mb-2">Banner Image</label>
           <DragEditUploadImageInput
             getRootProps={getBannerRootProps}
             getInputProps={getBannerInputProps}
@@ -172,7 +172,7 @@ export default function AboutUsSection({
          
         </div>
         <div className="relative">
-          <label className="block text-gray-700 mb-2">Side Image *</label>
+          <label className="block text-gray-700 mb-2 mt-3">Side Image </label>
           <DragEditUploadImageInput
             getRootProps={getSideImageRootProps}
             getInputProps={getSideImageInputProps}
@@ -186,23 +186,23 @@ export default function AboutUsSection({
         {/* Right Column - Form Inputs */}
         <div className="space-y-4 mb-6 col-span-full">
           <div>
-            <label className="block text-gray-700">Title *</label>
+            <label className="block text-gray-700 mt-3">Title </label>
             <input
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full p-2 border rounded"
+              className="customInput"
               required
             />
           </div>
           
         </div>
           <div className="mb-8 col-span-full">
-            <label className="block text-gray-700">Description *</label>
+            <label className="block text-gray-700 mb-2">Description</label>
             <CustomEditor
               value={description}
               setValue={setDescription}
-              className="w-full p-2 border rounded min-h-[250px]"
+              className="customInput min-h-[250px]"
               required
              />
 
@@ -214,7 +214,7 @@ export default function AboutUsSection({
         <div className="flex justify-end w-full">
           <button
             type="submit"
-            className=" max-w-[200px]  bg-blue-500 text-white p-2 rounded ml-auto"
+            className="customSaveButton"
           >
             Save Changes
           </button>

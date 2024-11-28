@@ -63,43 +63,43 @@ export default function CreateFAQForm({
   };
 
   return (
-    <div className="w-[80%] bg-gray-100 p-10">
+    <div className="w-[40%]">
       <div className="w-full mx-auto bg-white p-8 shadow-md rounded-md">
-        <h1 className="text-2xl font-bold mb-5">Create question Form</h1>
+        <h1 className="text-2xl font-semibold mb-7">Create question Form</h1>
         <form onSubmit={handleSubmit}>
           {/* Model Name */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">
-              question *
+            <label className="block text-gray-700 ">
+              Question 
             </label>
             <input
               type="text"
               value={question}
               onChange={(e) => setQuestion(e.target.value)}
-              className="w-full p-2 border rounded-md"
+              className="customInput"
               placeholder="Model Name"
               required
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">
-              Answer *
+            <label className="block text-gray-700">
+              Answer
             </label>
             <textarea
               type="text"
               value={answer}
               onChange={(e) => setAnswer(e.target.value)}
-              className="w-full p-2 border rounded-md min-h-[200px]"
+              className="customInput resize-none"
               placeholder="Model Name"
               required
             />
           </div>
 
           {/* Submit Button */}
-          <div className="flex justify-end mt-4">
+          <div className="flex justify-end gap-3 mt-4">
             <button
               type="button"
-              className="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 mr-4"
+              className="customCancelButton"
               onClick={() => handleCloseModal()}
             >
               Cancel
@@ -107,7 +107,7 @@ export default function CreateFAQForm({
 
             <button
               type="submit"
-              className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+              className="customSaveButton"
             >
               Save 
             </button>
