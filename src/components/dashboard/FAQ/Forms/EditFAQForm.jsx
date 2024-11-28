@@ -71,33 +71,33 @@ export default function EditFAQForm({
   };
 
   return (
-    <div className="w-[80%] bg-gray-100 p-10">
+    <div className="w-[40%]">
       <div className="w-full mx-auto bg-white p-8 shadow-md rounded-md">
-        <h1 className="text-2xl font-bold mb-5">Edit Product Color Form</h1>
+        <h1 className="text-2xl font-semibold mb-7">Edit Product Color Form</h1>
         <form onSubmit={handleSubmit}>
           {/* Model Name */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">
-              question *
+            <label className="block text-gray-700 ">
+              Question 
             </label>
             <input
               type="text"
               value={question}
               onChange={(e) => setQuestion(e.target.value)}
-              className="w-full p-2 border rounded-md"
+              className="customInput"
               placeholder="Model Name"
               required
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">
-              Answer *
+            <label className="block text-gray-700">
+              Answer 
             </label>
             <textarea
               type="text"
               value={answer}
               onChange={(e) => setAnswer(e.target.value)}
-              className="w-full p-2 border rounded-md min-h-[200px]"
+              className="customInput resize-none"
               placeholder="Model Name"
               required
             />
@@ -106,14 +106,14 @@ export default function EditFAQForm({
           <div className="flex justify-end mt-4 gap-6">
             <button
               type="button"
-              className="w-full p-3 bg-gray-500 text-white font-bold rounded-md"
+              className="customCancelButton"
               onClick={() => handleCloseModal()}
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="w-full p-3 bg-blue-500 text-white font-bold rounded-md"
+              className="customSaveButton"
             >
               Update
             </button>

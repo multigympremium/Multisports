@@ -13,8 +13,8 @@ export default function GenerateDemoProducts() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="bg-white rounded-lg shadow-lg p-8">
+    <div className="py-6 pt-0">
+      <div className="">
         <div className="flex items-center justify-between mb-6">
           {/* Image Section */}
           <div className="w-1/2">
@@ -28,8 +28,8 @@ export default function GenerateDemoProducts() {
           </div>
 
           {/* Form Section */}
-          <div className="w-1/2 pl-6">
-            <h2 className="text-2xl font-bold mb-4">Generate Demo Products</h2>
+          <div className="w-1/2 px-6 ">
+            <h2 className="text-3xl font-semibold mb-4">Generate Demo Products</h2>
             <p className="mb-6">
               {`Demo products involve showcasing the features, benefits, and
               functionality of the products in a way that helps stakeholders
@@ -40,13 +40,13 @@ export default function GenerateDemoProducts() {
             </p>
 
             <div className="mb-4">
-              <label className="block mb-2 text-gray-700">
+              <label className="block  text-gray-700">
                 Demo Products Type
               </label>
               <select
                 value={productType}
                 onChange={(e) => setProductType(e.target.value)}
-                className="block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="customInput select"
               >
                 <option value="">Select One</option>
                 <option value="Clothing">Clothing</option>
@@ -56,21 +56,21 @@ export default function GenerateDemoProducts() {
             </div>
 
             <div className="mb-4">
-              <label className="block mb-2 text-gray-700">
+              <label className="block  text-gray-700">
                 No of Demo Products to be Generated
               </label>
               <input
                 type="number"
                 value={numberOfProducts}
                 onChange={(e) => setNumberOfProducts(e.target.value)}
-                className="block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="customInput"
                 placeholder="Enter number of products"
               />
             </div>
 
             <button
               onClick={handleGenerate}
-              className="bg-teal-500 hover:bg-teal-600 text-white py-2 px-4 rounded-md"
+              className="customSaveButton"
             >
               Generate Demo Products
             </button>

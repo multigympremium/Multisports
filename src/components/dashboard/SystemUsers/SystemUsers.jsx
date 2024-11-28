@@ -8,6 +8,8 @@ import EditSystemUser from "../MemberRegistration/EditSystemUser/EditSystemUser"
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
+import EditButton from "../../../components library/EditButton";
+import DeleteButton from "../../../components library/DeleteButton";
 
 export default function SystemUsers() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -23,7 +25,7 @@ export default function SystemUsers() {
     setIsEditShowModel(true);
   };
 
-  const systemUsers = useGetAllSystemUsers({isDeleted, isEdited: isEditShowModel});
+  const systemUsers = useGetAllSystemUsers({ isDeleted, isEdited: isEditShowModel });
 
   const handleDelete = async (id) => {
     try {
@@ -62,29 +64,31 @@ export default function SystemUsers() {
 
 
   return (
-    <div className="container mx-auto px-4 py-6">
-      <h1 className="text-2xl font-bold mb-4">System Users List</h1>
-      <div className="flex justify-between mb-4">
-        <button className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded" onClick={() => setIsModalOpen(true)}>
-          + Add New User
-        </button>
+    <div className="p-6 pt-0">
+      <div className="flex items-center justify-between  mb-9">
+        <h1 className="text-3xl font-semibold">System Users List</h1>
+        <div className="flex justify-between">
+          <button className="customSaveButton" onClick={() => setIsModalOpen(true)}>
+            + Add New User
+          </button>
+        </div>
       </div>
 
       <table className="min-w-full table-auto">
         <thead>
-          <tr className="bg-gray-100">
-            <th className="p-2 border">SL</th>
-            <th className="p-2 border">Name</th>
-            <th className="p-2 border">Email</th>
-            <th className="p-2 border">Phone</th>
-            <th className="p-2 border">Address</th>
-            <th className="p-2 border">User Type</th>
-            <th className="p-2 border">Action</th>
+          <tr className="bg-gray-100 text-center">
+            <td className="p-2 border">SL</td>
+            <td className="p-2 border">Name</td>
+            <td className="p-2 border">Email</td>
+            <td className="p-2 border">Phone</td>
+            <td className="p-2 border">Address</td>
+            <td className="p-2 border">User Type</td>
+            <td className="p-2 border">Action</td>
           </tr>
         </thead>
         <tbody>
           {systemUsers?.length > 0 && systemUsers.map((user, index) => (
-            <tr key={user.id} className="border-b">
+            <tr key={user.id} className="border-b text-center">
               <td className="p-2 border">{index + 1}</td>
               <td className="p-2 border">{user.username}</td>
               <td className="p-2 border">{user.email}</td>
@@ -93,13 +97,9 @@ export default function SystemUsers() {
               <td className="p-2 border">
                 {user.role}
               </td>
-              <td className="p-2 border space-x-3">
-                <button className="bg-yellow-500 hover:bg-yellow-600 text-white px-2 py-1 rounded" onClick={() => handleEdit(user._id)}>
-                  Edit
-                </button>
-                <button className="bg-green-700 hover:bg-yellow-600 text-white px-2 py-1 rounded" onClick={()=> handleDelete(user._id)} >
-                  Delete
-                </button>
+              <td className="p-2 py-3 border space-x-3">
+                <EditButton onClick={() => handleEdit(user._id)} />
+                <DeleteButton onClick={() => handleDelete(user._id)} />
               </td>
             </tr>
           ))}

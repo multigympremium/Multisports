@@ -44,9 +44,9 @@ const UserPermission = () => {
     console.log(role, "role in permission item");
   }, [role, axiosSecure]);
   return (
-    <div className="bg-white md:bg-slate-50">
-      <div className="p-6 w-full min-w-[340px] mx-auto md:rounded-xl shadow-md space-y-4">
-        <h2 className="text-xl font-bold mb-4">Set Permissions for {role}</h2>
+    <div className="p-6 pt-0">
+      <div className="">
+        <h2 className="text-3xl font-semibold mb-9">Set Permissions for {role}</h2>
 
         {/* Dropdown to select Role from departments */}
         <div className="form-control">
@@ -54,7 +54,7 @@ const UserPermission = () => {
             <span className="label-text">Select Role</span>
           </label>
           <select
-            className="select select-bordered"
+            className="select customInput mb-6"
             value={role}
             onChange={(e) => setRole(e.target.value)}
           >
@@ -79,7 +79,7 @@ const UserPermission = () => {
                   />
                   <label
                     htmlFor={`collapsed-${cat.title}`}
-                    className={`font-medium flex items-center gap-2 cursor-pointer pl-4 bg-yellow-500 text-white ease-in-out duration-300 transition-all p-1 py-3 rounded-xl hover:bg-yellow-600`}
+                    className={`customSaveButton flex items-center gap-3`}
                   >
                     {!isCollapsed && cat.icon}
                     {!isCollapsed && cat.title}

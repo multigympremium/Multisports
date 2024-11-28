@@ -2,6 +2,7 @@
 // pages/system-users.js
 
 import { useState } from "react";
+import { MdAssignmentAdd } from "react-icons/md";
 
 export default function AssignUserRolePermission() {
   // Sample data for system users
@@ -29,34 +30,36 @@ export default function AssignUserRolePermission() {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    <div className="container mx-auto px-4 py-6">
-      <h1 className="text-2xl font-bold mb-4">System Users List</h1>
+    <div className="p-6 pt-0">
+      <h1 className="text-3xl font-semibold mb-9">System Users List</h1>
 
       <table className="min-w-full table-auto">
         <thead>
-          <tr className="bg-gray-100">
-            <th className="p-2 border">SL</th>
-            <th className="p-2 border">Name</th>
-            <th className="p-2 border">Email</th>
-            <th className="p-2 border">Phone</th>
-            <th className="p-2 border">Address</th>
-            <th className="p-2 border">Account Created</th>
-            <th className="p-2 border">Action</th>
+          <tr className="bg-gray-100 text-center">
+            <td className="p-2 border">SL</td>
+            <td className="p-2 border">Name</td>
+            <td className="p-2 border">Email</td>
+            <td className="p-2 border">Phone</td>
+            <td className="p-2 border">Address</td>
+            <td className="p-2 border">Account Created</td>
+            <td className="p-2 border">Action</td>
           </tr>
         </thead>
         <tbody>
           {currentUsers.map((user, index) => (
-            <tr key={user.id} className="border-b">
+            <tr key={user.id} className="border-b text-center">
               <td className="p-2 border">{indexOfFirstUser + index + 1}</td>
               <td className="p-2 border">{user.name}</td>
               <td className="p-2 border">{user.email}</td>
               <td className="p-2 border">{user.phone}</td>
               <td className="p-2 border">{user.address}</td>
               <td className="p-2 border">{user.accountCreated}</td>
-              <td className="p-2 border">
-                <button className="bg-yellow-500 hover:bg-yellow-600 text-white py-1 px-3 rounded mr-2">
-                  Assign
-                </button>
+              <td className="p-2 py-3 border">
+                <div className="flex justify-center">
+                  <button className="flex  text-white bg-green-500 items-center gap-2 justify-center  rounded-2xl px-4 py-1 ">
+                    <MdAssignmentAdd /> Assign
+                  </button>
+                </div>
               </td>
             </tr>
           ))}

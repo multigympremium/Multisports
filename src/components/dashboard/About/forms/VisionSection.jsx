@@ -131,14 +131,14 @@ export default function VisionSection() {
   };
 
   return (
-    <div className="w-full bg-white  p-8 rounded-md">
+    <div className="">
       {/* Testimonial Edit Form */}
-      <h1 className="text-2xl font-bold mb-4">Vision Section</h1>
+      <h1 className="text-3xl font-semibold mb-9">Vision Section</h1>
       <form onSubmit={handleSubmit}>
-        <div className="grid grid-cols-2 gap-4 mb-8" > 
+        <div className="" > 
         {/* Left Column - Image Upload */}
         <div className="relative">
-          <label className="block text-gray-700 mb-2">Image *</label>
+          <label className="block text-gray-700 mb-2">Image </label>
           <DragEditUploadImageInput
             getRootProps={getThumbnailRootProps}
             getInputProps={getThumbnailInputProps}
@@ -159,24 +159,24 @@ export default function VisionSection() {
         </div>
 
         {/* Right Column - Form Inputs */}
-        <div className="space-y-4 mb-6">
+        <div className="space-y-4 mb-6 mt-4">
           <div>
-            <label className="block text-gray-700">title *</label>
+            <label className="block text-gray-700">Title </label>
             <input
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full p-2 border rounded"
+              className="customInput"
               required
             />
           </div>
           
           <div className="mb-8">
-            <label className="block text-gray-700">Description *</label>
+            <label className="block text-gray-700 mb-2">Description </label>
             <CustomEditor
               value={description}
               setValue={setDescription}
-              className="w-full p-2 border rounded min-h-[250px]"
+              className="customInput min-h-[250px]"
               required
              />
 
@@ -189,7 +189,7 @@ export default function VisionSection() {
         <div className="flex justify-end w-full">
           <button
             type="submit"
-            className=" max-w-[200px]  bg-blue-500 text-white p-2 rounded ml-auto"
+            className="customSaveButton"
           >
             Save Changes
           </button>

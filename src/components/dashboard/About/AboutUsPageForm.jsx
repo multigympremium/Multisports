@@ -21,7 +21,7 @@ export default function AboutUsPageForm() {
   };
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="p-6 pt-0">
       {/* Vision Section */}
       <VisionSection />
 

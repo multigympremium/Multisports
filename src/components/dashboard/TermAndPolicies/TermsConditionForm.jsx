@@ -54,18 +54,18 @@ const TermsConditionForm = () => {
   };
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="p-6 pt-0">
       <form
         onSubmit={handleSubmit}
-        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+        className=""
       >
-        <h2 className="text-2xl font-bold mb-4">
+        <h2 className="text-3xl font-semibold mb-9">
           Terms And Condition Update Form
         </h2>
 
         <div className="mb-6">
-          <div className="mb-[4rem]">
-            <label className="block text-gray-500 text-md font-bold mb-6">
+          <div className="">
+            <label className="block text-gray-500 text-lg mb-4">
               Write Terms And Condition Here:
             </label>
 
@@ -73,10 +73,10 @@ const TermsConditionForm = () => {
           </div>
         </div>
 
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-end">
           <button
             type="submit"
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="customSaveButton"
           >
             Update Terms And Condition
           </button>

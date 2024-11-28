@@ -3,6 +3,8 @@
 // components/CustomPageList.js
 import { useState, useEffect } from "react";
 
+import DeleteButton from "../../../components library/DeleteButton";
+import EditButton from "../../../components library/EditButton";
 const CustomPageList = () => {
   // Example data for custom pages
   const [pages, setPages] = useState([]);
@@ -42,31 +44,32 @@ const CustomPageList = () => {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="p-6 pt-0">
+      <p className="font-semibold text-3xl mb-9">Custom Page list</p>
       <div className="bg-white shadow-md rounded my-6">
         <table className="min-w-full table-auto">
           <thead className="bg-gray-200 text-gray-600">
             <tr>
-              <th className="py-2 px-4 text-left">SL</th>
-              <th className="py-2 px-4 text-left">Feature Image</th>
-              <th className="py-2 px-4 text-left">Page Title</th>
-              <th className="py-2 px-4 text-left">Page URL</th>
-              <th className="py-2 px-4 text-left">Status</th>
-              <th className="py-2 px-4 text-left">Action</th>
+              <td className="py-2 px-4 text-center">SL</td>
+              <td className="py-2 px-4 text-center">Feature Image</td>
+              <td className="py-2 px-4 text-center">Page Title</td>
+              <td className="py-2 px-4 text-center">Page URL</td>
+              <td className="py-2 px-4 text-center">Status</td>
+              <td className="py-2 px-4 text-center">Action</td>
             </tr>
           </thead>
           <tbody>
             {currentPages.length === 0 ? (
               <tr>
-                <td colSpan="6" className="text-center py-4">
+                <td colSpan="6" className="text-center  py-4">
                   No data available in the table
                 </td>
               </tr>
             ) : (
               currentPages.map((page, index) => (
                 <tr key={page.id} className="border-b border-gray-200">
-                  <td className="py-2 px-4">{index + 1 + indexOfFirstItem}</td>
-                  <td className="py-2 px-4">
+                  <td className="py-2 border px-4 text-center">{index + 1 + indexOfFirstItem}</td>
+                  <td className="py-2 border px-4 text-center">
                     <img
                       width={400}
                       height={400}
@@ -75,16 +78,12 @@ const CustomPageList = () => {
                       className="w-12 h-12 object-cover"
                     />
                   </td>
-                  <td className="py-2 px-4">{page.title}</td>
-                  <td className="py-2 px-4">{page.url}</td>
-                  <td className="py-2 px-4">{page.status}</td>
-                  <td className="py-2 px-4">
-                    <button className="text-blue-500 hover:underline">
-                      Edit
-                    </button>
-                    <button className="text-red-500 hover:underline ml-4">
-                      Delete
-                    </button>
+                  <td className="py-2 border px-4 text-center">{page.title}</td>
+                  <td className="py-2 border px-4 text-center">{page.url}</td>
+                  <td className="py-2 border px-4 text-center">{page.status}</td>
+                  <td className="py-2 items-center px-4 flex justify-center gap-1 text-center">
+                    <EditButton ></EditButton>
+                    <DeleteButton></DeleteButton>
                   </td>
                 </tr>
               ))
@@ -103,9 +102,9 @@ const CustomPageList = () => {
                 <li key={i}>
                   <button
                     onClick={() => paginate(i + 1)}
-                    className={`px-4 py-2 border rounded ${
+                    className={`px-4 py-2 border rounded-full ${
                       currentPage === i + 1
-                        ? "bg-blue-500 text-white"
+                        ? "bg-blue-500  text-white"
                         : "bg-white text-gray-700"
                     }`}
                   >

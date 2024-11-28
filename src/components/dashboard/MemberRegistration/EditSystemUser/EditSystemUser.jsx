@@ -25,11 +25,11 @@ const schema = z.object({
   address: z.string().optional(),
   gender: z.string().nonempty({ message: "Please select your gender" }),
   status: z.string().optional(),
-  
+
 });
 
 
-function EditSystemUser({  setIsShow, isShow, targetId, }) {
+function EditSystemUser({ setIsShow, isShow, targetId, }) {
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [image, setImage] = useState(null);
@@ -92,8 +92,8 @@ function EditSystemUser({  setIsShow, isShow, targetId, }) {
     formData.append("role", data.role);
     formData.append("photourl", image ? image : imagePreview);
 
-  
-  
+
+
     try {
       const response = await axiosSecure.put(`/users/system-user/${targetId}`, formData);
       if (response?.status === 200 || response?.status === 201) {
@@ -111,8 +111,8 @@ function EditSystemUser({  setIsShow, isShow, targetId, }) {
 
 
 
-   // Dropzone for thumbnail and gallery
-   const onDropThumbnail = (acceptedFiles) => {
+  // Dropzone for thumbnail and gallery
+  const onDropThumbnail = (acceptedFiles) => {
     const file = acceptedFiles[0]; // Assuming one file for simplicity
 
     // Create a local URL for the dropped image
@@ -132,7 +132,7 @@ function EditSystemUser({  setIsShow, isShow, targetId, }) {
     accept: "image/*",
     multiple: false,
   });
-  
+
   const handleApiErrors = (error) => {
     if (error?.response?.status === 409) {
       const errorMessage = error?.response?.data?.message;
@@ -164,8 +164,8 @@ function EditSystemUser({  setIsShow, isShow, targetId, }) {
         }`}
     >
       <h2 className="px-5 py-1 border-b border-gray-300 flex justify-between items-center w-full">
-        <span className="font-bold text-2xl mt-2">Add User</span>
-        
+        <span className="font-semibold mb-2 text-2xl mt-2">Add User</span>
+
       </h2>
 
       {/* Display error message */}
@@ -176,19 +176,19 @@ function EditSystemUser({  setIsShow, isShow, targetId, }) {
       )}
 
       <form className="md:px-5 px-3 py-3" onSubmit={handleSubmit(onSubmit)}>
-          <div className="mb-4">
-            <label className="block text-gray-700 font-semibold mb-2">
-               Profile Image
-            </label>
+        <div className="mb-4">
+          <label className="block text-gray-700 font-semibold mb-2">
+            Profile Image
+          </label>
 
-            <DragEditUploadImageInput
-              getRootProps={getThumbnailRootProps}
-              getInputProps={getThumbnailInputProps}
-              image={image}
-              imagePreview={imagePreview}
-            />
-          </div>
-     
+          <DragEditUploadImageInput
+            getRootProps={getThumbnailRootProps}
+            getInputProps={getThumbnailInputProps}
+            image={image}
+            imagePreview={imagePreview}
+          />
+        </div>
+
         <div className="grid md:grid-cols-2 gap-3">
           <MemberRegisterInput
             type={"text"}
@@ -196,7 +196,7 @@ function EditSystemUser({  setIsShow, isShow, targetId, }) {
             error={errors}
             name={"first_name"}
             isRequired={true}
-            label={"First Name*"}
+            label={"First Name"}
           />
           <MemberRegisterInput
             type={"text"}
@@ -204,12 +204,12 @@ function EditSystemUser({  setIsShow, isShow, targetId, }) {
             error={errors}
             name={"last_name"}
             isRequired={true}
-            label={"Last Name*"}
+            label={"Last Name"}
           />
 
           <MemberRegisterInput
             type={"email"}
-            label={"Email*"}
+            label={"Email"}
             register={register}
             error={errors}
             name={"email"}
@@ -217,10 +217,10 @@ function EditSystemUser({  setIsShow, isShow, targetId, }) {
           />
 
 
-          
+
           <MemberRegisterInput
             type={"text"}
-            label={"phone number*"}
+            label={"phone number"}
             register={register}
             error={errors}
             name={"contact_no"}
@@ -229,7 +229,7 @@ function EditSystemUser({  setIsShow, isShow, targetId, }) {
 
           <MemberRegisterSelect
             type={"text"}
-            label={"Gender *"}
+            label={"Gender "}
             register={register}
             error={errors}
             name={"gender"}
@@ -242,7 +242,7 @@ function EditSystemUser({  setIsShow, isShow, targetId, }) {
 
           <MemberRegisterSelect
             type={"text"}
-            label={"Role *"}
+            label={"Role "}
             register={register}
             error={errors}
             name={"role"}
@@ -250,7 +250,7 @@ function EditSystemUser({  setIsShow, isShow, targetId, }) {
           >
             <option value={""}>Select role</option>
             {
-             departments?.length > 0 && departments.map((item, index) => (
+              departments?.length > 0 && departments.map((item, index) => (
                 <option key={index} value={item.Role}>
                   {item.Role}
                 </option>
@@ -259,62 +259,62 @@ function EditSystemUser({  setIsShow, isShow, targetId, }) {
           </MemberRegisterSelect>
 
           <MemberRegisterInput
-                type={"text"}
-                label={"Address"}
-                register={register}
-                error={errors}
-                name={"address"}
-                isRequired={false}
-              />
+            type={"text"}
+            label={"Address"}
+            register={register}
+            error={errors}
+            name={"address"}
+            isRequired={false}
+          />
 
-<MemberRegisterSelect
-                type={"text"}
-                label={"Marital Status"}
-                register={register}
-                error={errors}
-                name={"status"}
-                isRequired={false}
-              >
-                <option value={""}>Select Marital Status</option>
-                <option value={"Married"}>Married</option>
-                <option value={"Unmarried"}>Unmarried</option>
-                <option value={"Divorced"}>Divorced</option>
-                <option value={"Don't say"}>{`Don't Say`}</option>
-              </MemberRegisterSelect>
+          <MemberRegisterSelect
+            type={"text"}
+            label={"Marital Status"}
+            register={register}
+            error={errors}
+            name={"status"}
+            isRequired={false}
+          >
+            <option value={""}>Select Marital Status</option>
+            <option value={"Married"}>Married</option>
+            <option value={"Unmarried"}>Unmarried</option>
+            <option value={"Divorced"}>Divorced</option>
+            <option value={"Don't say"}>{`Don't Say`}</option>
+          </MemberRegisterSelect>
 
         </div>
 
-        <div className="flex justify-end items-center gap-3 mt-9">
-              <div className="flex justify-end">
-                <div className="flex gap-2 cursor-pointer items-center bg-gray-700 text-white py-2 px-3 rounded-xl shadow hover:bg-gray-800 transition duration-300">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setIsShow(false);
-                      reset();
-                    }}
-                    className="font-semibold"
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </div>
-              <div className="flex justify-end">
-                <div className="flex gap-2 cursor-pointer items-center bg-gray-700 text-white py-2 px-3 rounded-xl shadow hover:bg-gray-800 transition duration-300">
-                  {loading ?
-                    <>
-                      <span className="loading loading-spinner loading-md"></span>
-                    </>
-                    :
-                    <>
-                      <button type="submit" className="font-semibold">
-                        Save
-                      </button>
-                    </>}
-                </div>
-              </div>
+        <div className="flex justify-end items-center gap-3 mb-4 mt-9">
+          <div className="flex justify-end">
+            <div className="customCancelButton">
+              <button
+                type="button"
+                onClick={() => {
+                  setIsShow(false);
+                  reset();
+                }}
+                className="font-semibold"
+              >
+                Cancel
+              </button>
             </div>
-        
+          </div>
+          <div className="flex justify-end">
+            <div className="customSaveButton">
+              {loading ?
+                <>
+                  <span className="loading loading-spinner loading-md"></span>
+                </>
+                :
+                <>
+                  <button type="submit" className="font-semibold">
+                    Save
+                  </button>
+                </>}
+            </div>
+          </div>
+        </div>
+
       </form>
     </article>
   );

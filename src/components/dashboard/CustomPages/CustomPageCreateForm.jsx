@@ -50,30 +50,30 @@ const CustomPageCreateForm = () => {
   };
 
   return (
-    <div className="container mx-auto p-6">
+    <div className="p-6 pt-0">
       <form
         onSubmit={handleSubmit}
-        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+        className=""
       >
-        <h2 className="text-2xl font-bold mb-6">Custom Page Create Form</h2>
+        <h2 className="text-3xl font-semibold mb-9">Custom Page Create Form</h2>
 
         {/* Page Feature Image */}
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
+          <label className="block text-gray-700 text-sm">
             Page Feature Image (1112px x 400px):
           </label>
           <input
             type="file"
             accept="image/*"
             onChange={handleFileChange}
-            className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+            className="customInput"
           />
         </div>
 
         {/* Meta Title */}
         <div className="mb-4">
           <label
-            className="block text-gray-700 text-sm font-bold mb-2"
+            className="block text-gray-700 text-sm"
             htmlFor="metaTitle"
           >
             Page Meta Title (SEO):
@@ -83,7 +83,7 @@ const CustomPageCreateForm = () => {
             type="text"
             value={metaTitle}
             onChange={(e) => setMetaTitle(e.target.value)}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="customInput"
             placeholder="Meta Title"
           />
         </div>
@@ -91,7 +91,7 @@ const CustomPageCreateForm = () => {
         {/* Meta Keywords */}
         <div className="mb-4">
           <label
-            className="block text-gray-700 text-sm font-bold mb-2"
+            className="block text-gray-700 text-sm"
             htmlFor="metaKeywords"
           >
             Page Meta Keywords (SEO):
@@ -101,7 +101,7 @@ const CustomPageCreateForm = () => {
             type="text"
             value={metaKeywords}
             onChange={(e) => setMetaKeywords(e.target.value)}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="customInput"
             placeholder="Meta Keywords"
           />
         </div>
@@ -109,7 +109,7 @@ const CustomPageCreateForm = () => {
         {/* Meta Description */}
         <div className="mb-4">
           <label
-            className="block text-gray-700 text-sm font-bold mb-2"
+            className="block text-gray-700 text-sm"
             htmlFor="metaDescription"
           >
             Page Meta Description (SEO):
@@ -118,7 +118,7 @@ const CustomPageCreateForm = () => {
             id="metaDescription"
             value={metaDescription}
             onChange={(e) => setMetaDescription(e.target.value)}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="customInput resize-none"
             placeholder="Meta Description Here"
           />
         </div>
@@ -126,7 +126,7 @@ const CustomPageCreateForm = () => {
         {/* Page Title */}
         <div className="mb-4">
           <label
-            className="block text-gray-700 text-sm font-bold mb-2"
+            className="block text-gray-700 text-sm"
             htmlFor="pageTitle"
           >
             Page Title:
@@ -136,7 +136,7 @@ const CustomPageCreateForm = () => {
             type="text"
             value={pageTitle}
             onChange={(e) => setPageTitle(e.target.value)}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="customInput"
             placeholder="Page Title"
           />
         </div>
@@ -144,7 +144,7 @@ const CustomPageCreateForm = () => {
         {/* Page Description (Rich Text Editor) */}
         <div className="mb-6">
           <label
-            className="block text-gray-700 text-sm font-bold mb-2"
+            className="block text-gray-700 text-sm mb-2"
             htmlFor="content"
           >
             Page Description:
@@ -155,17 +155,17 @@ const CustomPageCreateForm = () => {
             theme="snow"
             value={content}
             onChange={setContent}
-            className="border rounded-lg p-2 w-full"
+            className=" rounded-lg  w-full"
             style={{ height: "200px" }}
           />
           </Suspense>
         </div>
 
         {/* Submit Button */}
-        <div className="flex items-center justify-center">
+        <div className="flex items-center mt-16 justify-end">
           <button
             type="submit"
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="customSaveButton"
           >
             Save Custom Page
           </button>
