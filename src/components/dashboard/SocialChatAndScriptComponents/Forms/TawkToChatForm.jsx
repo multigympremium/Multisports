@@ -43,7 +43,7 @@ const TawkToChatForm = ({isShow}) => {
 
           Swal.fire({
             title: "Success!",
-            text: "Recaptcha updated successfully",
+            text: "Tawk.to updated successfully",
             icon: "success",
             confirmButtonText: "Ok",
           });
@@ -60,7 +60,7 @@ const TawkToChatForm = ({isShow}) => {
 
               Swal.fire({
                 title: "Success!",
-                text: "Recaptcha created successfully",
+                text: "Tawk.to created successfully",
                 icon: "success",
                 confirmButtonText: "Ok",
               });
@@ -89,7 +89,7 @@ const TawkToChatForm = ({isShow}) => {
     <form onSubmit={handleSubmit}>
 
 
-              <h3 className="text-2xl text-gray-700 mb-6">Google Analytic</h3>
+              <h3 className="text-2xl text-gray-700 mb-6">Tawk.to Live Chat</h3>
 
               <div className="mb-6">
                     <label className="block text-gray-700  ">

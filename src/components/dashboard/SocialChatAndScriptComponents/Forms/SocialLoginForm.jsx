@@ -94,7 +94,7 @@ const SocialLoginForm = ({isShow}) => {
 
           Swal.fire({
             title: "Success!",
-            text: "Recaptcha updated successfully",
+            text: "Social Login updated successfully",
             icon: "success",
             confirmButtonText: "Ok",
           });
@@ -108,7 +108,7 @@ const SocialLoginForm = ({isShow}) => {
 
               Swal.fire({
                 title: "Success!",
-                text: "Recaptcha created successfully",
+                text: "Social Login created successfully",
                 icon: "success",
                 confirmButtonText: "Ok",
               });

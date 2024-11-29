@@ -42,7 +42,7 @@ export default function FacebookPixelForm({isShow}) {
 
           Swal.fire({
             title: "Success!",
-            text: "Recaptcha updated successfully",
+            text: "Facebook Pixel updated successfully",
             icon: "success",
             confirmButtonText: "Ok",
           });
@@ -59,7 +59,7 @@ export default function FacebookPixelForm({isShow}) {
 
               Swal.fire({
                 title: "Success!",
-                text: "Recaptcha created successfully",
+                text: "Facebook Pixel created successfully",
                 icon: "success",
                 confirmButtonText: "Ok",
               });
