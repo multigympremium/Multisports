@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 // Import Swiper styles
@@ -11,6 +11,7 @@ import "./styles.css";
 // import required modules
 import { Pagination, Navigation, Autoplay } from "swiper/modules";
 import { Link } from "react-router-dom";
+import useGetAllProductBrands from "../../../Hook/GetDataHook/useGetAllProductBrands";
 const products = [
   {
     id: 1,
@@ -84,6 +85,19 @@ const products = [
   },
 ];
 function LogoArea() {
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [isEdited, setIsEdited] = useState(false);
+  const [isDeleted, setIsDeleted] = useState(false);
+  const [isShowModal, setIsShowModal] = useState(false);
+  const productBrands = useGetAllProductBrands({
+    isEdited,
+    isDeleted,
+    setLoading,
+    isShowModal,
+  });
+
+
   return (
     <div className="container mx-auto mt-16 mb-10">
       <Swiper
@@ -113,24 +127,24 @@ function LogoArea() {
         pagination={{
           clickable: true,
         }}
-        navigation={true}
+        // navigation={true}
         loop={true}
         autoplay={true}
         modules={[Pagination, Navigation, Autoplay]}
         className="brand"
       >
-        {products.map((product, index) => (
+        {productBrands.map((product, index) => (
           <SwiperSlide key={index}>
             <Link
               to={`#`}
-              className="flex justify-center items-center h-[250px]"
+              className="flex justify-center items-center  h-[200px]"
             >
               <img
                 width={400}
                 height={300}
-                src={product.image}
-                alt={product.title}
-                className="mix-blend-multiply object-contain"
+                src={`https://mgpwebaps.s3.eu-north-1.amazonaws.com/multi-sports/${product.logo}`}
+                alt={product.brandName}
+                className="mix-blend-multiply object-contain  p-9"
                 style={{ mixBlendMode: "multiply" }}
               />
             </Link>

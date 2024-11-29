@@ -8,13 +8,14 @@ import useGetSeo from "./Hook/GetPublicDataHook/useGetSeo";
 import useAxiosPublic from "./Hook/useAxiosPublic";
 import ReactGA from "react-ga4";
 import ReactPixel from "react-facebook-pixel"
+import TopBar from "./components/Home/TopBar";
 
 //This is Login Page Root only and 404 page Root use for Outlet Component
 const Root = () => {
 
   const axiosPublic = useAxiosPublic()
 
-  
+
   useEffect(() => {
     // Simulate fetching theme from API
     const fetchTheme = async () => {
@@ -24,12 +25,12 @@ const Root = () => {
 
       const root = document.documentElement;
       root.style.setProperty("--primary-color", theme.primaryColor || "#3490dc");
-root.style.setProperty("--secondary-color", theme.secondaryColor || "#ffed4a");
-root.style.setProperty("--tertiary-color", theme.tertiaryColor || "#e3342f");
-root.style.setProperty("--title-color", theme.titleColor || "#1a202c");
-root.style.setProperty("--paragraph-color", theme.paragraphColor || "#2d3748");
-root.style.setProperty("--border-color", theme.borderColor || "#cbd5e0");
-      
+      root.style.setProperty("--secondary-color", theme.secondaryColor || "#ffed4a");
+      root.style.setProperty("--tertiary-color", theme.tertiaryColor || "#e3342f");
+      root.style.setProperty("--title-color", theme.titleColor || "#1a202c");
+      root.style.setProperty("--paragraph-color", theme.paragraphColor || "#2d3748");
+      root.style.setProperty("--border-color", theme.borderColor || "#cbd5e0");
+
     };
 
     fetchTheme();
@@ -40,7 +41,7 @@ root.style.setProperty("--border-color", theme.borderColor || "#cbd5e0");
     const applyCustomCode = async () => {
       const response = await axiosPublic.get("/custom-css-js")
       if (response.status === 200 || response.status === 201) {
-        const  data  = await response.data.data[0];
+        const data = await response.data.data[0];
 
         console.log(data, "css jss")
 
@@ -90,41 +91,41 @@ root.style.setProperty("--border-color", theme.borderColor || "#cbd5e0");
         ReactPixel.init(facebookData?.pixelId);
         ReactPixel.pageView(); // Track a page view
       }
-  
+
       // const googleAnalytic = localStorage.getItem("googleAnalytic");
       // const googleAnalyticData = JSON.parse(googleAnalytic);
 
       const response = await axiosPublic.get("/google-analytic");
       const googleAnalyticData = response?.data?.data[0];
-  
+
       console.log(googleAnalyticData, "googleAnalyticData");
-  
-      
+
+
       if (googleAnalyticData?.isEnabled && googleAnalyticData?.trackingID) {
 
         console.log(googleAnalyticData, "data google analytic")
         ReactGA.initialize(googleAnalyticData?.trackingID);
-  
+
         const scriptElem = document.createElement("script");
         let scriptSrcElem = document.createElement("script");
-         scriptSrcElem.src =  `src="https://www.googletagmanager.com/gtag/js?id=G-2P4DFL43YR`;
-         scriptSrcElem.async = true;
+        scriptSrcElem.src = `src="https://www.googletagmanager.com/gtag/js?id=G-2P4DFL43YR`;
+        scriptSrcElem.async = true;
         //  `<script async src="https://www.googletagmanager.com/gtag/js?id=G-2P4DFL43YR"></script>`;
         scriptElem.innerHTML = `window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
   
     gtag('config', 'G-2P4DFL43YR');`;
-  
-  
-    document.body.appendChild(scriptElem);
-    document.body.appendChild(scriptSrcElem);
-  
-  
+
+
+        document.body.appendChild(scriptElem);
+        document.body.appendChild(scriptSrcElem);
+
+
       }
-  
+
       // ReactGA.initialize(googleAnalyticData?.trackingID);
-      
+
 
     }
 
@@ -139,14 +140,14 @@ root.style.setProperty("--border-color", theme.borderColor || "#cbd5e0");
 
       // setTargetId(data[0]?._id);
       // setIsEnabled(data[0]?.isEnabled);
-      
-      if(data?.isEnabled === "true") {
-        
-        console.log(data , "agsdfgs sfg sg  talk");
+
+      if (data?.isEnabled === "true") {
+
+        console.log(data, "agsdfgs sfg sg  talk");
 
         const scriptElem = document.createElement("script");
         scriptElem.innerHTML = data?.code.replaceAll(`<script type="text/javascript">`, "").replaceAll(`</script>`, "");
-        
+
         document.body.appendChild(scriptElem);
       }
     };
@@ -158,14 +159,14 @@ root.style.setProperty("--border-color", theme.borderColor || "#cbd5e0");
 
       // setTargetId(data[0]?._id);
       // setIsEnabled(data[0]?.isEnabled);
-      
-      if(data?.isEnabled === "true") {
-        
-        
+
+      if (data?.isEnabled === "true") {
+
+
 
         const scriptElem = document.createElement("script");
         scriptElem.innerHTML = data?.code.replaceAll(`<script type="text/javascript">`, "").replaceAll(`</script>`, "");
-        
+
         document.body.appendChild(scriptElem);
       }
     };
@@ -178,8 +179,8 @@ root.style.setProperty("--border-color", theme.borderColor || "#cbd5e0");
   const content = useGetSeo({});
   return (
     <>
-          <MetaTags metaTitle={content.metaTitle} metaDescription={content.metaDescription} metaOgTitle={content.metaOgTitle} metaOgDescription={content.metaOgDescription} metaOgImage={content.metaOgImage} metaKeywords={content.metaKeywords} />
-
+      <MetaTags metaTitle={content.metaTitle} metaDescription={content.metaDescription} metaOgTitle={content.metaOgTitle} metaOgDescription={content.metaOgDescription} metaOgImage={content.metaOgImage} metaKeywords={content.metaKeywords} />
+      <TopBar/>
       <Navbar />
       <HorizontalMenu />
       <Outlet />
