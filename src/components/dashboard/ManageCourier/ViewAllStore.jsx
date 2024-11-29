@@ -2,7 +2,6 @@
 import { useState, useEffect, useCallback } from "react";
 
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
-import { Link } from "react-router-dom";
 
 export default function ViewAllStores() {
   const [currentPage, setCurrentPage] = useState(0);

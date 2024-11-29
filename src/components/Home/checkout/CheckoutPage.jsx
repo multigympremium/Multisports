@@ -51,17 +51,46 @@ export default function CheckoutPage() {
                         {shippingAddress.contactNumber}
                       </span>
                     </div>
+                    <div className="flex justify-between text-sm text-gray-500 ">
+                      <b className="font-bold text-lg">City</b>
+                      <span className="font-medium">
+                        {shippingAddress.city_name}
+                      </span>
+                    </div>
+                    <div className="flex justify-between text-sm text-gray-500 ">
+                      <b className="font-bold text-lg">Zone</b>
+                      <span className="font-medium">
+                        {shippingAddress.zone_name}
+                      </span>
+                    </div>
                    </div>
-
-                   <div>
-                    {`${shippingAddress.district}, ${shippingAddress.area}, ${shippingAddress.postCode}, ${shippingAddress.address}, ${shippingAddress.deliveryType}`}
+                  <div className="border p-6 rounded-md border-r border-gray-200">
+                    <div className="flex justify-between text-sm text-gray-500">
+                      <b className="font-bold text-lg">Area</b>
+                      <span className="font-medium">
+                        {shippingAddress.area_name}
+                      </span>
+                    </div>
+                    <div className="flex justify-between text-sm text-gray-500 ">
+                      <b className="font-bold text-lg">Post Cone</b>
+                      <span className="font-medium">
+                        {shippingAddress.postCode}
+                      </span>
+                    </div>
+                    <div className="flex justify-between text-sm text-gray-500 ">
+                      <b className="font-bold text-lg">Address</b>
+                      <span className="font-medium">
+                        {shippingAddress.address}
+                      </span>
+                    </div>
+                   
                    </div>
 
                    <button className='px-3 py-1 border border-blue-400 rounded-md absolute top-5 right-5' onClick={()=> setIsShippingEdit(true)}>Edit</button>
                 </div>
               </div>
             ) : (
-              <ShippingForm setShippingAddress={setShippingAddress} />
+              <ShippingForm setShippingAddress={setShippingAddress} shippingAddress={shippingAddress} setIsShippingEdit={setIsShippingEdit} />
             )}
 
             <div
@@ -90,7 +119,7 @@ export default function CheckoutPage() {
       )}
 
       <BgBlurModal isShowModal={isShippingEdit} setIsShowModal={setIsShippingEdit}>
-        <ShippingForm shippingAddress={shippingAddress} />
+        <ShippingForm shippingAddress={shippingAddress} setShippingAddress={setShippingAddress} setIsShowModal={setIsShippingEdit} isShowModal={isShippingEdit} />
       </BgBlurModal>
     </Container>
   );
