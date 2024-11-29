@@ -48,7 +48,7 @@ const GeneralInfoForm = () => {
         if (res.status === 200 || res.status === 201) {
           Swal.fire({
             title: "Success!",
-            text: "About Us updated successfully",
+            text: "General info updated successfully",
             icon: "success",
             confirmButtonText: "Ok",
           });
@@ -62,7 +62,7 @@ const GeneralInfoForm = () => {
         if (res.status === 200 || res.status === 201) {
           Swal.fire({
             title: "Success!",
-            text: "About Us Created successfully",
+            text: "General info Created successfully",
             icon: "success",
             confirmButtonText: "Ok",
           });

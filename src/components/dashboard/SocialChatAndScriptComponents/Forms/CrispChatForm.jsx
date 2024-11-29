@@ -42,7 +42,7 @@ const CrispChatForm = ({isShow}) => {
 
           Swal.fire({
             title: "Success!",
-            text: "Recaptcha updated successfully",
+            text: "Crisp Live Chat updated successfully",
             icon: "success",
             confirmButtonText: "Ok",
           });
@@ -59,7 +59,7 @@ const CrispChatForm = ({isShow}) => {
 
               Swal.fire({
                 title: "Success!",
-                text: "Recaptcha created successfully",
+                text: "Crisp Live Chat created successfully",
                 icon: "success",
                 confirmButtonText: "Ok",
               });
@@ -88,7 +88,7 @@ const CrispChatForm = ({isShow}) => {
     <form onSubmit={handleSubmit}>
 
 
-              <h3 className="text-2xl text-gray-700 mb-6">Google Analytic</h3>
+              <h3 className="text-2xl text-gray-700 mb-6">Crisp Live Chat</h3>
 
               <div className="mb-6">
                     <label className="block text-gray-700  ">

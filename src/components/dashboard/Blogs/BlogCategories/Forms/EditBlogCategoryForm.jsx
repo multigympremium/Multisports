@@ -46,7 +46,7 @@ export default function EditBlogCategoryForm({
       if (res.status === 200 || res.status === 201) {
         Swal.fire({
           title: "Success!",
-          text: "blogCategoryName updated successfully",
+          text: "blogCategory Name updated successfully",
           icon: "success",
           confirmButtonText: "Ok",
         });

@@ -1,4 +1,3 @@
-"use client";
 
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
@@ -40,7 +39,7 @@ export default function GoogleAnalyticForm({isShow}) {
 
           Swal.fire({
             title: "Success!",
-            text: "Recaptcha updated successfully",
+            text: "Google analytic updated successfully",
             icon: "success",
             confirmButtonText: "Ok",
           });
@@ -57,7 +56,7 @@ export default function GoogleAnalyticForm({isShow}) {
 
               Swal.fire({
                 title: "Success!",
-                text: "Recaptcha created successfully",
+                text: "Google analytic created successfully",
                 icon: "success",
                 confirmButtonText: "Ok",
               });

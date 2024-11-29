@@ -58,7 +58,7 @@ export default function SeoForm() {
         if (res.status === 200 || res.status === 201) {
           Swal.fire({
             title: "Success!",
-            text: "About Us updated successfully",
+            text: "Meta updated successfully",
             icon: "success",
             confirmButtonText: "Ok",
           });
@@ -72,7 +72,7 @@ export default function SeoForm() {
         if (res.status === 200 || res.status === 201) {
           Swal.fire({
             title: "Success!",
-            text: "About Us Created successfully",
+            text: "Meta Created successfully",
             icon: "success",
             confirmButtonText: "Ok",
           });

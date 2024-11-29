@@ -33,7 +33,7 @@ export default function CustomCSSJSForm() {
         if (res.status === 200 || res.status === 201) {
           Swal.fire({
             title: "Success!",
-            text: "About Us updated successfully",
+            text: "Script updated successfully",
             icon: "success",
             confirmButtonText: "Ok",
           });
@@ -47,7 +47,7 @@ export default function CustomCSSJSForm() {
         if (res.status === 200 || res.status === 201) {
           Swal.fire({
             title: "Success!",
-            text: "About Us Created successfully",
+            text: "Script Created successfully",
             icon: "success",
             confirmButtonText: "Ok",
           });

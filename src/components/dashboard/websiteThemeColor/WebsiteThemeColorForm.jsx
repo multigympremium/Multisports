@@ -71,7 +71,7 @@ export default function WebsiteThemeColorForm() {
         if (res.status === 200 || res.status === 201) {
           Swal.fire({
             title: "Success!",
-            text: "About Us updated successfully",
+            text: "Website Theme Colour updated successfully",
             icon: "success",
             confirmButtonText: "Ok",
           });
@@ -85,7 +85,7 @@ export default function WebsiteThemeColorForm() {
         if (res.status === 200 || res.status === 201) {
           Swal.fire({
             title: "Success!",
-            text: "About Us Created successfully",
+            text: "Website Theme Colour Created successfully",
             icon: "success",
             confirmButtonText: "Ok",
           });

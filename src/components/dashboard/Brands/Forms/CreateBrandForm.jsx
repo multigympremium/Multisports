@@ -37,13 +37,11 @@ export default function CreateBrandForm({ isShowModal, setIsShowModal }) {
 
     if (
       !logo ||
-      !banner ||
       !brandName ||
       !category ||
       !subcategory ||
-      !slug ||
-      !isActive ||
-      !featureBrand
+      !slug 
+ 
     ) {
       Swal.fire({
         title: "Error!",
@@ -74,7 +72,7 @@ export default function CreateBrandForm({ isShowModal, setIsShowModal }) {
         handleCloseModal();
         Swal.fire({
           title: "Success!",
-          text: "Category created successfully",
+          text: "Brand created successfully",
           icon: "success",
           confirmButtonText: "Ok",
         });

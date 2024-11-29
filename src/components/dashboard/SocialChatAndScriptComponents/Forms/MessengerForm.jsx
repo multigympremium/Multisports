@@ -45,7 +45,7 @@ const MessengerForm = ({isShow}) => {
 
           Swal.fire({
             title: "Success!",
-            text: "Recaptcha updated successfully",
+            text: "Messenger updated successfully",
             icon: "success",
             confirmButtonText: "Ok",
           });
@@ -63,7 +63,7 @@ const MessengerForm = ({isShow}) => {
 
               Swal.fire({
                 title: "Success!",
-                text: "Recaptcha created successfully",
+                text: "Messenger created successfully",
                 icon: "success",
                 confirmButtonText: "Ok",
               });
@@ -92,7 +92,7 @@ const MessengerForm = ({isShow}) => {
     <form onSubmit={handleSubmit}>
 
 
-              <h3 className="text-2xl text-gray-700 mb-6">Google Analytic</h3>
+              <h3 className="text-2xl text-gray-700 mb-6">Messenger</h3>
 
               <div className="mb-6">
                     <label className="block text-gray-700  ">
