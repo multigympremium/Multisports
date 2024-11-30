@@ -60,7 +60,9 @@ export default function ProductCreateForm() {
   const [activeDescription, setActiveDescription] = useState("full_desc");
 
   const categories = useGetAllCategories({});
-  const subcategories = useGetAllSubCategories({});
+  const subcategories = useGetAllSubCategories({
+    query: `category=${category}`,
+  });
   const childCategories = useGetAllChildCategories({});
   const productBrands = useGetAllProductBrands({});
   const productColors = useGetAllProductColors({});
