@@ -13,6 +13,9 @@ export default function SetupConfig() {
   const [productColor, setProductColor] = useState("");
   const [measurementUnit, setMeasurementUnit] = useState("");
   const [seoInformation, setSeoInformation] = useState("");
+  const [rewardPoints, setRewardPoints] = useState(0);
+  const [productCode, setProductCode] = useState("");
+  const [productFlags, setProductFlags] = useState("");
   const [targetId, setTargetId] = useState("");
   const [loading, setLoading] = useState(false);
   const axiosSecure = useAxiosSecure();
@@ -26,6 +29,9 @@ export default function SetupConfig() {
       productColor,
       measurementUnit,
       seoInformation,
+      rewardPoints,
+      productCode,
+      productFlags,
     };
     console.log(data, "data");
     try {
@@ -82,6 +88,9 @@ export default function SetupConfig() {
           setProductColor(data.productColor);
           setMeasurementUnit(data.measurementUnit);
           setSeoInformation(data.seoInformation);
+          setRewardPoints(data.rewardPoints);
+          setProductCode(data.productCode);
+          setProductFlags(data.productFlags);
 
           console.log(data?._id, "targetId useEffect");
 
@@ -159,6 +168,45 @@ export default function SetupConfig() {
               label="Seo Information"
               checked={seoInformation}
               setChecked={setSeoInformation}
+              offColor="#ccc"
+              onColor="#00b894"
+              checkedIcon={false}
+              uncheckedIcon={false}
+              handleDiameter={25}
+              height={30}
+              width={70}
+            />
+
+            <SwitchInput
+              label="reward Points"
+              checked={rewardPoints}
+              setChecked={setRewardPoints}
+              offColor="#ccc"
+              onColor="#00b894"
+              checkedIcon={false}
+              uncheckedIcon={false}
+              handleDiameter={25}
+              height={30}
+              width={70}
+            />
+
+            <SwitchInput
+              label="Product Code"
+              checked={productCode}
+              setChecked={setProductCode}
+              offColor="#ccc"
+              onColor="#00b894"
+              checkedIcon={false}
+              uncheckedIcon={false}
+              handleDiameter={25}
+              height={30}
+              width={70}
+            />
+
+            <SwitchInput
+              label="Product Flags"
+              checked={productFlags}
+              setChecked={setProductFlags}
               offColor="#ccc"
               onColor="#00b894"
               checkedIcon={false}

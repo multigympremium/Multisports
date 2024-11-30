@@ -9,7 +9,7 @@ import useGetAllProductBrands from "../../../Hook/GetDataHook/useGetAllProductBr
 import useGetAllProductColors from "../../../Hook/GetDataHook/useGetAllProductColors";
 import useGetAllProductFlag from "../../../Hook/GetDataHook/useGetAllProductFlag";
 import useGetAllSubCategories from "../../../Hook/GetDataHook/useGetAllSubCategories";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import Switch from "react-switch";
 import ActiveDescBtn from "./productSharedComponents/ActiveDescBtn";
@@ -52,9 +52,10 @@ export default function ProductCreateForm() {
   const [brandValue, setBrandValue] = useState("");
   const [productSizeValue, setProductSizeValue] = useState("");
 
+  const [setupConfig, setSetupConfig] = useState({});
+
   const [productSize, setProductSize] = useState([]);
   const [productColor, setProductColor] = useState([]);
-
 
   const [activeDescription, setActiveDescription] = useState("full_desc");
 
@@ -166,7 +167,6 @@ export default function ProductCreateForm() {
     formData.append("subcategory", subcategory);
     formData.append("childCategory", childCategory);
 
-
     // If `gallery` is an array of files, you can loop through it and append each file:
 
     console.log(gallery, "gallery");
@@ -212,7 +212,9 @@ export default function ProductCreateForm() {
     setProductColorValue(value);
 
     if (value !== "") {
-      setProductColor((prev) => prev.includes(value) ? prev : [...prev, value]);
+      setProductColor((prev) =>
+        prev.includes(value) ? prev : [...prev, value]
+      );
     }
   };
   const handleSizeChange = (e) => {
@@ -220,9 +222,37 @@ export default function ProductCreateForm() {
     setProductSizeValue(value);
 
     if (value !== "") {
-      setProductSize((prev) => prev.includes(value) ? prev : [...prev, value]);
+      setProductSize((prev) =>
+        prev.includes(value) ? prev : [...prev, value]
+      );
     }
   };
+
+  useEffect(() => {
+    const fetchTestimonial = async () => {
+      try {
+        const firstResData = await axiosSecure.get(`/setup-config`);
+
+        console.log(firstResData, "res ljlj");
+
+        if (firstResData.status === 200 || firstResData.status === 201) {
+          const data = firstResData?.data?.data[0];
+
+          console.log(data, "data");
+
+          setSetupConfig(data);
+
+          // Set form values with the testimonial data
+        }
+      } catch (error) {
+        console.error("Error fetching testimonial:", error);
+      }
+    };
+
+    fetchTestimonial();
+  }, [axiosSecure]);
+
+  console.log(setupConfig, "setupConfig");
 
   return (
     <div className="p-6 pt-0">
@@ -231,9 +261,7 @@ export default function ProductCreateForm() {
         <form onSubmit={handleSubmit}>
           {/* Product Title */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-semibold">
-              Title
-            </label>
+            <label className="block text-gray-700 font-semibold">Title</label>
             <input
               type="text"
               value={productTitle}
@@ -365,17 +393,20 @@ export default function ProductCreateForm() {
                 className="customInput"
               />
             </div>
-            <div>
-              <label className="block text-gray-700 font-semibold ">
-                Reward Points
-              </label>
-              <input
-                type="number"
-                value={rewardPoints}
-                onChange={(e) => setRewardPoints(e.target.value)}
-                className="customInput"
-              />
-            </div>
+
+            {setupConfig?.rewardPoints && (
+              <div>
+                <label className="block text-gray-700 font-semibold ">
+                  Reward Points
+                </label>
+                <input
+                  type="number"
+                  value={rewardPoints}
+                  onChange={(e) => setRewardPoints(e.target.value)}
+                  className="customInput"
+                />
+              </div>
+            )}
             <div>
               <label className="block text-gray-700 font-semibold ">
                 Stock
@@ -388,23 +419,24 @@ export default function ProductCreateForm() {
               />
             </div>
             {/* Product Code */}
-            <div className="mb-4">
-              <label className="block text-gray-700 font-semibold ">
-                Product Code
-              </label>
-              <input
-                type="text"
-                value={productCode}
-                onChange={(e) => setProductCode(e.target.value)}
-                className="customInput"
-                placeholder="Product Code"
-              />
-            </div>
+
+            {setupConfig?.productCode && (
+              <div className="mb-4">
+                <label className="block text-gray-700 font-semibold ">
+                  Product Code
+                </label>
+                <input
+                  type="text"
+                  value={productCode}
+                  onChange={(e) => setProductCode(e.target.value)}
+                  className="customInput"
+                  placeholder="Product Code"
+                />
+              </div>
+            )}
           </div>
 
           <div className={"grid grid-cols-3 gap-4 mb-4"}>
-
-
             {/* Select Category */}
             <div className="mb-4">
               <label className="block text-gray-700 font-semibold ">
@@ -490,95 +522,109 @@ export default function ProductCreateForm() {
               </select>
             </div>
 
+            {/* Select Subcategory */}
 
+            {setupConfig?.productColor && (
+              <div className="mb-4">
+                <label className="block text-gray-700 font-semibold ">
+                  Select Product Color
+                </label>
+                <select
+                  value={productColorValue}
+                  onChange={handleColorChange}
+                  className="customInput select"
+                  required
+                >
+                  <option value="">Select One</option>
+                  {productColors?.length > 0 &&
+                    productColors.map((item, index) => (
+                      <option value={item.productColor} key={item._id}>
+                        {item?.productColorName}
+                      </option>
+                    ))}
+                  {/* Add more subcategories dynamically if needed */}
+                </select>
+
+                <ul className="flex gap-3 mt-3 items-center">
+                  {productColor?.length > 0 &&
+                    productColor.map((item, index) => (
+                      <li
+                        key={item._id}
+                        className="px-3 py-1 border border-black text-sm capitalize relative rounded-lg"
+                      >
+                        {item}
+                        <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 ">
+                          <IoCloseCircleOutline size={25} />
+                        </span>
+                      </li>
+                    ))}
+                </ul>
+              </div>
+            )}
 
             {/* Select Subcategory */}
-            <div className="mb-4">
-              <label className="block text-gray-700 font-semibold ">
-                Select Product Color
-              </label>
-              <select
-                value={productColorValue}
-                onChange={handleColorChange}
-                className="customInput select"
-                required
-              >
-                <option value="">Select One</option>
-                {productColors?.length > 0 &&
-                  productColors.map((item, index) => (
-                    <option value={item.productColor} key={item._id}>
-                      {item?.productColorName}
-                    </option>
-                  ))}
-                {/* Add more subcategories dynamically if needed */}
-              </select>
 
-              <ul className="flex gap-3 mt-3 items-center">
-                {
-                  productColor?.length > 0 &&
-                  productColor.map((item, index) => (
-                    <li key={item._id} className="px-3 py-1 border border-black text-sm capitalize relative rounded-lg" >{item}
-                      <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 "><IoCloseCircleOutline size={25} /></span>
-                    </li>
-                  ))}
-              </ul>
-            </div>
+            {setupConfig?.productFlags && (
+              <div className="mb-4">
+                <label className="block text-gray-700 font-semibold ">
+                  Select Product Flag
+                </label>
+                <select
+                  value={productFlagValue}
+                  onChange={(e) => setProductFlagValue(e.target.value)}
+                  className="customInput select"
+                  required
+                >
+                  <option value="">Select One</option>
+                  {productFlags?.length > 0 &&
+                    productFlags.map((item, index) => (
+                      <option value={item.flagName} key={item._id}>
+                        {item?.flagName}
+                      </option>
+                    ))}
+                  {/* Add more subcategories dynamically if needed */}
+                </select>
+              </div>
+            )}
 
             {/* Select Subcategory */}
-            <div className="mb-4">
-              <label className="block text-gray-700 font-semibold ">
-                Select Product Flag
-              </label>
-              <select
-                value={productFlagValue}
-                onChange={(e) => setProductFlagValue(e.target.value)}
-                className="customInput select"
-                required
-              >
-                <option value="">Select One</option>
-                {productFlags?.length > 0 &&
-                  productFlags.map((item, index) => (
-                    <option value={item.flagName} key={item._id}>
-                      {item?.flagName}
-                    </option>
-                  ))}
-                {/* Add more subcategories dynamically if needed */}
-              </select>
 
-
-            </div>
-
-            {/* Select Subcategory */}
-            <div className="mb-4">
-              <label className="block text-gray-700 font-semibold ">
-                Select Product Size
-              </label>
-              <select
-                value={productSizeValue}
-                onChange={handleSizeChange}
-                className="customInput select"
-                required
-              >
-                <option value="">Select One</option>
-                {productSizes?.length > 0 &&
-                  productSizes.map((item, index) => (
-                    <option value={item.sizeName} key={item._id}>
-                      {item?.sizeName}
-                    </option>
-                  ))}
-                {/* Add more subcategories dynamically if needed */}
-              </select>
-              <ul className="flex gap-3 mt-3 items-center">
-                {
-                  productSize?.length > 0 &&
-                  productSize.map((item, index) => (
-                    <li key={item._id} className="px-3 py-1 border border-black text-sm capitalize relative rounded" >{item}
-                      <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 "><IoCloseCircleOutline size={25} /></span>
-                    </li>
-                  ))}
-              </ul>
-            </div>
-
+            {setupConfig?.productSize && (
+              <div className="mb-4">
+                <label className="block text-gray-700 font-semibold ">
+                  Select Product Size
+                </label>
+                <select
+                  value={productSizeValue}
+                  onChange={handleSizeChange}
+                  className="customInput select"
+                  required
+                >
+                  <option value="">Select One</option>
+                  {productSizes?.length > 0 &&
+                    productSizes.map((item, index) => (
+                      <option value={item.sizeName} key={item._id}>
+                        {item?.sizeName}
+                      </option>
+                    ))}
+                  {/* Add more subcategories dynamically if needed */}
+                </select>
+                <ul className="flex gap-3 mt-3 items-center">
+                  {productSize?.length > 0 &&
+                    productSize.map((item, index) => (
+                      <li
+                        key={item._id}
+                        className="px-3 py-1 border border-black text-sm capitalize relative rounded"
+                      >
+                        {item}
+                        <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 ">
+                          <IoCloseCircleOutline size={25} />
+                        </span>
+                      </li>
+                    ))}
+                </ul>
+              </div>
+            )}
           </div>
 
           {/* File Upload for Thumbnail */}
@@ -644,54 +690,53 @@ export default function ProductCreateForm() {
           </div>
 
           {/* SEO Information */}
-          <div className="mb-4 mt-6">
-            <h2 className="text-2xl font-semibold mb-4 pb-5 border-b border-gray-300">
-              Product SEO Information (Optional)
-            </h2>
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-gray-700 font-semibold ">
-                  Meta Title
-                </label>
-                <input
-                  type="text"
-                  value={metaTitle}
-                  onChange={(e) => setMetaTitle(e.target.value)}
-                  className="customInput"
-                />
-              </div>
-              <div>
-                <label className="block text-gray-700 font-semibold ">
-                  Meta Keywords
-                </label>
-                <input
-                  type="text"
-                  value={metaKeywords}
-                  onChange={(e) => setMetaKeywords(e.target.value)}
-                  className="customInput"
-                />
-              </div>
-              <div className="col-span-2">
-                <label className="block text-gray-700 font-semibold ">
-                  Meta Description
-                </label>
-                <textarea
-                  value={metaDescription}
 
-                  onChange={(e) => setMetaDescription(e.target.value)}
-                  className="customInput resize-none"
-                  rows="3"
-                />
+          {setupConfig?.seoInformation && (
+            <div className="mb-4 mt-6">
+              <h2 className="text-2xl font-semibold mb-4 pb-5 border-b border-gray-300">
+                Product SEO Information (Optional)
+              </h2>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-gray-700 font-semibold ">
+                    Meta Title
+                  </label>
+                  <input
+                    type="text"
+                    value={metaTitle}
+                    onChange={(e) => setMetaTitle(e.target.value)}
+                    className="customInput"
+                  />
+                </div>
+                <div>
+                  <label className="block text-gray-700 font-semibold ">
+                    Meta Keywords
+                  </label>
+                  <input
+                    type="text"
+                    value={metaKeywords}
+                    onChange={(e) => setMetaKeywords(e.target.value)}
+                    className="customInput"
+                  />
+                </div>
+                <div className="col-span-2">
+                  <label className="block text-gray-700 font-semibold ">
+                    Meta Description
+                  </label>
+                  <textarea
+                    value={metaDescription}
+                    onChange={(e) => setMetaDescription(e.target.value)}
+                    className="customInput resize-none"
+                    rows="3"
+                  />
+                </div>
               </div>
             </div>
-          </div>
+          )}
 
           {/* Buttons */}
           <div className="flex justify-end gap-5">
-            <button
-              type="button"
-              className="customCancelButton"
-            >
+            <button type="button" className="customCancelButton">
               Discard
             </button>
             <button
@@ -701,7 +746,8 @@ export default function ProductCreateForm() {
             >
               {loading ? (
                 <>
-                  <span className="loading loading-spinner mr-2  loading-xs"></span>Saving Product ..
+                  <span className="loading loading-spinner mr-2  loading-xs"></span>
+                  Saving Product ..
                 </>
               ) : (
                 "Save Product"
