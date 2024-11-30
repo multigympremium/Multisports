@@ -1,4 +1,4 @@
-import React , { lazy, Suspense, useState } from "react";
+import React, { lazy, Suspense, useState } from "react";
 // import { lazy } from "react";
 import { createBrowserRouter } from "react-router-dom";
 import Root from "../Root";
@@ -15,14 +15,15 @@ import ProductPage from "../components/Home/Products/ProductPage";
 
 // Continue for other components...
 
-const Root_Dashboard = lazy(() => import(  "../pages/Dashboard/Root"))
-import SignUpPage from  "../pages/authentication/signup/Signup";
-import Login from  "../pages/authentication/login/Login";
-import ForgotPassword from  "../pages/authentication/forgot-password/ForgotPassword";
-import VerifyOTP from  "../pages/authentication/verify-otp/VerifyOTP";
-import SendOTP from  "../pages/authentication/send-otp/SendOTP";
+const Root_Dashboard = lazy(() => import("../pages/Dashboard/Root"))
+import SignUpPage from "../pages/authentication/signup/Signup";
+import Login from "../pages/authentication/login/Login";
+import ForgotPassword from "../pages/authentication/forgot-password/ForgotPassword";
+import VerifyOTP from "../pages/authentication/verify-otp/VerifyOTP";
+import SendOTP from "../pages/authentication/send-otp/SendOTP";
 
 import GlobalLoading from "../components library/GlobalLoading";
+import AllBrands from "../components/Home/Brands/AllBrands";
 
 const AllRoutes = () => {
   // const [permissionData, setPermissionData] = useState([]);
@@ -44,7 +45,7 @@ const AllRoutes = () => {
             // <Login />
             // <PublicRoute>
             // </PublicRoute>
-              <HomePage />
+            <HomePage />
           ),
         },
         {
@@ -55,8 +56,8 @@ const AllRoutes = () => {
             // <PrivateRoute>
             //   <Addworkout />
             // </PrivateRoute>
-            
-                <SignUpPage />
+
+            <SignUpPage />
           ),
         },
         {
@@ -67,8 +68,8 @@ const AllRoutes = () => {
             // <PrivateRoute>
             //   <Addworkout />
             // </PrivateRoute>
-            
-                <Login />
+
+            <Login />
           ),
         },
         {
@@ -79,8 +80,8 @@ const AllRoutes = () => {
             // <PrivateRoute>
             //   <Addworkout />
             // </PrivateRoute>
-            
-                <ForgotPassword />
+
+            <ForgotPassword />
           ),
         },
         {
@@ -91,8 +92,8 @@ const AllRoutes = () => {
             // <PrivateRoute>
             //   <Addworkout />
             // </PrivateRoute>
-            
-                <VerifyOTP />
+
+            <VerifyOTP />
           ),
         },
         {
@@ -103,8 +104,8 @@ const AllRoutes = () => {
             // <PrivateRoute>
             //   <Addworkout />
             // </PrivateRoute>
-           
-                <SendOTP />
+
+            <SendOTP />
           ),
         },
         {
@@ -115,8 +116,8 @@ const AllRoutes = () => {
             // <PrivateRoute>
             //   <Addworkout />
             // </PrivateRoute>
-           
-                <CheckoutPage />
+
+            <CheckoutPage />
           ),
         },
         {
@@ -127,8 +128,8 @@ const AllRoutes = () => {
             // <PrivateRoute>
             //   <Addworkout />
             // </PrivateRoute>
-            
-                <CartPage />
+
+            <CartPage />
           ),
         },
         {
@@ -136,8 +137,8 @@ const AllRoutes = () => {
           path: "products/:id",
           // path: isPermittedRoute("addworkout"),
           element: (
-            
-                <ProductPage />
+
+            <ProductPage />
           ),
         },
         {
@@ -148,8 +149,8 @@ const AllRoutes = () => {
             // <PrivateRoute>
             //   <Addworkout />
             // </PrivateRoute>
-                <Success />
-            
+            <Success />
+
           ),
         },
         {
@@ -160,10 +161,16 @@ const AllRoutes = () => {
             // <PrivateRoute>
             //   <Addworkout />
             // </PrivateRoute>
-                <Cancel />
-            
+            <Cancel />
+
           ),
         },
+        {
+          path : "all-brands",
+          element : (
+            <AllBrands />
+          )
+        }
       ],
     },
     {
@@ -176,15 +183,15 @@ const AllRoutes = () => {
         // <Rootdashboard />
 
         <Suspense fallback={<GlobalLoading />}>
-        <PrivateRoute>
-        <Root_Dashboard />
+          <PrivateRoute>
+            <Root_Dashboard />
 
-      </PrivateRoute>
+          </PrivateRoute>
 
         </Suspense>
-        
+
       ),
-      
+
 
       // errorElement: <Error404></Error404>,
       children: dashboardChildrenRoutes,
