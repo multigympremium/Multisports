@@ -43,13 +43,13 @@ export default function ProductCreateForm() {
   const [thumbnailPreview, setThumbnailPreview] = useState(null);
   const [gallery, setGallery] = useState([]);
   const [galleryPreview, setGalleryPreview] = useState([]);
-  const [category, setCategory] = useState("");
-  const [subcategory, setSubcategory] = useState("");
-  const [childCategory, setChildCategory] = useState("");
+  const [category, setCategory] = useState("dfsf");
+  const [subcategory, setSubcategory] = useState("sdfds");
+  const [childCategory, setChildCategory] = useState("sdfsd");
   const [modelOfBrandValue, setModelOfBrandValue] = useState("");
   const [productColorValue, setProductColorValue] = useState("");
   const [productFlagValue, setProductFlagValue] = useState("");
-  const [brandValue, setBrandValue] = useState("");
+  const [brandValue, setBrandValue] = useState("zxcvzcxv");
   const [productSizeValue, setProductSizeValue] = useState("");
 
   const [setupConfig, setSetupConfig] = useState({});
@@ -68,6 +68,8 @@ export default function ProductCreateForm() {
   const productColors = useGetAllProductColors({});
   const productFlags = useGetAllProductFlag({});
   const productSizes = useGetAllProductSizes({});
+
+  const modelOfBrand = useGetAllModelOfBrands({});
 
   const axiosSecure = useAxiosSecure();
 
@@ -270,7 +272,7 @@ export default function ProductCreateForm() {
               onChange={(e) => setProductTitle(e.target.value)}
               className="customInput"
               placeholder="Enter Product Name Here"
-              required
+              // required
             />
           </div>
           <div className={"flex items-center gap-6 mb-6 mt-5"}>
@@ -381,7 +383,7 @@ export default function ProductCreateForm() {
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
                 className="customInput"
-                required
+                // required
               />
             </div>
             <div>
@@ -448,7 +450,7 @@ export default function ProductCreateForm() {
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
                 className="customInput select"
-                required
+                // required
               >
                 <option value="">Select One</option>
                 {categories?.length > 0 &&
@@ -469,7 +471,7 @@ export default function ProductCreateForm() {
                 value={subcategory}
                 onChange={(e) => setSubcategory(e.target.value)}
                 className="customInput select"
-                required
+                // required
               >
                 <option value="">Select One</option>
                 {subcategories?.length > 0 &&
@@ -511,7 +513,7 @@ export default function ProductCreateForm() {
                 value={brandValue}
                 onChange={(e) => setBrandValue(e.target.value)}
                 className="customInput select"
-                required
+                // required
               >
                 <option value="">Select One</option>
                 {productBrands?.length > 0 &&
@@ -526,6 +528,31 @@ export default function ProductCreateForm() {
 
             {/* Select Subcategory */}
 
+            {setupConfig?.modelOfBrand && (
+              <div className="mb-4">
+                <label className="block text-gray-700 font-bold mb-2">
+                  Select Model Of Brand *
+                </label>
+                <select
+                  value={modelOfBrandValue}
+                  onChange={(e) => setModelOfBrandValue(e.target.value)}
+                  className="w-full p-2 border rounded-md"
+                  // required
+                >
+                  <option value="">Select One</option>
+                  {modelOfBrand?.length > 0 &&
+                    modelOfBrand.map((item, index) => (
+                      <option value={item.slug} key={item._id}>
+                        {item?.modelName}
+                      </option>
+                    ))}
+                  {/* Add more subcategories dynamically if needed */}
+                </select>
+              </div>
+            )}
+
+            {/* Select Subcategory */}
+
             {setupConfig?.productColor && (
               <div className="mb-4">
                 <label className="block text-gray-700 font-semibold ">
@@ -535,7 +562,7 @@ export default function ProductCreateForm() {
                   value={productColorValue}
                   onChange={handleColorChange}
                   className="customInput select"
-                  required
+                  // required
                 >
                   <option value="">Select One</option>
                   {productColors?.length > 0 &&
@@ -575,7 +602,7 @@ export default function ProductCreateForm() {
                   value={productFlagValue}
                   onChange={(e) => setProductFlagValue(e.target.value)}
                   className="customInput select"
-                  required
+                  // required
                 >
                   <option value="">Select One</option>
                   {productFlags?.length > 0 &&
@@ -600,7 +627,7 @@ export default function ProductCreateForm() {
                   value={productSizeValue}
                   onChange={handleSizeChange}
                   className="customInput select"
-                  required
+                  // required
                 >
                   <option value="">Select One</option>
                   {productSizes?.length > 0 &&

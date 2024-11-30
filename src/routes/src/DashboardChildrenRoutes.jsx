@@ -1,5 +1,8 @@
 import React, { lazy, Suspense } from "react";
 import GlobalLoading from "../../components library/GlobalLoading";
+const ModelOfBrand = lazy(() =>
+  import("../../components/dashboard/ModelOfBrand/ModelOfBrand")
+);
 const ViewAllStores = lazy(() =>
   import("../../components/dashboard/ManageCourier/ViewAllStore")
 );
@@ -1290,6 +1293,21 @@ function DashboardChildrenRoutes() {
         <Suspense fallback={<GlobalLoading />}>
           <PrivateRoute>
             <SolvedSupport />
+          </PrivateRoute>
+        </Suspense>
+      ),
+    },
+    {
+      // path: "senderid",
+      path: "models-of-brand",
+      // path: isPermittedRoute("senderid"),
+      element: (
+        // <PrivateRoute>
+        //   <SmsGroup />
+        // </PrivateRoute>
+        <Suspense fallback={<GlobalLoading />}>
+          <PrivateRoute>
+            <ModelOfBrand />
           </PrivateRoute>
         </Suspense>
       ),
