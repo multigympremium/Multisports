@@ -7,43 +7,51 @@ import MetaTags from "./components/Home/MetaTags/MetaTags";
 import useGetSeo from "./Hook/GetPublicDataHook/useGetSeo";
 import useAxiosPublic from "./Hook/useAxiosPublic";
 import ReactGA from "react-ga4";
-import ReactPixel from "react-facebook-pixel"
+import ReactPixel from "react-facebook-pixel";
 import TopBar from "./components/Home/TopBar";
 
 //This is Login Page Root only and 404 page Root use for Outlet Component
 const Root = () => {
-
-  const axiosPublic = useAxiosPublic()
-
+  const axiosPublic = useAxiosPublic();
 
   useEffect(() => {
     // Simulate fetching theme from API
     const fetchTheme = async () => {
-      const res = await axiosPublic.get("/website-theme-color")
+      const res = await axiosPublic.get("/website-theme-color");
 
       const theme = res?.data?.data[0];
 
       const root = document.documentElement;
-      root.style.setProperty("--primary-color", theme.primaryColor || "#3490dc");
-      root.style.setProperty("--secondary-color", theme.secondaryColor || "#ffed4a");
-      root.style.setProperty("--tertiary-color", theme.tertiaryColor || "#e3342f");
+      root.style.setProperty(
+        "--primary-color",
+        theme.primaryColor || "#3490dc"
+      );
+      root.style.setProperty(
+        "--secondary-color",
+        theme.secondaryColor || "#ffed4a"
+      );
+      root.style.setProperty(
+        "--tertiary-color",
+        theme.tertiaryColor || "#e3342f"
+      );
       root.style.setProperty("--title-color", theme.titleColor || "#1a202c");
-      root.style.setProperty("--paragraph-color", theme.paragraphColor || "#2d3748");
+      root.style.setProperty(
+        "--paragraph-color",
+        theme.paragraphColor || "#2d3748"
+      );
       root.style.setProperty("--border-color", theme.borderColor || "#cbd5e0");
-
     };
 
     fetchTheme();
   }, [axiosPublic]);
 
-
   useEffect(() => {
     const applyCustomCode = async () => {
-      const response = await axiosPublic.get("/custom-css-js")
+      const response = await axiosPublic.get("/custom-css-js");
       if (response.status === 200 || response.status === 201) {
         const data = await response.data.data[0];
 
-        console.log(data, "css jss")
+        console.log(data, "css jss");
 
         if (data) {
           // Apply Custom CSS
@@ -78,7 +86,6 @@ const Root = () => {
   }, []);
 
   useEffect(() => {
-
     const fetchData = async () => {
       // Fetch the Pixel ID dynamically (from backend or settings)
 
@@ -86,7 +93,6 @@ const Root = () => {
       const facebookData = res?.data?.data[0];
       // const pixelId = localStorage.getItem('facebookPixelId');
       if (facebookData?.pixelId && facebookData?.isEnabled) {
-
         console.log(facebookData, "facebookData");
         ReactPixel.init(facebookData?.pixelId);
         ReactPixel.pageView(); // Track a page view
@@ -100,10 +106,8 @@ const Root = () => {
 
       console.log(googleAnalyticData, "googleAnalyticData");
 
-
       if (googleAnalyticData?.isEnabled && googleAnalyticData?.trackingID) {
-
-        console.log(googleAnalyticData, "data google analytic")
+        console.log(googleAnalyticData, "data google analytic");
         ReactGA.initialize(googleAnalyticData?.trackingID);
 
         const scriptElem = document.createElement("script");
@@ -117,20 +121,14 @@ const Root = () => {
   
     gtag('config', 'G-2P4DFL43YR');`;
 
-
         document.body.appendChild(scriptElem);
         document.body.appendChild(scriptSrcElem);
-
-
       }
 
       // ReactGA.initialize(googleAnalyticData?.trackingID);
-
-
-    }
+    };
 
     fetchData();
-
   }, []);
 
   useEffect(() => {
@@ -142,16 +140,16 @@ const Root = () => {
       // setIsEnabled(data[0]?.isEnabled);
 
       if (data?.isEnabled === "true") {
-
         console.log(data, "agsdfgs sfg sg  talk");
 
         const scriptElem = document.createElement("script");
-        scriptElem.innerHTML = data?.code.replaceAll(`<script type="text/javascript">`, "").replaceAll(`</script>`, "");
+        scriptElem.innerHTML = data?.code
+          .replaceAll(`<script type="text/javascript">`, "")
+          .replaceAll(`</script>`, "");
 
         document.body.appendChild(scriptElem);
       }
     };
-
 
     const fetchCrispData = async () => {
       const response = await axiosPublic.get("/crisp-live-chat");
@@ -161,11 +159,10 @@ const Root = () => {
       // setIsEnabled(data[0]?.isEnabled);
 
       if (data?.isEnabled === "true") {
-
-
-
         const scriptElem = document.createElement("script");
-        scriptElem.innerHTML = data?.code.replaceAll(`<script type="text/javascript">`, "").replaceAll(`</script>`, "");
+        scriptElem.innerHTML = data?.code
+          .replaceAll(`<script type="text/javascript">`, "")
+          .replaceAll(`</script>`, "");
 
         document.body.appendChild(scriptElem);
       }
@@ -175,12 +172,18 @@ const Root = () => {
     fetchCrispData();
   }, [axiosPublic]);
 
-
   const content = useGetSeo({});
   return (
     <>
-      <MetaTags metaTitle={content.metaTitle} metaDescription={content.metaDescription} metaOgTitle={content.metaOgTitle} metaOgDescription={content.metaOgDescription} metaOgImage={content.metaOgImage} metaKeywords={content.metaKeywords} />
-      <TopBar/>
+      <MetaTags
+        metaTitle={content?.metaTitle}
+        metaDescription={content?.metaDescription}
+        metaOgTitle={content?.metaOgTitle}
+        metaOgDescription={content?.metaOgDescription}
+        metaOgImage={content?.metaOgImage}
+        metaKeywords={content?.metaKeywords}
+      />
+      <TopBar />
       <Navbar />
       <HorizontalMenu />
       <Outlet />

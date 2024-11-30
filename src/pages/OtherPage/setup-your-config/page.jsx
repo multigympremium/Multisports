@@ -1,7 +1,8 @@
 import React from "react";
+import SetupConfig from "../../../components/dashboard/SetupConfig/SetupConfig";
 
-function SetupConfig() {
-  return <div>setup your config</div>;
+function SetupConfigPage() {
+  return <SetupConfig />;
 }
 
-export default SetupConfig
+export default SetupConfigPage;

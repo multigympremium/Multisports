@@ -2,7 +2,15 @@
 
 import moment from "moment/moment";
 import { useEffect, useState } from "react";
-import { FaFacebook, FaInstagram, FaLinkedin, FaPhoneAlt, FaPinterest, FaTiktok, FaYoutube } from "react-icons/fa";
+import {
+  FaFacebook,
+  FaInstagram,
+  FaLinkedin,
+  FaPhoneAlt,
+  FaPinterest,
+  FaTiktok,
+  FaYoutube,
+} from "react-icons/fa";
 import { FiMail } from "react-icons/fi";
 import { ImLocation } from "react-icons/im";
 import { Link } from "react-router-dom";
@@ -79,7 +87,7 @@ const Footer = () => {
             <div className="flex gap-2 items-center">
               <FaPhoneAlt className="text-slate-600" />
               <h2 className="font-normal flex gap-3 ">
-                <p>{info.phone}</p>
+                <p>{info?.phone}</p>
               </h2>
             </div>
             <div className="flex  gap-2 items-start mt-3 text-lg">
@@ -87,23 +95,21 @@ const Footer = () => {
                 <ImLocation className="text-base text-slate-600 mt-1" />
               </div>
               <div className="text-slate-600">
-                <p className="font-semibold text-base">{info.company_name}</p>
-                <p className="max-w-sm">{info.address}</p>
-
+                <p className="font-semibold text-base">{info?.company_name}</p>
+                <p className="max-w-sm">{info?.address}</p>
               </div>
             </div>
             <p className="text-slate-600 flex  gap-2 items-center mt-3 text-base">
               <span className="font-bold">
                 <FiMail className="text-base text-slate-600" />
               </span>{" "}
-              {info.email}
+              {info?.email}
             </p>
-
 
             {/* icons */}
             <nav className="flex gap-3 mt-6">
               <Link
-                to={content.facebook}
+                to={content?.facebook}
                 target="_blank"
                 className=""
                 rel="noopener noreferrer"
@@ -112,7 +118,7 @@ const Footer = () => {
                 <FaFacebook className="text-lg" />
               </Link>
               <Link
-                to={content.instagram}
+                to={content?.instagram}
                 target="_blank"
                 className=""
                 rel="noopener noreferrer"
@@ -121,7 +127,7 @@ const Footer = () => {
                 <FaInstagram className="text-lg" />
               </Link>
               <Link
-                to={content.linkedin}
+                to={content?.linkedin}
                 target="_blank"
                 className=""
                 rel="noopener noreferrer"
@@ -130,7 +136,7 @@ const Footer = () => {
                 <FaLinkedin className="text-lg" />
               </Link>
               <Link
-                to={content.pinterest}
+                to={content?.pinterest}
                 target="_blank"
                 className=""
                 rel="noopener noreferrer"
@@ -139,7 +145,7 @@ const Footer = () => {
                 <FaPinterest className="text-lg" />
               </Link>
               <Link
-                to={content.tiktok}
+                to={content?.tiktok}
                 target="_blank"
                 className=""
                 rel="noopener noreferrer"
@@ -148,7 +154,7 @@ const Footer = () => {
                 <FaTiktok className="text-lg" />
               </Link>
               <Link
-                to={content.youtube}
+                to={content?.youtube}
                 target="_blank"
                 className=""
                 rel="noopener noreferrer"
@@ -157,7 +163,6 @@ const Footer = () => {
                 <FaYoutube className="text-lg" />
               </Link>
             </nav>
-
           </div>
         </aside>
         <nav>
@@ -298,10 +303,7 @@ const Footer = () => {
 
       <div className="mx-auto w-[95%]">
         <footer className="footer flex flex-col md:flex-row justify-center items-center py-3  border-t px-5 text-center text-xl">
-          <p className="text-base">
-            {info.footer_copyright}
-          </p>
-
+          <p className="text-base">{info?.footer_copyright}</p>
         </footer>
       </div>
     </div>

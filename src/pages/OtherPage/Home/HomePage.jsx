@@ -1,4 +1,3 @@
-
 import { useEffect } from "react";
 import Banner from "../../../components/Home/Banner/Banner";
 import Brands from "../../../components/Home/Brands/Brands";
@@ -20,7 +19,11 @@ const HomePage = () => {
   const content = useGetSeo({});
 
   useEffect(() => {
-    ReactGA.send({ hitType: "pageview", page: window.location.pathname , title: "HomePage.jsx" });
+    ReactGA.send({
+      hitType: "pageview",
+      page: window.location.pathname,
+      title: "HomePage.jsx",
+    });
 
     ReactGA.event({
       category: "content Visiting",
@@ -29,8 +32,14 @@ const HomePage = () => {
   }, []);
   return (
     <>
-      
-      <MetaTags metaTitle={content.metaTitle} metaDescription={content.metaDescription} metaOgTitle={content.metaOgTitle} metaOgDescription={content.metaOgDescription} metaOgImage={content.metaOgImage} metaKeywords={content.metaKeywords} />
+      <MetaTags
+        metaTitle={content?.metaTitle}
+        metaDescription={content?.metaDescription}
+        metaOgTitle={content?.metaOgTitle}
+        metaOgDescription={content?.metaOgDescription}
+        metaOgImage={content?.metaOgImage}
+        metaKeywords={content?.metaKeywords}
+      />
 
       <Banner />
       <PopularProducts />
