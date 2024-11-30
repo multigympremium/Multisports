@@ -99,6 +99,65 @@ const Footer = () => {
               {info.email}
             </p>
 
+
+            {/* icons */}
+            <nav className="flex gap-3 mt-6">
+              <Link
+                to={content.facebook}
+                target="_blank"
+                className=""
+                rel="noopener noreferrer"
+                aria-label="Facebook"
+              >
+                <FaFacebook className="text-lg" />
+              </Link>
+              <Link
+                to={content.instagram}
+                target="_blank"
+                className=""
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+              >
+                <FaInstagram className="text-lg" />
+              </Link>
+              <Link
+                to={content.linkedin}
+                target="_blank"
+                className=""
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+              >
+                <FaLinkedin className="text-lg" />
+              </Link>
+              <Link
+                to={content.pinterest}
+                target="_blank"
+                className=""
+                rel="noopener noreferrer"
+                aria-label="Pinterest"
+              >
+                <FaPinterest className="text-lg" />
+              </Link>
+              <Link
+                to={content.tiktok}
+                target="_blank"
+                className=""
+                rel="noopener noreferrer"
+                aria-label="TikTok"
+              >
+                <FaTiktok className="text-lg" />
+              </Link>
+              <Link
+                to={content.youtube}
+                target="_blank"
+                className=""
+                rel="noopener noreferrer"
+                aria-label="YouTube"
+              >
+                <FaYoutube className="text-lg" />
+              </Link>
+            </nav>
+
           </div>
         </aside>
         <nav>
@@ -215,7 +274,7 @@ const Footer = () => {
             </Link>
           </div>
         </nav>
-        <nav>
+        {/* <nav>
           <h6 className="footer-title text-lg font-bold mb-4 text-black">
             Social
           </h6>
@@ -234,71 +293,15 @@ const Footer = () => {
                   })}
               </div>
           
-        </nav>
+        </nav> */}
       </footer>
 
       <div className="mx-auto w-[95%]">
-        <footer className="footer flex flex-col md:flex-row justify-between items-center py-3  border-t px-5 text-center text-xl">
+        <footer className="footer flex flex-col md:flex-row justify-center items-center py-3  border-t px-5 text-center text-xl">
           <p className="text-base">
             {info.footer_copyright}
           </p>
-          {/* icons */}
-          <nav className="flex gap-3">
-            <Link
-              to={content.facebook}
-              target="_blank"
-              className=""
-              rel="noopener noreferrer"
-              aria-label="Facebook"
-            >
-              <FaFacebook className="text-lg" />
-            </Link>
-            <Link
-              to={content.instagram}
-              target="_blank"
-              className=""
-              rel="noopener noreferrer"
-              aria-label="Instagram"
-            >
-              <FaInstagram className="text-lg" />
-            </Link>
-            <Link
-              to={content.linkedin}
-              target="_blank"
-              className=""
-              rel="noopener noreferrer"
-              aria-label="LinkedIn"
-            >
-              <FaLinkedin className="text-lg" />
-            </Link>
-            <Link
-              to={content.pinterest}
-              target="_blank"
-              className=""
-              rel="noopener noreferrer"
-              aria-label="Pinterest"
-            >
-              <FaPinterest className="text-lg" />
-            </Link>
-            <Link
-              to={content.tiktok}
-              target="_blank"
-              className=""
-              rel="noopener noreferrer"
-              aria-label="TikTok"
-            >
-              <FaTiktok className="text-lg" />
-            </Link>
-            <Link
-              to={content.youtube}
-              target="_blank"
-              className=""
-              rel="noopener noreferrer"
-              aria-label="YouTube"
-            >
-              <FaYoutube className="text-lg" />
-            </Link>
-          </nav>
+
         </footer>
       </div>
     </div>
