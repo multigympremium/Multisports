@@ -80,6 +80,8 @@ export default function PaymentMethodModal({
       store_id: 126,
       quantity: 1,
       weight: "0.5",
+      size: "lg",
+      color: "black",
     },
   ];
 
