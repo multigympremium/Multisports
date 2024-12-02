@@ -19,7 +19,6 @@ import useGetAllCategories from "../../../Hook/GetDataHook/useGetAllCategories";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
 import { IoCloseCircleOutline } from "react-icons/io5";
 
-
 export default function EditProductForm({
   targetId,
   setIsShowModal,
@@ -82,8 +81,8 @@ export default function EditProductForm({
         setProductTitle(resData.productTitle);
         setShortDescription(resData.shortDescription);
         setFullDescription(resData.fullDescription);
-        setSpecifications(res?.specifications)
-        setReturnPolicy(res.returnPolicy)
+        setSpecifications(res?.specifications);
+        setReturnPolicy(res.returnPolicy);
         setPrice(resData.price);
         setDiscountPrice(resData.discountPrice);
         setRewardPoints(resData.rewardPoints);
@@ -215,7 +214,7 @@ export default function EditProductForm({
     formData.append("metaDescription", metaDescription);
     formData.append("specialOffer", specialOffer);
     formData.append("hasVariants", hasVariants);
-    formData.append("thumbnail",  thumbnail || thumbnailPreview); // If it's a file, ensure it's a `File` object
+    formData.append("thumbnail", thumbnail || thumbnailPreview); // If it's a file, ensure it's a `File` object
     // formData.append("gallery", gallery);
     formData.append("category", category);
     formData.append("brandValue", brandValue);
@@ -225,6 +224,7 @@ export default function EditProductForm({
     formData.append("subcategory", subcategory);
     formData.append("childCategory", childCategory);
     formData.append("galleryItemIds", galleryItemIds);
+    formData.append("galleryItemCount", gallery.length);
 
     // If `gallery` is an array of files, you can loop through it and append each file:
 
@@ -258,8 +258,8 @@ export default function EditProductForm({
       }
 
       setIsShowModal(false);
-      
-      handleCloseModal()
+
+      handleCloseModal();
     } catch (err) {
       Swal.fire({
         title: "Error!",
@@ -270,7 +270,7 @@ export default function EditProductForm({
     }
   };
 
-  const handleCloseModal = useCallback( () => {
+  const handleCloseModal = useCallback(() => {
     setIsShowModal(false);
     setProductTitle("");
     setShortDescription("");
@@ -297,8 +297,8 @@ export default function EditProductForm({
     setGalleryItemIds([]);
     setProductColor([]);
     setProductSize([]);
-    setGallery([])
-  },[]);
+    setGallery([]);
+  }, []);
 
   useEffect(() => {
     setProductTitle("");
@@ -326,28 +326,29 @@ export default function EditProductForm({
     setGalleryItemIds([]);
     setProductColor([]);
     setProductSize([]);
-    setGallery([])
-  }, [isShowModal])
-
+    setGallery([]);
+  }, [isShowModal]);
 
   console.log(galleryItemIds, "productTitle");
-
-
 
   const handleColorChange = (e) => {
     const { name, value } = e.target;
     setProductColorValue(value);
 
-    if(value !== ""){
-    setProductColor((prev)=> prev.includes(value) ? prev : [...prev, value]);
+    if (value !== "") {
+      setProductColor((prev) =>
+        prev.includes(value) ? prev : [...prev, value]
+      );
     }
   };
   const handleSizeChange = (e) => {
     const { name, value } = e.target;
     setProductSizeValue(value);
 
-    if(value !== ""){
-    setProductSize((prev)=> prev.includes(value) ? prev : [...prev, value]);
+    if (value !== "") {
+      setProductSize((prev) =>
+        prev.includes(value) ? prev : [...prev, value]
+      );
     }
   };
 
@@ -358,9 +359,7 @@ export default function EditProductForm({
         <form onSubmit={handleSubmit}>
           {/* Product Title */}
           <div className="mb-4">
-            <label className="block text-gray-700">
-              Title 
-            </label>
+            <label className="block text-gray-700">Title</label>
             <input
               type="text"
               value={productTitle}
@@ -470,9 +469,7 @@ export default function EditProductForm({
           {/* Price, Discount Price, Reward Points, Stock */}
           <div className="grid grid-cols-4 gap-4 mb-4">
             <div>
-              <label className="block text-gray-700 ">
-                Price (BDT) 
-              </label>
+              <label className="block text-gray-700 ">Price (BDT)</label>
               <input
                 type="number"
                 value={price}
@@ -482,9 +479,7 @@ export default function EditProductForm({
               />
             </div>
             <div>
-              <label className="block text-gray-70">
-                Discount Price
-              </label>
+              <label className="block text-gray-70">Discount Price</label>
               <input
                 type="number"
                 value={discountPrice}
@@ -493,9 +488,7 @@ export default function EditProductForm({
               />
             </div>
             <div>
-              <label className="block text-gray-70">
-                Reward Points
-              </label>
+              <label className="block text-gray-70">Reward Points</label>
               <input
                 type="number"
                 value={rewardPoints}
@@ -504,9 +497,7 @@ export default function EditProductForm({
               />
             </div>
             <div>
-              <label className="block text-gray-70">
-                Stock
-              </label>
+              <label className="block text-gray-70">Stock</label>
               <input
                 type="number"
                 value={stock}
@@ -519,9 +510,7 @@ export default function EditProductForm({
           <div className={"grid grid-cols-3 gap-4 mb-4"}>
             {/* Product Code */}
             <div className="mb-4">
-              <label className="block text-gray-70">
-                Product Code
-              </label>
+              <label className="block text-gray-70">Product Code</label>
               <input
                 type="text"
                 value={productCode}
@@ -533,9 +522,7 @@ export default function EditProductForm({
 
             {/* Select Category */}
             <div className="mb-4">
-              <label className="block text-gray-70">
-                Select Category 
-              </label>
+              <label className="block text-gray-70">Select Category</label>
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
@@ -554,9 +541,7 @@ export default function EditProductForm({
 
             {/* Select Subcategory */}
             <div className="mb-4">
-              <label className="block text-gray-70">
-                Select Subcategory 
-              </label>
+              <label className="block text-gray-70">Select Subcategory</label>
               <select
                 value={subcategory}
                 onChange={(e) => setSubcategory(e.target.value)}
@@ -577,7 +562,7 @@ export default function EditProductForm({
             {/* Select Subcategory */}
             <div className="mb-4">
               <label className="block text-gray-70">
-                Select Child Categories 
+                Select Child Categories
               </label>
               <select
                 value={childCategory}
@@ -597,9 +582,7 @@ export default function EditProductForm({
             </div>
             {/* Select Brand */}
             <div className="mb-4">
-              <label className="block text-gray-70">
-                Select Brand 
-              </label>
+              <label className="block text-gray-70">Select Brand</label>
               <select
                 value={brandValue}
                 onChange={(e) => setBrandValue(e.target.value)}
@@ -617,13 +600,9 @@ export default function EditProductForm({
               </select>
             </div>
 
-            
-
             {/* Select Subcategory */}
             <div className="mb-4">
-              <label className="block text-gray-70">
-                Select Product Color 
-              </label>
+              <label className="block text-gray-70">Select Product Color</label>
               <select
                 value={productColorValue}
                 onChange={handleColorChange}
@@ -641,21 +620,24 @@ export default function EditProductForm({
               </select>
 
               <ul className="flex gap-3 mt-3 items-center">
-                {
-                  productColor?.length > 0 &&
+                {productColor?.length > 0 &&
                   productColor.map((item, index) => (
-                    <li key={item._id} className="px-3 py-1 border border-black text-sm capitalize relative rounded-lg" >{item}
-                    <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 "><IoCloseCircleOutline size={25} /></span>
+                    <li
+                      key={item._id}
+                      className="px-3 py-1 border border-black text-sm capitalize relative rounded-lg"
+                    >
+                      {item}
+                      <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 ">
+                        <IoCloseCircleOutline size={25} />
+                      </span>
                     </li>
-                ))}
+                  ))}
               </ul>
             </div>
 
             {/* Select Subcategory */}
             <div className="mb-4">
-              <label className="block text-gray-70">
-                Select Product Flag
-              </label>
+              <label className="block text-gray-70">Select Product Flag</label>
               <select
                 value={productFlagValue}
                 onChange={(e) => setProductFlagValue(e.target.value)}
@@ -675,9 +657,7 @@ export default function EditProductForm({
 
             {/* Select Subcategory */}
             <div className="mb-4">
-              <label className="block text-gray-70">
-                Select Product Size
-              </label>
+              <label className="block text-gray-70">Select Product Size</label>
               <select
                 value={productSizeValue}
                 onChange={handleSizeChange}
@@ -693,14 +673,19 @@ export default function EditProductForm({
                   ))}
                 {/* Add more subcategories dynamically if needed */}
               </select>
-            <ul className="flex gap-3 mt-3 items-center">
-                {
-                  productSize?.length > 0 &&
+              <ul className="flex gap-3 mt-3 items-center">
+                {productSize?.length > 0 &&
                   productSize.map((item, index) => (
-                    <li key={item._id} className="px-3 py-1 border border-black text-sm capitalize relative rounded" >{item}
-                    <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 "><IoCloseCircleOutline size={25} /></span>
+                    <li
+                      key={item._id}
+                      className="px-3 py-1 border border-black text-sm capitalize relative rounded"
+                    >
+                      {item}
+                      <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 ">
+                        <IoCloseCircleOutline size={25} />
+                      </span>
                     </li>
-                ))}
+                  ))}
               </ul>
             </div>
           </div>
@@ -708,7 +693,7 @@ export default function EditProductForm({
           {/* File Upload for Thumbnail */}
           <div className="mb-4">
             <label className="block text-gray-70">
-              Product Thumbnail Image 
+              Product Thumbnail Image
             </label>
 
             <DragEditUploadImageInput
@@ -721,9 +706,7 @@ export default function EditProductForm({
 
           {/* Gallery */}
           <div className="mb-4">
-            <label className="block text-gray-70">
-              Product Image Gallery
-            </label>
+            <label className="block text-gray-70">Product Image Gallery</label>
 
             <DragEditUploadImageInput
               getRootProps={getGalleryRootProps}
@@ -767,9 +750,7 @@ export default function EditProductForm({
             </h2>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-gray-70">
-                  Meta Title
-                </label>
+                <label className="block text-gray-70">Meta Title</label>
                 <input
                   type="text"
                   value={metaTitle}
@@ -778,9 +759,7 @@ export default function EditProductForm({
                 />
               </div>
               <div>
-                <label className="block text-gray-70">
-                  Meta Keywords
-                </label>
+                <label className="block text-gray-70">Meta Keywords</label>
                 <input
                   type="text"
                   value={metaKeywords}
@@ -789,9 +768,7 @@ export default function EditProductForm({
                 />
               </div>
               <div className="col-span-2">
-                <label className="block text-gray-70">
-                  Meta Description
-                </label>
+                <label className="block text-gray-70">Meta Description</label>
                 <textarea
                   value={metaDescription}
                   onChange={(e) => setMetaDescription(e.target.value)}
@@ -811,10 +788,7 @@ export default function EditProductForm({
             >
               Cancel
             </button>
-            <button
-              type="submit"
-              className={`customSaveButton`}
-            >
+            <button type="submit" className={`customSaveButton`}>
               Save Product
             </button>
           </div>

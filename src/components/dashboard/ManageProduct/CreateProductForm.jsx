@@ -173,6 +173,7 @@ export default function ProductCreateForm() {
     formData.append("productFlagValue", productFlagValue);
     formData.append("subcategory", subcategory);
     formData.append("childCategory", childCategory);
+    formData.append("galleryItemCount", gallery.length);
 
     // If `gallery` is an array of files, you can loop through it and append each file:
 
