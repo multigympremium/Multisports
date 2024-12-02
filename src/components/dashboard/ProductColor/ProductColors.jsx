@@ -16,6 +16,7 @@ import { FaRetweet } from "react-icons/fa6";
 import EditButton from "../../../components library/EditButton";
 import DeleteButton from "../../../components library/DeleteButton";
 import { HiArrowCircleDown, HiArrowCircleUp } from "react-icons/hi";
+import Mpagination from "../../../shared/Mpagination";
 
 const ProductColors = () => {
   // State management
@@ -27,6 +28,10 @@ const ProductColors = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [targetId, setTargetId] = useState("");
   const itemsPerPage = 10;
+
+  const handlePageClick = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
   const axiosSecure = useAxiosSecure();
 
@@ -41,11 +46,15 @@ const ProductColors = () => {
     isShowModal,
   });
 
+  const { paginatedData, paginationControls } = Mpagination({
+    totalData: productColors,
+  });
+
   // Paginated data
-  const paginatedData = useCallback(() => {
-    const offset = currentPage * itemsPerPage;
-    return productColors.slice(offset, offset + itemsPerPage);
-  }, [currentPage, itemsPerPage, productColors]);
+  // const paginatedData = useCallback(() => {
+  //   const offset = currentPage * itemsPerPage;
+  //   return productColors.slice(offset, offset + itemsPerPage);
+  // }, [currentPage, itemsPerPage, productColors]);
 
   // Sorting handler
   const handleSort = (key) => {
@@ -120,10 +129,14 @@ const ProductColors = () => {
               className="customSaveButton"
               onClick={() => setIsShowModal(true)}
             >
-              <span className="flex items-center gap-1"><IoAddCircle />  Add New Color</span>
+              <span className="flex items-center gap-1">
+                <IoAddCircle /> Add New Color
+              </span>
             </button>
             <button className="customCancelButton">
-              <span className="flex items-center gap-1"><FaRetweet /> Rearrange Brand</span>
+              <span className="flex items-center gap-1">
+                <FaRetweet /> Rearrange Brand
+              </span>
             </button>
           </div>
         </div>
@@ -142,7 +155,11 @@ const ProductColors = () => {
                   >
                     SL{"  "}
                     {sortConfig.key === "id" &&
-                      (sortConfig.direction === "asc" ?<HiArrowCircleUp className="text-[#087D6D] "/>: <HiArrowCircleDown  className="text-[#E68923]" />)}
+                      (sortConfig.direction === "asc" ? (
+                        <HiArrowCircleUp className="text-[#087D6D] " />
+                      ) : (
+                        <HiArrowCircleDown className="text-[#E68923]" />
+                      ))}
                   </td>
                   <td
                     className="border p-2 text-center cursor-pointer"
@@ -156,7 +173,7 @@ const ProductColors = () => {
                     className="border p-2 text-center cursor-pointer"
                     onClick={() => handleSort("productColorName")}
                   >
-                    Color Name 
+                    Color Name
                     {sortConfig.key === "productColorName" &&
                       (sortConfig.direction === "asc" ? "🔼" : "🔽")}
                   </td>
@@ -165,31 +182,59 @@ const ProductColors = () => {
                 </tr>
               </thead>
               <tbody>
-                {paginatedData()?.length > 0 && paginatedData().map((item, index) => (
-                  <tr key={item._id} className="border-b">
-                    <td className="border text-center p-2">
-                      {index + 1 + currentPage * itemsPerPage}
-                    </td>
-                    <td className="border text-center p-2">
-                      {item.productColor}{" "}
-                      <span
-                        className={` min-w-14 h-3 rounded inline-block`}
-                        style={{ backgroundColor: item.productColor }}
-                      ></span>
-                    </td>
-                    <td className="border p-2  text-center">{item.productColorName}</td>
-                    <td className="border p-2">
-                      <div className="flex justify-center space-x-2">
-                        <EditButton onClick={() => handleEdit(item._id)}></EditButton>
-                        <DeleteButton onClick={() => handleDelete(item._id)}></DeleteButton>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
+                {paginatedData?.length > 0 &&
+                  paginatedData.map((item, index) => (
+                    <tr key={item._id} className="border-b">
+                      <td className="border text-center p-2">
+                        {index + 1 + currentPage * itemsPerPage}
+                      </td>
+                      <td className="border text-center p-2">
+                        {item.productColor}{" "}
+                        <span
+                          className={` min-w-14 h-3 rounded inline-block`}
+                          style={{ backgroundColor: item.productColor }}
+                        ></span>
+                      </td>
+                      <td className="border p-2  text-center">
+                        {item.productColorName}
+                      </td>
+                      <td className="border p-2">
+                        <div className="flex justify-center space-x-2">
+                          <EditButton
+                            onClick={() => handleEdit(item._id)}
+                          ></EditButton>
+                          <DeleteButton
+                            onClick={() => handleDelete(item._id)}
+                          ></DeleteButton>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
               </tbody>
             </table>
           </div>
         )}
+
+        {/* Pagination
+        <div className="mt-5 flex justify-center space-x-2">
+          {Array.from({
+            length: Math.ceil(productColors.length / itemsPerPage),
+          }).map((_, pageIndex) => (
+            <button
+              key={pageIndex}
+              onClick={() => handlePageClick(pageIndex)}
+              className={`px-3 py-1 border rounded-md ${
+                currentPage === pageIndex
+                  ? "bg-blue-500 text-white"
+                  : "hover:bg-gray-200"
+              }`}
+            >
+              {pageIndex + 1}
+            </button>
+          ))}
+        </div> */}
+
+        {paginationControls}
       </div>
 
       {/* Modal for Adding/Editing Brand */}

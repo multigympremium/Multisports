@@ -18,6 +18,7 @@ import Swal from "sweetalert2";
 
 import { IoCloseCircleOutline } from "react-icons/io5";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
+import DragMultiUploadImageInput from "../../../shared/DragMultiUploadImageInput";
 
 export default function ProductCreateForm() {
   // States for the form fields
@@ -201,10 +202,10 @@ export default function ProductCreateForm() {
         });
       }
     } catch (err) {
-      console.error(err);
+      console.error(err, "submit product error");
       Swal.fire({
         title: "Error!",
-        text: "Something went wrong!",
+        text: err.message,
         icon: "error",
         confirmButtonText: "Ok",
       });
@@ -716,11 +717,13 @@ export default function ProductCreateForm() {
               Product Image Gallery
             </label>
 
-            <DragUploadImageInput
+            <DragMultiUploadImageInput
               getRootProps={getGalleryRootProps}
               getInputProps={getGalleryInputProps}
               image={gallery}
               imagePreview={galleryPreview}
+              setImagePreview={setGalleryPreview}
+              setGallery={setGallery}
             />
           </div>
 

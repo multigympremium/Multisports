@@ -41,33 +41,7 @@ export default function Summary({
   //     item_description: item.itemDescription,
   //     amount_to_collect: item.total,
 
-  const items = [
-    {
-      productTitle: "MENS CASUAL SHIRT",
-      shortDescription:
-        '<p><strong style="color: rgb(55, 65, 81);">Short Description</strong></p>',
-      fullDescription:
-        '<p><strong style="color: rgb(55, 65, 81);">Full Description</strong></p>',
-      price: 522,
-      discountPrice: 5,
-      rewardPoints: 5,
-      stock: 5,
-      productCode: "54545",
-      metaTitle: "kk",
-      metaKeywords: "hg",
-      metaDescription: "hg",
-      specialOffer: true,
-      hasVariants: true,
-      thumbnail: "1728189072154-58acca94f0313e0f56c2b0aab45c9257.webp",
-      category: "Running",
-      brandValue: "Apple",
-      productColorValue: "#2aa73be8",
-      productSizeValue: "lg",
-      productFlagValue: "Flag Name Testing",
-      modelOfBrandValue: "one_t_5",
-      store_id: 126,
-    },
-  ];
+  
 
   // const submitOrder = async () => {
   //   const submitOrderData = {

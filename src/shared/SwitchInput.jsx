@@ -14,7 +14,7 @@ function SwitchInput({
   className = "",
 }) {
   return (
-    <div className={`mb-6 flex items-center ${className}`}>
+  <div className={`mb-6 flex items-center ${className}`}>
       <label className="block text-gray-700 font-semibold mr-2">{label}</label>
       <Switch
         id="switch"

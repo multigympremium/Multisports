@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 import Modal from "../../../shared/Modal/Modal";
 import CreateModelBrandForm from "./Forms/CreateModelBrandForm";
 import EditModelBrandForm from "./Forms/EditModelBrandForm";
+import Mpagination from "../../../shared/Mpagination";
 
 const ModelOfBrand = () => {
   // State management
@@ -34,11 +35,9 @@ const ModelOfBrand = () => {
     isShowModal,
   });
 
-  // Paginated data
-  const paginatedData = useCallback(() => {
-    const offset = currentPage * itemsPerPage;
-    return modelOfBrand.slice(offset, offset + itemsPerPage);
-  }, [currentPage, itemsPerPage, modelOfBrand]);
+  const { paginatedData, paginationControls } = Mpagination({
+    totalData: modelOfBrand,
+  });
 
   // Sorting handler
   const handleSort = (key) => {
@@ -158,7 +157,7 @@ const ModelOfBrand = () => {
                 </tr>
               </thead>
               <tbody>
-                {paginatedData().map((brand, index) => (
+                {paginatedData.map((brand, index) => (
                   <tr key={brand._id} className="border-b">
                     <td className="border p-2">
                       {index + 1 + currentPage * itemsPerPage}
@@ -187,6 +186,8 @@ const ModelOfBrand = () => {
             </table>
           </div>
         )}
+
+        {paginationControls}
       </div>
 
       {/* Modal for Adding/Editing Brand */}
