@@ -1,13 +1,16 @@
-import { useEffect, useState } from 'react';
-import useAxiosSecure from '../../../Hook/useAxiosSecure';
-import Swal from 'sweetalert2';
-import useGetAllDistrict from '../../../Hook/GetPublicDataHook/useGetAllDistrict';
-import { set } from 'react-hook-form';
-import { AiOutlineLoading } from 'react-icons/ai';
+import { useEffect, useState } from "react";
+import useAxiosSecure from "../../../Hook/useAxiosSecure";
+import Swal from "sweetalert2";
+import useGetAllDistrict from "../../../Hook/GetPublicDataHook/useGetAllDistrict";
+import { set } from "react-hook-form";
+import { AiOutlineLoading } from "react-icons/ai";
 
-
-
-const ShippingForm = ({setShippingAddress, shippingAddress, isShowModal, setIsShowModal}) => {
+const ShippingForm = ({
+  setShippingAddress,
+  shippingAddress,
+  isShowModal,
+  setIsShowModal,
+}) => {
   const [cities, setCities] = useState([]);
   const [zones, setZones] = useState([]);
   const [areas, setAreas] = useState([]);
@@ -15,72 +18,89 @@ const ShippingForm = ({setShippingAddress, shippingAddress, isShowModal, setIsSh
   const [areaLoading, setAreaLoading] = useState(false);
 
   const [formData, setFormData] = useState({
-    recipient_name: '',
-    contact_number: '',
-    city_id: '',
+    recipient_name: "",
+    contact_number: "",
+    secondaryContactNumber: "",
+    city_id: "",
     city_name: "",
     zone_name: "",
     area_name: "",
-    zone_id: '',
-    area_id: '',
-    address: '',
-    postCode: '',
-    special_instruction: '',
+    zone_id: "",
+    area_id: "",
+    address: "",
+    postCode: "",
+    special_instruction: "",
   });
-
 
   const [errors, setErrors] = useState({});
 
   const axiosSecure = useAxiosSecure();
 
   const handleInputChange = (e) => {
-
-
     const { name, value } = e.target;
 
-    if(name === "city_id"){
-      const filter_name = cities.find(city => city.city_id == value).city_name;
+    if (name === "city_id") {
+      const filter_name = cities.find(
+        (city) => city.city_id == value
+      ).city_name;
 
-      console.log(filter_name, "city_name")
+      console.log(filter_name, "city_name");
 
       setFormData({
         ...formData,
         city_name: filter_name,
-        city_id: value
-      })
+        city_id: value,
+      });
 
-      return
-    } else if(name === "zone_id"){
-      const filter_name = zones.find(zone => zone.zone_id == value).zone_name;
+      return;
+    } else if (name === "zone_id") {
+      const filter_name = zones.find((zone) => zone.zone_id == value).zone_name;
 
-      console.log(filter_name, "zone_name")
+      console.log(filter_name, "zone_name");
 
       setFormData({
         ...formData,
         zone_name: filter_name,
-        zone_id: value
-      })
-      return
-    } else if(name === "area_id"){
-      const filter_name = areas.find(area => area.area_id == value).area_name;
+        zone_id: value,
+      });
+      return;
+    } else if (name === "area_id") {
+      const filter_name = areas.find((area) => area.area_id == value).area_name;
 
-      console.log(filter_name, "area_name")
+      console.log(filter_name, "area_name");
 
       setFormData({
         ...formData,
         area_name: filter_name,
-        area_id: value
-      })
+        area_id: value,
+      });
 
-      return
-  }
+      return;
+    }
 
-    console.log(name, value)
+    if (name === "contact_number") {
+      console.log(formData.contact_number, value, "contact_number");
+      value === formData.secondaryContactNumber &&
+        setErrors((prev) => ({
+          ...prev,
+          contact_number:
+            "Secondary Contact Number should not be same as Primary Contact Number",
+        }));
+    } else if (name === "secondaryContactNumber") {
+      console.log(formData.contact_number, value, "contact_number");
+      value === formData.contact_number &&
+        setErrors((prev) => ({
+          ...prev,
+          secondaryContactNumber:
+            "Secondary Contact Number should not be same as Primary Contact Number",
+        }));
+    }
+
+    console.log(name, value);
     console.log({
       ...formData,
       [name]: value,
-    })
-
+    });
 
     setFormData({
       ...formData,
@@ -90,14 +110,19 @@ const ShippingForm = ({setShippingAddress, shippingAddress, isShowModal, setIsSh
 
   const validateForm = () => {
     let formErrors = {};
-    if (!formData.recipientName) formErrors.recipientName = 'Recipient Name is required';
-    if (!formData.contactNumber) formErrors.contactNumber = 'Contact Number is required';
-    if (!formData.city_id) formErrors.city_id = 'City selection is required';
-    if (!formData.zone_id) formErrors.zone_id = 'City selection is required';
-    if (!formData.area_id) formErrors.area_id = 'Area selection is required';
-    if (!formData.address) formErrors.address = 'Address is required';
-    if (!formData.postCode) formErrors.postCode = 'Post Code is required';
-    
+    if (!formData.recipientName)
+      formErrors.recipientName = "Recipient Name is required";
+    if (!formData.contactNumber)
+      formErrors.contactNumber = "Contact Number is required";
+    if (!formData.city_id) formErrors.city_id = "City selection is required";
+    if (!formData.zone_id) formErrors.zone_id = "City selection is required";
+    if (!formData.area_id) formErrors.area_id = "Area selection is required";
+    if (!formData.address) formErrors.address = "Address is required";
+    if (!formData.postCode) formErrors.postCode = "Post Code is required";
+    if (!formData.secondaryContactNumber)
+      formErrors.secondaryContactNumber =
+        "Secondary Contact Number is required";
+
     setErrors(formErrors);
     return Object.keys(formErrors).length === 0;
   };
@@ -105,63 +130,62 @@ const ShippingForm = ({setShippingAddress, shippingAddress, isShowModal, setIsSh
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    
+    console.log(formData, "formData", validateForm());
+
     if (validateForm()) {
-      
-      if(shippingAddress){
-        console.log(formData, "formData")
+      if (shippingAddress) {
+        console.log(formData, "formData");
 
-
-        localStorage.setItem('shippingAddress', JSON.stringify(formData));
+        localStorage.setItem("shippingAddress", JSON.stringify(formData));
         setShippingAddress(formData);
-          setFormData({
-            ...formData,
-            recipientName: '',
-            contactNumber: '',
-            district: '',
-            area: '',
-            address: '',
-            postCode: '',
-            deliveryType: 'Home',
-          });
-          setIsShowModal(false);
-          return;
+        setFormData({
+          ...formData,
+          recipientName: "",
+          contactNumber: "",
+          district: "",
+          area: "",
+          address: "",
+          postCode: "",
+          deliveryType: "Home",
+        });
 
+        setIsShowModal(false);
+        return;
       }
 
-        // formData.userId = user._id;
-        // formData.email = user.email;
+      // formData.userId = user._id;
+      // formData.email = user.email;
       try {
-        const response = await axiosSecure.post('/shipping', formData);
+        const response = await axiosSecure.post("/shipping", formData);
 
-        console.log(response, "response")
+        console.log(response, "response");
 
-        if(response.status === 200 || response.status === 201){
-          localStorage.setItem('shippingAddress', JSON.stringify(response.data?.data));
+        if (response.status === 200 || response.status === 201) {
+          localStorage.setItem(
+            "shippingAddress",
+            JSON.stringify(response.data?.data)
+          );
           setShippingAddress(response.data?.data);
-            setFormData({
-              ...formData,
-              recipientName: '',
-              contactNumber: '',
-              district: '',
-              area: '',
-              address: '',
-              postCode: '',
-              deliveryType: 'Home',
-            });
-            return;
+          setFormData({
+            ...formData,
+            recipientName: "",
+            contactNumber: "",
+            district: "",
+            area: "",
+            address: "",
+            postCode: "",
+            deliveryType: "Home",
+          });
+          return;
         }
-
-        
-        
       } catch (error) {
-        console.error('Error submitting form:', error);
+        console.error("Error submitting form:", error);
         Swal.fire({
-          title: 'Error',
-          text: 'There was an error submitting the form.',
-          icon: 'error',
-          confirmButtonText: 'Ok',
-          customClass: 'border-none',
+          title: "Error",
+          text: "There was an error submitting the form.",
+          icon: "error",
+          confirmButtonText: "Ok",
+          customClass: "border-none",
           buttonsStyling: false,
         });
       }
@@ -169,11 +193,13 @@ const ShippingForm = ({setShippingAddress, shippingAddress, isShowModal, setIsSh
   };
 
   useEffect(() => {
-    const stringShippingAddress = localStorage.getItem('shippingAddress');
-    const localShippingAddress = stringShippingAddress ? JSON.parse(stringShippingAddress) : null;
+    const stringShippingAddress = localStorage.getItem("shippingAddress");
+    const localShippingAddress = stringShippingAddress
+      ? JSON.parse(stringShippingAddress)
+      : null;
 
-    console.log(localShippingAddress, "localShippingAddress")
-    if(localShippingAddress){
+    console.log(localShippingAddress, "localShippingAddress");
+    if (localShippingAddress) {
       formData.recipientName = localShippingAddress.recipientName;
       formData.contactNumber = localShippingAddress.contactNumber;
       formData.district = localShippingAddress.district;
@@ -182,24 +208,17 @@ const ShippingForm = ({setShippingAddress, shippingAddress, isShowModal, setIsSh
       formData.postCode = localShippingAddress.postCode;
       formData.deliveryType = localShippingAddress.deliveryType;
     }
-    
-  }, [formData])
-
-
+  }, [formData]);
 
   useEffect(() => {
     const fetchCities = async () => {
       try {
-        
         const res = await axiosSecure.get("/courier/cities");
         if (res.status === 200 || res.status === 201) {
           setCities(res.data?.data?.data?.data);
-          
         }
-        
       } catch (error) {
         console.error("Error fetching cities:", error);
-        
       }
     };
 
@@ -250,7 +269,9 @@ const ShippingForm = ({setShippingAddress, shippingAddress, isShowModal, setIsSh
     if (isShowModal) {
       setFormData(shippingAddress);
     }
-  }, [isShowModal , shippingAddress]);
+  }, [isShowModal, shippingAddress]);
+
+  console.log(errors, "errors");
 
   return (
     <div className="w-full mx-auto p-6 border rounded-md mb-12 bg-white shadow-lg ">
@@ -269,7 +290,9 @@ const ShippingForm = ({setShippingAddress, shippingAddress, isShowModal, setIsSh
               className="border p-2 w-full rounded"
             />
             {errors.recipientName && (
-              <p className="text-red-500 text-sm mt-1">{errors.recipientName}</p>
+              <p className="text-red-500 text-sm mt-1">
+                {errors.recipientName}
+              </p>
             )}
           </div>
 
@@ -278,14 +301,34 @@ const ShippingForm = ({setShippingAddress, shippingAddress, isShowModal, setIsSh
             <label className="block font-semibold mb-1">Contact Number *</label>
             <input
               type="text"
-              name="contactNumber"
-              value={formData.contactNumber}
+              name="contact_number"
+              value={formData.contact_number}
               onChange={handleInputChange}
               placeholder="Mobile Number"
               className="border p-2 w-full rounded"
             />
-            {errors.contactNumber && (
-              <p className="text-red-500 text-sm mt-1">{errors.contactNumber}</p>
+            {errors.contact_number && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.contact_number}
+              </p>
+            )}
+          </div>
+          <div>
+            <label className="block font-semibold mb-1">
+              Secondary Contact Number *
+            </label>
+            <input
+              type="text"
+              name="secondaryContactNumber"
+              value={formData.secondaryContactNumber}
+              onChange={handleInputChange}
+              placeholder="Mobile Number"
+              className="border p-2 w-full rounded"
+            />
+            {errors.secondaryContactNumber && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.secondaryContactNumber}
+              </p>
             )}
           </div>
 
@@ -299,9 +342,12 @@ const ShippingForm = ({setShippingAddress, shippingAddress, isShowModal, setIsSh
               className="border p-2 w-full rounded"
             >
               <option value="">Select District/City Name</option>
-              {cities.length > 0 && cities.map((item, index) => (
-                <option key={index} value={item.city_id}>{item.city_name}</option>
-              ))}
+              {cities.length > 0 &&
+                cities.map((item, index) => (
+                  <option key={index} value={item.city_id}>
+                    {item.city_name}
+                  </option>
+                ))}
               {/* Add more options as necessary */}
             </select>
             {errors.city_id && (
@@ -312,29 +358,27 @@ const ShippingForm = ({setShippingAddress, shippingAddress, isShowModal, setIsSh
           {/* Area/Thana/Upazilla */}
           <div>
             <label className="block font-semibold mb-1">Zone *</label>
-            {
-              !zoneLoading ? (
-            <select
-              name="zone_id"
-              value={formData.zone_id}
-              onChange={handleInputChange}
-              className="border p-2 w-full rounded"
-            >
-              <option value="">Select Zone</option>
-              {
-                zones?.length > 0 && zones.map((item, index) => (
-                  <option key={index} value={item.zone_id}>{item?.zone_name}</option>
-                ))
-              }
-              {/* Add more options as necessary */}
-            </select>
-
-              ) : (
-                <div className="flex justify-center items-center border py-2">
-                  <AiOutlineLoading className="animate-spin text-gray-500" />
-                </div>
-              )
-            }
+            {!zoneLoading ? (
+              <select
+                name="zone_id"
+                value={formData.zone_id}
+                onChange={handleInputChange}
+                className="border p-2 w-full rounded"
+              >
+                <option value="">Select Zone</option>
+                {zones?.length > 0 &&
+                  zones.map((item, index) => (
+                    <option key={index} value={item.zone_id}>
+                      {item?.zone_name}
+                    </option>
+                  ))}
+                {/* Add more options as necessary */}
+              </select>
+            ) : (
+              <div className="flex justify-center items-center border py-2">
+                <AiOutlineLoading className="animate-spin text-gray-500" />
+              </div>
+            )}
             {errors.zone_id && (
               <p className="text-red-500 text-sm mt-1">{errors.zone_id}</p>
             )}
@@ -343,29 +387,27 @@ const ShippingForm = ({setShippingAddress, shippingAddress, isShowModal, setIsSh
           <div>
             <label className="block font-semibold mb-1">Area *</label>
 
-            {
-              !areaLoading ? (
-            <select
-              name="area_id"
-              value={formData.area_id}
-              onChange={handleInputChange}
-              className="border p-2 w-full rounded"
-            >
-              <option value="">Select Area</option>
-              {
-                areas?.length > 0 && areas.map((item, index) => (
-                  <option key={index} value={item.area_id}>{item?.area_name}</option>
-                ))
-              }
-              {/* Add more options as necessary */}
-            </select>
-
-              ) : (
-                <div className="flex justify-center items-center border py-2">
+            {!areaLoading ? (
+              <select
+                name="area_id"
+                value={formData.area_id}
+                onChange={handleInputChange}
+                className="border p-2 w-full rounded"
+              >
+                <option value="">Select Area</option>
+                {areas?.length > 0 &&
+                  areas.map((item, index) => (
+                    <option key={index} value={item.area_id}>
+                      {item?.area_name}
+                    </option>
+                  ))}
+                {/* Add more options as necessary */}
+              </select>
+            ) : (
+              <div className="flex justify-center items-center border py-2">
                 <AiOutlineLoading className="animate-spin text-gray-500" />
               </div>
-              )
-            }
+            )}
             {errors.area_id && (
               <p className="text-red-500 text-sm mt-1">{errors.area_id}</p>
             )}
@@ -403,9 +445,10 @@ const ShippingForm = ({setShippingAddress, shippingAddress, isShowModal, setIsSh
             )}
           </div>
 
-
           <div className="md:col-span-2">
-            <label className="block font-semibold mb-1">Special Instruction *</label>
+            <label className="block font-semibold mb-1">
+              Special Instruction *
+            </label>
             <textarea
               type="text"
               name="special_instruction"
@@ -415,7 +458,9 @@ const ShippingForm = ({setShippingAddress, shippingAddress, isShowModal, setIsSh
               className="border p-2 w-full rounded min-h-[150px]"
             />
             {errors.special_instruction && (
-              <p className="text-red-500 text-sm mt-1">{errors.special_instruction}</p>
+              <p className="text-red-500 text-sm mt-1">
+                {errors.special_instruction}
+              </p>
             )}
           </div>
 

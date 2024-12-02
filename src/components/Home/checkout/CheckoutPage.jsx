@@ -1,30 +1,25 @@
-
-import { useContext, useState, useEffect } from 'react'
-import { IoHome } from 'react-icons/io5'
-import { AuthContext } from '../../../providers/AuthProvider';
-import Container from '../../../shared/Container';
-import ShippingForm from '../Shipping/ShippingForm';
-import ViewCart from '../../../shared/cart/viewCart/ViewCart';
-import Summary from '../../../shared/cart/viewCart/Summary';
-import { Link } from 'react-router-dom';
-import BgBlurModal from '../../../shared/Modal/BgBlurModal';
+import { useContext, useState, useEffect } from "react";
+import { IoHome } from "react-icons/io5";
+import { AuthContext } from "../../../providers/AuthProvider";
+import Container from "../../../shared/Container";
+import ShippingForm from "../Shipping/ShippingForm";
+import ViewCart from "../../../shared/cart/viewCart/ViewCart";
+import Summary from "../../../shared/cart/viewCart/Summary";
+import { Link } from "react-router-dom";
+import BgBlurModal from "../../../shared/Modal/BgBlurModal";
 
 export default function CheckoutPage() {
-  const {cartItems} = useContext(AuthContext)
+  const { cartItems } = useContext(AuthContext);
 
   const [shippingAddress, setShippingAddress] = useState(null);
   const [isShippingEdit, setIsShippingEdit] = useState(false);
 
-
   useEffect(() => {
-    const localShippingAddress = localStorage.getItem('shippingAddress');
-    if(localShippingAddress){
+    const localShippingAddress = localStorage.getItem("shippingAddress");
+    if (localShippingAddress) {
       setShippingAddress(JSON.parse(localShippingAddress));
-
     }
-      
-  }, [])
-
+  }, []);
 
   return (
     <Container>
@@ -63,7 +58,7 @@ export default function CheckoutPage() {
                         {shippingAddress.zone_name}
                       </span>
                     </div>
-                   </div>
+                  </div>
                   <div className="border p-6 rounded-md border-r border-gray-200">
                     <div className="flex justify-between text-sm text-gray-500">
                       <b className="font-bold text-lg">Area</b>
@@ -83,14 +78,28 @@ export default function CheckoutPage() {
                         {shippingAddress.address}
                       </span>
                     </div>
-                   
-                   </div>
+                    <div className="flex justify-between text-sm text-gray-500 ">
+                      <b className="font-bold text-lg">Secondary Number</b>
+                      <span className="font-medium">
+                        {shippingAddress.secondaryContactNumber}
+                      </span>
+                    </div>
+                  </div>
 
-                   <button className='px-3 py-1 border border-blue-400 rounded-md absolute top-5 right-5' onClick={()=> setIsShippingEdit(true)}>Edit</button>
+                  <button
+                    className="px-3 py-1 border border-blue-400 rounded-md absolute top-5 right-5"
+                    onClick={() => setIsShippingEdit(true)}
+                  >
+                    Edit
+                  </button>
                 </div>
               </div>
             ) : (
-              <ShippingForm setShippingAddress={setShippingAddress} shippingAddress={shippingAddress} setIsShippingEdit={setIsShippingEdit} />
+              <ShippingForm
+                setShippingAddress={setShippingAddress}
+                shippingAddress={shippingAddress}
+                setIsShippingEdit={setIsShippingEdit}
+              />
             )}
 
             <div
@@ -118,8 +127,16 @@ export default function CheckoutPage() {
         </div>
       )}
 
-      <BgBlurModal isShowModal={isShippingEdit} setIsShowModal={setIsShippingEdit}>
-        <ShippingForm shippingAddress={shippingAddress} setShippingAddress={setShippingAddress} setIsShowModal={setIsShippingEdit} isShowModal={isShippingEdit} />
+      <BgBlurModal
+        isShowModal={isShippingEdit}
+        setIsShowModal={setIsShippingEdit}
+      >
+        <ShippingForm
+          shippingAddress={shippingAddress}
+          setShippingAddress={setShippingAddress}
+          setIsShowModal={setIsShippingEdit}
+          isShowModal={isShippingEdit}
+        />
       </BgBlurModal>
     </Container>
   );

@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useCallback } from "react";
 
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
@@ -9,7 +8,6 @@ export default function ViewAllStores() {
   const [courierStore, setCourierStore] = useState([]);
   const [sortConfig, setSortConfig] = useState({ key: "id", direction: "asc" });
   const axiosSecure = useAxiosSecure();
-
 
   const sortedcourierStore = useCallback(() => {
     const sortedData = [...courierStore];
@@ -39,13 +37,9 @@ export default function ViewAllStores() {
     setSortConfig({ key, direction });
   };
 
-
-
   const handlePageClick = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
-
-  
 
   useEffect(() => {
     const fetchCourierStore = async () => {
@@ -71,12 +65,8 @@ export default function ViewAllStores() {
         <table className="min-w-full shadow table-auto border-collapse">
           <thead className="text-lg">
             <tr>
-              <td
-                className="border flex justify-center items-center gap-2 text-lg p-2 text-center cursor-pointer"
-                
-              >
+              <td className="border flex justify-center items-center gap-2 text-lg p-2 text-center cursor-pointer">
                 SL{" "}
-                
               </td>
               <td
                 className="border p-2 text-center cursor-pointer"
@@ -118,26 +108,22 @@ export default function ViewAllStores() {
                 {sortConfig.key === "hub_id" &&
                   (sortConfig.direction === "asc" ? "🔼" : "🔽")}
               </td>
-             
-              
             </tr>
           </thead>
           <tbody>
-            {paginatedData()?.length > 0 && paginatedData().map((item, index) => (
-              <tr key={item.id} className="border-b text-center">
-                <td className="border p-2 ">
-                  {index + 1 + currentPage * itemsPerPage}
-                </td>
-                <td className="border p-2">{item.store_name}</td>
-                <td className="border p-2">{item.store_address}</td>
-                <td className="border p-2">{item.city_id}</td>
-                <td className="border p-2">{item.zone_id}</td>
-                <td className="border p-2">{item.hub_id}</td>
-               
-               
-                
-              </tr>
-            ))}
+            {paginatedData()?.length > 0 &&
+              paginatedData().map((item, index) => (
+                <tr key={item.id} className="border-b text-center">
+                  <td className="border p-2 ">
+                    {index + 1 + currentPage * itemsPerPage}
+                  </td>
+                  <td className="border p-2">{item.store_name}</td>
+                  <td className="border p-2">{item.store_address}</td>
+                  <td className="border p-2">{item.city_id}</td>
+                  <td className="border p-2">{item.zone_id}</td>
+                  <td className="border p-2">{item.hub_id}</td>
+                </tr>
+              ))}
           </tbody>
         </table>
 
@@ -149,17 +135,17 @@ export default function ViewAllStores() {
             <button
               key={pageIndex}
               onClick={() => handlePageClick(pageIndex)}
-              className={`px-3 py-1 border rounded-md ${currentPage === pageIndex
-                ? "bg-blue-500 text-white"
-                : "hover:bg-gray-200"
-                }`}
+              className={`px-3 py-1 border rounded-md ${
+                currentPage === pageIndex
+                  ? "bg-blue-500 text-white"
+                  : "hover:bg-gray-200"
+              }`}
             >
               {pageIndex + 1}
             </button>
           ))}
         </div>
       </div>
-     
     </div>
   );
 }

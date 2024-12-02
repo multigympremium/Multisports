@@ -51,6 +51,7 @@ export default function ProductCreateForm() {
   const [productFlagValue, setProductFlagValue] = useState("");
   const [brandValue, setBrandValue] = useState("zxcvzcxv");
   const [productSizeValue, setProductSizeValue] = useState("");
+  const [store, setStore] = useState("");
 
   const [setupConfig, setSetupConfig] = useState({});
 
@@ -68,6 +69,7 @@ export default function ProductCreateForm() {
   const productColors = useGetAllProductColors({});
   const productFlags = useGetAllProductFlag({});
   const productSizes = useGetAllProductSizes({});
+  const [courierStore, setCourierStore] = useState([]);
 
   const modelOfBrand = useGetAllModelOfBrands({});
 
@@ -257,6 +259,23 @@ export default function ProductCreateForm() {
   }, [axiosSecure]);
 
   console.log(setupConfig, "setupConfig");
+
+  useEffect(() => {
+    const fetchCourierStore = async () => {
+      try {
+        const res = await axiosSecure.get("/courier/store");
+        console.log(res, "res", res?.data?.data);
+        if (res.status === 200 || res.status === 201) {
+          setCourierStore(res.data?.data?.data?.data);
+        }
+      } catch (error) {
+        console.error("Error fetching courierStore:", error);
+        throw new Error("Failed to fetch courierStore");
+      }
+    };
+
+    fetchCourierStore();
+  }, [axiosSecure]);
 
   return (
     <div className="p-6 pt-0">
@@ -476,6 +495,27 @@ export default function ProductCreateForm() {
                 <option value="">Select One</option>
                 {subcategories?.length > 0 &&
                   subcategories.map((item, index) => (
+                    <option value={item.slug} key={item._id}>
+                      {item?.subcategoryName}
+                    </option>
+                  ))}
+                {/* Add more subcategories dynamically if needed */}
+              </select>
+            </div>
+
+            <div className="mb-4">
+              <label className="block text-gray-700 font-semibold ">
+                Select Store Area
+              </label>
+              <select
+                value={store}
+                onChange={(e) => setStore(e.target.value)}
+                className="customInput select"
+                // required
+              >
+                <option value="">Select One</option>
+                {courierStore?.length > 0 &&
+                  courierStore.map((item, index) => (
                     <option value={item.slug} key={item._id}>
                       {item?.subcategoryName}
                     </option>
