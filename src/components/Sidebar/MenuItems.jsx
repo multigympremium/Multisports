@@ -60,9 +60,9 @@ function MenuItemsList({ userRole }) {
           icon: <IoIosHome />,
         },
         {
-          title: "Shop Settings",
-          path: "shop-settings",
-          isAllowed: isAllowedRoute("shop-settings"),
+          title: "Courier Settings",
+          path: "courier-pathao-settings",
+          isAllowed: isAllowedRoute("courier-pathao-settings"),
           icon: <IoIosHome />,
         },
       ],

@@ -1,7 +1,7 @@
 import { lazy, Suspense } from "react";
 import GlobalLoading from "../../components library/GlobalLoading";
-const ShopSettings = lazy(() =>
-  import("../../components/dashboard/ShopSettings/ShopSettings")
+const CourierPathaoSettings = lazy(() =>
+  import("../../components/dashboard/CourierSettings/CourierPathaoSettings")
 );
 const ModelOfBrand = lazy(() =>
   import("../../components/dashboard/ModelOfBrand/ModelOfBrand")
@@ -1710,7 +1710,7 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "userpermission",
-      path: "shop-settings",
+      path: "courier-pathao-settings",
       // path: isPermittedRoute("userpermission"),
       element: (
         // <PrivateRoute>
@@ -1718,7 +1718,7 @@ function DashboardChildrenRoutes() {
         // </PrivateRoute>
         <Suspense fallback={<GlobalLoading />}>
           <PrivateRoute>
-            <ShopSettings />
+            <CourierPathaoSettings />
           </PrivateRoute>
         </Suspense>
       ),
