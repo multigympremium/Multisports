@@ -8,14 +8,11 @@ import useAxiosSecure from "../../../Hook/useAxiosSecure";
 
 // Zod schema for form validation
 const schema = z.object({
-  clientId: z.string().nonempty(" Client Id is required"),
-  storeId: z.string().nonempty(" Store Id is required"),
-  clientSecret: z.string().nonempty(" Client Secret is required"),
-  clientEmail: z.string().nonempty(" Client Email is required"),
-  clientPassword: z.string().nonempty(" Client Password is required"),
+  apiKey: z.string().nonempty(" Api Key is required"),
+  secretKey: z.string().nonempty(" Secret Key is required"),
 });
 
-const CourierPathaoSettings = () => {
+const CourierSteadFastSettings = () => {
   const axiosSecure = useAxiosSecure();
   const [targetId, setTargetId] = useState("");
   const [loading, setLoading] = useState(false);
@@ -33,7 +30,10 @@ const CourierPathaoSettings = () => {
     console.log(data, "data");
     try {
       if (targetId) {
-        const res = await axiosSecure.put(`/courier/pathao/${targetId}`, data);
+        const res = await axiosSecure.put(
+          `/courier/stead_fast/${targetId}`,
+          data
+        );
         if (res.status === 200 || res.status === 201) {
           Swal.fire({
             title: "Success!",
@@ -43,7 +43,7 @@ const CourierPathaoSettings = () => {
           });
         }
       } else {
-        const res = await axiosSecure.post(`/courier/pathao`, data);
+        const res = await axiosSecure.post(`/courier/stead_fast`, data);
         if (res.status === 200 || res.status === 201) {
           Swal.fire({
             title: "Success!",
@@ -69,7 +69,7 @@ const CourierPathaoSettings = () => {
   useEffect(() => {
     const fetchTestimonial = async () => {
       try {
-        const res = await axiosSecure.get(`/courier/pathao`);
+        const res = await axiosSecure.get(`/courier/stead_fast`);
 
         if (res.status === 200 || res.status === 201) {
           const data = res?.data?.data[0];
@@ -97,72 +97,27 @@ const CourierPathaoSettings = () => {
         {/* Basic Information */}
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            Client Id:
+            Api Key:
+          </label>
+          <input type="text" {...register("apiKey")} className="customInput" />
+          {errors.apiKey && (
+            <span className="text-red-600 text-sm">
+              {errors.apiKey.message}
+            </span>
+          )}
+        </div>
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700">
+            Secret Key:
           </label>
           <input
             type="text"
-            {...register("clientId")}
+            {...register("secretKey")}
             className="customInput"
           />
-          {errors.clientId && (
+          {errors.secretKey && (
             <span className="text-red-600 text-sm">
-              {errors.clientId.message}
-            </span>
-          )}
-        </div>
-        <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">
-            Store Id:
-          </label>
-          <input type="text" {...register("storeId")} className="customInput" />
-          {errors.storeId && (
-            <span className="text-red-600 text-sm">
-              {errors.storeId.message}
-            </span>
-          )}
-        </div>
-        <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">
-            Client Secret:
-          </label>
-          <input
-            type="text"
-            {...register("clientSecret")}
-            className="customInput"
-          />
-          {errors.clientSecret && (
-            <span className="text-red-600 text-sm">
-              {errors.clientSecret.message}
-            </span>
-          )}
-        </div>
-        <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">
-            Client Email:
-          </label>
-          <input
-            type="email"
-            {...register("clientEmail")}
-            className="customInput"
-          />
-          {errors.clientEmail && (
-            <span className="text-red-600 text-sm">
-              {errors.clientEmail.message}
-            </span>
-          )}
-        </div>
-        <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">
-            Client Password:
-          </label>
-          <input
-            type="password"
-            {...register("clientPassword")}
-            className="customInput"
-          />
-          {errors.clientPassword && (
-            <span className="text-red-600 text-sm">
-              {errors.clientPassword.message}
+              {errors.secretKey.message}
             </span>
           )}
         </div>
@@ -194,4 +149,4 @@ const CourierPathaoSettings = () => {
   );
 };
 
-export default CourierPathaoSettings;
+export default CourierSteadFastSettings;

@@ -1,5 +1,6 @@
 import { lazy, Suspense } from "react";
 import GlobalLoading from "../../components library/GlobalLoading";
+const CourierSteadFastSettings  = lazy(() => import("../../components/dashboard/CourierSettings/CourierSteadFastSettings");
 const CourierPathaoSettings = lazy(() =>
   import("../../components/dashboard/CourierSettings/CourierPathaoSettings")
 );
@@ -1704,6 +1705,21 @@ function DashboardChildrenRoutes() {
         <Suspense fallback={<GlobalLoading />}>
           <PrivateRoute>
             <ViewAllArea />
+          </PrivateRoute>
+        </Suspense>
+      ),
+    },
+    {
+      // path: "userpermission",
+      path: "courier-steadfast-settings",
+      // path: isPermittedRoute("userpermission"),
+      element: (
+        // <PrivateRoute>
+        //   <SmsGroup />
+        // </PrivateRoute>
+        <Suspense fallback={<GlobalLoading />}>
+          <PrivateRoute>
+            <CourierSteadFastSettings />
           </PrivateRoute>
         </Suspense>
       ),

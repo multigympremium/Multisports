@@ -60,9 +60,15 @@ function MenuItemsList({ userRole }) {
           icon: <IoIosHome />,
         },
         {
-          title: "Courier Settings",
+          title: "Pathao Courier Settings",
           path: "courier-pathao-settings",
           isAllowed: isAllowedRoute("courier-pathao-settings"),
+          icon: <IoIosHome />,
+        },
+        {
+          title: "SteadFast Courier Settings",
+          path: "courier-steadfast-settings",
+          isAllowed: isAllowedRoute("courier-steadfast-settings"),
           icon: <IoIosHome />,
         },
       ],
