@@ -2,7 +2,6 @@
 import CustomEditor from "../../../shared/CustomEditor/CustomEditor";
 import SwitchInput from "../../../shared/SwitchInput";
 import useGetAllChildCategories from "../../../Hook/GetDataHook/useGetAllChildCategories";
-import useGetAllModelOfBrands from "../../../Hook/GetDataHook/useGetAllModelOfBrands";
 import useGetAllProductBrands from "../../../Hook/GetDataHook/useGetAllProductBrands";
 import useGetAllProductColors from "../../../Hook/GetDataHook/useGetAllProductColors";
 import useGetAllProductFlag from "../../../Hook/GetDataHook/useGetAllProductFlag";
@@ -10,7 +9,6 @@ import useGetAllSubCategories from "../../../Hook/GetDataHook/useGetAllSubCatego
 
 import { useState, useEffect, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
-import Switch from "react-switch";
 import ActiveDescBtn from "./productSharedComponents/ActiveDescBtn";
 import useGetAllProductSizes from "../../../Hook/GetDataHook/useGetAllProductSizes";
 import Swal from "sweetalert2";

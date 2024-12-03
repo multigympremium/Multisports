@@ -59,6 +59,12 @@ function MenuItemsList({ userRole }) {
           isAllowed: isAllowedRoute("social-chat-scripts"),
           icon: <IoIosHome />,
         },
+        {
+          title: "Shop Settings",
+          path: "shop-settings",
+          isAllowed: isAllowedRoute("shop-settings"),
+          icon: <IoIosHome />,
+        },
       ],
     },
 

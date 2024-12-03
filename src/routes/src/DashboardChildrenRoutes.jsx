@@ -1,5 +1,8 @@
-import React, { lazy, Suspense } from "react";
+import { lazy, Suspense } from "react";
 import GlobalLoading from "../../components library/GlobalLoading";
+const ShopSettings = lazy(() =>
+  import("../../components/dashboard/ShopSettings/ShopSettings")
+);
 const ModelOfBrand = lazy(() =>
   import("../../components/dashboard/ModelOfBrand/ModelOfBrand")
 );
@@ -1701,6 +1704,21 @@ function DashboardChildrenRoutes() {
         <Suspense fallback={<GlobalLoading />}>
           <PrivateRoute>
             <ViewAllArea />
+          </PrivateRoute>
+        </Suspense>
+      ),
+    },
+    {
+      // path: "userpermission",
+      path: "shop-settings",
+      // path: isPermittedRoute("userpermission"),
+      element: (
+        // <PrivateRoute>
+        //   <SmsGroup />
+        // </PrivateRoute>
+        <Suspense fallback={<GlobalLoading />}>
+          <PrivateRoute>
+            <ShopSettings />
           </PrivateRoute>
         </Suspense>
       ),
