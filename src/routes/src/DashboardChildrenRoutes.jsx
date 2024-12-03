@@ -1,6 +1,8 @@
 import { lazy, Suspense } from "react";
 import GlobalLoading from "../../components library/GlobalLoading";
-const CourierSteadFastSettings  = lazy(() => import("../../components/dashboard/CourierSettings/CourierSteadFastSettings");
+const CourierSteadFastSettings = lazy(() =>
+  import("../../components/dashboard/CourierSettings/CourierSteadFastSettings")
+);
 const CourierPathaoSettings = lazy(() =>
   import("../../components/dashboard/CourierSettings/CourierPathaoSettings")
 );

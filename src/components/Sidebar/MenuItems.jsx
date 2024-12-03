@@ -59,18 +59,6 @@ function MenuItemsList({ userRole }) {
           isAllowed: isAllowedRoute("social-chat-scripts"),
           icon: <IoIosHome />,
         },
-        {
-          title: "Pathao Courier Settings",
-          path: "courier-pathao-settings",
-          isAllowed: isAllowedRoute("courier-pathao-settings"),
-          icon: <IoIosHome />,
-        },
-        {
-          title: "SteadFast Courier Settings",
-          path: "courier-steadfast-settings",
-          isAllowed: isAllowedRoute("courier-steadfast-settings"),
-          icon: <IoIosHome />,
-        },
       ],
     },
 
@@ -254,6 +242,18 @@ function MenuItemsList({ userRole }) {
       title: "Couriers",
       icon: <IoIosHome />, // Replace with the actual SVG icon
       list: [
+        {
+          title: "Pathao Courier Settings",
+          path: "courier-pathao-settings",
+          isAllowed: isAllowedRoute("courier-pathao-settings"),
+          icon: <IoIosHome />,
+        },
+        {
+          title: "SteadFast Courier Settings",
+          path: "courier-steadfast-settings",
+          isAllowed: isAllowedRoute("courier-steadfast-settings"),
+          icon: <IoIosHome />,
+        },
         {
           title: "Store",
           path: "view-all-stores",
