@@ -8,6 +8,7 @@ import useAxiosSecure from "../../../Hook/useAxiosSecure";
 
 // Zod schema for form validation
 const schema = z.object({
+  baseUrl: z.string().nonempty(" Base Url is required"),
   apiKey: z.string().nonempty(" Api Key is required"),
   secretKey: z.string().nonempty(" Secret Key is required"),
 });
@@ -95,6 +96,17 @@ const CourierSteadFastSettings = () => {
       {/* Section 1: General Information */}
       <div className="grid grid-cols-1 gap-3 md:gap-4 lg:gap-5 md:grid-cols-2">
         {/* Basic Information */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            Base Url:
+          </label>
+          <input type="text" {...register("baseUrl")} className="customInput" />
+          {errors.baseUrl && (
+            <span className="text-red-600 text-sm">
+              {errors.baseUrl.message}
+            </span>
+          )}
+        </div>
         <div>
           <label className="block text-sm font-medium text-gray-700">
             Api Key:

@@ -1,5 +1,7 @@
 import { lazy, Suspense } from "react";
 import GlobalLoading from "../../components library/GlobalLoading";
+import TermsCondition from "../../components/Home/(policy)/terms-and-condition/page";
+import ShippingPublicPolicy from "../../components/Home/(policy)/shipping-policy/page";
 const CourierSteadFastSettings = lazy(() =>
   import("../../components/dashboard/CourierSettings/CourierSteadFastSettings")
 );
@@ -1752,6 +1754,51 @@ function DashboardChildrenRoutes() {
         <Suspense fallback={<GlobalLoading />}>
           <PrivateRoute>
             <StoreCreateForm />
+          </PrivateRoute>
+        </Suspense>
+      ),
+    },
+    {
+      // path: "userpermission",
+      path: "terms-and-condition",
+      // path: isPermittedRoute("userpermission"),
+      element: (
+        // <PrivateRoute>
+        //   <SmsGroup />
+        // </PrivateRoute>
+        <Suspense fallback={<GlobalLoading />}>
+          <PrivateRoute>
+            <TermsCondition />
+          </PrivateRoute>
+        </Suspense>
+      ),
+    },
+    {
+      // path: "userpermission",
+      path: "shipping-policy",
+      // path: isPermittedRoute("userpermission"),
+      element: (
+        // <PrivateRoute>
+        //   <SmsGroup />
+        // </PrivateRoute>
+        <Suspense fallback={<GlobalLoading />}>
+          <PrivateRoute>
+            <ShippingPolicy />
+          </PrivateRoute>
+        </Suspense>
+      ),
+    },
+    {
+      // path: "userpermission",
+      path: "shipping-policy",
+      // path: isPermittedRoute("userpermission"),
+      element: (
+        // <PrivateRoute>
+        //   <SmsGroup />
+        // </PrivateRoute>
+        <Suspense fallback={<GlobalLoading />}>
+          <PrivateRoute>
+            <ShippingPublicPolicy />
           </PrivateRoute>
         </Suspense>
       ),

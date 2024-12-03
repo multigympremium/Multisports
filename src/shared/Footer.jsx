@@ -215,27 +215,27 @@ const Footer = () => {
             </Link>
             <Link
               className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300 cursor-pointer"
-              to="/terms"
+              to="/terms-and-condition"
             >
               Terms & Conditions
             </Link>
             <Link
               className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300 cursor-pointer"
-              to="/Privacy"
+              to="/return-policy"
             >
-              Replacement Policy
+              Return Policy
             </Link>
             <Link
               className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300 cursor-pointer"
-              to="/cookiePolicy"
+              to="/shipping-policy"
             >
-              Cookie policy
+              Shipping Policy
             </Link>
             <Link
               className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300 cursor-pointer"
-              to="/refundpolicy"
+              to="/privacy-policy"
             >
-              EMI Terms & Conditions
+              Privacy Policy
             </Link>
           </div>
           {/* <Link className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300 cursor-pointer" to="/webadmin">
