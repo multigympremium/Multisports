@@ -16,6 +16,8 @@ import DragEditUploadImageInput from "../../../shared/DragEditUploadImageInput";
 import useGetAllCategories from "../../../Hook/GetDataHook/useGetAllCategories";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
 import { IoCloseCircleOutline } from "react-icons/io5";
+import DragMultiEditUploadImageInput from "../../../shared/DragMultiEditUploadImageInput";
+import useGetAllModelOfBrands from "../../../Hook/GetDataHook/useGetAllModelOfBrands";
 
 export default function EditProductForm({
   targetId,
@@ -54,7 +56,12 @@ export default function EditProductForm({
   const [productSizeValue, setProductSizeValue] = useState("");
   const [galleryItemIds, setGalleryItemIds] = useState([]);
 
+  const [modelOfBrandValue, setModelOfBrandValue] = useState("");
+
+  const modelOfBrand = useGetAllModelOfBrands({});
+
   const [activeDescription, setActiveDescription] = useState("full_desc");
+  const [setupConfig, setSetupConfig] = useState({});
 
   const [productSize, setProductSize] = useState([]);
   const [productColor, setProductColor] = useState([]);
@@ -350,6 +357,30 @@ export default function EditProductForm({
     }
   };
 
+  useEffect(() => {
+    const fetchTestimonial = async () => {
+      try {
+        const firstResData = await axiosSecure.get(`/setup-config`);
+
+        console.log(firstResData, "res ljlj");
+
+        if (firstResData.status === 200 || firstResData.status === 201) {
+          const data = firstResData?.data?.data[0];
+
+          console.log(data, "data");
+
+          setSetupConfig(data);
+
+          // Set form values with the testimonial data
+        }
+      } catch (error) {
+        console.error("Error fetching testimonial:", error);
+      }
+    };
+
+    fetchTestimonial();
+  }, [axiosSecure]);
+
   return (
     <div className="w-[80%] mx-auto bg-gray-100 rounded-2xl p-10">
       <div className="">
@@ -364,7 +395,7 @@ export default function EditProductForm({
               onChange={(e) => setProductTitle(e.target.value)}
               className="customInput mb-4"
               placeholder="Enter Product Name Here"
-              required
+              // required
             />
           </div>
           <div className={"flex items-center  gap-6 mb-5"}>
@@ -473,7 +504,7 @@ export default function EditProductForm({
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
                 className="customInput"
-                required
+                // required
               />
             </div>
             <div>
@@ -525,7 +556,7 @@ export default function EditProductForm({
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
                 className=" customInput"
-                required
+                // required
               >
                 <option value="">Select One</option>
                 {categories?.length > 0 &&
@@ -544,7 +575,7 @@ export default function EditProductForm({
                 value={subcategory}
                 onChange={(e) => setSubcategory(e.target.value)}
                 className="customInput"
-                required
+                // required
               >
                 <option value="">Select One</option>
                 {subcategories?.length > 0 &&
@@ -566,7 +597,7 @@ export default function EditProductForm({
                 value={childCategory}
                 onChange={(e) => setChildCategory(e.target.value)}
                 className="customInput"
-                required
+                // required
               >
                 <option value="">Select One</option>
                 {childCategories?.length > 0 &&
@@ -585,7 +616,7 @@ export default function EditProductForm({
                 value={brandValue}
                 onChange={(e) => setBrandValue(e.target.value)}
                 className="customInput"
-                required
+                // required
               >
                 <option value="">Select One</option>
                 {productBrands?.length > 0 &&
@@ -597,97 +628,133 @@ export default function EditProductForm({
                 {/* Add more subcategories dynamically if needed */}
               </select>
             </div>
+            {setupConfig?.modelOfBrand && (
+              <div className="mb-4">
+                <label className="block text-gray-700 font-bold mb-2">
+                  Select Model Of Brand *
+                </label>
+                <select
+                  value={modelOfBrandValue}
+                  onChange={(e) => setModelOfBrandValue(e.target.value)}
+                  className="w-full p-2 border rounded-md"
+                  // required
+                >
+                  <option value="">Select One</option>
+                  {modelOfBrand?.length > 0 &&
+                    modelOfBrand.map((item, index) => (
+                      <option value={item.slug} key={item._id}>
+                        {item?.modelName}
+                      </option>
+                    ))}
+                  {/* Add more subcategories dynamically if needed */}
+                </select>
+              </div>
+            )}
 
             {/* Select Subcategory */}
-            <div className="mb-4">
-              <label className="block text-gray-70">Select Product Color</label>
-              <select
-                value={productColorValue}
-                onChange={handleColorChange}
-                className="customInput"
-                required
-              >
-                <option value="">Select One</option>
-                {productColors?.length > 0 &&
-                  productColors.map((item, index) => (
-                    <option value={item.productColor} key={item._id}>
-                      {item?.productColorName}
-                    </option>
-                  ))}
-                {/* Add more subcategories dynamically if needed */}
-              </select>
 
-              <ul className="flex gap-3 mt-3 items-center">
-                {productColor?.length > 0 &&
-                  productColor.map((item, index) => (
-                    <li
-                      key={item._id}
-                      className="px-3 py-1 border border-black text-sm capitalize relative rounded-lg"
-                    >
-                      {item}
-                      <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 ">
-                        <IoCloseCircleOutline size={25} />
-                      </span>
-                    </li>
-                  ))}
-              </ul>
-            </div>
+            {setupConfig?.productColor && (
+              <div className="mb-4">
+                <label className="block text-gray-700 font-semibold ">
+                  Select Product Color
+                </label>
+                <select
+                  value={productColorValue}
+                  onChange={handleColorChange}
+                  className="customInput select"
+                  // required
+                >
+                  <option value="">Select One</option>
+                  {productColors?.length > 0 &&
+                    productColors.map((item, index) => (
+                      <option value={item.productColor} key={item._id}>
+                        {item?.productColorName}
+                      </option>
+                    ))}
+                  {/* Add more subcategories dynamically if needed */}
+                </select>
 
-            {/* Select Subcategory */}
-            <div className="mb-4">
-              <label className="block text-gray-70">Select Product Flag</label>
-              <select
-                value={productFlagValue}
-                onChange={(e) => setProductFlagValue(e.target.value)}
-                className="customInput"
-                required
-              >
-                <option value="">Select One</option>
-                {productFlags?.length > 0 &&
-                  productFlags.map((item, index) => (
-                    <option value={item.flagName} key={item._id}>
-                      {item?.flagName}
-                    </option>
-                  ))}
-                {/* Add more subcategories dynamically if needed */}
-              </select>
-            </div>
+                <ul className="flex gap-3 mt-3 items-center">
+                  {productColor?.length > 0 &&
+                    productColor.map((item, index) => (
+                      <li
+                        key={item._id}
+                        className="px-3 py-1 border border-black text-sm capitalize relative rounded-lg"
+                      >
+                        {item}
+                        <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 ">
+                          <IoCloseCircleOutline size={25} />
+                        </span>
+                      </li>
+                    ))}
+                </ul>
+              </div>
+            )}
 
             {/* Select Subcategory */}
-            <div className="mb-4">
-              <label className="block text-gray-70">Select Product Size</label>
-              <select
-                value={productSizeValue}
-                onChange={handleSizeChange}
-                className="customInput"
-                required
-              >
-                <option value="">Select One</option>
-                {productSizes?.length > 0 &&
-                  productSizes.map((item, index) => (
-                    <option value={item.sizeName} key={item._id}>
-                      {item?.sizeName}
-                    </option>
-                  ))}
-                {/* Add more subcategories dynamically if needed */}
-              </select>
-              <ul className="flex gap-3 mt-3 items-center">
-                {productSize?.length > 0 &&
-                  productSize.map((item, index) => (
-                    <li
-                      key={item._id}
-                      className="px-3 py-1 border border-black text-sm capitalize relative rounded"
-                    >
-                      {item}
-                      <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 ">
-                        <IoCloseCircleOutline size={25} />
-                      </span>
-                    </li>
-                  ))}
-              </ul>
-            </div>
+
+            {setupConfig?.productFlags && (
+              <div className="mb-4">
+                <label className="block text-gray-700 font-semibold ">
+                  Select Product Flag
+                </label>
+                <select
+                  value={productFlagValue}
+                  onChange={(e) => setProductFlagValue(e.target.value)}
+                  className="customInput select"
+                  // required
+                >
+                  <option value="">Select One</option>
+                  {productFlags?.length > 0 &&
+                    productFlags.map((item, index) => (
+                      <option value={item.flagName} key={item._id}>
+                        {item?.flagName}
+                      </option>
+                    ))}
+                  {/* Add more subcategories dynamically if needed */}
+                </select>
+              </div>
+            )}
+
+            {/* Select Subcategory */}
+
+            {setupConfig?.productSize && (
+              <div className="mb-4">
+                <label className="block text-gray-700 font-semibold ">
+                  Select Product Size
+                </label>
+                <select
+                  value={productSizeValue}
+                  onChange={handleSizeChange}
+                  className="customInput select"
+                  // required
+                >
+                  <option value="">Select One</option>
+                  {productSizes?.length > 0 &&
+                    productSizes.map((item, index) => (
+                      <option value={item.sizeName} key={item._id}>
+                        {item?.sizeName}
+                      </option>
+                    ))}
+                  {/* Add more subcategories dynamically if needed */}
+                </select>
+                <ul className="flex gap-3 mt-3 items-center">
+                  {productSize?.length > 0 &&
+                    productSize.map((item, index) => (
+                      <li
+                        key={item._id}
+                        className="px-3 py-1 border border-black text-sm capitalize relative rounded"
+                      >
+                        {item}
+                        <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 ">
+                          <IoCloseCircleOutline size={25} />
+                        </span>
+                      </li>
+                    ))}
+                </ul>
+              </div>
+            )}
           </div>
-
           {/* File Upload for Thumbnail */}
           <div className="mb-4">
             <label className="block text-gray-70">
@@ -706,11 +773,13 @@ export default function EditProductForm({
           <div className="mb-4">
             <label className="block text-gray-70">Product Image Gallery</label>
 
-            <DragEditUploadImageInput
+            <DragMultiEditUploadImageInput
               getRootProps={getGalleryRootProps}
               getInputProps={getGalleryInputProps}
               image={gallery}
               imagePreview={galleryPreview}
+              setGallery={setGallery}
+              setImagePreview={setGalleryPreview}
             />
           </div>
 
@@ -741,41 +810,48 @@ export default function EditProductForm({
           />
           <SwitchInput label="Is New" checked={isNew} setChecked={setIsNew} />
 
-          {/* SEO Information */}
-          <div className="mb-4 mt-6">
-            <h2 className="text-xl  pb-3 mb-3 border-b border-gray-300">
-              Product SEO Information (Optional)
-            </h2>
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-gray-70">Meta Title</label>
-                <input
-                  type="text"
-                  value={metaTitle}
-                  onChange={(e) => setMetaTitle(e.target.value)}
-                  className="customInput"
-                />
-              </div>
-              <div>
-                <label className="block text-gray-70">Meta Keywords</label>
-                <input
-                  type="text"
-                  value={metaKeywords}
-                  onChange={(e) => setMetaKeywords(e.target.value)}
-                  className="customInput"
-                />
-              </div>
-              <div className="col-span-2">
-                <label className="block text-gray-70">Meta Description</label>
-                <textarea
-                  value={metaDescription}
-                  onChange={(e) => setMetaDescription(e.target.value)}
-                  className="customInput resize-none"
-                  rows="3"
-                />
+          {setupConfig?.seoInformation && (
+            <div className="mb-4 mt-6">
+              <h2 className="text-2xl font-semibold mb-4 pb-5 border-b border-gray-300">
+                Product SEO Information (Optional)
+              </h2>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-gray-700 font-semibold ">
+                    Meta Title
+                  </label>
+                  <input
+                    type="text"
+                    value={metaTitle}
+                    onChange={(e) => setMetaTitle(e.target.value)}
+                    className="customInput"
+                  />
+                </div>
+                <div>
+                  <label className="block text-gray-700 font-semibold ">
+                    Meta Keywords
+                  </label>
+                  <input
+                    type="text"
+                    value={metaKeywords}
+                    onChange={(e) => setMetaKeywords(e.target.value)}
+                    className="customInput"
+                  />
+                </div>
+                <div className="col-span-2">
+                  <label className="block text-gray-700 font-semibold ">
+                    Meta Description
+                  </label>
+                  <textarea
+                    value={metaDescription}
+                    onChange={(e) => setMetaDescription(e.target.value)}
+                    className="customInput resize-none"
+                    rows="3"
+                  />
+                </div>
               </div>
             </div>
-          </div>
+          )}
 
           {/* Buttons */}
           <div className="flex justify-end gap-4 ">

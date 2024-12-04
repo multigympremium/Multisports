@@ -2,7 +2,7 @@ import { useState } from "react";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import { FiUploadCloud } from "react-icons/fi";
 
-function DragMultiUploadImageInput({
+function DragMultiEditUploadImageInput({
   image,
   imagePreview,
   getRootProps,
@@ -28,12 +28,16 @@ function DragMultiUploadImageInput({
       </div>
 
       <div className="flex flex-col gap-4 mt-4">
-        {image && image?.length > 0 ? (
+        {imagePreview && imagePreview?.length > 0 ? (
           <div className="flex flex-wrap gap-4">
             {imagePreview.map((item, index) => (
               <div key={index} className="relative">
                 <img
-                  src={item.preview}
+                  src={
+                    item?.file
+                      ? item.preview
+                      : `https://mgpwebaps.s3.eu-north-1.amazonaws.com/multi-sports/${item.image}`
+                  }
                   alt="subcategoryIcon"
                   width={200}
                   height={200}
@@ -42,22 +46,35 @@ function DragMultiUploadImageInput({
                 <span
                   className="absolute -right-3 -top-3 text-red-600 bg-gray-200 rounded-full  text-xs"
                   onClick={() => {
-                    setImagePreview((prev) =>
-                      prev.filter((item2) => {
-                        console.log(
-                          item2?.file?.name,
-                          item.file.name,
-                          "item, item2"
-                        );
-                        return item2?.file?.name !== item?.file?.name;
-                      })
-                    );
-                    setGallery((prev) =>
-                      prev.filter((item2) => {
-                        console.log(item2.name, item.file.name, "item, item2");
-                        return item2?.name !== item?.file?.name;
-                      })
-                    );
+                    if (item.file) {
+                      setImagePreview((prev) =>
+                        prev.filter((item2) => {
+                          console.log(
+                            item2?.file?.name,
+                            item.file.name,
+                            "item, item2"
+                          );
+                          return item2?.file?.name !== item?.file?.name;
+                        })
+                      );
+                      setGallery((prev) =>
+                        prev.filter((item2) => {
+                          console.log(
+                            item2.name,
+                            item.file.name,
+                            "item, item2"
+                          );
+                          return item2?.name !== item?.file?.name;
+                        })
+                      );
+                    } else {
+                      setImagePreview((prev) =>
+                        prev.filter((item2) => {
+                          console.log(item?._id, item?._id, "item, item2");
+                          return item2?._id !== item?._id;
+                        })
+                      );
+                    }
                   }}
                 >
                   <AiOutlineCloseCircle size={25} />
@@ -79,4 +96,4 @@ function DragMultiUploadImageInput({
   );
 }
 
-export default DragMultiUploadImageInput;
+export default DragMultiEditUploadImageInput;
