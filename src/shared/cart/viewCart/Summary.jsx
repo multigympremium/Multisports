@@ -41,8 +41,6 @@ export default function Summary({
   //     item_description: item.itemDescription,
   //     amount_to_collect: item.total,
 
-  
-
   // const submitOrder = async () => {
   //   const submitOrderData = {
   //     recipient_name: shippingAddress.name,
@@ -81,6 +79,8 @@ export default function Summary({
   //     });
   //   }
   // };
+
+  console.log(isShowPaymentMethod, "isShowPaymentMethod");
   return (
     <>
       <div className="border p-6 mt-auto rounded-md shadow-lg w-full max-w-[350px]">
@@ -106,14 +106,14 @@ export default function Summary({
         </div>
 
         {isCart ? (
-          <Link href="/checkout">
+          <Link to="/checkout">
             <button className="bg-black text-white text-sm py-2 px-4 rounded-md mt-4">
               Proceed to Checkout
             </button>
           </Link>
         ) : (
           <button
-            onClick={() => setIsShowCourier(true)}
+            onClick={() => setIsShowPaymentMethod(true)}
             className="bg-black text-white text-sm py-2 px-4 rounded-md mt-4 disabled:bg-gray-200 disabled:text-black"
             disabled={shippingAddress && cartItems.length > 0 ? false : true}
           >
@@ -132,17 +132,6 @@ export default function Summary({
           courierMethod={courierMethod}
           shippingAddress={shippingAddress}
           cartItems={cartItems}
-        />
-      </BgBlurModal>
-
-      <BgBlurModal
-        isShowModal={isShowCourier}
-        setIsShowModal={setIsShowCourier}
-      >
-        <CourierMethodModal
-          setCourierMethod={setSetCourierMethod}
-          setIsShowPaymentMethod={setIsShowPaymentMethod}
-          setIsShow={setIsShowCourier}
         />
       </BgBlurModal>
     </>

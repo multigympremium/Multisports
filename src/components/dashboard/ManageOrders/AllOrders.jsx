@@ -10,7 +10,8 @@ import toast from "react-hot-toast";
 import { IoIosSearch } from "react-icons/io";
 import EditButton from "../../../components library/EditButton";
 import DeleteButton from "../../../components library/DeleteButton";
-
+import CourierMethodModal from "../../../shared/cart/viewCart/CourierMethodModal";
+import { set } from "react-hook-form";
 
 export default function AllOrders() {
   // const [orders, setOrders] = useState(initialData);
@@ -20,16 +21,20 @@ export default function AllOrders() {
   const [isShowDetail, setIsShowDetail] = useState(false);
   const [targetId, setTargetId] = useState(null);
   const [isDeleted, setIsDeleted] = useState(false);
+  const [isShowPaymentMethod, setIsShowPaymentMethod] = useState(false);
+  const [isShowCourier, setIsShowCourier] = useState(false);
+  const [courierMethod, setSetCourierMethod] = useState("");
   const itemsPerPage = 5;
 
-  const orders = useGetAllOrders({ isDeleted, isShowModal: isShowDetail })
+  const orders = useGetAllOrders({ isDeleted, isShowModal: isShowDetail });
 
   console.log(orders, "orders");
 
   // Filter orders based on the search term
-  const filteredOrders = orders.filter(
-    (order) =>
-      order?.products.map(item => item.productTitle.toLowerCase().includes(searchTerm.toLowerCase()))
+  const filteredOrders = orders.filter((order) =>
+    order?.items.map((item) =>
+      item.productTitle.toLowerCase().includes(searchTerm.toLowerCase())
+    )
   );
 
   // Pagination logic
@@ -74,7 +79,6 @@ export default function AllOrders() {
     console.log(`Delete category with ID: ${id}`);
   };
 
-
   const totalPending = parseFloat(
     orders
       .filter((order) => order.status === "Pending")
@@ -96,6 +100,25 @@ export default function AllOrders() {
       .reduce((acc, order) => acc + order.total, 0)
   );
 
+  const handleAccept = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You want to accept this order?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#087D6D",
+      cancelButtonColor: "#E68923",
+      confirmButtonText: "Yes, Accept it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        console.log("delete");
+        setTargetId(id);
+        setIsShowCourier(true);
+      }
+    });
+    console.log(id, "id");
+  };
+
   return (
     <div className="p-6 pt-0">
       <div className="max-w-7xl mx-auto">
@@ -106,7 +129,6 @@ export default function AllOrders() {
             <p className="text-2xl mt-2">৳ {totalDelivered.toFixed(2)}</p>
             {/* <p className="text-2xl mt-2">৳ 0</p> */}
           </div>
-
 
           <div className="bg-[#E68923] p-6 text-white font-semibold  rounded-2xl">
             <h3 className="text-xl ">Total Pending Orders</h3>
@@ -119,8 +141,6 @@ export default function AllOrders() {
             <p className="text-2xl mt-2">৳ {totalApproved.toFixed(2)}</p>
             {/* <p className="text-2xl mt-2">৳ 0</p> */}
           </div>
-
-
 
           <div className="bg-[#EB1C24] p-6 text-white font-semibold  rounded-2xl">
             <h3 className="text-xl ">Total Cancelled Orders</h3>
@@ -157,25 +177,48 @@ export default function AllOrders() {
             </tr>
           </thead>
           <tbody>
-            {orders.length > 0 ? (
-              orders.map((order, index) => (
+            {orders?.length > 0 ? (
+              orders?.map((order, index) => (
                 <tr key={order._id} className="border-b text-center">
                   <td className="p-2 border">
                     {index + 1 + (currentPage - 1) * itemsPerPage}
                   </td>
                   <td className="p-2 border">{order._id}</td>
                   <td className="p-2 border">{order.createdAt}</td>
-                  <td className="p-2 border">{order?.shipping_address_id?.recipientName}</td>
-                  <td className="p-2 border">{order?.shipping_address_id?.email || "N/A"}</td>
-                  <td className="p-2 border">{order?.shipping_address_id?.contactNumber}</td>
-                  <td className="p-2 border "><span className="bg-red-500 text-white  px-3 rounded-lg  py-1">{order?.status}</span></td>
+                  <td className="p-2 border">
+                    {order?.shipping_address_id?.recipientName}
+                  </td>
+                  <td className="p-2 border">
+                    {order?.shipping_address_id?.email || "N/A"}
+                  </td>
+                  <td className="p-2 border">
+                    {order?.shipping_address_id?.contactNumber}
+                  </td>
+                  <td className="p-2 border ">
+                    <span className="bg-red-500 text-white  px-3 rounded-lg  py-1">
+                      {order?.status}
+                    </span>
+                  </td>
                   <td className="p-2 border">{order?.payment_method}</td>
                   <td className="p-2 border">৳ {order?.total}</td>
                   <td className="p-2 border">
                     <div className="flex justify-center space-x-2">
-                      
-                      <EditButton onClick={() => { setIsShowDetail(true); setTargetId(order._id) }}/>
-                      <DeleteButton  onClick={() => handleDelete(order._id)}/>
+                      {order?.status === "Pending" && (
+                        <button
+                          onClick={() => handleAccept(order._id)}
+                          className="bg-blue-500 text-white rounded-lg px-4 py-2 font-semibold"
+                        >
+                          Accept Order
+                        </button>
+                      )}
+                      <EditButton
+                        onClick={() => {
+                          setIsShowDetail(true);
+                          setTargetId(order._id);
+                        }}
+                      />
+
+                      <DeleteButton onClick={() => handleDelete(order._id)} />
                     </div>
                   </td>
                 </tr>
@@ -219,7 +262,23 @@ export default function AllOrders() {
       </div>
 
       <BgBlurModal isShowModal={isShowDetail} setIsShowModal={setIsShowDetail}>
-        <OrderDetail id={targetId} isShow={isShowDetail} setIsShow={setIsShowDetail} />
+        <OrderDetail
+          id={targetId}
+          isShow={isShowDetail}
+          setIsShow={setIsShowDetail}
+        />
+      </BgBlurModal>
+
+      <BgBlurModal
+        isShowModal={isShowCourier}
+        setIsShowModal={setIsShowCourier}
+      >
+        <CourierMethodModal
+          setCourierMethod={setSetCourierMethod}
+          setIsShowPaymentMethod={setIsShowPaymentMethod}
+          setIsShow={setIsShowCourier}
+          targetId={targetId}
+        />
       </BgBlurModal>
     </div>
   );

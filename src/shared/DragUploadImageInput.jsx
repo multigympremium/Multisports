@@ -21,7 +21,7 @@ function DragUploadImageInput({
       className="w-full p-4 border-dashed min-h-[200px] flex flex-col items-center justify-center border-2 border-gray-300 rounded-2xl text-center cursor-pointer"
     >
       <input {...getInputProps()} />
-      {image ? (
+      {image  ? (
         <>
           {Array.isArray(image) ? (
             <div className="flex flex-wrap gap-4">

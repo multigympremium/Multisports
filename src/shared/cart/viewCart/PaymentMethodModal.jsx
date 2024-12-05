@@ -100,7 +100,7 @@ export default function PaymentMethodModal({
       items: items,
       payment_method: "cash",
       total: totalPrice,
-      courierMethod: courierMethod,
+      // courierMethod: courierMethod,
       itemCount: items.length,
     };
     try {
