@@ -18,6 +18,7 @@ import useAxiosSecure from "../../../Hook/useAxiosSecure";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import DragMultiEditUploadImageInput from "../../../shared/DragMultiEditUploadImageInput";
 import useGetAllModelOfBrands from "../../../Hook/GetDataHook/useGetAllModelOfBrands";
+import { set } from "react-hook-form";
 
 export default function EditProductForm({
   targetId,
@@ -55,6 +56,7 @@ export default function EditProductForm({
   const [brandValue, setBrandValue] = useState("");
   const [productSizeValue, setProductSizeValue] = useState("");
   const [galleryItemIds, setGalleryItemIds] = useState([]);
+  const [deleteItemIds, setDeleteItemIds] = useState([]);
 
   const [modelOfBrandValue, setModelOfBrandValue] = useState("");
 
@@ -179,6 +181,9 @@ export default function EditProductForm({
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Handle form submission here
+
+    // const uniqeDeletedGalleryItemIds = Array.from(new Set(deleteItemIds));
+
     console.log({
       productTitle,
       shortDescription,
@@ -229,6 +234,10 @@ export default function EditProductForm({
     formData.append("subcategory", subcategory);
     formData.append("childCategory", childCategory);
     formData.append("galleryItemIds", galleryItemIds);
+    formData.append(
+      "deletedGalleryItemIds",
+      Array.from(new Set(deleteItemIds))
+    );
     formData.append("galleryItemCount", gallery.length);
 
     // If `gallery` is an array of files, you can loop through it and append each file:
@@ -303,6 +312,7 @@ export default function EditProductForm({
     setProductColor([]);
     setProductSize([]);
     setGallery([]);
+    setDeleteItemIds([]);
   }, []);
 
   useEffect(() => {
@@ -333,8 +343,6 @@ export default function EditProductForm({
     setProductSize([]);
     setGallery([]);
   }, [isShowModal]);
-
-  console.log(galleryItemIds, "productTitle");
 
   const handleColorChange = (e) => {
     const { name, value } = e.target;
@@ -380,6 +388,14 @@ export default function EditProductForm({
 
     fetchTestimonial();
   }, [axiosSecure]);
+
+  console.log(deleteItemIds, "deleteItemIds");
+  console.log(galleryItemIds, "galleryItemIds");
+  useEffect(() => {
+    setGalleryItemIds((prev) =>
+      prev.filter((item) => !deleteItemIds.includes(item))
+    );
+  }, [deleteItemIds]);
 
   return (
     <div className="w-[80%] mx-auto bg-gray-100 rounded-2xl p-10">
@@ -780,6 +796,7 @@ export default function EditProductForm({
               imagePreview={galleryPreview}
               setGallery={setGallery}
               setImagePreview={setGalleryPreview}
+              setDeleteItemIds={setDeleteItemIds}
             />
           </div>
 

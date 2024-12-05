@@ -9,6 +9,7 @@ function DragMultiEditUploadImageInput({
   getInputProps,
   setImagePreview,
   setGallery,
+  setDeleteItemIds,
 }) {
   console.log(
     image,
@@ -46,7 +47,7 @@ function DragMultiEditUploadImageInput({
                 <span
                   className="absolute -right-3 -top-3 text-red-600 bg-gray-200 rounded-full  text-xs"
                   onClick={() => {
-                    if (item.file) {
+                    if (item?.file) {
                       setImagePreview((prev) =>
                         prev.filter((item2) => {
                           console.log(
@@ -70,8 +71,15 @@ function DragMultiEditUploadImageInput({
                     } else {
                       setImagePreview((prev) =>
                         prev.filter((item2) => {
-                          console.log(item?._id, item?._id, "item, item2");
-                          return item2?._id !== item?._id;
+                          if (item2?._id === item?._id) {
+                            setDeleteItemIds((prev) => [...prev, item?._id]);
+                            return false;
+                          }
+
+                          if (item2?._id !== item?._id) {
+                            console.log(item2?._id, item?._id, "item, item2");
+                            return true;
+                          }
                         })
                       );
                     }
