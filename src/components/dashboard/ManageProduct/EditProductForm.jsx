@@ -2,7 +2,6 @@
 import CustomEditor from "../../../shared/CustomEditor/CustomEditor";
 import SwitchInput from "../../../shared/SwitchInput";
 import useGetAllChildCategories from "../../../Hook/GetDataHook/useGetAllChildCategories";
-import useGetAllModelOfBrands from "../../../Hook/GetDataHook/useGetAllModelOfBrands";
 import useGetAllProductBrands from "../../../Hook/GetDataHook/useGetAllProductBrands";
 import useGetAllProductColors from "../../../Hook/GetDataHook/useGetAllProductColors";
 import useGetAllProductFlag from "../../../Hook/GetDataHook/useGetAllProductFlag";
@@ -10,7 +9,6 @@ import useGetAllSubCategories from "../../../Hook/GetDataHook/useGetAllSubCatego
 
 import { useState, useEffect, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
-import Switch from "react-switch";
 import ActiveDescBtn from "./productSharedComponents/ActiveDescBtn";
 import useGetAllProductSizes from "../../../Hook/GetDataHook/useGetAllProductSizes";
 import Swal from "sweetalert2";
@@ -18,7 +16,9 @@ import DragEditUploadImageInput from "../../../shared/DragEditUploadImageInput";
 import useGetAllCategories from "../../../Hook/GetDataHook/useGetAllCategories";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
 import { IoCloseCircleOutline } from "react-icons/io5";
-
+import DragMultiEditUploadImageInput from "../../../shared/DragMultiEditUploadImageInput";
+import useGetAllModelOfBrands from "../../../Hook/GetDataHook/useGetAllModelOfBrands";
+import { set } from "react-hook-form";
 
 export default function EditProductForm({
   targetId,
@@ -56,8 +56,14 @@ export default function EditProductForm({
   const [brandValue, setBrandValue] = useState("");
   const [productSizeValue, setProductSizeValue] = useState("");
   const [galleryItemIds, setGalleryItemIds] = useState([]);
+  const [deleteItemIds, setDeleteItemIds] = useState([]);
+
+  const [modelOfBrandValue, setModelOfBrandValue] = useState("");
+
+  const modelOfBrand = useGetAllModelOfBrands({});
 
   const [activeDescription, setActiveDescription] = useState("full_desc");
+  const [setupConfig, setSetupConfig] = useState({});
 
   const [productSize, setProductSize] = useState([]);
   const [productColor, setProductColor] = useState([]);
@@ -82,8 +88,8 @@ export default function EditProductForm({
         setProductTitle(resData.productTitle);
         setShortDescription(resData.shortDescription);
         setFullDescription(resData.fullDescription);
-        setSpecifications(res?.specifications)
-        setReturnPolicy(res.returnPolicy)
+        setSpecifications(res?.specifications);
+        setReturnPolicy(res.returnPolicy);
         setPrice(resData.price);
         setDiscountPrice(resData.discountPrice);
         setRewardPoints(resData.rewardPoints);
@@ -175,6 +181,9 @@ export default function EditProductForm({
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Handle form submission here
+
+    // const uniqeDeletedGalleryItemIds = Array.from(new Set(deleteItemIds));
+
     console.log({
       productTitle,
       shortDescription,
@@ -215,7 +224,7 @@ export default function EditProductForm({
     formData.append("metaDescription", metaDescription);
     formData.append("specialOffer", specialOffer);
     formData.append("hasVariants", hasVariants);
-    formData.append("thumbnail",  thumbnail || thumbnailPreview); // If it's a file, ensure it's a `File` object
+    formData.append("thumbnail", thumbnail || thumbnailPreview); // If it's a file, ensure it's a `File` object
     // formData.append("gallery", gallery);
     formData.append("category", category);
     formData.append("brandValue", brandValue);
@@ -225,6 +234,11 @@ export default function EditProductForm({
     formData.append("subcategory", subcategory);
     formData.append("childCategory", childCategory);
     formData.append("galleryItemIds", galleryItemIds);
+    formData.append(
+      "deletedGalleryItemIds",
+      Array.from(new Set(deleteItemIds))
+    );
+    formData.append("galleryItemCount", gallery.length);
 
     // If `gallery` is an array of files, you can loop through it and append each file:
 
@@ -258,8 +272,8 @@ export default function EditProductForm({
       }
 
       setIsShowModal(false);
-      
-      handleCloseModal()
+
+      handleCloseModal();
     } catch (err) {
       Swal.fire({
         title: "Error!",
@@ -270,7 +284,7 @@ export default function EditProductForm({
     }
   };
 
-  const handleCloseModal = useCallback( () => {
+  const handleCloseModal = useCallback(() => {
     setIsShowModal(false);
     setProductTitle("");
     setShortDescription("");
@@ -297,8 +311,9 @@ export default function EditProductForm({
     setGalleryItemIds([]);
     setProductColor([]);
     setProductSize([]);
-    setGallery([])
-  },[]);
+    setGallery([]);
+    setDeleteItemIds([]);
+  }, []);
 
   useEffect(() => {
     setProductTitle("");
@@ -326,30 +341,61 @@ export default function EditProductForm({
     setGalleryItemIds([]);
     setProductColor([]);
     setProductSize([]);
-    setGallery([])
-  }, [isShowModal])
-
-
-  console.log(galleryItemIds, "productTitle");
-
-
+    setGallery([]);
+  }, [isShowModal]);
 
   const handleColorChange = (e) => {
     const { name, value } = e.target;
     setProductColorValue(value);
 
-    if(value !== ""){
-    setProductColor((prev)=> prev.includes(value) ? prev : [...prev, value]);
+    if (value !== "") {
+      setProductColor((prev) =>
+        prev.includes(value) ? prev : [...prev, value]
+      );
     }
   };
   const handleSizeChange = (e) => {
     const { name, value } = e.target;
     setProductSizeValue(value);
 
-    if(value !== ""){
-    setProductSize((prev)=> prev.includes(value) ? prev : [...prev, value]);
+    if (value !== "") {
+      setProductSize((prev) =>
+        prev.includes(value) ? prev : [...prev, value]
+      );
     }
   };
+
+  useEffect(() => {
+    const fetchTestimonial = async () => {
+      try {
+        const firstResData = await axiosSecure.get(`/setup-config`);
+
+        console.log(firstResData, "res ljlj");
+
+        if (firstResData.status === 200 || firstResData.status === 201) {
+          const data = firstResData?.data?.data[0];
+
+          console.log(data, "data");
+
+          setSetupConfig(data);
+
+          // Set form values with the testimonial data
+        }
+      } catch (error) {
+        console.error("Error fetching testimonial:", error);
+      }
+    };
+
+    fetchTestimonial();
+  }, [axiosSecure]);
+
+  console.log(deleteItemIds, "deleteItemIds");
+  console.log(galleryItemIds, "galleryItemIds");
+  useEffect(() => {
+    setGalleryItemIds((prev) =>
+      prev.filter((item) => !deleteItemIds.includes(item))
+    );
+  }, [deleteItemIds]);
 
   return (
     <div className="w-[80%] mx-auto bg-gray-100 rounded-2xl p-10">
@@ -358,16 +404,14 @@ export default function EditProductForm({
         <form onSubmit={handleSubmit}>
           {/* Product Title */}
           <div className="mb-4">
-            <label className="block text-gray-700">
-              Title 
-            </label>
+            <label className="block text-gray-700">Title</label>
             <input
               type="text"
               value={productTitle}
               onChange={(e) => setProductTitle(e.target.value)}
               className="customInput mb-4"
               placeholder="Enter Product Name Here"
-              required
+              // required
             />
           </div>
           <div className={"flex items-center  gap-6 mb-5"}>
@@ -470,21 +514,17 @@ export default function EditProductForm({
           {/* Price, Discount Price, Reward Points, Stock */}
           <div className="grid grid-cols-4 gap-4 mb-4">
             <div>
-              <label className="block text-gray-700 ">
-                Price (BDT) 
-              </label>
+              <label className="block text-gray-700 ">Price (BDT)</label>
               <input
                 type="number"
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
                 className="customInput"
-                required
+                // required
               />
             </div>
             <div>
-              <label className="block text-gray-70">
-                Discount Price
-              </label>
+              <label className="block text-gray-70">Discount Price</label>
               <input
                 type="number"
                 value={discountPrice}
@@ -493,9 +533,7 @@ export default function EditProductForm({
               />
             </div>
             <div>
-              <label className="block text-gray-70">
-                Reward Points
-              </label>
+              <label className="block text-gray-70">Reward Points</label>
               <input
                 type="number"
                 value={rewardPoints}
@@ -504,9 +542,7 @@ export default function EditProductForm({
               />
             </div>
             <div>
-              <label className="block text-gray-70">
-                Stock
-              </label>
+              <label className="block text-gray-70">Stock</label>
               <input
                 type="number"
                 value={stock}
@@ -519,9 +555,7 @@ export default function EditProductForm({
           <div className={"grid grid-cols-3 gap-4 mb-4"}>
             {/* Product Code */}
             <div className="mb-4">
-              <label className="block text-gray-70">
-                Product Code
-              </label>
+              <label className="block text-gray-70">Product Code</label>
               <input
                 type="text"
                 value={productCode}
@@ -533,14 +567,12 @@ export default function EditProductForm({
 
             {/* Select Category */}
             <div className="mb-4">
-              <label className="block text-gray-70">
-                Select Category 
-              </label>
+              <label className="block text-gray-70">Select Category</label>
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
                 className=" customInput"
-                required
+                // required
               >
                 <option value="">Select One</option>
                 {categories?.length > 0 &&
@@ -554,14 +586,12 @@ export default function EditProductForm({
 
             {/* Select Subcategory */}
             <div className="mb-4">
-              <label className="block text-gray-70">
-                Select Subcategory 
-              </label>
+              <label className="block text-gray-70">Select Subcategory</label>
               <select
                 value={subcategory}
                 onChange={(e) => setSubcategory(e.target.value)}
                 className="customInput"
-                required
+                // required
               >
                 <option value="">Select One</option>
                 {subcategories?.length > 0 &&
@@ -577,13 +607,13 @@ export default function EditProductForm({
             {/* Select Subcategory */}
             <div className="mb-4">
               <label className="block text-gray-70">
-                Select Child Categories 
+                Select Child Categories
               </label>
               <select
                 value={childCategory}
                 onChange={(e) => setChildCategory(e.target.value)}
                 className="customInput"
-                required
+                // required
               >
                 <option value="">Select One</option>
                 {childCategories?.length > 0 &&
@@ -597,14 +627,12 @@ export default function EditProductForm({
             </div>
             {/* Select Brand */}
             <div className="mb-4">
-              <label className="block text-gray-70">
-                Select Brand 
-              </label>
+              <label className="block text-gray-70">Select Brand</label>
               <select
                 value={brandValue}
                 onChange={(e) => setBrandValue(e.target.value)}
                 className="customInput"
-                required
+                // required
               >
                 <option value="">Select One</option>
                 {productBrands?.length > 0 &&
@@ -616,99 +644,137 @@ export default function EditProductForm({
                 {/* Add more subcategories dynamically if needed */}
               </select>
             </div>
-
-            
-
-            {/* Select Subcategory */}
-            <div className="mb-4">
-              <label className="block text-gray-70">
-                Select Product Color 
-              </label>
-              <select
-                value={productColorValue}
-                onChange={handleColorChange}
-                className="customInput"
-                required
-              >
-                <option value="">Select One</option>
-                {productColors?.length > 0 &&
-                  productColors.map((item, index) => (
-                    <option value={item.productColor} key={item._id}>
-                      {item?.productColorName}
-                    </option>
-                  ))}
-                {/* Add more subcategories dynamically if needed */}
-              </select>
-
-              <ul className="flex gap-3 mt-3 items-center">
-                {
-                  productColor?.length > 0 &&
-                  productColor.map((item, index) => (
-                    <li key={item._id} className="px-3 py-1 border border-black text-sm capitalize relative rounded-lg" >{item}
-                    <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 "><IoCloseCircleOutline size={25} /></span>
-                    </li>
-                ))}
-              </ul>
-            </div>
+            {setupConfig?.modelOfBrand && (
+              <div className="mb-4">
+                <label className="block text-gray-700 font-bold mb-2">
+                  Select Model Of Brand *
+                </label>
+                <select
+                  value={modelOfBrandValue}
+                  onChange={(e) => setModelOfBrandValue(e.target.value)}
+                  className="w-full p-2 border rounded-md"
+                  // required
+                >
+                  <option value="">Select One</option>
+                  {modelOfBrand?.length > 0 &&
+                    modelOfBrand.map((item, index) => (
+                      <option value={item.slug} key={item._id}>
+                        {item?.modelName}
+                      </option>
+                    ))}
+                  {/* Add more subcategories dynamically if needed */}
+                </select>
+              </div>
+            )}
 
             {/* Select Subcategory */}
-            <div className="mb-4">
-              <label className="block text-gray-70">
-                Select Product Flag
-              </label>
-              <select
-                value={productFlagValue}
-                onChange={(e) => setProductFlagValue(e.target.value)}
-                className="customInput"
-                required
-              >
-                <option value="">Select One</option>
-                {productFlags?.length > 0 &&
-                  productFlags.map((item, index) => (
-                    <option value={item.flagName} key={item._id}>
-                      {item?.flagName}
-                    </option>
-                  ))}
-                {/* Add more subcategories dynamically if needed */}
-              </select>
-            </div>
+
+            {setupConfig?.productColor && (
+              <div className="mb-4">
+                <label className="block text-gray-700 font-semibold ">
+                  Select Product Color
+                </label>
+                <select
+                  value={productColorValue}
+                  onChange={handleColorChange}
+                  className="customInput select"
+                  // required
+                >
+                  <option value="">Select One</option>
+                  {productColors?.length > 0 &&
+                    productColors.map((item, index) => (
+                      <option value={item.productColor} key={item._id}>
+                        {item?.productColorName}
+                      </option>
+                    ))}
+                  {/* Add more subcategories dynamically if needed */}
+                </select>
+
+                <ul className="flex gap-3 mt-3 items-center">
+                  {productColor?.length > 0 &&
+                    productColor.map((item, index) => (
+                      <li
+                        key={item._id}
+                        className="px-3 py-1 border border-black text-sm capitalize relative rounded-lg"
+                      >
+                        {item}
+                        <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 ">
+                          <IoCloseCircleOutline size={25} />
+                        </span>
+                      </li>
+                    ))}
+                </ul>
+              </div>
+            )}
 
             {/* Select Subcategory */}
-            <div className="mb-4">
-              <label className="block text-gray-70">
-                Select Product Size
-              </label>
-              <select
-                value={productSizeValue}
-                onChange={handleSizeChange}
-                className="customInput"
-                required
-              >
-                <option value="">Select One</option>
-                {productSizes?.length > 0 &&
-                  productSizes.map((item, index) => (
-                    <option value={item.sizeName} key={item._id}>
-                      {item?.sizeName}
-                    </option>
-                  ))}
-                {/* Add more subcategories dynamically if needed */}
-              </select>
-            <ul className="flex gap-3 mt-3 items-center">
-                {
-                  productSize?.length > 0 &&
-                  productSize.map((item, index) => (
-                    <li key={item._id} className="px-3 py-1 border border-black text-sm capitalize relative rounded" >{item}
-                    <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 "><IoCloseCircleOutline size={25} /></span>
-                    </li>
-                ))}
-              </ul>
-            </div>
+
+            {setupConfig?.productFlags && (
+              <div className="mb-4">
+                <label className="block text-gray-700 font-semibold ">
+                  Select Product Flag
+                </label>
+                <select
+                  value={productFlagValue}
+                  onChange={(e) => setProductFlagValue(e.target.value)}
+                  className="customInput select"
+                  // required
+                >
+                  <option value="">Select One</option>
+                  {productFlags?.length > 0 &&
+                    productFlags.map((item, index) => (
+                      <option value={item.flagName} key={item._id}>
+                        {item?.flagName}
+                      </option>
+                    ))}
+                  {/* Add more subcategories dynamically if needed */}
+                </select>
+              </div>
+            )}
+
+            {/* Select Subcategory */}
+
+            {setupConfig?.productSize && (
+              <div className="mb-4">
+                <label className="block text-gray-700 font-semibold ">
+                  Select Product Size
+                </label>
+                <select
+                  value={productSizeValue}
+                  onChange={handleSizeChange}
+                  className="customInput select"
+                  // required
+                >
+                  <option value="">Select One</option>
+                  {productSizes?.length > 0 &&
+                    productSizes.map((item, index) => (
+                      <option value={item.sizeName} key={item._id}>
+                        {item?.sizeName}
+                      </option>
+                    ))}
+                  {/* Add more subcategories dynamically if needed */}
+                </select>
+                <ul className="flex gap-3 mt-3 items-center">
+                  {productSize?.length > 0 &&
+                    productSize.map((item, index) => (
+                      <li
+                        key={item._id}
+                        className="px-3 py-1 border border-black text-sm capitalize relative rounded"
+                      >
+                        {item}
+                        <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 ">
+                          <IoCloseCircleOutline size={25} />
+                        </span>
+                      </li>
+                    ))}
+                </ul>
+              </div>
+            )}
           </div>
-
           {/* File Upload for Thumbnail */}
           <div className="mb-4">
             <label className="block text-gray-70">
-              Product Thumbnail Image 
+              Product Thumbnail Image
             </label>
 
             <DragEditUploadImageInput
@@ -721,15 +787,16 @@ export default function EditProductForm({
 
           {/* Gallery */}
           <div className="mb-4">
-            <label className="block text-gray-70">
-              Product Image Gallery
-            </label>
+            <label className="block text-gray-70">Product Image Gallery</label>
 
-            <DragEditUploadImageInput
+            <DragMultiEditUploadImageInput
               getRootProps={getGalleryRootProps}
               getInputProps={getGalleryInputProps}
               image={gallery}
               imagePreview={galleryPreview}
+              setGallery={setGallery}
+              setImagePreview={setGalleryPreview}
+              setDeleteItemIds={setDeleteItemIds}
             />
           </div>
 
@@ -760,47 +827,48 @@ export default function EditProductForm({
           />
           <SwitchInput label="Is New" checked={isNew} setChecked={setIsNew} />
 
-          {/* SEO Information */}
-          <div className="mb-4 mt-6">
-            <h2 className="text-xl  pb-3 mb-3 border-b border-gray-300">
-              Product SEO Information (Optional)
-            </h2>
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-gray-70">
-                  Meta Title
-                </label>
-                <input
-                  type="text"
-                  value={metaTitle}
-                  onChange={(e) => setMetaTitle(e.target.value)}
-                  className="customInput"
-                />
-              </div>
-              <div>
-                <label className="block text-gray-70">
-                  Meta Keywords
-                </label>
-                <input
-                  type="text"
-                  value={metaKeywords}
-                  onChange={(e) => setMetaKeywords(e.target.value)}
-                  className="customInput"
-                />
-              </div>
-              <div className="col-span-2">
-                <label className="block text-gray-70">
-                  Meta Description
-                </label>
-                <textarea
-                  value={metaDescription}
-                  onChange={(e) => setMetaDescription(e.target.value)}
-                  className="customInput resize-none"
-                  rows="3"
-                />
+          {setupConfig?.seoInformation && (
+            <div className="mb-4 mt-6">
+              <h2 className="text-2xl font-semibold mb-4 pb-5 border-b border-gray-300">
+                Product SEO Information (Optional)
+              </h2>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-gray-700 font-semibold ">
+                    Meta Title
+                  </label>
+                  <input
+                    type="text"
+                    value={metaTitle}
+                    onChange={(e) => setMetaTitle(e.target.value)}
+                    className="customInput"
+                  />
+                </div>
+                <div>
+                  <label className="block text-gray-700 font-semibold ">
+                    Meta Keywords
+                  </label>
+                  <input
+                    type="text"
+                    value={metaKeywords}
+                    onChange={(e) => setMetaKeywords(e.target.value)}
+                    className="customInput"
+                  />
+                </div>
+                <div className="col-span-2">
+                  <label className="block text-gray-700 font-semibold ">
+                    Meta Description
+                  </label>
+                  <textarea
+                    value={metaDescription}
+                    onChange={(e) => setMetaDescription(e.target.value)}
+                    className="customInput resize-none"
+                    rows="3"
+                  />
+                </div>
               </div>
             </div>
-          </div>
+          )}
 
           {/* Buttons */}
           <div className="flex justify-end gap-4 ">
@@ -811,10 +879,7 @@ export default function EditProductForm({
             >
               Cancel
             </button>
-            <button
-              type="submit"
-              className={`customSaveButton`}
-            >
+            <button type="submit" className={`customSaveButton`}>
               Save Product
             </button>
           </div>

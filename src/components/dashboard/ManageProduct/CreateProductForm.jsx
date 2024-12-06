@@ -9,7 +9,7 @@ import useGetAllProductBrands from "../../../Hook/GetDataHook/useGetAllProductBr
 import useGetAllProductColors from "../../../Hook/GetDataHook/useGetAllProductColors";
 import useGetAllProductFlag from "../../../Hook/GetDataHook/useGetAllProductFlag";
 import useGetAllSubCategories from "../../../Hook/GetDataHook/useGetAllSubCategories";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import Switch from "react-switch";
 import ActiveDescBtn from "./productSharedComponents/ActiveDescBtn";
@@ -18,6 +18,7 @@ import Swal from "sweetalert2";
 
 import { IoCloseCircleOutline } from "react-icons/io5";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
+import DragMultiUploadImageInput from "../../../shared/DragMultiUploadImageInput";
 
 export default function ProductCreateForm() {
   // States for the form fields
@@ -43,28 +44,33 @@ export default function ProductCreateForm() {
   const [thumbnailPreview, setThumbnailPreview] = useState(null);
   const [gallery, setGallery] = useState([]);
   const [galleryPreview, setGalleryPreview] = useState([]);
-  const [category, setCategory] = useState("");
-  const [subcategory, setSubcategory] = useState("");
-  const [childCategory, setChildCategory] = useState("");
+  const [category, setCategory] = useState("dfsf");
+  const [subcategory, setSubcategory] = useState("sdfds");
+  const [childCategory, setChildCategory] = useState("sdfsd");
   const [modelOfBrandValue, setModelOfBrandValue] = useState("");
   const [productColorValue, setProductColorValue] = useState("");
   const [productFlagValue, setProductFlagValue] = useState("");
-  const [brandValue, setBrandValue] = useState("");
+  const [brandValue, setBrandValue] = useState("zxcvzcxv");
   const [productSizeValue, setProductSizeValue] = useState("");
+
+  const [setupConfig, setSetupConfig] = useState({});
 
   const [productSize, setProductSize] = useState([]);
   const [productColor, setProductColor] = useState([]);
 
-
   const [activeDescription, setActiveDescription] = useState("full_desc");
 
   const categories = useGetAllCategories({});
-  const subcategories = useGetAllSubCategories({});
+  const subcategories = useGetAllSubCategories({
+    query: `category=${category}`,
+  });
   const childCategories = useGetAllChildCategories({});
   const productBrands = useGetAllProductBrands({});
   const productColors = useGetAllProductColors({});
   const productFlags = useGetAllProductFlag({});
   const productSizes = useGetAllProductSizes({});
+
+  const modelOfBrand = useGetAllModelOfBrands({});
 
   const axiosSecure = useAxiosSecure();
 
@@ -165,7 +171,7 @@ export default function ProductCreateForm() {
     formData.append("productFlagValue", productFlagValue);
     formData.append("subcategory", subcategory);
     formData.append("childCategory", childCategory);
-
+    formData.append("galleryItemCount", gallery.length);
 
     // If `gallery` is an array of files, you can loop through it and append each file:
 
@@ -195,10 +201,10 @@ export default function ProductCreateForm() {
         });
       }
     } catch (err) {
-      console.error(err);
+      console.error(err, "submit product error");
       Swal.fire({
         title: "Error!",
-        text: "Something went wrong!",
+        text: err.message,
         icon: "error",
         confirmButtonText: "Ok",
       });
@@ -212,7 +218,9 @@ export default function ProductCreateForm() {
     setProductColorValue(value);
 
     if (value !== "") {
-      setProductColor((prev) => prev.includes(value) ? prev : [...prev, value]);
+      setProductColor((prev) =>
+        prev.includes(value) ? prev : [...prev, value]
+      );
     }
   };
   const handleSizeChange = (e) => {
@@ -220,9 +228,37 @@ export default function ProductCreateForm() {
     setProductSizeValue(value);
 
     if (value !== "") {
-      setProductSize((prev) => prev.includes(value) ? prev : [...prev, value]);
+      setProductSize((prev) =>
+        prev.includes(value) ? prev : [...prev, value]
+      );
     }
   };
+
+  useEffect(() => {
+    const fetchTestimonial = async () => {
+      try {
+        const firstResData = await axiosSecure.get(`/setup-config`);
+
+        console.log(firstResData, "res ljlj");
+
+        if (firstResData.status === 200 || firstResData.status === 201) {
+          const data = firstResData?.data?.data[0];
+
+          console.log(data, "data");
+
+          setSetupConfig(data);
+
+          // Set form values with the testimonial data
+        }
+      } catch (error) {
+        console.error("Error fetching testimonial:", error);
+      }
+    };
+
+    fetchTestimonial();
+  }, [axiosSecure]);
+
+  console.log(setupConfig, "setupConfig");
 
   return (
     <div className="p-6 pt-0">
@@ -231,16 +267,14 @@ export default function ProductCreateForm() {
         <form onSubmit={handleSubmit}>
           {/* Product Title */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-semibold">
-              Title
-            </label>
+            <label className="block text-gray-700 font-semibold">Title</label>
             <input
               type="text"
               value={productTitle}
               onChange={(e) => setProductTitle(e.target.value)}
               className="customInput"
               placeholder="Enter Product Name Here"
-              required
+              // required
             />
           </div>
           <div className={"flex items-center gap-6 mb-6 mt-5"}>
@@ -351,7 +385,7 @@ export default function ProductCreateForm() {
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
                 className="customInput"
-                required
+                // required
               />
             </div>
             <div>
@@ -365,17 +399,20 @@ export default function ProductCreateForm() {
                 className="customInput"
               />
             </div>
-            <div>
-              <label className="block text-gray-700 font-semibold ">
-                Reward Points
-              </label>
-              <input
-                type="number"
-                value={rewardPoints}
-                onChange={(e) => setRewardPoints(e.target.value)}
-                className="customInput"
-              />
-            </div>
+
+            {setupConfig?.rewardPoints && (
+              <div>
+                <label className="block text-gray-700 font-semibold ">
+                  Reward Points
+                </label>
+                <input
+                  type="number"
+                  value={rewardPoints}
+                  onChange={(e) => setRewardPoints(e.target.value)}
+                  className="customInput"
+                />
+              </div>
+            )}
             <div>
               <label className="block text-gray-700 font-semibold ">
                 Stock
@@ -388,23 +425,24 @@ export default function ProductCreateForm() {
               />
             </div>
             {/* Product Code */}
-            <div className="mb-4">
-              <label className="block text-gray-700 font-semibold ">
-                Product Code
-              </label>
-              <input
-                type="text"
-                value={productCode}
-                onChange={(e) => setProductCode(e.target.value)}
-                className="customInput"
-                placeholder="Product Code"
-              />
-            </div>
+
+            {setupConfig?.productCode && (
+              <div className="mb-4">
+                <label className="block text-gray-700 font-semibold ">
+                  Product Code
+                </label>
+                <input
+                  type="text"
+                  value={productCode}
+                  onChange={(e) => setProductCode(e.target.value)}
+                  className="customInput"
+                  placeholder="Product Code"
+                />
+              </div>
+            )}
           </div>
 
           <div className={"grid grid-cols-3 gap-4 mb-4"}>
-
-
             {/* Select Category */}
             <div className="mb-4">
               <label className="block text-gray-700 font-semibold ">
@@ -414,7 +452,7 @@ export default function ProductCreateForm() {
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
                 className="customInput select"
-                required
+                // required
               >
                 <option value="">Select One</option>
                 {categories?.length > 0 &&
@@ -435,7 +473,7 @@ export default function ProductCreateForm() {
                 value={subcategory}
                 onChange={(e) => setSubcategory(e.target.value)}
                 className="customInput select"
-                required
+                // required
               >
                 <option value="">Select One</option>
                 {subcategories?.length > 0 &&
@@ -477,7 +515,7 @@ export default function ProductCreateForm() {
                 value={brandValue}
                 onChange={(e) => setBrandValue(e.target.value)}
                 className="customInput select"
-                required
+                // required
               >
                 <option value="">Select One</option>
                 {productBrands?.length > 0 &&
@@ -490,95 +528,134 @@ export default function ProductCreateForm() {
               </select>
             </div>
 
+            {/* Select Subcategory */}
 
+            {setupConfig?.modelOfBrand && (
+              <div className="mb-4">
+                <label className="block text-gray-700 font-bold mb-2">
+                  Select Model Of Brand *
+                </label>
+                <select
+                  value={modelOfBrandValue}
+                  onChange={(e) => setModelOfBrandValue(e.target.value)}
+                  className="w-full p-2 border rounded-md"
+                  // required
+                >
+                  <option value="">Select One</option>
+                  {modelOfBrand?.length > 0 &&
+                    modelOfBrand.map((item, index) => (
+                      <option value={item.slug} key={item._id}>
+                        {item?.modelName}
+                      </option>
+                    ))}
+                  {/* Add more subcategories dynamically if needed */}
+                </select>
+              </div>
+            )}
 
             {/* Select Subcategory */}
-            <div className="mb-4">
-              <label className="block text-gray-700 font-semibold ">
-                Select Product Color
-              </label>
-              <select
-                value={productColorValue}
-                onChange={handleColorChange}
-                className="customInput select"
-                required
-              >
-                <option value="">Select One</option>
-                {productColors?.length > 0 &&
-                  productColors.map((item, index) => (
-                    <option value={item.productColor} key={item._id}>
-                      {item?.productColorName}
-                    </option>
-                  ))}
-                {/* Add more subcategories dynamically if needed */}
-              </select>
 
-              <ul className="flex gap-3 mt-3 items-center">
-                {
-                  productColor?.length > 0 &&
-                  productColor.map((item, index) => (
-                    <li key={item._id} className="px-3 py-1 border border-black text-sm capitalize relative rounded-lg" >{item}
-                      <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 "><IoCloseCircleOutline size={25} /></span>
-                    </li>
-                  ))}
-              </ul>
-            </div>
+            {setupConfig?.productColor && (
+              <div className="mb-4">
+                <label className="block text-gray-700 font-semibold ">
+                  Select Product Color
+                </label>
+                <select
+                  value={productColorValue}
+                  onChange={handleColorChange}
+                  className="customInput select"
+                  // required
+                >
+                  <option value="">Select One</option>
+                  {productColors?.length > 0 &&
+                    productColors.map((item, index) => (
+                      <option value={item.productColor} key={item._id}>
+                        {item?.productColorName}
+                      </option>
+                    ))}
+                  {/* Add more subcategories dynamically if needed */}
+                </select>
 
-            {/* Select Subcategory */}
-            <div className="mb-4">
-              <label className="block text-gray-700 font-semibold ">
-                Select Product Flag
-              </label>
-              <select
-                value={productFlagValue}
-                onChange={(e) => setProductFlagValue(e.target.value)}
-                className="customInput select"
-                required
-              >
-                <option value="">Select One</option>
-                {productFlags?.length > 0 &&
-                  productFlags.map((item, index) => (
-                    <option value={item.flagName} key={item._id}>
-                      {item?.flagName}
-                    </option>
-                  ))}
-                {/* Add more subcategories dynamically if needed */}
-              </select>
-
-
-            </div>
+                <ul className="flex gap-3 mt-3 items-center">
+                  {productColor?.length > 0 &&
+                    productColor.map((item, index) => (
+                      <li
+                        key={item._id}
+                        className="px-3 py-1 border border-black text-sm capitalize relative rounded-lg"
+                      >
+                        {item}
+                        <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 ">
+                          <IoCloseCircleOutline size={25} />
+                        </span>
+                      </li>
+                    ))}
+                </ul>
+              </div>
+            )}
 
             {/* Select Subcategory */}
-            <div className="mb-4">
-              <label className="block text-gray-700 font-semibold ">
-                Select Product Size
-              </label>
-              <select
-                value={productSizeValue}
-                onChange={handleSizeChange}
-                className="customInput select"
-                required
-              >
-                <option value="">Select One</option>
-                {productSizes?.length > 0 &&
-                  productSizes.map((item, index) => (
-                    <option value={item.sizeName} key={item._id}>
-                      {item?.sizeName}
-                    </option>
-                  ))}
-                {/* Add more subcategories dynamically if needed */}
-              </select>
-              <ul className="flex gap-3 mt-3 items-center">
-                {
-                  productSize?.length > 0 &&
-                  productSize.map((item, index) => (
-                    <li key={item._id} className="px-3 py-1 border border-black text-sm capitalize relative rounded" >{item}
-                      <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 "><IoCloseCircleOutline size={25} /></span>
-                    </li>
-                  ))}
-              </ul>
-            </div>
 
+            {setupConfig?.productFlags && (
+              <div className="mb-4">
+                <label className="block text-gray-700 font-semibold ">
+                  Select Product Flag
+                </label>
+                <select
+                  value={productFlagValue}
+                  onChange={(e) => setProductFlagValue(e.target.value)}
+                  className="customInput select"
+                  // required
+                >
+                  <option value="">Select One</option>
+                  {productFlags?.length > 0 &&
+                    productFlags.map((item, index) => (
+                      <option value={item.flagName} key={item._id}>
+                        {item?.flagName}
+                      </option>
+                    ))}
+                  {/* Add more subcategories dynamically if needed */}
+                </select>
+              </div>
+            )}
+
+            {/* Select Subcategory */}
+
+            {setupConfig?.productSize && (
+              <div className="mb-4">
+                <label className="block text-gray-700 font-semibold ">
+                  Select Product Size
+                </label>
+                <select
+                  value={productSizeValue}
+                  onChange={handleSizeChange}
+                  className="customInput select"
+                  // required
+                >
+                  <option value="">Select One</option>
+                  {productSizes?.length > 0 &&
+                    productSizes.map((item, index) => (
+                      <option value={item.sizeName} key={item._id}>
+                        {item?.sizeName}
+                      </option>
+                    ))}
+                  {/* Add more subcategories dynamically if needed */}
+                </select>
+                <ul className="flex gap-3 mt-3 items-center">
+                  {productSize?.length > 0 &&
+                    productSize.map((item, index) => (
+                      <li
+                        key={item._id}
+                        className="px-3 py-1 border border-black text-sm capitalize relative rounded"
+                      >
+                        {item}
+                        <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 ">
+                          <IoCloseCircleOutline size={25} />
+                        </span>
+                      </li>
+                    ))}
+                </ul>
+              </div>
+            )}
           </div>
 
           {/* File Upload for Thumbnail */}
@@ -601,11 +678,13 @@ export default function ProductCreateForm() {
               Product Image Gallery
             </label>
 
-            <DragUploadImageInput
+            <DragMultiUploadImageInput
               getRootProps={getGalleryRootProps}
               getInputProps={getGalleryInputProps}
               image={gallery}
               imagePreview={galleryPreview}
+              setImagePreview={setGalleryPreview}
+              setGallery={setGallery}
             />
           </div>
 
@@ -644,54 +723,53 @@ export default function ProductCreateForm() {
           </div>
 
           {/* SEO Information */}
-          <div className="mb-4 mt-6">
-            <h2 className="text-2xl font-semibold mb-4 pb-5 border-b border-gray-300">
-              Product SEO Information (Optional)
-            </h2>
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-gray-700 font-semibold ">
-                  Meta Title
-                </label>
-                <input
-                  type="text"
-                  value={metaTitle}
-                  onChange={(e) => setMetaTitle(e.target.value)}
-                  className="customInput"
-                />
-              </div>
-              <div>
-                <label className="block text-gray-700 font-semibold ">
-                  Meta Keywords
-                </label>
-                <input
-                  type="text"
-                  value={metaKeywords}
-                  onChange={(e) => setMetaKeywords(e.target.value)}
-                  className="customInput"
-                />
-              </div>
-              <div className="col-span-2">
-                <label className="block text-gray-700 font-semibold ">
-                  Meta Description
-                </label>
-                <textarea
-                  value={metaDescription}
 
-                  onChange={(e) => setMetaDescription(e.target.value)}
-                  className="customInput resize-none"
-                  rows="3"
-                />
+          {setupConfig?.seoInformation && (
+            <div className="mb-4 mt-6">
+              <h2 className="text-2xl font-semibold mb-4 pb-5 border-b border-gray-300">
+                Product SEO Information (Optional)
+              </h2>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-gray-700 font-semibold ">
+                    Meta Title
+                  </label>
+                  <input
+                    type="text"
+                    value={metaTitle}
+                    onChange={(e) => setMetaTitle(e.target.value)}
+                    className="customInput"
+                  />
+                </div>
+                <div>
+                  <label className="block text-gray-700 font-semibold ">
+                    Meta Keywords
+                  </label>
+                  <input
+                    type="text"
+                    value={metaKeywords}
+                    onChange={(e) => setMetaKeywords(e.target.value)}
+                    className="customInput"
+                  />
+                </div>
+                <div className="col-span-2">
+                  <label className="block text-gray-700 font-semibold ">
+                    Meta Description
+                  </label>
+                  <textarea
+                    value={metaDescription}
+                    onChange={(e) => setMetaDescription(e.target.value)}
+                    className="customInput resize-none"
+                    rows="3"
+                  />
+                </div>
               </div>
             </div>
-          </div>
+          )}
 
           {/* Buttons */}
           <div className="flex justify-end gap-5">
-            <button
-              type="button"
-              className="customCancelButton"
-            >
+            <button type="button" className="customCancelButton">
               Discard
             </button>
             <button
@@ -701,7 +779,8 @@ export default function ProductCreateForm() {
             >
               {loading ? (
                 <>
-                  <span className="loading loading-spinner mr-2  loading-xs"></span>Saving Product ..
+                  <span className="loading loading-spinner mr-2  loading-xs"></span>
+                  Saving Product ..
                 </>
               ) : (
                 "Save Product"

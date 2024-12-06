@@ -12,6 +12,7 @@ import useGetAllMeasurementUnits from "../../../Hook/GetDataHook/useGetAllMeasur
 import CreateMeasurementUnitsForm from "./Forms/CreateMeasurementUnitsForm";
 import EditMeasurementUnitsForm from "./Forms/EditMeasurementUnitsForm";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
+import Mpagination from "../../../shared/Mpagination";
 
 const MeasurementUnits = () => {
   // State management
@@ -37,11 +38,15 @@ const MeasurementUnits = () => {
     isShowModal,
   });
 
-  // Paginated data
-  const paginatedData = useCallback(() => {
-    const offset = currentPage * itemsPerPage;
-    return measurementUnits.slice(offset, offset + itemsPerPage);
-  }, [currentPage, itemsPerPage, measurementUnits]);
+  const { paginatedData, paginationControls } = Mpagination({
+    totalData: measurementUnits,
+  });
+
+  // // Paginated data
+  // const paginatedData = useCallback(() => {
+  //   const offset = currentPage * itemsPerPage;
+  //   return measurementUnits.slice(offset, offset + itemsPerPage);
+  // }, [currentPage, itemsPerPage, measurementUnits]);
 
   // Sorting handler
   const handleSort = (key) => {
@@ -156,33 +161,36 @@ const MeasurementUnits = () => {
                 </tr>
               </thead>
               <tbody>
-                {paginatedData()?.length > 0 &&  paginatedData().map((item, index) => (
-                  <tr key={item._id} className="border-b">
-                    <td className="border p-2">
-                      {index + 1 + currentPage * itemsPerPage}
-                    </td>
-                    <td className="border p-2">{item.unitName}</td>
-                    <td className="border p-2">{item.createdAt}</td>
-                    <td className="border p-2">
-                      <div className="flex space-x-2">
-                        <button
-                          className="text-yellow-500 hover:text-yellow-700"
-                          onClick={() => handleEdit(item._id)}
-                        >
-                          <FiEdit />
-                        </button>
-                        <button
-                          className="text-red-500 hover:text-red-700"
-                          onClick={() => handleDelete(item._id)}
-                        >
-                          <FiTrash2 />
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
+                {paginatedData?.length > 0 &&
+                  paginatedData.map((item, index) => (
+                    <tr key={item._id} className="border-b">
+                      <td className="border p-2">
+                        {index + 1 + currentPage * itemsPerPage}
+                      </td>
+                      <td className="border p-2">{item.unitName}</td>
+                      <td className="border p-2">{item.createdAt}</td>
+                      <td className="border p-2">
+                        <div className="flex space-x-2">
+                          <button
+                            className="text-yellow-500 hover:text-yellow-700"
+                            onClick={() => handleEdit(item._id)}
+                          >
+                            <FiEdit />
+                          </button>
+                          <button
+                            className="text-red-500 hover:text-red-700"
+                            onClick={() => handleDelete(item._id)}
+                          >
+                            <FiTrash2 />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
               </tbody>
             </table>
+
+            {paginationControls}
           </div>
         )}
       </div>

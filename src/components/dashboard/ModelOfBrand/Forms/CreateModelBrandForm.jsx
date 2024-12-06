@@ -1,42 +1,32 @@
-"use client";
-import SwitchInput from "../../../shared/SwitchInput";
-
-import useGetAllModelOfBrands from "../../../Hook/GetDataHook/useGetAllModelOfBrands";
-import useGetAllProductBrands from "../../../Hook/GetDataHook/useGetAllProductBrands";
 import { useState } from "react";
 import Swal from "sweetalert2";
-import useAxiosSecure from "../../../Hook/useAxiosSecure";
+import useGetAllProductBrands from "../../../../Hook/GetDataHook/useGetAllProductBrands";
+import useAxiosSecure from "../../../../Hook/useAxiosSecure";
 
 export default function CreateModelBrandForm({ isShowModal, setIsShowModal }) {
   const [brand, setBrand] = useState("");
   const [modelName, setModelName] = useState("");
-  const [slug, setSlug] = useState("");
-  const [isActive, setIsActive] = useState(false);
   const [code, setCode] = useState("");
-  const productBrands = useGetAllProductBrands({});
+  const productBrands = useGetAllProductBrands({ isShowModal });
 
   const axiosSecure = useAxiosSecure();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(brand, "brand", modelName, "modelName", slug, "slug", code);
-
-    if (!brand || !modelName || !slug || !code) {
-      Swal.fire({
-        title: "Error!",
-        text: "Please fill all the fields",
-        icon: "error",
-        confirmButtonText: "Ok",
-      });
-      return;
-    }
+    // if (!brand || !modelName || !code) {
+    //   Swal.fire({
+    //     title: "Error!",
+    //     text: "Please fill all the fields",
+    //     icon: "error",
+    //     confirmButtonText: "Ok",
+    //   });
+    //   return;
+    // }
 
     const formData = new FormData();
     formData.append("brand", brand);
     formData.append("modelName", modelName);
-    formData.append("slug", slug);
-    formData.append("isActive", isActive);
     formData.append("code", code);
 
     try {
@@ -66,19 +56,7 @@ export default function CreateModelBrandForm({ isShowModal, setIsShowModal }) {
     setIsShowModal(false);
     setBrand("");
     setModelName("");
-    setSlug("");
-    setIsActive(false);
     setCode("");
-  };
-
-  const handleModelNameInput = (input) => {
-    const sanitizedInput = input.replace(/[^a-zA-Z0-9]/g, "_");
-    setSlug(sanitizedInput);
-    setModelName(input);
-  };
-  const handleSlugInput = (input) => {
-    const sanitizedInput = input.replace(/[^a-zA-Z0-9]/g, "_");
-    setSlug(sanitizedInput);
   };
 
   return (
@@ -113,31 +91,12 @@ export default function CreateModelBrandForm({ isShowModal, setIsShowModal }) {
             <input
               type="text"
               value={modelName}
-              onChange={(e) => handleModelNameInput(e.target.value)}
+              onChange={(e) => setModelName(e.target.value)}
               className="w-full p-2 border rounded-md"
               placeholder="Model Name"
               required
             />
           </div>
-
-          {/* Slug */}
-          <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">Slug *</label>
-            <input
-              type="text"
-              value={slug}
-              onChange={(e) => handleSlugInput(e.target.value)}
-              className="w-full p-2 border rounded-md"
-              placeholder="Slug"
-              required
-            />
-          </div>
-
-          <SwitchInput
-            label="Active"
-            checked={isActive}
-            setChecked={setIsActive}
-          />
 
           {/* Code */}
           <div className="mb-4">

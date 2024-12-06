@@ -49,7 +49,11 @@ export default function CancelOrders() {
   const [targetId, setTargetId] = useState(null);
   const [isDeleted, setIsDeleted] = useState(false);
 
-  const orders = useGetAllOrders({query:`status=Cancelled`, isDeleted, isShowModal: isShowDetail})
+  const orders = useGetAllOrders({
+    query: `status=Cancelled`,
+    isDeleted,
+    isShowModal: isShowDetail,
+  });
 
   console.log(orders, "orders");
 
@@ -57,11 +61,11 @@ export default function CancelOrders() {
   let filteredOrders = orders;
 
   useEffect(() => {
-    if(searchTerm === ""){
+    if (searchTerm === "") {
       // setOrders(orders);
       return;
     }
-     filteredOrders = orders.filter(
+    filteredOrders = orders.filter(
       (order) =>
         order.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         order.email.toLowerCase().includes(searchTerm.toLowerCase())
@@ -144,24 +148,37 @@ export default function CancelOrders() {
             </tr>
           </thead>
           <tbody>
-            {orders.length > 0 ? (
-              orders.map((order, index) => (
+            {orders?.length > 0 ? (
+              orders?.map((order, index) => (
                 <tr key={order._id} className="border-b text-center">
                   <td className="p-2 border">
                     {index + 1 + (currentPage - 1) * itemsPerPage}
                   </td>
                   <td className="p-2 border">{order._id}</td>
                   <td className="p-2 border">{order.createdAt}</td>
-                  <td className="p-2 border">{order?.shipping_address_id?.recipientName}</td>
-                  <td className="p-2 border">{order?.shipping_address_id?.email || "N/A"}</td>
-                  <td className="p-2 border">{order?.shipping_address_id?.contactNumber}</td>
+                  <td className="p-2 border">
+                    {order?.shipping_address_id?.recipientName}
+                  </td>
+                  <td className="p-2 border">
+                    {order?.shipping_address_id?.email || "N/A"}
+                  </td>
+                  <td className="p-2 border">
+                    {order?.shipping_address_id?.contactNumber}
+                  </td>
                   <td className="p-2 border">{order?.status}</td>
                   <td className="p-2 border">{order?.payment_method}</td>
                   <td className="p-2 border">৳ {order?.total}</td>
                   <td className="p-2 border">
                     <div className="flex justify-center space-x-2">
-                      <EditButton  onClick={()=> {setIsShowDetail(true); setTargetId(order._id)}}></EditButton>
-                      <DeleteButton  onClick={()=> handleDelete(order._id)}></DeleteButton>
+                      <EditButton
+                        onClick={() => {
+                          setIsShowDetail(true);
+                          setTargetId(order._id);
+                        }}
+                      ></EditButton>
+                      <DeleteButton
+                        onClick={() => handleDelete(order._id)}
+                      ></DeleteButton>
                     </div>
                   </td>
                 </tr>
@@ -205,7 +222,11 @@ export default function CancelOrders() {
       </div>
 
       <BgBlurModal isShowModal={isShowDetail} setIsShowModal={setIsShowDetail}>
-        <OrderDetail id={targetId} isShow={isShowDetail} setIsShow={setIsShowDetail} />
+        <OrderDetail
+          id={targetId}
+          isShow={isShowDetail}
+          setIsShow={setIsShowDetail}
+        />
       </BgBlurModal>
     </div>
   );

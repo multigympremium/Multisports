@@ -16,6 +16,7 @@ import useAxiosSecure from "../../../Hook/useAxiosSecure";
 import DeleteButton from "../../../components library/DeleteButton";
 import EditButton from "../../../components library/EditButton";
 import TableSkeleton from "../../../components library/TableSkeleton";
+import Mpagination from "../../../shared/Mpagination";
 
 const ProductSize = () => {
   // State management
@@ -41,11 +42,9 @@ const ProductSize = () => {
     isShowModal,
   });
 
-  // Paginated data
-  const paginatedData = useCallback(() => {
-    const offset = currentPage * itemsPerPage;
-    return productSizes.slice(offset, offset + itemsPerPage);
-  }, [currentPage, itemsPerPage, productSizes]);
+  const { paginatedData, paginationControls } = Mpagination({
+    totalData: productSizes,
+  });
 
   // Sorting handler
   const handleSort = (key) => {
@@ -120,17 +119,23 @@ const ProductSize = () => {
               className="customSaveButton"
               onClick={() => setIsShowModal(true)}
             >
-              <span className="flex items-center gap-1"><IoAddCircle />  Add New Size</span>
+              <span className="flex items-center gap-1">
+                <IoAddCircle /> Add New Size
+              </span>
             </button>
             <button className="customCancelButton">
-              <span className="flex items-center gap-1"><FaRetweet /> Rearrange Brand</span>
+              <span className="flex items-center gap-1">
+                <FaRetweet /> Rearrange Brand
+              </span>
             </button>
           </div>
         </div>
 
         {/* Loading Spinner */}
         {loading ? (
-          <div><TableSkeleton></TableSkeleton></div>
+          <div>
+            <TableSkeleton></TableSkeleton>
+          </div>
         ) : (
           <div className="overflow-x-auto relative shadow-sm sm:rounded-lg">
             <table className="w-full text-sm text-left text-gray-500">
@@ -142,7 +147,11 @@ const ProductSize = () => {
                   >
                     Serial no {"   "}
                     {sortConfig.key === "id" &&
-                      (sortConfig.direction === "asc" ? <HiArrowCircleUp className="text-[#087D6D] "/>: <HiArrowCircleDown  className="text-[#E68923]" />)}
+                      (sortConfig.direction === "asc" ? (
+                        <HiArrowCircleUp className="text-[#087D6D] " />
+                      ) : (
+                        <HiArrowCircleDown className="text-[#E68923]" />
+                      ))}
                   </td>
                   <td
                     className="border text-lg p-2 text-center cursor-pointer"
@@ -160,25 +169,35 @@ const ProductSize = () => {
                 </tr>
               </thead>
               <tbody>
-                {paginatedData()?.length > 0 && paginatedData().map((item, index) => (
-                  <tr key={item._id} className="border-b">
-                    <td className="border p-2 text-center">
-                      {index + 1 + currentPage * itemsPerPage}
-                    </td>
-                    <td className="border p-2 text-center"><span className="border border-[#087d6d3a] p-1 px-2 rounded-lg bg font-semibold uppercase">{item.sizeName}</span></td>
-                    <td className="border p-2 text-center">{item.createdAt}</td>
-                    <td className="border p-2">
-                      <div className="flex justify-center gap-2">
-                        <EditButton onClick={() => handleEdit(item._id)} />
-                        <DeleteButton onClick={() => handleDelete(item._id)} />
-                      </div>
-                    </td>
-                  </tr>
-                ))}
+                {paginatedData?.length > 0 &&
+                  paginatedData.map((item, index) => (
+                    <tr key={item._id} className="border-b">
+                      <td className="border p-2 text-center">
+                        {index + 1 + currentPage * itemsPerPage}
+                      </td>
+                      <td className="border p-2 text-center">
+                        <span className="border border-[#087d6d3a] p-1 px-2 rounded-lg bg font-semibold uppercase">
+                          {item.sizeName}
+                        </span>
+                      </td>
+                      <td className="border p-2 text-center">
+                        {item.createdAt}
+                      </td>
+                      <td className="border p-2">
+                        <div className="flex justify-center gap-2">
+                          <EditButton onClick={() => handleEdit(item._id)} />
+                          <DeleteButton
+                            onClick={() => handleDelete(item._id)}
+                          />
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
               </tbody>
             </table>
           </div>
         )}
+        {paginationControls}
       </div>
 
       {/* Modal for Adding/Editing Brand */}

@@ -1,98 +1,294 @@
-
-import React , { lazy, Suspense } from "react";
+import { lazy, Suspense } from "react";
 import GlobalLoading from "../../components library/GlobalLoading";
-const ViewAllStores = lazy(() => import(  "../../components/dashboard/ManageCourier/ViewAllStore"));
-const StoreCreateForm = lazy(() => import(  "../../components/dashboard/ManageCourier/forms/StoreCreateForm"));
-const ViewAllCities = lazy(() => import(  "../../components/dashboard/ManageCourier/ViewAllCities"));
-const ViewAllZones = lazy(() => import(  "../../components/dashboard/ManageCourier/ViewAllZones"));
-const ViewAllArea = lazy(() => import(  "../../components/dashboard/ManageCourier/ViewAllArea"));
-const UserPermission = lazy(() => import(   "../../components/dashboard/UserPermission/Userpermission"));
-const StaffRole = lazy(() => import(  "../../components/dashboard/UserPermission/StaffRole"));
-const ProductPage = lazy(() => import( "../../components/Home/Products/ProductPage"));
-const PrivateRoute = lazy(() => import( "./routes/PrivateRoute"));
-const CancelOrders = lazy(() => import( "../../components/dashboard/ManageOrders/CancelOrders"));
-const Change_Password = lazy(() => import( "../../pages/User_Dashboard/Change_Password"));
-const UserRoleList = lazy(() => import( "../../components/dashboard/SystemUsers/UserRoleList"));
-const ViewAllBlogs = lazy(() => import( "../../components/dashboard/Blogs/ViewAllBlogs/ViewAllBlogs"));
-const ViewAllProducts = lazy(() => import( "../../components/dashboard/ManageProduct/ViewAllProducts"));
-const AllOrders = lazy(() => import( "../../components/dashboard/ManageOrders/AllOrders"));
+import TermsCondition from "../../components/Home/(policy)/terms-and-condition/page";
+import ShippingPublicPolicy from "../../components/Home/(policy)/shipping-policy/page";
+const CourierSteadFastSettings = lazy(() =>
+  import("../../components/dashboard/CourierSettings/CourierSteadFastSettings")
+);
+const CourierPathaoSettings = lazy(() =>
+  import("../../components/dashboard/CourierSettings/CourierPathaoSettings")
+);
+const ModelOfBrand = lazy(() =>
+  import("../../components/dashboard/ModelOfBrand/ModelOfBrand")
+);
+const ViewAllStores = lazy(() =>
+  import("../../components/dashboard/ManageCourier/ViewAllStore")
+);
+const StoreCreateForm = lazy(() =>
+  import("../../components/dashboard/ManageCourier/forms/StoreCreateForm")
+);
+const ViewAllCities = lazy(() =>
+  import("../../components/dashboard/ManageCourier/ViewAllCities")
+);
+const ViewAllZones = lazy(() =>
+  import("../../components/dashboard/ManageCourier/ViewAllZones")
+);
+const ViewAllArea = lazy(() =>
+  import("../../components/dashboard/ManageCourier/ViewAllArea")
+);
+const UserPermission = lazy(() =>
+  import("../../components/dashboard/UserPermission/Userpermission")
+);
+const StaffRole = lazy(() =>
+  import("../../components/dashboard/UserPermission/StaffRole")
+);
+const ProductPage = lazy(() =>
+  import("../../components/Home/Products/ProductPage")
+);
+const PrivateRoute = lazy(() => import("./routes/PrivateRoute"));
+const CancelOrders = lazy(() =>
+  import("../../components/dashboard/ManageOrders/CancelOrders")
+);
+const Change_Password = lazy(() =>
+  import("../../pages/User_Dashboard/Change_Password")
+);
+const UserRoleList = lazy(() =>
+  import("../../components/dashboard/SystemUsers/UserRoleList")
+);
+const ViewAllBlogs = lazy(() =>
+  import("../../components/dashboard/Blogs/ViewAllBlogs/ViewAllBlogs")
+);
+const ViewAllProducts = lazy(() =>
+  import("../../components/dashboard/ManageProduct/ViewAllProducts")
+);
+const AllOrders = lazy(() =>
+  import("../../components/dashboard/ManageOrders/AllOrders")
+);
 const AboutAdmin = lazy(() => import("../../pages/OtherPage/about-us/page"));
-const CreateTestimonials = lazy(() => import("../../pages/OtherPage/add-new-testimonial/page"));
-const AllCustomers = lazy(() => import("../../pages/OtherPage/all-custormers/page"));
-const ApprovedOrders = lazy(() => import("../../components/dashboard/ManageOrders/ApprovedOrders"));
-const AssignUserRolePermission = lazy(() => import("../../components/dashboard/SystemUsers/AssignUserRolePermission"));
-const BannerImagesBackup = lazy(() => import("../../pages/OtherPage/banner-images-backup/page"));
-const BlogCategories = lazy(() => import("../../components/dashboard/Blogs/BlogCategories/BlogCategories"));
-const BlogFilesBackup = lazy(() => import("../../pages/OtherPage/blog-files-backup/page"));
-const BulkUpload = lazy(() => import("../../components/dashboard/ManageProduct/BulkUpload"));
-const CategoryIconBackup = lazy(() => import("../../pages/OtherPage/category-icon-backup/page"));
-const ContactRequestsList = lazy(() => import("../../components/dashboard/ContactRequest/ContactUsers"));
-const CategoryCreateForm = lazy(() => import("../../components/dashboard/CategoryComponents/CategoryCreateForm"));
-const ChildCategoryCreateForm = lazy(() => import("../../components/dashboard/ChildCategoryComponent/ChildCategoryCreateForm"));
-const CustomPageCreateForm = lazy(() => import("../../components/dashboard/CustomPages/CustomPageCreateForm"));
-const ProductCreateForm = lazy(() => import("../../components/dashboard/ManageProduct/CreateProductForm"));
-const CreatePromoCodeForm = lazy(() => import("../../components/dashboard/PromoCode/CreatePromoCodeForm"));
-const SubcategoryCreateForm = lazy(() => import("../../components/dashboard/SubCategoryComponents/CreateSubCategoryFrom"));
-const CustomCSSJSForm = lazy(() => import("../../components/dashboard/CustomCssJsForm/CustomCssJsForm"));
-const CustomerWishlist = lazy(() => import("../../components/dashboard/Customers/CustomerWishlist"));
-const DatabaseBackup = lazy(() => import("../../pages/OtherPage/database-backup/page"));
-const DeliveryCharges = lazy(() => import("../../components/dashboard/Customers/DeliveryCharges"));
-const EmailConfigurations = lazy(() => import("../../components/dashboard/Gateway & Api/EmailConfigaration"));
-const EmailTemplates = lazy(() => import("../../components/dashboard/Gateway & Api/EmailTemplates"));
+const CreateTestimonials = lazy(() =>
+  import("../../pages/OtherPage/add-new-testimonial/page")
+);
+const AllCustomers = lazy(() =>
+  import("../../pages/OtherPage/all-custormers/page")
+);
+const ApprovedOrders = lazy(() =>
+  import("../../components/dashboard/ManageOrders/ApprovedOrders")
+);
+const AssignUserRolePermission = lazy(() =>
+  import("../../components/dashboard/SystemUsers/AssignUserRolePermission")
+);
+const BannerImagesBackup = lazy(() =>
+  import("../../pages/OtherPage/banner-images-backup/page")
+);
+const BlogCategories = lazy(() =>
+  import("../../components/dashboard/Blogs/BlogCategories/BlogCategories")
+);
+const BlogFilesBackup = lazy(() =>
+  import("../../pages/OtherPage/blog-files-backup/page")
+);
+const BulkUpload = lazy(() =>
+  import("../../components/dashboard/ManageProduct/BulkUpload")
+);
+const CategoryIconBackup = lazy(() =>
+  import("../../pages/OtherPage/category-icon-backup/page")
+);
+const ContactRequestsList = lazy(() =>
+  import("../../components/dashboard/ContactRequest/ContactUsers")
+);
+const CategoryCreateForm = lazy(() =>
+  import("../../components/dashboard/CategoryComponents/CategoryCreateForm")
+);
+const ChildCategoryCreateForm = lazy(() =>
+  import(
+    "../../components/dashboard/ChildCategoryComponent/ChildCategoryCreateForm"
+  )
+);
+const CustomPageCreateForm = lazy(() =>
+  import("../../components/dashboard/CustomPages/CustomPageCreateForm")
+);
+const ProductCreateForm = lazy(() =>
+  import("../../components/dashboard/ManageProduct/CreateProductForm")
+);
+const CreatePromoCodeForm = lazy(() =>
+  import("../../components/dashboard/PromoCode/CreatePromoCodeForm")
+);
+const SubcategoryCreateForm = lazy(() =>
+  import(
+    "../../components/dashboard/SubCategoryComponents/CreateSubCategoryFrom"
+  )
+);
+const CustomCSSJSForm = lazy(() =>
+  import("../../components/dashboard/CustomCssJsForm/CustomCssJsForm")
+);
+const CustomerWishlist = lazy(() =>
+  import("../../components/dashboard/Customers/CustomerWishlist")
+);
+const DatabaseBackup = lazy(() =>
+  import("../../pages/OtherPage/database-backup/page")
+);
+const DeliveryCharges = lazy(() =>
+  import("../../components/dashboard/Customers/DeliveryCharges")
+);
+const EmailConfigurations = lazy(() =>
+  import("../../components/dashboard/Gateway & Api/EmailConfigaration")
+);
+const EmailTemplates = lazy(() =>
+  import("../../components/dashboard/Gateway & Api/EmailTemplates")
+);
 const FAQList = lazy(() => import("../../components/dashboard/FAQ/FAQList"));
-const FlagIconBackup = lazy(() => import("../../pages/OtherPage/flag-icon-backup/page"));
-const CompanyInformation = lazy(() => import("../../pages/OtherPage/general-info/page"));
-const GenerateDemoProducts = lazy(() => import("../../components/dashboard/DemoProduct/GenerateDemoProducts"));
+const FlagIconBackup = lazy(() =>
+  import("../../pages/OtherPage/flag-icon-backup/page")
+);
+const CompanyInformation = lazy(() =>
+  import("../../pages/OtherPage/general-info/page")
+);
+const GenerateDemoProducts = lazy(() =>
+  import("../../components/dashboard/DemoProduct/GenerateDemoProducts")
+);
 const SeoPage = lazy(() => import("../../pages/OtherPage/home-page-seo/page"));
-const MeasurementUnits = lazy(() => import("../../components/dashboard/MeasurementUnits/MeasurementUnits"));
-const OnHoldSupport = lazy(() => import("../../components/dashboard/SupportTicket/OnHoldSupport"));
-const OtherImagesBackup = lazy(() => import("../../pages/OtherPage/other-images-backup/page"));
-const PaymentGateways = lazy(() => import("../../components/dashboard/Gateway & Api/PaymentGateway"));
-const PaymentHistory = lazy(() => import("../../components/dashboard/Customers/PaymentHistory"));
-const PendingOrders = lazy(() => import("../../components/dashboard/ManageOrders/PendingOrders"));
-const PendingSupport = lazy(() => import("../../components/dashboard/SupportTicket/PendingSupport"));
-const PreviousNotifications = lazy(() => import("../../components/dashboard/Push Notification/PreviousNotification"));
-const PrivacyPolicy = lazy(() => import("../../components/dashboard/TermAndPolicies/PrivacyPolicy"));
-const ProductBrands = lazy(() => import("../../components/dashboard/Brands/ProductBrands"));
-const ProductColors = lazy(() => import("../../components/dashboard/ProductColor/ProductColors"));
-const ProductFlag = lazy(() => import("../../components/dashboard/ProductFlag/ProductFlag"));
-const ProductImageBackup = lazy(() => import("../../pages/OtherPage/product-images-backup/page"));
-const ProductQuestionAnswer = lazy(() => import("../../components/dashboard/ManageProduct/ProductQuestionAnswer"));
-const ProductSize = lazy(() => import("../../components/dashboard/ProductSize/ProductSize"));
-const PromotionalBanner = lazy(() => import("../../components/dashboard/SliderAndBanner/PromotionalBanner"));
-const RatingsReview = lazy(() => import("../../components/dashboard/ManageProduct/RatingsReview"));
-const RejectedSupport = lazy(() => import("../../components/dashboard/SupportTicket/RejectedSupport"));
-const RemoveDemoProducts = lazy(() => import("../../components/dashboard/DemoProduct/RemoveDemoProduct"));
-const ReturnPolicy = lazy(() => import("../../components/dashboard/TermAndPolicies/ReturnPolicy"));
-const SendNotification = lazy(() => import("../../components/dashboard/Push Notification/SendNotification"));
-const SendSMS = lazy(() => import("../../components/dashboard/SMS Service/SendSms"));
-const SetupConfig = lazy(() => import("../../pages/OtherPage/setup-your-config/page"));
-const ShippingPolicy = lazy(() => import("../../components/dashboard/TermAndPolicies/ShippingPolicy"));
-const SmsGateways = lazy(() => import("../../components/dashboard/Gateway & Api/SMS_Gateway"));
-const SmsHistory = lazy(() => import("../../components/dashboard/SMS Service/SMS_History"));
-const SMSTemplates = lazy(() => import("../../components/dashboard/SMS Service/SMSTemplates"));
-const SocialChatAndScript = lazy(() => import("../../components/dashboard/SocialChatAndScriptComponents/SocialChatAndScript"));
-const SocialMedia = lazy(() => import("../../pages/OtherPage/social-media-links/page"));
-const SolvedSupport = lazy(() => import("../../components/dashboard/SupportTicket/SolvedSupport"));
-const SubcategoryBackup = lazy(() => import("../../pages/OtherPage/subcategory-backup/page"));
-const SubscribedUsersList = lazy(() => import("../../components/dashboard/ContactRequest/SubscribeUsers"));
-const SystemUsers = lazy(() => import("../../components/dashboard/SystemUsers/SystemUsers"));
-const TermsConditionForm = lazy(() => import("../../components/dashboard/TermAndPolicies/TermsConditionForm"));
-const TicketFilesBackup = lazy(() => import("../../pages/OtherPage/ticket-files-backup/page"));
-const UpazilaThanaList = lazy(() => import("../../components/dashboard/Customers/UpazilaThana"));
-const UserImagesBackup = lazy(() => import("../../pages/OtherPage/user-images-backup/page"));
-const BagBanners = lazy(() => import("../../components/dashboard/SliderAndBanner/BagBanner/BagBanners"));
-const AllBanners = lazy(() => import("../../pages/OtherPage/view-all-banners/page"));
-const CategoryList = lazy(() => import("../../components/dashboard/CategoryComponents/ViewAllCategory"));
-const ChildCategoryList = lazy(() => import("../../components/dashboard/ChildCategoryComponent/ViewAllChildCategories"));
-const CustomPageList = lazy(() => import("../../components/dashboard/CustomPages/CustomPageList"));
-const ViewAllPromoCode = lazy(() => import("../../components/dashboard/PromoCode/ViewAllPromoCode"));
-const ShoesBanners = lazy(() => import("../../components/dashboard/SliderAndBanner/ShoesBanner/ShoesBanners"));
-const SliderList = lazy(() => import("../../components/dashboard/SliderAndBanner/Sliders"));
-const SubcategoryList = lazy(() => import("../../components/dashboard/SubCategoryComponents/ViewAllSubcategories"));
-const ViewAllTestimonials = lazy(() => import("../../components/dashboard/Testimonials/ViewAllTestimonials"));
-const WebsiteThemeColorForm = lazy(() => import("../../components/dashboard/websiteThemeColor/WebsiteThemeColorForm"));
-const BlogCreateForm = lazy(() => import("../../components/dashboard/Blogs/ViewAllBlogs/BlogCreateForm"));
+const MeasurementUnits = lazy(() =>
+  import("../../components/dashboard/MeasurementUnits/MeasurementUnits")
+);
+const OnHoldSupport = lazy(() =>
+  import("../../components/dashboard/SupportTicket/OnHoldSupport")
+);
+const OtherImagesBackup = lazy(() =>
+  import("../../pages/OtherPage/other-images-backup/page")
+);
+const PaymentGateways = lazy(() =>
+  import("../../components/dashboard/Gateway & Api/PaymentGateway")
+);
+const PaymentHistory = lazy(() =>
+  import("../../components/dashboard/Customers/PaymentHistory")
+);
+const PendingOrders = lazy(() =>
+  import("../../components/dashboard/ManageOrders/PendingOrders")
+);
+const PendingSupport = lazy(() =>
+  import("../../components/dashboard/SupportTicket/PendingSupport")
+);
+const PreviousNotifications = lazy(() =>
+  import("../../components/dashboard/Push Notification/PreviousNotification")
+);
+const PrivacyPolicy = lazy(() =>
+  import("../../components/dashboard/TermAndPolicies/PrivacyPolicy")
+);
+const ProductBrands = lazy(() =>
+  import("../../components/dashboard/Brands/ProductBrands")
+);
+const ProductColors = lazy(() =>
+  import("../../components/dashboard/ProductColor/ProductColors")
+);
+const ProductFlag = lazy(() =>
+  import("../../components/dashboard/ProductFlag/ProductFlag")
+);
+const ProductImageBackup = lazy(() =>
+  import("../../pages/OtherPage/product-images-backup/page")
+);
+const ProductQuestionAnswer = lazy(() =>
+  import("../../components/dashboard/ManageProduct/ProductQuestionAnswer")
+);
+const ProductSize = lazy(() =>
+  import("../../components/dashboard/ProductSize/ProductSize")
+);
+const PromotionalBanner = lazy(() =>
+  import("../../components/dashboard/SliderAndBanner/PromotionalBanner")
+);
+const RatingsReview = lazy(() =>
+  import("../../components/dashboard/ManageProduct/RatingsReview")
+);
+const RejectedSupport = lazy(() =>
+  import("../../components/dashboard/SupportTicket/RejectedSupport")
+);
+const RemoveDemoProducts = lazy(() =>
+  import("../../components/dashboard/DemoProduct/RemoveDemoProduct")
+);
+const ReturnPolicy = lazy(() =>
+  import("../../components/dashboard/TermAndPolicies/ReturnPolicy")
+);
+const SendNotification = lazy(() =>
+  import("../../components/dashboard/Push Notification/SendNotification")
+);
+const SendSMS = lazy(() =>
+  import("../../components/dashboard/SMS Service/SendSms")
+);
+const SetupConfigPage = lazy(() =>
+  import("../../pages/OtherPage/setup-your-config/page")
+);
+const ShippingPolicy = lazy(() =>
+  import("../../components/dashboard/TermAndPolicies/ShippingPolicy")
+);
+const SmsGateways = lazy(() =>
+  import("../../components/dashboard/Gateway & Api/SMS_Gateway")
+);
+const SmsHistory = lazy(() =>
+  import("../../components/dashboard/SMS Service/SMS_History")
+);
+const SMSTemplates = lazy(() =>
+  import("../../components/dashboard/SMS Service/SMSTemplates")
+);
+const SocialChatAndScript = lazy(() =>
+  import(
+    "../../components/dashboard/SocialChatAndScriptComponents/SocialChatAndScript"
+  )
+);
+const SocialMedia = lazy(() =>
+  import("../../pages/OtherPage/social-media-links/page")
+);
+const SolvedSupport = lazy(() =>
+  import("../../components/dashboard/SupportTicket/SolvedSupport")
+);
+const SubcategoryBackup = lazy(() =>
+  import("../../pages/OtherPage/subcategory-backup/page")
+);
+const SubscribedUsersList = lazy(() =>
+  import("../../components/dashboard/ContactRequest/SubscribeUsers")
+);
+const SystemUsers = lazy(() =>
+  import("../../components/dashboard/SystemUsers/SystemUsers")
+);
+const TermsConditionForm = lazy(() =>
+  import("../../components/dashboard/TermAndPolicies/TermsConditionForm")
+);
+const TicketFilesBackup = lazy(() =>
+  import("../../pages/OtherPage/ticket-files-backup/page")
+);
+const UpazilaThanaList = lazy(() =>
+  import("../../components/dashboard/Customers/UpazilaThana")
+);
+const UserImagesBackup = lazy(() =>
+  import("../../pages/OtherPage/user-images-backup/page")
+);
+const BagBanners = lazy(() =>
+  import("../../components/dashboard/SliderAndBanner/BagBanner/BagBanners")
+);
+const AllBanners = lazy(() =>
+  import("../../pages/OtherPage/view-all-banners/page")
+);
+const CategoryList = lazy(() =>
+  import("../../components/dashboard/CategoryComponents/ViewAllCategory")
+);
+const ChildCategoryList = lazy(() =>
+  import(
+    "../../components/dashboard/ChildCategoryComponent/ViewAllChildCategories"
+  )
+);
+const CustomPageList = lazy(() =>
+  import("../../components/dashboard/CustomPages/CustomPageList")
+);
+const ViewAllPromoCode = lazy(() =>
+  import("../../components/dashboard/PromoCode/ViewAllPromoCode")
+);
+const ShoesBanners = lazy(() =>
+  import("../../components/dashboard/SliderAndBanner/ShoesBanner/ShoesBanners")
+);
+const SliderList = lazy(() =>
+  import("../../components/dashboard/SliderAndBanner/Sliders")
+);
+const SubcategoryList = lazy(() =>
+  import(
+    "../../components/dashboard/SubCategoryComponents/ViewAllSubcategories"
+  )
+);
+const ViewAllTestimonials = lazy(() =>
+  import("../../components/dashboard/Testimonials/ViewAllTestimonials")
+);
+const WebsiteThemeColorForm = lazy(() =>
+  import("../../components/dashboard/websiteThemeColor/WebsiteThemeColorForm")
+);
+const BlogCreateForm = lazy(() =>
+  import("../../components/dashboard/Blogs/ViewAllBlogs/BlogCreateForm")
+);
 
 function DashboardChildrenRoutes() {
   // const axiosSecure = useAxiosSecure();
@@ -116,8 +312,8 @@ function DashboardChildrenRoutes() {
 
   // const permissionRoutesArray = fetchPermissions();
 
-  const isPermittedRoute  = (pathName) =>{
-  // const isPermittedRoute = (pathName) => {
+  const isPermittedRoute = (pathName) => {
+    // const isPermittedRoute = (pathName) => {
     const permissionRoutesArray = () => {
       const storedUser = localStorage.getItem("permissionRoutes");
       return storedUser == "undefined" || storedUser == null
@@ -168,7 +364,6 @@ function DashboardChildrenRoutes() {
       ),
     },
     {
-     
       // path: isPermittedRoute("add-new-testimonial"),
       path: "add-new-testimonial",
       element: (
@@ -882,7 +1077,7 @@ function DashboardChildrenRoutes() {
         </Suspense>
       ),
     },
-    
+
     {
       // path: "smscampaign",
       path: "promotional-banner",
@@ -999,7 +1194,7 @@ function DashboardChildrenRoutes() {
         // </PrivateRoute>
         <Suspense fallback={<GlobalLoading />}>
           <PrivateRoute>
-            <SetupConfig />
+            <SetupConfigPage />
           </PrivateRoute>
         </Suspense>
       ),
@@ -1106,6 +1301,21 @@ function DashboardChildrenRoutes() {
         <Suspense fallback={<GlobalLoading />}>
           <PrivateRoute>
             <SolvedSupport />
+          </PrivateRoute>
+        </Suspense>
+      ),
+    },
+    {
+      // path: "senderid",
+      path: "models-of-brand",
+      // path: isPermittedRoute("senderid"),
+      element: (
+        // <PrivateRoute>
+        //   <SmsGroup />
+        // </PrivateRoute>
+        <Suspense fallback={<GlobalLoading />}>
+          <PrivateRoute>
+            <ModelOfBrand />
           </PrivateRoute>
         </Suspense>
       ),
@@ -1425,7 +1635,7 @@ function DashboardChildrenRoutes() {
             <WebsiteThemeColorForm />
           </PrivateRoute>
         </Suspense>
-            // <WebsiteThemeColorForm />
+        // <WebsiteThemeColorForm />
       ),
     },
     {
@@ -1505,6 +1715,36 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "userpermission",
+      path: "courier-steadfast-settings",
+      // path: isPermittedRoute("userpermission"),
+      element: (
+        // <PrivateRoute>
+        //   <SmsGroup />
+        // </PrivateRoute>
+        <Suspense fallback={<GlobalLoading />}>
+          <PrivateRoute>
+            <CourierSteadFastSettings />
+          </PrivateRoute>
+        </Suspense>
+      ),
+    },
+    {
+      // path: "userpermission",
+      path: "courier-pathao-settings",
+      // path: isPermittedRoute("userpermission"),
+      element: (
+        // <PrivateRoute>
+        //   <SmsGroup />
+        // </PrivateRoute>
+        <Suspense fallback={<GlobalLoading />}>
+          <PrivateRoute>
+            <CourierPathaoSettings />
+          </PrivateRoute>
+        </Suspense>
+      ),
+    },
+    {
+      // path: "userpermission",
       path: "create-store",
       // path: isPermittedRoute("userpermission"),
       element: (
@@ -1514,6 +1754,51 @@ function DashboardChildrenRoutes() {
         <Suspense fallback={<GlobalLoading />}>
           <PrivateRoute>
             <StoreCreateForm />
+          </PrivateRoute>
+        </Suspense>
+      ),
+    },
+    {
+      // path: "userpermission",
+      path: "terms-and-condition",
+      // path: isPermittedRoute("userpermission"),
+      element: (
+        // <PrivateRoute>
+        //   <SmsGroup />
+        // </PrivateRoute>
+        <Suspense fallback={<GlobalLoading />}>
+          <PrivateRoute>
+            <TermsCondition />
+          </PrivateRoute>
+        </Suspense>
+      ),
+    },
+    {
+      // path: "userpermission",
+      path: "shipping-policy",
+      // path: isPermittedRoute("userpermission"),
+      element: (
+        // <PrivateRoute>
+        //   <SmsGroup />
+        // </PrivateRoute>
+        <Suspense fallback={<GlobalLoading />}>
+          <PrivateRoute>
+            <ShippingPolicy />
+          </PrivateRoute>
+        </Suspense>
+      ),
+    },
+    {
+      // path: "userpermission",
+      path: "shipping-policy",
+      // path: isPermittedRoute("userpermission"),
+      element: (
+        // <PrivateRoute>
+        //   <SmsGroup />
+        // </PrivateRoute>
+        <Suspense fallback={<GlobalLoading />}>
+          <PrivateRoute>
+            <ShippingPublicPolicy />
           </PrivateRoute>
         </Suspense>
       ),

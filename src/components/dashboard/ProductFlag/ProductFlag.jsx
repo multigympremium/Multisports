@@ -17,6 +17,7 @@ import TableSkeleton from "../../../components library/TableSkeleton";
 import { HiArrowCircleDown, HiArrowCircleUp } from "react-icons/hi";
 import EditButton from "../../../components library/EditButton";
 import DeleteButton from "../../../components library/DeleteButton";
+import Mpagination from "../../../shared/Mpagination";
 
 const ProductFlag = () => {
   // State management
@@ -42,11 +43,9 @@ const ProductFlag = () => {
     isShowModal,
   });
 
-  // Paginated data
-  const paginatedData = useCallback(() => {
-    const offset = currentPage * itemsPerPage;
-    return productFlags.slice(offset, offset + itemsPerPage);
-  }, [currentPage, itemsPerPage, productFlags]);
+  const { paginatedData, paginationControls } = Mpagination({
+    totalData: productFlags,
+  });
 
   // Sorting handler
   const handleSort = (key) => {
@@ -121,17 +120,23 @@ const ProductFlag = () => {
               className="customSaveButton"
               onClick={() => setIsShowModal(true)}
             >
-              <span className="flex items-center gap-1"><IoAddCircle />  Add New Size</span>
+              <span className="flex items-center gap-1">
+                <IoAddCircle /> Add New Size
+              </span>
             </button>
             <button className="customCancelButton">
-              <span className="flex items-center gap-1"><FaRetweet /> Rearrange Brand</span>
+              <span className="flex items-center gap-1">
+                <FaRetweet /> Rearrange Brand
+              </span>
             </button>
           </div>
         </div>
 
         {/* Loading Spinner */}
         {loading ? (
-          <div className="text-center"><TableSkeleton /></div>
+          <div className="text-center">
+            <TableSkeleton />
+          </div>
         ) : (
           <div className="overflow-x-auto relative shadow sm:rounded-lg">
             <table className="w-full text-sm text-center text-gray-500">
@@ -143,7 +148,11 @@ const ProductFlag = () => {
                   >
                     SL{" "}
                     {sortConfig.key === "id" &&
-                      (sortConfig.direction === "asc" ? <HiArrowCircleUp className="text-[#087D6D] " /> : <HiArrowCircleDown className="text-[#E68923]" />)}
+                      (sortConfig.direction === "asc" ? (
+                        <HiArrowCircleUp className="text-[#087D6D] " />
+                      ) : (
+                        <HiArrowCircleDown className="text-[#E68923]" />
+                      ))}
                   </td>
                   <td className="border p-2 text-center cursor-pointer">
                     Flag Icon
@@ -161,34 +170,41 @@ const ProductFlag = () => {
                 </tr>
               </thead>
               <tbody>
-                {paginatedData()?.length > 0 && paginatedData().map((item, index) => (
-                  <tr key={item._id} className="border-b">
-                    <td className="border p-2">
-                      {index + 1 + currentPage * itemsPerPage}
-                    </td>
-                    <td className="border flex justify-center p-2">
-                      <div className=" rounded-full overflow-hidden max-w-20">
-                        <CellImage
-                          width={400}
-                          height={400}
-                          src={item.flagIcon}
-                          alt="Flag Icon"
-                        />
-                      </div>
-                    </td>
-                    <td className="border p-2">{item.flagName}</td>
-                    <td className="border p-2">
-                      <div className="flex justify-center space-x-2">
-                        <EditButton onClick={() => handleEdit(item._id)}></EditButton>
-                        <DeleteButton onClick={() => handleDelete(item._id)}></DeleteButton>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
+                {paginatedData?.length > 0 &&
+                  paginatedData.map((item, index) => (
+                    <tr key={item._id} className="border-b">
+                      <td className="border p-2">
+                        {index + 1 + currentPage * itemsPerPage}
+                      </td>
+                      <td className="border flex justify-center p-2">
+                        <div className=" rounded-full overflow-hidden max-w-20">
+                          <CellImage
+                            width={400}
+                            height={400}
+                            src={item.flagIcon}
+                            alt="Flag Icon"
+                          />
+                        </div>
+                      </td>
+                      <td className="border p-2">{item.flagName}</td>
+                      <td className="border p-2">
+                        <div className="flex justify-center space-x-2">
+                          <EditButton
+                            onClick={() => handleEdit(item._id)}
+                          ></EditButton>
+                          <DeleteButton
+                            onClick={() => handleDelete(item._id)}
+                          ></DeleteButton>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
               </tbody>
             </table>
           </div>
         )}
+
+        {paginationControls}
       </div>
 
       {/* Modal for Adding/Editing Brand */}

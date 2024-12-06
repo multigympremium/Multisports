@@ -242,30 +242,30 @@ function MenuItemsList({ userRole }) {
       title: "Couriers",
       icon: <IoIosHome />, // Replace with the actual SVG icon
       list: [
-         {
+        {
+          title: "Pathao Courier Settings",
+          path: "courier-pathao-settings",
+          isAllowed: isAllowedRoute("courier-pathao-settings"),
+          icon: <IoIosHome />,
+        },
+        {
+          title: "SteadFast Courier Settings",
+          path: "courier-steadfast-settings",
+          isAllowed: isAllowedRoute("courier-steadfast-settings"),
+          icon: <IoIosHome />,
+        },
+        {
           title: "Store",
           path: "view-all-stores",
           isAllowed: isAllowedRoute("view-all-stores"),
           icon: <IoIosHome />, // Replace with the actual SVG icon
-         },
-         {
+        },
+        {
           title: "Cities",
           path: "view-all-cities",
           isAllowed: isAllowedRoute("view-all-stores"),
           icon: <IoIosHome />, // Replace with the actual SVG icon
-         },
-         {
-          title: "Zones",
-          path: "view-all-zones",
-          isAllowed: isAllowedRoute("view-all-stores"),
-          icon: <IoIosHome />, // Replace with the actual SVG icon
-         },
-         {
-          title: "Areas",
-          path: "view-all-areas",
-          isAllowed: isAllowedRoute("view-all-stores"),
-          icon: <IoIosHome />, // Replace with the actual SVG icon
-         },
+        },
         {
           title: "Create Store",
           path: "create-store",

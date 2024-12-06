@@ -16,6 +16,7 @@ import EditButton from "../../../components library/EditButton";
 import { HiArrowCircleDown, HiArrowCircleUp } from "react-icons/hi";
 import toast from "react-hot-toast";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
+import Mpagination from "../../../shared/Mpagination";
 const ProductBrands = () => {
   // State management
   const [Brands, setBrands] = useState([]);
@@ -38,11 +39,9 @@ const ProductBrands = () => {
     isShowModal,
   });
 
-  // Paginated data
-  const paginatedData = useCallback(() => {
-    const offset = currentPage * itemsPerPage;
-    return productBrands.slice(offset, offset + itemsPerPage);
-  }, [currentPage, itemsPerPage, productBrands]);
+  const { paginatedData, paginationControls } = Mpagination({
+    totalData: productBrands,
+  });
 
   // Sorting handler
   const handleSort = (key) => {
@@ -117,17 +116,23 @@ const ProductBrands = () => {
               className="customSaveButton"
               onClick={() => setIsShowModal(true)}
             >
-              <span className="flex items-center gap-1"><IoAddCircle />  Add New Brand</span>
+              <span className="flex items-center gap-1">
+                <IoAddCircle /> Add New Brand
+              </span>
             </button>
             <button className="customCancelButton">
-              <span className="flex items-center gap-1"><FaRetweet /> Rearrange Brand</span>
+              <span className="flex items-center gap-1">
+                <FaRetweet /> Rearrange Brand
+              </span>
             </button>
           </div>
         </div>
 
         {/* Loading Spinner */}
         {loading ? (
-          <div><TableSkeleton></TableSkeleton></div>
+          <div>
+            <TableSkeleton></TableSkeleton>
+          </div>
         ) : (
           <div className="overflow-x-auto relative shadow-md sm:rounded-lg">
             <table className="w-full text-sm text-center text-gray-500">
@@ -139,7 +144,11 @@ const ProductBrands = () => {
                   >
                     SL{" "}
                     {sortConfig.key === "id" &&
-                      (sortConfig.direction === "asc" ? <HiArrowCircleUp className="text-[#087D6D] "/>: <HiArrowCircleDown className="text-[#E68923]" />)}
+                      (sortConfig.direction === "asc" ? (
+                        <HiArrowCircleUp className="text-[#087D6D] " />
+                      ) : (
+                        <HiArrowCircleDown className="text-[#E68923]" />
+                      ))}
                   </td>
                   <td
                     className="border p-2 text-center cursor-pointer"
@@ -179,47 +188,58 @@ const ProductBrands = () => {
                 </tr>
               </thead>
               <tbody>
-                {paginatedData()?.length > 0 && paginatedData().map((brand, index) => (
-                  <tr key={brand.id} className="border-b">
-                    <td className="border p-2">
-                      {index + 1 + currentPage * itemsPerPage}
-                    </td>
-                    <td className="border p-2">{brand.brandName}</td>
-                    <td className="border p-2 flex justify-center">
-                      <div className="rounded-full border border-gray-200 max-w-20 overflow-hidden">
-                        <CellImage
-                          width={400}
-                          height={400}
-                          src={brand.logo}
-                          alt="Logo"
-                        />
-                      </div>
-                    </td>
-                    <td className="border p-2 ">
-                      <div className="flex justify-center">
-                        <CellImage
-                          width={400}
-                          height={400}
-                          src={brand.banner}
-                          alt="Banner"
-                        />
-                      </div>
-                    </td>
-                    <td className="border p-2"><span className="border p-2 rounded-xl border-[#087d6d2d] font-semibold">{brand.category}</span></td>
-                    <td className="border p-2">{brand.subcategory}</td>
-                    <td className="border p-2">{brand.slug}</td>
-                    <td className="border p-2">
-                      <div className="flex justify-center space-x-2">
-                        <EditButton onClick={() => handleEdit(brand._id)}></EditButton>
-                        <DeleteButton onClick={() => handleDelete(brand._id)}></DeleteButton>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
+                {paginatedData?.length > 0 &&
+                  paginatedData.map((brand, index) => (
+                    <tr key={brand.id} className="border-b">
+                      <td className="border p-2">
+                        {index + 1 + currentPage * itemsPerPage}
+                      </td>
+                      <td className="border p-2">{brand.brandName}</td>
+                      <td className="border p-2 flex justify-center">
+                        <div className="rounded-full border border-gray-200 max-w-20 overflow-hidden">
+                          <CellImage
+                            width={400}
+                            height={400}
+                            src={brand.logo}
+                            alt="Logo"
+                          />
+                        </div>
+                      </td>
+                      <td className="border p-2 ">
+                        <div className="flex justify-center">
+                          <CellImage
+                            width={400}
+                            height={400}
+                            src={brand.banner}
+                            alt="Banner"
+                          />
+                        </div>
+                      </td>
+                      <td className="border p-2">
+                        <span className="border p-2 rounded-xl border-[#087d6d2d] font-semibold">
+                          {brand.category}
+                        </span>
+                      </td>
+                      <td className="border p-2">{brand.subcategory}</td>
+                      <td className="border p-2">{brand.slug}</td>
+                      <td className="border p-2">
+                        <div className="flex justify-center space-x-2">
+                          <EditButton
+                            onClick={() => handleEdit(brand._id)}
+                          ></EditButton>
+                          <DeleteButton
+                            onClick={() => handleDelete(brand._id)}
+                          ></DeleteButton>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
               </tbody>
             </table>
           </div>
         )}
+
+        {paginationControls}
       </div>
 
       {/* Modal for Adding/Editing Brand */}
