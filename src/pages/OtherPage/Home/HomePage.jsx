@@ -30,7 +30,6 @@ const HomePage = () => {
   }, []);
   return (
     <>
-      
       <MetaTags metaTitle={content.metaTitle} metaDescription={content.metaDescription} metaOgTitle={content.metaOgTitle} metaOgDescription={content.metaOgDescription} metaOgImage={content.metaOgImage} metaKeywords={content.metaKeywords} />
       <Banner />
       <PopularProducts />
