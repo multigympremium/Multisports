@@ -69,39 +69,37 @@ const Footer = () => {
   console.log(socialLinks, "socialLinks");
 
   return (
-    <div className="poppins border-t mt-12">
-      <footer className="flex flex-col  md:flex-row p-10  w-[96%] mx-auto justify-center md:justify-between items-start md:gap-8 gap-5  text-left">
+    <div className="poppins mt-12">
+      <footer className=" md:p-10 md:py-20 p-5 pr-0  w-[96%] mx-auto gap-x-6 md:gap-x-6 grid grid-cols-2 gap-y-16 md:grid-cols-6  md:gap-20 text-left">
         <aside>
-          <h6 className="footer-title text-lg font-bold mb-4 text-black">
-            CONTACT US
-          </h6>
           <div>
-            <div className="flex gap-2 items-center">
-              <FaPhoneAlt className="text-slate-600" />
-              <h2 className="font-normal flex gap-3 ">
-                <p>{info.phone}</p>
-              </h2>
-            </div>
-            <div className="flex  gap-2 items-start mt-3 text-lg">
-              <div>
-                <ImLocation className="text-base text-slate-600 mt-1" />
+            <h6 className="footer-title text-base md:text-lg font-bold mb-1 md:mb-4 text-black">
+              CONTACT US
+            </h6>
+            <div className="flex flex-col gap-1 md:gap-3 ">
+              <div className="flex text-sm md:text-base gap-2 items-center">
+                {/* <FaPhoneAlt className="text-slate-600" /> */}
+                <h2 className="font-normal flex gap-3 ">
+                  <p>{info.phone}</p>
+                </h2>
               </div>
-              <div className="text-slate-600">
-                <p className="font-semibold text-base">{info.company_name}</p>
-                <p className="max-w-sm">{info.address}</p>
-
+              <div className="flex text-sm md:text-base gap-2 items-center">
+                {/* <FaPhoneAlt className="text-slate-600" /> */}
+                <h2 className="font-normal flex gap-3 ">
+                  <p>{info.address}</p>
+                </h2>
+              </div>
+              <div className="flex text-sm md:text-base gap-2 items-center">
+                {/* <FaPhoneAlt className="text-slate-600" /> */}
+                <h2 className="font-normal flex gap-3 ">
+                  <p>{info.email}</p>
+                </h2>
               </div>
             </div>
-            <p className="text-slate-600 flex  gap-2 items-center mt-3 text-base">
-              <span className="font-bold">
-                <FiMail className="text-base text-slate-600" />
-              </span>{" "}
-              {info.email}
-            </p>
 
 
             {/* icons */}
-            <nav className="flex gap-3 mt-6">
+            <nav className="flex gap-1 md:gap-3 mt-3 md:mt-6">
               <Link
                 to={content.facebook}
                 target="_blank"
@@ -109,7 +107,7 @@ const Footer = () => {
                 rel="noopener noreferrer"
                 aria-label="Facebook"
               >
-                <FaFacebook className="text-lg" />
+                <FaFacebook className="text-sm md:text-lg" />
               </Link>
               <Link
                 to={content.instagram}
@@ -118,7 +116,7 @@ const Footer = () => {
                 rel="noopener noreferrer"
                 aria-label="Instagram"
               >
-                <FaInstagram className="text-lg" />
+                <FaInstagram className="text-sm md:text-lg" />
               </Link>
               <Link
                 to={content.linkedin}
@@ -127,7 +125,7 @@ const Footer = () => {
                 rel="noopener noreferrer"
                 aria-label="LinkedIn"
               >
-                <FaLinkedin className="text-lg" />
+                <FaLinkedin className="text-sm md:text-lg" />
               </Link>
               <Link
                 to={content.pinterest}
@@ -136,7 +134,7 @@ const Footer = () => {
                 rel="noopener noreferrer"
                 aria-label="Pinterest"
               >
-                <FaPinterest className="text-lg" />
+                <FaPinterest className="text-sm md:text-lg" />
               </Link>
               <Link
                 to={content.tiktok}
@@ -145,7 +143,7 @@ const Footer = () => {
                 rel="noopener noreferrer"
                 aria-label="TikTok"
               >
-                <FaTiktok className="text-lg" />
+                <FaTiktok className="text-sm md:text-lg" />
               </Link>
               <Link
                 to={content.youtube}
@@ -154,17 +152,17 @@ const Footer = () => {
                 rel="noopener noreferrer"
                 aria-label="YouTube"
               >
-                <FaYoutube className="text-lg" />
+                <FaYoutube className="text-sm md:text-lg" />
               </Link>
             </nav>
 
           </div>
         </aside>
         <nav>
-          <h6 className="footer-title text-lg font-bold mb-4 text-black">
+          <h6 className="footer-title text-base md:text-lg font-bold md:mb-4 text-black">
             Company
           </h6>
-          <div className="text-slate-600 flex flex-col gap-3 text-base">
+          <div className="text-slate-600 flex flex-col gap-1 md:gap-3 text-sm md:text-base">
             <Link
               className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300"
               to="/aboutus/about"
@@ -198,10 +196,142 @@ const Footer = () => {
           </div>
         </nav>
         <nav>
+          <h6 className="footer-title text-base md:text-lg font-bold md:mb-4 text-black">
+            Categories
+          </h6>
+          <div className="text-slate-600 flex flex-col gap-1 md:gap-3 text-sm md:text-base">
+            <Link
+              className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300"
+              to="/aboutus/about"
+            >
+              Mens wear
+            </Link>
+            <Link
+              className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300"
+              to="/contactus"
+            >
+              Womens wear
+            </Link>
+            <Link
+              className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300"
+              to="#"
+            >
+              kids wear
+            </Link>
+            <Link
+              className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300"
+              to="/blogs"
+            >
+              Sports wear
+            </Link>
+            <Link
+              className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300"
+              to="/notice"
+            >
+              Swim wear
+            </Link>
+          </div>
+        </nav>
+        
+        <nav>
+          <h6 className="footer-title  text-base md:text-lg font-bold mb-1 md:mb-4 text-black">
+            Customer
+          </h6>
+          <div className="text-slate-600 flex flex-col gap-1 md:gap-3 text-sm md:text-base">
+            <Link
+              to={"#"}
+              className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300"
+            >
+              Login
+            </Link>
+            <Link
+              to={"#"}
+              className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300"
+            >
+              Register
+            </Link>
+            <Link
+              to={"#"}
+              className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300"
+            >
+              Marketplace
+            </Link>
+            <Link
+              to={"#"}
+              className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300"
+            >
+              Brands
+            </Link>
+            <Link
+              to={"#"}
+              className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300"
+            >
+              Savings for You
+            </Link>
+          </div>
+        </nav>
+        <nav>
+          <h6 className="footer-title text-base md:text-lg font-bold mb-1 md:mb-4 text-black">
+            Support
+          </h6>
+          <div className="text-slate-600 flex flex-col gap-1 md:gap-3 text-sm md:text-base">
+            <Link
+              to={"#"}
+              className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300"
+            >
+              Help center
+            </Link>
+            <Link
+              to={"#"}
+              className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300"
+            >
+              Direct contact
+            </Link>
+            <Link
+              to={"#"}
+              className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300"
+            >
+              Hotmail
+            </Link>
+            <Link
+              to={"#"}
+              className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300"
+            >
+              Agreement
+            </Link>
+            <Link
+              to={"#"}
+              className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300"
+            >
+              Information
+            </Link>
+          </div>
+        </nav>
+        {/* <nav>
           <h6 className="footer-title text-lg font-bold mb-4 text-black">
+            Social
+          </h6>
+            <div className="flex flex-col gap-3 text-slate-600 text-md">
+                {socialLinks.length > 0 &&
+                  socialLinks.map((item, index) => {
+                    return (
+                      <Link
+                        href={`${item.link}`}
+                        className=" hover:translate-x-3 hover:text-blue-500 transition-all duration-300 flex gap-2 items-center capitalize"
+                        key={index}
+                      >
+                        {item.name}
+                      </Link>
+                    );
+                  })}
+              </div>
+          
+        </nav> */}
+        <nav>
+          <h6 className="footer-title text-base md:text-lg font-bold md:mb-4 text-black">
             Help
           </h6>
-          <div className="text-slate-600 flex flex-col gap-3 text-base">
+          <div className="text-slate-600 flex flex-col gap-1 md:gap-3 text-sm md:text-base">
             <Link
               className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300 cursor-pointer"
               to="#"
@@ -237,71 +367,31 @@ const Footer = () => {
             Admin Login
           </Link> */}
         </nav>
-        <nav>
-          <h6 className="footer-title text-lg font-bold mb-4 text-black">
-            Customer
-          </h6>
-          <div className="flex flex-col gap-3 text-slate-600 text-base">
-            <Link
-              to={"#"}
-              className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300"
-            >
-              Login
-            </Link>
-            <Link
-              to={"#"}
-              className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300"
-            >
-              Register
-            </Link>
-            <Link
-              to={"#"}
-              className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300"
-            >
-              Marketplace
-            </Link>
-            <Link
-              to={"#"}
-              className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300"
-            >
-              Brands
-            </Link>
-            <Link
-              to={"#"}
-              className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300"
-            >
-              Savings for You
-            </Link>
-          </div>
-        </nav>
-        {/* <nav>
-          <h6 className="footer-title text-lg font-bold mb-4 text-black">
-            Social
-          </h6>
-            <div className="flex flex-col gap-3 text-slate-600 text-md">
-                {socialLinks.length > 0 &&
-                  socialLinks.map((item, index) => {
-                    return (
-                      <Link
-                        href={`${item.link}`}
-                        className=" hover:translate-x-3 hover:text-blue-500 transition-all duration-300 flex gap-2 items-center capitalize"
-                        key={index}
-                      >
-                        {item.name}
-                      </Link>
-                    );
-                  })}
-              </div>
-          
-        </nav> */}
       </footer>
 
       <div className="mx-auto w-[95%]">
-        <footer className="footer flex flex-col md:flex-row justify-center items-center py-3  border-t px-5 text-center text-xl">
-          <p className="text-base">
-            {info.footer_copyright}
+        <footer className="footer flex py-4  border-t px-5 text-center text-xl justify-center md:justify-between">
+          <p className="md:text-lg text-sm">
+            Copyright {info.footer_copyright}
           </p>
+          <div className="hidden md:flex items-center gap-6">
+            <div>
+              <img src="https://chawkbazar.vercel.app/assets/images/payment/mastercard.svg" alt="" className="cursor-pointer" />
+            </div>
+            <div>
+              <img src="https://chawkbazar.vercel.app/assets/images/payment/visa.svg" alt="" className="cursor-pointer" />
+            </div>
+            <div>
+              <img src="https://chawkbazar.vercel.app/assets/images/payment/paypal.svg" alt="" className="cursor-pointer" />
+            </div>
+            <div>
+              <img src="https://chawkbazar.vercel.app/assets/images/payment/jcb.svg" alt="" className="cursor-pointer" />
+            </div>
+            <div>
+              <img src="https://chawkbazar.vercel.app/assets/images/payment/skrill.svg" alt="" className="cursor-pointer" />
+            </div>
 
+          </div>
         </footer>
       </div>
     </div>

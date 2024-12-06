@@ -1,12 +1,17 @@
-*Header এর উপরে একটা লাইন 
+Our Website Total Layout 
 
-*মেনু বার ফিট হয়ে যাবে 
+Header -in the side bar use it 3 dot button  -https://chawkbazar.vercel.app/elegant
 
-*মেনু বার colour রেড 
+Mainslider-https://chawkbazar.vercel.app/elegant
+Flash Sale-https://chawkbazar.vercel.app/trendy
+Featured Products-https://chawkbazar.vercel.app/elegant
+Slider 2- https://chawkbazar.vercel.app/classic (Onselling product +Flash Sale are Majha)
+New Arrivals-https://chawkbazar.vercel.app/classic
+Recently View Products -https://chawkbazar.vercel.app/contemporary
+Slider 3-https://chawkbazar.vercel.app/classic (Top Brands+New Arrivals are majha)
+ 
+TESTIMONIAL -https://chawkbazar.vercel.app/trendy
+Top Brands-https://chawkbazar.vercel.app/standard 
+Footer -https://chawkbazar.vercel.app/minimal
 
-
-*ফুটার এর ডিসাইন ও ব্র্যান্ড এর ডিসাইন https://king-prawn-app-qkhg8.ondigitalocean.app/dashboard/product-brands ইমেজ এর মতো 
-
-
-*সব ব্র্যান্ড পেজ 
-king-prawn-app-qkhg8.ondigitalocean.app
+Click on product a modal and collect the modal 

@@ -11,6 +11,7 @@ import TrendyBags from "../../../components/Home/TrendyBags/TrendyBags";
 import useGetSeo from "../../../Hook/GetPublicDataHook/useGetSeo";
 import ReactGA from "react-ga4";
 import FacebookChat from "../../../components/Home/FacebookChat/FacebookChat";
+import Test from "./Test";
 export const metadata = {
   title: "Universal Survey - Home",
   description:
@@ -31,7 +32,6 @@ const HomePage = () => {
     <>
       
       <MetaTags metaTitle={content.metaTitle} metaDescription={content.metaDescription} metaOgTitle={content.metaOgTitle} metaOgDescription={content.metaOgDescription} metaOgImage={content.metaOgImage} metaKeywords={content.metaKeywords} />
-
       <Banner />
       <PopularProducts />
       <NewArrivals />
