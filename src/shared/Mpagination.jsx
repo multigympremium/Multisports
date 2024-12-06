@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { MdNavigateBefore, MdNavigateNext } from "react-icons/md";
 
-
-
 const Mpagination = ({ totalData }) => {
   const [itemsPerPage, setItemsPerPage] = useState(6);
   const [currentPage, setCurrentPage] = useState(0);

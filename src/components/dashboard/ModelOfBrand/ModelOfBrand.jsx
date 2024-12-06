@@ -2,15 +2,14 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
-import Modal from "../../../shared/Modal/Modal";
-import CellImage from "../../../shared/ImageComponents/CellImage";
 import Swal from "sweetalert2";
-import EditModelBrandForm from "./Forms/EditModelBrandForm";
-import CreateModelBrandForm from "./Forms/CreateModelBrandForm";
+import useAxiosSecure from "../../../Hook/useAxiosSecure";
 import useGetAllModelOfBrands from "../../../Hook/GetDataHook/useGetAllModelOfBrands";
 import toast from "react-hot-toast";
-import useAxiosSecure from "../../../Hook/useAxiosSecure";
-
+import Modal from "../../../shared/Modal/Modal";
+import CreateModelBrandForm from "./Forms/CreateModelBrandForm";
+import EditModelBrandForm from "./Forms/EditModelBrandForm";
+import Mpagination from "../../../shared/Mpagination";
 
 const ModelOfBrand = () => {
   // State management
@@ -36,11 +35,9 @@ const ModelOfBrand = () => {
     isShowModal,
   });
 
-  // Paginated data
-  const paginatedData = useCallback(() => {
-    const offset = currentPage * itemsPerPage;
-    return modelOfBrand.slice(offset, offset + itemsPerPage);
-  }, [currentPage, itemsPerPage, modelOfBrand]);
+  const { paginatedData, paginationControls } = Mpagination({
+    totalData: modelOfBrand,
+  });
 
   // Sorting handler
   const handleSort = (key) => {
@@ -155,25 +152,17 @@ const ModelOfBrand = () => {
                     {sortConfig.key === "code" &&
                       (sortConfig.direction === "asc" ? "🔼" : "🔽")}
                   </th>
-                  <th
-                    className="border p-2 text-left cursor-pointer"
-                    onClick={() => handleSort("slug")}
-                  >
-                    Slug
-                    {sortConfig.key === "slug" &&
-                      (sortConfig.direction === "asc" ? "🔼" : "🔽")}
-                  </th>
+
                   <th className="border p-2 text-left">Action</th>
                 </tr>
               </thead>
               <tbody>
-                {paginatedData()?.length > 0 &&  paginatedData().map((brand, index) => (
+                {paginatedData.map((brand, index) => (
                   <tr key={brand._id} className="border-b">
                     <td className="border p-2">
                       {index + 1 + currentPage * itemsPerPage}
                     </td>
                     <td className="border p-2">{brand.brand}</td>
-                    <td className="border p-2">{brand.slug}</td>
                     <td className="border p-2">{brand.code}</td>
                     <td className="border p-2">
                       <div className="flex space-x-2">
@@ -197,6 +186,8 @@ const ModelOfBrand = () => {
             </table>
           </div>
         )}
+
+        {paginationControls}
       </div>
 
       {/* Modal for Adding/Editing Brand */}

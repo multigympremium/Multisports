@@ -1,10 +1,8 @@
-"use client";
-import SwitchInput from "../../../shared/SwitchInput";
-
-import useGetAllProductBrands from "../../../Hook/GetDataHook/useGetAllProductBrands";
 import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
-import useAxiosSecure from "../../../Hook/useAxiosSecure";
+import useAxiosSecure from "../../../../Hook/useAxiosSecure";
+import useGetAllProductBrands from "../../../../Hook/GetDataHook/useGetAllProductBrands";
+import SwitchInput from "../../../../shared/SwitchInput";
 
 export default function EditModelBrandForm({
   targetId,
@@ -45,19 +43,12 @@ export default function EditModelBrandForm({
     }
   }, [targetId, axiosSecure, isShowModal]);
 
-  const handleSlugInput = (input) => {
-    const sanitizedInput = input.replace(/[^a-zA-Z0-9]/g, "_");
-    setSlug(sanitizedInput);
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const formData = new FormData();
     formData.append("brand", brand);
     formData.append("modelName", modelName);
-    formData.append("slug", slug);
-    formData.append("isActive", isActive);
     formData.append("code", code);
 
     try {
@@ -135,26 +126,6 @@ export default function EditModelBrandForm({
               required
             />
           </div>
-
-          {/* Slug */}
-          <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">Slug *</label>
-            <input
-              type="text"
-              value={slug}
-              onChange={(e) => handleSlugInput(e.target.value)}
-              className="w-full p-2 border rounded-md"
-              placeholder="Slug"
-              required
-            />
-          </div>
-
-          {/* Is Active */}
-          <SwitchInput
-            label="Is Active"
-            checked={isActive}
-            setChecked={setIsActive}
-          />
 
           {/* Code */}
           <div className="mb-4">

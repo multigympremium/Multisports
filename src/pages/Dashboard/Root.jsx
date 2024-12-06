@@ -13,33 +13,49 @@ const Root_Dashboard = () => {
 
   const content = useGetSeo({});
 
-  const axiosPublic = useAxiosPublic()
+  const axiosPublic = useAxiosPublic();
 
-  
   useEffect(() => {
     // Simulate fetching theme from API
     const fetchTheme = async () => {
-      const res = await axiosPublic.get("/website-theme-color")
+      const res = await axiosPublic.get("/website-theme-color");
 
       const theme = res?.data?.data[0];
 
       const root = document.documentElement;
-      root.style.setProperty("--primary-color", theme.primaryColor || "#3490dc");
-root.style.setProperty("--secondary-color", theme.secondaryColor || "#ffed4a");
-root.style.setProperty("--tertiary-color", theme.tertiaryColor || "#e3342f");
-root.style.setProperty("--title-color", theme.titleColor || "#1a202c");
-root.style.setProperty("--paragraph-color", theme.paragraphColor || "#2d3748");
-root.style.setProperty("--border-color", theme.borderColor || "#cbd5e0");
-      
+      root.style.setProperty(
+        "--primary-color",
+        theme.primaryColor || "#3490dc"
+      );
+      root.style.setProperty(
+        "--secondary-color",
+        theme.secondaryColor || "#ffed4a"
+      );
+      root.style.setProperty(
+        "--tertiary-color",
+        theme.tertiaryColor || "#e3342f"
+      );
+      root.style.setProperty("--title-color", theme.titleColor || "#1a202c");
+      root.style.setProperty(
+        "--paragraph-color",
+        theme.paragraphColor || "#2d3748"
+      );
+      root.style.setProperty("--border-color", theme.borderColor || "#cbd5e0");
     };
 
     fetchTheme();
   }, [axiosPublic]);
 
-  
   return (
     <div className="grid grid-cols-[auto_1fr]">
-            <MetaTags metaTitle={content.metaTitle} metaDescription={content.metaDescription} metaOgTitle={content.metaOgTitle} metaOgDescription={content.metaOgDescription} metaOgImage={content.metaOgImage} metaKeywords={content.metaKeywords} />
+      <MetaTags
+        metaTitle={content?.metaTitle}
+        metaDescription={content?.metaDescription}
+        metaOgTitle={content?.metaOgTitle}
+        metaOgDescription={content?.metaOgDescription}
+        metaOgImage={content?.metaOgImage}
+        metaKeywords={content?.metaKeywords}
+      />
 
       <Sidebar isCollapsed={isCollapsed} />
       {/* <Header/> */}

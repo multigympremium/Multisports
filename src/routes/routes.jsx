@@ -15,7 +15,7 @@ import ProductPage from "../components/Home/Products/ProductPage";
 
 // Continue for other components...
 
-const Root_Dashboard = lazy(() => import("../pages/Dashboard/Root"))
+const Root_Dashboard = lazy(() => import("../pages/Dashboard/Root"));
 import SignUpPage from "../pages/authentication/signup/Signup";
 import Login from "../pages/authentication/login/Login";
 import ForgotPassword from "../pages/authentication/forgot-password/ForgotPassword";
@@ -24,6 +24,10 @@ import SendOTP from "../pages/authentication/send-otp/SendOTP";
 
 import GlobalLoading from "../components library/GlobalLoading";
 import AllBrands from "../components/Home/Brands/AllBrands";
+import TermsCondition from "../components/Home/(policy)/terms-and-condition/page";
+import ShippingPublicPolicy from "../components/Home/(policy)/shipping-policy/page";
+import ReturnPolicy from "../components/Home/(policy)/return-policy/page";
+import PrivacyPolicy from "../components/Home/(policy)/privacy-policy/page";
 
 const AllRoutes = () => {
   // const [permissionData, setPermissionData] = useState([]);
@@ -136,10 +140,7 @@ const AllRoutes = () => {
           // path: "addworkout",
           path: "products/:id",
           // path: isPermittedRoute("addworkout"),
-          element: (
-
-            <ProductPage />
-          ),
+          element: <ProductPage />,
         },
         {
           // path: "addworkout",
@@ -150,7 +151,6 @@ const AllRoutes = () => {
             //   <Addworkout />
             // </PrivateRoute>
             <Success />
-
           ),
         },
         {
@@ -162,15 +162,72 @@ const AllRoutes = () => {
             //   <Addworkout />
             // </PrivateRoute>
             <Cancel />
-
           ),
         },
         {
-          path : "all-brands",
-          element : (
-            <AllBrands />
-          )
-        }
+          path: "all-brands",
+          element: <AllBrands />,
+        },
+        {
+          // path: "userpermission",
+          path: "terms-and-condition",
+          // path: isPermittedRoute("userpermission"),
+          element: (
+            // <PrivateRoute>
+            //   <SmsGroup />
+            // </PrivateRoute>
+            <Suspense fallback={<GlobalLoading />}>
+              <PrivateRoute>
+                <TermsCondition />
+              </PrivateRoute>
+            </Suspense>
+          ),
+        },
+        {
+          // path: "userpermission",
+          path: "shipping-policy",
+          // path: isPermittedRoute("userpermission"),
+          element: (
+            // <PrivateRoute>
+            //   <SmsGroup />
+            // </PrivateRoute>
+            <Suspense fallback={<GlobalLoading />}>
+              <PrivateRoute>
+                <ShippingPublicPolicy />
+              </PrivateRoute>
+            </Suspense>
+          ),
+        },
+        {
+          // path: "userpermission",
+          path: "return-policy",
+          // path: isPermittedRoute("userpermission"),
+          element: (
+            // <PrivateRoute>
+            //   <SmsGroup />
+            // </PrivateRoute>
+            <Suspense fallback={<GlobalLoading />}>
+              <PrivateRoute>
+                <ReturnPolicy />
+              </PrivateRoute>
+            </Suspense>
+          ),
+        },
+        {
+          // path: "userpermission",
+          path: "privacy-policy",
+          // path: isPermittedRoute("userpermission"),
+          element: (
+            // <PrivateRoute>
+            //   <SmsGroup />
+            // </PrivateRoute>
+            <Suspense fallback={<GlobalLoading />}>
+              <PrivateRoute>
+                <PrivacyPolicy />
+              </PrivateRoute>
+            </Suspense>
+          ),
+        },
       ],
     },
     {
@@ -185,13 +242,9 @@ const AllRoutes = () => {
         <Suspense fallback={<GlobalLoading />}>
           <PrivateRoute>
             <Root_Dashboard />
-
           </PrivateRoute>
-
         </Suspense>
-
       ),
-
 
       // errorElement: <Error404></Error404>,
       children: dashboardChildrenRoutes,
