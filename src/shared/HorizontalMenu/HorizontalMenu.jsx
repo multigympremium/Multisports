@@ -54,8 +54,8 @@ function HorizontalMenu() {
   console.log(activeCategory, "activeCategory");
   return (
     <div className="relative">
-      <header className="w-full bg-red-500 text-white ">
-        <div className="container flex px-2  gap-4 ">
+      <header className="w-full bg-red-500 flex justify-center text-white ">
+        <div className="container flex px-2 gap-4 ">
           <Swiper
             slidesPerView={"auto"}
             spaceBetween={10}
@@ -66,7 +66,7 @@ function HorizontalMenu() {
             {categories?.length > 0 && categories.map((category, index) => (
               <SwiperSlide key={index}>
                 <button
-                  className={`py-2 md:py-3 px-2 text-xs md:text-sm hover:bg-white ${
+                  className={`py-2 md:py-3 px-2 text-xs md:text-base hover:bg-white ${
                     isHover && category?.slug === activeCategory
                       ? "bg-white text-black"
                       : "text-white"
