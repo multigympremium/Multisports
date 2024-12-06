@@ -2,6 +2,9 @@ import { lazy, Suspense } from "react";
 import GlobalLoading from "../../components library/GlobalLoading";
 import TermsCondition from "../../components/Home/(policy)/terms-and-condition/page";
 import ShippingPublicPolicy from "../../components/Home/(policy)/shipping-policy/page";
+const CompletedOrders = lazy(() =>
+  import("../../components/dashboard/ManageOrders/CompletedOrders")
+);
 const CourierSteadFastSettings = lazy(() =>
   import("../../components/dashboard/CourierSettings/CourierSteadFastSettings")
 );
@@ -424,6 +427,22 @@ function DashboardChildrenRoutes() {
         <Suspense fallback={<GlobalLoading />}>
           <PrivateRoute>
             <ApprovedOrders />
+          </PrivateRoute>
+        </Suspense>
+      ),
+    },
+    {
+      // path: "workout-routine",
+      path: "completed-orders",
+      // path: isPermittedRoute("workout-routine"),
+      element: (
+        // <PrivateRoute>
+        //   <Visitor />
+        // </PrivateRoute>
+        // <Workout_routine />
+        <Suspense fallback={<GlobalLoading />}>
+          <PrivateRoute>
+            <CompletedOrders />
           </PrivateRoute>
         </Suspense>
       ),

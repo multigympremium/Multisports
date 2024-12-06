@@ -225,9 +225,15 @@ function MenuItemsList({ userRole }) {
           icon: <IoIosHome />,
         },
         {
+          title: "Completed Orders",
+          path: "completed-orders",
+          isAllowed: isAllowedRoute("completed-orders"),
+          icon: <IoIosHome />,
+        },
+        {
           title: "Cancelled Orders",
           path: "cancelled-orders",
-          isAllowed: isAllowedRoute("approved-orders"),
+          isAllowed: isAllowedRoute("cancelled-orders"),
           icon: <IoIosHome />,
         },
         {

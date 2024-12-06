@@ -38,7 +38,7 @@ const initialData = [
   // Add more pending order data if needed
 ];
 
-export default function ApprovedOrders() {
+export default function CompletedOrders() {
   // const [orders, setOrders] = useState(initialData);
   const axiosSecure = useAxiosSecure();
   const [searchTerm, setSearchTerm] = useState("");
@@ -50,7 +50,7 @@ export default function ApprovedOrders() {
   const [isDeleted, setIsDeleted] = useState(false);
 
   const orders = useGetAllOrders({
-    query: `status=Accepted`,
+    query: `status=Completed`,
     isDeleted,
     isShowModal: isShowDetail,
   });
@@ -118,7 +118,7 @@ export default function ApprovedOrders() {
   return (
     <div className="p-6 pt-0">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-3xl font-semibold mb-9">Accepted Orders</h1>
+        <h1 className="text-3xl font-semibold mb-9">Completed Orders</h1>
 
         {/* Search Input */}
         <div className="bg-white border rounded-full px-3 mb-6 md:py-2 py-1 md:gap-2 gap-1 flex-row-reverse justify-between flex">
@@ -141,6 +141,7 @@ export default function ApprovedOrders() {
               <td className="p-2 border">Name</td>
               <td className="p-2 border">Email</td>
               <td className="p-2 border">Phone</td>
+              <td className="p-2 border">Status</td>
               <td className="p-2 border">Payment</td>
               <td className="p-2 border">Total</td>
               <td className="p-2 border">Action</td>
@@ -164,7 +165,11 @@ export default function ApprovedOrders() {
                   <td className="p-2 border">
                     {order?.phone}
                   </td>
-                 
+                  <td className="p-2 border ">
+                    <span className="bg-red-500 text-white  px-3 rounded-lg  py-1">
+                      {order?.status}
+                    </span>
+                  </td>
                   <td className="p-2 border">{order?.payment_method}</td>
                   <td className="p-2 border">৳ {order?.total}</td>
                   <td className="p-2 border">

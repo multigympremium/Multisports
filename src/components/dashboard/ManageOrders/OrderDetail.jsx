@@ -102,7 +102,7 @@ export default function OrderDetail({ id, isShow, setIsShow }) {
             >
               <option value="Pending">Pending</option>
               <option value="Accepted">Accepted</option>
-              <option value="Delivered">Delivered</option>
+              <option value="Completed">Completed</option>
               <option value="Cancelled">Cancelled</option>
             </select>
           </p>
