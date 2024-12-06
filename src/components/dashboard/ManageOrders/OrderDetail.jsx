@@ -66,6 +66,26 @@ export default function OrderDetail({ id, isShow, setIsShow }) {
           <p className="mb-2">
             <strong>Total:</strong> {order?.total} BDT
           </p>
+          {
+            order.courierMethod && 
+          <p className="mb-2">
+            <strong>Courier Method:</strong> {order?.courierMethod}
+          </p>
+          }
+
+          {
+            order.invoice && 
+          <p className="mb-2">
+            <strong>Invoice Id:</strong> {order?.invoice}
+          </p>
+          }
+
+          {
+            order.courier_status && 
+          <p className="mb-2">
+            <strong>Courier Status:</strong> {order?.courier_status}
+          </p>
+          }
           <p className="mb-2">
             <strong>Payment Method:</strong> {order?.payment_method}
           </p>
@@ -81,6 +101,7 @@ export default function OrderDetail({ id, isShow, setIsShow }) {
               className=" select ml-4 border-gray-200 outline-none select-sm"
             >
               <option value="Pending">Pending</option>
+              <option value="Accepted">Accepted</option>
               <option value="Delivered">Delivered</option>
               <option value="Cancelled">Cancelled</option>
             </select>
@@ -93,14 +114,32 @@ export default function OrderDetail({ id, isShow, setIsShow }) {
             Shipping Address
           </h3>
           <p className="mb-2">
-            <strong>Name:</strong> {order?.recipientName}
+            <strong>Name:</strong> {order?.name}
           </p>
           <p className="mb-2">
-            <strong>Phone:</strong> {order?.contactNumber}
+            <strong>Phone:</strong> {order?.phone}
           </p>
           <p className="mb-2">
             <strong>Address:</strong> {order?.address}, {order?.area},{" "}
             {order?.district}, {order?.postCode}
+          </p>
+          <p className="mb-2">
+            <strong>City Name:</strong> {order?.city_name}
+          </p>
+          <p className="mb-2">
+            <strong>City Id:</strong> {order?.city_id}
+          </p>
+          <p className="mb-2">
+            <strong>Zone Name:</strong> {order?.zone_name}
+          </p>
+          <p className="mb-2">
+            <strong>Zone Id:</strong> {order?.zone_id}
+          </p>
+          <p className="mb-2">
+            <strong>Area Name:</strong> {order?.area_name}
+          </p>
+          <p className="mb-2">
+            <strong>Area Id:</strong> {order?.area_id}
           </p>
         </div>
       </div>

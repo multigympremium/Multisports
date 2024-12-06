@@ -50,7 +50,7 @@ export default function ApprovedOrders() {
   const [isDeleted, setIsDeleted] = useState(false);
 
   const orders = useGetAllOrders({
-    query: `status=Delivered`,
+    query: `status=Accepted`,
     isDeleted,
     isShowModal: isShowDetail,
   });
