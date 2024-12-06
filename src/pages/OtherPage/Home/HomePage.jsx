@@ -23,24 +23,21 @@
     useEffect(() => {
       ReactGA.send({ hitType: "pageview", page: window.location.pathname , title: "HomePage.jsx" });
 
-      ReactGA.event({
-        category: "content Visiting",
-        action: "Home ",
-      });
-    }, []);
-    return (
-      <>
-        
-        <MetaTags metaTitle={content.metaTitle} metaDescription={content.metaDescription} metaOgTitle={content.metaOgTitle} metaOgDescription={content.metaOgDescription} metaOgImage={content.metaOgImage} metaKeywords={content.metaKeywords} />
-        <Banner />
-        <PopularProducts />
-        <NewArrivals />
-        <ExclusiveCollection />
-        <Footwear />
-        <TrendyBags />
-
+    ReactGA.event({
+      category: "content Visiting",
+      action: "Home ",
+    });
+  }, []);
+  return (
+    <>
+      <MetaTags metaTitle={content.metaTitle} metaDescription={content.metaDescription} metaOgTitle={content.metaOgTitle} metaOgDescription={content.metaOgDescription} metaOgImage={content.metaOgImage} metaKeywords={content.metaKeywords} />
+      <Banner />
+      <PopularProducts />
+      <NewArrivals />
+      <ExclusiveCollection />
+      <Footwear />
+      <TrendyBags />
         <Brands />
-
         <FacebookChat />
       </>
     );
