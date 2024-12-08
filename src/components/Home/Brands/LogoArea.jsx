@@ -46,7 +46,7 @@ function LogoArea() {
               <SwiperSlide key={index}>
                 <Link
                   to={`#`}
-                  className="flex justify-center items-center h-[100px] md:h-[200px]"
+                  className="flex justify-center hover:scale-125 transition-all duration-300 items-center h-[100px] md:h-[200px]"
                 >
                   <img
                     width={400}

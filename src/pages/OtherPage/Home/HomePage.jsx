@@ -1,4 +1,3 @@
-
   import { useEffect } from "react";
   import Banner from "../../../components/Home/Banner/Banner";
   import Brands from "../../../components/Home/Brands/Brands";
@@ -11,7 +10,7 @@
   import useGetSeo from "../../../Hook/GetPublicDataHook/useGetSeo";
   import ReactGA from "react-ga4";
   import FacebookChat from "../../../components/Home/FacebookChat/FacebookChat";
-  import Test from "./Test";
+import Featured from "../../../components/Home/Featured/Featured";
   export const metadata = {
     title: "Universal Survey - Home",
     description:
@@ -31,7 +30,8 @@
   return (
     <>
       <MetaTags metaTitle={content.metaTitle} metaDescription={content.metaDescription} metaOgTitle={content.metaOgTitle} metaOgDescription={content.metaOgDescription} metaOgImage={content.metaOgImage} metaKeywords={content.metaKeywords} />
-      <Banner />
+      <Banner /> 
+      <Featured />
       <PopularProducts />
       <NewArrivals />
       <ExclusiveCollection />
