@@ -11,6 +11,7 @@
   import ReactGA from "react-ga4";
   import FacebookChat from "../../../components/Home/FacebookChat/FacebookChat";
 import Featured from "../../../components/Home/Featured/Featured";
+import FlashSale from "../../../components/Home/FlashSale/FlashSale";
   export const metadata = {
     title: "Universal Survey - Home",
     description:
@@ -32,6 +33,7 @@ import Featured from "../../../components/Home/Featured/Featured";
       <MetaTags metaTitle={content.metaTitle} metaDescription={content.metaDescription} metaOgTitle={content.metaOgTitle} metaOgDescription={content.metaOgDescription} metaOgImage={content.metaOgImage} metaKeywords={content.metaKeywords} />
       <Banner /> 
       <Featured />
+      <FlashSale/>
       <PopularProducts />
       <NewArrivals />
       <ExclusiveCollection />
