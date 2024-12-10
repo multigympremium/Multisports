@@ -1,5 +1,3 @@
-import React from "react";
-
 const products = [
     {
         id: 1,
@@ -35,121 +33,84 @@ const products = [
         price: "$16.38",
         imageUrl: "https://chawkbazar.vercel.app/_next/image?url=%2Fassets%2Fimages%2Fproducts%2Ffeatured%2F3.png&w=640&q=75",
     },
+    {
+        id: 5,
+        name: "Nike Leader VT",
+        description: "Footwear refers to garments worn on the feet, which originally serves to purpose of protection against adversities of the environment.",
+        price: "$16.38",
+        imageUrl: "https://chawkbazar.vercel.app/_next/image?url=%2Fassets%2Fimages%2Fproducts%2Ffeatured%2F5.png&w=384&q=75",
+    },
 ];
 
 const Featured = () => {
     return (
-        <div className="p-6 w-[90%] mx-auto">
+        <div className="md:p-6 py-6 px-5 md:w-[90%] mx-auto">
             <h2 className="text-2xl font-bold mb-4">Featured Products</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* First Product: Takes the first grid column */}
+                {/* First Product: Larger, occupies the full height of the left column */}
                 <div className="bg-gray-50 p-4 flex flex-col justify-between rounded-lg shadow-sm relative">
+                    <div></div>
                     {products[0].discount && (
-                        <span className="absolute top-7 left-7 bg-black text-white text-sm py-1 px-3 rounded">
+                        <span className="absolute left-3 top-3  md:top-4 md:left-4 bg-gray-900 text-white text-[10px] md:text-sm py-1 px-2 md:px-3 rounded-md">
                             {products[0].discount}
                         </span>
                     )}
                     <img
                         src={products[0].imageUrl}
                         alt={products[0].name}
-                        className="w-full hover:scale-110 transition-all duration-300 object-contain mb-4"
+                        className="w-full cursor-pointer h-auto md:max-h-[600px] object-cover hover:scale-105 transition-transform duration-300 mb-4"
                     />
-                    <div className="flex justify-between items-center">
-                        <div>
-                            <h3 className="font-semibold mb-2">{products[0].name}</h3>
-                            <p className="text-gray-500 text-sm mb-2 line-clamp-2">
+                    <div className="flex flex-col md:flex-row justify-between items-start md:items-end">
+                        <div className="flex flex-col justify-end">
+                            <h3 className="font-semibold md:text-base text-sm mb-2 hidden lg:block">{products[0].name}</h3>
+                            <h3 className="font-semibold md:text-base text-sm md:mb-2 block md:hidden">{products[0].name.length > 12 ? `${products[0].name.slice(0, 12)}...` : products[0].name}                            </h3>
+                            <p className="text-gray-500 md:text-sm text-xs line-clamp-2">
                                 {products[0].description.slice(0, 40)}...
                             </p>
+                            
                         </div>
-                        <div className="flex items-center flex-col gap-2">
-                            <span className="text-gray-400 line-through">{products[0].originalPrice}</span>
-                            <span className="text-xl font-bold">{products[0].price}</span>
+                        <div className="flex items-end justify-between flex-row-reverse md:flex-col mt-2 md:mt-0 gap-2 md:gap-1">
+                            <span className="text-gray-400 text-sm md:text-base   line-through">{products[0].originalPrice}</span>
+                            <span className="md:text-lg text-sm font-semibold md:font-bold">{products[0].price}</span>
                         </div>
                     </div>
                 </div>
 
-                {/* Second Grid Column: Contains the other three products */}
-                <div className="grid grid-cols-2 grid-rows-2 gap-6">
-                    <div className="flex flex-col gap-6">
-                        {/* Second Product */}
-                        <div className="bg-slate-50 p-4 rounded-lg shadow-sm relative">
-                            {products[1].discount && (
-                                <span className="absolute top-7 left-7 bg-black text-white text-sm py-1 px-3 rounded">
-                                    {products[1].discount}
+                {/* Other Products: Arranged in a two-row grid */}
+                <div className="grid grid-cols-2 gap-3  md:gap-6">
+                    {products.slice(1, 5).map((product, index) => (
+                        <div key={index} className="bg-gray-50 p-4 flex flex-col justify-between rounded-lg shadow-sm relative">
+                            <div></div>
+                            {product.discount && (
+                                <span className="absolute left-3 top-3  md:top-4 md:left-4 bg-gray-900 text-white text-[10px] md:text-sm py-1 px-2 md:px-3 rounded-md">
+                                    {product.discount}
                                 </span>
                             )}
                             <img
-                                src={products[1].imageUrl}
-                                alt={products[1].name}
-                                className="w-full hover:scale-110 transition-all duration-300 object-contain mb-4"
+                                src={product.imageUrl}
+                                alt={product.name}
+                                className="w-full cursor-pointer md:h-48 object-cover hover:scale-105 transition-transform duration-300 mb-4"
                             />
-                            <div className="flex justify-between items-end">
-                                <div>
-                                    <h3 className="font-semibold mb-2">{products[1].name}</h3>
-                                    <p className="text-gray-500 text-sm mb-2 line-clamp-2">
-                                        {products[1].description.slice(0, 40)}...
+                            <div className="flex flex-col md:flex-row justify-between items-start md:items-end">
+                                <div className="flex flex-col justify-end">
+                                    <h3 className="font-semibold md:text-base text-sm mb-2 hidden md:block">{product.name}</h3>
+                                    <h3 className="font-semibold md:text-base text-sm md:mb-2 block md:hidden">{product.name.slice(0, 12)}..</h3>
+                                    <p className="text-gray-500 md:text-sm text-xs line-clamp-2 block md:hidden">
+                                        {product.description.slice(0, 15)}...
+                                    </p>
+                                    <p className="text-gray-500 md:text-sm text-xs line-clamp-2 hidden md:block">
+                                        {product.description.slice(0, 40)}...
                                     </p>
                                 </div>
-                                <div className="flex items-center flex-col gap-2">
-                                    <span className="text-gray-400 line-through">{products[1].originalPrice}</span>
-                                    <span className="text-lg font-bold">{products[1].price}</span>
+                                <div className="flex items-end justify-between flex-row-reverse md:flex-col mt-2 md:mt-0 gap-2 md:gap-1">
+                                    <span className="text-gray-400 text-sm md:text-base   line-through">{product.originalPrice}</span>
+                                    <span className="md:text-lg text-sm font-semibold md:font-bold">{product.price}</span>
                                 </div>
                             </div>
                         </div>
-
-                        {/* Third Product */}
-                        <div className="bg-slate-50 p-4 rounded-lg shadow-sm relative">
-                            {products[2].discount && (
-                                <span className="absolute top-7 left-7 bg-black text-white text-sm py-1 px-3 rounded">
-                                    {products[2].discount}
-                                </span>
-                            )}
-                            <img
-                                src={products[2].imageUrl}
-                                alt={products[2].name}
-                                className="w-full  hover:scale-110 transition-all duration-300 object-contain mb-4"
-                            />
-                            <div className="flex justify-between items-end">
-                                <div>
-                                    <h3 className="font-semibold mb-2">{products[2].name}</h3>
-                                    <p className="text-gray-500 text-sm mb-2 line-clamp-2">
-                                        {products[2].description.slice(0, 40)}...
-                                    </p>
-                                </div>
-                                <div className="flex items-center flex-col gap-2">
-                                    <span className="text-gray-400 line-through">{products[2].originalPrice}</span>
-                                    <span className="text-lg font-bold">{products[2].price}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Fourth Product: Spans the full width of the second grid */}
-                    <div className=" bg-slate-50 p-4 flex flex-col justify-between rounded-lg shadow-sm relative">
-                        <div>
-
-                        </div>
-                        <img
-                            src={products[3].imageUrl}
-                            alt={products[3].name}
-                            className="w-full  hover:scale-110 transition-all duration-300 object-contain mb-4"
-                        />
-
-                        <div className="flex justify-between items-end">
-                            <div>
-                                <h3 className="font-semibold mb-2">{products[3].name}</h3>
-                                <p className="text-gray-500 text-sm mb-2 line-clamp-2">
-                                    {products[3].description.slice(0, 40)}...
-                                </p>
-                            </div>
-                            <div className="flex items-center gap-2">
-                                <span className="text-lg font-bold">{products[3].price}</span>
-                            </div>
-                        </div>
-                    </div>
+                    ))}
                 </div>
             </div>
-
         </div>
     );
 };
