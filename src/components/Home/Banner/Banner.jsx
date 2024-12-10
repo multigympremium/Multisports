@@ -80,7 +80,7 @@ const CustomCarousel = () => {
                 <img
                   src={slide.image}
                   alt="Slide"
-                  className="h-auto max-w-[50px] md:max-w-[300px] rounded-lg shadow-md"
+                  className="h-auto  max-w-[50px] md:max-w-[300px] rounded-lg shadow-md"
                 />
               </div>
             </div>
@@ -104,7 +104,7 @@ const CustomCarousel = () => {
       </button>
 
       {/* Custom 3 Dot Pagination */}
-      <div className="absolute bottom-4 md:bottom-10 left-12 md:left-52 z-50 -translate-x-1/2 flex gap-2 md:gap-4">
+      <div className="absolute bottom-4 md:bottom-10 left-12 md:left-52 z-10 -translate-x-1/2 flex gap-2 md:gap-4">
         {slides.map((_, index) => (
           <div
             key={index}
