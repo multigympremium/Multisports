@@ -12,6 +12,7 @@ import useGetAllBagBanners from "../../../../Hook/GetDataHook/useGetAllBagBanner
 import useAxiosSecure from "../../../../Hook/useAxiosSecure";
 import DeleteButton from "../../../../components library/DeleteButton";
 import EditButton from "../../../../components library/EditButton";
+import Mpagination from "../../../../shared/Mpagination";
 
 const BagBanners = () => {
   const [showModal, setShowModal] = useState(false);
@@ -25,6 +26,10 @@ const BagBanners = () => {
     isShowModal: showModal,
     isDeleted,
     isEdited: isEdit,
+  });
+
+  const { paginatedData, paginationControls } = Mpagination({
+    totalData: banners,
   });
 
   // Simulate fetching data
@@ -52,7 +57,6 @@ const BagBanners = () => {
             const res = await axiosSecure.delete(`/bag-banners/${id}`);
             console.log(res, "res");
             if (res.status === 200 || res.status === 201) {
-
               setIsDeleted((prev) => !prev);
 
               toast.success("Banner deleted successfully!");
@@ -108,14 +112,14 @@ const BagBanners = () => {
             </tr>
           </thead>
           <tbody>
-            {banners.length === 0 ? (
+            {paginatedData.length === 0 ? (
               <tr>
                 <td colSpan="9" className="text-center py-4">
                   No data available in table
                 </td>
               </tr>
             ) : (
-              banners.map((slider, index) => (
+              paginatedData.map((slider, index) => (
                 <tr key={index} className="bg-white border-b text-center">
                   <td className="py-3 border px-6">{index + 1}</td>
                   <td className="py-3 px-6 border">
@@ -131,8 +135,12 @@ const BagBanners = () => {
                   <td className="py-3 px-6 border">{slider.title}</td>
                   <td className="py-3 px-6 border">{slider.subtitle}</td>
                   <td className="py-3 space-x-2 px-6 border">
-                    <EditButton onClick={() => handleEdit(slider._id)}></EditButton>
-                    <DeleteButton onClick={() => handleDelete(slider._id, slider.key)} />
+                    <EditButton
+                      onClick={() => handleEdit(slider._id)}
+                    ></EditButton>
+                    <DeleteButton
+                      onClick={() => handleDelete(slider._id, slider.key)}
+                    />
                   </td>
                 </tr>
               ))
@@ -140,6 +148,8 @@ const BagBanners = () => {
           </tbody>
         </table>
       </div>
+
+      {paginationControls}
 
       <BgBlurModal isShowModal={showModal} setIsShowModal={setShowModal}>
         <CreateBagBannerForm setIsShow={setShowModal} />

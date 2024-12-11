@@ -15,7 +15,7 @@ import useAxiosSecure from "../../../Hook/useAxiosSecure";
 import { IoIosSearch } from "react-icons/io";
 import DeleteButton from "../../../components library/DeleteButton";
 import EditButton from "../../../components library/EditButton";
-
+import Mpagination from "../../../shared/Mpagination";
 
 export default function ViewAllTestimonials() {
   // Testimonials data
@@ -51,6 +51,10 @@ export default function ViewAllTestimonials() {
   const [isDeleted, setIsDeleted] = useState(false);
 
   const testimonials = useGetAllTestimonials({ isShowModal, isDeleted });
+
+  const { paginatedData, paginationControls } = Mpagination({
+    totalData: testimonials,
+  });
 
   const axiosSecure = useAxiosSecure();
 
@@ -90,7 +94,6 @@ export default function ViewAllTestimonials() {
             const res = await axiosSecure.delete(`/testimonials/${id}`);
             console.log(res, "res");
             if (res.status === 200 || res.status === 201) {
-
               setIsDeleted((prev) => !prev);
 
               toast.success("Brand deleted successfully!");
@@ -138,30 +141,28 @@ export default function ViewAllTestimonials() {
               </tr>
             </thead>
             <tbody>
-              {currentTestimonials.length > 0 ? (
-                currentTestimonials.map((testimonial, index) => (
+              {paginatedData.length > 0 ? (
+                paginatedData.map((testimonial, index) => (
                   <tr key={testimonial.id} className="text-center">
                     <td className="p-2 border pl-5">{index + 1}</td>
                     <td className="p-2 border">
-                      {
-                        testimonial?.image ? (
-                          <div className="flex justify-center">
-                            <div>
-                              <CellImage
-                                width={400}
-                                height={400}
-                                src={testimonial.image}
-                                alt={testimonial.customerName}
-                                loading="lazy"
-                              />
-                            </div>
+                      {testimonial?.image ? (
+                        <div className="flex justify-center">
+                          <div>
+                            <CellImage
+                              width={400}
+                              height={400}
+                              src={testimonial.image}
+                              alt={testimonial.customerName}
+                              loading="lazy"
+                            />
                           </div>
-                        ) : (
-                          <div className="py-6 px-3">
-                            <span className="loading loading-spinner text-gray-400 loading-sm"></span>
-                          </div>
-                        )
-                      }
+                        </div>
+                      ) : (
+                        <div className="py-6 px-3">
+                          <span className="loading loading-spinner text-gray-400 loading-sm"></span>
+                        </div>
+                      )}
                     </td>
 
                     <td className="p-2 border">{testimonial?.customerName}</td>
@@ -172,13 +173,17 @@ export default function ViewAllTestimonials() {
                     </td>
                     <td className="p-2 border">
                       <div className="flex justify-center gap-2">
-                        <EditButton onClick={() => handleEdit(testimonial._id)} />
-                        <DeleteButton onClick={() =>
-                          handleDelete({
-                            id: testimonial?._id,
-                            file_key: testimonial?.key,
-                          })
-                        } />
+                        <EditButton
+                          onClick={() => handleEdit(testimonial._id)}
+                        />
+                        <DeleteButton
+                          onClick={() =>
+                            handleDelete({
+                              id: testimonial?._id,
+                              file_key: testimonial?.key,
+                            })
+                          }
+                        />
                       </div>
                     </td>
                   </tr>
@@ -194,6 +199,8 @@ export default function ViewAllTestimonials() {
           </table>
         </div>
       </div>
+
+      {paginationControls}
 
       <BgBlurModal isShowModal={isShowModal} setIsShowModal={setIsShowModal}>
         <EditTestimonialsForm

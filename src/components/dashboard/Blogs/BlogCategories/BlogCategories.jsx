@@ -16,6 +16,7 @@ import DeleteButton from "../../../../components library/DeleteButton";
 import EditButton from "../../../../components library/EditButton";
 import { HiArrowCircleDown, HiArrowCircleUp } from "react-icons/hi";
 import TableSkeleton from "../../../../components library/TableSkeleton";
+import Mpagination from "../../../../shared/Mpagination";
 
 const BlogCategories = () => {
   // State management
@@ -41,11 +42,11 @@ const BlogCategories = () => {
     isShowModal,
   });
 
+  const { paginatedData, paginationControls } = Mpagination({
+    totalData: BlogCategories,
+  });
+
   // Paginated data
-  const paginatedData = useCallback(() => {
-    const offset = currentPage * itemsPerPage;
-    return BlogCategories.slice(offset, offset + itemsPerPage);
-  }, [currentPage, itemsPerPage, BlogCategories]);
 
   // Sorting handler
   const handleSort = (key) => {
@@ -55,19 +56,6 @@ const BlogCategories = () => {
     }
     setSortConfig({ key, direction });
   };
-
-  // Sorted data based on configuration
-  const sortedCategories = useCallback(() => {
-    const sortedData = [...BlogCategories];
-    sortedData.sort((a, b) => {
-      if (a[sortConfig.key] < b[sortConfig.key])
-        return sortConfig.direction === "asc" ? -1 : 1;
-      if (a[sortConfig.key] > b[sortConfig.key])
-        return sortConfig.direction === "asc" ? 1 : -1;
-      return 0;
-    });
-    return sortedData;
-  }, [BlogCategories, sortConfig]);
 
   const handleEdit = (id) => {
     setTargetId(id);
@@ -120,11 +108,14 @@ const BlogCategories = () => {
               className="customSaveButton"
               onClick={() => setIsShowModal(true)}
             >
-              <span className="flex items-center gap-1"><IoMdAddCircle />  Add New Size</span>
-
+              <span className="flex items-center gap-1">
+                <IoMdAddCircle /> Add New Size
+              </span>
             </button>
             <button className="customCancelButton">
-              <span className="flex items-center gap-1"><FaRetweet /> Rearrange Brand</span>
+              <span className="flex items-center gap-1">
+                <FaRetweet /> Rearrange Brand
+              </span>
             </button>
           </div>
         </div>
@@ -143,7 +134,11 @@ const BlogCategories = () => {
                   >
                     SL{" "}
                     {sortConfig.key === "id" &&
-                      (sortConfig.direction === "asc" ? <HiArrowCircleUp className="text-[#087D6D] " /> : <HiArrowCircleDown className="text-[#E68923]" />)}
+                      (sortConfig.direction === "asc" ? (
+                        <HiArrowCircleUp className="text-[#087D6D] " />
+                      ) : (
+                        <HiArrowCircleDown className="text-[#E68923]" />
+                      ))}
                   </td>
                   <td
                     className="border p-2 cursor-pointer"
@@ -154,32 +149,37 @@ const BlogCategories = () => {
                       (sortConfig.direction === "asc" ? "🔼" : "🔽")}
                   </td>
 
-                  <td className="border p-2 cursor-pointer">
-                    Created At
-                  </td>
+                  <td className="border p-2 cursor-pointer">Created At</td>
                   <td className="border p-2 ">Action</td>
                 </tr>
               </thead>
               <tbody>
-                {paginatedData()?.length > 0 && paginatedData().map((item, index) => (
-                  <tr key={item._id} className="border-b text-center">
-                    <td className="border p-2">
-                      {index + 1 + currentPage * itemsPerPage}
-                    </td>
-                    <td className="border p-2">{item.name}</td>
-                    <td className="border p-2">{item.createdAt}</td>
-                    <td className="border p-2 py-4">
-                      <div className="flex justify-center">
-                        <EditButton onClick={() => handleEdit(item._id)}></EditButton>
-                        <DeleteButton  onClick={() => handleDelete(item._id)}/>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
+                {paginatedData?.length > 0 &&
+                  paginatedData.map((item, index) => (
+                    <tr key={item._id} className="border-b text-center">
+                      <td className="border p-2">
+                        {index + 1 + currentPage * itemsPerPage}
+                      </td>
+                      <td className="border p-2">{item.name}</td>
+                      <td className="border p-2">{item.createdAt}</td>
+                      <td className="border p-2 py-4">
+                        <div className="flex justify-center">
+                          <EditButton
+                            onClick={() => handleEdit(item._id)}
+                          ></EditButton>
+                          <DeleteButton
+                            onClick={() => handleDelete(item._id)}
+                          />
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
               </tbody>
             </table>
           </div>
         )}
+
+        {paginationControls}
       </div>
 
       {/* Modal for Adding/Editing Brand */}
@@ -201,4 +201,4 @@ const BlogCategories = () => {
   );
 };
 
-export default BlogCategories
+export default BlogCategories;

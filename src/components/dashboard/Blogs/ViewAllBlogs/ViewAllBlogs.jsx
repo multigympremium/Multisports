@@ -10,6 +10,7 @@ import BgBlurModal from "../../../../shared/Modal/BgBlurModal";
 import useAxiosSecure from "../../../../Hook/useAxiosSecure";
 import EditButton from "../../../../components library/EditButton";
 import DeleteButton from "../../../../components library/DeleteButton";
+import Mpagination from "../../../../shared/Mpagination";
 
 export default function ViewAllBlogs() {
   const [currentPage, setCurrentPage] = useState(0);
@@ -21,11 +22,9 @@ export default function ViewAllBlogs() {
   const [isEdited, setIsEdited] = useState(false);
   const [BlogId, setBlogId] = useState("");
 
-  const paginatedData = useCallback(() => {
-    const offset = currentPage * itemsPerPage;
-    console.log(blogs, "blogs", offset, offset + itemsPerPage);
-    return blogs.slice(offset, offset + itemsPerPage);
-  }, [currentPage, itemsPerPage, blogs]);
+  const { paginatedData, paginationControls } = Mpagination({
+    totalData: blogs,
+  });
 
   const handleSort = (key) => {
     let direction = "asc";
@@ -34,20 +33,6 @@ export default function ViewAllBlogs() {
     }
     setSortConfig({ key, direction });
   };
-
-  const sortedblogs = useCallback(() => {
-    const sortedData = [...blogs];
-    sortedData.sort((a, b) => {
-      if (a[sortConfig.key] < b[sortConfig.key]) {
-        return sortConfig.direction === "asc" ? -1 : 1;
-      }
-      if (a[sortConfig.key] > b[sortConfig.key]) {
-        return sortConfig.direction === "asc" ? 1 : -1;
-      }
-      return 0;
-    });
-    return sortedData;
-  }, [blogs, sortConfig]);
 
   const handlePageClick = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -147,34 +132,35 @@ export default function ViewAllBlogs() {
             </tr>
           </thead>
           <tbody>
-            {paginatedData()?.length > 0 && paginatedData().map((item, index) => (
-              <tr key={item.id} className="border-b text-center">
-                <td className="border p-2">
-                  {index + 1 + currentPage * itemsPerPage}
-                </td>
-                <td className="border p-2">{item.writer}</td>
-                <td className="border p-2">{item.title}</td>
-                <td className="border p-2">
-                  <div className="flex justify-center">
-                    <div>
-                      <CellImage
-                        width={400}
-                        height={400}
-                        src={item.image}
-                        alt="icon"
-                      />
+            {paginatedData?.length > 0 &&
+              paginatedData.map((item, index) => (
+                <tr key={item.id} className="border-b text-center">
+                  <td className="border p-2">
+                    {index + 1 + currentPage * itemsPerPage}
+                  </td>
+                  <td className="border p-2">{item.writer}</td>
+                  <td className="border p-2">{item.title}</td>
+                  <td className="border p-2">
+                    <div className="flex justify-center">
+                      <div>
+                        <CellImage
+                          width={400}
+                          height={400}
+                          src={item.image}
+                          alt="icon"
+                        />
+                      </div>
                     </div>
-                  </div>
-                </td>
+                  </td>
 
-                <td className="border p-2">
-                  <div className="flex justify-center gap-2">
-                    <EditButton onClick={() => handleEdit(item._id)}/>
-                    <DeleteButton  onClick={() => handleDelete(item._id)} />
-                  </div>
-                </td>
-              </tr>
-            ))}
+                  <td className="border p-2">
+                    <div className="flex justify-center gap-2">
+                      <EditButton onClick={() => handleEdit(item._id)} />
+                      <DeleteButton onClick={() => handleDelete(item._id)} />
+                    </div>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
 
@@ -186,16 +172,19 @@ export default function ViewAllBlogs() {
             <button
               key={pageIndex}
               onClick={() => handlePageClick(pageIndex)}
-              className={`px-3 py-1 border rounded-md ${currentPage === pageIndex
+              className={`px-3 py-1 border rounded-md ${
+                currentPage === pageIndex
                   ? "bg-blue-500 text-white"
                   : "hover:bg-gray-200"
-                }`}
+              }`}
             >
               {pageIndex + 1}
             </button>
           ))}
         </div>
       </div>
+
+      {paginationControls}
       <BgBlurModal isShowModal={isEdited} setIsShowModal={setIsEdited}>
         <BlogEditForm
           BlogId={BlogId}
