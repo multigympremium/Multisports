@@ -163,25 +163,6 @@ export default function ViewAllBlogs() {
               ))}
           </tbody>
         </table>
-
-        {/* Pagination */}
-        <div className="mt-5 flex justify-center space-x-2">
-          {Array.from({
-            length: Math.ceil(blogs.length / itemsPerPage),
-          }).map((_, pageIndex) => (
-            <button
-              key={pageIndex}
-              onClick={() => handlePageClick(pageIndex)}
-              className={`px-3 py-1 border rounded-md ${
-                currentPage === pageIndex
-                  ? "bg-blue-500 text-white"
-                  : "hover:bg-gray-200"
-              }`}
-            >
-              {pageIndex + 1}
-            </button>
-          ))}
-        </div>
       </div>
 
       {paginationControls}

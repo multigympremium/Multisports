@@ -171,7 +171,7 @@ const Footer = () => {
           <div className="text-slate-600 flex flex-col gap-1 md:gap-3 text-sm md:text-base">
             <Link
               className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300"
-              to="/aboutus/about"
+              to="/about"
             >
               About us
             </Link>

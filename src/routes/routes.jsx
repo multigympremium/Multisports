@@ -28,6 +28,7 @@ import TermsCondition from "../components/Home/(policy)/terms-and-condition/page
 import ShippingPublicPolicy from "../components/Home/(policy)/shipping-policy/page";
 import ReturnPolicy from "../components/Home/(policy)/return-policy/page";
 import PrivacyPolicy from "../components/Home/(policy)/privacy-policy/page";
+import Blogs from "../components/Home/Blogs/Blogs";
 
 const AllRoutes = () => {
   // const [permissionData, setPermissionData] = useState([]);
@@ -224,6 +225,21 @@ const AllRoutes = () => {
             <Suspense fallback={<GlobalLoading />}>
               <PrivateRoute>
                 <PrivacyPolicy />
+              </PrivateRoute>
+            </Suspense>
+          ),
+        },
+        {
+          // path: "userpermission",
+          path: "blogs",
+          // path: isPermittedRoute("userpermission"),
+          element: (
+            // <PrivateRoute>
+            //   <SmsGroup />
+            // </PrivateRoute>
+            <Suspense fallback={<GlobalLoading />}>
+              <PrivateRoute>
+                <Blogs />
               </PrivateRoute>
             </Suspense>
           ),
