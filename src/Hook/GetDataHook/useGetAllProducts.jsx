@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import useAxiosSecure from "../useAxiosSecure";
+import { set } from "react-hook-form";
 
 function useGetAllProducts({
   isEdited = false,
@@ -10,6 +11,8 @@ function useGetAllProducts({
   query = "",
 }) {
   const [products, setProducts] = useState([]);
+  const [totalItems, setTotalItems] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
 
   const axiosSecure = useAxiosSecure();
 
@@ -22,6 +25,8 @@ function useGetAllProducts({
         if (res.status === 200 || res.status === 201) {
           setProducts(res.data.data);
           setLoading(false);
+          setTotalItems(res.data.totalItems);
+          setTotalPages(res.data.totalPages);
         }
       } catch (error) {
         console.error("Error fetching Products:", error);
@@ -33,7 +38,7 @@ function useGetAllProducts({
     fetchProducts();
   }, [axiosSecure, isDeleted, isEdited, isShowModal, query]);
 
-  return products;
+  return { products, totalItems, totalPages };
 }
 
 export default useGetAllProducts;
