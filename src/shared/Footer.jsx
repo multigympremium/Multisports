@@ -175,6 +175,7 @@ const Footer = () => {
             >
               About us
             </Link>
+
             <Link
               className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300"
               to="/contactus"
