@@ -14,6 +14,7 @@ import Featured from "../../../components/Home/Featured/Featured";
 import FlashSale from "../../../components/Home/FlashSale/FlashSale";
 import Banner2 from "../../../components/Home/Banner/Bannner2";
 import Banner3 from "../../../components/Home/Banner/Banner3";
+import Testimonials from "../../../components/Home/Testimonials/Testimonials";
   export const metadata = {
     title: "Universal Survey - Home",
     description:
@@ -43,6 +44,7 @@ import Banner3 from "../../../components/Home/Banner/Banner3";
       <NewArrivals />
       <ExclusiveCollection />
       <Footwear />
+      <Testimonials />
       <TrendyBags />
         <Brands />
         <FacebookChat />
