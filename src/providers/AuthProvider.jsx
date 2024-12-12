@@ -1,4 +1,3 @@
-
 import {
   GithubAuthProvider,
   GoogleAuthProvider,
@@ -16,10 +15,7 @@ import useAxiosSecure from "../Hook/useAxiosSecure";
 import toast from "react-hot-toast";
 import useAxiosPublic from "../Hook/useAxiosPublic";
 
-
 export const AuthContext = createContext(null);
-
-
 
 export const useAuth = () => {
   return useContext(AuthContext);
@@ -42,153 +38,74 @@ const AuthProvider = ({ children }) => {
   const axiosSecure = useAxiosSecure();
   const axiosPublic = useAxiosPublic();
 
+  // Update cart totals whenever cart items change
+  useEffect(() => {
+    const totalItemsInfo = cartItems.reduce(
+      (acc, item) => acc + item.quantity,
+      0
+    );
+    const totalPriceInfo = cartItems.reduce(
+      (acc, item) => acc + item.price * item.quantity,
+      0
+    );
 
+    setTotalItems(totalItemsInfo);
+    setTotalPrice(totalPriceInfo);
 
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+  }, [cartItems]);
 
   // Update quantity
   const updateCartQuantity = (id, quantity, color, size) => {
-    setCartItems((prevItems) => {
-      const itemInCart = prevItems.map((item) =>
-        item._id === id && item.color === color && item.size === size ? { ...item, quantity } : item
-      );
-
-      const totalPriceInfo = itemInCart.reduce(
-        (acc, item) => acc + item.price * item.quantity,
-        0
-      );
-      const totalItemsInfo = itemInCart.reduce(
-        (acc, item) => acc + item.quantity,
-        0
-      );
-
-      setTotalItems(totalItemsInfo);
-
-      setTotalPrice(totalPriceInfo);
-
-      localStorage.setItem("cartItems", JSON.stringify(itemInCart));
-
-      return itemInCart;
-    });
+    setCartItems((prevItems) =>
+      prevItems.map((item) =>
+        item._id === id && item.color === color && item.size === size
+          ? { ...item, quantity }
+          : item
+      )
+    );
   };
 
   // Add item to cart
   const addToCart = (product, color, size) => {
-    console.log(product, "product")
+    if (!color || !size) {
+      toast.error("Please select color and size");
+      return;
+    }
+
     setCartItems((prevItems) => {
-      const itemInCart = prevItems.find((item) => {
-        if(item?._id === product?._id && item.color === product.color && item.size === product.size){
-          return item;
-        }
-        
-      });
-      if (itemInCart) {
-        
-      const itemInTheCart = prevItems.map((item) =>
-          item?._id === product?._id
+      const existingItem = prevItems.find(
+        (item) =>
+          item._id === product._id && item.color === color && item.size === size
+      );
+
+      if (existingItem) {
+        // Update quantity for existing item
+        return prevItems.map((item) =>
+          item._id === product._id && item.color === color && item.size === size
             ? { ...item, quantity: item.quantity + 1 }
             : item
         );
-
-        const totalPriceInfo = itemInTheCart.reduce(
-          (acc, item) => acc + item.price * item.quantity,
-          0
-        );
-        const totalItemsInfo = itemInTheCart.reduce(
-          (acc, item) => acc + item.quantity,
-          0
-        );
-  
-        setTotalItems(totalItemsInfo);
-  
-        setTotalPrice(totalPriceInfo);
-        return itemInTheCart
+      } else {
+        // Add new item to cart
+        return [...prevItems, { ...product, color, size, quantity: 1 }];
       }
-      else{
-        const itemInTheCart = [...prevItems, { ...product, quantity: 1 }];
-
-        const totalPriceInfo = itemInTheCart.reduce(
-          (acc, item) => acc + item.price * item.quantity,
-          0
-        );
-        const totalItemsInfo = itemInTheCart.reduce(
-          (acc, item) => acc + item.quantity,
-          0
-        );
-  
-        setTotalItems(totalItemsInfo);
-  
-        setTotalPrice(totalPriceInfo);
-        return itemInTheCart
-      }
-      // updateCartQuantity(product?._id, 1);
-      // localStorage.setItem(
-      //   "cartItems",
-      //   JSON.stringify([...prevItems, { ...product, quantity: 1 }])
-      // );
-      // return [...prevItems, { ...product, quantity: 1 }];
     });
-    // if(color && size && product && product.color === color && product.size === size){
-
-    // }else if(color && size && product && product.color !== color && product.size !== size){
-    //   setCartItems((prevItems) => {
-    //     const itemInCart = prevItems.find((item) => item?._id === product?._id);
-    //     if (itemInCart) {
-          
-    //     const itemInTheCart = [...prevItems, { ...product, quantity: 1 }];
-  
-    //       const totalPriceInfo = itemInTheCart.reduce(
-    //         (acc, item) => acc + item.price * item.quantity,
-    //         0
-    //       );
-    //       const totalItemsInfo = itemInTheCart.reduce(
-    //         (acc, item) => acc + item.quantity,
-    //         0
-    //       );
-    
-    //       setTotalItems(totalItemsInfo);
-    
-    //       setTotalPrice(totalPriceInfo);
-    //       return itemInTheCart
-    //     }
-    //     updateCartQuantity(product?._id, 1);
-    //     localStorage.setItem(
-    //       "cartItems",
-    //       JSON.stringify([...prevItems, { ...product, quantity: 1 }])
-    //     );
-    //     return [...prevItems, { ...product, quantity: 1 }];
-    //   });
-
-    // } else {
-    //   toast.error("Please select color and size");
-    // }
   };
 
   // Remove item from cart
   const removeFromCart = (id, color, size) => {
-    setCartItems((prevItems) => {
-      const itemInCart = prevItems.filter((item) => item._id !== id && item.color !== color && item.size !== size);
-      const totalPriceInfo = itemInCart.reduce(
-        (acc, item) => acc + item.price * item.quantity,
-        0
-      );
-      const totalItemsInfo = itemInCart.reduce(
-        (acc, item) => acc + item.quantity,
-        0
-      );
-
-      setTotalItems(totalItemsInfo);
-
-      setTotalPrice(totalPriceInfo);
-      localStorage.setItem("cartItems", JSON.stringify(itemInCart));
-
-      return itemInCart;
-    });
+    setCartItems((prevItems) =>
+      prevItems.filter(
+        (item) =>
+          !(item._id === id && item.color === color && item.size === size)
+      )
+    );
   };
-
 
   // Load wishlist from localStorage on component mount
   useEffect(() => {
-    const storedWishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+    const storedWishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
     setWishlist(storedWishlist);
   }, []);
 
@@ -198,30 +115,29 @@ const AuthProvider = ({ children }) => {
     if (!existingProduct) {
       const updatedWishlist = [...wishlist, product];
       setWishlist(updatedWishlist);
-      localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
+      localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
       try {
-  
-        const res = await axiosPublic.get(`/products/wish-count/${product?._id}`);
-  
-        if(res.status === 200 || res.status === 201){
+        const res = await axiosPublic.get(
+          `/products/wish-count/${product?._id}`
+        );
+
+        if (res.status === 200 || res.status === 201) {
           toast.success("Added to wishlist!");
         }
-        
       } catch (error) {
-        console.log(error)
+        console.log(error);
         toast.error("Error adding to wishlist!");
       }
     }
   };
 
   const removeFromWishlist = (productId) => {
-    console.log(productId, "productId")
+    console.log(productId, "productId");
     const updatedWishlist = wishlist.filter((item) => item._id !== productId);
-    console.log("updatedWishlist", updatedWishlist)
+    console.log("updatedWishlist", updatedWishlist);
     setWishlist(updatedWishlist);
-    localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
+    localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
   };
-
 
   const createUser = (email, password) => {
     setLoading(true);
@@ -280,36 +196,31 @@ const AuthProvider = ({ children }) => {
         localStorage.removeItem("user");
       }
 
+      const cartItemData = localStorage.getItem("cart");
 
+      if (cartItemData) {
+        setCartItems(JSON.parse(cartItemData));
+      } else {
+        setCartItems([]);
+      }
 
-    const cartItemData = localStorage.getItem("cart");
+      const storedCart = localStorage.getItem("cartItems");
 
-    if (cartItemData) {
-      setCartItems(JSON.parse(cartItemData));
-    } else {
-      setCartItems([]);
-    }
+      if (storedCart) {
+        setCartItems(JSON.parse(storedCart));
 
-    const storedCart = localStorage.getItem("cartItems");
+        const totalPriceInfo = JSON.parse(storedCart).reduce(
+          (acc, item) => acc + item.price * item.quantity,
+          0
+        );
+        const totalItemsInfo = JSON.parse(storedCart).reduce(
+          (acc, item) => acc + item.quantity,
+          0
+        );
+        setTotalItems(totalItemsInfo);
 
-    if (storedCart) {
-      setCartItems(JSON.parse(storedCart));
-
-      const totalPriceInfo = JSON.parse(storedCart).reduce(
-        (acc, item) => acc + item.price * item.quantity,
-        0
-      );
-      const totalItemsInfo = JSON.parse(storedCart).reduce(
-        (acc, item) => acc + item.quantity,
-        0
-      );
-      setTotalItems(totalItemsInfo);
-
-      setTotalPrice(totalPriceInfo);
-    }
-
-
-    
+        setTotalPrice(totalPriceInfo);
+      }
     });
     return () => {
       unSubscribe();
@@ -340,9 +251,7 @@ const AuthProvider = ({ children }) => {
     totalPrice,
     addToWishlist,
     removeFromWishlist,
-    wishlist
-
-
+    wishlist,
   };
 
   return (

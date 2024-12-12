@@ -10,6 +10,7 @@ import useAxiosSecure from "../../../Hook/useAxiosSecure";
 import { IoIosSearch } from "react-icons/io";
 import EditButton from "../../../components library/EditButton";
 import DeleteButton from "../../../components library/DeleteButton";
+import Pagination from "../../partial/Pagination/Pagination";
 
 // Sample pending orders data (could be fetched from API)
 const initialData = [
@@ -42,15 +43,15 @@ export default function ApprovedOrders() {
   // const [orders, setOrders] = useState(initialData);
   const axiosSecure = useAxiosSecure();
   const [searchTerm, setSearchTerm] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
   const [isShowDetail, setIsShowDetail] = useState(false);
   const [targetId, setTargetId] = useState(null);
   const [isDeleted, setIsDeleted] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const orders = useGetAllOrders({
-    query: `status=Accepted`,
+  const { orders, totalItems } = useGetAllOrders({
+    query: `status=Accepted&currentPage=${currentPage}`,
     isDeleted,
     isShowModal: isShowDetail,
   });
@@ -155,16 +156,10 @@ export default function ApprovedOrders() {
                   </td>
                   <td className="p-2 border">{order._id}</td>
                   <td className="p-2 border">{order.createdAt}</td>
-                  <td className="p-2 border">
-                    {order?.name}
-                  </td>
-                  <td className="p-2 border">
-                    {order?.email || "N/A"}
-                  </td>
-                  <td className="p-2 border">
-                    {order?.phone}
-                  </td>
-                 
+                  <td className="p-2 border">{order?.name}</td>
+                  <td className="p-2 border">{order?.email || "N/A"}</td>
+                  <td className="p-2 border">{order?.phone}</td>
+
                   <td className="p-2 border">{order?.payment_method}</td>
                   <td className="p-2 border">৳ {order?.total}</td>
                   <td className="p-2 border">
@@ -193,31 +188,12 @@ export default function ApprovedOrders() {
         </table>
 
         {/* Pagination */}
-        <div className="mt-4 flex justify-between">
-          <span>
-            Showing {indexOfFirstItem + 1} to{" "}
-            {Math.min(indexOfLastItem, filteredOrders.length)} of{" "}
-            {filteredOrders.length} entries
-          </span>
-          <div className="flex space-x-2">
-            {Array.from(
-              { length: Math.ceil(filteredOrders.length / itemsPerPage) },
-              (_, index) => (
-                <button
-                  key={index}
-                  onClick={() => handlePageChange(index + 1)}
-                  className={`px-3 py-1 border rounded-md ${
-                    currentPage === index + 1
-                      ? "bg-blue-500 text-white"
-                      : "bg-gray-100"
-                  }`}
-                >
-                  {index + 1}
-                </button>
-              )
-            )}
-          </div>
-        </div>
+        <Pagination
+          currentPage={currentPage}
+          totalItems={totalItems}
+          itemsPerPage={itemsPerPage}
+          setCurrentPage={setCurrentPage}
+        />
       </div>
 
       <BgBlurModal isShowModal={isShowDetail} setIsShowModal={setIsShowDetail}>

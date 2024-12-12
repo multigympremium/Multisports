@@ -1,7 +1,7 @@
 import React from 'react';
 
 const products = [
-  {
+  {         
     image: 'https://chawkbazar.vercel.app/_next/image?url=%2Fassets%2Fimages%2Fproducts%2Fancient%2F1.jpg&w=384&q=100',
     title: 'Roadster Women Round Neck',
     price: '$18.59',
@@ -74,10 +74,10 @@ const NewArrivals = () => {
         {products.map((product, index) => (
           <div
           key={index}
-          className="bg-white overflow-hidden rounded-lg  md:hover:shadow-lg transition-transform duration-300 md:hover:scale-105"
+          className="bg-white overflow-hidden rounded-lg  md:hover:shadow-lg transition-transform duration-300 md:hover:scale-100"
         >
           <img
-            src={product.image}
+            src={product.image} 
             alt={product.title}
             className="w-full rounded md:h-80 object-cover transition-transform duration-300 hover:scale-105"
           />

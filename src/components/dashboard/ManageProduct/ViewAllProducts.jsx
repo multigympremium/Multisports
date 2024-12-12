@@ -1,7 +1,6 @@
 "use client";
 import { HiArrowCircleUp, HiArrowCircleDown } from "react-icons/hi";
-import { useState, useEffect, useCallback } from "react";
-import { FiEdit, FiTrash2 } from "react-icons/fi";
+import { useState, useCallback } from "react";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 import TableSkeleton from "../../../components library/TableSkeleton";
@@ -12,6 +11,7 @@ import Modal from "../../../shared/Modal/Modal";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
 import EditButton from "../../../components library/EditButton";
 import DeleteButton from "../../../components library/DeleteButton";
+import Pagination from "../../partial/Pagination/Pagination";
 
 const ProductFlag = () => {
   // State management
@@ -30,7 +30,7 @@ const ProductFlag = () => {
   const [sortConfig, setSortConfig] = useState({ key: "id", direction: "asc" });
 
   // Fetch product brands with custom hook
-  const products = useGetAllProducts({
+  const { products, totalItems, totalPages } = useGetAllProducts({
     isEdited,
     isDeleted,
     setLoading,
@@ -40,7 +40,9 @@ const ProductFlag = () => {
   // Paginated data
   const paginatedData = useCallback(() => {
     const offset = currentPage * itemsPerPage;
-    return products?.length > 0 && products.slice(offset, offset + itemsPerPage);
+    return (
+      products?.length > 0 && products.slice(offset, offset + itemsPerPage)
+    );
   }, [currentPage, itemsPerPage, products]);
 
   // Sorting handler
@@ -115,13 +117,13 @@ const ProductFlag = () => {
 
         {/* Loading Spinner */}
         {loading ? (
-          <div className="text-center"><TableSkeleton></TableSkeleton></div>
+          <div className="text-center">
+            <TableSkeleton></TableSkeleton>
+          </div>
         ) : (
           <div className="overflow-x-auto relative shadow sm:rounded-lg">
             <table className="w-full text-center text-lg text-gray-500">
               <thead className="bg-gray-100">
-
-
                 <tr>
                   <td
                     className="border p-2 text-center text-base cursor-pointer"
@@ -223,39 +225,48 @@ const ProductFlag = () => {
                   </td>
                   <td className="border p-2 text-center text-base">Action</td>
                 </tr>
-
               </thead>
               <tbody>
-                {paginatedData()?.length > 0 && paginatedData().map((item, index) => (
-                  <tr key={item._id} className="border-b">
-                    <td className="border p-2">
-                      {index + 1 + currentPage * itemsPerPage}
-                    </td>
-                    <td className="border p-2">
-                      <CellImage
-                        width={400}
-                        height={400}
-                        src={item.thumbnail}
-                        alt="Image"
-                      />
-                    </td>
-                    <td className="border p-2">{item.productTitle}</td>
-                    <td className="border p-2">{item.price}</td>
-                    <td className="border p-2">{item.discountPrice}</td>
-                    <td className="border p-2">{item.stock}</td>
-                    <td className="border p-2">{item.category}</td>
-                    <td className="border p-2">
-                      <div className="flex justify-center space-x-2">
-                        <EditButton onClick={() => handleEdit(item._id)} />
-                        <DeleteButton onClick={() => handleDelete(item._id)} />
-                      </div>
-                    </td>
-                  </tr>
-                ))}
+                {products.length > 0 &&
+                  products.map((item, index) => (
+                    <tr key={item._id} className="border-b">
+                      <td className="border p-2">
+                        {index + 1 + currentPage * itemsPerPage}
+                      </td>
+                      <td className="border p-2">
+                        <CellImage
+                          width={400}
+                          height={400}
+                          src={item.thumbnail}
+                          alt="Image"
+                        />
+                      </td>
+                      <td className="border p-2">{item.productTitle}</td>
+                      <td className="border p-2">{item.price}</td>
+                      <td className="border p-2">{item.discountPrice}</td>
+                      <td className="border p-2">{item.stock}</td>
+                      <td className="border p-2">{item.category}</td>
+                      <td className="border p-2">
+                        <div className="flex justify-center space-x-2">
+                          <EditButton onClick={() => handleEdit(item._id)} />
+                          <DeleteButton
+                            onClick={() => handleDelete(item._id)}
+                          />
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
               </tbody>
             </table>
           </div>
         )}
+
+        <Pagination
+          currentPage={currentPage}
+          totalItems={totalItems}
+          itemsPerPage={itemsPerPage}
+          setCurrentPage={setCurrentPage}
+        />
       </div>
 
       {/* Modal for Adding/Editing Brand */}

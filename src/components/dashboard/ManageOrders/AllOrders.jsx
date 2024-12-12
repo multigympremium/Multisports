@@ -12,6 +12,7 @@ import EditButton from "../../../components library/EditButton";
 import DeleteButton from "../../../components library/DeleteButton";
 import CourierMethodModal from "../../../shared/cart/viewCart/CourierMethodModal";
 import { set } from "react-hook-form";
+import Pagination from "../../partial/Pagination/Pagination";
 
 export default function AllOrders() {
   // const [orders, setOrders] = useState(initialData);
@@ -26,7 +27,11 @@ export default function AllOrders() {
   const [courierMethod, setSetCourierMethod] = useState("");
   const itemsPerPage = 5;
 
-  const orders = useGetAllOrders({ isDeleted, isShowModal: isShowDetail });
+  const { orders, totalItems } = useGetAllOrders({
+    isDeleted,
+    isShowModal: isShowDetail,
+    query: `page=${currentPage}`,
+  });
 
   console.log(orders, "orders");
 
@@ -259,6 +264,12 @@ export default function AllOrders() {
             )}
           </div>
         </div> */}
+        <Pagination
+          currentPage={currentPage}
+          totalItems={totalItems}
+          itemsPerPage={itemsPerPage}
+          setCurrentPage={setCurrentPage}
+        />
       </div>
 
       <BgBlurModal isShowModal={isShowDetail} setIsShowModal={setIsShowDetail}>

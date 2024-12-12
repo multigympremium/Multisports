@@ -2,7 +2,15 @@
 
 import moment from "moment/moment";
 import { useEffect, useState } from "react";
-import { FaFacebook, FaInstagram, FaLinkedin, FaPhoneAlt, FaPinterest, FaTiktok, FaYoutube } from "react-icons/fa";
+import {
+  FaFacebook,
+  FaInstagram,
+  FaLinkedin,
+  FaPhoneAlt,
+  FaPinterest,
+  FaTiktok,
+  FaYoutube,
+} from "react-icons/fa";
 import { FiMail } from "react-icons/fi";
 import { ImLocation } from "react-icons/im";
 import { Link } from "react-router-dom";
@@ -80,28 +88,27 @@ const Footer = () => {
               <div className="flex text-sm md:text-base gap-2 items-center">
                 {/* <FaPhoneAlt className="text-slate-600" /> */}
                 <h2 className="font-normal flex gap-3 ">
-                  <p>{info.phone}</p>
+                  <p>{info?.phone}</p>
                 </h2>
               </div>
               <div className="flex text-sm md:text-base gap-2 items-center">
                 {/* <FaPhoneAlt className="text-slate-600" /> */}
                 <h2 className="font-normal flex gap-3 ">
-                  <p>{info.address}</p>
+                  <p>{info?.address}</p>
                 </h2>
               </div>
               <div className="flex text-sm md:text-base gap-2 items-center">
                 {/* <FaPhoneAlt className="text-slate-600" /> */}
                 <h2 className="font-normal flex gap-3 ">
-                  <p>{info.email}</p>
+                  <p>{info?.email}</p>
                 </h2>
               </div>
             </div>
 
-
             {/* icons */}
             <nav className="flex gap-1 md:gap-3 mt-3 md:mt-6">
               <Link
-                to={content.facebook}
+                to={content?.facebook}
                 target="_blank"
                 className=""
                 rel="noopener noreferrer"
@@ -110,7 +117,7 @@ const Footer = () => {
                 <FaFacebook className="text-sm md:text-lg" />
               </Link>
               <Link
-                to={content.instagram}
+                to={content?.instagram}
                 target="_blank"
                 className=""
                 rel="noopener noreferrer"
@@ -119,7 +126,7 @@ const Footer = () => {
                 <FaInstagram className="text-sm md:text-lg" />
               </Link>
               <Link
-                to={content.linkedin}
+                to={content?.linkedin}
                 target="_blank"
                 className=""
                 rel="noopener noreferrer"
@@ -128,7 +135,7 @@ const Footer = () => {
                 <FaLinkedin className="text-sm md:text-lg" />
               </Link>
               <Link
-                to={content.pinterest}
+                to={content?.pinterest}
                 target="_blank"
                 className=""
                 rel="noopener noreferrer"
@@ -137,7 +144,7 @@ const Footer = () => {
                 <FaPinterest className="text-sm md:text-lg" />
               </Link>
               <Link
-                to={content.tiktok}
+                to={content?.tiktok}
                 target="_blank"
                 className=""
                 rel="noopener noreferrer"
@@ -146,7 +153,7 @@ const Footer = () => {
                 <FaTiktok className="text-sm md:text-lg" />
               </Link>
               <Link
-                to={content.youtube}
+                to={content?.youtube}
                 target="_blank"
                 className=""
                 rel="noopener noreferrer"
@@ -155,7 +162,6 @@ const Footer = () => {
                 <FaYoutube className="text-sm md:text-lg" />
               </Link>
             </nav>
-
           </div>
         </aside>
         <nav>
@@ -165,10 +171,11 @@ const Footer = () => {
           <div className="text-slate-600 flex flex-col gap-1 md:gap-3 text-sm md:text-base">
             <Link
               className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300"
-              to="/aboutus/about"
+              to="/about"
             >
               About us
             </Link>
+
             <Link
               className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300"
               to="/contactus"
@@ -232,7 +239,7 @@ const Footer = () => {
             </Link>
           </div>
         </nav>
-        
+
         <nav>
           <h6 className="footer-title  text-base md:text-lg font-bold mb-1 md:mb-4 text-black">
             Customer
@@ -372,25 +379,44 @@ const Footer = () => {
       <div className="mx-auto w-[95%]">
         <footer className="footer flex py-4  border-t px-5 text-center text-xl justify-center md:justify-between">
           <p className="md:text-lg text-sm">
-            Copyright {info.footer_copyright}
+            Copyright {info?.footer_copyright}
           </p>
           <div className="hidden md:flex items-center gap-6">
             <div>
-              <img src="https://chawkbazar.vercel.app/assets/images/payment/mastercard.svg" alt="" className="cursor-pointer" />
+              <img
+                src="https://chawkbazar.vercel.app/assets/images/payment/mastercard.svg"
+                alt=""
+                className="cursor-pointer"
+              />
             </div>
             <div>
-              <img src="https://chawkbazar.vercel.app/assets/images/payment/visa.svg" alt="" className="cursor-pointer" />
+              <img
+                src="https://chawkbazar.vercel.app/assets/images/payment/visa.svg"
+                alt=""
+                className="cursor-pointer"
+              />
             </div>
             <div>
-              <img src="https://chawkbazar.vercel.app/assets/images/payment/paypal.svg" alt="" className="cursor-pointer" />
+              <img
+                src="https://chawkbazar.vercel.app/assets/images/payment/paypal.svg"
+                alt=""
+                className="cursor-pointer"
+              />
             </div>
             <div>
-              <img src="https://chawkbazar.vercel.app/assets/images/payment/jcb.svg" alt="" className="cursor-pointer" />
+              <img
+                src="https://chawkbazar.vercel.app/assets/images/payment/jcb.svg"
+                alt=""
+                className="cursor-pointer"
+              />
             </div>
             <div>
-              <img src="https://chawkbazar.vercel.app/assets/images/payment/skrill.svg" alt="" className="cursor-pointer" />
+              <img
+                src="https://chawkbazar.vercel.app/assets/images/payment/skrill.svg"
+                alt=""
+                className="cursor-pointer"
+              />
             </div>
-
           </div>
         </footer>
       </div>

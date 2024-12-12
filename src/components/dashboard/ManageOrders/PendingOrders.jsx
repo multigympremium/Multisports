@@ -9,6 +9,7 @@ import Swal from "sweetalert2";
 import { IoIosSearch } from "react-icons/io";
 import EditButton from "../../../components library/EditButton";
 import DeleteButton from "../../../components library/DeleteButton";
+import Pagination from "../../partial/Pagination/Pagination";
 
 // Sample pending orders data (could be fetched from API)
 const initialData = [
@@ -45,9 +46,13 @@ export default function PendingOrders() {
   const [isDeleted, setIsDeleted] = useState(false);
   const [targetId, setTargetId] = useState(null);
   const itemsPerPage = 10;
-  
-  const orders = useGetAllOrders({query:`status=Pending`, isDeleted, isShowModal: isShowDetail})
-  
+
+  const { orders, totalItems } = useGetAllOrders({
+    query: `status=Pending&currentPage=${currentPage}`,
+    isDeleted,
+    isShowModal: isShowDetail,
+  });
+
   // const [orders, setOrders] = useState(initialData);
   console.log(orders, "orders");
 
@@ -56,11 +61,11 @@ export default function PendingOrders() {
   let filteredOrders = orders;
 
   useEffect(() => {
-    if(searchTerm === ""){
+    if (searchTerm === "") {
       // setOrders(orders);
       return;
     }
-     filteredOrders = orders.filter(
+    filteredOrders = orders.filter(
       (order) =>
         order.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         order.email.toLowerCase().includes(searchTerm.toLowerCase())
@@ -116,8 +121,8 @@ export default function PendingOrders() {
         <h1 className="text-3xl font-semibold mb-9">Pending Orders</h1>
 
         {/* Orders Table */}
-       {/* Search Input */}
-       <div className="bg-white border rounded-full px-3 mb-6 md:py-2 py-1 md:gap-2 gap-1 flex-row-reverse justify-between flex">
+        {/* Search Input */}
+        <div className="bg-white border rounded-full px-3 mb-6 md:py-2 py-1 md:gap-2 gap-1 flex-row-reverse justify-between flex">
           <input
             type="text"
             className="outline-none w-full bg-white"
@@ -152,16 +157,33 @@ export default function PendingOrders() {
                   </td>
                   <td className="p-2 border">{order._id}</td>
                   <td className="p-2 border">{order.createdAt}</td>
-                  <td className="p-2 border">{order?.shipping_address_id?.recipientName}</td>
-                  <td className="p-2 border">{order?.shipping_address_id?.email || "N/A"}</td>
-                  <td className="p-2 border">{order?.shipping_address_id?.contactNumber}</td>
-                  <td className="p-2 border "><span className="bg-red-500 text-white  px-3 rounded-lg  py-1">{order?.status}</span></td>
+                  <td className="p-2 border">
+                    {order?.shipping_address_id?.recipientName}
+                  </td>
+                  <td className="p-2 border">
+                    {order?.shipping_address_id?.email || "N/A"}
+                  </td>
+                  <td className="p-2 border">
+                    {order?.shipping_address_id?.contactNumber}
+                  </td>
+                  <td className="p-2 border ">
+                    <span className="bg-red-500 text-white  px-3 rounded-lg  py-1">
+                      {order?.status}
+                    </span>
+                  </td>
                   <td className="p-2 border">{order?.payment_method}</td>
                   <td className="p-2 border">৳ {order?.total}</td>
                   <td className="p-2 border">
                     <div className="flex justify-center space-x-2">
-                      <EditButton onClick={()=> {setIsShowDetail(true); setTargetId(order._id)}}></EditButton>
-                      <DeleteButton onClick={()=> handleDelete(order._id)}></DeleteButton>
+                      <EditButton
+                        onClick={() => {
+                          setIsShowDetail(true);
+                          setTargetId(order._id);
+                        }}
+                      ></EditButton>
+                      <DeleteButton
+                        onClick={() => handleDelete(order._id)}
+                      ></DeleteButton>
                     </div>
                   </td>
                 </tr>
@@ -176,8 +198,19 @@ export default function PendingOrders() {
           </tbody>
         </table>
       </div>
+
+      <Pagination
+        currentPage={currentPage}
+        totalItems={totalItems}
+        itemsPerPage={itemsPerPage}
+        setCurrentPage={setCurrentPage}
+      />
       <BgBlurModal isShowModal={isShowDetail} setIsShowModal={setIsShowDetail}>
-        <OrderDetail id={targetId} isShow={isShowDetail} setIsShow={setIsShowDetail} />
+        <OrderDetail
+          id={targetId}
+          isShow={isShowDetail}
+          setIsShow={setIsShowDetail}
+        />
       </BgBlurModal>
     </div>
   );
