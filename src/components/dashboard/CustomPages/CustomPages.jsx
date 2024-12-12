@@ -15,6 +15,7 @@ import Mpagination from "../../../shared/Mpagination";
 import CreateCustomPagesForm from "./Forms/CreateCustomPagesForm";
 import EditCustomPagesForm from "./Forms/EditCustomPagesForm";
 import useGetAllCustomPages from "../../../Hook/GetDataHook/useGetAllCustomPages";
+import { FaCopy } from "react-icons/fa";
 
 const CustomPages = () => {
   // State management
@@ -94,6 +95,25 @@ const CustomPages = () => {
     console.log(`Delete brand with ID: ${id}`);
   };
 
+  const handleCopyLink = async (id) => {
+    console.log(window.location.origin);
+    const copyUrl = `${window.location.origin}/tailored-page/${id}`;
+    try {
+      await navigator.clipboard.writeText(copyUrl);
+
+      Swal.fire({
+        title: "Link copied to clipboard! ",
+        icon: "success",
+        timer: 2000,
+        showConfirmButton: false,
+      });
+    } catch (error) {
+      console.log(error, "error");
+      toast.error("Error deleting user!");
+    }
+    console.log(`Delete brand with ID: ${id}`);
+  };
+
   return (
     <>
       <div className="container mx-auto p-6 pt-0">
@@ -142,13 +162,13 @@ const CustomPages = () => {
                     className="border text-lg p-2 text-center cursor-pointer"
                     onClick={() => handleSort("title")}
                   >
-                    Name
+                    Title
                     {sortConfig.key === "title" &&
                       (sortConfig.direction === "asc" ? "🔼" : "🔽")}
                   </td>
 
                   <td className="border text-lg p-2 text-center cursor-pointer">
-                    Created At
+                    Slug
                   </td>
                   <td className="border text-lg p-2 text-center">Action</td>
                 </tr>
@@ -162,15 +182,19 @@ const CustomPages = () => {
                       </td>
                       <td className="border p-2 text-center">
                         <span className="border border-[#087d6d3a] p-1 px-2 rounded-lg bg font-semibold uppercase">
-                          {item.sizeName}
+                          {item.title}
                         </span>
                       </td>
-                      <td className="border p-2 text-center">
-                        {item.createdAt}
-                      </td>
+                      <td className="border p-2 text-center">{item.slug}</td>
                       <td className="border p-2">
                         <div className="flex justify-center gap-2">
                           <EditButton onClick={() => handleEdit(item._id)} />
+                          <button
+                            className="text-[#2E3190] border p-2 rounded-xl transition ease-in-out duration-300 hover:text-white hover:bg-[#2E3190]"
+                            onClick={() => handleCopyLink(item?.slug)}
+                          >
+                            <FaCopy />
+                          </button>
                           <DeleteButton
                             onClick={() => handleDelete(item._id)}
                           />
