@@ -52,6 +52,7 @@ export default function ProductCreateForm() {
   const [productFlagValue, setProductFlagValue] = useState("");
   const [brandValue, setBrandValue] = useState("zxcvzcxv");
   const [productSizeValue, setProductSizeValue] = useState("");
+  const [slug, setSlug] = useState("");
 
   const [setupConfig, setSetupConfig] = useState({});
 

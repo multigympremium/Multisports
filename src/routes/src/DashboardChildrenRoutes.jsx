@@ -2,6 +2,9 @@ import { lazy, Suspense } from "react";
 import GlobalLoading from "../../components library/GlobalLoading";
 import TermsCondition from "../../components/Home/(policy)/terms-and-condition/page";
 import ShippingPublicPolicy from "../../components/Home/(policy)/shipping-policy/page";
+const CustomPages = lazy(() =>
+  import("../../components/dashboard/CustomPages/CustomPages")
+);
 const CompletedOrders = lazy(() =>
   import("../../components/dashboard/ManageOrders/CompletedOrders")
 );
@@ -95,9 +98,6 @@ const ChildCategoryCreateForm = lazy(() =>
   import(
     "../../components/dashboard/ChildCategoryComponent/ChildCategoryCreateForm"
   )
-);
-const CustomPageCreateForm = lazy(() =>
-  import("../../components/dashboard/CustomPages/CustomPageCreateForm")
 );
 const ProductCreateForm = lazy(() =>
   import("../../components/dashboard/ManageProduct/CreateProductForm")
@@ -265,9 +265,6 @@ const ChildCategoryList = lazy(() =>
   import(
     "../../components/dashboard/ChildCategoryComponent/ViewAllChildCategories"
   )
-);
-const CustomPageList = lazy(() =>
-  import("../../components/dashboard/CustomPages/CustomPageList")
 );
 const ViewAllPromoCode = lazy(() =>
   import("../../components/dashboard/PromoCode/ViewAllPromoCode")
@@ -610,22 +607,6 @@ function DashboardChildrenRoutes() {
         <Suspense fallback={<GlobalLoading />}>
           <PrivateRoute>
             <ChildCategoryCreateForm />
-          </PrivateRoute>
-        </Suspense>
-      ),
-    },
-    {
-      // path: "assign-lockers",
-      path: "create-new-page",
-      // path: isPermittedRoute("assign-lockers"),
-      element: (
-        // <PrivateRoute>
-        //   <AssignLockers />
-        // </PrivateRoute>
-        // <AssignLockers />
-        <Suspense fallback={<GlobalLoading />}>
-          <PrivateRoute>
-            <CustomPageCreateForm />
           </PrivateRoute>
         </Suspense>
       ),
@@ -1546,7 +1527,7 @@ function DashboardChildrenRoutes() {
         // </PrivateRoute>
         <Suspense fallback={<GlobalLoading />}>
           <PrivateRoute>
-            <CustomPageList />
+            <CustomPages />
           </PrivateRoute>
         </Suspense>
       ),
