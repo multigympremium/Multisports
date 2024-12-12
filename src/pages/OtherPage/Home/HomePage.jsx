@@ -4,7 +4,7 @@
   import ExclusiveCollection from "../../../components/Home/ExclusiveCollection/ExclusiveCollection";
   import Footwear from "../../../components/Home/Footwear/Footwear";
   import MetaTags from "../../../components/Home/MetaTags/MetaTags";
-  import NewArrivals from "../../../components/Home/NewArrival/NewArrival";
+  import NewArrivals from "../../../components/Home/NewArrivals/NewArrivals";
   import PopularProducts from "../../../components/Home/PopularProducts/PopularProducts";
   import TrendyBags from "../../../components/Home/TrendyBags/TrendyBags";
   import useGetSeo from "../../../Hook/GetPublicDataHook/useGetSeo";
@@ -33,6 +33,7 @@ import Banner2 from "../../../components/Home/Banner/Bannner2";
     <>
       <MetaTags metaTitle={content.metaTitle} metaDescription={content.metaDescription} metaOgTitle={content.metaOgTitle} metaOgDescription={content.metaOgDescription} metaOgImage={content.metaOgImage} metaKeywords={content.metaKeywords} />
       <Banner /> 
+      <NewArrivals/>
       <Featured />
       <FlashSale/>
       <Banner2/>
