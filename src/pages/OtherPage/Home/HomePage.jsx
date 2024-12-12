@@ -13,6 +13,7 @@
 import Featured from "../../../components/Home/Featured/Featured";
 import FlashSale from "../../../components/Home/FlashSale/FlashSale";
 import Banner2 from "../../../components/Home/Banner/Bannner2";
+import Banner3 from "../../../components/Home/Banner/Banner3";
   export const metadata = {
     title: "Universal Survey - Home",
     description:
@@ -35,6 +36,7 @@ import Banner2 from "../../../components/Home/Banner/Bannner2";
       <Banner /> 
       <NewArrivals/>
       <Featured />
+      <Banner3 />
       <FlashSale/>
       <Banner2/>
       <PopularProducts />

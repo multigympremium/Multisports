@@ -3,7 +3,6 @@ module.exports = {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
-    // "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {
@@ -15,6 +14,16 @@ module.exports = {
         title: "var(--title-color)",
         paragraph: "var(--paragraph-color)",
         border: "var(--border-color)",
+      },
+      keyframes: {
+        shimmer: {
+          '0%': { transform: 'translateX(-100%)' },
+          '50%': { opacity: '0.6' },  // Slightly less intense opacity
+          '100%': { transform: 'translateX(100%)' },
+        },
+      },
+      animation: {
+        shimmer: 'shimmer 2s infinite ease-in-out',  // Slightly slower animation
       },
     },
   },
