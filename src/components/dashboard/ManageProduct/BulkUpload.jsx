@@ -2,11 +2,39 @@
 
 import { useState } from "react";
 import { useDropzone } from "react-dropzone";
+import { set } from "react-hook-form";
+import Swal from "sweetalert2";
 import * as XLSX from "xlsx";
+import useAxiosSecure from "../../../Hook/useAxiosSecure";
 
 export default function BulkUpload() {
   const [file, setFile] = useState(null);
   const [message, setMessage] = useState("");
+
+  const axiosSecure = useAxiosSecure();
+
+  const handleSubmit = async (data) => {
+    try {
+      const res = await axiosSecure.post("/products/bulk", data);
+
+      if (res.status === 200 || res.status === 201) {
+        Swal.fire({
+          title: "Success!",
+          text: "question created successfully",
+          icon: "success",
+          confirmButtonText: "Ok",
+        });
+      }
+    } catch (err) {
+      console.error(err);
+      Swal.fire({
+        title: "Error!",
+        text: "Something went wrong!",
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+    }
+  };
 
   // Handle file drop using react-dropzone
   const onDrop = (acceptedFiles) => {
@@ -16,24 +44,84 @@ export default function BulkUpload() {
   };
 
   // Parsing the Excel file
-  const handleFileUpload = () => {
-    if (!file) {
-      setMessage("Please select a file first.");
-      return;
+  // const handleFileUpload = () => {
+  //   if (!file) {
+  //     setMessage("Please select a file first.");
+  //     return;
+  //   }
+
+  //   console.log("file", file);
+
+  //   const reader = new FileReader();
+  //   reader.onload = (e) => {
+  //     const data = new Uint8Array(e.target.result);
+  //     const workbook = XLSX.read(data, { type: "array" });
+  //     const firstSheetName = workbook.SheetNames[0];
+  //     const worksheet = workbook.Sheets[firstSheetName];
+  //     const jsonData = XLSX.utils.sheet_to_json(worksheet);
+  //     console.log(jsonData, "jsonData");
+
+  //     setMessage("Products uploaded successfully!");
+  //   };
+  //   reader.readAsArrayBuffer(file);
+  // };
+
+  const handleFileUpload = (event) => {
+    try {
+      // const file = event.target.files[0];
+      if (!file) {
+        setMessage("No file selected");
+        return;
+      }
+
+      const fileExtension = file.name.split(".").pop().toLowerCase();
+      const reader = new FileReader();
+
+      console.log("fileExtension", fileExtension, file);
+
+      // Handle JSON files
+      if (fileExtension === "json") {
+        reader.onload = (e) => {
+          try {
+            const jsonData = JSON.parse(e.target.result);
+            handleSubmit({ type: "json", data: jsonData });
+          } catch (parseError) {
+            setMessage("Invalid JSON file");
+          }
+        };
+        reader.readAsText(file);
+        return;
+      }
+
+      // Handle CSV files
+      if (fileExtension === "csv") {
+        reader.onload = (e) => {
+          const csvData = e.target.result;
+          handleSubmit({ type: "csv", data: csvData });
+        };
+        reader.readAsText(file);
+        return;
+      }
+
+      // Handle Excel files (.xlsx or .xls)
+      if (fileExtension === "xlsx" || fileExtension === "xls") {
+        reader.onload = (e) => {
+          const arrayBuffer = e.target.result;
+          const workbook = XLSX.read(arrayBuffer, { type: "array" });
+          const sheetName = workbook.SheetNames[0]; // Get the first sheet
+          const worksheet = workbook.Sheets[sheetName];
+          const json = XLSX.utils.sheet_to_json(worksheet);
+          handleSubmit({ type: "excel", data: json });
+        };
+        reader.readAsArrayBuffer(file);
+        return;
+      }
+
+      setMessage("Unsupported file type");
+    } catch (err) {
+      console.error("Error uploading file:", err);
+      setMessage("An error occurred while processing the file");
     }
-
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const data = new Uint8Array(e.target.result);
-      const workbook = XLSX.read(data, { type: "array" });
-      const firstSheetName = workbook.SheetNames[0];
-      const worksheet = workbook.Sheets[firstSheetName];
-      const jsonData = XLSX.utils.sheet_to_json(worksheet);
-      console.log(jsonData);
-
-      setMessage("Products uploaded successfully!");
-    };
-    reader.readAsArrayBuffer(file);
   };
 
   // react-dropzone hook
@@ -46,7 +134,9 @@ export default function BulkUpload() {
   return (
     <div className="p-6 pt-0">
       <div className="">
-        <h1 className="text-3xl font-semibold mb-9">Upload Products from Excel</h1>
+        <h1 className="text-3xl font-semibold mb-9">
+          Upload Products from Excel
+        </h1>
         <div className="grid grid-cols-2 gap-4">
           {/* Left Side Image */}
           <div className="flex items-center justify-center">

@@ -10,6 +10,7 @@ import useAxiosSecure from "../../../Hook/useAxiosSecure";
 import { IoIosSearch } from "react-icons/io";
 import EditButton from "../../../components library/EditButton";
 import DeleteButton from "../../../components library/DeleteButton";
+import Pagination from "../../partial/Pagination/Pagination";
 
 // Sample pending orders data (could be fetched from API)
 const initialData = [
@@ -49,8 +50,8 @@ export default function CompletedOrders() {
   const [targetId, setTargetId] = useState(null);
   const [isDeleted, setIsDeleted] = useState(false);
 
-  const orders = useGetAllOrders({
-    query: `status=Completed`,
+  const { orders, totalItems } = useGetAllOrders({
+    query: `status=Completed&currentPage=${currentPage}`,
     isDeleted,
     isShowModal: isShowDetail,
   });
@@ -156,15 +157,9 @@ export default function CompletedOrders() {
                   </td>
                   <td className="p-2 border">{order._id}</td>
                   <td className="p-2 border">{order.createdAt}</td>
-                  <td className="p-2 border">
-                    {order?.name}
-                  </td>
-                  <td className="p-2 border">
-                    {order?.email || "N/A"}
-                  </td>
-                  <td className="p-2 border">
-                    {order?.phone}
-                  </td>
+                  <td className="p-2 border">{order?.name}</td>
+                  <td className="p-2 border">{order?.email || "N/A"}</td>
+                  <td className="p-2 border">{order?.phone}</td>
                   <td className="p-2 border ">
                     <span className="bg-red-500 text-white  px-3 rounded-lg  py-1">
                       {order?.status}
@@ -224,6 +219,13 @@ export default function CompletedOrders() {
           </div>
         </div>
       </div>
+
+      <Pagination
+        currentPage={currentPage}
+        totalItems={totalItems}
+        itemsPerPage={itemsPerPage}
+        setCurrentPage={setCurrentPage}
+      />
 
       <BgBlurModal isShowModal={isShowDetail} setIsShowModal={setIsShowDetail}>
         <OrderDetail

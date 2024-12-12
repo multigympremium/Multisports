@@ -10,6 +10,8 @@ function useGetAllOrders({
   query = "",
 }) {
   const [orders, setOrders] = useState([]);
+  const [totalItems, setTotalItems] = useState(0);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
 
   const axiosSecure = useAxiosSecure();
 
@@ -22,6 +24,8 @@ function useGetAllOrders({
         if (res.status === 200 || res.status === 201) {
           setOrders(res.data.data);
           setLoading(false);
+          setTotalItems(res.data.totalItems);
+          setItemsPerPage(res.data.totalPages);
         }
       } catch (error) {
         console.error("Error fetching orders:", error);
@@ -33,7 +37,7 @@ function useGetAllOrders({
     fetchOrders();
   }, [axiosSecure, isDeleted, isEdited, isShowModal, query]);
 
-  return orders;
+  return { orders, totalItems, itemsPerPage };
 }
 
 export default useGetAllOrders;

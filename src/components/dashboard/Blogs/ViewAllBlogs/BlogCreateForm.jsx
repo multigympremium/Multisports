@@ -22,7 +22,7 @@ export default function BlogCreateForm() {
 
   const BlogCategories = useGetAllBlogCategories({});
 
-    const [thumbnail, setThumbnail] = useState(null);
+  const [thumbnail, setThumbnail] = useState(null);
   const [title, setTitle] = useState("");
 
   const onDropIcon = (acceptedFiles) => {
@@ -52,9 +52,6 @@ export default function BlogCreateForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Handle form submission logic here
-    
-
-   
 
     const formData = new FormData();
 
@@ -64,6 +61,7 @@ export default function BlogCreateForm() {
     formData.append("fullDescription", fullDescription);
     formData.append("image", thumbnail);
     formData.append("title", title);
+    formData.append("slug", slug);
     formData.append("metaTitle", metaTitle);
     formData.append("metaKeywords", metaKeywords);
     formData.append("metaDescription", metaDescription);
@@ -109,8 +107,6 @@ export default function BlogCreateForm() {
     multiple: false,
   });
 
-
-
   const handleCloseModal = () => {
     setWriter("");
     setBlogCategory(null);
@@ -123,7 +119,6 @@ export default function BlogCreateForm() {
     setMetaDescription("");
     setThumbnail(null);
     setThumbnailPreview("");
-
   };
 
   const handleSlug = (input) => {
@@ -161,7 +156,6 @@ export default function BlogCreateForm() {
             />
           </div>
 
-
           <div className="mb-4">
             <label className="block text-gray-700 ">Slug </label>
             <input
@@ -175,9 +169,7 @@ export default function BlogCreateForm() {
           </div>
 
           <div className="mb-4">
-            <label className="block text-gray-700 ">
-               Blog Category
-            </label>
+            <label className="block text-gray-700 ">Blog Category</label>
             <select
               value={blogCategory}
               onChange={(e) => setBlogCategory(e.target.value)}
@@ -190,58 +182,46 @@ export default function BlogCreateForm() {
                 </option>
               ))}
             </select>
-             
           </div>
 
-       
           <div className="mb-4">
-            <label className="block text-gray-700 mb-2">
-              Blog Thumbnail
-            </label>
+            <label className="block text-gray-700 mb-2">Blog Thumbnail</label>
             <DragUploadImageInput
-            getRootProps={getIconRootProps}
-            getInputProps={getIconInputProps}
-            image={thumbnail}
-            imagePreview={thumbnailPreview}
-          />
+              getRootProps={getIconRootProps}
+              getInputProps={getIconInputProps}
+              image={thumbnail}
+              imagePreview={thumbnailPreview}
+            />
           </div>
 
-        
-
-          
-
           <div className="mb-8">
-              <label className="block text-gray-700 text-2xl mb-4">
-                Short Description
-              </label>
+            <label className="block text-gray-700 text-2xl mb-4">
+              Short Description
+            </label>
 
-              <CustomEditor
-                value={shortDescription}
-                setValue={setShortDescription}
-              />
-            </div>
+            <CustomEditor
+              value={shortDescription}
+              setValue={setShortDescription}
+            />
+          </div>
           <div className="mb-8">
-              <label className="block text-gray-700 text-2xl mb-4">
-                Full Description
-              </label>
+            <label className="block text-gray-700 text-2xl mb-4">
+              Full Description
+            </label>
 
-              <CustomEditor
-                value={fullDescription}
-                setValue={setFullDescription}
-              />
-            </div>
+            <CustomEditor
+              value={fullDescription}
+              setValue={setFullDescription}
+            />
+          </div>
 
-
-    
           <div className="mb-4 mt-4">
             <h2 className="text-2xl font-semibold mb-4 pb-3  border-b border-gray-300">
-               SEO Information (Optional)
+              SEO Information (Optional)
             </h2>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-gray-700 ">
-                  Meta Title
-                </label>
+                <label className="block text-gray-700 ">Meta Title</label>
                 <input
                   type="text"
                   value={metaTitle}
@@ -250,9 +230,7 @@ export default function BlogCreateForm() {
                 />
               </div>
               <div>
-                <label className="block text-gray-700 ">
-                  Meta Keywords
-                </label>
+                <label className="block text-gray-700 ">Meta Keywords</label>
                 <input
                   type="text"
                   value={metaKeywords}
@@ -261,9 +239,7 @@ export default function BlogCreateForm() {
                 />
               </div>
               <div className="col-span-2">
-                <label className="block text-gray-700 ">
-                  Meta Description
-                </label>
+                <label className="block text-gray-700 ">Meta Description</label>
                 <textarea
                   value={metaDescription}
                   onChange={(e) => setMetaDescription(e.target.value)}
@@ -274,12 +250,8 @@ export default function BlogCreateForm() {
             </div>
           </div>
 
-      
           <div className="flex justify-end">
-            <button
-              type="submit"
-              className="customSaveButton"
-            >
+            <button type="submit" className="customSaveButton">
               Save Blog
             </button>
           </div>
