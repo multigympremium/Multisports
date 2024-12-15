@@ -341,31 +341,31 @@ const Footer = () => {
           <div className="text-slate-600 flex flex-col gap-1 md:gap-3 text-sm md:text-base">
             <Link
               className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300 cursor-pointer"
-              to="#"
+              to="/faqs"
             >
               Frequently Asked Questions
             </Link>
             <Link
               className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300 cursor-pointer"
-              to="/terms"
+              to="/terms-and-condition"
             >
               Terms & Conditions
             </Link>
             <Link
               className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300 cursor-pointer"
-              to="/Privacy"
+              to="/privacy-policy"
             >
               Replacement Policy
             </Link>
             <Link
               className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300 cursor-pointer"
-              to="/cookiePolicy"
+              to="/shipping-policy"
             >
-              Cookie policy
+              Shipping Policy
             </Link>
             <Link
               className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300 cursor-pointer"
-              to="/refundpolicy"
+              to="/return-policy"
             >
               EMI Terms & Conditions
             </Link>

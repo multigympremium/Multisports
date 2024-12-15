@@ -33,6 +33,7 @@ import AboutUsSection from "../components/dashboard/About/forms/AboutUsSection";
 import About from "../components/Home/About/About";
 import AboutVision from "../components/Home/About/AboutVision";
 import TailoredPages from "../components/Home/TailoredPages/TailoredPages";
+import Faqs from "../components/Home/faqs/Faqs";
 
 const AllRoutes = () => {
   // const [permissionData, setPermissionData] = useState([]);
@@ -244,6 +245,21 @@ const AllRoutes = () => {
             <Suspense fallback={<GlobalLoading />}>
               <PrivateRoute>
                 <Blogs />
+              </PrivateRoute>
+            </Suspense>
+          ),
+        },
+        {
+          // path: "userpermission",
+          path: "faqs",
+          // path: isPermittedRoute("userpermission"),
+          element: (
+            // <PrivateRoute>
+            //   <SmsGroup />
+            // </PrivateRoute>
+            <Suspense fallback={<GlobalLoading />}>
+              <PrivateRoute>
+                <Faqs />
               </PrivateRoute>
             </Suspense>
           ),
