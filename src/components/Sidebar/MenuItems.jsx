@@ -695,12 +695,12 @@ function MenuItemsList({ userRole }) {
           isAllowed: isAllowedRoute("user-roles"),
           icon: <IoIosHome />,
         },
-        {
-          title: "Assign Role Permission",
-          path: "assign-role-permission",
-          isAllowed: isAllowedRoute("assign-role-permission"),
-          icon: <IoIosHome />,
-        },
+        // {
+        //   title: "Assign Role Permission",
+        //   path: "assign-role-permission",
+        //   isAllowed: isAllowedRoute("assign-role-permission"),
+        //   icon: <IoIosHome />,
+        // },
       ],
     },
 

@@ -14,6 +14,7 @@ import auth from "../firebase/firebase.config";
 import useAxiosSecure from "../Hook/useAxiosSecure";
 import toast from "react-hot-toast";
 import useAxiosPublic from "../Hook/useAxiosPublic";
+import { set } from "react-hook-form";
 
 export const AuthContext = createContext(null);
 
@@ -159,73 +160,84 @@ const AuthProvider = ({ children }) => {
   };
 
   const logOut = () => {
-    setLoading(true);
-    return signOut(auth);
+    localStorage.removeItem("user");
+    setUser(null);
   };
 
+  // useEffect(() => {
+  //   const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
+  //     setUser(currentUser);
+  //     setLoading(false);
+  //     const getUserRole = async () => {
+  //       try {
+  //         if (currentUser) {
+  //           const res = await axiosSecure.get(
+  //             `/users/admin/${currentUser.email}`
+  //           );
+  //           // get current user from the surver
+  //           const response = await axiosSecure.get(
+  //             `/users/${currentUser.email}`
+  //           );
+
+  //           localStorage.setItem("user", JSON.stringify(response.data));
+
+  //           setCurrentUser(response.data);
+  //           setUserRole(res.data);
+  //           setLoading(false);
+  //         } else {
+  //           setUserRole(null);
+  //         }
+  //       } catch (error) {
+  //         console.error("Error fetching user type:", error);
+  //       }
+  //     };
+  //     getUserRole();
+
+  //     if (!currentUser) {
+  //       localStorage.removeItem("user");
+  //     }
+
+  //     const cartItemData = localStorage.getItem("cart");
+
+  //     if (cartItemData) {
+  //       setCartItems(JSON.parse(cartItemData));
+  //     } else {
+  //       setCartItems([]);
+  //     }
+
+  //     const storedCart = localStorage.getItem("cartItems");
+
+  //     if (storedCart) {
+  //       setCartItems(JSON.parse(storedCart));
+
+  //       const totalPriceInfo = JSON.parse(storedCart).reduce(
+  //         (acc, item) => acc + item.price * item.quantity,
+  //         0
+  //       );
+  //       const totalItemsInfo = JSON.parse(storedCart).reduce(
+  //         (acc, item) => acc + item.quantity,
+  //         0
+  //       );
+  //       setTotalItems(totalItemsInfo);
+
+  //       setTotalPrice(totalPriceInfo);
+  //     }
+  //   });
+  //   return () => {
+  //     unSubscribe();
+  //   };
+  // }, [axiosSecure]);
+
   useEffect(() => {
-    const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-      setLoading(false);
-      const getUserRole = async () => {
-        try {
-          if (currentUser) {
-            const res = await axiosSecure.get(
-              `/users/admin/${currentUser.email}`
-            );
-            // get current user from the surver
-            const response = await axiosSecure.get(
-              `/users/${currentUser.email}`
-            );
-
-            localStorage.setItem("user", JSON.stringify(response.data));
-
-            setCurrentUser(response.data);
-            setUserRole(res.data);
-            setLoading(false);
-          } else {
-            setUserRole(null);
-          }
-        } catch (error) {
-          console.error("Error fetching user type:", error);
-        }
-      };
-      getUserRole();
-
-      if (!currentUser) {
-        localStorage.removeItem("user");
-      }
-
-      const cartItemData = localStorage.getItem("cart");
-
-      if (cartItemData) {
-        setCartItems(JSON.parse(cartItemData));
-      } else {
-        setCartItems([]);
-      }
-
-      const storedCart = localStorage.getItem("cartItems");
-
-      if (storedCart) {
-        setCartItems(JSON.parse(storedCart));
-
-        const totalPriceInfo = JSON.parse(storedCart).reduce(
-          (acc, item) => acc + item.price * item.quantity,
-          0
-        );
-        const totalItemsInfo = JSON.parse(storedCart).reduce(
-          (acc, item) => acc + item.quantity,
-          0
-        );
-        setTotalItems(totalItemsInfo);
-
-        setTotalPrice(totalPriceInfo);
-      }
-    });
-    return () => {
-      unSubscribe();
+    const get_user = () => {
+      const storedUser = localStorage.getItem("user");
+      return storedUser == "undefined" || storedUser == null
+        ? null
+        : JSON.parse(storedUser);
     };
-  }, [axiosSecure]);
+
+    setUser(get_user());
+  }, []);
 
   const authInfo = {
     user,
