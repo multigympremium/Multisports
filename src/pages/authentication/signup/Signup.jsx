@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import {Link, useLocation, useNavigate} from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { MdOutlineKeyboardBackspace } from "react-icons/md";
 import { IoEyeOutline } from "react-icons/io5";
 import { IoEyeOffOutline } from "react-icons/io5";
@@ -19,8 +19,8 @@ export default function SignUpPage() {
   const [subscribe, setSubscribe] = useState(false);
   const [recaptcha, setRecaptcha] = useState("");
 
-  const [ site_key ,setSite_key] = useState("");
-  const [ isRecaptcha , setIsRecaptcha] = useState(false);
+  const [site_key, setSite_key] = useState("");
+  const [isRecaptcha, setIsRecaptcha] = useState(false);
   const axiosPublic = useAxiosPublic();
   const router = useNavigate();
 
@@ -104,8 +104,7 @@ export default function SignUpPage() {
     validatePassword();
   }, [password, confirmPassword]);
 
-
-  const handleCaptcha = async(value) => {
+  const handleCaptcha = async (value) => {
     console.log(value);
 
     const submitData = {
@@ -117,16 +116,12 @@ export default function SignUpPage() {
       console.log(res);
       if (res.status === 200 || res.status === 201) {
         setRecaptcha(value);
-         
       }
     } catch (error) {
       console.log(error);
 
       toast.error("Something went wrong!");
     }
-
-
-
   };
 
   useEffect(() => {
@@ -138,10 +133,11 @@ export default function SignUpPage() {
 
       setSite_key(data[0]?.site_key);
       setIsRecaptcha(data[0]?.isRecaptcha);
-     
     };
 
     fetchShippingPolicy();
+    const userEmailData = sessionStorage.getItem("userEmail");
+    setEmail(userEmailData);
   }, [axiosPublic]);
 
   return (
@@ -156,13 +152,13 @@ export default function SignUpPage() {
           className="mx-auto"
         />
 
-<div className="w-full py-5 absolute top-5 left-8">
-        <Link to="/">
-          <button className="flex items-center justify-center rounded-full shadow-lg w-[50px] h-[50px] bg-white ml-10">
-            <MdOutlineKeyboardBackspace size={30} />
-          </button>
-        </Link>
-      </div>
+        <div className="w-full py-5 absolute top-5 left-8">
+          <Link to="/">
+            <button className="flex items-center justify-center rounded-full shadow-lg w-[50px] h-[50px] bg-white ml-10">
+              <MdOutlineKeyboardBackspace size={30} />
+            </button>
+          </Link>
+        </div>
 
         <div className=" rounded-lg p-8  h-full mt-4 mx-auto ">
           <form className="mt-6 bg-white p-3 w-[94%] mx-auto">
@@ -185,7 +181,7 @@ export default function SignUpPage() {
               />
             </div>
             {/* Email Input */}
-            <div className="mb-4 border-b border-gray-200 pb-5">
+            {/* <div className="mb-4 border-b border-gray-200 pb-5">
               <label
                 htmlFor="email"
                 className="block text-gray-700 py-3 text-xl"
@@ -201,7 +197,7 @@ export default function SignUpPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
-            </div>
+            </div> */}
 
             {/* Password Input */}
             <div className="mb-4 relative">
@@ -264,13 +260,9 @@ export default function SignUpPage() {
                 {passwordVisible ? <IoEyeOffOutline /> : <IoEyeOutline />}
               </button>
             </div>
-          {
-                isRecaptcha && site_key && (
-      
-                  <ReCAPTCHA sitekey={site_key} onChange={handleCaptcha}
-                  />
-                )
-              }
+            {isRecaptcha && site_key && (
+              <ReCAPTCHA sitekey={site_key} onChange={handleCaptcha} />
+            )}
           </form>
           {/* Subscribe Checkbox */}
           {/* <div className="flex items-center mt-6 pl-8 text-lg ">
@@ -292,7 +284,7 @@ export default function SignUpPage() {
               type="submit"
               className="block bg-black text-white text-center text-2xl py-3 rounded-lg font-semibold mb-4 hover:scale-[0.95] transition-all duration-300 w-[90%] mx-auto disabled:opacity-20 disabled:cursor-not-allowed"
               onClick={handleSignUp}
-              disabled={recaptcha === ""}
+              disabled={isRecaptcha && site_key && recaptcha === ""}
             >
               Sign Up
             </button>

@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import {Link, useLocation, useNavigate} from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { MdOutlineKeyboardBackspace } from "react-icons/md";
 import { IoEyeOutline } from "react-icons/io5";
 import { IoEyeOffOutline } from "react-icons/io5";
@@ -14,17 +14,17 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [subscribe, setSubscribe] = useState(false);
-  const [recaptcha, setRecaptcha] = useState("")
+  const [recaptcha, setRecaptcha] = useState("");
   const pathName = useLocation().pathname;
-  const axiosPublic = useAxiosPublic()
-  const [ site_key ,setSite_key] = useState("");
-  const [ isRecaptcha ,setIsRecaptcha] = useState(false);
+  const axiosPublic = useAxiosPublic();
+  const [site_key, setSite_key] = useState("");
+  const [isRecaptcha, setIsRecaptcha] = useState(false);
 
   console.log(pathName, "pathName");
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-   const handleSignUp = async (e) => {
+  const handleSignUp = async (e) => {
     e.preventDefault();
     console.log("Email:", email);
     console.log("Password:", password);
@@ -43,7 +43,7 @@ export default function Login() {
           duration: 2000,
           position: "top-right",
         });
-        navigate("/setup");
+        navigate("/");
       }
     } catch (error) {
       console.log(error);
@@ -56,8 +56,7 @@ export default function Login() {
     }
   };
 
-
-  const handleCaptcha = async(value) => {
+  const handleCaptcha = async (value) => {
     console.log(value);
 
     const submitData = {
@@ -69,16 +68,12 @@ export default function Login() {
       console.log(res);
       if (res.status === 200 || res.status === 201) {
         setRecaptcha(value);
-         
       }
     } catch (error) {
       console.log(error);
 
       toast.error("Something went wrong!");
     }
-
-
-
   };
 
   useEffect(() => {
@@ -88,7 +83,6 @@ export default function Login() {
 
       setSite_key(data[0]?.site_key);
       setIsRecaptcha(data[0]?.isRecaptcha);
-     
     };
 
     fetchShippingPolicy();
@@ -193,24 +187,19 @@ export default function Login() {
           </Link>
         </div>
 
-        {
-          isRecaptcha && site_key && (
-
-            <ReCAPTCHA sitekey={site_key} onChange={handleCaptcha}
-            />
-          )
-        }
-
+        {isRecaptcha && site_key && (
+          <ReCAPTCHA sitekey={site_key} onChange={handleCaptcha} />
+        )}
+        <div className="mt-4 text-center text-sm text-gray-500  w-full flex flex-col gap-4 py-4 pb-10">
+          <button
+            type="submit"
+            disabled={recaptcha === "" && isRecaptcha && site_key}
+            className="block bg-black text-white text-center text-2xl py-3 rounded-lg font-semibold mb-4 hover:scale-[0.95] transition-all duration-300 w-[94%] mx-auto disabled:opacity-20"
+          >
+            Log In
+          </button>
+        </div>
       </form>
-      <div className="mt-4 text-center text-sm text-gray-500  w-full flex flex-col gap-4 py-4 pb-10">
-        <button
-          type="submit"
-          disabled={recaptcha === ""}
-          className="block bg-black text-white text-center text-2xl py-3 rounded-lg font-semibold mb-4 hover:scale-[0.95] transition-all duration-300 w-[94%] mx-auto disabled:opacity-20"
-        >
-          Log In
-        </button>
-      </div>
     </div>
   );
 }
