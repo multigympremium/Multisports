@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { MdOutlineKeyboardBackspace } from "react-icons/md";
 import useAxiosPublic from "../../../Hook/useAxiosPublic";
 import toast from "react-hot-toast";
+import Swal from "sweetalert2";
 
 export default function SendOTP() {
   const [email, setEmail] = useState("");
@@ -33,7 +34,15 @@ export default function SendOTP() {
           position: "top-right",
         });
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+      Swal.fire({
+        title: "Oops...",
+        text: `${error?.response?.data?.error || error?.message || error}`,
+        icon: "error",
+        confirmButtonText: "Try Again",
+      });
+    }
   };
 
   return (

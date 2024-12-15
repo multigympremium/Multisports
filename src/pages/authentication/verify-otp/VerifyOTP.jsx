@@ -149,7 +149,7 @@ export default function VerifyOTP() {
         />
 
         <div className="w-full py-5">
-          <Link to="/signup">
+          <Link to="/">
             <button className="flex items-center justify-center rounded-full shadow-lg w-[50px] h-[50px] bg-white ml-10">
               <MdOutlineKeyboardBackspace size={30} />
             </button>
