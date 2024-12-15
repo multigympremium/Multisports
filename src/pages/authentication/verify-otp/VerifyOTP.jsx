@@ -15,7 +15,6 @@ export default function VerifyOTP() {
   const router = useNavigate();
   const [userEmail, setUserEmail] = useState("");
 
-  
   const [otp_expiry, setOtp_expiry] = useState(new Date().getTime());
   const [otp_expiryDate, setOtp_expiryDate] = useState(new Date());
   // let expiryTimestamp = null;
@@ -72,7 +71,10 @@ export default function VerifyOTP() {
       console.log(res);
       if (res.status === 200 || res.status === 201) {
         sessionStorage.setItem("otp_expiry", res?.data?.otp_expiry);
-        sessionStorage.setItem("otp_limit_time", res?.data?.otp_limitation_time);
+        sessionStorage.setItem(
+          "otp_limit_time",
+          res?.data?.otp_limitation_time
+        );
 
         // setOtp_limit_time(res?.data?.otp_limitation_time);
         setOtp_expiry(res?.data?.otp_expiry);
@@ -94,14 +96,15 @@ export default function VerifyOTP() {
 
     const validatePassword = async () => {
       try {
-      const res = await axiosPublic.post("/users/verify-otp", {
-        otp,
-        email: userEmail,
-      });
-      console.log(res);
-      if (res.status === 200 || res.status === 201) {
-        return router("/signup");
-      }
+        const res = await axiosPublic.post("/users/verify-otp", {
+          otp,
+          email: userEmail,
+        });
+        console.log(res);
+        if (res.status === 200 || res.status === 201) {
+          sessionStorage.setItem("user", JSON.stringify(res.data.user));
+          return router("/signup");
+        }
       } catch (error) {
         console.log(error);
         Swal.fire({
@@ -117,7 +120,7 @@ export default function VerifyOTP() {
       validatePassword();
     }
 
-    const userEmailData = localStorage.getItem("userEmail");
+    const userEmailData = sessionStorage.getItem("userEmail");
     setUserEmail(userEmailData);
     const otp_expiryDateData = sessionStorage.getItem("otp_expiry") || "";
     // const otp_limitation_timeData =

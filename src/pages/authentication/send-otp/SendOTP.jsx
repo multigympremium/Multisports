@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import {Link, useLocation, useNavigate} from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { MdOutlineKeyboardBackspace } from "react-icons/md";
 import useAxiosPublic from "../../../Hook/useAxiosPublic";
 import toast from "react-hot-toast";
@@ -21,9 +21,12 @@ export default function SendOTP() {
       const res = await axiosPublic.post("/users/send-otp", { email });
       console.log(res);
       if (res.status === 200 || res.status === 201) {
-        localStorage.setItem("userEmail", email);
-        localStorage.setItem("otp_expiry", res?.data?.otp_expiry);
-        localStorage.setItem("otp_limit_time", res?.data?.otp_limitation_time);
+        sessionStorage.setItem("userEmail", email);
+        sessionStorage.setItem("otp_expiry", res?.data?.otp_expiry);
+        sessionStorage.setItem(
+          "otp_limit_time",
+          res?.data?.otp_limitation_time
+        );
         router("/verify-otp");
         toast.success("OTP sent successfully!", {
           duration: 2000,
