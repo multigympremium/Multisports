@@ -53,7 +53,7 @@ function HorizontalMenu() {
 
   console.log(activeCategory, "activeCategory");
   return (
-    <div className="relative">
+    <div className="relative md:block hidden">
       <header className="w-full bg-red-500 flex justify-center text-white ">
         <div className="container flex px-2 gap-4 ">
           <Swiper

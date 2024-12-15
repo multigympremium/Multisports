@@ -1,7 +1,12 @@
-Navbar Header Responsive 
+Navbar Header Responsive
+
+
 navbar 3 dot button 
+
 Mostpopular https://chawkbazar.vercel.app/contemporary
+
 Shop By Category -https://chawkbazar.vercel.app/classic real data not show in large device 
+
 click on modal open the modal 
 
 

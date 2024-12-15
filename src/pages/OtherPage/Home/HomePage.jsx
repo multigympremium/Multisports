@@ -15,6 +15,7 @@ import FlashSale from "../../../components/Home/FlashSale/FlashSale";
 import Banner2 from "../../../components/Home/Banner/Bannner2";
 import Banner3 from "../../../components/Home/Banner/Banner3";
 import Testimonials from "../../../components/Home/Testimonials/Testimonials";
+import Category from "../../../components/Home/Category/Category";
   export const metadata = {
     title: "Universal Survey - Home",
     description:
@@ -36,6 +37,7 @@ import Testimonials from "../../../components/Home/Testimonials/Testimonials";
       <MetaTags metaTitle={content.metaTitle} metaDescription={content.metaDescription} metaOgTitle={content.metaOgTitle} metaOgDescription={content.metaOgDescription} metaOgImage={content.metaOgImage} metaKeywords={content.metaKeywords} />
       <Banner /> 
       <NewArrivals/>
+      <Category/>
       <Featured />
       <Banner3 />
       <FlashSale/>
