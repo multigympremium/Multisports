@@ -1,34 +1,45 @@
-import React, { useEffect, useRef } from "react";
-function Modal({
-  isShowModal,
-  children,
-  setIsShowModal,
-  setFormIndex = () => {},
-}) {
-  const modalElem = useRef(null);
+import React, { useEffect } from "react";
 
+function Modal({ isShowModal, children, setIsShowModal, setFormIndex = () => {} }) {
   useEffect(() => {
-    if (!isShowModal) {
-      modalElem.current.scrollTop = 0;
+    if (isShowModal) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
     }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [isShowModal]);
+
   return (
-    <div
-      className={`fixed top-0 left-0 w-screen h-screen grid place-items-center py-6 z-[99] bg-black bg-opacity-50 overflow-auto transition-all duration-500 ${
-        isShowModal ? "opacity-100 visible" : "opacity-0 invisible"
-      }`}
-      ref={modalElem}
+    <dialog
+      className={`modal ${isShowModal ? "modal-open" : ""}`}
+      open={isShowModal}
+      onClick={() => {
+        setIsShowModal(false);
+        setFormIndex(0);
+      }}
     >
       <div
-        // added comment
-        className="w-full h-full absolute top-0 left-0 z-[-1]"
-        onClick={() => {
-          setIsShowModal(false);
-          setFormIndex(0);
-        }}
-      ></div>
-      {children}
-    </div>
+        className="modal-box relative"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Close Button */}
+        <button
+          className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+          onClick={() => {
+            setIsShowModal(false);
+            setFormIndex(0);
+          }}
+        >
+          ✕
+        </button>
+
+        {children}
+      </div>
+    </dialog>
   );
 }
 

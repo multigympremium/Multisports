@@ -1,5 +1,3 @@
-
-
 import { useEffect, useState } from "react";
 import { FaUser } from "react-icons/fa";
 import { useLocation, useParams, useSearchParams } from "react-router-dom";
@@ -12,11 +10,50 @@ import ActiveLink from "../../../shared/ActiveLink";
 import FilterRadioInput from "../../../shared/FilterRadioInput";
 import ProductsArea from "./ProductsArea";
 import ReactGA from "react-ga4";
+import ProductFilterGroup from "../../../shared/ProductFilterGroup";
+
+const SelectableList = ({ items, labelKey }) => {
+  const [selectedItems, setSelectedItems] = useState([]);
+
+  const toggleSelection = (name) => {
+    setSelectedItems((prev) =>
+      prev.includes(name) ? prev.filter((item) => item !== name) : [...prev, name]
+    );
+  };
+
+  return (
+    <div className="space-y-4">
+      {items.length > 0 &&
+        items.slice(0, 8).map((item, index) => (
+          <label
+            key={index}
+            className="flex items-center cursor-pointer transition-colors group"
+          >
+            <input
+              type="checkbox"
+              className="peer hidden"
+              checked={selectedItems.includes(item[labelKey])}
+              onChange={() => toggleSelection(item[labelKey])}
+            />
+            <span className="w-5 h-5 border-2 border-gray-200 rounded mr-4 flex items-center justify-center peer-checked:bg-black peer-checked:border-black group-hover:border-gray-700 transition-all duration-300 delay-100">
+              {selectedItems.includes(item[labelKey]) && (
+                <svg className="w-4 h-4 text-white" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M9 16.2l-4.2-4.2-1.4 1.4 5.6 5.6 12-12-1.4-1.4z" />
+                </svg>
+              )}
+            </span>
+            <p className="transition-all text-sm duration-300 delay-100">{item[labelKey]}</p>
+          </label>
+        ))}
+    </div>
+
+  );
+};
 
 function ProductPage() {
-    const params = useParams()
-    const location = useLocation()
-    console.log(location, "searchParams")
+  const params = useParams()
+  const location = useLocation()
+  console.log(location, "searchParams")
   const [brandFilter, setBrandFilter] = useState([]);
   const [colorFilter, setColorFilter] = useState([]);
   const [sizeFilter, setSizesFilter] = useState([]);
@@ -79,7 +116,7 @@ function ProductPage() {
   };
 
   useEffect(() => {
-    ReactGA.send({ hitType: "pageview", page: window.location.pathname , title: "ProductPage.jsx" });
+    ReactGA.send({ hitType: "pageview", page: window.location.pathname, title: "ProductPage.jsx" });
 
     ReactGA.event({
       category: "Product Visiting",
@@ -89,23 +126,24 @@ function ProductPage() {
 
   console.log(params, router, "search");
   return (
-    <div className="flex flex-col h-screen">
-      <div className="flex flex-1 relative z-[1] ">
+    <div className="flex ml-12 flex-col">
+      <div className="flex  flex-1 relative z-[1] ">
         <div
-          className={` transition-all duration-500  h-[90vh] overflow-auto absolute top-0 left-0 lg:relative pt-8 z-[3] bg-gray-100 w-[300px]`}
+          className={` transition-all duration-500  overflow-auto absolute top-0 left-0 lg:relative pt-8 z-[3] w-[300px]`}
         >
           <ul className="menu gap-3">
-            {/* {currentUserRoute} */}
 
-            <GroupLink groupName="Categories" icon={<FaUser />}>
+            {/* <GroupLink groupName="Categories" icon={<FaUser />}>
               {subcategories.length > 0 &&
                 subcategories.map((item, index) => (
                   <ActiveLink key={index} href={`/products/${item.slug}`}>
                     {item.subcategoryName}
                   </ActiveLink>
                 ))}
-            </GroupLink>
-            <GroupLink groupName="Brands" icon={<FaUser />}>
+            </GroupLink> */}
+
+
+            {/* <GroupLink groupName="Brands" icon={<FaUser />}>
               {productBrands?.length > 0 &&
                 productBrands?.map((item, index) => (
                   <FilterRadioInput
@@ -119,9 +157,10 @@ function ProductPage() {
                     type="brand"
                   />
                 ))}
-            </GroupLink>
+            </GroupLink> */}
 
-            <GroupLink groupName="Colors" icon={<FaUser />}>
+
+            {/* <GroupLink groupName="Colors" icon={<FaUser />}>
               {productColors?.length > 0 &&
                 productColors?.map((item, index) => (
                   <FilterRadioInput
@@ -134,9 +173,9 @@ function ProductPage() {
                     type="color"
                   />
                 ))}
-            </GroupLink>
+            </GroupLink> */}
 
-            <GroupLink groupName="Sizes" icon={<FaUser />}>
+            {/* <GroupLink groupName="Sizes" icon={<FaUser />}>
               {productSizes?.length > 0 &&
                 productSizes?.map((item, index) => (
                   <FilterRadioInput
@@ -149,10 +188,27 @@ function ProductPage() {
                     type="size"
                   />
                 ))}
-            </GroupLink>
+            </GroupLink> */}
+            <div className="space-y-4">
+              <ProductFilterGroup groupName="Categories">
+                <SelectableList items={subcategories} labelKey="subcategoryName" />
+              </ProductFilterGroup>
+
+              <ProductFilterGroup groupName="Brands">
+                <SelectableList items={productBrands} labelKey="brandName" />
+              </ProductFilterGroup>
+
+              <ProductFilterGroup groupName="Colors">
+                <SelectableList items={productColors} labelKey="productColorName" />
+              </ProductFilterGroup>
+
+              <ProductFilterGroup groupName="Sizes">
+                <SelectableList items={productSizes} labelKey="sizeName" />
+              </ProductFilterGroup>
+            </div>
           </ul>
         </div>
-        <div className="flex-1 p-4 h-[90vh] overflow-auto dark:bg-white relative">
+        <div className="flex-1 p-4 overflow-auto dark:bg-white relative">
           <ProductsArea
             slug={params.id}
             sizeFilter={sizeFilter}
