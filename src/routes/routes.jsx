@@ -29,11 +29,10 @@ import ShippingPublicPolicy from "../components/Home/(policy)/shipping-policy/pa
 import ReturnPolicy from "../components/Home/(policy)/return-policy/page";
 import PrivacyPolicy from "../components/Home/(policy)/privacy-policy/page";
 import Blogs from "../components/Home/Blogs/Blogs";
-import AboutUsSection from "../components/dashboard/About/forms/AboutUsSection";
 import About from "../components/Home/About/About";
-import AboutVision from "../components/Home/About/AboutVision";
 import TailoredPages from "../components/Home/TailoredPages/TailoredPages";
 import Faqs from "../components/Home/faqs/Faqs";
+import PublicRoute from "./src/routes/PublicRoute";
 
 const AllRoutes = () => {
   // const [permissionData, setPermissionData] = useState([]);
@@ -67,7 +66,9 @@ const AllRoutes = () => {
             //   <Addworkout />
             // </PrivateRoute>
 
-            <SignUpPage />
+            <PublicRoute>
+              <SignUpPage />
+            </PublicRoute>
           ),
         },
         {
@@ -78,8 +79,9 @@ const AllRoutes = () => {
             // <PrivateRoute>
             //   <Addworkout />
             // </PrivateRoute>
-
-            <Login />
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
           ),
         },
         {
@@ -91,7 +93,9 @@ const AllRoutes = () => {
             //   <Addworkout />
             // </PrivateRoute>
 
-            <ForgotPassword />
+            <PublicRoute>
+              <ForgotPassword />
+            </PublicRoute>
           ),
         },
         {
@@ -102,8 +106,9 @@ const AllRoutes = () => {
             // <PrivateRoute>
             //   <Addworkout />
             // </PrivateRoute>
-
-            <VerifyOTP />
+            <PublicRoute>
+              <VerifyOTP />
+            </PublicRoute>
           ),
         },
         {
@@ -114,8 +119,9 @@ const AllRoutes = () => {
             // <PrivateRoute>
             //   <Addworkout />
             // </PrivateRoute>
-
-            <SendOTP />
+            <PublicRoute>
+              <SendOTP />
+            </PublicRoute>
           ),
         },
         {
@@ -126,7 +132,6 @@ const AllRoutes = () => {
             // <PrivateRoute>
             //   <Addworkout />
             // </PrivateRoute>
-
             <CheckoutPage />
           ),
         },
@@ -182,11 +187,8 @@ const AllRoutes = () => {
             // <PrivateRoute>
             //   <SmsGroup />
             // </PrivateRoute>
-            <Suspense fallback={<GlobalLoading />}>
-              <PrivateRoute>
-                <TermsCondition />
-              </PrivateRoute>
-            </Suspense>
+
+            <TermsCondition />
           ),
         },
         {
@@ -197,11 +199,8 @@ const AllRoutes = () => {
             // <PrivateRoute>
             //   <SmsGroup />
             // </PrivateRoute>
-            <Suspense fallback={<GlobalLoading />}>
-              <PrivateRoute>
-                <ShippingPublicPolicy />
-              </PrivateRoute>
-            </Suspense>
+
+            <ShippingPublicPolicy />
           ),
         },
         {
@@ -212,87 +211,39 @@ const AllRoutes = () => {
             // <PrivateRoute>
             //   <SmsGroup />
             // </PrivateRoute>
-            <Suspense fallback={<GlobalLoading />}>
-              <PrivateRoute>
-                <ReturnPolicy />
-              </PrivateRoute>
-            </Suspense>
+
+            <ReturnPolicy />
           ),
         },
         {
           // path: "userpermission",
           path: "privacy-policy",
           // path: isPermittedRoute("userpermission"),
-          element: (
-            // <PrivateRoute>
-            //   <SmsGroup />
-            // </PrivateRoute>
-            <Suspense fallback={<GlobalLoading />}>
-              <PrivateRoute>
-                <PrivacyPolicy />
-              </PrivateRoute>
-            </Suspense>
-          ),
+          element: <PrivacyPolicy />,
         },
         {
           // path: "userpermission",
           path: "blogs",
           // path: isPermittedRoute("userpermission"),
-          element: (
-            // <PrivateRoute>
-            //   <SmsGroup />
-            // </PrivateRoute>
-            <Suspense fallback={<GlobalLoading />}>
-              <PrivateRoute>
-                <Blogs />
-              </PrivateRoute>
-            </Suspense>
-          ),
+          element: <Blogs />,
         },
         {
           // path: "userpermission",
           path: "faqs",
           // path: isPermittedRoute("userpermission"),
-          element: (
-            // <PrivateRoute>
-            //   <SmsGroup />
-            // </PrivateRoute>
-            <Suspense fallback={<GlobalLoading />}>
-              <PrivateRoute>
-                <Faqs />
-              </PrivateRoute>
-            </Suspense>
-          ),
+          element: <Faqs />,
         },
         {
           // path: "userpermission",
           path: "about",
           // path: isPermittedRoute("userpermission"),
-          element: (
-            // <PrivateRoute>
-            //   <SmsGroup />
-            // </PrivateRoute>
-            <Suspense fallback={<GlobalLoading />}>
-              <PrivateRoute>
-                <About />
-              </PrivateRoute>
-            </Suspense>
-          ),
+          element: <About />,
         },
         {
           // path: "userpermission",
           path: "tailored-page/:slug",
           // path: isPermittedRoute("userpermission"),
-          element: (
-            // <PrivateRoute>
-            //   <SmsGroup />
-            // </PrivateRoute>
-            <Suspense fallback={<GlobalLoading />}>
-              <PrivateRoute>
-                <TailoredPages />
-              </PrivateRoute>
-            </Suspense>
-          ),
+          element: <TailoredPages />,
         },
       ],
     },

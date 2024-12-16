@@ -16,16 +16,23 @@ function PrivateRoute({ children }) {
 
     console.log("user 654546", get_user());
 
-    // if (!get_user()) {
-    //   router("/", { scroll: true, replace: true });
-    //   location.reload();
-    // }
+    const user = get_user();
+
+    if (user) {
+      if (user?.role !== "user") {
+        router("/dashboard", { scroll: true, replace: true });
+      } else {
+        router("/", { scroll: true, replace: true });
+      }
+    } else {
+      router("/", { scroll: true, replace: true });
+    }
   }, [router, user]);
 
   console.log("user private", user);
 
-  // return <>{user && <div>{children}</div>}</>;
-  return <>{<div>{children}</div>}</>;
+  return <>{user && <div>{children}</div>}</>;
+  // return <>{<div>{children}</div>}</>;
 }
 
 export default PrivateRoute;

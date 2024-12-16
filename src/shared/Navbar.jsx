@@ -15,7 +15,8 @@ import { Link, useNavigate } from "react-router-dom";
 import ProductSearch from "../components/Home/Products/ProductSearch/ProductSearch";
 import SidebarContainer from "./SidebarContainer";
 const Navbar = () => {
-  const placeholders = ['Shorts', 'Watch', 'Shirt'];
+  const { userRole, logOut, totalItems, user } = useContext(AuthContext);
+  const placeholders = ["Shorts", "Watch", "Shirt"];
   const [placeholderText, setPlaceholderText] = useState("");
   const [placeholderIndex, setPlaceholderIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
@@ -26,18 +27,17 @@ const Navbar = () => {
   const [isShowWishlist, setIsShowWishlist] = useState(false);
   const [isShowSearch, setIsShowSearch] = useState(false);
   const SearchBar = ({ setIsShowSearch }) => {
-
-
     useEffect(() => {
       if (isFocused) return;
 
       let typingTimeout;
 
       if (isTyping) {
-
         if (charIndex < placeholders[placeholderIndex].length) {
           typingTimeout = setTimeout(() => {
-            setPlaceholderText((prev) => prev + placeholders[placeholderIndex][charIndex]);
+            setPlaceholderText(
+              (prev) => prev + placeholders[placeholderIndex][charIndex]
+            );
             setCharIndex((prev) => prev + 1);
           }, 300);
         } else {
@@ -45,14 +45,12 @@ const Navbar = () => {
           setTimeout(() => setIsTyping(false), 2000);
         }
       } else {
-
         if (charIndex > 0) {
           typingTimeout = setTimeout(() => {
             setPlaceholderText((prev) => prev.slice(0, -1));
             setCharIndex((prev) => prev - 1);
           }, 150);
         } else {
-
           setIsTyping(true);
           setPlaceholderIndex((prev) => (prev + 1) % placeholders.length);
         }
@@ -80,44 +78,22 @@ const Navbar = () => {
           placeholder={!isFocused ? `Search for "${placeholderText}"` : ""}
           onFocus={handleFocus}
           onBlur={handleBlur}
-
         />
         <IoIosSearch className="text-2xl text-gray-400" />
       </div>
     );
   };
 
-  const {
-    userRole,
-    logOut,
-    totalItems
-  } = useContext(AuthContext);
-
-
-
-  const currentUserRoute =
-    userRole === "Administrator"
-      ? "/dashboard/admin/view_and_edit_admin_information"
-      : userRole === "Survey Creator"
-        ? "/dashboard/company/creator_profile"
-        : "/dashboard/user/participant_profile";
-
-
-
   const handleLogOut = () => {
-    logOut()
-      .then(() => {
-        toast.success("User logged out successfully!", {
-          duration: 3000,
-          position: "top-right",
-        });
-
-        router("/", { scroll: false });
-      })
-      .catch((error) => {
-        toast.error("Logout failed. Please try again later.");
-        console.error(error);
+    const isLogOut = logOut();
+    if (isLogOut) {
+      toast.success("User logged out successfully!", {
+        duration: 3000,
+        position: "top-right",
       });
+
+      router("/", { scroll: false });
+    }
   };
 
   useEffect(() => {
@@ -173,17 +149,26 @@ const Navbar = () => {
           <div className="navbar-start">
             <div className="flex items-center gap-3">
               <div role="button" className="" id="menu_icon">
-                
                 <div className="drawer z-10">
-                  <input id="my-drawer" type="checkbox" className="drawer-toggle" />
+                  <input
+                    id="my-drawer"
+                    type="checkbox"
+                    className="drawer-toggle"
+                  />
                   <div className="drawer-content">
                     {/* Page content here */}
-                    <label htmlFor="my-drawer" className=" drawer-button"><MdMenu className="text-2xl cursor-pointer" /></label>
+                    <label htmlFor="my-drawer" className=" drawer-button">
+                      <MdMenu className="text-2xl cursor-pointer" />
+                    </label>
                   </div>
                   <div className="drawer-side">
-                    <label htmlFor="my-drawer" aria-label="close sidebar" className="drawer-overlay"></label>
+                    <label
+                      htmlFor="my-drawer"
+                      aria-label="close sidebar"
+                      className="drawer-overlay"
+                    ></label>
                     <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
-                     <SidebarContainer />
+                      <SidebarContainer />
                     </ul>
                   </div>
                 </div>
@@ -194,7 +179,9 @@ const Navbar = () => {
                     className="w-28 mix-blend-multiply dark:mix-blend-normal"
                     width={400}
                     height={400}
-                    src={"https://multisports.shop/images/site_setting/multi-sports_vi6P5.png"}
+                    src={
+                      "https://multisports.shop/images/site_setting/multi-sports_vi6P5.png"
+                    }
                     alt="logo"
                   />{" "}
                 </Link>
@@ -239,25 +226,51 @@ const Navbar = () => {
             >
               <BsCart className="md:text-2xl text-base text-gray-600 hover:text-orange-500 hover:scale-110 cursor-pointer transition-all" />
               <span className="hidden md:block">Cart</span>
-              <div className="badge badge-primary badge-lg absolute top-0 -right-2">{totalItems}</div>
+              <div className="badge badge-primary badge-lg absolute top-0 -right-2">
+                {totalItems}
+              </div>
             </button>
 
             {/* Sign In */}
-            <Link to="/login">
-              <div className="flex items-center justify-center flex-col gap-1 md:p-3 p-1 rounded">
-                <FaRegUser className="md:text-2xl text-base text-gray-600 hover:text-blue-500 hover:scale-110 cursor-pointer transition-all" />
-                <span className="hidden md:block">Sign In</span>
-              </div>
-            </Link>
+            {user ? (
+              <details className="dropdown">
+                <summary className="avatar w-16 m-1">
+                  <div className="ring-primary ring-offset-base-100 w-24 rounded-full ring ring-offset-2">
+                    <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                  </div>
+                </summary>
+                <ul className="menu dropdown-content bg-base-200 rounded-box z-[1] w-52 p-2 shadow right-0">
+                  <li>
+                    <a className="bg-gray-200">Profile</a>
+                  </li>
+                  <li>
+                    <button
+                      className="btn bg-gray-400 mt-3"
+                      onClick={handleLogOut}
+                    >
+                      Logout
+                    </button>
+                  </li>
+                </ul>
+              </details>
+            ) : (
+              <Link to="/login">
+                <div className="flex items-center justify-center flex-col gap-1 md:p-3 p-1 rounded">
+                  <FaRegUser className="md:text-2xl text-base text-gray-600 hover:text-blue-500 hover:scale-110 cursor-pointer transition-all" />
+                  <span className="hidden md:block">Sign In</span>
+                </div>
+              </Link>
+            )}
           </div>
-
         </div>
-
       </header>
       <BgBlurModal isShowModal={isShowModal} setIsShowModal={setIsShowModal}>
         <Cart isShow={isShowModal} setIsShow={setIsShowModal} />
       </BgBlurModal>
-      <BgBlurModal isShowModal={isShowWishlist} setIsShowModal={setIsShowWishlist}>
+      <BgBlurModal
+        isShowModal={isShowWishlist}
+        setIsShowModal={setIsShowWishlist}
+      >
         <Wishlist isShow={isShowWishlist} setIsShow={setIsShowWishlist} />
       </BgBlurModal>
       <BgBlurModal isShowModal={isShowSearch} setIsShowModal={setIsShowSearch}>

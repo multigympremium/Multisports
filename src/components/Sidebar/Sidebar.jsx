@@ -31,30 +31,20 @@ const Sidebar = ({ isCollapsed }) => {
   // const UserRole = "Coffee Shop Staff"; // add later
   // const UserRole = "Operation Manager"; // add later
 
-  
-
   const handleLogOut = () => {
-    logOut()
-      .then(() => {
-        toast.success("User logged out successfully");
-        // Swal.fire({
-        //   icon: "success",
-        //   title: "Logout Successful",
-        //   text: "You have successfully logged out.",
-        // }).then(() => {});
+    const isSuccess = logOut();
+    if (isSuccess) {
+      toast.success("User logged out successfully");
+      // Swal.fire({
+      //   icon: "success",
+      //   title: "Logout Successful",
+      //   text: "You have successfully logged out.",
+      // }).then(() => {});
 
-        setUser(null);
-        navigate("/", { replace: true });
-        // location.reload();
-      })
-      .catch((error) => {
-        Swal.fire({
-          icon: "error",
-          title: "Logout Failed",
-          text: "Logout failed. Please try again later.",
-        });
-        console.error(error);
-      });
+      setUser(null);
+      navigate("/", { replace: true });
+      // location.reload();
+    }
   };
 
   const isActiveLink = (pathName, currentPath) => {
@@ -75,7 +65,11 @@ const Sidebar = ({ isCollapsed }) => {
     >
       <div className="flex flex-col items-start mb-6">
         {!isCollapsed && (
-          <img src='https://multisports.shop/images/site_setting/multi-sports_vi6P5.png' alt="Logo" className="w-[80%]  mb-4" />
+          <img
+            src="https://multisports.shop/images/site_setting/multi-sports_vi6P5.png"
+            alt="Logo"
+            className="w-[80%]  mb-4"
+          />
         )}
       </div>
 
