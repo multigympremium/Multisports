@@ -10,7 +10,6 @@ Shop By Category -https://chawkbazar.vercel.app/classic real data not show in la
 click on modal open the modal 
 
 
-
 https://king-prawn-app-qkhg8.ondigitalocean.app/products/jersey
 
 https://chawkbazar.vercel.app/search?q=t-shit-shirtrt

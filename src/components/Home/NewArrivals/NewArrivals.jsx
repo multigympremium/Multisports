@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
+import Modal from '../../../shared/Modal/Modal';
 
 const products = [
-  {         
+  {
     image: 'https://chawkbazar.vercel.app/_next/image?url=%2Fassets%2Fimages%2Fproducts%2Fancient%2F1.jpg&w=384&q=100',
     title: 'Roadster Women Round Neck',
     price: '$18.59',
@@ -66,34 +67,37 @@ const products = [
 
 
 const NewArrivals = () => {
-    console.log("products :" ,products)
+  const [isShowModal, setIsShowModal] = useState(false);
+  console.log("products :", products)
   return (
     <section className="w-[90%] mx-auto py-6">
       <h2 className="text-2xl font-bold mb-4">New Arrivals </h2>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-6">
         {products.map((product, index) => (
           <div
-          key={index}
-          className="bg-white overflow-hidden rounded-lg  md:hover:shadow-lg transition-transform duration-300 md:hover:scale-100"
-        >
-          <img
-            src={product.image} 
-            alt={product.title}
-            className="w-full rounded md:h-80 object-cover transition-transform duration-300 hover:scale-105"
-          />
-          <div className="p-4">
-            <h3 className="text-sm font-semibold mb-1 block md:hidden">{product.title.length>12?`${product.title.slice(0,12)}..` : product.title}</h3>
-            <h3 className="text-sm font-semibold mb-2 md:block hidden">{product.title}</h3>
-            <p className="text-xs text-gray-500 mb-1 lg:hidden">
-              {product.description.slice(0, 17)}...
-            </p>
-            <p className="text-xs text-gray-500 mb-2 hidden lg:block">
-              {product.description.slice(0, 36)}...
-            </p>
-            <p className="text-sm font-bold">{product.price}</p>
+          onClick={()=>{setIsShowModal(true)}}
+            key={index}
+            className="bg-white cursor-pointer overflow-hidden rounded-lg  md:hover:shadow-lg transition-transform duration-300 md:hover:scale-100"
+          >
+            <img
+              src={product.image}
+              alt={product.title}
+              className="w-full rounded md:h-80 object-cover transition-transform duration-300 hover:scale-105"
+            />
+            <div className="p-4">
+              <h3 className="text-sm font-semibold mb-1 block md:hidden">{product.title.length > 12 ? `${product.title.slice(0, 12)}..` : product.title}</h3>
+              <h3 className="text-sm font-semibold mb-2 md:block hidden">{product.title}</h3>
+              <p className="text-xs text-gray-500 mb-1 lg:hidden">
+                {product.description.slice(0, 17)}...
+              </p>
+              <p className="text-xs text-gray-500 mb-2 hidden lg:block">
+                {product.description.slice(0, 36)}...
+              </p>
+              <p className="text-sm font-bold">{product.price}</p>
+              <Modal  setIsShowModal={setIsShowModal} isShowModal={isShowModal}>hi</Modal>
+            </div>
           </div>
-        </div>
-        
+
         ))}
       </div>
     </section>
