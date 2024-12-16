@@ -84,6 +84,8 @@ const Navbar = () => {
     );
   };
 
+  console.log(user, "user");
+
   const handleLogOut = () => {
     const isLogOut = logOut();
     if (isLogOut) {

@@ -19,9 +19,7 @@ function PrivateRoute({ children }) {
     const user = get_user();
 
     if (user) {
-      if (user?.role !== "user") {
-        router("/dashboard", { scroll: true, replace: true });
-      } else {
+      if (user?.role === "user") {
         router("/", { scroll: true, replace: true });
       }
     } else {

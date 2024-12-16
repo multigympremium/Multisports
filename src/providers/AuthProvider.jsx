@@ -236,7 +236,11 @@ const AuthProvider = ({ children }) => {
         : JSON.parse(storedUser);
     };
 
-    setUser(get_user());
+    console.log(get_user(), "get_user");
+
+    const currentUser = get_user();
+
+    setUser(currentUser);
   }, []);
 
   const authInfo = {
