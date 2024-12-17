@@ -1,4 +1,3 @@
-"use client";
 import CustomEditor from "../../../../shared/CustomEditor/CustomEditor";
 import DragEditUploadImageInput from "../../../../shared/DragEditUploadImageInput";
 
@@ -7,11 +6,7 @@ import { useDropzone } from "react-dropzone";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../../Hook/useAxiosSecure";
 
-export default function AboutUsSection({
-  testimonialId,
-  isShow,
-  setIsShow,
-}) {
+export default function AboutUsSection({ testimonialId, isShow, setIsShow }) {
   // State management for form fields
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -31,16 +26,15 @@ export default function AboutUsSection({
       try {
         const res = await axiosSecure.get(`/about-us/${targetId}`);
 
-        if(res.status === 200 || res.status === 201) {
-            
-            const data = res?.data?.data[0];
-    
-            // Set form values with the testimonial data
-            setTitle(data?.title);
-            setDescription(data?.description);
-            setSideImagePreview(data?.sideImage); //
-            setBannerImagePreview(data?.bannerImage); //
-            setTargetId(data?._id)
+        if (res.status === 200 || res.status === 201) {
+          const data = res?.data?.data[0];
+
+          // Set form values with the testimonial data
+          setTitle(data?.title);
+          setDescription(data?.description);
+          setSideImagePreview(data?.sideImage); //
+          setBannerImagePreview(data?.bannerImage); //
+          setTargetId(data?._id);
         }
       } catch (error) {
         console.error("Error fetching testimonial:", error);
@@ -58,10 +52,8 @@ export default function AboutUsSection({
 
     setBannerImagePreview(bannerImagePreview);
 
-
     setBannerImage(acceptedFiles[0]);
   };
-
 
   // Dropzone for thumbnail upload
   const onDropSideImage = (acceptedFiles) => {
@@ -70,7 +62,6 @@ export default function AboutUsSection({
     const sideImagePreview = URL.createObjectURL(acceptedFiles[0]);
 
     setSideImagePreview(sideImagePreview);
-
 
     setSideImage(acceptedFiles[0]);
   };
@@ -84,7 +75,6 @@ export default function AboutUsSection({
     multiple: false,
   });
 
-
   const {
     getRootProps: getSideImageRootProps,
     getInputProps: getSideImageInputProps,
@@ -96,52 +86,37 @@ export default function AboutUsSection({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
-    console.log({title, description, thumbnail});
-    
-  
-  
+
+    console.log({ title, description, thumbnail });
+
     const formData = new FormData();
     formData.append("title", title);
     formData.append("description", description);
     formData.append("sideImage", sideImage);
     formData.append("bannerImage", bannerImage);
-  
-    
+
     try {
-  
-        if(targetId){
-            const res = await axiosSecure.put(
-              `/about-us/${targetId}`,
-              formData
-            );
-            if (res.status === 200 || res.status === 201) {
-              Swal.fire({
-                title: "Success!",
-                text: "About Us updated successfully",
-                icon: "success",
-                confirmButtonText: "Ok",
-              });
-            }
-            
-        }else {
-           const res = await axiosSecure.post(
-                `/about-us`,
-                formData
-            );
-            if (res.status === 200 || res.status === 201) {
-              Swal.fire({
-                title: "Success!",
-                text: "About Us Created successfully",
-                icon: "success",
-                confirmButtonText: "Ok",
-              });
-            }
-  
+      if (targetId) {
+        const res = await axiosSecure.put(`/about-us/${targetId}`, formData);
+        if (res.status === 200 || res.status === 201) {
+          Swal.fire({
+            title: "Success!",
+            text: "About Us updated successfully",
+            icon: "success",
+            confirmButtonText: "Ok",
+          });
         }
-  
-     
-  
+      } else {
+        const res = await axiosSecure.post(`/about-us`, formData);
+        if (res.status === 200 || res.status === 201) {
+          Swal.fire({
+            title: "Success!",
+            text: "About Us Created successfully",
+            icon: "success",
+            confirmButtonText: "Ok",
+          });
+        }
+      }
     } catch (err) {
       console.error(err);
       Swal.fire({
@@ -158,45 +133,40 @@ export default function AboutUsSection({
       {/* Testimonial Edit Form */}
       <h1 className="text-2xl font-semibold mb-7">About Section</h1>
       <form onSubmit={handleSubmit}>
-        <div className="mb-4" > 
-        {/* Left Column - Image Upload */}
-        <div className="relative">
-          <label className="block text-gray-700 mb-2">Banner Image</label>
-          <DragEditUploadImageInput
-            getRootProps={getBannerRootProps}
-            getInputProps={getBannerInputProps}
-            image={bannerImage}
-            imagePreview={bannerImagePreview}
-          />
-
-         
-        </div>
-        <div className="relative">
-          <label className="block text-gray-700 mb-2 mt-3">Side Image </label>
-          <DragEditUploadImageInput
-            getRootProps={getSideImageRootProps}
-            getInputProps={getSideImageInputProps}
-            image={sideImage}
-            imagePreview={sideImagePreview}
-          />
-
-         
-        </div>
-
-        {/* Right Column - Form Inputs */}
-        <div className="space-y-4 mb-6 col-span-full">
-          <div>
-            <label className="block text-gray-700 mt-3">Title </label>
-            <input
-              type="text"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              className="customInput"
-              required
+        <div className="mb-4">
+          {/* Left Column - Image Upload */}
+          <div className="relative">
+            <label className="block text-gray-700 mb-2">Banner Image</label>
+            <DragEditUploadImageInput
+              getRootProps={getBannerRootProps}
+              getInputProps={getBannerInputProps}
+              image={bannerImage}
+              imagePreview={bannerImagePreview}
             />
           </div>
-          
-        </div>
+          <div className="relative">
+            <label className="block text-gray-700 mb-2 mt-3">Side Image </label>
+            <DragEditUploadImageInput
+              getRootProps={getSideImageRootProps}
+              getInputProps={getSideImageInputProps}
+              image={sideImage}
+              imagePreview={sideImagePreview}
+            />
+          </div>
+
+          {/* Right Column - Form Inputs */}
+          <div className="space-y-4 mb-6 col-span-full">
+            <div>
+              <label className="block text-gray-700 mt-3">Title </label>
+              <input
+                type="text"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                className="customInput"
+                required
+              />
+            </div>
+          </div>
           <div className="mb-8 col-span-full">
             <label className="block text-gray-700 mb-2">Description</label>
             <CustomEditor
@@ -204,18 +174,11 @@ export default function AboutUsSection({
               setValue={setDescription}
               className="customInput min-h-[250px]"
               required
-             />
-
-
+            />
           </div>
-
-
         </div>
         <div className="flex justify-end w-full">
-          <button
-            type="submit"
-            className="customSaveButton"
-          >
+          <button type="submit" className="customSaveButton">
             Save Changes
           </button>
         </div>

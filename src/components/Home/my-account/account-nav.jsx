@@ -6,7 +6,6 @@ import {
   IoSettingsOutline,
   IoLogOutOutline,
 } from "react-icons/io5";
-import { useTranslation } from "react-i18next";
 import toast from "react-hot-toast";
 import { useAuth } from "../../../providers/AuthProvider";
 
@@ -41,7 +40,6 @@ const accountMenu = [
 ];
 
 export default function AccountNav() {
-  const { t } = useTranslation();
   const location = useLocation();
   const { logOut, setUser } = useAuth();
 
@@ -76,7 +74,7 @@ export default function AccountNav() {
             }
           >
             {item.icon}
-            <span className="ltr:pl-2 rtl:pr-2">{t(`${item.name}`)}</span>
+            <span className="ltr:pl-2 rtl:pr-2">{`${item.name}`}</span>
           </NavLink>
         );
       })}
@@ -86,7 +84,7 @@ export default function AccountNav() {
         onClick={handleLogout}
       >
         <IoLogOutOutline className="w-5 h-5" />
-        <span className="ltr:pl-2 rtl:pr-2">{t("text-logout")}</span>
+        <span className="ltr:pl-2 rtl:pr-2">Logout</span>
       </button>
     </nav>
   );
