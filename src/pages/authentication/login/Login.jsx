@@ -8,8 +8,10 @@ import useAxiosPublic from "../../../Hook/useAxiosPublic";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 import ReCAPTCHA from "react-google-recaptcha";
+import { useAuth } from "../../../providers/AuthProvider";
 
 export default function Login() {
+  const { setUser } = useAuth();
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -37,13 +39,18 @@ export default function Login() {
       if (res.status === 200 || res.status === 201) {
         localStorage.setItem("user", JSON.stringify(res?.data?.user));
 
-        // setUser(res?.data?.user);
+        setUser(res?.data?.user);
 
         toast.success("User Logged In successfully!", {
           duration: 2000,
           position: "top-right",
         });
-        navigate("/");
+
+        if (res?.data?.user?.role === "user") {
+          navigate("/", { scroll: true, replace: true });
+        } else {
+          navigate("/dashboard", { scroll: true, replace: true });
+        }
       }
     } catch (error) {
       console.log(error);

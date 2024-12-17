@@ -14,6 +14,7 @@ import Cart from "./cart/Cart";
 import { Link, useNavigate } from "react-router-dom";
 import ProductSearch from "../components/Home/Products/ProductSearch/ProductSearch";
 import SidebarContainer from "./SidebarContainer";
+import noUser from "../assets/user.png";
 const Navbar = () => {
   const { userRole, logOut, totalItems, user } = useContext(AuthContext);
   const placeholders = ["Shorts", "Watch", "Shirt"];
@@ -83,8 +84,6 @@ const Navbar = () => {
       </div>
     );
   };
-
-  console.log(user, "user");
 
   const handleLogOut = () => {
     const isLogOut = logOut();
@@ -238,7 +237,7 @@ const Navbar = () => {
               <details className="dropdown">
                 <summary className="avatar w-16 m-1">
                   <div className="ring-primary ring-offset-base-100 w-24 rounded-full ring ring-offset-2">
-                    <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                    <img src={user.photourl ? user.photourl : noUser} />
                   </div>
                 </summary>
                 <ul className="menu dropdown-content bg-base-200 rounded-box z-[1] w-52 p-2 shadow right-0">

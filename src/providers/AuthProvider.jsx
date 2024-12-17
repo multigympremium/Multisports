@@ -27,7 +27,6 @@ const githubProvider = new GithubAuthProvider();
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [userRole, setUserRole] = useState("Survey Participant");
   const [themMode, setThemMode] = useState(false);
@@ -162,6 +161,7 @@ const AuthProvider = ({ children }) => {
   const logOut = () => {
     localStorage.removeItem("user");
     setUser(null);
+    return true;
   };
 
   // useEffect(() => {
@@ -245,6 +245,7 @@ const AuthProvider = ({ children }) => {
 
   const authInfo = {
     user,
+    setUser,
     loading,
     setLoading,
     createUser,
@@ -256,8 +257,6 @@ const AuthProvider = ({ children }) => {
     setUserRole,
     themMode,
     setThemMode,
-    currentUser,
-    setCurrentUser,
     removeFromCart,
     addToCart,
     updateCartQuantity,

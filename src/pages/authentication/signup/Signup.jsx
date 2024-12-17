@@ -7,8 +7,10 @@ import { IoEyeOffOutline } from "react-icons/io5";
 import useAxiosPublic from "../../../Hook/useAxiosPublic";
 import ReCAPTCHA from "react-google-recaptcha";
 import toast from "react-hot-toast";
+import { useAuth } from "../../../providers/AuthProvider";
 
 export default function SignUpPage() {
+  const { setUser } = useAuth();
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -49,7 +51,14 @@ export default function SignUpPage() {
       console.log(res);
       if (res.status === 200 || res.status === 201) {
         localStorage.setItem("user", JSON.stringify(res.data.user));
-        router("/");
+
+        setUser(res?.data?.user);
+
+        if (res?.data?.user?.role === "user") {
+          router("/", { scroll: true, replace: true });
+        } else {
+          router("/dashboard", { scroll: true, replace: true });
+        }
       }
     } catch (error) {
       console.log(error);

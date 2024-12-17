@@ -200,15 +200,20 @@ export default function AllOrders() {
                     {order?.shipping_address_id?.contactNumber}
                   </td>
                   <td className="p-2 border ">
-                    <span className="bg-red-500 text-white  px-3 rounded-lg  py-1">
-                      {order?.status}
-                    </span>
+                    {order?.status ? (
+                      <span className="bg-red-500 text-white  px-3 rounded-lg  py-1">
+                        {order?.status}
+                      </span>
+                    ) : (
+                      "N/A"
+                    )}
                   </td>
                   <td className="p-2 border">{order?.payment_method}</td>
                   <td className="p-2 border">৳ {order?.total}</td>
                   <td className="p-2 border">
                     <div className="flex justify-center space-x-2">
-                      {order?.status === "Pending" && (
+                      {(order?.status === "Pending" ||
+                        order?.status === "") && (
                         <button
                           onClick={() => handleAccept(order._id)}
                           className="bg-blue-500 text-white rounded-lg px-4 py-2 font-semibold"
