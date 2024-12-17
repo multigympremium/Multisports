@@ -11,9 +11,10 @@ import FilterRadioInput from "../../../shared/FilterRadioInput";
 import ProductsArea from "./ProductsArea";
 import ReactGA from "react-ga4";
 import ProductFilterGroup from "../../../shared/ProductFilterGroup";
+import { RiDeleteBin7Line } from "react-icons/ri";
 
-const SelectableList = ({ items, labelKey ,toggleSelection }) => {
-  
+const SelectableList = ({ items, labelKey, toggleSelection, selectedItems }) => {
+
 
   return (
     <div className="space-y-4">
@@ -69,6 +70,12 @@ function ProductPage() {
       prev.includes(name) ? prev.filter((item) => item !== name) : [...prev, name]
     );
   };
+
+  const handleRemoveItem = (itemToRemove) => {
+    setSelectedItems((prevSelected) => prevSelected.filter((item) => item !== itemToRemove));
+  };
+
+
   const params = useParams()
   const location = useLocation()
   console.log(location, "searchParams")
@@ -151,18 +158,29 @@ function ProductPage() {
         >
           <ul className="menu gap-3">
             {/* Filtering section */}
-            <section className="border-b pb-8">
+            <section className="border-b">
               <p className="text-sm"><span className="text-gray-500">Home </span>   /   Products</p>
               <div className="mt-12">
                 <div className="flex justify-between items-center">
                   <p className="text-3xl font-normal">Filters</p>
-                  <p className="text-sm">Clear All</p>
+                  <p onClick={() => { setSelectedItems([]) }} className="text-sm cursor-pointer">Clear All</p>
                 </div>
                 {/* items here */}
-                <div className="mt-7 flex flex-wrap gap-3">
-                  <p className="border max-w-min py-2 px-4 rounded-2xl bg-slate-50">itfems</p>
-                  
-                </div>
+                {selectedItems &&
+                  <div className="my-7 flex flex-wrap gap-2">
+                    {/* <p className="border max-w-min py-2 px-4 rounded-2xl bg-slate-50">itfems</p> */}
+                    {selectedItems.map((item, indx) => {
+                      return <p
+                        key={indx}
+                        onClick={() => handleRemoveItem(item)}
+                        className="border py-2 px-4 rounded-2xl bg-slate-50 hover:bg-red-500 hover:text-white cursor-pointer transition-all duration-300 ease-in-out transform active:scale-95 flex items-center gap-2"
+                      >
+                        {item} <RiDeleteBin7Line className="transition-transform duration-300 ease-in-out group-hover:rotate-12" />
+                      </p>
+
+                    })}
+                  </div>
+                }
               </div>
             </section>
 
@@ -224,19 +242,19 @@ function ProductPage() {
             </GroupLink> */}
             <div className="space-y-4">
               <ProductFilterGroup groupName="Categories">
-                <SelectableList items={subcategories} toggleSelection={toggleSelection} labelKey="subcategoryName" />
+                <SelectableList items={subcategories} toggleSelection={toggleSelection} selectedItems={selectedItems} labelKey="subcategoryName" />
               </ProductFilterGroup>
 
               <ProductFilterGroup groupName="Brands">
-                <SelectableList items={productBrands} toggleSelection={toggleSelection} labelKey="brandName" />
+                <SelectableList items={productBrands} toggleSelection={toggleSelection} selectedItems={selectedItems} labelKey="brandName" />
               </ProductFilterGroup>
 
               <ProductFilterGroup groupName="Colors">
-                <SelectableList items={productColors} toggleSelection={toggleSelection} labelKey="productColorName" />
+                <SelectableList items={productColors} toggleSelection={toggleSelection} selectedItems={selectedItems} labelKey="productColorName" />
               </ProductFilterGroup>
 
               <ProductFilterGroup groupName="Sizes">
-                <SelectableList items={productSizes} toggleSelection={toggleSelection} labelKey="sizeName" />
+                <SelectableList items={productSizes} toggleSelection={toggleSelection} selectedItems={selectedItems} labelKey="sizeName" />
               </ProductFilterGroup>
             </div>
           </ul>
