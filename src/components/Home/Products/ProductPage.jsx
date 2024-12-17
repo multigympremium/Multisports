@@ -11,19 +11,26 @@ import FilterRadioInput from "../../../shared/FilterRadioInput";
 import ProductsArea from "./ProductsArea";
 import ReactGA from "react-ga4";
 import ProductFilterGroup from "../../../shared/ProductFilterGroup";
+import { RiDeleteBin7Line } from "react-icons/ri";
 
-const SelectableList = ({ items, labelKey }) => {
-  const [selectedItems, setSelectedItems] = useState([]);
+const SelectableList = ({ items, labelKey, toggleSelection, selectedItems }) => {
 
-  const toggleSelection = (name) => {
-    setSelectedItems((prev) =>
-      prev.includes(name) ? prev.filter((item) => item !== name) : [...prev, name]
-    );
-  };
 
   return (
     <div className="space-y-4">
-      {items.length > 0 &&
+      {items.length == 0 ? (
+        // Loading skeleton when items.length is 0
+        Array.from({ length: 8 }).map((_, index) => (
+          <div
+            key={index}
+            className="flex items-center space-x-4 animate-pulse"
+          >
+            <div className="w-5 h-5 bg-gray-200 rounded"></div>
+            <div className="h-5 bg-gray-200 rounded-full w-2/3"></div>
+          </div>
+        ))
+      ) : (
+        // Actual items when items.length > 0
         items.slice(0, 8).map((item, index) => (
           <label
             key={index}
@@ -42,15 +49,33 @@ const SelectableList = ({ items, labelKey }) => {
                 </svg>
               )}
             </span>
-            <p className="transition-all text-sm duration-300 delay-100">{item[labelKey]}</p>
+            <p className="transition-all text-sm duration-300 delay-100">
+              {item[labelKey]}
+            </p>
           </label>
-        ))}
+        ))
+      )}
     </div>
 
   );
 };
 
+
+
 function ProductPage() {
+  const [selectedItems, setSelectedItems] = useState([]);
+
+  const toggleSelection = (name) => {
+    setSelectedItems((prev) =>
+      prev.includes(name) ? prev.filter((item) => item !== name) : [...prev, name]
+    );
+  };
+
+  const handleRemoveItem = (itemToRemove) => {
+    setSelectedItems((prevSelected) => prevSelected.filter((item) => item !== itemToRemove));
+  };
+
+
   const params = useParams()
   const location = useLocation()
   console.log(location, "searchParams")
@@ -132,6 +157,32 @@ function ProductPage() {
           className={` transition-all duration-500  overflow-auto absolute top-0 left-0 lg:relative pt-8 z-[3] w-[300px]`}
         >
           <ul className="menu gap-3">
+            {/* Filtering section */}
+            <section className="border-b">
+              <p className="text-sm"><span className="text-gray-500">Home </span>   /   Products</p>
+              <div className="mt-12">
+                <div className="flex justify-between items-center">
+                  <p className="text-3xl font-normal">Filters</p>
+                  <p onClick={() => { setSelectedItems([]) }} className="text-sm cursor-pointer">Clear All</p>
+                </div>
+                {/* items here */}
+                {selectedItems &&
+                  <div className="my-7 flex flex-wrap gap-2">
+                    {/* <p className="border max-w-min py-2 px-4 rounded-2xl bg-slate-50">itfems</p> */}
+                    {selectedItems.map((item, indx) => {
+                      return <p
+                        key={indx}
+                        onClick={() => handleRemoveItem(item)}
+                        className="border py-2 px-4 rounded-2xl bg-slate-50 hover:bg-red-500 hover:text-white cursor-pointer transition-all duration-300 ease-in-out transform active:scale-95 flex items-center gap-2"
+                      >
+                        {item} <RiDeleteBin7Line className="transition-transform duration-300 ease-in-out group-hover:rotate-12" />
+                      </p>
+
+                    })}
+                  </div>
+                }
+              </div>
+            </section>
 
             {/* <GroupLink groupName="Categories" icon={<FaUser />}>
               {subcategories.length > 0 &&
@@ -191,19 +242,19 @@ function ProductPage() {
             </GroupLink> */}
             <div className="space-y-4">
               <ProductFilterGroup groupName="Categories">
-                <SelectableList items={subcategories} labelKey="subcategoryName" />
+                <SelectableList items={subcategories} toggleSelection={toggleSelection} selectedItems={selectedItems} labelKey="subcategoryName" />
               </ProductFilterGroup>
 
               <ProductFilterGroup groupName="Brands">
-                <SelectableList items={productBrands} labelKey="brandName" />
+                <SelectableList items={productBrands} toggleSelection={toggleSelection} selectedItems={selectedItems} labelKey="brandName" />
               </ProductFilterGroup>
 
               <ProductFilterGroup groupName="Colors">
-                <SelectableList items={productColors} labelKey="productColorName" />
+                <SelectableList items={productColors} toggleSelection={toggleSelection} selectedItems={selectedItems} labelKey="productColorName" />
               </ProductFilterGroup>
 
               <ProductFilterGroup groupName="Sizes">
-                <SelectableList items={productSizes} labelKey="sizeName" />
+                <SelectableList items={productSizes} toggleSelection={toggleSelection} selectedItems={selectedItems} labelKey="sizeName" />
               </ProductFilterGroup>
             </div>
           </ul>
