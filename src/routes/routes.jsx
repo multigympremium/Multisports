@@ -33,6 +33,10 @@ import About from "../components/Home/About/About";
 import TailoredPages from "../components/Home/TailoredPages/TailoredPages";
 import Faqs from "../components/Home/faqs/Faqs";
 import PublicRoute from "./src/routes/PublicRoute";
+import AccountLayout from "../components/Home/my-account/account-layout";
+import AccountDetails from "../components/Home/my-account/account-details";
+import OrdersTable from "../components/Home/my-account/orders-table";
+import ChangePassword from "../components/Home/my-account/change-password";
 
 const AllRoutes = () => {
   // const [permissionData, setPermissionData] = useState([]);
@@ -265,6 +269,26 @@ const AllRoutes = () => {
 
       // errorElement: <Error404></Error404>,
       children: dashboardChildrenRoutes,
+    },
+    {
+      path: "account",
+      element: <AccountLayout />,
+
+      // errorElement: <Error404></Error404>,
+      children: [
+        {
+          path: "details",
+          element: <AccountDetails />,
+        },
+        {
+          path: "orders",
+          element: <OrdersTable />,
+        },
+        {
+          path: "change-password",
+          element: <ChangePassword />,
+        },
+      ],
     },
   ]);
 
