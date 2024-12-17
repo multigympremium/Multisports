@@ -8,6 +8,7 @@ import useAxiosPublic from "../../../Hook/useAxiosPublic";
 import ReCAPTCHA from "react-google-recaptcha";
 import toast from "react-hot-toast";
 import { useAuth } from "../../../providers/AuthProvider";
+import Swal from "sweetalert2";
 
 export default function SignUpPage() {
   const { setUser } = useAuth();
@@ -62,6 +63,13 @@ export default function SignUpPage() {
       }
     } catch (error) {
       console.log(error);
+
+      Swal.fire({
+        title: "Oops...",
+        text: error?.response?.data?.message || error?.message,
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
     }
   };
 

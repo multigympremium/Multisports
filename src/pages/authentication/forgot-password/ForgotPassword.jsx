@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import {Link, useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { MdOutlineKeyboardBackspace } from "react-icons/md";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 import Swal from "sweetalert2";
@@ -25,9 +25,9 @@ export default function ForgotPassword() {
 
     try {
       if (!isAllowSetPassword) {
-        const res = await axiosPublic.get(`/users/${email}`);
+        const res = await axiosPublic.get(`/users/is_user_exist/${email}`);
         console.log(res?.data?.user, "res jkjkjkkkllk");
-        if (res.status === 200 || res.status === 201) {
+        if (res?.data?.isExist) {
           setIsAllowSetPassword(true);
         }
       } else {
@@ -100,11 +100,15 @@ export default function ForgotPassword() {
   return (
     <div className="min-h-screen flex flex-col items-center w-[750px] relative mx-auto bg-gray-50 ">
       {/* Back Arrow */}
-      <h3 className="text-2xl font-bold text-center py-5 border-b border-gray-200 w-full">
-        Dot.
-      </h3>
+      <img
+        src={"/logo.png"}
+        width={300}
+        height={300}
+        alt="dot"
+        className="mx-auto"
+      />
 
-      <div className="w-full py-5">
+      <div className="w-full py-5 absolute top-5 left-8">
         <Link to="/login">
           <button className="flex items-center justify-center rounded-full shadow-lg w-[50px] h-[50px] bg-white ml-10">
             <MdOutlineKeyboardBackspace size={30} />

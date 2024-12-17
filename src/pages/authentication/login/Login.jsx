@@ -56,9 +56,9 @@ export default function Login() {
       console.log(error);
       Swal.fire({
         title: "Oops...",
-        text: "Something went wrong!",
+        text: error?.response?.data?.message || error?.message,
         icon: "error",
-        confirmButtonText: "Try Again",
+        confirmButtonText: "Ok",
       });
     }
   };
