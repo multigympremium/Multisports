@@ -1,14 +1,3 @@
-import cn from "classnames";
-
-const classes = {
-  root: "py-2 px-4 md:px-5 w-full appearance-none transition duration-150 ease-in-out border text-input text-xs lg:text-sm font-body placeholder-body min-h-12 transition duration-200 ease-in-out",
-  normal:
-    "bg-gray-100 border-gray-300 focus:shadow focus:bg-white focus:border-primary",
-  solid:
-    "bg-white border-gray-300 focus:outline-none focus:border-heading h-11 md:h-12",
-  outline: "border-gray-300 focus:border-primary",
-  shadow: "focus:shadow",
-};
 const Input = (
   {
     className = "block",
@@ -25,18 +14,6 @@ const Input = (
   },
   ref
 ) => {
-  const rootClassName = cn(
-    classes.root,
-    {
-      [classes.normal]: variant === "normal",
-      [classes.solid]: variant === "solid",
-      [classes.outline]: variant === "outline",
-    },
-    {
-      [classes.shadow]: shadow,
-    },
-    inputClassName
-  );
   return (
     <div className={className}>
       {labelKey && (
@@ -54,7 +31,7 @@ const Input = (
         ref={ref}
         // @ts-ignore
         placeholder={placeholderKey}
-        className={rootClassName + `${!disableBorderRadius && " rounded-md"}`}
+        className={`normal ${!disableBorderRadius && " rounded-md"}`}
         autoComplete="off"
         spellCheck="false"
         aria-invalid={errorKey ? "true" : "false"}

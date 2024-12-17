@@ -15,6 +15,12 @@ import { Link, useNavigate } from "react-router-dom";
 import ProductSearch from "../components/Home/Products/ProductSearch/ProductSearch";
 import SidebarContainer from "./SidebarContainer";
 import noUser from "../assets/user.png";
+import {
+  IoCartOutline,
+  IoHomeOutline,
+  IoPersonOutline,
+  IoSettingsOutline,
+} from "react-icons/io5";
 const Navbar = () => {
   const { userRole, logOut, totalItems, user } = useContext(AuthContext);
   const placeholders = ["Shorts", "Watch", "Shirt"];
@@ -140,6 +146,36 @@ const Navbar = () => {
       }
     });
   }, []);
+
+  const ROUTES = {
+    ACCOUNT: "/account/dashboard",
+    ORDERS: "/account/orders",
+    ACCOUNT_DETAILS: "/account/details",
+    CHANGE_PASSWORD: "/account/change-password",
+  };
+
+  const accountMenu = [
+    {
+      slug: ROUTES.ACCOUNT,
+      name: "Account",
+      icon: <IoHomeOutline className="w-5 h-5" />,
+    },
+    {
+      slug: ROUTES.ORDERS,
+      name: "Orders",
+      icon: <IoCartOutline className="w-5 h-5" />,
+    },
+    {
+      slug: ROUTES.ACCOUNT_DETAILS,
+      name: "Details",
+      icon: <IoPersonOutline className="w-5 h-5" />,
+    },
+    {
+      slug: ROUTES.CHANGE_PASSWORD,
+      name: "Password",
+      icon: <IoSettingsOutline className="w-5 h-5" />,
+    },
+  ];
   return (
     <>
       <header
@@ -240,10 +276,19 @@ const Navbar = () => {
                     <img src={user.photourl ? user.photourl : noUser} />
                   </div>
                 </summary>
-                <ul className="menu dropdown-content bg-base-200 rounded-box z-[1] w-52 p-2 shadow right-0">
-                  <li>
-                    <a className="bg-gray-200">Profile</a>
-                  </li>
+                <ul className="menu dropdown-content bg-base-200 rounded-box z-[1] w-52 p-2 shadow right-0 gap-1">
+                  {accountMenu.map((item, index) => (
+                    <li key={item.slug}>
+                      <Link
+                        to={item.slug}
+                        className="flex items-center text-[13px] gap-2 p-2 rounded-lg transition-colors  "
+                      >
+                        {item.icon}
+                        {item.name}
+                      </Link>
+                    </li>
+                  ))}
+
                   <li>
                     <button
                       className="btn bg-gray-400 mt-3"

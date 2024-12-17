@@ -37,6 +37,7 @@ import AccountLayout from "../components/Home/my-account/account-layout";
 import AccountDetails from "../components/Home/my-account/account-details";
 import OrdersTable from "../components/Home/my-account/orders-table";
 import ChangePassword from "../components/Home/my-account/change-password";
+import AccountDashboard from "../components/Home/my-account/AccountDashboard";
 
 const AllRoutes = () => {
   // const [permissionData, setPermissionData] = useState([]);
@@ -276,6 +277,10 @@ const AllRoutes = () => {
 
       // errorElement: <Error404></Error404>,
       children: [
+        {
+          path: "dashboard",
+          element: <AccountDashboard />,
+        },
         {
           path: "details",
           element: <AccountDetails />,

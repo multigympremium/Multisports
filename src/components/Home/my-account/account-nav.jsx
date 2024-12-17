@@ -1,4 +1,4 @@
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import {
   IoHomeOutline,
   IoCartOutline,
@@ -7,6 +7,8 @@ import {
   IoLogOutOutline,
 } from "react-icons/io5";
 import { useTranslation } from "react-i18next";
+import toast from "react-hot-toast";
+import { useAuth } from "../../../providers/AuthProvider";
 
 const ROUTES = {
   ACCOUNT: "/account/dashboard",
@@ -18,22 +20,22 @@ const ROUTES = {
 const accountMenu = [
   {
     slug: ROUTES.ACCOUNT,
-    name: "text-dashboard",
+    name: "Dashboard",
     icon: <IoHomeOutline className="w-5 h-5" />,
   },
   {
     slug: ROUTES.ORDERS,
-    name: "text-orders",
+    name: "Orders",
     icon: <IoCartOutline className="w-5 h-5" />,
   },
   {
     slug: ROUTES.ACCOUNT_DETAILS,
-    name: "text-account-details",
+    name: "Details",
     icon: <IoPersonOutline className="w-5 h-5" />,
   },
   {
     slug: ROUTES.CHANGE_PASSWORD,
-    name: "text-change-password",
+    name: "Password",
     icon: <IoSettingsOutline className="w-5 h-5" />,
   },
 ];
@@ -41,13 +43,21 @@ const accountMenu = [
 export default function AccountNav() {
   const { t } = useTranslation();
   const location = useLocation();
+  const { logOut, setUser } = useAuth();
+
+  const navigate = useNavigate();
 
   // Extract the main path (2nd segment of URL)
   const mainPath = `/${location.pathname.split("/")[2] || ""}`;
 
   const handleLogout = () => {
-    console.log("User logged out");
-    // Place your logout logic here
+    const isSuccess = logOut();
+    if (isSuccess) {
+      toast.success("User logged out successfully");
+
+      setUser(null);
+      navigate("/", { replace: true });
+    }
   };
 
   return (
@@ -61,8 +71,8 @@ export default function AccountNav() {
             to={item.slug}
             className={({ isActive }) =>
               isActive || mainPath === menuPath
-                ? "bg-gray-100 font-semibold flex items-center cursor-pointer text-sm lg:text-base text-heading py-3.5 px-4 lg:px-5 rounded mb-2"
-                : "flex items-center cursor-pointer text-sm lg:text-base text-heading font-normal py-3.5 px-4 lg:px-5 rounded mb-2"
+                ? "bg-gray-100 font-semibold flex gap-3 items-center cursor-pointer text-sm lg:text-base text-heading py-3.5 px-4 lg:px-5 rounded mb-2"
+                : "flex items-center cursor-pointer gap-3 text-sm lg:text-base text-heading font-normal py-3.5 px-4 lg:px-5 rounded mb-2"
             }
           >
             {item.icon}

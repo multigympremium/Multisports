@@ -1,21 +1,69 @@
-import { useForm } from "react-hook-form";
+import { useState } from "react";
 import { motion } from "framer-motion";
-import Input from "../../UI/InputBox";
-import RadioBox from "../../UI/RadioBox";
 import Button from "../../UI/Button";
+import { fadeInTop } from "../../utils/motion/fade-in-top";
 
-const defaultValues = {};
 const AccountDetails = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    defaultValues,
+  const [formValues, setFormValues] = useState({
+    firstName: "",
+    lastName: "",
+    displayName: "",
+    phoneNumber: "",
+    email: "",
+    gender: "",
   });
-  function onSubmit(input) {
-    console.log("Password Changed:", input);
-  }
+
+  const [errors, setErrors] = useState({});
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormValues({ ...formValues, [name]: value });
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!formValues.firstName) {
+      newErrors.firstName = "First name is required";
+    }
+    if (!formValues.lastName) {
+      newErrors.lastName = "Last name is required";
+    }
+    if (!formValues.displayName) {
+      newErrors.displayName = "Display name is required";
+    }
+    if (!formValues.phoneNumber) {
+      newErrors.phoneNumber = "Phone number is required";
+    }
+    if (!formValues.email) {
+      newErrors.email = "Email is required";
+    } else if (
+      !/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+        formValues.email
+      )
+    ) {
+      newErrors.email = "Invalid email format";
+    }
+
+    if (!formValues.gender) {
+      newErrors.gender = "Gender is required";
+    }
+
+    return newErrors;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const validationErrors = validateForm();
+
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+    } else {
+      console.log("Form submitted:", formValues);
+      setErrors({});
+      // Perform further actions (API call, etc.)
+    }
+  };
 
   return (
     <motion.div
@@ -23,96 +71,143 @@ const AccountDetails = () => {
       initial="from"
       animate="to"
       exit="from"
-      //@ts-ignore
       variants={fadeInTop(0.35)}
-      className={`w-full flex flex-col`}
+      className="w-full flex flex-col px-5"
     >
       <h2 className="text-lg md:text-xl xl:text-2xl font-bold text-heading mb-6 xl:mb-8">
         Account Details
       </h2>
       <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="w-full mx-auto flex flex-col justify-center "
+        onSubmit={handleSubmit}
+        className="w-full mx-auto  flex flex-col justify-center space-y-6 bg-white  rounded-lg p-6"
         noValidate
       >
-        <div className="flex flex-col space-y-4 sm:space-y-5">
-          <div className="flex flex-col sm:flex-row sm:gap-x-3 space-y-4 sm:space-y-0">
-            <Input
-              labelKey="forms:label-first-name"
-              {...register("firstName", {
-                required: "forms:first-name-required",
-              })}
-              variant="solid"
-              className="w-full sm:w-1/2"
-              errorKey={errors.firstName?.message}
+        {/* First Name and Last Name */}
+        <div className="flex flex-col sm:flex-row sm:gap-x-4 space-y-4 sm:space-y-0">
+          <div className="w-full sm:w-1/2">
+            <label className="label">
+              <span className="label-text">First Name</span>
+            </label>
+            <input
+              name="firstName"
+              value={formValues.firstName}
+              onChange={handleChange}
+              placeholder="Enter First Name"
+              className="input input-bordered w-full"
             />
-            <Input
-              labelKey="forms:label-last-name"
-              {...register("lastName", {
-                required: "forms:last-name-required",
-              })}
-              variant="solid"
-              className="w-full sm:w-1/2"
-              errorKey={errors.lastName?.message}
-            />
+            {errors.firstName && (
+              <span className="text-error text-sm">{errors.firstName}</span>
+            )}
           </div>
-          <Input
-            labelKey="forms:label-display-name"
-            {...register("displayName", {
-              required: "forms:display-name-required",
-            })}
-            variant="solid"
-            errorKey={errors.displayName?.message}
+          <div className="w-full sm:w-1/2">
+            <label className="label">
+              <span className="label-text">Last Name</span>
+            </label>
+            <input
+              name="lastName"
+              value={formValues.lastName}
+              onChange={handleChange}
+              placeholder="Enter Last Name"
+              className="input input-bordered w-full"
+            />
+            {errors.lastName && (
+              <span className="text-error text-sm">{errors.lastName}</span>
+            )}
+          </div>
+        </div>
+
+        {/* Display Name */}
+        <div>
+          <label className="label">
+            <span className="label-text">Display Name</span>
+          </label>
+          <input
+            name="displayName"
+            value={formValues.displayName}
+            onChange={handleChange}
+            placeholder="Enter Display Name"
+            className="input input-bordered w-full"
           />
-          <div className="flex flex-col sm:flex-row sm:gap-x-3 space-y-4 sm:space-y-0">
-            <Input
+          {errors.displayName && (
+            <span className="text-error text-sm">{errors.displayName}</span>
+          )}
+        </div>
+
+        {/* Phone Number and Email */}
+        <div className="flex flex-col sm:flex-row sm:gap-x-4 space-y-4 sm:space-y-0">
+          <div className="w-full sm:w-1/2">
+            <label className="label">
+              <span className="label-text">Phone Number</span>
+            </label>
+            <input
               type="tel"
-              labelKey="forms:label-phone"
-              {...register("phoneNumber", {
-                required: "forms:phone-required",
-              })}
-              variant="solid"
-              className="w-full sm:w-1/2"
-              errorKey={errors.phoneNumber?.message}
+              name="phoneNumber"
+              value={formValues.phoneNumber}
+              onChange={handleChange}
+              placeholder="Enter Phone Number"
+              className="input input-bordered w-full"
             />
-            <Input
+            {errors.phoneNumber && (
+              <span className="text-error text-sm">{errors.phoneNumber}</span>
+            )}
+          </div>
+          <div className="w-full sm:w-1/2">
+            <label className="label">
+              <span className="label-text">Email</span>
+            </label>
+            <input
               type="email"
-              labelKey="forms:label-email-star"
-              {...register("email", {
-                required: "forms:email-required",
-                pattern: {
-                  value:
-                    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                  message: "forms:email-error",
-                },
-              })}
-              variant="solid"
-              className="w-full sm:w-1/2"
-              errorKey={errors.email?.message}
+              name="email"
+              value={formValues.email}
+              onChange={handleChange}
+              placeholder="Enter Email"
+              className="input input-bordered w-full"
             />
+            {errors.email && (
+              <span className="text-error text-sm">{errors.email}</span>
+            )}
           </div>
-          <div className="relative flex flex-col">
-            <span className="mt-2 text-sm text-heading font-semibold block pb-1">
-              Gender
-            </span>
-            <div className="mt-2 flex items-center gap-x-6">
-              <RadioBox
-                labelKey="forms:label-male"
-                {...register("gender")}
+        </div>
+
+        {/* Gender */}
+        <div>
+          <label className="label">
+            <span className="label-text">Gender</span>
+          </label>
+          <div className="flex items-center gap-x-6">
+            <label className="label cursor-pointer">
+              <input
+                type="radio"
+                name="gender"
                 value="male"
+                checked={formValues.gender === "male"}
+                onChange={handleChange}
+                className="radio checked:bg-primary"
               />
-              <RadioBox
-                labelKey="forms:label-female"
-                {...register("gender")}
+              <span className="ml-2">Male</span>
+            </label>
+            <label className="label cursor-pointer">
+              <input
+                type="radio"
+                name="gender"
                 value="female"
+                checked={formValues.gender === "female"}
+                onChange={handleChange}
+                className="radio checked:bg-primary"
               />
-            </div>
+              <span className="ml-2">Female</span>
+            </label>
           </div>
-          <div className="relative">
-            <Button type="submit" className="h-12 mt-3 w-full sm:w-32">
-              Save
-            </Button>
-          </div>
+          {errors.gender && (
+            <span className="text-error text-sm">{errors.gender}</span>
+          )}
+        </div>
+
+        {/* Submit Button */}
+        <div className="flex justify-end">
+          <button type="submit" className="btn  w-full sm:w-32">
+            Save
+          </button>
         </div>
       </form>
     </motion.div>

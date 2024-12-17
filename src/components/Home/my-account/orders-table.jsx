@@ -7,8 +7,10 @@ import { Link } from "react-router-dom";
 const OrdersTable = () => {
   const { width } = useSsrCompatible(useWindowSize(), { width: 0, height: 0 });
 
+  console.log(width, "width  order 3434");
+
   return (
-    <>
+    <div className="w-full flex flex-col px-5">
       <h2 className="mb-6 text-lg font-bold md:text-xl xl:text-2xl text-heading xl:mb-8">
         Order
       </h2>
@@ -64,7 +66,7 @@ const OrdersTable = () => {
                 <td className="px-4 py-5 ltr:text-right rtl:text-left text-heading">
                   <Link
                     href="/my-account/orders/3203"
-                    className="text-sm leading-4 bg-heading text-white px-4 py-2.5 inline-block rounded-md hover:text-white hover:bg-gray-600"
+                    className="text-sm leading-4 bg-gray-200 text-black  px-4 py-2.5 inline-block rounded-md hover:text-white hover:bg-gray-600"
                   >
                     View
                   </Link>
@@ -91,7 +93,7 @@ const OrdersTable = () => {
                 <td className="px-4 py-5 ltr:text-right rtl:text-left text-heading">
                   <Link
                     href="/my-account/orders/3204"
-                    className="text-sm leading-4 bg-heading text-white px-4 py-2.5 inline-block rounded-md hover:text-white hover:bg-gray-600"
+                    className="text-sm leading-4 bg-gray-200 text-black  px-4 py-2.5 inline-block rounded-md hover:text-white hover:bg-gray-600"
                   >
                     View
                   </Link>
@@ -104,7 +106,7 @@ const OrdersTable = () => {
           <div className="w-full space-y-4">
             <ul className="flex flex-col px-4 pt-5 pb-6 space-y-5 text-sm font-semibold border border-gray-300 rounded-md text-heading">
               <li className="flex items-center justify-between">
-                {Order}
+                Order
                 <span className="font-normal">
                   <Link
                     href="/my-account/orders/3203"
@@ -127,7 +129,7 @@ const OrdersTable = () => {
                 <span className="font-normal">
                   <Link
                     href="/my-account/orders/3203"
-                    className="text-sm leading-4 bg-heading text-white px-4 py-2.5 inline-block rounded-md hover:text-white hover:bg-gray-600"
+                    className="text-sm leading-4 bg-gray-200 text-black   px-4 py-2.5 inline-block rounded-md hover:text-white hover:bg-gray-600"
                   >
                     View
                   </Link>
@@ -158,7 +160,7 @@ const OrdersTable = () => {
                 <span className="font-normal">
                   <Link
                     href="/my-account/orders/3204"
-                    className="text-sm leading-4 bg-heading text-white px-4 py-2.5 inline-block rounded-md hover:text-white hover:bg-gray-600"
+                    className="text-sm leading-4 bg-gray-200 text-black px-4 py-2.5 inline-block rounded-md hover:text-white hover:bg-gray-600"
                   >
                     View
                   </Link>
@@ -168,7 +170,7 @@ const OrdersTable = () => {
           </div>
         )}
       </motion.div>
-    </>
+    </div>
   );
 };
 

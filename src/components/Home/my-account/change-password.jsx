@@ -1,37 +1,47 @@
 import { useState } from "react";
-import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
-import PasswordInput from "../../UI/PasswordInput";
-import Button from "../../UI/Button";
 import { fadeInTop } from "../../utils/motion/fade-in-top";
 
-const defaultValues = {
-  oldPassword: "",
-  newPassword: "",
-};
-
 const ChangePassword = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    defaultValues,
+  const [formValues, setFormValues] = useState({
+    oldPassword: "",
+    newPassword: "",
   });
-
+  const [errors, setErrors] = useState({});
   const [isPending, setIsPending] = useState(false);
 
-  function onSubmit(input) {
+  const validateForm = () => {
+    const newErrors = {};
+    if (!formValues.oldPassword)
+      newErrors.oldPassword = "Old password is required";
+    if (!formValues.newPassword)
+      newErrors.newPassword = "New password is required";
+    return newErrors;
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormValues({ ...formValues, [name]: value });
+    setErrors({ ...errors, [name]: "" }); // Clear field error on change
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const validationErrors = validateForm();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
     setIsPending(true);
-    // Simulate API call
     setTimeout(() => {
-      console.log("Password Changed:", input);
+      console.log("Password Changed:", formValues);
       setIsPending(false);
     }, 2000);
-  }
+  };
 
   return (
-    <>
+    <div className="w-full flex flex-col px-5">
       <h2 className="text-lg md:text-xl xl:text-2xl font-bold text-heading mb-6 xl:mb-8">
         Change Password
       </h2>
@@ -44,41 +54,66 @@ const ChangePassword = () => {
         className="w-full flex h-full lg:w-8/12 flex-col"
       >
         <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="w-full mx-auto flex flex-col justify-center"
+          onSubmit={handleSubmit}
+          className="w-full mx-auto flex flex-col justify-center space-y-4"
         >
-          <div className="flex flex-col space-y-3">
-            <PasswordInput
-              labelKey="Old Password"
-              errorKey={errors.oldPassword?.message}
-              {...register("oldPassword", {
-                required: "Old password is required",
-              })}
-              className="mb-4"
+          {/* Old Password Input */}
+          <div className="form-control w-full">
+            <label className="label">
+              <span className="label-text font-semibold">Old Password</span>
+            </label>
+            <input
+              type="password"
+              name="oldPassword"
+              value={formValues.oldPassword}
+              onChange={handleChange}
+              placeholder="Enter old password"
+              className={`input input-bordered w-full ${
+                errors.oldPassword ? "input-error" : ""
+              }`}
             />
-            <PasswordInput
-              labelKey="New Password"
-              errorKey={errors.newPassword?.message}
-              {...register("newPassword", {
-                required: "New password is required",
-              })}
-              className="mb-4"
-            />
+            {errors.oldPassword && (
+              <span className="text-sm text-red-500 mt-1">
+                {errors.oldPassword}
+              </span>
+            )}
+          </div>
 
-            <div className="relative">
-              <Button
-                type="submit"
-                loading={isPending}
-                disabled={isPending}
-                className="h-13 mt-3"
-              >
-                Change Password
-              </Button>
-            </div>
+          {/* New Password Input */}
+          <div className="form-control w-full">
+            <label className="label">
+              <span className="label-text font-semibold">New Password</span>
+            </label>
+            <input
+              type="password"
+              name="newPassword"
+              value={formValues.newPassword}
+              onChange={handleChange}
+              placeholder="Enter new password"
+              className={`input input-bordered w-full ${
+                errors.newPassword ? "input-error" : ""
+              }`}
+            />
+            {errors.newPassword && (
+              <span className="text-sm text-red-500 mt-1">
+                {errors.newPassword}
+              </span>
+            )}
+          </div>
+
+          {/* Submit Button */}
+          <div className="mt-4">
+            <button
+              type="submit"
+              disabled={isPending}
+              className={`btn  w-full ${isPending ? "loading" : ""}`}
+            >
+              {isPending ? "Changing..." : "Change Password"}
+            </button>
           </div>
         </form>
       </motion.div>
-    </>
+    </div>
   );
 };
 

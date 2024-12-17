@@ -34,15 +34,9 @@ const Sidebar = ({ isCollapsed }) => {
     const isSuccess = logOut();
     if (isSuccess) {
       toast.success("User logged out successfully");
-      // Swal.fire({
-      //   icon: "success",
-      //   title: "Logout Successful",
-      //   text: "You have successfully logged out.",
-      // }).then(() => {});
 
       setUser(null);
       navigate("/", { replace: true });
-      // location.reload();
     }
   };
 
