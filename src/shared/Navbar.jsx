@@ -21,6 +21,7 @@ import {
   IoPersonOutline,
   IoSettingsOutline,
 } from "react-icons/io5";
+import CustomImage from "./ImageComponents/CustomImage";
 const Navbar = () => {
   const { userRole, logOut, totalItems, user } = useContext(AuthContext);
   const placeholders = ["Shorts", "Watch", "Shirt"];
@@ -272,8 +273,12 @@ const Navbar = () => {
             {user ? (
               <details className="dropdown">
                 <summary className="avatar w-16 m-1">
-                  <div className="ring-primary ring-offset-base-100 w-24 rounded-full ring ring-offset-2">
-                    <img src={user.photourl ? user.photourl : noUser} />
+                  <div className="bg-neutral text-neutral-content w-16 rounded-full !flex justify-center items-center mx-auto">
+                    {user?.photourl ? (
+                      <CustomImage imageKey={user?.photourl} />
+                    ) : (
+                      <span className="text-3xl">{user?.username[0]}</span>
+                    )}
                   </div>
                 </summary>
                 <ul className="menu dropdown-content bg-base-200 rounded-box z-[1] w-52 p-2 shadow right-0 gap-1">
