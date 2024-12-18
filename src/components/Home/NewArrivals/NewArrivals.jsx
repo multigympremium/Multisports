@@ -63,21 +63,23 @@ const products = [
     description: 'These Sunglasses with Style provide UV protection and a fashionable look. Perfect for sunny days and outdoor adventures.',
   },
 ];
-
-
-
 const NewArrivals = () => {
-  const [isShowModal, setIsShowModal] = useState(false);
-  console.log("products :", products)
+  const [currentProduct, setCurrentProduct] = useState(null);
+
+  const handleProductClick = (product) => {
+    setCurrentProduct(product);
+    document.getElementById(`modal_${product.title.replace(/\s+/g, '_')}`).showModal();
+  };
+
   return (
     <section className="w-[90%] mx-auto py-6">
-      <h2 className="text-2xl font-bold mb-4">New Arrivals </h2>
+      <h2 className="text-2xl font-bold mb-4">New Arrivals</h2>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-6">
         {products.map((product, index) => (
           <div
-          onClick={()=>{setIsShowModal(true)}}
+            onClick={() => handleProductClick(product)}
             key={index}
-            className="bg-white cursor-pointer overflow-hidden rounded-lg  md:hover:shadow-lg transition-transform duration-300 md:hover:scale-100"
+            className="bg-white cursor-pointer overflow-hidden rounded-lg md:hover:shadow-lg transition-transform duration-300 md:hover:scale-100"
           >
             <img
               src={product.image}
@@ -85,7 +87,9 @@ const NewArrivals = () => {
               className="w-full rounded md:h-80 object-cover transition-transform duration-300 hover:scale-105"
             />
             <div className="p-4">
-              <h3 className="text-sm font-semibold mb-1 block md:hidden">{product.title.length > 12 ? `${product.title.slice(0, 12)}..` : product.title}</h3>
+              <h3 className="text-sm font-semibold mb-1 block md:hidden">
+                {product.title.length > 12 ? `${product.title.slice(0, 12)}..` : product.title}
+              </h3>
               <h3 className="text-sm font-semibold mb-2 md:block hidden">{product.title}</h3>
               <p className="text-xs text-gray-500 mb-1 lg:hidden">
                 {product.description.slice(0, 17)}...
@@ -94,10 +98,15 @@ const NewArrivals = () => {
                 {product.description.slice(0, 36)}...
               </p>
               <p className="text-sm font-bold">{product.price}</p>
-              <Modal  setIsShowModal={setIsShowModal} isShowModal={isShowModal}>hi</Modal>
+              <Modal
+                id={`modal_${product.title.replace(/\s+/g, '_')}`}
+                title={product.title}
+                image={product.image}
+                description={product.description}
+                price={product.price}
+              />
             </div>
           </div>
-
         ))}
       </div>
     </section>
