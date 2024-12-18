@@ -1,14 +1,20 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { fadeInTop } from "../../utils/motion/fade-in-top";
+import useAxiosSecure from "../../../Hook/useAxiosSecure";
+import Swal from "sweetalert2";
+import { useAuth } from "../../../providers/AuthProvider";
 
 const ChangePassword = () => {
+  const { user } = useAuth();
   const [formValues, setFormValues] = useState({
     oldPassword: "",
     newPassword: "",
   });
   const [errors, setErrors] = useState({});
   const [isPending, setIsPending] = useState(false);
+
+  const axiosSecure = useAxiosSecure();
 
   const validateForm = () => {
     const newErrors = {};
@@ -25,7 +31,7 @@ const ChangePassword = () => {
     setErrors({ ...errors, [name]: "" }); // Clear field error on change
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validateForm();
     if (Object.keys(validationErrors).length > 0) {
@@ -34,10 +40,36 @@ const ChangePassword = () => {
     }
 
     setIsPending(true);
-    setTimeout(() => {
-      console.log("Password Changed:", formValues);
+
+    formValues.email = user.email;
+
+    try {
+      const response = await axiosSecure.post(
+        `/users/change-password`,
+        formValues
+      );
+      console.log(response, "response");
+      if (response.status === 200 || response.status === 201) {
+        setIsPending(false);
+        Swal.fire({
+          title: "Success!",
+          text: "Password changed successfully!",
+          icon: "success",
+          confirmButtonText: "Ok",
+        });
+      }
       setIsPending(false);
-    }, 2000);
+    } catch (error) {
+      console.log(error, "error");
+      Swal.fire({
+        title: "Oops...",
+        text: error?.response?.data?.message || error?.message,
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+      setIsPending(false);
+    }
+    setIsPending(false);
   };
 
   return (
@@ -106,7 +138,7 @@ const ChangePassword = () => {
             <button
               type="submit"
               disabled={isPending}
-              className={`btn  w-full ${isPending ? "loading" : ""}`}
+              className={`btn  w-full `}
             >
               {isPending ? "Changing..." : "Change Password"}
             </button>

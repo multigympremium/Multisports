@@ -1,32 +1,40 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import Button from "../../UI/Button";
 import { fadeInTop } from "../../utils/motion/fade-in-top";
+import Swal from "sweetalert2";
+import { useAuth } from "../../../providers/AuthProvider";
+import useAxiosSecure from "../../../Hook/useAxiosSecure";
 
 const AccountDetails = () => {
+  const { user, setUser } = useAuth();
   const [formValues, setFormValues] = useState({
-    firstName: "",
-    lastName: "",
+    first_name: "",
+    last_name: "",
     displayName: "",
     phoneNumber: "",
     email: "",
     gender: "",
   });
 
+  const [isPending, setIsPending] = useState(false);
+  const axiosSecure = useAxiosSecure();
+
   const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    console.log(name, "name", value, "value");
     setFormValues({ ...formValues, [name]: value });
   };
 
   const validateForm = () => {
     const newErrors = {};
 
-    if (!formValues.firstName) {
+    if (!formValues.first_name) {
       newErrors.firstName = "First name is required";
     }
-    if (!formValues.lastName) {
+    if (!formValues.last_name) {
       newErrors.lastName = "Last name is required";
     }
     if (!formValues.displayName) {
@@ -52,7 +60,7 @@ const AccountDetails = () => {
     return newErrors;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validateForm();
 
@@ -61,9 +69,58 @@ const AccountDetails = () => {
     } else {
       console.log("Form submitted:", formValues);
       setErrors({});
-      // Perform further actions (API call, etc.)
+      try {
+        const response = await axiosSecure.post(
+          `/users/update-user/${user?.email}`,
+          formValues
+        );
+        console.log(response, "response");
+        if (response.status === 200 || response.status === 201) {
+          setUser(response.data.user);
+          localStorage.setItem("user", JSON.stringify(response.data.user));
+          setIsPending(false);
+          Swal.fire({
+            title: "Success!",
+            text: "Password changed successfully!",
+            icon: "success",
+            confirmButtonText: "Ok",
+          });
+        }
+        setIsPending(false);
+      } catch (error) {
+        console.log(error, "error");
+        Swal.fire({
+          title: "Oops...",
+          text: error?.response?.data?.message || error?.message,
+          icon: "error",
+          confirmButtonText: "Ok",
+        });
+        setIsPending(false);
+      }
+      setIsPending(false);
     }
   };
+
+  useEffect(() => {
+    if (!user) return;
+    setFormValues({
+      first_name: user?.first_name || "",
+      last_name: user?.last_name || "",
+      displayName: user?.username || "",
+      phoneNumber: user?.phoneNumber || "",
+      email: user?.email || "",
+      gender: user?.gender || "",
+    });
+  }, [user]);
+
+  console.log(
+    formValues,
+    "formValues",
+    formValues.gender === "female",
+    "formValues.gender === female",
+    formValues.gender === "male",
+    "formValues.gender === female"
+  );
 
   return (
     <motion.div
@@ -89,14 +146,14 @@ const AccountDetails = () => {
               <span className="label-text">First Name</span>
             </label>
             <input
-              name="firstName"
-              value={formValues.firstName}
+              name="first_name"
+              value={formValues.first_name}
               onChange={handleChange}
               placeholder="Enter First Name"
               className="input input-bordered w-full"
             />
             {errors.firstName && (
-              <span className="text-error text-sm">{errors.firstName}</span>
+              <span className="text-error text-sm">{errors.first_name}</span>
             )}
           </div>
           <div className="w-full sm:w-1/2">
@@ -104,14 +161,14 @@ const AccountDetails = () => {
               <span className="label-text">Last Name</span>
             </label>
             <input
-              name="lastName"
-              value={formValues.lastName}
+              name="last_name"
+              value={formValues.last_name}
               onChange={handleChange}
               placeholder="Enter Last Name"
               className="input input-bordered w-full"
             />
             {errors.lastName && (
-              <span className="text-error text-sm">{errors.lastName}</span>
+              <span className="text-error text-sm">{errors.last_name}</span>
             )}
           </div>
         </div>
@@ -182,7 +239,7 @@ const AccountDetails = () => {
                 value="male"
                 checked={formValues.gender === "male"}
                 onChange={handleChange}
-                className="radio checked:bg-primary"
+                className="radio"
               />
               <span className="ml-2">Male</span>
             </label>
@@ -193,7 +250,7 @@ const AccountDetails = () => {
                 value="female"
                 checked={formValues.gender === "female"}
                 onChange={handleChange}
-                className="radio checked:bg-primary"
+                className="radio"
               />
               <span className="ml-2">Female</span>
             </label>
@@ -205,8 +262,12 @@ const AccountDetails = () => {
 
         {/* Submit Button */}
         <div className="flex justify-end">
-          <button type="submit" className="btn  w-full sm:w-32">
-            Save
+          <button
+            type="submit"
+            disabled={isPending}
+            className="btn  w-full sm:w-32"
+          >
+            {isPending ? "Saving..." : "Save"}
           </button>
         </div>
       </form>
