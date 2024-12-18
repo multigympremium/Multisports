@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FaUser } from "react-icons/fa";
 import { useLocation, useParams, useSearchParams } from "react-router-dom";
 import useGetAllProductBrands from "../../../Hook/GetDataHook/useGetAllProductBrands";
@@ -12,6 +12,9 @@ import ProductsArea from "./ProductsArea";
 import ReactGA from "react-ga4";
 import ProductFilterGroup from "../../../shared/ProductFilterGroup";
 import { RiDeleteBin7Line } from "react-icons/ri";
+import { IoMdArrowBack } from "react-icons/io";
+import { IoFilterOutline } from "react-icons/io5";
+import { PiSlidersHorizontal } from "react-icons/pi";
 
 const SelectableList = ({ items, labelKey, toggleSelection, selectedItems }) => {
 
@@ -60,11 +63,47 @@ const SelectableList = ({ items, labelKey, toggleSelection, selectedItems }) => 
   );
 };
 
+const DrawerComponent = ({ children , setSelectedItems }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleOpenDrawer = () => setIsOpen(true);
+  const handleCloseDrawer = () => setIsOpen(false);
+
+  return (
+    <div className="drawer">
+      <input
+        id="my-filter"
+        type="checkbox"
+        className="drawer-toggle"
+        checked={isOpen}
+        onChange={handleOpenDrawer}
+      />
+      <div className="drawer-content">
+        {/* Page content here */}
+        <label htmlFor="my-filter" className="border border-gray-300 rounded-lg flex items-center max-w-min gap-2 px-4 py-1 font-semibold drawer-button" onClick={handleOpenDrawer}>
+        <PiSlidersHorizontal />
+        Filters
+        </label>
+      </div>
+      <div className="drawer-side z-50">
+        <label htmlFor="my-filter" aria-label="close sidebar" className="drawer-overlay" onClick={handleCloseDrawer}></label>
+        <ul className="menu bg-base-200 text-base-content w-full p-4 relative">
+          {/* Close Button */}
+          <div className="flex justify-between items-center">
+            <p className="text-2xl gap-3 font-normal flex items-center"><IoMdArrowBack onClick={handleCloseDrawer}  className="text-2xl" /> Filters</p>
+            <p onClick={() => { setSelectedItems([]) }} className="text-sm cursor-pointer">Clear All</p>
+          </div>
+          {/* Sidebar content here */}
+          {children}
+        </ul>
+      </div>
+    </div>
+  );
+};
 
 
 function ProductPage() {
   const [selectedItems, setSelectedItems] = useState([]);
-
   const toggleSelection = (name) => {
     setSelectedItems((prev) =>
       prev.includes(name) ? prev.filter((item) => item !== name) : [...prev, name]
@@ -152,9 +191,57 @@ function ProductPage() {
   console.log(params, router, "search");
   return (
     <div className="flex ml-12 flex-col">
+      <div className="block md:hidden mt-3">
+        <DrawerComponent setSelectedItems={setSelectedItems}>
+          <div
+            className={`md:hidden block transition-all duration-500  overflow-auto`}
+          >
+            <ul className="menu gap-3">
+              {/* Filtering section */}
+              <section className="border-b">
+                <div>
+                  {/* items here */}
+                  {selectedItems &&
+                    <div className="my-4 flex flex-wrap gap-1">
+                      {/* <p className="border max-w-min py-2 px-4 rounded-2xl bg-slate-50">itfems</p> */}
+                      {selectedItems.map((item, indx) => {
+                        return <p
+                          key={indx}
+                          onClick={() => handleRemoveItem(item)}
+                          className="border py-2 px-3 rounded-xl bg-slate-50 text-xs hover:bg-red-500 hover:text-white cursor-pointer transition-all duration-300 ease-in-out transform active:scale-95 flex items-center gap-2"
+                        >
+                          {item} <RiDeleteBin7Line className="transition-transform duration-300 ease-in-out group-hover:rotate-12" />
+                        </p>
+
+                      })}
+                    </div>
+                  }
+                </div>
+              </section>
+              <div className="space-y-3">
+                <ProductFilterGroup groupName="Categories">
+                  <SelectableList items={subcategories} toggleSelection={toggleSelection} selectedItems={selectedItems} labelKey="subcategoryName" />
+                </ProductFilterGroup>
+
+                <ProductFilterGroup groupName="Brands">
+                  <SelectableList items={productBrands} toggleSelection={toggleSelection} selectedItems={selectedItems} labelKey="brandName" />
+                </ProductFilterGroup>
+
+                <ProductFilterGroup groupName="Colors">
+                  <SelectableList items={productColors} toggleSelection={toggleSelection} selectedItems={selectedItems} labelKey="productColorName" />
+                </ProductFilterGroup>
+
+                <ProductFilterGroup groupName="Sizes">
+                  <SelectableList items={productSizes} toggleSelection={toggleSelection} selectedItems={selectedItems} labelKey="sizeName" />
+                </ProductFilterGroup>
+              </div>
+            </ul>
+          </div>
+        </DrawerComponent>
+      </div>
       <div className="flex  flex-1 relative z-[1] ">
         <div
-          className={` transition-all duration-500  overflow-auto absolute top-0 left-0 lg:relative pt-8 z-[3] w-[300px]`}
+          className={`hidden md:block transition-all duration-500  overflow-auto absolute top-0 left-0 lg:relative pt-8 z-[3] w-[300px]`}
         >
           <ul className="menu gap-3">
             {/* Filtering section */}
