@@ -38,6 +38,7 @@ import AccountDetails from "../components/Home/my-account/account-details";
 import OrdersTable from "../components/Home/my-account/orders-table";
 import ChangePassword from "../components/Home/my-account/change-password";
 import AccountDashboard from "../components/Home/my-account/AccountDashboard";
+import AccountAddress from "../components/Home/my-account/AccountAddress";
 
 const AllRoutes = () => {
   // const [permissionData, setPermissionData] = useState([]);
@@ -292,6 +293,10 @@ const AllRoutes = () => {
         {
           path: "change-password",
           element: <ChangePassword />,
+        },
+        {
+          path: "address",
+          element: <AccountAddress />,
         },
       ],
     },

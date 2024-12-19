@@ -13,6 +13,7 @@ const ROUTES = {
   ACCOUNT: "/account/dashboard",
   ORDERS: "/account/orders",
   ACCOUNT_DETAILS: "/account/details",
+  ADDRESS: "/account/address",
   CHANGE_PASSWORD: "/account/change-password",
 };
 
@@ -31,6 +32,11 @@ const accountMenu = [
     slug: ROUTES.ACCOUNT_DETAILS,
     name: "Details",
     icon: <IoPersonOutline className="w-5 h-5" />,
+  },
+  {
+    slug: ROUTES.ADDRESS,
+    name: "Address",
+    icon: <IoSettingsOutline className="w-5 h-5" />,
   },
   {
     slug: ROUTES.CHANGE_PASSWORD,

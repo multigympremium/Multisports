@@ -1,15 +1,17 @@
 import { useContext, useState, useEffect } from "react";
 import { IoHome } from "react-icons/io5";
-import { AuthContext } from "../../../providers/AuthProvider";
+import { AuthContext, useAuth } from "../../../providers/AuthProvider";
 import Container from "../../../shared/Container";
 import ShippingForm from "../Shipping/ShippingForm";
 import ViewCart from "../../../shared/cart/viewCart/ViewCart";
 import Summary from "../../../shared/cart/viewCart/Summary";
 import { Link } from "react-router-dom";
 import BgBlurModal from "../../../shared/Modal/BgBlurModal";
+import AccountAddress from "../my-account/AccountAddress";
 
 export default function CheckoutPage() {
   const { cartItems } = useContext(AuthContext);
+  const { user } = useAuth();
 
   const [shippingAddress, setShippingAddress] = useState(null);
   const [isShippingEdit, setIsShippingEdit] = useState(false);
@@ -19,7 +21,7 @@ export default function CheckoutPage() {
     if (localShippingAddress) {
       setShippingAddress(JSON.parse(localShippingAddress));
     }
-  }, []);
+  }, [isShippingEdit]);
 
   return (
     <Container>
@@ -43,7 +45,7 @@ export default function CheckoutPage() {
                     <div className="flex justify-between text-sm text-gray-500 ">
                       <b className="font-bold text-lg">Phone</b>
                       <span className="font-medium">
-                        {shippingAddress.contactNumber}
+                        {shippingAddress.contact_number}
                       </span>
                     </div>
                     <div className="flex justify-between text-sm text-gray-500 ">
@@ -64,12 +66,6 @@ export default function CheckoutPage() {
                       <b className="font-bold text-lg">Area</b>
                       <span className="font-medium">
                         {shippingAddress.area_name}
-                      </span>
-                    </div>
-                    <div className="flex justify-between text-sm text-gray-500 ">
-                      <b className="font-bold text-lg">Post Cone</b>
-                      <span className="font-medium">
-                        {shippingAddress.postCode}
                       </span>
                     </div>
                     <div className="flex justify-between text-sm text-gray-500 ">
@@ -131,12 +127,16 @@ export default function CheckoutPage() {
         isShowModal={isShippingEdit}
         setIsShowModal={setIsShippingEdit}
       >
-        <ShippingForm
-          shippingAddress={shippingAddress}
-          setShippingAddress={setShippingAddress}
-          setIsShowModal={setIsShippingEdit}
-          isShowModal={isShippingEdit}
-        />
+        {user ? (
+          <AccountAddress setIsShow={setIsShippingEdit} />
+        ) : (
+          <ShippingForm
+            shippingAddress={shippingAddress}
+            setShippingAddress={setShippingAddress}
+            setIsShowModal={setIsShippingEdit}
+            isShowModal={isShippingEdit}
+          />
+        )}
       </BgBlurModal>
     </Container>
   );
