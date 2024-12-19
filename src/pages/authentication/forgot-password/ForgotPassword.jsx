@@ -5,6 +5,9 @@ import { MdOutlineKeyboardBackspace } from "react-icons/md";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 import Swal from "sweetalert2";
 import useAxiosPublic from "../../../Hook/useAxiosPublic";
+import { useTimer } from "react-timer-hook";
+import toast from "react-hot-toast";
+import OTPInput from "react-otp-input";
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -14,6 +17,13 @@ export default function ForgotPassword() {
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
   const [passwordError, setPasswordError] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
+  const [isSetOTP, setIsSetOTP] = useState(false);
+  const [otp, setOtp] = useState("");
+
+  const [isActiveOtpInput, setIsActiveOtpInput] = useState(false);
+
+  const [otp_expiry, setOtp_expiry] = useState(new Date().getTime());
+  const [otp_expiryDate, setOtp_expiryDate] = useState(new Date());
 
   const router = useNavigate();
 
@@ -28,7 +38,18 @@ export default function ForgotPassword() {
         const res = await axiosPublic.get(`/users/is_user_exist/${email}`);
         console.log(res?.data?.user, "res jkjkjkkkllk");
         if (res?.data?.isExist) {
-          setIsAllowSetPassword(true);
+          // setIsAllowSetPassword(true);
+          setIsSetOTP(true);
+          setOtp_expiry(res?.data?.otp_expiry);
+
+          setOtp("");
+          setIsActiveOtpInput(false);
+          restart(new Date(res?.data?.otp_expiry).getTime());
+
+          toast.success("OTP sent successfully!", {
+            duration: 2000,
+            position: "top-right",
+          });
         }
       } else {
         if (password !== confirmPassword) {
@@ -97,6 +118,77 @@ export default function ForgotPassword() {
     validatePassword();
   }, [password]);
 
+  // let expiryTimestamp = null;
+
+  // if (!isNaN(new Date(otp_expiry).getTime())) {
+  //   expiryTimestamp =
+  //     new Date().getTime() < new Date(otp_expiry).getTime()
+  //       ? new Date(otp_expiry).getTime()
+  //       : new Date().getTime();
+  //   console.log(
+  //     expiryTimestamp,
+  //     "expiryTimestamp",
+  //     new Date(otp_expiry).getTime(),
+  //     new Date() > new Date(otp_expiry),
+  //     isNaN(new Date(otp_expiry).getTime())
+  //   );
+  // }
+
+  const {
+    // totalSeconds,
+    seconds,
+    minutes,
+    // hours,
+    // days,
+    // isRunning,
+    // start,
+    // pause,
+    // resume,
+    restart,
+  } = useTimer({
+    expiryTimestamp: otp_expiry,
+    // otp_expiry,
+    onExpire: () => {
+      console.warn("onExpire called");
+
+      if (new Date().getTime() < new Date(otp_expiryDate).getTime()) {
+        setOtp_expiry(new Date(otp_expiryDate).getTime());
+        restart(new Date(otp_expiryDate).getTime());
+        console.log("restart");
+      } else {
+        setOtp_expiry(new Date().getTime());
+        console.log("end");
+      }
+    },
+  });
+
+  useEffect(() => {
+    const validatePassword = async () => {
+      try {
+        const res = await axiosPublic.post("/users/verify-otp", {
+          otp,
+          email,
+        });
+        console.log(res);
+        if (res.status === 200 || res.status === 201) {
+          setIsAllowSetPassword(true);
+        }
+      } catch (error) {
+        console.log(error);
+        Swal.fire({
+          title: "Oops...",
+          text: "Something went wrong!",
+          icon: "error",
+          confirmButtonText: "Try Again",
+        });
+      }
+    };
+
+    if (otp.length === 6) {
+      validatePassword();
+    }
+  }, [otp]);
+
   return (
     <div className="min-h-screen flex flex-col items-center w-[750px] relative mx-auto bg-gray-50 ">
       {/* Back Arrow */}
@@ -126,21 +218,84 @@ export default function ForgotPassword() {
         className="mt-6 bg-white shadow-lg p-3 w-[94%] mx-auto rounded-lg"
       >
         {!isAllowSetPassword && (
-          <div className="mb-4 border-b border-gray-200 pb-5">
-            <label htmlFor="email" className="block text-gray-700 py-3 text-xl">
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              placeholder="email"
-              className="mt-1 block w-full p-2 border border-black bg-white rounded-lg text-xl py-3 px-4"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
+          <>
+            {isSetOTP ? (
+              <div className="w-full p-10 rounded-lg  mx-auto">
+                <h2 className="text-2xl text-center font-bold mb-4">
+                  Enter Verification Code
+                </h2>
+                <form className="flex flex-col items-center gap-4">
+                  <OTPInput
+                    value={otp}
+                    onChange={setOtp}
+                    numInputs={6}
+                    renderSeparator={<span className="px-4"></span>}
+                    inputStyle={{
+                      width: "55px",
+                      height: "60px",
+                      borderRadius: "6px",
+                      color: "black",
+                      fontWeight: "bold",
+                      // border: "2px solid black",
+                      boxShadow: "0 0 10px 0px rgba(0,0,0,0.4)",
+                    }}
+                    renderInput={(props) => (
+                      <input
+                        type="text"
+                        placeholder="Enter your code"
+                        className="w-full h-32 rounded-lg p-4 text-black font-bold border-2 border-black"
+                        disabled={isActiveOtpInput}
+                        {...props}
+                      />
+                    )}
+                  />
+                  <div className="grid grid-cols-3 gap-2 mt-4 justify-between w-full  items-center">
+                    <p className="col-span-2">
+                      OTP Expires in
+                      <span
+                        className={`countdown font-mono text-2xl px-2 ${
+                          minutes > 3 ? "text-blue-500" : "text-red-500"
+                        } font-bold`}
+                      >
+                        {/* <span style={{ "--value": 10 }}></span>h */}
+                        <span style={{ "--value": minutes }}></span>:
+                        <span style={{ "--value": `${seconds}` }}></span>
+                      </span>
+                      min
+                    </p>
+                  </div>
+                </form>
+              </div>
+            ) : (
+              <div className="mb-4 border-b border-gray-200 pb-5">
+                <label
+                  htmlFor="email"
+                  className="block text-gray-700 py-3 text-xl"
+                >
+                  Email
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  placeholder="email"
+                  className="mt-1 block w-full p-2 border border-black bg-white rounded-lg text-xl py-3 px-4"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+                <div className="mt-4 text-center text-sm text-gray-500  w-full flex flex-col gap-4 py-4 ">
+                  <button
+                    type="submit"
+                    className="block bg-black text-white text-center text-2xl py-3 rounded-lg font-semibold mb-4 hover:scale-[0.95] transition-all duration-300 w-[94%] mx-auto"
+                  >
+                    Submit
+                  </button>
+                </div>
+              </div>
+            )}
+          </>
         )}
+
         {isAllowSetPassword && (
           <>
             {/* Password Input */}
@@ -205,16 +360,16 @@ export default function ForgotPassword() {
                 {passwordVisible ? <IoEyeOffOutline /> : <IoEyeOutline />}
               </button>
             </div>
+            <div className="mt-4 text-center text-sm text-gray-500  w-full flex flex-col gap-4 py-4 ">
+              <button
+                type="submit"
+                className="block bg-black text-white text-center text-2xl py-3 rounded-lg font-semibold mb-4 hover:scale-[0.95] transition-all duration-300 w-[94%] mx-auto"
+              >
+                Submit
+              </button>
+            </div>
           </>
         )}
-        <div className="mt-4 text-center text-sm text-gray-500  w-full flex flex-col gap-4 py-4 ">
-          <button
-            type="submit"
-            className="block bg-black text-white text-center text-2xl py-3 rounded-lg font-semibold mb-4 hover:scale-[0.95] transition-all duration-300 w-[94%] mx-auto"
-          >
-            Submit
-          </button>
-        </div>
       </form>
     </div>
   );

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import useGetAllShippingAddress from "../../../Hook/GetDataHook/useGetAllShippingAddress";
-import Modal from "../../../shared/Modal/Modal";
 import CreateShippingAddress from "./CreateShippingAddress";
 import BgBlurModal from "../../../shared/Modal/BgBlurModal";
 import { FaEdit } from "react-icons/fa";
