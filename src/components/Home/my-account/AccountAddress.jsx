@@ -4,12 +4,23 @@ import CreateShippingAddress from "./CreateShippingAddress";
 import BgBlurModal from "../../../shared/Modal/BgBlurModal";
 import { FaEdit } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
+import { MdDeleteForever } from "react-icons/md";
+import Swal from "sweetalert2";
+import toast from "react-hot-toast";
+import useAxiosSecure from "../../../Hook/useAxiosSecure";
 
 export default function AccountAddress({ isShow, setIsShow }) {
   const [isShowModal, setIsShowModal] = useState();
   const [singleData, setSingleData] = useState(null);
   const [currentAddress, setCurrentAddress] = useState(null);
-  const address = useGetAllShippingAddress({ isEdited: isShowModal });
+  const [isDeleted, setIsDeleted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const address = useGetAllShippingAddress({
+    isEdited: isShowModal,
+    isDeleted,
+  });
+  const axiosSecure = useAxiosSecure();
 
   const handleEdit = (data) => {
     setSingleData(data);
@@ -19,6 +30,39 @@ export default function AccountAddress({ isShow, setIsShow }) {
   const handleDefaultAddress = (data) => {
     setCurrentAddress(data);
     localStorage.setItem("shippingAddress", JSON.stringify(data));
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      Swal.fire({
+        title: "Are you sure you want to delete this member?",
+        text: "This action cannot be undone!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Yes, delete it!",
+        cancelButtonText: "No, cancel!",
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          try {
+            const res = await axiosSecure.delete(`/shipping/${id}`);
+            console.log(res, "res");
+            if (res.status === 200 || res.status === 201) {
+              setIsDeleted((prev) => !prev);
+              toast.success("Address deleted successfully!");
+            }
+          } catch (error) {
+            console.log(error, "error");
+            toast.error("Error deleting user!");
+          }
+        }
+      });
+    } catch (error) {
+      console.log(error, "error");
+      toast.error("Error deleting brand!");
+    }
+    console.log(`Delete brand with ID: ${id}`);
   };
 
   useEffect(() => {
@@ -49,7 +93,14 @@ export default function AccountAddress({ isShow, setIsShow }) {
                 }`}
                 key={index}
               >
-                <div className="flex justify-end gap-4 items-center text-sm text-gray-500 mb-3">
+                <div className="flex justify-end gap-4 items-center text-sm  mb-3">
+                  <button
+                    className="btn btn-sm bg-red-300 "
+                    onClick={() => handleDelete(item._id)}
+                    title="Delete"
+                  >
+                    <MdDeleteForever />
+                  </button>
                   <button
                     className="btn btn-sm"
                     onClick={() => handleEdit(item)}
