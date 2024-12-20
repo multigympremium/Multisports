@@ -109,6 +109,12 @@ function MenuItemsList({ userRole }) {
           isAllowed: isAllowedRoute("product-flags"),
           icon: <IoIosHome />,
         },
+        {
+          title: "Discount",
+          path: "discount",
+          isAllowed: isAllowedRoute("discount"),
+          icon: <IoIosHome />,
+        },
       ],
     },
     // Category
