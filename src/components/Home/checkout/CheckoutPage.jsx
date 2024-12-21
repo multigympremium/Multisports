@@ -8,6 +8,7 @@ import Summary from "../../../shared/cart/viewCart/Summary";
 import { Link } from "react-router-dom";
 import BgBlurModal from "../../../shared/Modal/BgBlurModal";
 import AccountAddress from "../my-account/AccountAddress";
+import PromotionalBanner from "../../UI/PromotionalBanner";
 
 export default function CheckoutPage() {
   const { cartItems } = useContext(AuthContext);
@@ -120,6 +121,8 @@ export default function CheckoutPage() {
           >
             Go To Shop
           </Link>
+
+          <PromotionalBanner />
         </div>
       )}
 

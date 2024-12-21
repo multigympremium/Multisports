@@ -25,22 +25,22 @@ const Root_Dashboard = () => {
       const root = document.documentElement;
       root.style.setProperty(
         "--primary-color",
-        theme.primaryColor || "#3490dc"
+        theme?.primaryColor || "#3490dc"
       );
       root.style.setProperty(
         "--secondary-color",
-        theme.secondaryColor || "#ffed4a"
+        theme?.secondaryColor || "#ffed4a"
       );
       root.style.setProperty(
         "--tertiary-color",
-        theme.tertiaryColor || "#e3342f"
+        theme?.tertiaryColor || "#e3342f"
       );
-      root.style.setProperty("--title-color", theme.titleColor || "#1a202c");
+      root.style.setProperty("--title-color", theme?.titleColor || "#1a202c");
       root.style.setProperty(
         "--paragraph-color",
-        theme.paragraphColor || "#2d3748"
+        theme?.paragraphColor || "#2d3748"
       );
-      root.style.setProperty("--border-color", theme.borderColor || "#cbd5e0");
+      root.style.setProperty("--border-color", theme?.borderColor || "#cbd5e0");
     };
 
     fetchTheme();

@@ -29,7 +29,7 @@ function HorizontalMenu() {
   //   query: `category=${activeCategory}`,
   //   activeCategory,
   // });
-  const subcategories =  useGetAllSubCategories({
+  const subcategories = useGetAllSubCategories({
     // query: `category=${activeCategory}`,
     // activeCategory,
   });
@@ -48,13 +48,13 @@ function HorizontalMenu() {
     );
     setCurrentSubCategories(currentSubCategoriesData);
   }, [activeCategory]);
-
+  
 
 
   console.log(activeCategory, "activeCategory");
   return (
     <div className="relative md:block hidden">
-      <header className="w-full bg-red-500 flex justify-center text-white ">
+      <header className="w-full  flex justify-center  ">
         <div className="container flex px-2 gap-4 ">
           <Swiper
             slidesPerView={"auto"}
@@ -66,11 +66,16 @@ function HorizontalMenu() {
             {categories?.length > 0 && categories.map((category, index) => (
               <SwiperSlide key={index}>
                 <button
-                  className={`py-2 md:py-3 px-2 text-xs md:text-base hover:bg-white ${
-                    isHover && category?.slug === activeCategory
-                      ? "bg-white text-black"
-                      : "text-white"
-                  } hover:text-black cursor-pointer relative`}
+                  className={`py-2 md:py-3 px-2 text-xs md:text-base relative cursor-pointer 
+              hover:bg-white 
+              before:absolute before:bottom-0 before:left-0 
+              before:w-0 before:h-[2px] before:bg-gray-900 
+              before:transition-all before:duration-500 
+              hover:before:w-full
+              ${isHover && category?.slug === activeCategory
+                      ? "text-gray-900" // Optional for text color change
+                      : "text-gray-700"
+                    }`}
                   onMouseEnter={() => {
                     setActiveCategory(category.slug);
                     setIsHover(true);
@@ -81,11 +86,12 @@ function HorizontalMenu() {
                 >
                   <Link
                     to={`/products/${category.slug}`}
-                    className={""}
+                    className="relative z-10"
                   >
-                    {category.categoryName}
+                    {category.categoryName.charAt(0).toUpperCase() + category.categoryName.slice(1).toLowerCase()}
                   </Link>
                 </button>
+
               </SwiperSlide>
             ))}
           </Swiper>
