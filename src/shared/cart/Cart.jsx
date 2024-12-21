@@ -31,9 +31,9 @@ const Cart = ({ isShow, setIsShow }) => {
   const discount = calculateDiscounts(
     cartItems,
     discounts,
-    discounts.promoCode,
-    discounts.promoCodes
-  ).totalDiscount;
+    discounts?.promoCode,
+    discounts?.promoCodes
+  )?.totalDiscount;
 
   return (
     <div
