@@ -28,6 +28,8 @@ const DiscountForm = () => {
     promoCodeActive: false,
     promoCode: "",
     promoCodeDiscount: 0,
+    discountText: "",
+    discountTextActive: false,
   });
 
   const axiosSecure = useAxiosSecure();
@@ -111,6 +113,32 @@ const DiscountForm = () => {
   return (
     <div className="p-6 bg-white min-h-screen text-black">
       <h1 className="text-2xl font-bold mb-4">Manage Discounts</h1>
+
+      {/* Percentage Discount */}
+      <div className="mb-8 border-b pb-5">
+        <h2 className="text-lg font-semibold text-black">Discount Text</h2>
+        <div className="flex items-center gap-4">
+          <label className="text-black flex items-center gap-2">
+            <input
+              type="checkbox"
+              className="checkbox checkbox-primary"
+              name="discountTextActive"
+              checked={discounts?.discountTextActive}
+              onChange={handleChange}
+            />
+            Show On Home Page
+          </label>
+          <input
+            type="text"
+            name="discountText"
+            className="input input-bordered w-full "
+            value={discounts?.discountText}
+            onChange={handleChange}
+            maxLength={170}
+            placeholder="Max 170 Characters"
+          />
+        </div>
+      </div>
 
       {/* Percentage Discount */}
       <div className="mb-8 border-b pb-5">
@@ -294,7 +322,7 @@ const DiscountForm = () => {
       </div>
 
       <button className="btn btn-primary block ml-auto" onClick={handleSubmit}>
-        Save Discounts
+        Save
       </button>
     </div>
   );
