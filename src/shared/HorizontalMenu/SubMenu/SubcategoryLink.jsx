@@ -21,7 +21,7 @@ function SubcategoryLink({
   return (
     <Link
     
-    className="hover:text-blue-800 group hover:translate-x-3 pr-10 py-2 transition-all duration-300 text-lg hover:underline relative" to={`/products/${subcategory.slug}`} onMouseOver={()=> {setActiveItem(subcategory.slug); } }  >
+    className="hover:text-blue-800  group hover:translate-x-3 pr-10 py-2 transition-all duration-300 text-lg hover:underline relative" to={`/products/${subcategory.slug}`} onMouseOver={()=> {setActiveItem(subcategory.slug); } }  >
     {subcategory.subcategoryName} 
 
     {
