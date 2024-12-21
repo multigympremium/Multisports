@@ -353,7 +353,8 @@ function DashboardChildrenRoutes() {
     //   ),
     // },
     {
-      path: "about-us",
+      // path: "about-us",
+      path: isPermittedRoute("about-us"),
       element: (
         // <PrivateRoute>
         //   <Panel></Panel>
@@ -367,8 +368,8 @@ function DashboardChildrenRoutes() {
       ),
     },
     {
-      // path: isPermittedRoute("add-new-testimonial"),
-      path: "add-new-testimonial",
+      // path: "add-new-testimonial",
+      path: isPermittedRoute("add-new-testimonial"),
       element: (
         // <PrivateRoute>
         //   <Panel></Panel>
@@ -383,8 +384,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "visitor",
-      path: "all-customers",
-      // path: isPermittedRoute("visitor"),
+      // path: "all-customers",
+      path: isPermittedRoute("all-customers"),
 
       element: (
         // <PrivateRoute>
@@ -401,8 +402,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "workout-routine",
-      path: "all-orders",
-      // path: isPermittedRoute("create-workout-question-input"),
+      // path: "all-orders",
+      path: isPermittedRoute("all-orders"),
       element: (
         // <PrivateRoute>
         //   <Visitor />
@@ -417,8 +418,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "workout-routine",
-      path: "approved-orders",
-      // path: isPermittedRoute("workout-routine"),
+      // path: "approved-orders",
+      path: isPermittedRoute("approved-orders"),
       element: (
         // <PrivateRoute>
         //   <Visitor />
@@ -433,8 +434,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "workout-routine",
-      path: "completed-orders",
-      // path: isPermittedRoute("workout-routine"),
+      // path: "completed-orders",
+      path: isPermittedRoute("completed-orders"),
       element: (
         // <PrivateRoute>
         //   <Visitor />
@@ -449,8 +450,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "workout-routine",
-      path: "cancelled-orders",
-      // path: isPermittedRoute("workout-routine"),
+      // path: "cancelled-orders",
+      path: isPermittedRoute("cancelled-orders"),
       element: (
         // <PrivateRoute>
         //   <Visitor />
@@ -465,8 +466,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "workout-routine",
-      path: "assign-role-permission",
-      // path: isPermittedRoute("my-workout"),
+      // path: "assign-role-permission",
+      path: isPermittedRoute("assign-role-permission"),
       element: (
         // <PrivateRoute>
         //   <Visitor />
@@ -481,8 +482,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "diet-plan",
-      path: "banner-images-backup",
-      // path: isPermittedRoute("diet-plan"),
+      // path: "banner-images-backup",
+      path: isPermittedRoute("banner-images-backup"),
       element: (
         // <PrivateRoute>
         //   <Visitor />
@@ -497,8 +498,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "user_profile",
-      path: "blog-categories",
-      // path: isPermittedRoute("user_profile"),
+      // path: "blog-categories",
+      path: isPermittedRoute("blog-categories"),
       element: (
         <Suspense fallback={<GlobalLoading />}>
           <PrivateRoute>
@@ -510,8 +511,8 @@ function DashboardChildrenRoutes() {
 
     {
       // path: "shedule_classes",
-      path: "blog-files-backup",
-      // path: isPermittedRoute("shedule_classes"),
+      // path: "blog-files-backup",
+      path: isPermittedRoute("blog-files-backup"),
       element: (
         <Suspense fallback={<GlobalLoading />}>
           <PrivateRoute>
@@ -523,8 +524,8 @@ function DashboardChildrenRoutes() {
 
     {
       // path: "change_password",
-      path: "change_password",
-      // path: isPermittedRoute("change_password"),
+      // path: "change_password",
+      path: isPermittedRoute("change_password"),
       element: (
         <Suspense fallback={<GlobalLoading />}>
           <PrivateRoute>
@@ -535,8 +536,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "diet-plan",
-      path: "bulk-product",
-      // path: isPermittedRoute("add-request-diet-plan"),
+      // path: "bulk-product",
+      path: isPermittedRoute("bulk-product"),
       element: (
         // <PrivateRoute>
         //   <Visitor />
@@ -551,8 +552,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "add-new-user",
-      path: "category-icon-backup",
-      // path: isPermittedRoute("add-new-user"),
+      // path: "category-icon-backup",
+      path: isPermittedRoute("category-icon-backup"),
       element: (
         // <PrivateRoute>
         //   <AddNewUser />
@@ -567,8 +568,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "members",
-      path: "contact-request",
-      // path: isPermittedRoute("members"),
+      // path: "contact-request",
+      path: isPermittedRoute("contact-request"),
       element: (
         // <PrivateRoute>
         //   <Members />
@@ -582,9 +583,9 @@ function DashboardChildrenRoutes() {
       ),
     },
     {
-      path: "create-categories",
+      // path: "create-categories",
       // path: "add_package/:id",
-      // path: isPermittedRoute("add_package/:id"),
+      path: isPermittedRoute("create-categories"),
       element: (
         // <PrivateRoute>
         //   <Members />
@@ -599,8 +600,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "gym-staff",
-      path: "create-child-categories",
-      // path: isPermittedRoute("gym-staff"),
+      // path: "create-child-categories",
+      path: isPermittedRoute("create-child-categories"),
 
       element: (
         // <PrivateRoute>
@@ -616,8 +617,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "manage-lockers",
-      path: "create-product",
-      // path: isPermittedRoute("manage-lockers"),
+      // path: "create-product",
+      path: isPermittedRoute("create-product"),
       element: (
         // <PrivateRoute>
         //   <ManageLockers />
@@ -632,8 +633,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "locker-payments",
-      path: "create-promo-code",
-      // path: isPermittedRoute("locker-payments"),
+      // path: "create-promo-code",
+      path: isPermittedRoute("create-promo-code"),
       element: (
         // <PrivateRoute>
         //   <LockerPayments />
@@ -648,8 +649,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "invoices-billing",
-      path: "create-subcategories",
-      // path: isPermittedRoute("invoices-billing"),
+      // path: "create-subcategories",
+      path: isPermittedRoute("create-subcategories"),
       element: (
         // <PrivateRoute>
         //   <InvoicesBilling />
@@ -664,8 +665,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "reports",
-      path: "custom-css-js",
-      // path: isPermittedRoute("reports"),
+      // path: "custom-css-js",
+      path: isPermittedRoute("custom-css-js"),
       element: (
         // <PrivateRoute>
         //   <InvoicesBilling />
@@ -680,8 +681,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "expense-tracking",
-      path: "customers-wishlist",
-      // path: isPermittedRoute("expense-tracking"),
+      // path: "customers-wishlist",
+      path: isPermittedRoute("customers-wishlist"),
       element: (
         // <PrivateRoute>
         //   <ExpenseTracking />
@@ -696,8 +697,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "tax-management",
-      path: "database-backup",
-      // path: isPermittedRoute("tax-management"),
+      // path: "database-backup",
+      path: isPermittedRoute("database-backup"),
       element: (
         // <PrivateRoute>
         //   <TaxManagement />
@@ -712,8 +713,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "automated-reminders",
-      path: "delivery-charges",
-      // path: isPermittedRoute("automated-reminders"),
+      // path: "delivery-charges",
+      path: isPermittedRoute("delivery-charges"),
       element: (
         // <PrivateRoute>
         //   <AutomatedReminders />
@@ -728,8 +729,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "feedback-surveys",
-      path: "email-configurations",
-      // path: isPermittedRoute("feedback-surveys"),
+      // path: "email-configurations",
+      path: isPermittedRoute("email-configurations"),
       element: (
         // <PrivateRoute>
         //   <FeedbackSurveys />
@@ -744,8 +745,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "follow-up-scheduling",
-      path: "email-templates",
-      // path: isPermittedRoute("follow-up-scheduling"),
+      // path: "email-templates",
+      path: isPermittedRoute("email-templates"),
 
       element: (
         // <PrivateRoute>
@@ -761,8 +762,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "due-finder",
-      path: "faqs",
-      // path: isPermittedRoute("due-finder"),
+      // path: "faqs",
+      path: isPermittedRoute("faqs"),
       element: (
         // <PrivateRoute>
         //   <DueFinder />
@@ -777,8 +778,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "routine-library",
-      path: "flag-icon-backup",
-      // path: isPermittedRoute("routine-library"),
+      // path: "flag-icon-backup",
+      path: isPermittedRoute("flag-icon-backup"),
 
       element: (
         // <PrivateRoute>
@@ -794,8 +795,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "create-routine",
-      path: "general-info",
-      // path: isPermittedRoute("create-routine"),
+      // path: "general-info",
+      path: isPermittedRoute("general-info"),
       element: (
         // <PrivateRoute>
         //   <CreateRoutine />
@@ -809,8 +810,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "assign-routine",
-      path: "generate-products",
-      // path: isPermittedRoute("assign-routine"),
+      // path: "generate-products",
+      path: isPermittedRoute("generate-products"),
       element: (
         // <PrivateRoute>
         //   <AssignRoutine />
@@ -824,8 +825,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "track-progress",
-      path: "home-page-seo",
-      // path: isPermittedRoute("track-progress"),
+      // path: "home-page-seo",
+      path: isPermittedRoute("home-page-seo"),
       element: (
         // <PrivateRoute>
         //   <TrackProgress />
@@ -839,8 +840,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "diet-library",
-      path: "measurement-units",
-      // path: isPermittedRoute("diet-library"),
+      // path: "measurement-units",
+      path: isPermittedRoute("measurement-units"),
       element: (
         // <PrivateRoute>
         //   <DietLibrary />
@@ -854,8 +855,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "request-diet-plan",
-      path: "on-hold-supports",
-      // path: isPermittedRoute("request-diet-plan"),
+      // path: "on-hold-supports",
+      path: isPermittedRoute("on-hold-supports"),
       element: (
         // <PrivateRoute>
         //   <CreateDietPlan />
@@ -869,8 +870,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "assign-diet-plan",
-      path: "other-images-backup",
-      // path: isPermittedRoute("assign-diet-plan"),
+      // path: "other-images-backup",
+      path: isPermittedRoute("other-images-backup"),
       element: (
         // <PrivateRoute>
         //   <AssignDietPlan />
@@ -884,8 +885,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "track-diet-progress",
-      path: "payment-gateway",
-      // path: isPermittedRoute("track-diet-progress"),
+      // path: "payment-gateway",
+      path: isPermittedRoute("payment-gateway"),
       element: (
         // <PrivateRoute>
         //   <TrackDietProgress />
@@ -899,8 +900,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "track-diet-progress",
-      path: "permission-routes",
-      // path: isPermittedRoute("track-diet-progress"),
+      // path: "permission-routes",
+      path: isPermittedRoute("permission-routes"),
       element: (
         // <PrivateRoute>
         //   <TrackDietProgress />
@@ -914,8 +915,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "schedule-classes",
-      path: "payment-history",
-      // path: isPermittedRoute("schedule-classes"),
+      // path: "payment-history",
+      path: isPermittedRoute("payment-history"),
       element: (
         // <PrivateRoute>
         //   <ScheduleClasses />
@@ -929,8 +930,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "manage-classes",
-      path: "pending-orders",
-      // path: isPermittedRoute("manage-classes"),
+      // path: "pending-orders",
+      path: isPermittedRoute("pending-orders"),
       element: (
         // <PrivateRoute>
         //   <ManageClasses />
@@ -944,8 +945,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "register-classes",
-      path: "pending-supports",
-      // path: isPermittedRoute("register-classes"),
+      // path: "pending-supports",
+      path: isPermittedRoute("pending-supports"),
       element: (
         // <PrivateRoute>
         //   <RegisterClasses />
@@ -959,8 +960,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "class-attendance",
-      path: "previous-notification",
-      // path: isPermittedRoute("class-attendance"),
+      // path: "previous-notification",
+      path: isPermittedRoute("previous-notification"),
 
       element: (
         // <PrivateRoute>
@@ -975,8 +976,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "member-package",
-      path: "privacy-policy",
-      // path: isPermittedRoute("member-package"),
+      // path: "privacy-policy",
+      path: isPermittedRoute("privacy-policy"),
 
       element: (
         // <PrivateRoute>
@@ -991,8 +992,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "staff-role",
-      path: "product-brands",
-      // path: isPermittedRoute("staff-role"),
+      // path: "product-brands",
+      path: isPermittedRoute("product-brands"),
       element: (
         // <PrivateRoute>
         //   <StaffRole />
@@ -1006,8 +1007,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "staff-role",
-      path: "product-colors",
-      // path: isPermittedRoute("payment-method"),
+      // path: "product-colors",
+      path: isPermittedRoute("product-colors"),
       element: (
         // <PrivateRoute>
         //   <StaffRole />
@@ -1021,8 +1022,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "staff-role",
-      path: "product-flags",
-      // path: isPermittedRoute("create-transaction-type"),
+      // path: "product-flags",
+      path: isPermittedRoute("product-flags"),
       element: (
         // <PrivateRoute>
         //   <StaffRole />
@@ -1036,8 +1037,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "change-password",
-      path: "product-images-backup",
-      // path: isPermittedRoute("change-password"),
+      // path: "product-images-backup",
+      path: isPermittedRoute("product-images-backup"),
       element: (
         // <PrivateRoute>
         //   <ChangePassword />
@@ -1051,8 +1052,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "user-migration",
-      path: "product-question-answer",
-      // path: isPermittedRoute("user-migration"),
+      // path: "product-question-answer",
+      path: isPermittedRoute("product-question-answer"),
 
       element: (
         // <PrivateRoute>
@@ -1067,8 +1068,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "addworkout",
-      path: "product-sizes",
-      // path: isPermittedRoute("addworkout"),
+      // path: "product-sizes",
+      path: isPermittedRoute("product-sizes"),
       element: (
         // <PrivateRoute>
         //   <Addworkout />
@@ -1083,8 +1084,8 @@ function DashboardChildrenRoutes() {
 
     {
       // path: "smscampaign",
-      path: "promotional-banner",
-      // path: isPermittedRoute("smscampaign"),
+      // path: "promotional-banner",
+      path: isPermittedRoute("promotional-banner"),
       element: (
         // <PrivateRoute>
         //   <SmsCampaign />
@@ -1098,8 +1099,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "smslogs",
-      path: "ratings-review",
-      // path: isPermittedRoute("smslogs"),
+      // path: "ratings-review",
+      path: isPermittedRoute("ratings-review"),
       element: (
         // <PrivateRoute>
         //   <SMSLogs />
@@ -1113,8 +1114,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "sendsinglesms",
-      path: "rejected-supports",
-      // path: isPermittedRoute("sendsinglesms"),
+      // path: "rejected-supports",
+      path: isPermittedRoute("rejected-supports"),
       element: (
         // <PrivateRoute>
         //   <Sendsinglesms />
@@ -1128,8 +1129,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "sendgroupsms",
-      path: "remove-demo-products",
-      // path: isPermittedRoute("sendgroupsms"),
+      // path: "remove-demo-products",
+      path: isPermittedRoute("remove-demo-products"),
       element: (
         // <PrivateRoute>
         //   <Sendgroupsms />
@@ -1143,8 +1144,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "userprofile",
-      path: "return-policy",
-      // path: isPermittedRoute("userprofile"),
+      // path: "return-policy",
+      path: isPermittedRoute("return-policy"),
       element: (
         // <PrivateRoute>
         //   <UserProfile />
@@ -1158,8 +1159,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "companyprofile",
-      path: "send-notification",
-      // path: isPermittedRoute("companyprofile"),
+      // path: "send-notification",
+      path: isPermittedRoute("send-notification"),
       element: (
         // <PrivateRoute>
         //   <CompanyProfile />
@@ -1173,8 +1174,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "smstemplates",
-      path: "send-sms",
-      // path: isPermittedRoute("smstemplates"),
+      // path: "send-sms",
+      path: isPermittedRoute("send-sms"),
       element: (
         // <PrivateRoute>
         //   <Smstemplates />
@@ -1188,8 +1189,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "smsgroup",
-      path: "setup-your-config",
-      // path: isPermittedRoute("smsgroup"),
+      // path: "setup-your-config",
+      path: isPermittedRoute("setup-your-config"),
 
       element: (
         // <PrivateRoute>
@@ -1204,8 +1205,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "doorreport",
-      path: "shipping-policy",
-      // path: isPermittedRoute("doorreport"),
+      // path: "shipping-policy",
+      path: isPermittedRoute("shipping-policy"),
 
       element: (
         // <PrivateRoute>
@@ -1220,8 +1221,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "monthlydoor",
-      path: "sms-gateway",
-      // path: isPermittedRoute("monthlydoor"),
+      // path: "sms-gateway",
+      path: isPermittedRoute("sms-gateway"),
       element: (
         // <PrivateRoute>
         //   <SmsGroup />
@@ -1235,8 +1236,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "doorhistory",
-      path: "sms-history",
-      // path: isPermittedRoute("unactiveuser"),
+      // path: "sms-history",
+      path: isPermittedRoute("sms-history"),
       element: (
         // <PrivateRoute>
         //   <SmsGroup />
@@ -1250,8 +1251,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "doorhistory",
-      path: "sms-templates",
-      // path: isPermittedRoute("updateaccessinfo"),
+      // path: "sms-templates",
+      path: isPermittedRoute("sms-templates"),
       element: (
         // <PrivateRoute>
         //   <SmsGroup />
@@ -1265,8 +1266,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "doorhistory",
-      path: "social-chat-scripts",
-      // path: isPermittedRoute("announcement"),
+      // path: "social-chat-scripts",
+      path: isPermittedRoute("social-chat-scripts"),
       element: (
         // <PrivateRoute>
         //   <SmsGroup />
@@ -1280,8 +1281,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "dailydoor",
-      path: "social-media-links",
-      // path: isPermittedRoute("dailydoor"),
+      // path: "social-media-links",
+      path: isPermittedRoute("social-media-links"),
       element: (
         // <PrivateRoute>
         //   <SmsGroup />
@@ -1295,8 +1296,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "senderid",
-      path: "solved-supports",
-      // path: isPermittedRoute("senderid"),
+      // path: "solved-supports",
+      path: isPermittedRoute("solved-supports"),
       element: (
         // <PrivateRoute>
         //   <SmsGroup />
@@ -1310,8 +1311,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "senderid",
-      path: "models-of-brand",
-      // path: isPermittedRoute("senderid"),
+      // path: "models-of-brand",
+      path: isPermittedRoute("models-of-brand"),
       element: (
         // <PrivateRoute>
         //   <SmsGroup />
@@ -1325,8 +1326,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "doorhistory",
-      path: "subcategory-backup",
-      // path: isPermittedRoute("doorhistory"),
+      // path: "subcategory-backup",
+      path: isPermittedRoute("subcategory-backup"),
       element: (
         // <PrivateRoute>
         //   <SmsGroup />
@@ -1341,8 +1342,8 @@ function DashboardChildrenRoutes() {
 
     {
       // path: "userpermission",
-      path: "subscribed-users",
-      // path: isPermittedRoute("userpermission"),
+      // path: "subscribed-users",
+      path: isPermittedRoute("subscribed-users"),
       element: (
         // <PrivateRoute>
         //   <SmsGroup />
@@ -1356,8 +1357,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "userpermission",
-      path: "system-users",
-      // path: isPermittedRoute("userpermission"),
+      // path: "system-users",
+      path: isPermittedRoute("system-users"),
       element: (
         // <PrivateRoute>
         //   <SmsGroup />
@@ -1371,8 +1372,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "userpermission",
-      path: "terms-condition",
-      // path: isPermittedRoute("userpermission"),
+      // path: "terms-condition",
+      path: isPermittedRoute("terms-condition"),
       element: (
         // <PrivateRoute>
         //   <SmsGroup />
@@ -1386,8 +1387,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "userpermission",
-      path: "ticket-files-backup",
-      // path: isPermittedRoute("userpermission"),
+      // path: "ticket-files-backup",
+      path: isPermittedRoute("ticket-files-backup"),
       element: (
         // <PrivateRoute>
         //   <SmsGroup />
@@ -1401,8 +1402,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "userpermission",
-      path: "upazila-thana",
-      // path: isPermittedRoute("userpermission"),
+      // path: "upazila-thana",
+      path: isPermittedRoute("upazila-thana"),
       element: (
         // <PrivateRoute>
         //   <SmsGroup />
@@ -1416,8 +1417,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "userpermission",
-      path: "user-images-backup",
-      // path: isPermittedRoute("userpermission"),
+      // path: "user-images-backup",
+      path: isPermittedRoute("user-images-backup"),
       element: (
         // <PrivateRoute>
         //   <SmsGroup />
@@ -1431,8 +1432,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "userpermission",
-      path: "user-roles",
-      // path: isPermittedRoute("userpermission"),
+      // path: "user-roles",
+      path: isPermittedRoute("user-roles"),
       element: (
         // <PrivateRoute>
         //   <SmsGroup />
@@ -1447,8 +1448,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "userpermission",
-      path: "view-all-bag-banners",
-      // path: isPermittedRoute("userpermission"),
+      // path: "view-all-bag-banners",
+      path: isPermittedRoute("view-all-bag-banners"),
       element: (
         // <PrivateRoute>
         //   <SmsGroup />
@@ -1462,8 +1463,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "userpermission",
-      path: "view-all-banners",
-      // path: isPermittedRoute("userpermission"),
+      // path: "view-all-banners",
+      path: isPermittedRoute("view-all-banners"),
       element: (
         // <PrivateRoute>
         //   <SmsGroup />
@@ -1477,8 +1478,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "userpermission",
-      path: "view-all-blogs",
-      // path: isPermittedRoute("userpermission"),
+      // path: "view-all-blogs",
+      path: isPermittedRoute("view-all-blogs"),
       element: (
         // <PrivateRoute>
         //   <SmsGroup />
@@ -1492,8 +1493,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "userpermission",
-      path: "view-all-categories",
-      // path: isPermittedRoute("userpermission"),
+      // path: "view-all-categories",
+      path: isPermittedRoute("view-all-categories"),
       element: (
         // <PrivateRoute>
         //   <SmsGroup />
@@ -1507,8 +1508,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "userpermission",
-      path: "view-all-child-categories",
-      // path: isPermittedRoute("userpermission"),
+      // path: "view-all-child-categories",
+      path: isPermittedRoute("view-all-child-categories"),
       element: (
         // <PrivateRoute>
         //   <SmsGroup />
@@ -1522,8 +1523,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "userpermission",
-      path: "view-all-pages",
-      // path: isPermittedRoute("userpermission"),
+      // path: "view-all-pages",
+      path: isPermittedRoute("view-all-pages"),
       element: (
         // <PrivateRoute>
         //   <SmsGroup />
@@ -1537,8 +1538,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "userpermission",
-      path: "view-all-products",
-      // path: isPermittedRoute("userpermission"),
+      // path: "view-all-products",
+      path: isPermittedRoute("view-all-products"),
       element: (
         // <PrivateRoute>
         //   <SmsGroup />
@@ -1552,8 +1553,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "userpermission",
-      path: "view-all-promo-code",
-      // path: isPermittedRoute("userpermission"),
+      // path: "view-all-promo-code",
+      path: isPermittedRoute("view-all-promo-code"),
       element: (
         // <PrivateRoute>
         //   <SmsGroup />
@@ -1567,8 +1568,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "userpermission",
-      path: "view-all-shoes-banners",
-      // path: isPermittedRoute("userpermission"),
+      // path: "view-all-shoes-banners",
+      path: isPermittedRoute("view-all-shoes-banners"),
       element: (
         // <PrivateRoute>
         //   <SmsGroup />
@@ -1582,8 +1583,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "userpermission",
-      path: "view-all-sliders",
-      // path: isPermittedRoute("userpermission"),
+      // path: "view-all-sliders",
+      path: isPermittedRoute("view-all-sliders"),
       element: (
         // <PrivateRoute>
         //   <SmsGroup />
@@ -1597,8 +1598,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "userpermission",
-      path: "view-all-subcategories",
-      // path: isPermittedRoute("userpermission"),
+      // path: "view-all-subcategories",
+      path: isPermittedRoute("view-all-subcategories"),
       element: (
         // <PrivateRoute>
         //   <SmsGroup />
@@ -1612,8 +1613,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "userpermission",
-      path: "view-all-testimonials",
-      // path: isPermittedRoute("userpermission"),
+      // path: "view-all-testimonials",
+      path: isPermittedRoute("view-all-testimonials"),
       element: (
         // <PrivateRoute>
         //   <SmsGroup />
@@ -1627,8 +1628,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "userpermission",
-      path: "website-theme-color",
-      // path: isPermittedRoute("userpermission"),
+      // path: "website-theme-color",
+      path: isPermittedRoute("website-theme-color"),
       element: (
         // <PrivateRoute>
         //   <SmsGroup />
@@ -1643,8 +1644,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "userpermission",
-      path: "write-blog",
-      // path: isPermittedRoute("userpermission"),
+      // path: "write-blog",
+      path: isPermittedRoute("write-blog"),
       element: (
         // <PrivateRoute>
         //   <SmsGroup />
@@ -1658,8 +1659,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "userpermission",
-      path: "view-all-stores",
-      // path: isPermittedRoute("userpermission"),
+      // path: "view-all-stores",
+      path: isPermittedRoute("view-all-stores"),
       element: (
         // <PrivateRoute>
         //   <SmsGroup />
@@ -1673,8 +1674,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "userpermission",
-      path: "view-all-cities",
-      // path: isPermittedRoute("userpermission"),
+      // path: "view-all-cities",
+      path: isPermittedRoute("view-all-cities"),
       element: (
         // <PrivateRoute>
         //   <SmsGroup />
@@ -1688,8 +1689,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "userpermission",
-      path: "zones/:city_id",
-      // path: isPermittedRoute("userpermission"),
+      // path: "zones/:city_id",
+      path: isPermittedRoute("zones/:city_id"),
       element: (
         // <PrivateRoute>
         //   <SmsGroup />
@@ -1703,8 +1704,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "userpermission",
-      path: "area/:zone_id",
-      // path: isPermittedRoute("userpermission"),
+      // path: "area/:zone_id",
+      path: isPermittedRoute("area/:zone_id"),
       element: (
         // <PrivateRoute>
         //   <SmsGroup />
@@ -1718,8 +1719,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "userpermission",
-      path: "courier-steadfast-settings",
-      // path: isPermittedRoute("userpermission"),
+      // path: "courier-steadfast-settings",
+      path: isPermittedRoute("courier-steadfast-settings"),
       element: (
         // <PrivateRoute>
         //   <SmsGroup />
@@ -1733,8 +1734,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "userpermission",
-      path: "courier-pathao-settings",
-      // path: isPermittedRoute("userpermission"),
+      // path: "courier-pathao-settings",
+      path: isPermittedRoute("courier-pathao-settings"),
       element: (
         // <PrivateRoute>
         //   <SmsGroup />
@@ -1748,8 +1749,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "userpermission",
-      path: "create-store",
-      // path: isPermittedRoute("userpermission"),
+      // path: "create-store",
+      path: isPermittedRoute("create-store"),
       element: (
         // <PrivateRoute>
         //   <SmsGroup />
@@ -1763,8 +1764,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "userpermission",
-      path: "terms-and-condition",
-      // path: isPermittedRoute("userpermission"),
+      // path: "terms-and-condition",
+      path: isPermittedRoute("terms-and-condition"),
       element: (
         // <PrivateRoute>
         //   <SmsGroup />
@@ -1778,8 +1779,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "userpermission",
-      path: "shipping-policy",
-      // path: isPermittedRoute("userpermission"),
+      // path: "shipping-policy",
+      path: isPermittedRoute("shipping-policy"),
       element: (
         // <PrivateRoute>
         //   <SmsGroup />
@@ -1793,8 +1794,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "userpermission",
-      path: "shipping-policy",
-      // path: isPermittedRoute("userpermission"),
+      // path: "shipping-policy",
+      path: isPermittedRoute("shipping-policy"),
       element: (
         // <PrivateRoute>
         //   <SmsGroup />
@@ -1808,8 +1809,8 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "userpermission",
-      path: "discount",
-      // path: isPermittedRoute("userpermission"),
+      // path: "discount",
+      path: isPermittedRoute("discount"),
       element: (
         // <PrivateRoute>
         //   <SmsGroup />

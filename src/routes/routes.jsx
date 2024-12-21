@@ -269,7 +269,7 @@ const AllRoutes = () => {
         </Suspense>
       ),
 
-      // errorElement: <Error404></Error404>,
+      errorElement: <Error404></Error404>,
       children: dashboardChildrenRoutes,
     },
     {

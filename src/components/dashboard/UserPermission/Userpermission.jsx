@@ -5,7 +5,6 @@ import MenuItemsList from "../../Sidebar/MenuItems";
 import PermissionItem from "./permissionItem/permissionItem";
 import useGetDepartments from "../../../Hook/GetDepartments/useGetDepartments";
 
-
 const UserPermission = () => {
   const [role, setRole] = useState(""); // Default selected role, can be dynamic
   const [permissionData, setPermissionData] = useState([]);
@@ -15,7 +14,7 @@ const UserPermission = () => {
   const departments = useGetDepartments();
   const { user } = useAuth();
 
-  const menuItems = MenuItemsList({userRole: "admin"})
+  const menuItems = MenuItemsList({ userRole: "admin" });
 
   const axiosSecure = useAxiosSecure();
 
@@ -30,7 +29,9 @@ const UserPermission = () => {
   useEffect(() => {
     const fetchPermissions = async () => {
       try {
-        const response = await axiosSecure.get(`/permissions/${role}?branch=${user?.branch}`);
+        const response = await axiosSecure.get(
+          `/permissions/${role}?branch=${user?.branch}`
+        );
 
         console.log("response", response);
 
@@ -43,10 +44,13 @@ const UserPermission = () => {
 
     console.log(role, "role in permission item");
   }, [role, axiosSecure]);
+
   return (
     <div className="p-6 pt-0">
       <div className="">
-        <h2 className="text-3xl font-semibold mb-9">Set Permissions for {role}</h2>
+        <h2 className="text-3xl font-semibold mb-9">
+          Set Permissions for {role}
+        </h2>
 
         {/* Dropdown to select Role from departments */}
         <div className="form-control">

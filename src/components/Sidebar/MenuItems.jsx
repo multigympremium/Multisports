@@ -1,21 +1,60 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IoIosHome } from "react-icons/io";
+import useAxiosSecure from "../../Hook/useAxiosSecure";
+import { useAuth } from "../../providers/AuthProvider";
 
 function MenuItemsList({ userRole }) {
   const [permissionData, setPermissionData] = useState([]);
+  const axiosSecure = useAxiosSecure();
+  const { user } = useAuth();
+
+  const [groupNames, setGroupNames] = useState([]);
   const isAllowedRoute = (pathName) => {
     const isAllowed =
       permissionData &&
       permissionData.length > 0 &&
       permissionData.find((item) => item.path === pathName)?.isAllowed;
 
-    if (userRole === "admin") {
+    if (user?.role === "admin") {
       return true;
     }
 
     return isAllowed || false;
   };
+
+  useEffect(() => {
+    const fetchPermissions = async () => {
+      try {
+        const response = await axiosSecure.get(
+          `/permissions/${user?.role}?branch=${user.branch}`
+        );
+
+        console.log(
+          "response",
+          response,
+          "response?.data?.routesData parmition"
+        );
+        const permissionRoutesArray = response?.data?.routesData.map(
+          (item) => item.path
+        );
+
+        localStorage.setItem(
+          "permissionRoutes",
+          JSON.stringify(permissionRoutesArray)
+        );
+
+        setPermissionData(response?.data?.routesData);
+        setGroupNames(response?.data?.groupNames?.allowedGroups);
+        console.log("response", response, response?.data?.groupNames);
+      } catch (error) {
+        console.error("Error fetching permissions:", error);
+      }
+    };
+    fetchPermissions();
+  }, [user?.role, axiosSecure]);
+
+  console.log("permissionData", permissionData, groupNames, "groupNames");
 
   const allMenuItems = [
     // Website Config
@@ -731,13 +770,46 @@ function MenuItemsList({ userRole }) {
     },
 
     // Dashboard
-    {
-      title: "Dashboard",
-      icon: <IoIosHome />, // Replace with the actual SVG icon
-      path: "dashboard",
-      isAllowed: isAllowedRoute("dashboard"),
-    },
+    // {
+    //   title: "Dashboard",
+    //   icon: <IoIosHome />, // Replace with the actual SVG icon
+    //   path: "dashboard",
+    //   isAllowed: isAllowedRoute("dashboard"),
+    // },
   ];
+  const filterMenuData =
+    groupNames &&
+    groupNames.length > 0 &&
+    allMenuItems.filter((item) => groupNames.includes(item.title));
+
+  const filterMenuData2 =
+    groupNames &&
+    groupNames.length > 0 &&
+    filterMenuData.map((item) => {
+      const filteredItem = item.list.filter((item2) => {
+        console.log(item2, "item2.isAllowed");
+        return item2.isAllowed === true;
+      });
+      return {
+        title: item.title,
+        icon: item.icon,
+        list: filteredItem,
+      };
+    });
+
+  // setFilteredMenuItems(filterMenuData2);
+
+  if (user?.role === "admin") {
+    return allMenuItems;
+  } else {
+    console.log("filterMenuData2", filterMenuData2);
+    // return filterMenuData2 && filterMenuData2;
+    if (filterMenuData2?.length > 0) {
+      return filterMenuData2;
+    } else {
+      return [];
+    }
+  }
 
   return allMenuItems;
 }
