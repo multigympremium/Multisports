@@ -13,6 +13,7 @@ import CreateMeasurementUnitsForm from "./Forms/CreateMeasurementUnitsForm";
 import EditMeasurementUnitsForm from "./Forms/EditMeasurementUnitsForm";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
 import Mpagination from "../../../shared/Mpagination";
+import BgBlurModal from "../../../shared/Modal/BgBlurModal";
 
 const MeasurementUnits = () => {
   // State management
@@ -196,20 +197,20 @@ const MeasurementUnits = () => {
       </div>
 
       {/* Modal for Adding/Editing Brand */}
-      <Modal isShowModal={isShowModal} setIsShowModal={setIsShowModal}>
+      <BgBlurModal isShowModal={isShowModal} setIsShowModal={setIsShowModal}>
         <CreateMeasurementUnitsForm
           isShowModal={isShowModal}
           setIsShowModal={setIsShowModal}
         />
-      </Modal>
+      </BgBlurModal>
 
-      <Modal isShowModal={isEdited} setIsShowModal={setIsEdited}>
+      <BgBlurModal isShowModal={isEdited} setIsShowModal={setIsEdited}>
         <EditMeasurementUnitsForm
           isShowModal={isEdited}
           setIsShowModal={setIsEdited}
           targetId={targetId}
         />
-      </Modal>
+      </BgBlurModal>
     </>
   );
 };

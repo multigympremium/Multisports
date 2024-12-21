@@ -17,6 +17,7 @@ import EditButton from "../../../components library/EditButton";
 import DeleteButton from "../../../components library/DeleteButton";
 import { HiArrowCircleDown, HiArrowCircleUp } from "react-icons/hi";
 import Mpagination from "../../../shared/Mpagination";
+import BgBlurModal from "../../../shared/Modal/BgBlurModal";
 
 const ProductColors = () => {
   // State management
@@ -133,11 +134,11 @@ const ProductColors = () => {
                 <IoAddCircle /> Add New Color
               </span>
             </button>
-            <button className="customCancelButton">
+            {/* <button className="customCancelButton">
               <span className="flex items-center gap-1">
                 <FaRetweet /> Rearrange Brand
               </span>
-            </button>
+            </button> */}
           </div>
         </div>
 
@@ -238,20 +239,20 @@ const ProductColors = () => {
       </div>
 
       {/* Modal for Adding/Editing Brand */}
-      <Modal isShowModal={isShowModal} setIsShowModal={setIsShowModal}>
+      <BgBlurModal isShowModal={isShowModal} setIsShowModal={setIsShowModal}>
         <CreateProductColorForm
           isShowModal={isShowModal}
           setIsShowModal={setIsShowModal}
         />
-      </Modal>
+      </BgBlurModal>
 
-      <Modal isShowModal={isEdited} setIsShowModal={setIsEdited}>
+      <BgBlurModal isShowModal={isEdited} setIsShowModal={setIsEdited}>
         <EditProductColorForm
           isShowModal={isEdited}
           setIsShowModal={setIsEdited}
           targetId={targetId}
         />
-      </Modal>
+      </BgBlurModal>
     </>
   );
 };

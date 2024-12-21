@@ -68,9 +68,11 @@ export default function EditSizeForm({
   };
 
   return (
-    <div className="w-[30%] rounded-2xl bg-gray-100 p-10">
+    <div className="w-full mt-20 rounded-2xl bg-gray-100 p-10">
       <div className="w-full mx-auto ">
-        <h1 className="text-2xl text-center text-gray-700 font-semibold mb-9">Edit Size Name</h1>
+        <h1 className="text-2xl text-center text-gray-700 font-semibold mb-9">
+          Edit Size Name
+        </h1>
         <form onSubmit={handleSubmit}>
           {/* Model Name */}
           <div className="mb-4">
@@ -95,10 +97,7 @@ export default function EditSizeForm({
             >
               Cancel
             </button>
-            <button
-              type="submit"
-              className="customSaveButton w-full"
-            >
+            <button type="submit" className="customSaveButton w-full">
               Update Size Name
             </button>
           </div>

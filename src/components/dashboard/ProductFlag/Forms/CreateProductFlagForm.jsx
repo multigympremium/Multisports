@@ -91,15 +91,13 @@ export default function CreateProductFlagForm({ isShowModal, setIsShowModal }) {
   };
 
   return (
-    <div className="w-[30%] rounded-2xl bg-gray-100 p-10">
+    <div className="w-full bg-gray-100 p-10 rounded-2xl mt-20">
       <div className="w-full mx-auto ">
         <h1 className="text-2xl font-semibold mb-7">Create Flag Form</h1>
         <form onSubmit={handleSubmit}>
           {/* Model Name */}
           <div className="mb-4">
-            <label className="block text-gray-700">
-              Flag Name 
-            </label>
+            <label className="block text-gray-700">Flag Name</label>
             <input
               type="text"
               value={flagName}
@@ -131,10 +129,7 @@ export default function CreateProductFlagForm({ isShowModal, setIsShowModal }) {
               Cancel
             </button>
 
-            <button
-              type="submit"
-              className="customSaveButton w-full"
-            >
+            <button type="submit" className="customSaveButton w-full">
               Save flag
             </button>
           </div>

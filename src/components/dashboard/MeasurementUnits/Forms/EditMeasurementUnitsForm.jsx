@@ -41,7 +41,10 @@ export default function EditMeasurementUnitsForm({
     formData.append("unitName", unitName);
 
     try {
-      const res = await axiosSecure.put(`/measurement-units/${targetId}`, formData);
+      const res = await axiosSecure.put(
+        `/measurement-units/${targetId}`,
+        formData
+      );
 
       if (res.status === 200 || res.status === 201) {
         Swal.fire({
@@ -68,7 +71,7 @@ export default function EditMeasurementUnitsForm({
   };
 
   return (
-    <div className="w-[80%] bg-gray-100 p-10">
+    <div className="w-[full] mt-4 bg-gray-100 p-10">
       <div className="w-full mx-auto bg-white p-8 shadow-md rounded-md">
         <h1 className="text-2xl font-bold mb-5">Edit Unit Name Form</h1>
         <form onSubmit={handleSubmit}>

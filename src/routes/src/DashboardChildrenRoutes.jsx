@@ -319,10 +319,13 @@ function DashboardChildrenRoutes() {
     // const isPermittedRoute = (pathName) => {
     const permissionRoutesArray = () => {
       const storedUser = localStorage.getItem("permissionRoutes");
+      console.log(storedUser, "storedUser");
       return storedUser == "undefined" || storedUser == null
         ? []
         : JSON.parse(storedUser);
     };
+
+    console.log(permissionRoutesArray(), "permissionRoutesArray");
     const isAllowed = permissionRoutesArray()
       ? permissionRoutesArray().includes(pathName)
       : false;

@@ -71,14 +71,14 @@ export default function EditProductColorForm({
   };
 
   return (
-    <div className="w-[30%] rounded-2xl bg-gray-100 p-10">
+    <div className="w-full mt-20 rounded-2xl bg-gray-100 p-10">
       <div className="w-full mx-auto ">
         <h1 className="text-2xl font-semibold mb-9">Edit Product Color Form</h1>
         <form onSubmit={handleSubmit}>
           {/* Model Name */}
           <div className="mb-4">
             <label className="block text-gray-700 text-sm ">
-              Product Color Code 
+              Product Color Code
             </label>
             <input
               type="text"
@@ -91,7 +91,7 @@ export default function EditProductColorForm({
           </div>
           <div className="mb-4">
             <label className="block text-gray-700 text-sm ">
-              Product Color Name 
+              Product Color Name
             </label>
             <input
               type="text"
@@ -111,10 +111,7 @@ export default function EditProductColorForm({
             >
               Cancel
             </button>
-            <button
-              type="submit"
-              className="customSaveButton w-full"
-            >
+            <button type="submit" className="customSaveButton w-full">
               Update Size Name
             </button>
           </div>

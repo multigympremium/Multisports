@@ -10,6 +10,7 @@ import Modal from "../../../shared/Modal/Modal";
 import CreateModelBrandForm from "./Forms/CreateModelBrandForm";
 import EditModelBrandForm from "./Forms/EditModelBrandForm";
 import Mpagination from "../../../shared/Mpagination";
+import BgBlurModal from "../../../shared/Modal/BgBlurModal";
 
 const ModelOfBrand = () => {
   // State management
@@ -191,20 +192,20 @@ const ModelOfBrand = () => {
       </div>
 
       {/* Modal for Adding/Editing Brand */}
-      <Modal isShowModal={isShowModal} setIsShowModal={setIsShowModal}>
+      <BgBlurModal isShowModal={isShowModal} setIsShowModal={setIsShowModal}>
         <CreateModelBrandForm
           isShowModal={isShowModal}
           setIsShowModal={setIsShowModal}
         />
-      </Modal>
+      </BgBlurModal>
 
-      <Modal isShowModal={isEdited} setIsShowModal={setIsEdited}>
+      <BgBlurModal isShowModal={isEdited} setIsShowModal={setIsEdited}>
         <EditModelBrandForm
           isShowModal={isEdited}
           setIsShowModal={setIsEdited}
           targetId={targetId}
         />
-      </Modal>
+      </BgBlurModal>
     </>
   );
 };

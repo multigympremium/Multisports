@@ -56,9 +56,11 @@ export default function CreateSizeForm({ isShowModal, setIsShowModal }) {
   };
 
   return (
-    <div className="w-[30%] bg-gray-100 p-10 rounded-2xl">
+    <div className="w-full bg-gray-100 p-10 rounded-2xl mt-20">
       <div className="w-full mx-auto">
-        <h1 className="text-2xl font-semibold text-center text-gray-700 mb-9">New Size</h1>
+        <h1 className="text-2xl font-semibold text-center text-gray-700 mb-9">
+          New Size
+        </h1>
         <form onSubmit={handleSubmit}>
           {/* Model Name */}
           <div className="mb-4">
@@ -85,10 +87,7 @@ export default function CreateSizeForm({ isShowModal, setIsShowModal }) {
               Cancel
             </button>
 
-            <button
-              type="submit"
-              className="customSaveButton w-full"
-            >
+            <button type="submit" className="customSaveButton w-full">
               Save Size Name
             </button>
           </div>

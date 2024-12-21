@@ -60,7 +60,7 @@ export default function CreateModelBrandForm({ isShowModal, setIsShowModal }) {
   };
 
   return (
-    <div className="w-[80%] bg-gray-100 p-10">
+    <div className="w-full bg-gray-100 p-10 rounded-2xl mt-20">
       <div className="w-full mx-auto bg-white p-8 shadow-md rounded-md">
         <h1 className="text-2xl font-bold mb-5">Create Brand Form</h1>
         <form onSubmit={handleSubmit}>

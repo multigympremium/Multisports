@@ -18,6 +18,7 @@ import { HiArrowCircleDown, HiArrowCircleUp } from "react-icons/hi";
 import EditButton from "../../../components library/EditButton";
 import DeleteButton from "../../../components library/DeleteButton";
 import Mpagination from "../../../shared/Mpagination";
+import BgBlurModal from "../../../shared/Modal/BgBlurModal";
 
 const ProductFlag = () => {
   // State management
@@ -208,20 +209,20 @@ const ProductFlag = () => {
       </div>
 
       {/* Modal for Adding/Editing Brand */}
-      <Modal isShowModal={isShowModal} setIsShowModal={setIsShowModal}>
+      <BgBlurModal isShowModal={isShowModal} setIsShowModal={setIsShowModal}>
         <CreateProductFlagForm
           isShowModal={isShowModal}
           setIsShowModal={setIsShowModal}
         />
-      </Modal>
+      </BgBlurModal>
 
-      <Modal isShowModal={isEdited} setIsShowModal={setIsEdited}>
+      <BgBlurModal isShowModal={isEdited} setIsShowModal={setIsEdited}>
         <EditProductFlagForm
           isShowModal={isEdited}
           setIsShowModal={setIsEdited}
           targetId={targetId}
         />
-      </Modal>
+      </BgBlurModal>
     </>
   );
 };

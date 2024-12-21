@@ -106,15 +106,13 @@ export default function EditProductFlagForm({
   };
 
   return (
-    <div className="w-[30%] rounded-2xl bg-gray-100 p-10">
+    <div className="w-full mt-20 rounded-2xl bg-gray-100 p-10">
       <div className="w-full mx-auto ">
         <h1 className="text-2xl font-semibold mb-7">Edit Flag Form</h1>
         <form onSubmit={handleSubmit}>
           {/* Model Name */}
           <div className="mb-4">
-            <label className="block text-gray-700">
-              Flag Name 
-            </label>
+            <label className="block text-gray-700">Flag Name</label>
             <input
               type="text"
               value={flagName}
@@ -144,10 +142,7 @@ export default function EditProductFlagForm({
             >
               Cancel
             </button>
-            <button
-              type="submit"
-              className="w-full customSaveButton"
-            >
+            <button type="submit" className="w-full customSaveButton">
               Update Flag
             </button>
           </div>
