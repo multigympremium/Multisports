@@ -250,19 +250,27 @@ const Navbar = () => {
 
             {/* Wishlist */}
             <button
-              className="flex items-center justify-center flex-col gap-1 md:p-3 p-1 rounded"
+              className=" md:p-3 p-1 rounded"
               onClick={() => setIsShowWishlist(true)}
             >
-              <FaRegHeart className="md:text-2xl text-base text-gray-600 hover:text-pink-500 hover:scale-110 cursor-pointer transition-all" />
-              <span className="hidden md:block">Wishlist</span>
+              <label
+                htmlFor="my-wishlist"
+                className=" drawer-button flex items-center justify-center flex-col gap-1"
+              >
+                <FaRegHeart className="md:text-2xl text-base text-gray-600 hover:text-pink-500 hover:scale-110 cursor-pointer transition-all" />
+                <span className="hidden md:block">Wishlist</span>
+              </label>
             </button>
 
             {/* Cart */}
             <button
               onClick={() => setIsShowModal(true)}
-              className="flex items-center justify-center flex-col gap-1 md:p-3 p-1 rounded relative"
+              className=" md:p-3 p-1 rounded relative"
             >
-              <label htmlFor="my-cart" className=" drawer-button">
+              <label
+                htmlFor="my-cart"
+                className=" drawer-button flex items-center justify-center flex-col gap-1"
+              >
                 <BsCart className="md:text-2xl text-base text-gray-600 hover:text-orange-500 hover:scale-110 cursor-pointer transition-all" />
                 <span className="hidden md:block">Cart</span>
               </label>
@@ -320,12 +328,12 @@ const Navbar = () => {
       {/* <BgBlurModal isShowModal={isShowModal} setIsShowModal={setIsShowModal}>
       </BgBlurModal> */}
       <Cart isShow={isShowModal} setIsShow={setIsShowModal} />
-      <BgBlurModal
+      <Wishlist isShow={isShowWishlist} setIsShow={setIsShowWishlist} />
+      {/* <BgBlurModal
         isShowModal={isShowWishlist}
         setIsShowModal={setIsShowWishlist}
       >
-        <Wishlist isShow={isShowWishlist} setIsShow={setIsShowWishlist} />
-      </BgBlurModal>
+      </BgBlurModal> */}
       <BgBlurModal isShowModal={isShowSearch} setIsShowModal={setIsShowSearch}>
         <ProductSearch isShow={isShowSearch} setIsShow={setIsShowSearch} />
       </BgBlurModal>
