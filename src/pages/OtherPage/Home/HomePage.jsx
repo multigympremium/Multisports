@@ -16,6 +16,7 @@ import Banner2 from "../../../components/Home/Banner/Bannner2";
 import Banner3 from "../../../components/Home/Banner/Banner3";
 import Testimonials from "../../../components/Home/Testimonials/Testimonials";
 import Category from "../../../components/Home/Category/Category";
+import HorizontalMenu from "../../../shared/HorizontalMenu/HorizontalMenu";
 export const metadata = {
   title: "Universal Survey - Home",
   description:
@@ -46,6 +47,7 @@ const HomePage = () => {
         metaOgImage={content?.metaOgImage}
         metaKeywords={content?.metaKeywords}
       />
+      <HorizontalMenu/>
       <Banner />
       <NewArrivals />
       <Category />

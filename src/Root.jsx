@@ -185,7 +185,6 @@ const Root = () => {
       />
       <TopBar />
       <Navbar />
-      <HorizontalMenu />
       <Outlet />
       <Footer />
     </>
