@@ -12,7 +12,7 @@ function useGetAboutMission({
   const axiosPublic = useAxiosPublic();
   useEffect(() => {
     const fetchShippingPolicy = async () => {
-      const response = await axiosPublic.get("/about-vision");
+      const response = await axiosPublic.get("/about-mission");
       const data = response?.data?.data[0];
       console.log(data);
       setContentMission(data);

@@ -174,15 +174,15 @@ export default function EditBrandForm({
   };
 
   return (
-    <div className="w-[50%] bg-gray-100 rounded-2xl p-10 py-7">
+    <div className="w-full bg-gray-100 rounded-2xl p-10 py-7">
       <div className="w-full mx-auto ">
-        <h1 className="text-2xl font-semibold mb-7">Child Category Edit Form</h1>
+        <h1 className="text-2xl font-semibold mb-7">
+          Child Category Edit Form
+        </h1>
         <form onSubmit={handleSubmit}>
           {/* Select Category */}
           <div className="mb-4">
-            <label className="block text-gray-700">
-              Select Category 
-            </label>
+            <label className="block text-gray-700">Select Category</label>
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
@@ -201,9 +201,7 @@ export default function EditBrandForm({
 
           {/* Select Subcategory */}
           <div className="mb-4">
-            <label className="block text-gray-700 ">
-              Select Subcategory 
-            </label>
+            <label className="block text-gray-700 ">Select Subcategory</label>
             <select
               value={subcategory}
               onChange={(e) => setSubcategory(e.target.value)}
@@ -260,9 +258,7 @@ export default function EditBrandForm({
 
           {/* Brand Name */}
           <div className="mb-4">
-            <label className="block text-gray-700">
-              Brand Name
-            </label>
+            <label className="block text-gray-700">Brand Name</label>
             <input
               type="text"
               value={brandName}
@@ -287,9 +283,7 @@ export default function EditBrandForm({
 
           {/* Banner */}
           <div className="mb-4">
-            <label className="block text-gray-700">
-              Banner
-            </label>
+            <label className="block text-gray-700">Banner</label>
 
             <DragEditUploadImageInput
               getRootProps={getBannerRootProps}
@@ -307,10 +301,7 @@ export default function EditBrandForm({
             >
               Cancel
             </button>
-            <button
-              type="submit"
-              className="customSaveButton"
-            >
+            <button type="submit" className="customSaveButton">
               Update Category
             </button>
           </div>

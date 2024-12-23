@@ -1,9 +1,9 @@
-function BlogFilesBackup() {
+function DatabaseBackup() {
   const handleDownload = async () => {
     try {
       // Send a request to the backend to get the ZIP file
       const response = await fetch(
-        "http://localhost:3000/api/backup/images/blog"
+        "http://localhost:3000/api/backup/images/database"
       );
 
       // Check if the response is OK
@@ -35,8 +35,8 @@ function BlogFilesBackup() {
 
   return (
     <div className="bg-gray-100 px-10 py-5 rounded w-full mt-10">
-      <h3 className="text-3xl mb-4 font-bold">Blog Files Backup</h3>
-      <p className="text-xl">Download the blog files backup file.</p>
+      <h3 className="text-3xl mb-4 font-bold">Database Backup</h3>
+      <p className="text-xl">Download the database backup file.</p>
 
       <div className="flex justify-between items-center mt-10">
         <button
@@ -52,4 +52,4 @@ function BlogFilesBackup() {
   );
 }
 
-export default BlogFilesBackup;
+export default DatabaseBackup;

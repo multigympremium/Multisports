@@ -17,6 +17,7 @@ import { HiArrowCircleDown, HiArrowCircleUp } from "react-icons/hi";
 import toast from "react-hot-toast";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
 import Mpagination from "../../../shared/Mpagination";
+import BgBlurModal from "../../../shared/Modal/BgBlurModal";
 const ProductBrands = () => {
   // State management
   const [Brands, setBrands] = useState([]);
@@ -243,20 +244,20 @@ const ProductBrands = () => {
       </div>
 
       {/* Modal for Adding/Editing Brand */}
-      <Modal isShowModal={isShowModal} setIsShowModal={setIsShowModal}>
+      <BgBlurModal isShowModal={isShowModal} setIsShowModal={setIsShowModal}>
         <CreateBrandForm
           isShowModal={isShowModal}
           setIsShowModal={setIsShowModal}
         />
-      </Modal>
+      </BgBlurModal>
 
-      <Modal isShowModal={isEdited} setIsShowModal={setIsEdited}>
+      <BgBlurModal isShowModal={isEdited} setIsShowModal={setIsEdited}>
         <EditBrandForm
           isShowModal={isEdited}
           setIsShowModal={setIsEdited}
           targetId={targetId}
         />
-      </Modal>
+      </BgBlurModal>
     </>
   );
 };

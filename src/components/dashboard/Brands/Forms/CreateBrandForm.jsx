@@ -35,14 +35,7 @@ export default function CreateBrandForm({ isShowModal, setIsShowModal }) {
     e.preventDefault();
     // Handle form submission logic here
 
-    if (
-      !logo ||
-      !brandName ||
-      !category ||
-      !subcategory ||
-      !slug 
- 
-    ) {
+    if (!logo || !brandName || !category || !subcategory || !slug) {
       Swal.fire({
         title: "Error!",
         text: "Please fill all the fields",
@@ -150,15 +143,13 @@ export default function CreateBrandForm({ isShowModal, setIsShowModal }) {
   };
 
   return (
-    <div className="w-[50%] bg-gray-100 rounded-2xl p-10 py-6">
+    <div className="w-full bg-gray-100 rounded-2xl p-10 py-6">
       <div className="w-full mx-auto">
         <h1 className="text-2xl font-semibold mb-7">Create Brand</h1>
         <form onSubmit={handleSubmit}>
           {/* Select Category */}
           <div className="mb-4">
-            <label className="block text-gray-700">
-              Select Category
-            </label>
+            <label className="block text-gray-700">Select Category</label>
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
@@ -179,9 +170,7 @@ export default function CreateBrandForm({ isShowModal, setIsShowModal }) {
 
           {/* Select Subcategory */}
           <div className="mb-4">
-            <label className="block text-gray-700">
-              Select Subcategory
-            </label>
+            <label className="block text-gray-700">Select Subcategory</label>
             <select
               value={subcategory}
               onChange={(e) => setSubcategory(e.target.value)}
@@ -203,9 +192,7 @@ export default function CreateBrandForm({ isShowModal, setIsShowModal }) {
 
           {/* Select Subcategory */}
           <div className="mb-4">
-            <label className="block text-gray-700">
-              Select Child Category 
-            </label>
+            <label className="block text-gray-700">Select Child Category</label>
             <select
               value={childCategory}
               onChange={(e) => setChildCategory(e.target.value)}
@@ -295,10 +282,7 @@ export default function CreateBrandForm({ isShowModal, setIsShowModal }) {
               Cancel
             </button>
 
-            <button
-              type="submit"
-              className="customSaveButton"
-            >
+            <button type="submit" className="customSaveButton">
               Save Brand
             </button>
           </div>

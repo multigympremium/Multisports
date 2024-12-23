@@ -24,7 +24,7 @@ export default function VisionSection() {
   useEffect(() => {
     const fetchTestimonial = async () => {
       try {
-        const res = await axiosSecure.get(`/about-vision/${targetId}`);
+        const res = await axiosSecure.get(`/about-vision`);
 
         if (res.status === 200 || res.status === 201) {
           const data = res?.data?.data[0];

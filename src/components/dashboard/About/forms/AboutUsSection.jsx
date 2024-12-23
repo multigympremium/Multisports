@@ -24,7 +24,7 @@ export default function AboutUsSection({ testimonialId, isShow, setIsShow }) {
   useEffect(() => {
     const fetchTestimonial = async () => {
       try {
-        const res = await axiosSecure.get(`/about-us/${targetId}`);
+        const res = await axiosSecure.get(`/about-us`);
 
         if (res.status === 200 || res.status === 201) {
           const data = res?.data?.data[0];

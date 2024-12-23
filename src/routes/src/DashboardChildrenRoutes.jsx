@@ -120,7 +120,7 @@ const CustomerWishlist = lazy(() =>
   import("../../components/dashboard/Customers/CustomerWishlist")
 );
 const DatabaseBackup = lazy(() =>
-  import("../../pages/OtherPage/database-backup/page")
+  import("../../pages/OtherPage/database-backup/DatabaseBackup")
 );
 const DeliveryCharges = lazy(() =>
   import("../../components/dashboard/Customers/DeliveryCharges")

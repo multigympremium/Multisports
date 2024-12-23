@@ -28,6 +28,32 @@ export default function PromotionalBanner() {
 
     fetchPromotionalBannerData();
   }, [axiosPublic]);
+
+  // const downloadImages = async (files) => {
+  //     try {
+  //       for (const file of files) {
+  //         const response = await axios({
+  //           url: file.url, // Signed URL
+  //           method: "GET",
+  //           responseType: "stream",
+  //         });
+
+  //         const filePath = path.join(__dirname, "downloads", file.key); // Local save path
+  //         const writer = fs.createWriteStream(filePath);
+
+  //         response.data.pipe(writer);
+
+  //         await new Promise((resolve, reject) => {
+  //           writer.on("finish", resolve);
+  //           writer.on("error", reject);
+  //         });
+
+  //         console.log(`Downloaded: ${file.key}`);
+  //       }
+  //     } catch (error) {
+  //       console.error("Error downloading images:", error);
+  //     }
+  //   };
   return (
     <>
       {data && data?.isActive && (
@@ -41,7 +67,6 @@ export default function PromotionalBanner() {
           <div className="flex justify-between items-center">
             <Link
               to={data?.buttonLink}
-              target="_blank"
               className="bg-pink-500 text-white px-4 py-2 rounded-2xl"
             >
               {data?.buttonText}
