@@ -4,9 +4,6 @@ import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
 import SwitchInput from "../../../shared/SwitchInput";
-import { m } from "framer-motion";
-import ProductSize from "../ProductSize/ProductSize";
-
 export default function SetupConfig() {
   const [isProductSize, setIsProductSize] = useState(false);
   const [modelOfBrand, setModelOfBrand] = useState(false);
