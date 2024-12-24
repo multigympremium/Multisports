@@ -73,7 +73,7 @@ export default function CreateCustomPagesForm({ isShow, setIsShow }) {
   };
 
   return (
-    <div className="bg-white p-6 pt-4 w-full max-w-[800px] rounded-lg">
+    <div className="bg-white p-6 pt-4 w-full  rounded-lg">
       {/* Testimonial Edit Form */}
       <h1 className="text-2xl font-semibold mb-7">Edit Custom Page</h1>
       <form onSubmit={handleSubmit}>

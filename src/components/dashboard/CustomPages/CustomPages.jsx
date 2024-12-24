@@ -16,6 +16,7 @@ import CreateCustomPagesForm from "./Forms/CreateCustomPagesForm";
 import EditCustomPagesForm from "./Forms/EditCustomPagesForm";
 import useGetAllCustomPages from "../../../Hook/GetDataHook/useGetAllCustomPages";
 import { FaCopy } from "react-icons/fa";
+import BgBlurModal from "../../../shared/Modal/BgBlurModal";
 
 const CustomPages = () => {
   // State management
@@ -210,20 +211,20 @@ const CustomPages = () => {
       </div>
 
       {/* Modal for Adding/Editing Brand */}
-      <Modal isShowModal={isShowModal} setIsShowModal={setIsShowModal}>
+      <BgBlurModal isShowModal={isShowModal} setIsShowModal={setIsShowModal}>
         <CreateCustomPagesForm
           isShow={isShowModal}
           setIsShow={setIsShowModal}
         />
-      </Modal>
+      </BgBlurModal>
 
-      <Modal isShowModal={isEdited} setIsShowModal={setIsEdited}>
+      <BgBlurModal isShowModal={isEdited} setIsShowModal={setIsEdited}>
         <EditCustomPagesForm
           isShow={isEdited}
           setIsShow={setIsEdited}
           targetId={targetId}
         />
-      </Modal>
+      </BgBlurModal>
     </>
   );
 };
