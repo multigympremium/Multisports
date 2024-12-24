@@ -9,13 +9,13 @@ import ProductSize from "../ProductSize/ProductSize";
 
 export default function SetupConfig() {
   const [isProductSize, setIsProductSize] = useState(false);
-  const [modelOfBrand, setModelOfBrand] = useState("");
-  const [productColor, setProductColor] = useState("");
-  const [measurementUnit, setMeasurementUnit] = useState("");
-  const [seoInformation, setSeoInformation] = useState("");
+  const [modelOfBrand, setModelOfBrand] = useState(false);
+  const [productColor, setProductColor] = useState(false);
+  const [measurementUnit, setMeasurementUnit] = useState(false);
+  const [seoInformation, setSeoInformation] = useState(false);
   const [rewardPoints, setRewardPoints] = useState(0);
-  const [productCode, setProductCode] = useState("");
-  const [productFlags, setProductFlags] = useState("");
+  const [productCode, setProductCode] = useState(false);
+  const [productFlags, setProductFlags] = useState(false);
   const [targetId, setTargetId] = useState("");
   const [loading, setLoading] = useState(false);
   const axiosSecure = useAxiosSecure();
