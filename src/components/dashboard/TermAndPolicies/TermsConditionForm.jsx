@@ -27,11 +27,8 @@ const TermsConditionForm = () => {
     e.preventDefault();
     // Handle form submission logic (e.g., send data to backend)
     try {
-      if (targetId) {
-        const res = await axiosSecure.put(`/terms_condition/${targetId}`, {
-          content,
-          id: targetId,
-        });
+
+      const res = await axiosSecure.put(`/terms_condition/${targetId}`, {content});
 
         console.log(res);
 
