@@ -239,6 +239,7 @@ export default function EditProductForm({
     formData.append("subcategory", subcategory);
     formData.append("childCategory", childCategory);
     formData.append("galleryItemIds", galleryItemIds);
+    formData.append("colorAndSize", JSON.stringify(colorAndSize));
     formData.append(
       "deletedGalleryItemIds",
       Array.from(new Set(deleteItemIds))
