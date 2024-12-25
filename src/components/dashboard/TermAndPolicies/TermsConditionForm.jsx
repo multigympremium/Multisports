@@ -27,35 +27,17 @@ const TermsConditionForm = () => {
     e.preventDefault();
     // Handle form submission logic (e.g., send data to backend)
     try {
-
       const res = await axiosSecure.put(`/terms_condition/${targetId}`, {content});
 
-        console.log(res);
+      console.log(res);
 
-        if (res.status === 200 || res.status === 201) {
-          Swal.fire({
-            title: "Success!",
-            text: "Product created successfully",
-            icon: "success",
-            confirmButtonText: "Ok",
-          });
-        }
-      } else {
-        const res = await axiosSecure.post(`/terms_condition`, {
-          content,
-          id: targetId,
+      if (res.status === 200 || res.status === 201) {
+        Swal.fire({
+          title: "Success!",
+          text: "Product created successfully",
+          icon: "success",
+          confirmButtonText: "Ok",
         });
-
-        console.log(res);
-
-        if (res.status === 200 || res.status === 201) {
-          Swal.fire({
-            title: "Success!",
-            text: "Product created successfully",
-            icon: "success",
-            confirmButtonText: "Ok",
-          });
-        }
       }
     } catch (err) {
       console.error(err);
@@ -70,7 +52,10 @@ const TermsConditionForm = () => {
 
   return (
     <div className="p-6 pt-0">
-      <form onSubmit={handleSubmit} className="">
+      <form
+        onSubmit={handleSubmit}
+        className=""
+      >
         <h2 className="text-3xl font-semibold mb-9">
           Terms And Condition Update Form
         </h2>
@@ -86,7 +71,10 @@ const TermsConditionForm = () => {
         </div>
 
         <div className="flex items-center justify-end">
-          <button type="submit" className="customSaveButton">
+          <button
+            type="submit"
+            className="customSaveButton"
+          >
             Update Terms And Condition
           </button>
         </div>

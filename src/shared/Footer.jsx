@@ -355,7 +355,7 @@ const Footer = () => {
               className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300 cursor-pointer"
               to="/privacy-policy"
             >
-              Replacement Policy
+              Privacy Policy
             </Link>
             <Link
               className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300 cursor-pointer"
@@ -367,7 +367,7 @@ const Footer = () => {
               className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300 cursor-pointer"
               to="/return-policy"
             >
-              EMI Terms & Conditions
+              Return Policy
             </Link>
           </div>
           {/* <Link className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300 cursor-pointer" to="/webadmin">
