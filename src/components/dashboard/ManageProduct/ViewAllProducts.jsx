@@ -12,6 +12,7 @@ import useAxiosSecure from "../../../Hook/useAxiosSecure";
 import EditButton from "../../../components library/EditButton";
 import DeleteButton from "../../../components library/DeleteButton";
 import Pagination from "../../partial/Pagination/Pagination";
+import BgBlurModal from "../../../shared/Modal/BgBlurModal";
 
 const ProductFlag = () => {
   // State management
@@ -270,13 +271,13 @@ const ProductFlag = () => {
       </div>
 
       {/* Modal for Adding/Editing Brand */}
-      <Modal isShowModal={isEdited} setIsShowModal={setIsEdited}>
+      <BgBlurModal isShowModal={isEdited} setIsShowModal={setIsEdited}>
         <EditProductForm
           targetId={targetId}
           isShowModal={isEdited}
           setIsShowModal={setIsEdited}
         />
-      </Modal>
+      </BgBlurModal>
     </>
   );
 };

@@ -10,14 +10,15 @@ export default function EditableTableColumn({
   colorAndSize,
   totalQuantity,
   setTotalQuantity,
+  stock,
+  isEditState = false,
 }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editingIndex, setEditingIndex] = useState(null);
   const [editingColor, setEditingColor] = useState(null);
   const [editingSize, setEditingSize] = useState(null);
   const [editingQuantity, setEditingQuantity] = useState(null);
-  const [quantity, setQuantity] = useState(1);
-  const [stock, setStock] = useState(10);
+  const [quantity, setQuantity] = useState(0);
 
   const [productColorValue, setProductColorValue] = useState(null);
   const [productSizeValue, setProductSizeValue] = useState(null);
@@ -71,13 +72,25 @@ export default function EditableTableColumn({
       newArr[index].quantity = editingQuantity;
       return newArr;
     });
+
+    // setEditingQuantity(0);
+    // setEditingColor(null);
+    // setEditingSize(null);
   };
 
   useEffect(() => {
-    if (totalQuantity > 0) {
-      setStock(totalQuantity);
+    const total = colorAndSize.reduce(
+      (acc, item) => acc + Number(item.quantity),
+      0
+    );
+    console.log(total, "total edit", totalQuantity);
+    if (isEditState) {
+      setTotalQuantity(Number(stock) - total);
+    } else {
+      setTotalQuantity(stock);
     }
-  }, [isEditing]);
+    // setTotalQuantity(total + Number(stock));
+  }, [stock, setTotalQuantity, colorAndSize]);
 
   const groupStyles = {
     display: "flex",
@@ -123,7 +136,21 @@ export default function EditableTableColumn({
       console.log(total, "total");
     }
     setTotalQuantity((prev) => prev - total);
-  }, [stock]);
+  }, []);
+
+  //   useEffect(() => {
+  //     let total = 0;
+
+  //     if (colorAndSize.length > 0) {
+  //       total = colorAndSize.reduce(
+  //         (acc, item) => acc + Number(item.quantity),
+  //         0
+  //       );
+
+  //       console.log(total, "total");
+  //     }
+  //     setTotalQuantity((prev) => total - stock - editingQuantity);
+  //   }, [editingQuantity, stock]);
 
   //   useEffect(() => {
   //     if (isEditing) {
@@ -133,7 +160,17 @@ export default function EditableTableColumn({
   //     }
   //   }, [isEditing]);
 
-  console.log(isEditing, "isEditing");
+  console.log(
+    editingQuantity,
+    "isEditing",
+    totalQuantity - Number(editingQuantity) <= 0 ||
+      editingColor === null ||
+      editingSize === null,
+    "totalQuantity",
+    editingColor,
+    editingSize,
+    "editing color"
+  );
 
   return (
     <div className=" border mb-4 rounded-xl bg-gray-50">
@@ -144,7 +181,7 @@ export default function EditableTableColumn({
             <th>Sl</th>
             <th>Color</th>
             <th>Size</th>
-            <th>Quantity (Remaining{totalQuantity - quantity})</th>
+            <th>Quantity (Remaining: {totalQuantity - quantity})</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -219,13 +256,12 @@ export default function EditableTableColumn({
                     defaultValue={item.quantity}
                     value={editingQuantity}
                     onChange={(e) => {
-                      if (e.target.value <= totalQuantity) {
-                        setEditingQuantity(e.target.value);
-                      }
+                      setEditingQuantity(e.target.value);
+                      setTotalQuantity(item?.quantity - Number(e.target.value));
                     }}
                     className="customInput"
-                    max={totalQuantity}
-                    min={0}
+                    // max={totalQuantity}
+                    // min={0}
                   />
                 ) : (
                   `${item.quantity}`
@@ -239,14 +275,14 @@ export default function EditableTableColumn({
                     onClick={() => {
                       setIsEditing(false);
                       handleUpdateColorAndSize(index);
-                      //   setEditingColor(item.color);
-                      //   setEditingSize(item.size);
-                      //   setEditingQuantity(item.quantity);
+                      setEditingColor(item.color);
+                      setEditingSize(item.size);
+                      setEditingQuantity(Number(item.quantity));
                     }}
                     disabled={
-                      totalQuantity - Number(editingQuantity) <= 0 ||
-                      productColorValue === null ||
-                      productSizeValue === null
+                      totalQuantity < 0 ||
+                      editingColor === null ||
+                      editingSize === null
                     }
                   >
                     Done
@@ -362,7 +398,7 @@ export default function EditableTableColumn({
                   }}
                   className="customInput"
                   max={totalQuantity}
-                  min={1}
+                  min={0}
                 />
               </td>
               <td className="space-x-2">

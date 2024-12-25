@@ -178,6 +178,7 @@ export default function ProductCreateForm() {
     formData.append("subcategory", subcategory);
     formData.append("childCategory", childCategory);
     formData.append("galleryItemCount", gallery.length);
+    formData.append("colorAndSize", JSON.stringify(colorAndSize));
 
     // If `gallery` is an array of files, you can loop through it and append each file:
 
@@ -706,6 +707,7 @@ export default function ProductCreateForm() {
             setColorAndSize={setColorAndSize}
             totalQuantity={virtualStock}
             setTotalQuantity={setVirtualStock}
+            stock={stock}
           />
 
           <div className="border rounded-2xl p-6 bg-gray-50 pb-0">

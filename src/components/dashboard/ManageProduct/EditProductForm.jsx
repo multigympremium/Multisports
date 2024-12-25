@@ -19,6 +19,7 @@ import { IoCloseCircleOutline } from "react-icons/io5";
 import DragMultiEditUploadImageInput from "../../../shared/DragMultiEditUploadImageInput";
 import useGetAllModelOfBrands from "../../../Hook/GetDataHook/useGetAllModelOfBrands";
 import { set } from "react-hook-form";
+import EditableTableColumn from "./productSharedComponents/EditableTableColumn";
 
 export default function EditProductForm({
   targetId,
@@ -57,6 +58,8 @@ export default function EditProductForm({
   const [productSizeValue, setProductSizeValue] = useState("");
   const [galleryItemIds, setGalleryItemIds] = useState([]);
   const [deleteItemIds, setDeleteItemIds] = useState([]);
+  const [colorAndSize, setColorAndSize] = useState([]);
+  const [virtualStock, setVirtualStock] = useState(0);
 
   const [modelOfBrandValue, setModelOfBrandValue] = useState("");
 
@@ -113,6 +116,8 @@ export default function EditProductForm({
         setIsRecommended(resData.isRecommended);
         setProductColor(resData.productColorValue);
         setProductSize(resData.productSizeValue);
+        setVirtualStock(resData.stock);
+        setColorAndSize(resData.colorAndSize);
 
         for (const galleryItem of resData.gallery) {
           setGalleryItemIds((prev) => [...prev, galleryItem._id]);
@@ -398,7 +403,7 @@ export default function EditProductForm({
   }, [deleteItemIds]);
 
   return (
-    <div className="w-[80%] mx-auto bg-gray-100 rounded-2xl p-10">
+    <div className="w-full mx-auto bg-gray-100 rounded-2xl p-10">
       <div className="">
         <h1 className="text-2xl font-semibold mb-9">Add New Product</h1>
         <form onSubmit={handleSubmit}>
@@ -771,6 +776,17 @@ export default function EditProductForm({
               </div>
             )}
           </div>
+
+          <EditableTableColumn
+            productColors={productColors}
+            productSizes={productSizes}
+            colorAndSize={colorAndSize}
+            setColorAndSize={setColorAndSize}
+            totalQuantity={virtualStock}
+            setTotalQuantity={setVirtualStock}
+            stock={stock}
+            isEditState={true}
+          />
           {/* File Upload for Thumbnail */}
           <div className="mb-4">
             <label className="block text-gray-70">
