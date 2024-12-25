@@ -209,31 +209,31 @@ const Footer = () => {
           <div className="text-slate-600 flex flex-col gap-1 md:gap-3 text-sm md:text-base">
             <Link
               className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300"
-              to="/aboutus/about"
+              to="/products/mens-wear"
             >
               Mens wear
             </Link>
             <Link
               className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300"
-              to="/contactus"
+              to="/products/womens-wear"
             >
               Womens wear
             </Link>
             <Link
               className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300"
-              to="#"
+              to="/products/kids-wear"
             >
               kids wear
             </Link>
             <Link
               className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300"
-              to="/blogs"
+              to="/products/sports-wear"
             >
               Sports wear
             </Link>
             <Link
               className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300"
-              to="/notice"
+              to="/products/swim-wear"
             >
               Swim wear
             </Link>
@@ -242,38 +242,38 @@ const Footer = () => {
 
         <nav>
           <h6 className="footer-title  text-base md:text-lg font-bold mb-1 md:mb-4 text-black">
-            Customer
+            Brands
           </h6>
           <div className="text-slate-600 flex flex-col gap-1 md:gap-3 text-sm md:text-base">
             <Link
-              to={"#"}
+              to={"/products/brands"}
               className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300"
             >
-              Login
+              Gucci
             </Link>
             <Link
-              to={"#"}
+              to={"/products/brands"}
               className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300"
             >
-              Register
+              Besiktas
             </Link>
             <Link
-              to={"#"}
+              to={"/products/brands"}
               className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300"
             >
-              Marketplace
+              Caixa
             </Link>
             <Link
-              to={"#"}
+              to={"/products/brands"}
               className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300"
             >
-              Brands
+              Apinestarsl
             </Link>
             <Link
-              to={"#"}
+              to={"/products/brands"}
               className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300"
             >
-              Savings for You
+              Lazada
             </Link>
           </div>
         </nav>
