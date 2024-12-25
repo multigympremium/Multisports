@@ -19,6 +19,10 @@ import Swal from "sweetalert2";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
 import DragMultiUploadImageInput from "../../../shared/DragMultiUploadImageInput";
+import ReactSelect from "../../UI/ReactSelect";
+import { FaEdit } from "react-icons/fa";
+import { MdDeleteForever } from "react-icons/md";
+import EditableTableColumn from "./productSharedComponents/EditableTableColumn";
 
 export default function ProductCreateForm() {
   // States for the form fields
@@ -48,10 +52,11 @@ export default function ProductCreateForm() {
   const [subcategory, setSubcategory] = useState("sdfds");
   const [childCategory, setChildCategory] = useState("sdfsd");
   const [modelOfBrandValue, setModelOfBrandValue] = useState("");
-  const [productColorValue, setProductColorValue] = useState("");
   const [productFlagValue, setProductFlagValue] = useState("");
   const [brandValue, setBrandValue] = useState("zxcvzcxv");
-  const [productSizeValue, setProductSizeValue] = useState("");
+  const [colorAndSize, setColorAndSize] = useState([]);
+  const [quantity, setQuantity] = useState(1);
+  const [virtualStock, setVirtualStock] = useState(10);
   const [slug, setSlug] = useState("");
 
   const [setupConfig, setSetupConfig] = useState({});
@@ -421,7 +426,10 @@ export default function ProductCreateForm() {
               <input
                 type="number"
                 value={stock}
-                onChange={(e) => setStock(e.target.value)}
+                onChange={(e) => {
+                  setStock(e.target.value);
+                  setVirtualStock(e.target.value);
+                }}
                 className="customInput"
               />
             </div>
@@ -556,7 +564,7 @@ export default function ProductCreateForm() {
 
             {/* Select Subcategory */}
 
-            {setupConfig?.productColor && (
+            {/* {setupConfig?.productColor && (
               <div className="mb-4">
                 <label className="block text-gray-700 font-semibold ">
                   Select Product Color
@@ -574,7 +582,7 @@ export default function ProductCreateForm() {
                         {item?.productColorName}
                       </option>
                     ))}
-                  {/* Add more subcategories dynamically if needed */}
+                 
                 </select>
 
                 <ul className="flex gap-3 mt-3 items-center">
@@ -592,7 +600,7 @@ export default function ProductCreateForm() {
                     ))}
                 </ul>
               </div>
-            )}
+            )} */}
 
             {/* Select Subcategory */}
 
@@ -621,7 +629,7 @@ export default function ProductCreateForm() {
 
             {/* Select Subcategory */}
 
-            {setupConfig?.productSize && (
+            {/* {setupConfig?.productSize && (
               <div className="mb-4">
                 <label className="block text-gray-700 font-semibold ">
                   Select Product Size
@@ -639,7 +647,7 @@ export default function ProductCreateForm() {
                         {item?.sizeName}
                       </option>
                     ))}
-                  {/* Add more subcategories dynamically if needed */}
+                  
                 </select>
                 <ul className="flex gap-3 mt-3 items-center">
                   {productSize?.length > 0 &&
@@ -656,7 +664,7 @@ export default function ProductCreateForm() {
                     ))}
                 </ul>
               </div>
-            )}
+            )} */}
           </div>
 
           {/* File Upload for Thumbnail */}
@@ -688,6 +696,17 @@ export default function ProductCreateForm() {
               setGallery={setGallery}
             />
           </div>
+
+          <EditableTableColumn
+            productColors={productColors}
+            productSizes={productSizes}
+            quantity={quantity}
+            setQuantity={setQuantity}
+            colorAndSize={colorAndSize}
+            setColorAndSize={setColorAndSize}
+            totalQuantity={virtualStock}
+            setTotalQuantity={setVirtualStock}
+          />
 
           <div className="border rounded-2xl p-6 bg-gray-50 pb-0">
             {/* Toggle for Special Offer */}

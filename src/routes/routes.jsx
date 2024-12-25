@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useState } from "react";
+import { lazy, Suspense, useState } from "react";
 // import { lazy } from "react";
 import { createBrowserRouter } from "react-router-dom";
 import Root from "../Root";
@@ -269,7 +269,7 @@ const AllRoutes = () => {
         </Suspense>
       ),
 
-      errorElement: <Error404></Error404>,
+      // errorElement: <Error404></Error404>,
       children: dashboardChildrenRoutes,
     },
     {
