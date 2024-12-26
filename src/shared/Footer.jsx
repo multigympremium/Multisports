@@ -239,6 +239,48 @@ const Footer = () => {
             </Link>
           </div>
         </nav>
+        <nav>
+          <h6 className="footer-title text-base md:text-lg font-bold mb-1 md:mb-4 text-black">
+            Social Media
+          </h6>
+          <div className="text-slate-600 flex flex-col gap-1 md:gap-3 text-sm md:text-base">
+            <Link
+              to={"https://www.facebook.com/"}
+              target="_blank"
+              className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300"
+            >
+              Facebook
+            </Link>
+            <Link
+              to={"https://www.instagram.com/"}
+              target="_blank"
+              className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300"
+            >
+              Instagram
+            </Link>
+            <Link
+              to={"https://www.tiktok.com/"}
+              target="_blank"
+              className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300"
+            >
+              Tiktok
+            </Link>
+            <Link
+              to={"https://www.youtube.com/"}
+              target="_blank"
+              className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300"
+            >
+              Youtube
+            </Link>
+            <Link
+              to={"https://www.pinterest.com/"}
+              target="_blank"
+              className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300"
+            >
+              Pinterest
+            </Link>
+          </div>
+        </nav>
 
         <nav>
           <h6 className="footer-title  text-base md:text-lg font-bold mb-1 md:mb-4 text-black">
@@ -277,43 +319,7 @@ const Footer = () => {
             </Link>
           </div>
         </nav>
-        <nav>
-          <h6 className="footer-title text-base md:text-lg font-bold mb-1 md:mb-4 text-black">
-            Support
-          </h6>
-          <div className="text-slate-600 flex flex-col gap-1 md:gap-3 text-sm md:text-base">
-            <Link
-              to={"#"}
-              className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300"
-            >
-              Help center
-            </Link>
-            <Link
-              to={"#"}
-              className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300"
-            >
-              Direct contact
-            </Link>
-            <Link
-              to={"#"}
-              className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300"
-            >
-              Hotmail
-            </Link>
-            <Link
-              to={"#"}
-              className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300"
-            >
-              Agreement
-            </Link>
-            <Link
-              to={"#"}
-              className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300"
-            >
-              Information
-            </Link>
-          </div>
-        </nav>
+
         {/* <nav>
           <h6 className="footer-title text-lg font-bold mb-4 text-black">
             Social
