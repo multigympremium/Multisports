@@ -64,7 +64,7 @@ const Testimonials = () => {
   }, []);
 
   return (
-    <div className="w-[90%] mx-auto py-5 md:py-10 relative">
+    <div className="w-[90%] md:w-full mx-auto py-5 md:py-10 relative">
       <h2 className="text-2xl md:text-3xl font-bold mb-4 md:mb-6">Testimonial</h2>
       <Swiper
         modules={[Pagination, Autoplay]}

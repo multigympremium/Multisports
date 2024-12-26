@@ -4,12 +4,12 @@
 
 // const [currentProduct, setCurrentProduct] = useState(null);
 //   const handleProductClick = (product) => {
-    //     setCurrentProduct(product);
-    //     document.getElementById(`modal_${product.productTitle.replace(/\s+/g, '_')}`).showModal();
-    //   };
-    
+//     setCurrentProduct(product);
+//     document.getElementById(`modal_${product.productTitle.replace(/\s+/g, '_')}`).showModal();
+//   };
+
 import Modal from "../../../shared/Modal/Modal";
-const ProductCard = ({ product , handleProductClick , varient="classic"}) => {
+const ProductCard = ({ product, handleProductClick, varient = "classic" }) => {
 
     return (
         <div
@@ -21,8 +21,9 @@ const ProductCard = ({ product , handleProductClick , varient="classic"}) => {
             <img
                 src={`https://mgpwebaps.s3.eu-north-1.amazonaws.com/multi-sports/${product.thumbnail}`}
                 alt={product.productTitle}
-                className="w-full rounded md:h-80 object-cover transition-transform duration-300 hover:scale-105"
+                className="w-50 h-50 rounded object-cover transition-transform duration-300 hover:scale-105"
             />
+
             <div className="p-4">
                 <h3 className="text-sm font-semibold mb-1 block md:hidden">
                     {product.productTitle.length > 12 ? `${product.productTitle.slice(0, 12)}..` : product.productTitle}

@@ -44,7 +44,7 @@ const products = [
 
 const Featured = () => {
     return (
-        <div className="md:p-6 py-6 px-5 md:w-[90%] mx-auto">
+        <div className=" py-6 px-5 md:w-full mx-auto">
             <h2 className="text-2xl font-bold mb-4">Featured Products</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* First Product: Larger, occupies the full height of the left column */}

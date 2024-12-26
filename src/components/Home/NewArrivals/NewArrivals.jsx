@@ -27,7 +27,7 @@ const NewArrivals = () => {
   };
 
   return (
-    <section className="w-[90%] mx-auto py-6">
+    <section className="w-[90%] md:w-full mx-auto py-6">
       <h2 className="text-2xl font-bold mb-4">New Arrivals</h2>
       {
         loading ?
