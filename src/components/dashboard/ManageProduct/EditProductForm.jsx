@@ -675,7 +675,7 @@ export default function EditProductForm({
 
             {/* Select Subcategory */}
 
-            {setupConfig?.productColor && (
+            {/* {setupConfig?.productColor && (
               <div className="mb-4">
                 <label className="block text-gray-700 font-semibold ">
                   Select Product Color
@@ -693,7 +693,6 @@ export default function EditProductForm({
                         {item?.productColorName}
                       </option>
                     ))}
-                  {/* Add more subcategories dynamically if needed */}
                 </select>
 
                 <ul className="flex gap-3 mt-3 items-center">
@@ -711,7 +710,7 @@ export default function EditProductForm({
                     ))}
                 </ul>
               </div>
-            )}
+            )} */}
 
             {/* Select Subcategory */}
 
@@ -733,14 +732,13 @@ export default function EditProductForm({
                         {item?.flagName}
                       </option>
                     ))}
-                  {/* Add more subcategories dynamically if needed */}
                 </select>
               </div>
             )}
 
             {/* Select Subcategory */}
 
-            {setupConfig?.productSize && (
+            {/* {setupConfig?.productSize && (
               <div className="mb-4">
                 <label className="block text-gray-700 font-semibold ">
                   Select Product Size
@@ -758,7 +756,6 @@ export default function EditProductForm({
                         {item?.sizeName}
                       </option>
                     ))}
-                  {/* Add more subcategories dynamically if needed */}
                 </select>
                 <ul className="flex gap-3 mt-3 items-center">
                   {productSize?.length > 0 &&
@@ -775,7 +772,7 @@ export default function EditProductForm({
                     ))}
                 </ul>
               </div>
-            )}
+            )} */}
           </div>
 
           <EditableTableColumn
