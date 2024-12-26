@@ -22,7 +22,7 @@ const ProductFlag = () => {
   const [isEdited, setIsEdited] = useState(false);
   const [isDeleted, setIsDeleted] = useState(false);
   const [isShowModal, setIsShowModal] = useState(false);
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
   const [targetId, setTargetId] = useState("");
   const itemsPerPage = 10;
   const [searchText, setSearchText] = useState("");
