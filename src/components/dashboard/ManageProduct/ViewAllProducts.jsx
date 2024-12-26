@@ -1,6 +1,6 @@
 "use client";
 import { HiArrowCircleUp, HiArrowCircleDown } from "react-icons/hi";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 import TableSkeleton from "../../../components library/TableSkeleton";
@@ -13,6 +13,7 @@ import EditButton from "../../../components library/EditButton";
 import DeleteButton from "../../../components library/DeleteButton";
 import Pagination from "../../partial/Pagination/Pagination";
 import BgBlurModal from "../../../shared/Modal/BgBlurModal";
+import SearchBox from "../../partial/SearchBox/SearchBox";
 
 const ProductFlag = () => {
   // State management
@@ -24,8 +25,22 @@ const ProductFlag = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [targetId, setTargetId] = useState("");
   const itemsPerPage = 10;
+  const [searchText, setSearchText] = useState("");
 
   const axiosSecure = useAxiosSecure();
+
+  const [debouncedSearchText, setDebouncedSearchText] = useState("");
+
+  // Debounce searchText
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearchText(searchText);
+    }, 300); // Adjust debounce delay as needed
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [searchText]);
 
   // Sort configuration
   const [sortConfig, setSortConfig] = useState({ key: "id", direction: "asc" });
@@ -36,15 +51,16 @@ const ProductFlag = () => {
     isDeleted,
     setLoading,
     isShowModal,
+    query: `search=${debouncedSearchText}&currentPage=${currentPage}&limit=${itemsPerPage}`,
   });
 
   // Paginated data
-  const paginatedData = useCallback(() => {
-    const offset = currentPage * itemsPerPage;
-    return (
-      products?.length > 0 && products.slice(offset, offset + itemsPerPage)
-    );
-  }, [currentPage, itemsPerPage, products]);
+  // const paginatedData = useCallback(() => {
+  //   const offset = currentPage * itemsPerPage;
+  //   return (
+  //     products?.length > 0 && products.slice(offset, offset + itemsPerPage)
+  //   );
+  // }, [currentPage, itemsPerPage, products]);
 
   // Sorting handler
   const handleSort = (key) => {
@@ -55,18 +71,18 @@ const ProductFlag = () => {
     setSortConfig({ key, direction });
   };
 
-  // Sorted data based on configuration
-  const sortedCategories = useCallback(() => {
-    const sortedData = [...products];
-    sortedData.sort((a, b) => {
-      if (a[sortConfig.key] < b[sortConfig.key])
-        return sortConfig.direction === "asc" ? -1 : 1;
-      if (a[sortConfig.key] > b[sortConfig.key])
-        return sortConfig.direction === "asc" ? 1 : -1;
-      return 0;
-    });
-    return sortedData;
-  }, [products, sortConfig]);
+  // // Sorted data based on configuration
+  // const sortedCategories = useCallback(() => {
+  //   const sortedData = [...products];
+  //   sortedData.sort((a, b) => {
+  //     if (a[sortConfig.key] < b[sortConfig.key])
+  //       return sortConfig.direction === "asc" ? -1 : 1;
+  //     if (a[sortConfig.key] > b[sortConfig.key])
+  //       return sortConfig.direction === "asc" ? 1 : -1;
+  //     return 0;
+  //   });
+  //   return sortedData;
+  // }, [products, sortConfig]);
 
   const handleEdit = (id) => {
     setTargetId(id);
@@ -114,6 +130,7 @@ const ProductFlag = () => {
       <div className="container  mx-auto p-6 pt-0">
         <div className="flex justify-between items-center mb-9">
           <h1 className="text-3xl font-semibold header">Product List</h1>
+          <SearchBox searchText={searchText} setSearchText={setSearchText} />
         </div>
 
         {/* Loading Spinner */}
@@ -232,7 +249,7 @@ const ProductFlag = () => {
                   products.map((item, index) => (
                     <tr key={item._id} className="border-b">
                       <td className="border p-2">
-                        {index + 1 + currentPage * itemsPerPage}
+                        {index + 1 + (currentPage - 1) * itemsPerPage}
                       </td>
                       <td className="border p-2">
                         <CellImage
@@ -265,7 +282,7 @@ const ProductFlag = () => {
         <Pagination
           currentPage={currentPage}
           totalItems={totalItems}
-          itemsPerPage={itemsPerPage}
+          limit={itemsPerPage}
           setCurrentPage={setCurrentPage}
         />
       </div>
