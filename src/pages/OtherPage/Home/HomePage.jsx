@@ -47,22 +47,24 @@ const HomePage = () => {
         metaOgImage={content?.metaOgImage}
         metaKeywords={content?.metaKeywords}
       />
-      <HorizontalMenu/>
-      <Banner />
-      <NewArrivals />
-      <Category />
-      <Featured />
-      <Banner3 />
-      <FlashSale />
-      <Banner2 />
-      <PopularProducts />
-      <NewArrivals />
-      <ExclusiveCollection />
-      <Footwear />
-      <Testimonials />
-      <TrendyBags />
-      <Brands />
-      <FacebookChat />
+      <div className="max-w-[1440px] mx-auto">
+        <HorizontalMenu />
+        <Banner />
+        <NewArrivals />
+        <Category />
+        <Featured />
+        <Banner3 />
+        <FlashSale />
+        <Banner2 />
+        {/* <PopularProducts /> */}
+        <NewArrivals />
+        {/* <ExclusiveCollection /> */}
+        {/* <Footwear /> */}
+        <Testimonials />
+        {/* <TrendyBags /> */}
+        <Brands />
+        <FacebookChat />
+      </div>
     </>
   );
 };

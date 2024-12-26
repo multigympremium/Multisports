@@ -57,7 +57,7 @@ const ProductDetails = () => {
     //     fetchProducts();
     //   }, [axiosSecure, isDeleted, isEdited, isShowModal, query]);
     return (
-        <div className='w-[95%] mx-auto pt-5 py-9'>
+        <div className='w-[95%] md:max-w-[1440px] mx-auto pt-5 py-9'>
 
 
             {/* If product exists */}

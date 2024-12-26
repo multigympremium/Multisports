@@ -69,7 +69,7 @@ const FlashSale = () => {
   const nextRef = useRef(null);
 
   return (
-    <div className="relative mx-auto w-[90%]">
+    <div className="relative mx-auto w-[90%] md:w-full">
       <h2 className="text-xl md:text-2xl font-semibold md:font-bold mb-4 md:mb-6 pl-1 md:pl-4">Flash Sale</h2>
 
       <div className="relative">
