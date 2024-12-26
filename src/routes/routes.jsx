@@ -39,6 +39,7 @@ import OrdersTable from "../components/Home/my-account/orders-table";
 import ChangePassword from "../components/Home/my-account/change-password";
 import AccountDashboard from "../components/Home/my-account/AccountDashboard";
 import AccountAddress from "../components/Home/my-account/AccountAddress";
+import ProductDetails from "../pages/OtherPage/product-details/page";
 
 const AllRoutes = () => {
   // const [permissionData, setPermissionData] = useState([]);
@@ -158,6 +159,12 @@ const AllRoutes = () => {
           path: "products/:id",
           // path: isPermittedRoute("addworkout"),
           element: <ProductPage />,
+        },
+        {
+          // path: "addworkout",
+          path: "product_details/:id",
+          // path: isPermittedRoute("addworkout"),
+          element: <ProductDetails />,
         },
         {
           // path: "addworkout",
