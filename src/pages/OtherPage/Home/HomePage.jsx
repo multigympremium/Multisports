@@ -47,9 +47,11 @@ const HomePage = () => {
         metaOgImage={content?.metaOgImage}
         metaKeywords={content?.metaKeywords}
       />
+      <div>
+        <HorizontalMenu className="max-w-[1440px] mx-auto" />
+      </div>
+      <Banner />
       <div className="max-w-[1440px] mx-auto">
-        <HorizontalMenu />
-        <Banner />
         <NewArrivals />
         <Category />
         <Featured />

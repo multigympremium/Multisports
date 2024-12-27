@@ -32,7 +32,7 @@ const slides = [
   },
 ];
 
-const CustomCarousel = () => {
+const CustomCarousel = ({ slides }) => {
   const prevRef = useRef(null);
   const nextRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -47,8 +47,8 @@ const CustomCarousel = () => {
     }
   }, []);
 
-  return (
-    <div className="relative w-full h-[190px] md:h-[800px]">
+  return (  
+    <div className="relative w-full h-[150px] md:h-[800px]">     
       <Swiper
         modules={[Navigation, Autoplay]}
         autoplay={{
@@ -66,27 +66,22 @@ const CustomCarousel = () => {
         className="h-full"
       >
         {slides.map((slide) => (
-          <SwiperSlide key={slide.id}>
-            <div className={`h-full flex items-center justify-center ${slide.bgColor}`}>
-              <div className="flex items-center gap-2 md:gap-6  justify-center md:justify-between w-full md:max-w-5xl mx-auto px-4">
-                <div className="text-black md:space-y-4 max-w-52 md:max-w-md">
-                  <h2 className="md:text-4xl mb-1 md:mb-0 font-semibold md:font-bold">{slide.title}</h2>
-                  <p className="md:text-lg text-xs">{slide.description}</p>
-                  <button className="md:mt-4 mt-2 text-xs md:text-lg py-1 px-3 md:px-6 md:py-3 bg-black text-white rounded md:rounded-lg flex items-center gap-1 md:gap-2 hover:bg-slate-50 font-semibold hover:text-black  transition-all duration-300">
-                    Shop Now <IoIosArrowForward />
-                  </button>
-
-                </div>
-                <img
-                  src={slide.image}
-                  alt="Slide"
-                  className="h-auto  max-w-[50px] md:max-w-[300px] rounded-lg shadow-md"
-                />
-              </div>
+          <SwiperSlide
+            key={slide.id}
+            style={{
+              backgroundImage: `url(https://mgpwebaps.s3.eu-north-1.amazonaws.com/multi-sports/${slide.image})`,
+              backgroundSize: 'cover', // Ensures the image covers the slide
+              backgroundPosition: 'center', // Centers the image
+              backgroundRepeat: 'no-repeat', // Prevents tiling
+            }}
+          >
+            <div className="h-full flex items-center justify-center">
+              {/* Add your content here if needed */}
             </div>
           </SwiperSlide>
         ))}
       </Swiper>
+
 
       {/* Custom Navigation Buttons */}
       <button
@@ -109,8 +104,8 @@ const CustomCarousel = () => {
           <div
             key={index}
             className={` h-2 md:h-4 rounded-full shadow-lg transition-all duration-300 cursor-pointer ${activeIndex === index
-                ? 'bg-black w-4 md:w-7 scale-110 shadow-md'
-                : 'bg-white w-2 md:w-4'
+              ? 'bg-black w-4 md:w-7 scale-110 shadow-md'
+              : 'bg-white w-2 md:w-4'
               }`}
             onClick={() => swiperRef.current.slideToLoop(index)}
           ></div>
@@ -123,9 +118,8 @@ const CustomCarousel = () => {
 
 const Banner = () => {
   const banners = useGetAllBanners({});
-
   return (
-    <CustomCarousel />
+    <CustomCarousel slides={banners} />
   );
 };
 
