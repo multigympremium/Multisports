@@ -1,8 +1,7 @@
-import { useState } from 'react';
-import useGetAllProducts from '../../../Hook/GetDataHook/useGetAllProducts';
-import ProductCard from '../../partial/ProductCard/ProductCard';
-import ProductSkeleton from '../../partial/ProductCard/ProductSkeleton';
-
+import { useEffect, useState } from "react";
+import ProductCard from "../../partial/ProductCard/ProductCard";
+import ProductSkeleton from "../../partial/ProductCard/ProductSkeleton";
+import useAxiosPublic from "../../../Hook/useAxiosPublic";
 
 const NewArrivals = () => {
   const [currentProduct, setCurrentProduct] = useState(null);
@@ -10,34 +9,57 @@ const NewArrivals = () => {
   const [isEdited, setIsEdited] = useState(false);
   const [isDeleted, setIsDeleted] = useState(false);
   const [query, setQuery] = useState("page=1&limit=10"); // Example query parameters
+  const [products, setProducts] = useState([]);
+  const axiosPublic = useAxiosPublic();
 
-  const { products, totalItems, totalPages } = useGetAllProducts({
-    isEdited,
-    isDeleted,
-    setLoading,
-    query,
-  });
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        setLoading(true);
+        const res = await axiosPublic.get(`/products/new_arrivals`);
 
-  console.log(products)
+        if (res.status === 200 || res.status === 201) {
+          setProducts(res.data.products);
+          setLoading(false);
+        }
+      } catch (error) {
+        console.error("Error fetching Products:", error);
+        setLoading(false);
+        throw new Error("Failed to fetch Products");
+      }
+    };
 
-  
+    fetchProducts();
+  }, [axiosPublic]);
+
+  console.log(products);
+
   const handleProductClick = (product) => {
     setCurrentProduct(product);
-    document.getElementById(`modal_${product.productTitle.replace(/\s+/g, '_')}`).showModal();
+    document
+      .getElementById(`modal_${product.productTitle.replace(/\s+/g, "_")}`)
+      .showModal();
   };
 
   return (
     <section className="w-[90%] md:w-full mx-auto py-6">
       <h2 className="text-2xl font-bold mb-4">New Arrivals</h2>
-      {
-        loading ?
-        <ProductSkeleton /> :
+      {loading ? (
+        <ProductSkeleton />
+      ) : (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-6">
-          {products.map((product, index) => (
-            <ProductCard product={product} handleProductClick={handleProductClick}/>
-          ))}
+          {products?.length > 0 &&
+            products
+              .slice(0, 10)
+              .map((product, index) => (
+                <ProductCard
+                  key={index}
+                  product={product}
+                  handleProductClick={handleProductClick}
+                />
+              ))}
         </div>
-      }
+      )}
     </section>
   );
 };
