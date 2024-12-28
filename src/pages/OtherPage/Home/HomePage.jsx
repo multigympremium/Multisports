@@ -57,9 +57,8 @@ const HomePage = () => {
         <Featured />
         <PromotionalBanner />
         <FlashSale />
-        <Banner2 />
         {/* <PopularProducts /> */}
-        <NewArrivals />
+        <Banner2 /> 
         {/* <ExclusiveCollection /> */}
         {/* <Footwear /> */}
         <Testimonials />
