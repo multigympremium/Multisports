@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import ReactSelect from "../../../UI/ReactSelect";
 import { FaEdit } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
+import { IoCloseCircleOutline } from "react-icons/io5";
 
 export default function EditableTableColumn({
   productColors,
@@ -16,12 +17,14 @@ export default function EditableTableColumn({
   const [isEditing, setIsEditing] = useState(false);
   const [editingIndex, setEditingIndex] = useState(null);
   const [editingColor, setEditingColor] = useState(null);
-  const [editingSize, setEditingSize] = useState(null);
+  const [editingSize, setEditingSize] = useState([]);
   const [editingQuantity, setEditingQuantity] = useState(null);
   const [quantity, setQuantity] = useState(0);
+  const [faceState, setFaceState] = useState("");
+  const [isSizeFocus, setIsSizeFocus] = useState(false);
 
   const [productColorValue, setProductColorValue] = useState(null);
-  const [productSizeValue, setProductSizeValue] = useState(null);
+  const [productSizeValue, setProductSizeValue] = useState([]);
 
   const handleColorAndSize = () => {
     setColorAndSize((prev) => [
@@ -171,26 +174,185 @@ export default function EditableTableColumn({
     editingSize,
     "editing color"
   );
+  console.log(colorAndSize, "colorAndSize");
 
   return (
-    <div className=" border mb-4 rounded-xl bg-gray-50">
-      <table className="table table-zebra">
-        {/* head */}
-        <thead>
-          <tr>
-            <th>Sl</th>
-            <th>Color</th>
-            <th>Size</th>
-            <th>Quantity (Remaining: {totalQuantity - quantity})</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {colorAndSize.map((item, index) => (
-            <tr key={index}>
-              <th>{index + 1}</th>
-              <td>
-                {isEditing && editingIndex === index ? (
+    <div className="w-full relative">
+      <div className=" border mb-4 rounded-xl bg-gray-50 ">
+        <table className="table table-zebra">
+          {/* head */}
+          <thead>
+            <tr>
+              <th>Sl</th>
+              <th>Color</th>
+              <th>Size</th>
+              <th>Quantity (Remaining: {totalQuantity - quantity})</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {colorAndSize.map((item, index) => (
+              <tr key={index}>
+                <th>{index + 1}</th>
+                <td>
+                  {isEditing && editingIndex === index ? (
+                    <ReactSelect
+                      options={productColors.map((item) => {
+                        return {
+                          value: item.productColor,
+                          label: item.productColorName,
+                        };
+                      })}
+                      formatGroupLabel={(data) => (
+                        <div
+                          style={groupStyles}
+                          key={data.productColor}
+                          onClick={() => {
+                            setProductColorValue(data);
+                            console.log(data, "color");
+                          }}
+                        >
+                          <span>{data.productColorName}</span>
+                          <span style={groupBadgeStyles}>
+                            {data.options.length}
+                          </span>
+                        </div>
+                      )}
+                      selectOption={editingColor}
+                    />
+                  ) : (
+                    `${item?.color?.label}`
+                  )}
+                </td>
+                <td>
+                  {isEditing && editingIndex === index ? (
+                    // <ReactSelect
+                    //   options={productSizes.map((item) => {
+                    //     return {
+                    //       value: item.sizeName,
+                    //       label: item.sizeName,
+                    //     };
+                    //   })}
+                    //   formatGroupLabel={(data) => (
+                    //     <div
+                    //       style={groupStyles}
+                    //       key={data.sizeName}
+                    //       onClick={() => {
+                    //         setProductSizeValue(data);
+                    //         console.log(data, "size");
+                    //       }}
+                    //     >
+                    //       <span>{data.sizeName}</span>
+                    //       <span style={groupBadgeStyles}>
+                    //         {data.options.length}
+                    //       </span>
+                    //     </div>
+                    //   )}
+                    //   selectOption={editingSize}
+                    // />
+                    <input
+                      type="text"
+                      className="customInput"
+                      value={
+                        editingSize?.length > 0
+                          ? editingSize.map((item) => item.value).join(", ")
+                          : ""
+                      }
+                      onFocus={() => {
+                        setIsSizeFocus(true);
+                        setFaceState("editing");
+                      }}
+                      placeholder="Enter Size"
+                    />
+                  ) : (
+                    `${
+                      item.size?.length > 0
+                        ? item.size.map((item) => item?.label).join(", ")
+                        : item.size[0]?.label
+                    }`
+                  )}
+                </td>
+                <td>
+                  {isEditing && editingIndex === index ? (
+                    <input
+                      type="number"
+                      defaultValue={item.quantity}
+                      value={editingQuantity}
+                      onChange={(e) => {
+                        setEditingQuantity(e.target.value);
+                        setTotalQuantity(
+                          item?.quantity - Number(e.target.value)
+                        );
+                      }}
+                      className="customInput"
+                      // max={totalQuantity}
+                      // min={0}
+                    />
+                  ) : (
+                    `${item.quantity}`
+                  )}
+                </td>
+                <td className="space-x-2 flex ">
+                  {isEditing && editingIndex === index ? (
+                    <button
+                      type="button"
+                      className="py-1 px-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 hover:scale-110 transition-all duration-300 disabled:bg-gray-100 disabled:text-gray-500"
+                      onClick={() => {
+                        setIsEditing(false);
+                        handleUpdateColorAndSize(index);
+                        setEditingColor(item.color);
+                        setEditingSize(item.size);
+                        setEditingQuantity(Number(item.quantity));
+                      }}
+                      disabled={
+                        totalQuantity < 0 ||
+                        editingColor === null ||
+                        editingSize === null
+                      }
+                    >
+                      Done
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      className="py-1 px-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 hover:scale-110 transition-all duration-300 "
+                      onClick={() => {
+                        setIsEditing(true);
+                        setEditingIndex(index);
+                        setEditingColor(item.color);
+                        setEditingSize(item.size);
+                        setEditingQuantity(item.quantity);
+                      }}
+                    >
+                      Edit
+                    </button>
+                  )}
+                  {/* <button type="button"
+                  className="p-1 bg-gray-200 rounded-md hover:bg-gray-300 hover:scale-110 transition-all duration-300"
+                  onClick={() => {
+                    setIsEditing(true);
+                    setEditingIndex(index);
+                    setEditingColor(item.color);
+                    setEditingSize(item.size);
+                    setEditingQuantity(item.quantity);
+                  }}
+                >
+                  <FaEdit size={18} />
+                </button> */}
+                  <button
+                    type="button"
+                    className="p-1 bg-gray-200 rounded-md hover:bg-gray-300 hover:scale-110 transition-all duration-300"
+                    onClick={() => handleDeleteColorAndSize(index)}
+                  >
+                    <MdDeleteForever size={18} />
+                  </button>
+                </td>
+              </tr>
+            ))}
+            {totalQuantity > 0 && (
+              <tr>
+                <th></th>
+                <td>
                   <ReactSelect
                     options={productColors.map((item) => {
                       return {
@@ -198,6 +360,7 @@ export default function EditableTableColumn({
                         label: item.productColorName,
                       };
                     })}
+                    selectOption={productColorValue}
                     formatGroupLabel={(data) => (
                       <div
                         style={groupStyles}
@@ -213,21 +376,21 @@ export default function EditableTableColumn({
                         </span>
                       </div>
                     )}
-                    selectOption={editingColor}
+                    onChange={(e) => {
+                      setProductColorValue(e);
+                      console.log(e, "color");
+                    }}
                   />
-                ) : (
-                  `${item?.color?.label}`
-                )}
-              </td>
-              <td>
-                {isEditing && editingIndex === index ? (
-                  <ReactSelect
+                </td>
+                <td>
+                  {/* <ReactSelect
                     options={productSizes.map((item) => {
                       return {
                         value: item.sizeName,
                         label: item.sizeName,
                       };
                     })}
+                    selectOption={productSizeValue}
                     formatGroupLabel={(data) => (
                       <div
                         style={groupStyles}
@@ -243,182 +406,182 @@ export default function EditableTableColumn({
                         </span>
                       </div>
                     )}
-                    selectOption={editingSize}
+                    onChange={(e) => {
+                      setProductSizeValue(e);
+                      console.log(e, "size");
+                    }}
+                  /> */}
+
+                  <input
+                    type="text"
+                    className="customInput"
+                    value={
+                      productSizeValue?.length > 0
+                        ? productSizeValue.map((item) => item.value).join(", ")
+                        : ""
+                    }
+                    onFocus={() => {
+                      setIsSizeFocus(true);
+                      setFaceState("create");
+                    }}
+                    placeholder="Enter Size"
                   />
-                ) : (
-                  `${item.size.label}`
-                )}
-              </td>
-              <td>
-                {isEditing && editingIndex === index ? (
+                </td>
+                <td>
                   <input
                     type="number"
-                    defaultValue={item.quantity}
-                    value={editingQuantity}
+                    value={quantity}
                     onChange={(e) => {
-                      setEditingQuantity(e.target.value);
-                      setTotalQuantity(item?.quantity - Number(e.target.value));
+                      if (e.target.value <= totalQuantity) {
+                        setQuantity(e.target.value);
+                      }
                     }}
                     className="customInput"
-                    // max={totalQuantity}
-                    // min={0}
+                    max={totalQuantity}
+                    min={0}
                   />
-                ) : (
-                  `${item.quantity}`
-                )}
-              </td>
-              <td className="space-x-2 flex ">
-                {isEditing && editingIndex === index ? (
+                </td>
+                <td className="space-x-2">
                   <button
                     type="button"
                     className="py-1 px-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 hover:scale-110 transition-all duration-300 disabled:bg-gray-100 disabled:text-gray-500"
-                    onClick={() => {
-                      setIsEditing(false);
-                      handleUpdateColorAndSize(index);
-                      setEditingColor(item.color);
-                      setEditingSize(item.size);
-                      setEditingQuantity(Number(item.quantity));
-                    }}
+                    onClick={handleColorAndSize}
                     disabled={
-                      totalQuantity < 0 ||
-                      editingColor === null ||
-                      editingSize === null
+                      totalQuantity + 1 - Number(quantity) <= 0 ||
+                      productColorValue === null ||
+                      productSizeValue === null
                     }
                   >
                     Done
                   </button>
-                ) : (
-                  <button
-                    type="button"
-                    className="py-1 px-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 hover:scale-110 transition-all duration-300 "
-                    onClick={() => {
-                      setIsEditing(true);
-                      setEditingIndex(index);
-                      setEditingColor(item.color);
-                      setEditingSize(item.size);
-                      setEditingQuantity(item.quantity);
-                    }}
-                  >
-                    Edit
-                  </button>
-                )}
-                {/* <button type="button"
-                  className="p-1 bg-gray-200 rounded-md hover:bg-gray-300 hover:scale-110 transition-all duration-300"
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+      <div
+        className={`absolute top-0 bottom-0 transition-all duration-300 ${
+          isSizeFocus ? "right-0 w-full px-8" : "right-full w-0 px-0"
+        } p-2 bg-white  pt-6 pb-2 overflow-hidden`}
+      >
+        {faceState === "create" ? (
+          <>
+            <ReactSelect
+              options={productSizes.map((item) => {
+                return {
+                  value: item.sizeName,
+                  label: item.sizeName,
+                };
+              })}
+              selectOption={productSizeValue}
+              formatGroupLabel={(data) => (
+                <div
+                  style={groupStyles}
+                  key={data.sizeName}
                   onClick={() => {
-                    setIsEditing(true);
-                    setEditingIndex(index);
-                    setEditingColor(item.color);
-                    setEditingSize(item.size);
-                    setEditingQuantity(item.quantity);
+                    setProductSizeValue(data);
+                    console.log(data, "size");
                   }}
                 >
-                  <FaEdit size={18} />
-                </button> */}
-                <button
-                  type="button"
-                  className="p-1 bg-gray-200 rounded-md hover:bg-gray-300 hover:scale-110 transition-all duration-300"
-                  onClick={() => handleDeleteColorAndSize(index)}
+                  <span>{data.sizeName}</span>
+                  <span style={groupBadgeStyles}>{data.options.length}</span>
+                </div>
+              )}
+              onChange={(data) => {
+                setProductSizeValue((prev) => {
+                  return prev?.length > 0
+                    ? Array.from(
+                        new Set(
+                          [...prev, data].map((obj) => JSON.stringify(obj))
+                        )
+                      ).map((str) => JSON.parse(str))
+                    : [data];
+                });
+              }}
+            />
+
+            <ul className="flex gap-3 mt-3 items-center h-[100px]">
+              {productSizeValue?.length > 0 &&
+                productSizeValue.map((item, index) => (
+                  <li
+                    key={item._id}
+                    className="px-3 py-1 border border-black text-sm capitalize relative rounded-lg"
+                  >
+                    {item?.label}
+                    <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 ">
+                      <IoCloseCircleOutline size={25} />
+                    </span>
+                  </li>
+                ))}
+            </ul>
+          </>
+        ) : (
+          <>
+            <ReactSelect
+              options={productSizes.map((item) => {
+                return {
+                  value: item.sizeName,
+                  label: item.sizeName,
+                };
+              })}
+              formatGroupLabel={(data) => (
+                <div
+                  style={groupStyles}
+                  key={data.sizeName}
+                  onClick={() => {
+                    // setProductSizeValue(data);
+                    console.log(data, "size");
+                  }}
                 >
-                  <MdDeleteForever size={18} />
-                </button>
-              </td>
-            </tr>
-          ))}
-          {totalQuantity > 0 && (
-            <tr>
-              <th></th>
-              <td>
-                <ReactSelect
-                  options={productColors.map((item) => {
-                    return {
-                      value: item.productColor,
-                      label: item.productColorName,
-                    };
-                  })}
-                  selectOption={productColorValue}
-                  formatGroupLabel={(data) => (
-                    <div
-                      style={groupStyles}
-                      key={data.productColor}
-                      onClick={() => {
-                        setProductColorValue(data);
-                        console.log(data, "color");
-                      }}
-                    >
-                      <span>{data.productColorName}</span>
-                      <span style={groupBadgeStyles}>
-                        {data.options.length}
-                      </span>
-                    </div>
-                  )}
-                  onChange={(e) => {
-                    setProductColorValue(e);
-                    console.log(e, "color");
-                  }}
-                />
-              </td>
-              <td>
-                <ReactSelect
-                  options={productSizes.map((item) => {
-                    return {
-                      value: item.sizeName,
-                      label: item.sizeName,
-                    };
-                  })}
-                  selectOption={productSizeValue}
-                  formatGroupLabel={(data) => (
-                    <div
-                      style={groupStyles}
-                      key={data.sizeName}
-                      onClick={() => {
-                        setProductSizeValue(data);
-                        console.log(data, "size");
-                      }}
-                    >
-                      <span>{data.sizeName}</span>
-                      <span style={groupBadgeStyles}>
-                        {data.options.length}
-                      </span>
-                    </div>
-                  )}
-                  onChange={(e) => {
-                    setProductSizeValue(e);
-                    console.log(e, "size");
-                  }}
-                />
-              </td>
-              <td>
-                <input
-                  type="number"
-                  value={quantity}
-                  onChange={(e) => {
-                    if (e.target.value <= totalQuantity) {
-                      setQuantity(e.target.value);
-                    }
-                  }}
-                  className="customInput"
-                  max={totalQuantity}
-                  min={0}
-                />
-              </td>
-              <td className="space-x-2">
-                <button
-                  type="button"
-                  className="py-1 px-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 hover:scale-110 transition-all duration-300 disabled:bg-gray-100 disabled:text-gray-500"
-                  onClick={handleColorAndSize}
-                  disabled={
-                    totalQuantity + 1 - Number(quantity) <= 0 ||
-                    productColorValue === null ||
-                    productSizeValue === null
-                  }
-                >
-                  Done
-                </button>
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </table>
+                  <span>{data.sizeName}</span>
+                  <span style={groupBadgeStyles}>{data.options.length}</span>
+                </div>
+              )}
+              selectOption={editingSize}
+              onChange={(data) => {
+                setEditingSize((prev) => {
+                  //   console.log([...editingSize, data], "prev");
+
+                  return prev?.length > 0
+                    ? Array.from(
+                        new Set(
+                          [...prev, data].map((obj) => JSON.stringify(obj))
+                        )
+                      ).map((str) => JSON.parse(str))
+                    : [data];
+                });
+              }}
+            />
+
+            <ul className="flex gap-3 mt-3 items-center h-[100px]">
+              {editingSize?.length > 0 &&
+                editingSize.map((item, index) => (
+                  <li
+                    key={item._id}
+                    className="px-3 py-1 border border-black text-sm capitalize relative rounded-lg"
+                  >
+                    {item?.label}
+                    <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 ">
+                      <IoCloseCircleOutline size={25} />
+                    </span>
+                  </li>
+                ))}
+            </ul>
+          </>
+        )}
+
+        <button
+          className="block btn ml-auto"
+          onClick={() => {
+            setIsSizeFocus(false);
+            setFaceState("");
+          }}
+          type="button"
+        >
+          Close
+        </button>
+      </div>
     </div>
   );
 }

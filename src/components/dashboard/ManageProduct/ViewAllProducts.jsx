@@ -261,7 +261,7 @@ const ProductFlag = () => {
                       </td>
                       <td className="border p-2">{item.productTitle}</td>
                       <td className="border p-2">{item.price}</td>
-                      <td className="border p-2">{item.discountPrice}</td>
+                      <td className="border p-2">{item.discount}%</td>
                       <td className="border p-2">{item.stock}</td>
                       <td className="border p-2">{item.category}</td>
                       <td className="border p-2">

@@ -6,8 +6,10 @@
 //     document.getElementById(`modal_${product.productTitle.replace(/\s+/g, '_')}`).showModal();
 //   };
 
+import { useState } from "react";
 import Modal from "../../../shared/Modal/Modal";
 const ProductCard = ({ product, handleProductClick, varient = "classic" }) => {
+  const [isShowModal, setIsShowModal] = useState(false);
   return (
     <div
       onClick={() => handleProductClick(product)}
@@ -53,8 +55,10 @@ const ProductCard = ({ product, handleProductClick, varient = "classic" }) => {
           sizes={product.productSizeValue}
           image={`https://mgpwebaps.s3.eu-north-1.amazonaws.com/multi-sports/${product.thumbnail}`}
           description={product.fullDescription}
-          colors={product.productColorValue}
+          colors={product.colorAndSize}
           price={product.price}
+          setIsShowModal={setIsShowModal}
+          isShowModal={isShowModal}
         />
       </div>
     </div>
