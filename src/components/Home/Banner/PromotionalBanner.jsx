@@ -1,6 +1,4 @@
-import React from 'react';
-
-const Banner3 = () => {
+const PromotionalBanner = () => {
   return (
     <div className='w-[90%] md:w-full mx-auto my-3  md:my-9 mb-6 md:mb-16 relative overflow-hidden'>
       <img
@@ -13,4 +11,4 @@ const Banner3 = () => {
   );
 };
 
-export default Banner3;
+export default PromotionalBanner;
