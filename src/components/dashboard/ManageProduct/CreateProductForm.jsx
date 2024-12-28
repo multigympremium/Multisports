@@ -59,6 +59,7 @@ export default function ProductCreateForm() {
   const [virtualStock, setVirtualStock] = useState(10);
   const [slug, setSlug] = useState("");
   const [isFeatured, setIsFeatured] = useState(false);
+  const [discount, setDiscount] = useState(0);
 
   const [setupConfig, setSetupConfig] = useState({});
 
@@ -173,6 +174,7 @@ export default function ProductCreateForm() {
     formData.append("thumbnail", thumbnail); // If it's a file, ensure it's a `File` object
     // formData.append("gallery", gallery);
     formData.append("category", category);
+    formData.append("discount", discount);
     formData.append("brandValue", brandValue);
     formData.append("productColorValue", productColor.join(","));
     formData.append("productSizeValue", productSize.join(","));
@@ -397,7 +399,7 @@ export default function ProductCreateForm() {
                 // required
               />
             </div>
-            <div>
+            {/* <div>
               <label className="block text-gray-700 font-semibold ">
                 Discount Price
               </label>
@@ -407,7 +409,7 @@ export default function ProductCreateForm() {
                 onChange={(e) => setDiscountPrice(e.target.value)}
                 className="customInput"
               />
-            </div>
+            </div> */}
 
             {setupConfig?.rewardPoints && (
               <div>
@@ -730,6 +732,21 @@ export default function ProductCreateForm() {
               checked={specialOffer}
               setChecked={setSpecialOffer}
             />
+
+            {specialOffer && (
+              <div className="mb-4">
+                <label className="block text-gray-700 font-semibold ">
+                  Special Offer Price As Discount
+                </label>
+                <input
+                  type="text"
+                  value={discount}
+                  onChange={(e) => setDiscount(e.target.value)}
+                  className="customInput"
+                  placeholder="Enter Special Offer Price As Discount"
+                />
+              </div>
+            )}
 
             <SwitchInput
               label="Is Recommended"

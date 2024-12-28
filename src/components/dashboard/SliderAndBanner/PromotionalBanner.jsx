@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import CustomEditor from "../../../shared/CustomEditor/CustomEditor";
 import DragUploadImageInput from "../../../shared/DragUploadImageInput";
 import { useDropzone } from "react-dropzone";
+import CustomImage from "../../../shared/ImageComponents/CustomImage";
 
 export default function PromotionalBanner() {
   // State variables for inputs
@@ -15,8 +16,8 @@ export default function PromotionalBanner() {
   const [timeEnd, setTimeEnd] = useState("2024-01-10 23:00:00");
   const [buttonText, setButtonText] = useState("Check it Out");
   const [buttonLink, setButtonLink] = useState("#");
-  const [image, setImage] = useState(""); 
-  const [color, setColor] = useState("#FFFFFF"); 
+  const [image, setImage] = useState("");
+  const [color, setColor] = useState("#FFFFFF");
   const [loading, setLoading] = useState(false);
   const [targetId, setTargetId] = useState("");
   const [isActive, setIsActive] = useState(false);
@@ -67,18 +68,30 @@ export default function PromotionalBanner() {
   // Function to handle form submission
   const onSubmit = async () => {
     setLoading(true);
-    const submitData = {
-      headerText,
-      titleText,
-      description,
-      timeStart,
-      timeEnd,
-      buttonText,
-      buttonLink,
-      isActive,
-      image: thumbnail,
-      color,
-    };
+    // const submitData = {
+    //   headerText,
+    //   titleText,
+    //   description,
+    //   timeStart,
+    //   timeEnd,
+    //   buttonText,
+    //   buttonLink,
+    //   isActive,
+    //   image: thumbnail,
+    //   color,
+    // };
+
+    const submitData = new FormData();
+    submitData.append("headerText", headerText);
+    submitData.append("titleText", titleText);
+    submitData.append("description", description);
+    submitData.append("timeStart", timeStart);
+    submitData.append("timeEnd", timeEnd);
+    submitData.append("buttonText", buttonText);
+    submitData.append("buttonLink", buttonLink);
+    submitData.append("isActive", isActive);
+    submitData.append("image", thumbnail);
+    submitData.append("color", color);
 
     try {
       const res = targetId
@@ -88,7 +101,9 @@ export default function PromotionalBanner() {
       if (res.status === 200 || res.status === 201) {
         Swal.fire({
           title: "Success!",
-          text: targetId ? "Banner updated successfully" : "Banner created successfully",
+          text: targetId
+            ? "Banner updated successfully"
+            : "Banner created successfully",
           icon: "success",
           confirmButtonText: "Ok",
         });
@@ -277,11 +292,21 @@ export default function PromotionalBanner() {
         {/* Preview Section */}
         <div className="p-4 border rounded-2xl">
           <h2 className="text-2xl font-semibold mb-9">Preview</h2>
-          <div className="bg-gray-100 p-4 rounded" style={{ backgroundColor: color }}>
-            <img src={thumbnailPreview} alt="Promo Banner" className="w-full mb-4 rounded" />
+          <div
+            className="bg-gray-100 p-4 rounded"
+            style={{ backgroundColor: color }}
+          >
+            <CustomImage
+              imageKey={thumbnailPreview}
+              alt="Promo Banner"
+              className="w-full mb-4 rounded"
+            />
             <h3 className="text-3xl mb-4 font-bold">{headerText}</h3>
             <p className="text-xl">{titleText}</p>
-            <p className="mb-4" dangerouslySetInnerHTML={{ __html: description }} />
+            <p
+              className="mb-4"
+              dangerouslySetInnerHTML={{ __html: description }}
+            />
             <div className="flex justify-between items-center">
               <Link
                 to={buttonLink}

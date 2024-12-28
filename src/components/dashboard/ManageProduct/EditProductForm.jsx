@@ -15,10 +15,8 @@ import Swal from "sweetalert2";
 import DragEditUploadImageInput from "../../../shared/DragEditUploadImageInput";
 import useGetAllCategories from "../../../Hook/GetDataHook/useGetAllCategories";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
-import { IoCloseCircleOutline } from "react-icons/io5";
 import DragMultiEditUploadImageInput from "../../../shared/DragMultiEditUploadImageInput";
 import useGetAllModelOfBrands from "../../../Hook/GetDataHook/useGetAllModelOfBrands";
-import { set } from "react-hook-form";
 import EditableTableColumn from "./productSharedComponents/EditableTableColumn";
 
 export default function EditProductForm({
@@ -61,6 +59,8 @@ export default function EditProductForm({
   const [colorAndSize, setColorAndSize] = useState([]);
   const [virtualStock, setVirtualStock] = useState(0);
   const [isFeatured, setIsFeatured] = useState(false);
+  const [discount, setDiscount] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   const [modelOfBrandValue, setModelOfBrandValue] = useState("");
 
@@ -120,6 +120,7 @@ export default function EditProductForm({
         setVirtualStock(resData.stock);
         setColorAndSize(resData.colorAndSize);
         setIsFeatured(resData.isFeatured);
+        setDiscount(resData.discount);
 
         for (const galleryItem of resData.gallery) {
           setGalleryItemIds((prev) => [...prev, galleryItem._id]);
@@ -215,6 +216,7 @@ export default function EditProductForm({
       subcategory: subcategory,
       childCategory: childCategory,
     });
+
     const formData = new FormData();
     formData.append("productTitle", productTitle);
     formData.append("shortDescription", shortDescription);
@@ -242,6 +244,7 @@ export default function EditProductForm({
     formData.append("subcategory", subcategory);
     formData.append("childCategory", childCategory);
     formData.append("galleryItemIds", galleryItemIds);
+    formData.append("discount", discount);
     formData.append("colorAndSize", JSON.stringify(colorAndSize));
     formData.append(
       "deletedGalleryItemIds",
@@ -269,6 +272,7 @@ export default function EditProductForm({
     // }
 
     try {
+      setLoading(true);
       const res = await axiosSecure.put(`/products/${targetId}`, formData);
 
       if (res.status === 200 || res.status === 201) {
@@ -290,6 +294,8 @@ export default function EditProductForm({
         icon: "error",
         confirmButtonText: "Ok",
       });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -532,7 +538,7 @@ export default function EditProductForm({
                 // required
               />
             </div>
-            <div>
+            {/* <div>
               <label className="block text-gray-70">Discount Price</label>
               <input
                 type="number"
@@ -540,7 +546,7 @@ export default function EditProductForm({
                 onChange={(e) => setDiscountPrice(e.target.value)}
                 className="customInput"
               />
-            </div>
+            </div> */}
             <div>
               <label className="block text-gray-70">Reward Points</label>
               <input
@@ -653,6 +659,7 @@ export default function EditProductForm({
                 {/* Add more subcategories dynamically if needed */}
               </select>
             </div>
+
             {setupConfig?.modelOfBrand && (
               <div className="mb-4">
                 <label className="block text-gray-700 font-bold mb-2">
@@ -846,6 +853,20 @@ export default function EditProductForm({
             checked={specialOffer}
             setChecked={setSpecialOffer}
           />
+          {specialOffer && (
+            <div className="mb-4">
+              <label className="block text-gray-700 font-semibold ">
+                Special Offer Price As Discount
+              </label>
+              <input
+                type="number"
+                value={discount}
+                onChange={(e) => setDiscount(e.target.value)}
+                className="customInput"
+                placeholder="Enter Special Offer Price As Discount"
+              />
+            </div>
+          )}
 
           <SwitchInput
             label="Is Recommended"
@@ -906,8 +927,19 @@ export default function EditProductForm({
             >
               Cancel
             </button>
-            <button type="submit" className={`customSaveButton`}>
-              Save Product
+            <button
+              type="submit"
+              className={`customSaveButton`}
+              disabled={loading}
+            >
+              {loading ? (
+                <div className="flex items-center justify-center gap-5">
+                  <span className="loading loading-spinner mr-2  loading-xs"></span>{" "}
+                  Change Product
+                </div>
+              ) : (
+                "Change Product"
+              )}
             </button>
           </div>
         </form>
