@@ -16,7 +16,6 @@ export default function PromotionalBanner() {
   const [timeEnd, setTimeEnd] = useState("2024-01-10 23:00:00");
   const [buttonText, setButtonText] = useState("Check it Out");
   const [buttonLink, setButtonLink] = useState("#");
-  const [image, setImage] = useState("");
   const [color, setColor] = useState("#FFFFFF");
   const [loading, setLoading] = useState(false);
   const [targetId, setTargetId] = useState("");

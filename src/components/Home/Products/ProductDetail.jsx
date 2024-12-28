@@ -8,9 +8,9 @@ import { AuthContext } from "../../../providers/AuthProvider";
 import ActiveDescBtn from "../../../components/dashboard/ManageProduct/productSharedComponents/ActiveDescBtn";
 import { useNavigate } from "react-router-dom";
 const ProductDetail = ({ targetId, isShowDetail }) => {
+  const axiosPublic = useAxiosPublic();
   const [product, setProduct] = useState({});
   const [selectedImage, setSelectedImage] = useState(product?.thumbnail || "");
-  const axiosPublic = useAxiosPublic();
   const {
     cartItems,
     removeFromCart,
