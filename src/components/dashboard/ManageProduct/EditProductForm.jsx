@@ -60,6 +60,7 @@ export default function EditProductForm({
   const [deleteItemIds, setDeleteItemIds] = useState([]);
   const [colorAndSize, setColorAndSize] = useState([]);
   const [virtualStock, setVirtualStock] = useState(0);
+  const [isFeatured, setIsFeatured] = useState(false);
 
   const [modelOfBrandValue, setModelOfBrandValue] = useState("");
 
@@ -118,6 +119,7 @@ export default function EditProductForm({
         setProductSize(resData.productSizeValue);
         setVirtualStock(resData.stock);
         setColorAndSize(resData.colorAndSize);
+        setIsFeatured(resData.isFeatured);
 
         for (const galleryItem of resData.gallery) {
           setGalleryItemIds((prev) => [...prev, galleryItem._id]);
@@ -228,6 +230,7 @@ export default function EditProductForm({
     formData.append("metaKeywords", metaKeywords);
     formData.append("metaDescription", metaDescription);
     formData.append("specialOffer", specialOffer);
+    formData.append("isFeatured", isFeatured);
     formData.append("hasVariants", hasVariants);
     formData.append("thumbnail", thumbnail || thumbnailPreview); // If it's a file, ensure it's a `File` object
     // formData.append("gallery", gallery);
@@ -828,6 +831,16 @@ export default function EditProductForm({
             />
           </div> */}
 
+          <SwitchInput
+            label="Has Variants?"
+            checked={hasVariants}
+            onChange={setHasVariants}
+          />
+          <SwitchInput
+            label="Is Featured?"
+            checked={isFeatured}
+            setChecked={setIsFeatured}
+          />
           <SwitchInput
             label="Special Offer?"
             checked={specialOffer}

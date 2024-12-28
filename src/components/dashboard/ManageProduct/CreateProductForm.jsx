@@ -58,6 +58,7 @@ export default function ProductCreateForm() {
   const [quantity, setQuantity] = useState(1);
   const [virtualStock, setVirtualStock] = useState(10);
   const [slug, setSlug] = useState("");
+  const [isFeatured, setIsFeatured] = useState(false);
 
   const [setupConfig, setSetupConfig] = useState({});
 
@@ -167,7 +168,8 @@ export default function ProductCreateForm() {
     formData.append("metaKeywords", metaKeywords);
     formData.append("metaDescription", metaDescription);
     formData.append("specialOffer", specialOffer);
-    formData.append("hasVariants", hasVariants);
+    formData.append("specialOffer", specialOffer);
+    formData.append("isFeatured", isFeatured);
     formData.append("thumbnail", thumbnail); // If it's a file, ensure it's a `File` object
     // formData.append("gallery", gallery);
     formData.append("category", category);
@@ -712,24 +714,17 @@ export default function ProductCreateForm() {
 
           <div className="border rounded-2xl p-6 bg-gray-50 pb-0">
             {/* Toggle for Special Offer */}
-            <div className="mb-4 flex  items-center">
-              <label className="block text-gray-700 font-semibold mr-2">
-                Special Offer?
-              </label>
-              <Switch
-                label="Has Variants?"
-                checked={hasVariants}
-                onChange={setHasVariants}
-                offColor="#ccc"
-                onColor="#00b894"
-                checkedIcon={false}
-                uncheckedIcon={false}
-                handleDiameter={16}
-                height={20}
-                width={40}
-              />
-            </div>
 
+            <SwitchInput
+              label="Has Variants?"
+              checked={hasVariants}
+              onChange={setHasVariants}
+            />
+            <SwitchInput
+              label="Is Featured?"
+              checked={isFeatured}
+              setChecked={setIsFeatured}
+            />
             <SwitchInput
               label="Special Offer?"
               checked={specialOffer}

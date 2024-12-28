@@ -40,6 +40,7 @@ import ChangePassword from "../components/Home/my-account/change-password";
 import AccountDashboard from "../components/Home/my-account/AccountDashboard";
 import AccountAddress from "../components/Home/my-account/AccountAddress";
 import ProductDetails from "../pages/OtherPage/product-details/page";
+import NewArrivals from "../components/Home/NewArrivals/NewArrivals";
 
 const AllRoutes = () => {
   // const [permissionData, setPermissionData] = useState([]);
@@ -62,6 +63,17 @@ const AllRoutes = () => {
             // <PublicRoute>
             // </PublicRoute>
             <HomePage />
+          ),
+        },
+        {
+          path: "new_arrivals",
+          element: (
+            // <PublicRoute>
+            // </PublicRoute>
+            // <Login />
+            // <PublicRoute>
+            // </PublicRoute>
+            <NewArrivals limit={40} isShowSeeAll={false} />
           ),
         },
         {
