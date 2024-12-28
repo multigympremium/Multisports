@@ -13,7 +13,7 @@ import FacebookChat from "../../../components/Home/FacebookChat/FacebookChat";
 import Featured from "../../../components/Home/Featured/Featured";
 import FlashSale from "../../../components/Home/FlashSale/FlashSale";
 import Banner2 from "../../../components/Home/Banner/Bannner2";
-import Banner3 from "../../../components/Home/Banner/Banner3";
+import PromotionalBanner from "../../../components/Home/Banner/PromotionalBanner";
 import Testimonials from "../../../components/Home/Testimonials/Testimonials";
 import Category from "../../../components/Home/Category/Category";
 import HorizontalMenu from "../../../shared/HorizontalMenu/HorizontalMenu";
@@ -55,7 +55,7 @@ const HomePage = () => {
         <NewArrivals />
         <Category />
         <Featured />
-        <Banner3 />
+        <PromotionalBanner />
         <FlashSale />
         <Banner2 />
         {/* <PopularProducts /> */}
