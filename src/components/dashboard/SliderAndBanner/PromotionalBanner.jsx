@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
 import Swal from "sweetalert2";
 import CustomEditor from "../../../shared/CustomEditor/CustomEditor";
+import DragUploadImageInput from "../../../shared/DragUploadImageInput";
+import { useDropzone } from "react-dropzone";
 
 export default function PromotionalBanner() {
   // State variables for inputs
@@ -13,85 +15,85 @@ export default function PromotionalBanner() {
   const [timeEnd, setTimeEnd] = useState("2024-01-10 23:00:00");
   const [buttonText, setButtonText] = useState("Check it Out");
   const [buttonLink, setButtonLink] = useState("#");
+  const [image, setImage] = useState(""); 
+  const [color, setColor] = useState("#FFFFFF"); 
   const [loading, setLoading] = useState(false);
   const [targetId, setTargetId] = useState("");
   const [isActive, setIsActive] = useState(false);
 
+  const [thumbnail, setThumbnail] = useState(null);
+  const [thumbnailPreview, setThumbnailPreview] = useState(null);
+  const [progress, setProgress] = useState(0);
+
   const axiosSecure = useAxiosSecure();
 
-  // Function to handle input changes
+  // Generic function to handle input changes
   const handleInputChange = (e) => {
-    const { name, value, checked } = e.target;
-    switch (name) {
-      case "headerText":
-        setHeaderText(value);
-        break;
-      case "titleText":
-        setTitleText(value);
-        break;
-      case "description":
-        setDescription(value);
-        break;
-      case "timeStart":
-        setTimeStart(value);
-        break;
-      case "timeEnd":
-        setTimeEnd(value);
-        break;
-      case "buttonText":
-        setButtonText(value);
-        break;
-      case "buttonLink":
-        setButtonLink(value);
-        break;
-      case "isActive":
-        setIsActive(checked);
-        break;
-      default:
-        break;
+    const { name, value, checked, type } = e.target;
+    if (type === "checkbox") {
+      setIsActive(checked);
+    } else {
+      switch (name) {
+        case "headerText":
+          setHeaderText(value);
+          break;
+        case "titleText":
+          setTitleText(value);
+          break;
+        case "description":
+          setDescription(value);
+          break;
+        case "timeStart":
+          setTimeStart(value);
+          break;
+        case "timeEnd":
+          setTimeEnd(value);
+          break;
+        case "buttonText":
+          setButtonText(value);
+          break;
+        case "buttonLink":
+          setButtonLink(value);
+          break;
+        case "color":
+          setColor(value);
+          break;
+        default:
+          break;
+      }
     }
   };
 
+  // Function to handle form submission
   const onSubmit = async () => {
     setLoading(true);
-
     const submitData = {
-      headerText: headerText,
-      titleText: titleText,
-      description: description,
-      timeStart: timeStart,
-      timeEnd: timeEnd,
-      buttonText: buttonText,
-      buttonLink: buttonLink,
-      isActive: isActive,
+      headerText,
+      titleText,
+      description,
+      timeStart,
+      timeEnd,
+      buttonText,
+      buttonLink,
+      isActive,
+      image: thumbnail,
+      color,
     };
+
     try {
-      if (targetId) {
-        const res = await axiosSecure.put(
-          `/promo-banner/${targetId}`,
-          submitData
-        );
-        if (res.status === 200 || res.status === 201) {
-          Swal.fire({
-            title: "Success!",
-            text: "Social updated successfully",
-            icon: "success",
-            confirmButtonText: "Ok",
-          });
-        }
-      } else {
-        const res = await axiosSecure.post(`/promo-banner`, submitData);
-        if (res.status === 200 || res.status === 201) {
-          Swal.fire({
-            title: "Success!",
-            text: "Social Created successfully",
-            icon: "success",
-            confirmButtonText: "Ok",
-          });
-        }
+      const res = targetId
+        ? await axiosSecure.put(`/promo-banner/${targetId}`, submitData)
+        : await axiosSecure.post(`/promo-banner`, submitData);
+
+      if (res.status === 200 || res.status === 201) {
+        Swal.fire({
+          title: "Success!",
+          text: targetId ? "Banner updated successfully" : "Banner created successfully",
+          icon: "success",
+          confirmButtonText: "Ok",
+        });
       }
     } catch (err) {
-      console.error(err);
       Swal.fire({
         title: "Error!",
         text: err.message,
@@ -104,36 +106,49 @@ export default function PromotionalBanner() {
   };
 
   useEffect(() => {
-    const fetchTestimonial = async () => {
+    const fetchBannerData = async () => {
       try {
         const res = await axiosSecure.get(`/promo-banner`);
-
         if (res.status === 200 || res.status === 201) {
           const data = res?.data?.data[0];
-
-          console.log(data, "data");
-
           if (data) {
-            setHeaderText(data?.headerText);
-            setTitleText(data?.titleText);
-            setDescription(data?.description);
-            setTimeStart(data?.timeStart);
-            setTimeEnd(data?.timeEnd);
-            setButtonText(data?.buttonText);
-            setButtonLink(data?.buttonLink);
-            setIsActive(data?.isActive);
-            setTargetId(data?._id);
+            setHeaderText(data.headerText);
+            setTitleText(data.titleText);
+            setDescription(data.description);
+            setTimeStart(data.timeStart);
+            setTimeEnd(data.timeEnd);
+            setButtonText(data.buttonText);
+            setButtonLink(data.buttonLink);
+            setThumbnail(data.image || null);
+            setThumbnailPreview(data.image || null);
+            setColor(data.color || "#FFFFFF");
+            setIsActive(data.isActive);
+            setTargetId(data._id);
           }
         }
       } catch (error) {
-        console.error("Error fetching testimonial:", error);
+        console.error("Error fetching promotional banner:", error);
       }
     };
-
-    fetchTestimonial();
+    fetchBannerData();
   }, [axiosSecure]);
 
-  console.log(description, "description");
+  // Dropzone for thumbnail upload
+  const onDropThumbnail = (acceptedFiles) => {
+    const file = acceptedFiles[0];
+    const thumbnailPreview = URL.createObjectURL(file);
+    setThumbnailPreview(thumbnailPreview);
+    setThumbnail(file);
+  };
+
+  const {
+    getRootProps: getThumbnailRootProps,
+    getInputProps: getThumbnailInputProps,
+  } = useDropzone({
+    onDrop: onDropThumbnail,
+    accept: "image/*",
+    multiple: false,
+  });
 
   return (
     <div className="container mx-auto p-4">
@@ -220,6 +235,28 @@ export default function PromotionalBanner() {
             />
           </div>
 
+          <div className="relative">
+            <label className="block text-gray-700 mb-2">Banner Image</label>
+            <DragUploadImageInput
+              getRootProps={getThumbnailRootProps}
+              getInputProps={getThumbnailInputProps}
+              image={thumbnail}
+              imagePreview={thumbnailPreview}
+            />
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-gray-700">Background Color</label>
+            <input
+              type="text"
+              name="color"
+              value={color}
+              onChange={handleInputChange}
+              placeholder="Enter a color (e.g., #ff0000 or red)"
+              className="customInput w-full h-10"
+            />
+          </div>
+
           <button
             type="button"
             className="customSaveButton"
@@ -228,7 +265,7 @@ export default function PromotionalBanner() {
           >
             {loading ? (
               <>
-                <span className="loading loading-spinner mr-2  loading-xs"></span>
+                <span className="loading loading-spinner mr-2 loading-xs"></span>
                 Updating ..
               </>
             ) : (
@@ -240,13 +277,11 @@ export default function PromotionalBanner() {
         {/* Preview Section */}
         <div className="p-4 border rounded-2xl">
           <h2 className="text-2xl font-semibold mb-9">Preview</h2>
-          <div className="bg-gray-100 p-4 rounded">
+          <div className="bg-gray-100 p-4 rounded" style={{ backgroundColor: color }}>
+            <img src={thumbnailPreview} alt="Promo Banner" className="w-full mb-4 rounded" />
             <h3 className="text-3xl mb-4 font-bold">{headerText}</h3>
             <p className="text-xl">{titleText}</p>
-            <p
-              className="mb-4"
-              dangerouslySetInnerHTML={{ __html: description }}
-            />
+            <p className="mb-4" dangerouslySetInnerHTML={{ __html: description }} />
             <div className="flex justify-between items-center">
               <Link
                 to={buttonLink}
