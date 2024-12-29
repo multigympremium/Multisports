@@ -36,15 +36,16 @@ const Banner2 = () => {
         spaceBetween={20} // Space between slides
         slidesPerView={1.5} // Show 1.5 slides at a time
         centeredSlides={true} // Center the active slide
+        centeredSlidesBounds={true} // Ensure centered slides are fully visible
         loop={true} // Enable infinite scrolling
       >
         {carouselImages.map((slide, index) => (
           <SwiperSlide key={index}>
-            <div className="relative">
+            <div className="relative h-[400px]">
               <img
                 src={slide.image}
                 alt={`Slide ${index + 1}`}
-                className="w-full h-auto object-cover rounded-lg"
+                className="w-full h-full object-cover rounded-lg"
               />
             </div>
           </SwiperSlide>
@@ -55,3 +56,5 @@ const Banner2 = () => {
 };
 
 export default Banner2;
+
+
