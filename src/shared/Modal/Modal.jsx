@@ -81,7 +81,7 @@ const Modal = ({
 
   console.log(selectedSize, selectedColor, "size, color", product, "product");
   return (
-    <dialog id={id} className="modal relative">
+    <dialog id={id} className="modal">
       <div className=" modal-box p-0 rounded max-w-4xl w-[90%] mx-auto md:w-full flex flex-col md:flex-row">
         <form method="dialog">
           <button className="btn btn-sm btn-circle btn-ghost absolute focus:outline-none right-2 top-2">
