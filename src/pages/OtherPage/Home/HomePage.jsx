@@ -17,6 +17,9 @@ import PromotionalBanner from "../../../components/Home/Banner/PromotionalBanner
 import Testimonials from "../../../components/Home/Testimonials/Testimonials";
 import Category from "../../../components/Home/Category/Category";
 import HorizontalMenu from "../../../shared/HorizontalMenu/HorizontalMenu";
+import MostPopular from "../../../components/Home/MostPopular/MostPopular";
+import BestSelling from "../../../components/Home/BestSelling/BestSelling";
+import SpecialDiscount from "../../../components/Home/SpecialDiscount/SpecialDiscount";
 export const metadata = {
   title: "Universal Survey - Home",
   description:
@@ -55,12 +58,15 @@ const HomePage = () => {
         <NewArrivals />
         <Category />
         <Featured />
+        <MostPopular/>
         <PromotionalBanner />
+        <BestSelling/>
         <FlashSale />
         {/* <PopularProducts /> */}
         <Banner2 /> 
         {/* <ExclusiveCollection /> */}
         {/* <Footwear /> */}
+        <SpecialDiscount/>
         <Testimonials />
         {/* <TrendyBags /> */}
         <Brands />
