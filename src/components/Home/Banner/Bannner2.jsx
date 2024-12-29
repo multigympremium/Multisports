@@ -2,6 +2,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { Pagination, Autoplay } from 'swiper/modules';
+import useGetAllShoesBanners from '../../../Hook/GetPublicDataHook/useGetAllShoesBanners';
 
 const carouselImages = [
   {
@@ -22,6 +23,7 @@ const carouselImages = [
 ];
 
 const Banner2 = () => {
+  const shoes = useGetAllShoesBanners({});
   return (
     <div className="relative my-28 mx-auto max-w-[1920px] overflow-hidden">
       <Swiper

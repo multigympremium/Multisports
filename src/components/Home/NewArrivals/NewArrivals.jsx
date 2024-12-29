@@ -5,7 +5,7 @@ import useAxiosPublic from "../../../Hook/useAxiosPublic";
 import { Link } from "react-router-dom";
 import { FaArrowRight } from "react-icons/fa";
 
-const NewArrivals = ({ limit = 10, isShowSeeAll = true }) => {
+const NewArrivals = ({ limit = 8, isShowSeeAll = true }) => {
   const [currentProduct, setCurrentProduct] = useState(null);
   const [loading, setLoading] = useState(false);
   const [isEdited, setIsEdited] = useState(false);
@@ -57,9 +57,9 @@ const NewArrivals = ({ limit = 10, isShowSeeAll = true }) => {
         )}
       </div>
       {loading ? (
-        <ProductSkeleton />
+        <ProductSkeleton skeletons={8} />
       ) : (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-6">
+        <div className="grid grid-cols-2 md:gap-y-8 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6">
           {products?.length > 0 &&
             products
               .slice(0, limit)
@@ -68,6 +68,8 @@ const NewArrivals = ({ limit = 10, isShowSeeAll = true }) => {
                   key={index}
                   product={product}
                   handleProductClick={handleProductClick}
+                  showNewArrival={true}
+                  showDiscount={true}
                 />
               ))}
         </div>
