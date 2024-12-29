@@ -133,7 +133,7 @@ export default function PromotionalBanner() {
             setTimeEnd(data.timeEnd);
             setButtonText(data.buttonText);
             setButtonLink(data.buttonLink);
-            setThumbnail(data.image || null);
+            // setThumbnail(data.image || null);
             setThumbnailPreview(data.image || null);
             setColor(data.color || "#FFFFFF");
             setIsActive(data.isActive);
