@@ -12,7 +12,10 @@ const ProductCard = ({ product, handleProductClick, varient = "classic" }) => {
   const [isShowModal, setIsShowModal] = useState(false);
   return (
     <div
-      onClick={() => handleProductClick(product)}
+      onClick={() => {
+        handleProductClick(product);
+        setIsShowModal(true);
+      }}
       key={product._id}
       className="bg-white cursor-pointer overflow-hidden rounded-lg md:hover:shadow-lg transition-transform duration-300 md:hover:scale-100"
     >
@@ -59,6 +62,7 @@ const ProductCard = ({ product, handleProductClick, varient = "classic" }) => {
           price={product.price}
           setIsShowModal={setIsShowModal}
           isShowModal={isShowModal}
+          product={product}
         />
       </div>
     </div>

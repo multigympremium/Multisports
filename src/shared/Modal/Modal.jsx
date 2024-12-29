@@ -15,9 +15,10 @@ const Modal = ({
   colors,
   setIsShowModal,
   isShowModal,
+  product,
 }) => {
   console.log(colors, "colors");
-  const [product, setProduct] = useState({});
+  const [trackingProduct, setTrackingProduct] = useState({});
   const [quantity, setQuantity] = useState(0);
   // const [sizes, setSizes] = useState([]);
   const [selectedImage, setSelectedImage] = useState(product?.thumbnail || "");
@@ -34,26 +35,46 @@ const Modal = ({
 
   const [activeDescription, setActiveDescription] = useState("full_desc");
 
-  const [color, setColor] = useState("");
-  const [size, setSize] = useState("");
+  const [selectedColor, setSelectedColor] = useState({});
+  const [sizeArray, setSizeArray] = useState([]);
+  const [selectedSize, setSelectedSize] = useState({});
 
   useEffect(() => {
-    setQuantity(cartItems.find((item) => item._id === object_id)?.quantity);
+    setQuantity(
+      cartItems.find((item) => item._id === object_id)?.quantity || 0
+    );
 
     if (isShowModal === false) {
-      setColor("");
-      setSize("");
+      setSelectedColor({});
+      setSelectedSize({});
     }
-  }, [cartItems, object_id, isShowModal]);
+    if (isShowModal === true) {
+      setSelectedColor(colors[0]?.color || {});
+      setSelectedSize(colors[0]?.size[0] || {});
+      setSizeArray(colors[0]?.size || []);
+    }
+  }, [cartItems, object_id, isShowModal, colors]);
 
   useEffect(() => {
-    const copy_product = { ...product, quantity: 1 };
-    copy_product.color = color;
-    copy_product.size = size;
-    setProduct(copy_product);
-  }, [size, color]);
+    const currentItem = cartItems.find((item) => item._id === object_id);
+    console.log(currentItem, "currentItem");
+    if (currentItem) {
+      setTrackingProduct(currentItem);
+      setQuantity(currentItem.quantity);
+    } else {
+      const copy_product = {
+        ...product,
+        quantity: trackingProduct.quantity || 1,
+      };
+      copy_product.color = selectedColor?.value;
+      copy_product.size = selectedSize?.value;
+      setTrackingProduct(copy_product);
+      setQuantity(1);
+    }
+    console.log(currentItem, "copy_product");
+  }, [selectedSize, selectedColor, product, cartItems]);
 
-  console.log(size, color, "size, color", product, "product");
+  console.log(selectedSize, selectedColor, "size, color", product, "product");
   return (
     <dialog id={id} className="modal relative">
       <div className=" modal-box p-0 rounded max-w-4xl w-[90%] mx-auto md:w-full flex flex-col md:flex-row">
@@ -83,12 +104,17 @@ const Modal = ({
           <div className="mb-4">
             <h3 className="font-semibold mb-2">Size</h3>
             <div className="flex gap-2">
-              {sizes.map((size) => (
+              {sizeArray.map((size) => (
                 <button
                   key={size}
-                  className="border text-xs md:text-sm shadow-sm w-7 h-7 md:w-10 md:h-10 hover:border-gray-500 duration-300 ease-in-out rounded-lg"
+                  className={`border text-xs md:text-sm shadow-sm w-7 h-7 md:w-10 md:h-10 hover:border-gray-500 duration-300 ease-in-out rounded-lg ${
+                    size.value === selectedSize.value
+                      ? "bg-neutral-500 text-white"
+                      : ""
+                  }`}
+                  onClick={() => setSelectedSize(size)}
                 >
-                  {size}
+                  {size?.label}
                 </button>
               ))}
             </div>
@@ -101,11 +127,19 @@ const Modal = ({
               {colors.map((color, index) => (
                 <div
                   key={index}
-                  className="border flex items-center border-gray-100 duration-300 ease-in-out  hover:border-gray-400 justify-center p-[3px] md:p-1 rounded-md"
+                  className={`border flex items-center border-gray-100 duration-300 ease-in-out  hover:border-gray-400 justify-center p-[3px] md:p-1 rounded-md ${
+                    selectedColor?.value === color?.color?.value
+                      ? "bg-neutral-500 text-white"
+                      : ""
+                  }`}
                 >
                   <button
-                    style={{ backgroundColor: color }}
+                    style={{ backgroundColor: color?.color?.value }}
                     className={`md:w-8 md:h-8 w-7 h-7 rounded-md`}
+                    onClick={() => {
+                      setSelectedColor(color.color);
+                      setSizeArray(color.size);
+                    }}
                   ></button>
                 </div>
               ))}
@@ -120,14 +154,15 @@ const Modal = ({
                   className="w-7 text-center py-2 md:h-11"
                   onClick={() =>
                     updateCartQuantity(
-                      product._id,
-                      product?.quantity + 1,
-                      color,
-                      size
+                      trackingProduct._id,
+                      quantity - 1,
+                      selectedColor.value,
+                      selectedSize.value
                     )
                   }
                   disabled={
-                    (product?.stock <= 0 && color === "") || size === ""
+                    product?.stock <= 0 || quantity == 1
+
                     // product?.quantity >= product?.stock ||
                   }
                 >
@@ -139,13 +174,13 @@ const Modal = ({
                   onClick={() =>
                     updateCartQuantity(
                       product._id,
-                      product?.quantity + 1,
-                      color,
-                      size
+                      quantity + 1,
+                      selectedColor?.value,
+                      selectedSize?.value
                     )
                   }
                   disabled={
-                    (product?.stock <= 0 && color === "") || size === ""
+                    product?.stock <= 0
                     // product?.quantity >= product?.stock ||
                   }
                 >
@@ -155,7 +190,7 @@ const Modal = ({
               <button
                 className="md:py-3 py-2 rounded-lg text-sm md:text-base font-semibold bg-black text-white w-full md:flex-1"
                 onClick={() => {
-                  addToCart(product, color, size);
+                  addToCart(product, selectedColor.value, selectedSize.value);
                   // setProduct((prev) => ({
                   //   ...prev,
                   //   quantity: quantity + 1,

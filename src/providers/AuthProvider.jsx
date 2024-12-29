@@ -57,16 +57,26 @@ const AuthProvider = ({ children }) => {
   // Update quantity
   const updateCartQuantity = (id, quantity, color, size) => {
     setCartItems((prevItems) =>
-      prevItems.map((item) =>
-        item._id === id && item.color === color && item.size === size
+      prevItems.map((item) => {
+        console.log(
+          "updateCartQuantity",
+          id,
+          quantity,
+          color,
+          size,
+          item,
+          item._id === id && item.color === color && item.size === size
+        );
+        return item._id === id && item.color === color && item.size === size
           ? { ...item, quantity }
-          : item
-      )
+          : item;
+      })
     );
   };
 
   // Add item to cart
   const addToCart = (product, color, size) => {
+    console.log(product, "addToCart", color, size);
     if (!color || !size) {
       toast.error("Please select color and size");
       return;
