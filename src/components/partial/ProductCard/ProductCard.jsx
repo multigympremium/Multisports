@@ -51,7 +51,7 @@ const ProductCard = ({ product, handleProductClick, varient = "classic" }) => {
           />
         </p>
         <p className="text-sm font-bold">BDT {product.price}</p>
-        <Modal
+        {/* <Modal
           id={`modal_${product.productTitle.replace(/\s+/g, "_")}`}
           object_id={product._id}
           title={product.productTitle}
@@ -63,7 +63,7 @@ const ProductCard = ({ product, handleProductClick, varient = "classic" }) => {
           setIsShowModal={setIsShowModal}
           isShowModal={isShowModal}
           product={product}
-        />
+        /> */}
       </div>
     </div>
   );
