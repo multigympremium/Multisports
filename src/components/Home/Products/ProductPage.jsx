@@ -10,6 +10,7 @@ import ProductFilterGroup from "../../../shared/ProductFilterGroup";
 import { RiDeleteBin7Line } from "react-icons/ri";
 import { IoMdArrowBack } from "react-icons/io";
 import { PiSlidersHorizontal } from "react-icons/pi";
+import useGetAllCategories from "../../../Hook/GetDataHook/useGetAllCategories";
 
 const SelectableList = ({
   items,
@@ -128,12 +129,20 @@ function ProductPage() {
   const [colorFilter, setColorFilter] = useState([]);
   const [sizeFilter, setSizesFilter] = useState([]);
   const [categoryFilter, setCategoryFilter] = useState([]);
+  const [subcategoryFilter, setSubCategoryFilter] = useState([]);
 
   const toggleSelection = (name, labelKey) => {
     setSelectedItems((prev) => {
       switch (labelKey) {
-        case "subcategoryName":
+        case "categoryName":
           setCategoryFilter(
+            prev.includes(name)
+              ? prev.filter((item) => item !== name)
+              : [...prev, name]
+          );
+          break;
+        case "subcategoryName":
+          setSubCategoryFilter(
             prev.includes(name)
               ? prev.filter((item) => item !== name)
               : [...prev, name]
@@ -192,7 +201,8 @@ function ProductPage() {
 
   const router = useLocation();
   const productBrands = useGetAllProductBrands({});
-  const subcategories = useGetAllSubCategories({});
+  const categories = useGetAllCategories({});
+  const subcategories = useGetAllSubCategories({ query: `slug=${params.id}` });
   const productColors = useGetAllProductColors({});
   const productSizes = useGetAllProductSizes({});
 
@@ -433,6 +443,14 @@ function ProductPage() {
             <div className="space-y-4">
               <ProductFilterGroup groupName="Categories">
                 <SelectableList
+                  items={categories}
+                  toggleSelection={toggleSelection}
+                  selectedItems={selectedItems}
+                  labelKey="categoryName"
+                />
+              </ProductFilterGroup>
+              <ProductFilterGroup groupName="Subcategories">
+                <SelectableList
                   items={subcategories}
                   toggleSelection={toggleSelection}
                   selectedItems={selectedItems}
@@ -476,6 +494,8 @@ function ProductPage() {
             colorFilter={colorFilter}
             brandFilter={brandFilter}
             query={location.search}
+            subcategoryFilter={subcategoryFilter}
+            categoryFilter={categoryFilter}
           />
         </div>
       </div>

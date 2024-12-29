@@ -36,7 +36,7 @@ const Cart = ({ isShow, setIsShow }) => {
   )?.totalDiscount;
 
   return (
-    <div className="drawer drawer-end">
+    <div className="drawer drawer-end z-[99]">
       <input id="my-cart" type="checkbox" className="drawer-toggle" />
 
       <div className="drawer-side">
