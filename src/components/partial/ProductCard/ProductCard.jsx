@@ -23,18 +23,18 @@ const ProductCard = ({
     >
       {console.log("product", product)}
       {product.discount > 0 && showDiscount && (
-        <span className="absolute z-10 left-3 top-3  md:top-5 md:left-5 bg-gray-800 text-white text-[10px] text-xs py-1 px-2 md:px-3 rounded-md">
+        <span className="absolute z-10 left-2 top-2  md:top-5 md:left-5 bg-gray-800 text-white md:text-[10px] text-[10px] md:text-xs  px-2 md:px-3 rounded-md">
           {product.discount}% OFF
         </span>
       )}
 
       {showNewArrival && product.discount > 0 && (
-        <span className="absolute z-10 left-5 top-5  md:top-12 md:left-5 bg-[#923670] text-white text-[10px] text-xs py-1 px-2 md:px-3 rounded-md">
+        <span className="absolute z-10 left-2 top-6  md:top-12 md:left-5 bg-[#923670] text-white md:text-[10px] text-[10px] md:text-xs  px-2 md:px-3 rounded-md">
           New Arrival
         </span>
       )}
       {showNewArrival && !product.discount > 0 && (
-        <span className="absolute z-10 left-3 top-3  md:top-5 md:left-5 bg-[#923670] text-white text-[10px] text-xs py-1 px-2 md:px-3 rounded-md">
+        <span className="absolute z-10 left-2 top-2  md:top-5 md:left-5 bg-[#923670] text-white md:text-[10px] text-[10px] md:text-xs  px-2 md:px-3 rounded-md">
           New Arrival
         </span>
       )}
@@ -46,7 +46,7 @@ const ProductCard = ({
       />
 
       <div className="p-4">
-        <h3 className="text-base font-semibold mb-1 block md:hidden">
+        <h3 className="text-sm md:text-base font-semibold mb-1 block md:hidden">
           {product.productTitle.length > 12
             ? `${product.productTitle.slice(0, 12)}..`
             : product.productTitle}
@@ -54,13 +54,12 @@ const ProductCard = ({
         <h3 className="text-base font-semibold mb-2 md:block hidden">
           {product.productTitle}
         </h3>
-        <p className=" text-gray-500 mb-1 lg:hidden">
+        <p className=" text-gray-500 mb-1 text-xs lg:hidden">
           <div
             dangerouslySetInnerHTML={{
-              __html: `${product.fullDescription.slice(0, 17)}...`,
+              __html: `${product.fullDescription.slice(0, 20)}...`,
             }}
           />
-          ...
         </p>
         <p className=" text-gray-500 mb-2 hidden lg:block">
           <div
@@ -70,8 +69,8 @@ const ProductCard = ({
           />
         </p>
         <div className="flex  flex-col-reverse">
-          <p className="text-lg font-semibold">BDT {product.price}.00</p>
-          {product.discount > 0 ? <p className="text-base line-through opacity-60">BDT {(product.price - (product.price * product.discount / 100)).toFixed(2)}</p> : <p className="opacity-0">3</p>}
+          <p className="text-sm md:text-lg font-semibold">BDT {product.price}.00</p>
+          {product.discount > 0 ? <p className="text-xs md:text-base line-through opacity-60">BDT {(product.price - (product.price * product.discount / 100)).toFixed(2)}</p> : <p className="opacity-0">3</p>}
         </div>
 
         <Modal
