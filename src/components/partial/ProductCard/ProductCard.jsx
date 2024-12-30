@@ -23,18 +23,18 @@ const ProductCard = ({
     >
       {console.log("product", product)}
       {product.discount > 0 && showDiscount && (
-        <span className="absolute z-10 left-2 top-2  md:top-5 md:left-5 bg-gray-800 text-white md:text-[10px] text-[10px] md:text-xs  px-2 md:px-3 rounded-md">
+        <span className="absolute z-10 left-2 top-2  md:top-5 md:left-5 bg-gray-800 text-white md:text-[10px] text-[10px] md:text-xs py-[2px] md:py-1 px-2 md:px-3 rounded-md">
           {product.discount}% OFF
         </span>
       )}
 
       {showNewArrival && product.discount > 0 && (
-        <span className="absolute z-10 left-2 top-6  md:top-12 md:left-5 bg-[#923670] text-white md:text-[10px] text-[10px] md:text-xs  px-2 md:px-3 rounded-md">
+        <span className="absolute z-10 left-2 top-7  md:top-12 md:left-5 bg-[#923670] text-white md:text-[10px] text-[10px] md:text-xs py-[2px] md:py-1 px-2 md:px-3 rounded-md">
           New Arrival
         </span>
       )}
       {showNewArrival && !product.discount > 0 && (
-        <span className="absolute z-10 left-2 top-2  md:top-5 md:left-5 bg-[#923670] text-white md:text-[10px] text-[10px] md:text-xs  px-2 md:px-3 rounded-md">
+        <span className="absolute z-10 left-2 top-2  md:top-5 md:left-5 bg-[#923670] text-white md:text-[10px] text-[10px] md:text-xs py-[2px] md:py-1 px-2 md:px-3 rounded-md">
           New Arrival
         </span>
       )}
