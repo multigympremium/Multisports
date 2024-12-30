@@ -48,7 +48,7 @@ const Modal = ({
       setSelectedColor({});
       setSelectedSize({});
     }
-    if (isShowModal === true) {
+    if (isShowModal === true && cartItems.length == 0) {
       setSelectedColor(colors[0]?.color || {});
       setSelectedSize(colors[0]?.size[0] || {});
       setSizeArray(colors[0]?.size || []);
@@ -56,7 +56,12 @@ const Modal = ({
   }, [cartItems, object_id, isShowModal, colors]);
 
   useEffect(() => {
-    const currentItem = cartItems.find((item) => item._id === object_id);
+    const currentItem = cartItems.find(
+      (item) =>
+        item._id === object_id &&
+        item.color === selectedColor?.value &&
+        item.size === selectedSize?.value
+    );
     console.log(currentItem, "currentItem");
     if (currentItem) {
       setTrackingProduct(currentItem);
@@ -69,14 +74,14 @@ const Modal = ({
       copy_product.color = selectedColor?.value;
       copy_product.size = selectedSize?.value;
       setTrackingProduct(copy_product);
-      setQuantity(1);
+      setQuantity(0);
     }
     console.log(currentItem, "copy_product");
   }, [selectedSize, selectedColor, product, cartItems]);
 
   console.log(selectedSize, selectedColor, "size, color", product, "product");
   return (
-    <dialog id={id} className="modal relative">
+    <dialog id={id} className="modal">
       <div className=" modal-box p-0 rounded max-w-4xl w-[90%] mx-auto md:w-full flex flex-col md:flex-row">
         <form method="dialog">
           <button className="btn btn-sm btn-circle btn-ghost absolute focus:outline-none right-2 top-2">
@@ -171,14 +176,22 @@ const Modal = ({
                 <span className="w-10 border-x text-center">{quantity}</span>
                 <button
                   className="w-7"
-                  onClick={() =>
-                    updateCartQuantity(
-                      product._id,
-                      quantity + 1,
-                      selectedColor?.value,
-                      selectedSize?.value
-                    )
-                  }
+                  onClick={() => {
+                    if (quantity > 1) {
+                      updateCartQuantity(
+                        product._id,
+                        quantity + 1,
+                        selectedColor?.value,
+                        selectedSize?.value
+                      );
+                    } else {
+                      addToCart(
+                        product,
+                        selectedColor.value,
+                        selectedSize.value
+                      );
+                    }
+                  }}
                   disabled={
                     product?.stock <= 0
                     // product?.quantity >= product?.stock ||

@@ -4,7 +4,15 @@ import ProductDetail from "./ProductDetail";
 import ProductCardWithGallery from "../../../shared/Cards/CardWithGallery/ProductCardWithGallery";
 import useGetAllProducts from "../../../Hook/GetPublicDataHook/useGetAllProducts";
 
-function ProductsArea({ slug, sizeFilter, colorFilter, brandFilter, query }) {
+function ProductsArea({
+  slug,
+  sizeFilter,
+  colorFilter,
+  brandFilter,
+  query,
+  subcategoryFilter,
+  categoryFilter,
+}) {
   const [targetId, setTargetId] = useState("");
   const [isShowDetail, setIsShowDetail] = useState(false);
 
@@ -22,7 +30,9 @@ function ProductsArea({ slug, sizeFilter, colorFilter, brandFilter, query }) {
       ","
     )}&size=${sizeFilter.join(",")}&brand=${brandFilter.join(",")}&${
       query.includes("product=") ? "product=" + query.split("=")[1] : ""
-    }`,
+    }&subcategory=${subcategoryFilter.join(",")}&category=${categoryFilter.join(
+      ","
+    )}`,
   });
 
   console.log(products, "products");

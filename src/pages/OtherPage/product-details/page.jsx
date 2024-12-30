@@ -4,6 +4,7 @@ import { axiosSecure } from "../../../Hook/useAxiosSecure";
 import useAxiosCourier from "../../../Hook/useAxiosCourier";
 import useAxiosPublic from "../../../Hook/useAxiosPublic";
 import { AuthContext } from "../../../providers/AuthProvider";
+import RelatedProducts from "../../../components/partial/RelatedProducts/RelatedProducts";
 
 const ProductDetails = () => {
   const product_id = useParams().id;
@@ -56,6 +57,8 @@ const ProductDetails = () => {
     wishCount,
     colorAndSize,
   } = product;
+
+  console.log(category, "category");
 
   const [trackingProduct, setTrackingProduct] = useState({});
   const [quantity, setQuantity] = useState(0);
@@ -368,6 +371,7 @@ const ProductDetails = () => {
           </div>
         </section>
       )}
+      <RelatedProducts category={category && category} />
     </div>
   );
 };

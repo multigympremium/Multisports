@@ -153,6 +153,7 @@ export default function PromotionalBanner() {
     const thumbnailPreview = URL.createObjectURL(file);
     setThumbnailPreview(thumbnailPreview);
     setThumbnail(file);
+    console.log(file);
   };
 
   const {
@@ -295,11 +296,19 @@ export default function PromotionalBanner() {
             className="bg-gray-100 p-4 rounded"
             style={{ backgroundColor: color }}
           >
-            <CustomImage
-              imageKey={thumbnailPreview}
-              alt="Promo Banner"
-              className="w-full mb-4 rounded"
-            />
+            {!thumbnail ? (
+              <CustomImage
+                imageKey={thumbnailPreview}
+                alt="Promo Banner"
+                className="w-full mb-4 rounded"
+              />
+            ) : (
+              <img
+                src={thumbnailPreview}
+                alt="Promo Banner"
+                className="w-full mb-4 rounded"
+              />
+            )}
             <h3 className="text-3xl mb-4 font-bold">{headerText}</h3>
             <p className="text-xl">{titleText}</p>
             <p

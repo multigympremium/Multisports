@@ -74,7 +74,7 @@ const ProductCard = ({
           {product.discount > 0 ? <p className="text-base line-through opacity-60">BDT {(product.price - (product.price * product.discount / 100)).toFixed(2)}</p> : <p className="opacity-0">3</p>}
         </div>
 
-        {/* <Modal
+        <Modal
           id={`modal_${product.productTitle.replace(/\s+/g, "_")}`}
           object_id={product._id}
           title={product.productTitle}
@@ -86,7 +86,7 @@ const ProductCard = ({
           setIsShowModal={setIsShowModal}
           isShowModal={isShowModal}
           product={product}
-        /> */}
+        />
       </div>
     </div>
   );

@@ -10,12 +10,14 @@ import ProductFilterGroup from "../../../shared/ProductFilterGroup";
 import { RiDeleteBin7Line } from "react-icons/ri";
 import { IoMdArrowBack } from "react-icons/io";
 import { PiSlidersHorizontal } from "react-icons/pi";
+import useGetAllCategories from "../../../Hook/GetDataHook/useGetAllCategories";
 
 const SelectableList = ({
   items,
   labelKey,
   toggleSelection,
   selectedItems,
+  slug,
 }) => {
   return (
     <div className="space-y-4">
@@ -39,8 +41,16 @@ const SelectableList = ({
               <input
                 type="checkbox"
                 className="peer hidden"
-                checked={selectedItems.includes(item[labelKey])}
-                onChange={() => toggleSelection(item[labelKey], labelKey)}
+                checked={
+                  slug
+                    ? selectedItems.includes(item[slug])
+                    : selectedItems.includes(item[labelKey])
+                }
+                onChange={() =>
+                  slug
+                    ? toggleSelection(item["slug"], labelKey)
+                    : toggleSelection(item[labelKey], labelKey)
+                }
               />
               <span className="w-5 h-5 border-2 border-gray-200 rounded mr-4 flex items-center justify-center peer-checked:bg-black peer-checked:border-black group-hover:border-gray-700 transition-all duration-300 delay-100">
                 {selectedItems.includes(item[labelKey]) && (
@@ -128,52 +138,61 @@ function ProductPage() {
   const [colorFilter, setColorFilter] = useState([]);
   const [sizeFilter, setSizesFilter] = useState([]);
   const [categoryFilter, setCategoryFilter] = useState([]);
+  const [subcategoryFilter, setSubCategoryFilter] = useState([]);
 
   const toggleSelection = (name, labelKey) => {
     setSelectedItems((prev) => {
-      switch (labelKey) {
-        case "subcategoryName":
-          setCategoryFilter(
-            prev.includes(name)
-              ? prev.filter((item) => item !== name)
-              : [...prev, name]
-          );
-          break;
-        case "brandName":
-          setBrandFilter(
-            prev.includes(name)
-              ? prev.filter((item) => item !== name)
-              : [...prev, name]
-          );
-
-          console.log(
-            prev.includes(name)
-              ? prev.filter((item) => item !== name)
-              : [...prev, name],
-            "brandFilter"
-          );
-          break;
-        case "productColorName":
-          setColorFilter(
-            prev.includes(name)
-              ? prev.filter((item) => item !== name)
-              : [...prev, name]
-          );
-          break;
-        case "sizeName":
-          setSizesFilter(
-            prev.includes(name)
-              ? prev.filter((item) => item !== name)
-              : [...prev, name]
-          );
-          break;
-        default:
-          break;
-      }
       return prev.includes(name)
         ? prev.filter((item) => item !== name)
         : [...prev, name];
     });
+    switch (labelKey) {
+      case "categoryName":
+        setCategoryFilter((prev2) =>
+          prev2.includes(name)
+            ? prev2.filter((item) => item !== name)
+            : [...prev2, name]
+        );
+        break;
+      case "subcategoryName":
+        setSubCategoryFilter((prev2) =>
+          prev2.includes(name)
+            ? prev2.filter((item) => item !== name)
+            : [...prev2, name]
+        );
+        break;
+      case "brandName":
+        setBrandFilter((prev2) =>
+          prev2.includes(name)
+            ? prev2.filter((item) => item !== name)
+            : [...prev2, name]
+        );
+
+        console.log(
+          (prev2) =>
+            prev2.includes(name)
+              ? prev2.filter((item) => item !== name)
+              : [...prev2, name],
+          "brandFilter"
+        );
+        break;
+      case "productColorName":
+        setColorFilter((prev2) =>
+          prev2.includes(name)
+            ? prev2.filter((item) => item !== name)
+            : [...prev2, name]
+        );
+        break;
+      case "sizeName":
+        setSizesFilter((prev2) =>
+          prev2.includes(name)
+            ? prev2.filter((item) => item !== name)
+            : [...prev2, name]
+        );
+        break;
+      default:
+        break;
+    }
   };
 
   console.log(
@@ -188,11 +207,31 @@ function ProductPage() {
     setSelectedItems((prevSelected) =>
       prevSelected.filter((item) => item !== itemToRemove)
     );
+    setColorFilter((prevColor) =>
+      prevColor.filter((item) => item !== itemToRemove)
+    );
+    setSizesFilter((prevSize) =>
+      prevSize.filter((item) => item !== itemToRemove)
+    );
+    setBrandFilter((prevBrand) =>
+      prevBrand.filter((item) => item !== itemToRemove)
+    );
+    setCategoryFilter((prevCategory) =>
+      prevCategory.filter((item) => item !== itemToRemove)
+    );
+    setSubCategoryFilter((prevSubcategory) =>
+      prevSubcategory.filter((item) => item !== itemToRemove)
+    );
   };
 
   const router = useLocation();
   const productBrands = useGetAllProductBrands({});
-  const subcategories = useGetAllSubCategories({});
+  const categories = useGetAllCategories({});
+  const subcategories = useGetAllSubCategories({
+    query: `slug=${
+      categoryFilter.length > 0 ? categoryFilter.join(",") : params.id
+    }`,
+  });
   const productColors = useGetAllProductColors({});
   const productSizes = useGetAllProductSizes({});
 
@@ -433,10 +472,20 @@ function ProductPage() {
             <div className="space-y-4">
               <ProductFilterGroup groupName="Categories">
                 <SelectableList
+                  items={categories}
+                  toggleSelection={toggleSelection}
+                  selectedItems={selectedItems}
+                  labelKey="categoryName"
+                  slug={"slug"}
+                />
+              </ProductFilterGroup>
+              <ProductFilterGroup groupName="Subcategories">
+                <SelectableList
                   items={subcategories}
                   toggleSelection={toggleSelection}
                   selectedItems={selectedItems}
                   labelKey="subcategoryName"
+                  slug={"slug"}
                 />
               </ProductFilterGroup>
 
@@ -446,6 +495,7 @@ function ProductPage() {
                   toggleSelection={toggleSelection}
                   selectedItems={selectedItems}
                   labelKey="brandName"
+                  slug={"slug"}
                 />
               </ProductFilterGroup>
 
@@ -476,6 +526,8 @@ function ProductPage() {
             colorFilter={colorFilter}
             brandFilter={brandFilter}
             query={location.search}
+            subcategoryFilter={subcategoryFilter}
+            categoryFilter={categoryFilter}
           />
         </div>
       </div>
