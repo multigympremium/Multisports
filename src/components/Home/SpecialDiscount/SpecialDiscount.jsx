@@ -5,7 +5,7 @@ import ProductSkeleton from "../../partial/ProductCard/ProductSkeleton";
 import ProductCard from "../../partial/ProductCard/ProductCard";
 import useAxiosPublic from "../../../Hook/useAxiosPublic";
 
-const SpecialDiscount = ({ limit = 10, isShowSeeAll = true }) => {
+const SpecialDiscount = ({ limit = 8, isShowSeeAll = true }) => {
   const [currentProduct, setCurrentProduct] = useState(null);
   const [loading, setLoading] = useState(false);
   const [isEdited, setIsEdited] = useState(false);
@@ -59,12 +59,14 @@ const SpecialDiscount = ({ limit = 10, isShowSeeAll = true }) => {
       {loading ? (
         <ProductSkeleton />
       ) : (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6">
           {products?.length > 0 &&
             products
               .slice(0, limit)
               .map((product, index) => (
                 <ProductCard
+                  // showDiscount={true}
+                  isSpecial={true}
                   key={index}
                   product={product}
                   handleProductClick={handleProductClick}

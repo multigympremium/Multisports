@@ -65,6 +65,8 @@ const MostPopular = ({ limit = 8, isShowSeeAll = true }) => {
               .slice(0, limit)
               .map((product, index) => (
                 <ProductCard
+                isPopular={true}
+                  showDiscount={true}
                   key={index}
                   product={product}
                   handleProductClick={handleProductClick}

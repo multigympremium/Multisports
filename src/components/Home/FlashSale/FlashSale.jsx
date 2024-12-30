@@ -104,7 +104,7 @@ const FlashSale = () => {
   }, [axiosPublic]);
 
   return (
-    <div className="relative mx-auto w-[90%] md:w-full">
+    <div className="relative my-9 mx-auto w-[90%] md:w-full">
       <h2 className="text-xl md:text-2xl font-semibold md:font-bold mb-4 md:mb-6 pl-1 md:pl-4">
         Flash Sale
       </h2>
@@ -137,12 +137,22 @@ const FlashSale = () => {
                   <div className="relative w-full aspect-square mb-4">
                     <img
                       src={`${baseImageUrl}/${product?.thumbnail}`}
-                      alt={product.name}
+                      alt={product.productTitle}
                       className="w-full h-full object-cover rounded transition-transform duration-300 ease-in-out hover:scale-105"
                     />
                   </div>
-                  <h3 className="font-semibold text-sm md:text-base  md:mb-2">
-                    {product.name}
+                  {product.discount > 0 && (
+                    <span className="absolute z-10 left-2 top-2  md:top-3 md:left-7 bg-yellow-700 text-white md:text-[10px] text-[10px] md:text-xs py-[2px] md:py-1 px-2 md:px-3 rounded-md">
+                      {product.discount}% OFF
+                    </span>
+                  )}
+                  <h3 className="text-sm md:text-base font-semibold mb-1 block md:hidden">
+                    {product.productTitle.length > 12
+                      ? `${product.productTitle.slice(0, 12)}..`
+                      : product.productTitle}
+                  </h3>
+                  <h3 className="text-base font-semibold mb-2 md:block hidden">
+                    {product.productTitle}
                   </h3>
                   <p
                     className="text-sm hidden md:block text-gray-600 mb-2"
@@ -162,13 +172,13 @@ const FlashSale = () => {
                           : product?.shortDescription,
                     }}
                   />
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-3 md:gap-4">
                     <span className="text-sm md:text-lg font-semibold md:font-bold">
-                      {product.price * (1 - product.discount / 100)}
+                      BDT {product.price * (1 - product.discount / 100)}
                     </span>
                     {product.discount > 0 && product.specialOffer && (
                       <span className="text-xs md:text-sm line-through text-gray-400">
-                        {product?.price}
+                        BDT {product?.price}
                       </span>
                     )}
                   </div>
@@ -180,14 +190,14 @@ const FlashSale = () => {
         {/* Custom Navigation Buttons Centered Relative to Image Div */}
         <button
           ref={prevRef}
-          className="absolute top-1/3 -left-2 transform -translate-y-1/2 w-7 h-7 md:w-11 md:h-11 flex items-center justify-center bg-white text-black rounded-full shadow-lg transition-all duration-300 ease-in-out hover:bg-gray-700 hover:text-white hover:scale-110 hover:shadow-2xl z-10"
+          className="absolute top-1/3 -left-2 transform -translate-y-1/2 w-7 h-7 md:w-11 md:h-11 flex items-center justify-center bg-white text-black rounded-full shadow-lg transition-all duration-300 ease-in-out md:hover:bg-gray-700 hover:text-white hover:scale-110 hover:shadow-2xl z-10"
         >
           <IoIosArrowBack className="text-base" />
         </button>
 
         <button
           ref={nextRef}
-          className="absolute top-1/3 -right-2 transform -translate-y-1/2 w-7 h-7 md:w-11 md:h-11 flex items-center justify-center bg-white text-black rounded-full shadow-lg transition-all duration-300 ease-in-out hover:bg-gray-700 hover:text-white hover:scale-110 hover:shadow-2xl z-10"
+          className="absolute top-1/3 -right-2 transform -translate-y-1/2 w-7 h-7 md:w-11 md:h-11 flex items-center justify-center bg-white text-black rounded-full shadow-lg transition-all duration-300 ease-in-out md:hover:bg-gray-700 hover:text-white hover:scale-110 hover:shadow-2xl z-10"
         >
           <IoIosArrowForward className="text-base" />
         </button>

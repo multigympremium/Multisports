@@ -9,7 +9,7 @@
 import { useState } from "react";
 import Modal from "../../../shared/Modal/Modal";
 const ProductCard = ({
-  product, handleProductClick, showDiscount = false, showNewArrival = false, varient = "classic"
+  product, handleProductClick,isPopular=false, showDiscount = false,isSpecial=false,  showNewArrival = false, varient = "classic"
 }) => {
   const [isShowModal, setIsShowModal] = useState(false);
   return (
@@ -36,6 +36,26 @@ const ProductCard = ({
       {showNewArrival && !product.discount > 0 && (
         <span className="absolute z-10 left-2 top-2  md:top-5 md:left-5 bg-[#923670] text-white md:text-[10px] text-[10px] md:text-xs py-[2px] md:py-1 px-2 md:px-3 rounded-md">
           New Arrival
+        </span>
+      )}
+      {isPopular && product.discount > 0 && (
+        <span className="absolute z-10 left-2 top-7  md:top-12 md:left-5 bg-blue-500 text-white md:text-[10px] text-[10px] md:text-xs py-[2px] md:py-1 px-2 md:px-3 rounded-md">
+          Popular now
+        </span>
+      )}
+      {isPopular && !product.discount > 0 && (
+        <span className="absolute z-10 left-2 top-2  md:top-5 md:left-5 bg-blue-500 text-white md:text-[10px] text-[10px] md:text-xs py-[2px] md:py-1 px-2 md:px-3 rounded-md">
+          Popular now
+        </span>
+      )}
+      {isSpecial && product.discount && showDiscount > 0 && (
+        <span className="absolute z-10 left-2 top-7  md:top-12 md:left-5 bg-blue-500 text-white md:text-[10px] text-[10px] md:text-xs py-[2px] md:py-1 px-2 md:px-3 rounded-md">
+          Special
+        </span>
+      )}
+      {isSpecial && (!product.discount || !showDiscount) > 0 && (
+        <span className="absolute z-10 left-2 top-2  md:top-5 md:left-5 bg-blue-500 text-white md:text-[10px] text-[10px] md:text-xs py-[2px] md:py-1 px-2 md:px-3 rounded-md">
+          Special
         </span>
       )}
 
