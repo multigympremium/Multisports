@@ -39,25 +39,33 @@ const AuthProvider = ({ children }) => {
 
   // Update cart totals whenever cart items change
   useEffect(() => {
-    const totalItemsInfo = cartItems.reduce(
+    const cartItemData = localStorage.getItem("cartItems");
+    const parsedCartItemData = JSON.parse(cartItemData);
+    const totalItemsInfo = parsedCartItemData.reduce(
       (acc, item) => acc + item.quantity,
       0
     );
-    const totalPriceInfo = cartItems.reduce(
+    const totalPriceInfo = parsedCartItemData.reduce(
       (acc, item) => acc + item.price * item.quantity,
       0
     );
 
     setTotalItems(totalItemsInfo);
     setTotalPrice(totalPriceInfo);
-
-    localStorage.setItem("cartItems", JSON.stringify(cartItems));
   }, [cartItems]);
+
+  useEffect(() => {
+    const cartItemData = localStorage.getItem("cartItems");
+
+    if (cartItemData) {
+      setCartItems(JSON.parse(cartItemData));
+    }
+  }, []);
 
   // Update quantity
   const updateCartQuantity = (id, quantity, color, size) => {
-    setCartItems((prevItems) =>
-      prevItems.map((item) => {
+    setCartItems((prevItems) => {
+      const existingItem = prevItems.map((item) => {
         console.log(
           "updateCartQuantity",
           id,
@@ -70,8 +78,12 @@ const AuthProvider = ({ children }) => {
         return item._id === id && item.color === color && item.size === size
           ? { ...item, quantity }
           : item;
-      })
-    );
+      });
+
+      localStorage.setItem("cartItems", JSON.stringify(existingItem));
+
+      return existingItem;
+    });
   };
 
   // Add item to cart
@@ -83,6 +95,7 @@ const AuthProvider = ({ children }) => {
     }
 
     setCartItems((prevItems) => {
+      let initialItems;
       const existingItem = prevItems.find(
         (item) =>
           item._id === product._id && item.color === color && item.size === size
@@ -90,26 +103,34 @@ const AuthProvider = ({ children }) => {
 
       if (existingItem) {
         // Update quantity for existing item
-        return prevItems.map((item) =>
+        initialItems = prevItems.map((item) =>
           item._id === product._id && item.color === color && item.size === size
             ? { ...item, quantity: item.quantity + 1 }
             : item
         );
       } else {
         // Add new item to cart
-        return [...prevItems, { ...product, color, size, quantity: 1 }];
+        initialItems = [...prevItems, { ...product, color, size, quantity: 1 }];
       }
+
+      localStorage.setItem("cartItems", JSON.stringify(initialItems));
+
+      return initialItems;
     });
   };
 
   // Remove item from cart
   const removeFromCart = (id, color, size) => {
-    setCartItems((prevItems) =>
-      prevItems.filter(
+    setCartItems((prevItems) => {
+      const updatedItems = prevItems.filter(
         (item) =>
           !(item._id === id && item.color === color && item.size === size)
-      )
-    );
+      );
+
+      localStorage.setItem("cartItems", JSON.stringify(updatedItems));
+
+      return updatedItems;
+    });
   };
 
   // Load wishlist from localStorage on component mount
