@@ -51,7 +51,7 @@ const HomePage = () => {
         metaKeywords={content?.metaKeywords}
       />
       <div>
-        <HorizontalMenu className="max-w-[1440px] mx-auto" />
+        <HorizontalMenu className=" w-[90%] lg:max-w-[1440px] mx-auto" />
       </div>
       <Banner />
       <div className="max-w-[1440px] mx-auto">

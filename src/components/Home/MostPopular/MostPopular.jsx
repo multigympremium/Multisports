@@ -5,7 +5,7 @@ import ProductSkeleton from "../../partial/ProductCard/ProductSkeleton";
 import ProductCard from "../../partial/ProductCard/ProductCard";
 import useAxiosPublic from "../../../Hook/useAxiosPublic";
 
-const MostPopular = ({ limit = 10, isShowSeeAll = true }) => {
+const MostPopular = ({ limit = 8, isShowSeeAll = true }) => {
   const [currentProduct, setCurrentProduct] = useState(null);
   const [loading, setLoading] = useState(false);
   const [isEdited, setIsEdited] = useState(false);
@@ -57,14 +57,16 @@ const MostPopular = ({ limit = 10, isShowSeeAll = true }) => {
         )}
       </div>
       {loading ? (
-        <ProductSkeleton />
+        <ProductSkeleton skeletons={8} />
       ) : (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6">
           {products?.length > 0 &&
             products
               .slice(0, limit)
               .map((product, index) => (
                 <ProductCard
+                isPopular={true}
+                  showDiscount={true}
                   key={index}
                   product={product}
                   handleProductClick={handleProductClick}
