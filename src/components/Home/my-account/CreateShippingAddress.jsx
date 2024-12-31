@@ -207,7 +207,7 @@ const CreateShippingAddress = ({
     };
 
     fetchCities();
-  }, [axiosSecure]);
+  }, [axiosSecure, isShowModal]);
 
   useEffect(() => {
     const fetchZones = async () => {
@@ -453,7 +453,7 @@ const CreateShippingAddress = ({
         {/* Submit Button */}
         <button
           type="submit"
-          className="mt-6 bg-indigo-600 text-white px-6 py-2 rounded hover:bg-indigo-700"
+          className="mt-6 bg-indigo-600 text-white px-6 py-2 rounded hover:bg-indigo-700 mr-5"
         >
           Submit
         </button>

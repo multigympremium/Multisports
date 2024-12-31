@@ -39,6 +39,18 @@ export default function EditableTableColumn({
     setQuantity(0);
   };
 
+  const deleteSize = (index, stage) => {
+    if (stage === "edit") {
+      setEditingSize((prev) => {
+        return prev.filter((item, i) => i !== index);
+      });
+    } else {
+      setProductSizeValue((prev) => {
+        return prev.filter((item, i) => i !== index);
+      });
+    }
+  };
+
   //   const handleDeleteColorAndSize = (index) => {
   //     setColorAndSize((prev) => {
   //       setTotalQuantity((prevQuantity) => {
@@ -177,8 +189,8 @@ export default function EditableTableColumn({
   console.log(colorAndSize, "colorAndSize");
 
   return (
-    <div className="w-full relative">
-      <div className=" border mb-4 rounded-xl bg-gray-50 ">
+    <div className="w-full relative ">
+      <div className=" border mb-4 rounded-xl bg-gray-50 min-h-[250px]">
         <table className="table table-zebra">
           {/* head */}
           <thead>
@@ -219,6 +231,9 @@ export default function EditableTableColumn({
                         </div>
                       )}
                       selectOption={editingColor}
+                      onChange={(e) => {
+                        setEditingColor(e);
+                      }}
                     />
                   ) : (
                     `${item?.color?.label}`
@@ -509,7 +524,10 @@ export default function EditableTableColumn({
                     className="px-3 py-1 border border-black text-sm capitalize relative rounded-lg"
                   >
                     {item?.label}
-                    <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 ">
+                    <span
+                      className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 "
+                      onClick={() => deleteSize(index, "create")}
+                    >
                       <IoCloseCircleOutline size={25} />
                     </span>
                   </li>
@@ -558,11 +576,14 @@ export default function EditableTableColumn({
               {editingSize?.length > 0 &&
                 editingSize.map((item, index) => (
                   <li
-                    key={item._id}
+                    key={index}
                     className="px-3 py-1 border border-black text-sm capitalize relative rounded-lg"
                   >
                     {item?.label}
-                    <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 ">
+                    <span
+                      className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 "
+                      onClick={() => deleteSize(index, "edit")}
+                    >
                       <IoCloseCircleOutline size={25} />
                     </span>
                   </li>
