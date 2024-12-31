@@ -4,33 +4,24 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { useRef, useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import { Navigation, Autoplay } from 'swiper/modules';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 
-
-const slides = [
-  {
-    id: 1,
-    title: 'We Picked Every Item',
-    description: 'Use this code to receive 50% discount off all products.',
-    image: 'https://via.placeholder.com/400',
-    bgColor: 'bg-orange-400',
-  },
-  {
-    id: 2,
-    title: 'Explore Our New Arrivals',
-    description: 'Discover the latest trends at discounted prices.',
-    image: 'https://via.placeholder.com/400',
-    bgColor: 'bg-blue-200',
-  },
-  {
-    id: 3,
-    title: 'Limited Time Offers',
-    description: 'Grab the best deals before they run out! So hurry up !',
-    image: 'https://via.placeholder.com/400',
-    bgColor: 'bg-green-300',
-  },
-];
+const SkeletonCarousel = () => (
+  <div className="relative w-full h-[150px] md:h-[800px] animate-pulse">
+    <div className="w-full h-full bg-gray-300 rounded-lg"></div>
+    <div className="absolute top-1/2 -translate-y-1/2 left-3 md:left-12 w-7 h-7 md:w-11 md:h-11 bg-gray-400 rounded-full"></div>
+    <div className="absolute top-1/2 -translate-y-1/2 right-3 md:right-12 w-7 h-7 md:w-11 md:h-11 bg-gray-400 rounded-full"></div>
+    <div className="absolute bottom-4 md:bottom-10 left-12 md:left-52 z-10 -translate-x-1/2 flex gap-2 md:gap-4">
+      {[...Array(3)].map((_, index) => (
+        <div
+          key={index}
+          className="h-2 md:h-4 w-2 md:w-4 bg-gray-400 rounded-full"
+        ></div>
+      ))}
+    </div>
+  </div>
+);
 
 const CustomCarousel = ({ slides }) => {
   const prevRef = useRef(null);
@@ -47,8 +38,8 @@ const CustomCarousel = ({ slides }) => {
     }
   }, []);
 
-  return (  
-    <div className="relative w-full h-[150px] md:h-[800px]">     
+  return (
+    <div className="relative w-full h-[150px] md:h-[800px]">
       <Swiper
         modules={[Navigation, Autoplay]}
         autoplay={{
@@ -70,9 +61,9 @@ const CustomCarousel = ({ slides }) => {
             key={slide.id}
             style={{
               backgroundImage: `url(https://mgpwebaps.s3.eu-north-1.amazonaws.com/multi-sports/${slide.image})`,
-              backgroundSize: 'cover', // Ensures the image covers the slide
-              backgroundPosition: 'center', // Centers the image
-              backgroundRepeat: 'no-repeat', // Prevents tiling
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
             }}
           >
             <div className="h-full flex items-center justify-center">
@@ -81,7 +72,6 @@ const CustomCarousel = ({ slides }) => {
           </SwiperSlide>
         ))}
       </Swiper>
-
 
       {/* Custom Navigation Buttons */}
       <button
@@ -103,10 +93,11 @@ const CustomCarousel = ({ slides }) => {
         {slides.map((_, index) => (
           <div
             key={index}
-            className={` h-2 md:h-4 rounded-full shadow-lg transition-all duration-300 cursor-pointer ${activeIndex === index
-              ? 'bg-black w-4 md:w-7 scale-110 shadow-md'
-              : 'bg-white w-2 md:w-4'
-              }`}
+            className={`h-2 md:h-4 rounded-full shadow-lg transition-all duration-300 cursor-pointer ${
+              activeIndex === index
+                ? 'bg-black w-4 md:w-7 scale-110 shadow-md'
+                : 'bg-white w-2 md:w-4'
+            }`}
             onClick={() => swiperRef.current.slideToLoop(index)}
           ></div>
         ))}
@@ -115,12 +106,11 @@ const CustomCarousel = ({ slides }) => {
   );
 };
 
-
 const Banner = () => {
-  const banners = useGetAllBanners({});
-  return (
-    <CustomCarousel slides={banners} />
-  );
+  const [loading,setLoading] = useState(false)
+  const banners = useGetAllBanners({setLoading});
+
+  return loading ? <SkeletonCarousel /> : <CustomCarousel slides={banners} />;
 };
 
 export default Banner;
