@@ -7,8 +7,13 @@ import calculateDiscounts from "../../helpers/calculateDiscount";
 import useAxiosPublic from "../../Hook/useAxiosPublic";
 
 const Cart = ({ isShow, setIsShow }) => {
-  const { cartItems, removeFromCart, updateCartQuantity, totalPrice } =
-    useContext(AuthContext);
+  const {
+    cartItems,
+    removeFromCart,
+    updateCartQuantity,
+    totalPrice,
+    totalCartDiscount,
+  } = useContext(AuthContext);
 
   const [loading, setLoading] = useState(false);
   const [discounts, setDiscounts] = useState({});
@@ -86,8 +91,12 @@ const Cart = ({ isShow, setIsShow }) => {
               <span className="font-medium">${totalPrice}</span>
             </div>
             <div className="flex justify-between text-sm text-gray-500 mt-2">
+              <span>Per-Product Total Discount</span>
+              <span className="font-medium">-${totalCartDiscount}</span>
+            </div>
+            <div className="flex justify-between text-sm text-gray-500 mt-2">
               <span>discounts</span>
-              <span className="font-medium">-${discount}</span>
+              <span className="font-medium">-${Number(discount)}</span>
             </div>
             <div className="flex justify-between text-sm text-gray-500 mt-2">
               <span>shipping</span>
@@ -98,7 +107,7 @@ const Cart = ({ isShow, setIsShow }) => {
           <div className="border-b pb-4 mt-4">
             <div className="flex justify-between text-lg font-bold">
               <span>your total</span>
-              <span>${totalPrice - discount}</span>
+              <span>${totalPrice - Number(discount)}</span>
             </div>
           </div>
 

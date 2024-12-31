@@ -30,6 +30,7 @@ const AuthProvider = ({ children }) => {
   const [userRole, setUserRole] = useState("Survey Participant");
   const [themMode, setThemMode] = useState(false);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [totalCartDiscount, setTotalCartDiscount] = useState(0);
   const [totalItems, setTotalItems] = useState(0);
   const [wishlist, setWishlist] = useState([]);
 
@@ -49,9 +50,14 @@ const AuthProvider = ({ children }) => {
       (acc, item) => acc + item.price * item.quantity,
       0
     );
+    const totalCartDiscount = parsedCartItemData.reduce(
+      (acc, item) => acc + Math.abs(item.discountPrice) * item.quantity,
+      0
+    );
 
     setTotalItems(totalItemsInfo);
     setTotalPrice(totalPriceInfo);
+    setTotalCartDiscount(totalCartDiscount);
   }, [cartItems]);
 
   useEffect(() => {
@@ -87,7 +93,17 @@ const AuthProvider = ({ children }) => {
   };
 
   // Add item to cart
-  const addToCart = (product, color, size) => {
+  const addToCart = (item, color, size) => {
+    const product = { ...item };
+    if (
+      (product.specialOffer === true || product.specialOffer == "true") &&
+      product.discount > 0
+    ) {
+      product.actualPrice = product.price;
+      product.price = product.price - (product.price * product.discount) / 100;
+      product.discountPrice = product.price - product.actualPrice;
+    }
+
     console.log(product, "addToCart", color, size);
     if (!color || !size) {
       toast.error("Please select color and size");
@@ -297,6 +313,8 @@ const AuthProvider = ({ children }) => {
     addToWishlist,
     removeFromWishlist,
     wishlist,
+    totalCartDiscount,
+    setTotalCartDiscount,
   };
 
   return (

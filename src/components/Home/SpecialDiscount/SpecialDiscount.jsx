@@ -18,7 +18,7 @@ const SpecialDiscount = ({ limit = 8, isShowSeeAll = true }) => {
     const fetchProducts = async () => {
       try {
         setLoading(true);
-        const res = await axiosPublic.get(`/products/popular`);
+        const res = await axiosPublic.get(`/products/discount`);
 
         if (res.status === 200 || res.status === 201) {
           setProducts(res.data.products);
@@ -61,17 +61,15 @@ const SpecialDiscount = ({ limit = 8, isShowSeeAll = true }) => {
       ) : (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6">
           {products?.length > 0 &&
-            products
-              .slice(0, limit)
-              .map((product, index) => (
-                <ProductCard
-                  // showDiscount={true}
-                  isSpecial={true}
-                  key={index}
-                  product={product}
-                  handleProductClick={handleProductClick}
-                />
-              ))}
+            products.slice(0, limit).map((product, index) => (
+              <ProductCard
+                // showDiscount={true}
+                isSpecial={true}
+                key={index}
+                product={product}
+                handleProductClick={handleProductClick}
+              />
+            ))}
         </div>
       )}
     </section>

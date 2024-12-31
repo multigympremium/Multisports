@@ -18,7 +18,7 @@ const BestSelling = ({ limit = 8, isShowSeeAll = true }) => {
     const fetchProducts = async () => {
       try {
         setLoading(true);
-        const res = await axiosPublic.get(`/products/popular`);
+        const res = await axiosPublic.get(`/products/best_selling`);
 
         if (res.status === 200 || res.status === 201) {
           setProducts(res.data.products);
