@@ -1,33 +1,26 @@
-
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
-import { IoClose } from "react-icons/io5";
 import { useAuth } from "../../../../providers/AuthProvider";
 import useAxiosSecure from "../../../../Hook/useAxiosSecure";
 import useGetAllDistrict from "../../../../Hook/GetDataHook/useGetAllDistrict";
 
-function EditDeliveryCharges({ setIsShowModal, isShowModal , targetId}) {
+function EditDeliveryCharges({ setIsShowModal, isShowModal, targetId }) {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const [districtName, setDistrictName] = useState("");
-  const [subdistrictName, setSubdistrictName] = useState("");
-  const [subdistricts, setSubdistricts] = useState([]);
   const [charge, setCharge] = useState("");
- 
-  const district = useGetAllDistrict({})
+  const [courierCities, setCourierCities] = useState([]);
+  const [cityId, setCityId] = useState("");
 
-    useEffect(() => {
-
+  useEffect(() => {
     const fetchPaymentMethodData = async () => {
       try {
         const response = await axiosSecure.get(
           `/delivery-charge/${targetId}?branch=${user?.branch}`
         );
-        setDistrictName(response.data?.district); 
-        setSubdistrictName(response.data?.subdistricts); 
+        setDistrictName(response.data?.district);
         setCharge(response.data?.charge);
-
-        
+        setCityId(response.data?.district_id);
 
         console.log("response.data?.options", response.data);
       } catch (error) {
@@ -39,19 +32,14 @@ function EditDeliveryCharges({ setIsShowModal, isShowModal , targetId}) {
   }, [axiosSecure, isShowModal, targetId]);
 
   const handleSubmit = async () => {
-    
-
     try {
-      const response = await axiosSecure.put(
-        `/delivery-charge/${targetId}`,
-        {
-          district: districtName,
-          subdistricts: subdistrictName,
-          charge: charge,
-         
-          branch: user?.branch || "shia",
-        }
-      );
+      const response = await axiosSecure.put(`/delivery-charge/${targetId}`, {
+        district: districtName,
+        district_id: cityId,
+        charge: charge,
+
+        branch: user?.branch || "shia",
+      });
       if (response.status === 200 || response.status === 201) {
         Swal.fire({
           title: "Success",
@@ -61,12 +49,8 @@ function EditDeliveryCharges({ setIsShowModal, isShowModal , targetId}) {
         });
         setIsShowModal(false);
 
-        
         setDistrictName("");
-        setSubdistrictName("");
         setCharge("");
-        setSubdistricts([]);
-
       }
     } catch (error) {
       console.log("error", error);
@@ -80,66 +64,68 @@ function EditDeliveryCharges({ setIsShowModal, isShowModal , targetId}) {
   };
 
   useEffect(() => {
-    if(districtName === ""){
-      setSubdistricts([]);
-      return;
+    const fetchCourierCities = async () => {
+      try {
+        const res = await axiosSecure.get("/courier/cities");
+        console.log(res, "res", res?.data?.data);
+        if (res.status === 200 || res.status === 201) {
+          setCourierCities(res.data?.data?.data?.data);
+        }
+      } catch (error) {
+        console.error("Error fetching courierCities:", error);
+        throw new Error("Failed to fetch courierCities");
+      }
+    };
+
+    fetchCourierCities();
+  }, [axiosSecure]);
+
+  useEffect(() => {
+    if (cityId) {
+      setDistrictName(
+        courierCities.find((item) => item.city_id == cityId)?.city_name
+      );
     }
-    const subdistrictArray = district.find(district => district.district === districtName);
-    setSubdistricts(subdistrictArray?.subdistricts);
-
-  }, [district, districtName])
-
-  
+  }, [cityId, courierCities]);
 
   return (
-    <div className="bg-white p-5  md:p-8 rounded-xl mt-36 w-full" >
-      <h3 className="text-2xl font-semibold mb-7 mt-3 text-nowrap">Add Question</h3>
+    <div className="bg-white p-5  md:p-8 rounded-xl mt-36 w-full">
+      <h3 className="text-2xl font-semibold mb-7 mt-3 text-nowrap">
+        Add Question
+      </h3>
       <div className="grid grid-cols-1 gap-4">
-        
-      <div>
-            <label className="block mb-1">District/City </label>
-            <select
-              name="district"
-              value={districtName}
-              onChange={(e)=> setDistrictName(e.target.value)}
-              className="customInput select"
-            >
-              <option value="">Select District</option>
-              {district.length > 0 && district.map((item, index) => (
-                <option key={index} value={item.district}>{item.district}</option>
+        <div>
+          <label className="block mb-1">District/City </label>
+          <select
+            name="district"
+            value={cityId}
+            onChange={(e) => setCityId(e.target.value)}
+            className="customInput select"
+          >
+            <option value="">Select District</option>
+            {courierCities.length > 0 &&
+              courierCities.map((item, index) => (
+                <option key={index} value={item.city_id}>
+                  {item.city_name}
+                </option>
               ))}
-              {/* Add more options as necessary */}
-            </select>
-            
-          </div>
+            {/* Add more options as necessary */}
+          </select>
+        </div>
 
-          {/* Area/Thana/Upazilla */}
-          <div>
-            <label className="block mb-1">Subdistrict </label>
-            <select
-              name="area"
-              value={subdistrictName}
-              onChange={(e)=> setSubdistrictName(e.target.value)}
-              className="select customInput"
-            >
-              <option value="">Select Area/Thana/Upazilla</option>
-              {
-               subdistricts?.length > 0 && subdistricts.map((subdistrict, index) => (
-                  <option key={index} value={subdistrict}>{subdistrict}</option>
-                ))
-              }
-              {/* Add more options as necessary */}
-            </select>
-            
-          </div>
-          <div className="w-full ">
-            <label className="block mb-1">Charge </label>
-            <input type="number" name="charge" id="charge" value={charge} onChange={(e) => setCharge(e.target.value)} className="customInput" />
-            
-          </div>
-       
+        <div className="w-full ">
+          <label className="block mb-1">Charge </label>
+          <input
+            type="number"
+            name="charge"
+            id="charge"
+            value={charge}
+            onChange={(e) => setCharge(e.target.value)}
+            className="customInput"
+          />
+        </div>
       </div>
-      <button className="w-full customSaveButton mt-10"  onClick={handleSubmit}>
+      <button className="w-full customSaveButton mt-10" onClick={handleSubmit}>
         Save
       </button>
     </div>

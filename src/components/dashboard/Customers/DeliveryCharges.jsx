@@ -15,44 +15,50 @@ import DeleteButton from "../../../components library/DeleteButton";
 import EditButton from "../../../components library/EditButton";
 
 export default function DeliveryCharges() {
-
   const axiosSecure = useAxiosSecure();
 
-  const [isAddModel, setIsAddModel] = useState(false)
-  const [isEditModel, setIsEditModel] = useState(false)
-  const [isDeleted, setIsDeleted] = useState(false)
-  const deliveryCharge = useGetAllDeliveryCharge({ isShowModal: isAddModel, isEdited: isEditModel, isDeleted })
+  const [isAddModel, setIsAddModel] = useState(false);
+  const [isEditModel, setIsEditModel] = useState(false);
+  const [isDeleted, setIsDeleted] = useState(false);
 
-  console.log(deliveryCharge, "deliveryChargedf ")
+  // Fetch delivery charges data
+  const deliveryCharge = useGetAllDeliveryCharge({
+    isShowModal: isAddModel,
+    isEdited: isEditModel,
+    isDeleted,
+  });
 
-  const [data, setData] = useState(deliveryCharge);
+  const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(15);
   const [searchTerm, setSearchTerm] = useState("");
   const [targetId, setTargetId] = useState("");
 
   // Pagination Logic
-
-  const totalPages = Math.ceil(data.length / itemsPerPage);
+  const totalPages = Math.ceil((data?.length || 0) / itemsPerPage);
   const startIdx = (currentPage - 1) * itemsPerPage;
-  const currentData = data.slice(startIdx, startIdx + itemsPerPage);
-
-  console.log(deliveryCharge, currentData, "currentData", data);
-
-
+  const currentData = data?.slice(startIdx, startIdx + itemsPerPage) || [];
 
   // Handle Search
   const handleSearch = (e) => {
-    setSearchTerm(e.target.value);
-    const filteredData = deliveryCharge.filter(
-      (item) =>
-        item.upazilaEnglish
-          .toLowerCase()
-          .includes(e.target.value.toLowerCase()) ||
-        item.upazilaBangla.includes(e.target.value)
-    );
-    setData(filteredData);
-    setCurrentPage(1); // Reset to first page on search
+    const searchValue = e.target.value.toLowerCase();
+    console.log(searchValue, "searchTerm");
+    setSearchTerm(searchValue);
+
+    if (Array.isArray(deliveryCharge)) {
+      const filteredData = deliveryCharge.filter((item) => {
+        return (
+          item.district?.toLowerCase().includes(searchValue) ||
+          item.district_id?.includes(searchValue)
+        );
+      });
+      // console.log(filteredData, "filteredData");
+      setData(filteredData);
+    } else {
+      console.error("deliveryCharge is not an array:", deliveryCharge);
+      setData([]);
+    }
+    setCurrentPage(1); // Reset to the first page
   };
 
   const handleEdit = (id) => {
@@ -63,7 +69,7 @@ export default function DeliveryCharges() {
   const handleDelete = async (id) => {
     try {
       Swal.fire({
-        title: "Are you sure you want to delete this member?",
+        title: "Are you sure you want to delete this item?",
         text: "This action cannot be undone!",
         icon: "warning",
         showCancelButton: true,
@@ -75,60 +81,58 @@ export default function DeliveryCharges() {
         if (result.isConfirmed) {
           try {
             const res = await axiosSecure.delete(`/delivery-charge/${id}`);
-            console.log(res, "res");
             if (res.status === 200 || res.status === 201) {
               setIsDeleted((prev) => !prev);
-
-              toast.success("Brand deleted successfully!");
+              toast.success("Item deleted successfully!");
             }
           } catch (error) {
-            console.log(error, "error");
-            toast.error("Error deleting user!");
+            toast.error("Error deleting item!");
           }
         }
       });
     } catch (error) {
-      console.log(error, "error");
-      toast.error("Error deleting brand!");
+      toast.error("Error deleting item!");
     }
-    console.log(`Delete brand with ID: ${id}`);
   };
 
   useEffect(() => {
-    setData(deliveryCharge);
+    if (Array.isArray(deliveryCharge)) {
+      setData(deliveryCharge);
+    }
   }, [deliveryCharge]);
 
   return (
     <>
       <div className="p-6 pt-0">
         <div className="">
-          <div className="flex justify-between mb-9 items-center ">
-            <h1 className="text-3xl font-semibold ">Delivery Charges List</h1>
-            <button className="customSaveButton" onClick={() => setIsAddModel(true)}>
-              + Add delivery Charge
+          <div className="flex justify-between mb-9 items-center">
+            <h1 className="text-3xl font-semibold">Delivery Charges List</h1>
+            <button
+              className="customSaveButton"
+              onClick={() => setIsAddModel(true)}
+            >
+              + Add Delivery Charge
             </button>
           </div>
+
           {/* Search Input */}
-          <div className="">
-            {/* Search Input */}
-            <div className="bg-white border rounded-full px-3 mb-6 md:py-2 py-1 md:gap-2 gap-1 flex-row-reverse justify-between flex">
-              <input
-                type="text"
-                className="outline-none w-full bg-white"
-                onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder="Search here ..."
-              />
-              <IoIosSearch className="text-2xl text-gray-400" />
-            </div>
+          <div className="bg-white border rounded-full px-3 mb-6 flex-row-reverse flex items-center">
+            <input
+              type="text"
+              className="outline-none w-full bg-white"
+              onChange={handleSearch}
+              placeholder="Search here ..."
+            />
+            <IoIosSearch className="text-2xl text-gray-400" />
           </div>
 
-          {/* Upazila Thana Table */}
+          {/* Table */}
           <table className="min-w-full table-auto border-collapse bg-white shadow rounded-md">
             <thead>
               <tr className="bg-gray-200 text-center">
                 <td className="p-2 border">SL</td>
                 <td className="p-2 border">District</td>
-                <td className="p-2 border">Subdistricts</td>
+                <td className="p-2 border">District ID</td>
                 <td className="p-2 border">Charges</td>
                 <td className="p-2 border">Action</td>
               </tr>
@@ -139,20 +143,20 @@ export default function DeliveryCharges() {
                   <tr key={item.id} className="border-b text-center">
                     <td className="p-2 border">{startIdx + index + 1}</td>
                     <td className="p-2 border">{item.district}</td>
-                    <td className="p-2 border">{item.subdistricts}</td>
-                    <td className="p-2 border text-green-600 font-bold text-center">{item.charge}</td>
-
+                    <td className="p-2 border">{item.district_id}</td>
+                    <td className="p-2 border text-green-600 font-bold">
+                      {item.charge}
+                    </td>
                     <td className="p-2 border space-x-2">
-                      
-                      <EditButton onClick={() => handleEdit(item._id)}></EditButton>
-                      <DeleteButton  onClick={() => handleDelete(item._id)}></DeleteButton>
+                      <EditButton onClick={() => handleEdit(item._id)} />
+                      <DeleteButton onClick={() => handleDelete(item._id)} />
                     </td>
                   </tr>
                 ))
               ) : (
                 <tr>
-                  <td colSpan="6" className="text-center p-4">
-                    No data available in the table
+                  <td colSpan="5" className="text-center p-4">
+                    No data available
                   </td>
                 </tr>
               )}
@@ -184,12 +188,15 @@ export default function DeliveryCharges() {
         </div>
       </div>
 
+      {/* Modals */}
       <BgBlurModal isShowModal={isAddModel} setIsShowModal={setIsAddModel}>
-        <AddDeliveryCharges setIsShowModal={setIsAddModel} isShowModal={isAddModel} />
+        <AddDeliveryCharges setIsShowModal={setIsAddModel} />
       </BgBlurModal>
-
       <BgBlurModal isShowModal={isEditModel} setIsShowModal={setIsEditModel}>
-        <EditDeliveryCharges setIsShowModal={setIsEditModel} isShowModal={isEditModel} targetId={targetId} />
+        <EditDeliveryCharges
+          setIsShowModal={setIsEditModel}
+          targetId={targetId}
+        />
       </BgBlurModal>
     </>
   );

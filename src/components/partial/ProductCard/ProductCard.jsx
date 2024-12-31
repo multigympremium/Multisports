@@ -9,7 +9,13 @@
 import { useState } from "react";
 import Modal from "../../../shared/Modal/Modal";
 const ProductCard = ({
-  product, handleProductClick,isPopular=false, showDiscount = false,isSpecial=false,  showNewArrival = false, varient = "classic"
+  product,
+  handleProductClick,
+  isPopular = false,
+  showDiscount = false,
+  isSpecial = false,
+  showNewArrival = false,
+  varient = "classic",
 }) => {
   const [isShowModal, setIsShowModal] = useState(false);
   return (
@@ -89,8 +95,20 @@ const ProductCard = ({
           />
         </p>
         <div className="flex  flex-col-reverse">
-          <p className="text-sm md:text-lg font-semibold">BDT {product.price}.00</p>
-          {product.discount > 0 ? <p className="text-xs md:text-base line-through opacity-60">BDT {(product.price - (product.price * product.discount / 100)).toFixed(2)}</p> : <p className="opacity-0">3</p>}
+          <p className="text-xs md:text-base line-through opacity-60">
+            BDT {product.price}.00
+          </p>
+          {product.discount > 0 ? (
+            <p className=" text-sm md:text-lg font-semibold">
+              BDT{" "}
+              {(
+                product.price -
+                (product.price * product.discount) / 100
+              ).toFixed(2)}
+            </p>
+          ) : (
+            <p className="opacity-0">3</p>
+          )}
         </div>
 
         <Modal
