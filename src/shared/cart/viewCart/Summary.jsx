@@ -2,12 +2,9 @@
 import useAxiosPublic from "../../../Hook/useAxiosPublic";
 import { AuthContext } from "../../../providers/AuthProvider";
 import { Link, useNavigate } from "react-router-dom";
-import { useContext, useState } from "react";
-import Swal from "sweetalert2";
+import { useContext, useEffect, useState } from "react";
 import BgBlurModal from "../../Modal/BgBlurModal";
 import PaymentMethodModal from "./PaymentMethodModal";
-import { set } from "react-hook-form";
-import CourierMethodModal from "./CourierMethodModal";
 
 export default function Summary({
   isCart = false,
@@ -15,13 +12,35 @@ export default function Summary({
   cartItems = [],
 }) {
   const { totalPrice } = useContext(AuthContext);
-
-  const discount = 17.4;
-  const axiosSecure = useAxiosPublic();
   const router = useNavigate();
   const [isShowPaymentMethod, setIsShowPaymentMethod] = useState(false);
   const [isShowCourier, setIsShowCourier] = useState(false);
   const [courierMethod, setSetCourierMethod] = useState("");
+
+  const [deliveryCharge, setDeliveryCharge] = useState(null);
+
+  const axiosPublic = useAxiosPublic();
+
+  useEffect(() => {
+    const fetchDeliveryCharge = async () => {
+      try {
+        const res = await axiosPublic.get(
+          `/delivery-charge/by_district_id/${Number(shippingAddress?.city_id)}`
+        );
+        console.log(res, "shippingAddress");
+        if (res.status === 200 || res.status === 201) {
+          setDeliveryCharge(res.data);
+        }
+      } catch (error) {
+        console.error("Error fetching delivery charge:", error);
+      }
+    };
+
+    if (shippingAddress) {
+      fetchDeliveryCharge();
+    }
+    console.log(shippingAddress, "shippingAddress");
+  }, [axiosPublic, shippingAddress]);
 
   // store_id: item.store_id,
   //     merchant_order_id: generateInvoiceId(),
@@ -80,7 +99,7 @@ export default function Summary({
   //   }
   // };
 
-  console.log(isShowPaymentMethod, "isShowPaymentMethod");
+  console.log(deliveryCharge, shippingAddress, "deliveryCharge");
   return (
     <>
       <div className="border p-6 mt-auto rounded-md shadow-lg w-full max-w-[350px]">
@@ -91,13 +110,13 @@ export default function Summary({
           <b className="font-bold text-lg">Total</b>
           <span className="font-medium">${totalPrice}</span>
         </div>
-        <div className="flex justify-between text-sm text-gray-500 mt-2">
+        {/* <div className="flex justify-between text-sm text-gray-500 mt-2">
           <b className="font-bold text-lg">Discounts</b>
           <span className="font-medium">-${discount.toFixed(2)}</span>
-        </div>
+        </div> */}
         <div className="flex justify-between text-sm text-gray-500 mt-2">
           <b className="font-bold text-lg">Shipping</b>
-          <span className="font-medium">free</span>
+          <span className="font-medium">${deliveryCharge?.charge || 0}</span>
         </div>
 
         <div className="flex justify-between text-sm text-gray-500 mt-2">
