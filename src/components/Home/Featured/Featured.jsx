@@ -82,9 +82,9 @@ const Featured = () => {
   }, [axiosPublic]);
 
   return (
-    <div className=" py-6 px-5 md:w-full mx-auto">
+    <div className=" py-6 px-5  md:w-full mx-auto">
       <h2 className="text-2xl font-bold mb-4">Featured Products</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+      <div className="grid bg-slate-50 grid-cols-1 md:grid-cols-2 gap-3">
         {/* First Product: Larger, occupies the full height of the left column */}
         <div className="p-4 flex flex-col justify-between rounded-lg relative bg-slate-50">
           {products?.length > 0 && products[0]?.discount && (
