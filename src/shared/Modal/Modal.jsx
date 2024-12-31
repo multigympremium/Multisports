@@ -72,6 +72,7 @@ const Modal = ({
         quantity: trackingProduct.quantity || 1,
       };
       copy_product.color = selectedColor?.value;
+      copy_product.colorName = selectedColor?.label;
       copy_product.size = selectedSize?.value;
       setTrackingProduct(copy_product);
       setQuantity(0);
@@ -107,7 +108,7 @@ const Modal = ({
 
           {/* Size Options */}
           <div className="mb-4">
-            <h3 className="font-semibold mb-2">Size</h3>
+            <h3 className="font-semibold mb-2">Size {sizeArray?.length}</h3>
             <div className="flex gap-2">
               {sizeArray.map((size) => (
                 <button
@@ -127,7 +128,7 @@ const Modal = ({
 
           {/* Color Options */}
           <div className="mb-4">
-            <h3 className="font-semibold mb-2">Color {colors.length}</h3>
+            <h3 className="font-semibold mb-2">Color {colors?.length}</h3>
             <div className="flex gap-2">
               {colors.map((color, index) => (
                 <div
@@ -188,7 +189,8 @@ const Modal = ({
                       addToCart(
                         product,
                         selectedColor.value,
-                        selectedSize.value
+                        selectedSize.value,
+                        selectedColor.label
                       );
                     }
                   }}

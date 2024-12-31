@@ -15,8 +15,8 @@ const Cart = ({ isShow, setIsShow }) => {
     totalCartDiscount,
   } = useContext(AuthContext);
 
-  const [loading, setLoading] = useState(false);
   const [discounts, setDiscounts] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const axiosPublic = useAxiosPublic();
 
@@ -33,12 +33,7 @@ const Cart = ({ isShow, setIsShow }) => {
     fetchDiscounts();
   }, [axiosPublic]);
 
-  const discount = calculateDiscounts(
-    cartItems,
-    discounts,
-    discounts?.promoCode,
-    discounts?.promoCodes
-  )?.totalDiscount;
+  const discount = calculateDiscounts(cartItems, discounts)?.totalDiscount;
 
   return (
     <div className="drawer drawer-end z-[99]">

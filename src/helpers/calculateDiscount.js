@@ -1,4 +1,4 @@
-function calculateDiscounts(cart, discounts, promoCode, promoDiscount) {
+function calculateDiscounts(cart, discounts, isMach) {
   const cartTotal = cart.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0
@@ -85,12 +85,14 @@ function calculateDiscounts(cart, discounts, promoCode, promoDiscount) {
     });
   }
 
+  // console.log(isMach, "isMach", discounts, discounts?.promoCodeDiscount);
   // Promo Code Discount
-  if (discounts.promoCodeActive && promoCode && promoDiscount) {
-    totalDiscount += Number(promoDiscount);
+  if (discounts.promoCodeActive && isMach && discounts?.promoCodeDiscount) {
+    // console.log(isMach, "isMach");
+    totalDiscount += Number(discounts?.promoCodeDiscount);
     appliedDiscounts.push({
       type: "Promo Code Discount",
-      amount: Number(promoDiscount).toFixed(2),
+      amount: Number(discounts?.promoCodeDiscount).toFixed(2),
     });
   }
 
