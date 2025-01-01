@@ -16,7 +16,6 @@ export default function AccountAddress({ isShow, setIsShow }) {
   const [singleData, setSingleData] = useState(null);
   const [currentAddress, setCurrentAddress] = useState(null);
   const [isDeleted, setIsDeleted] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
 
   const address = useGetAllShippingAddress({
     isEdited: isShowModal,

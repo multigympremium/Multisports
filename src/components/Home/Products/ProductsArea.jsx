@@ -3,8 +3,8 @@ import BgBlurModal from "../../../shared/Modal/BgBlurModal";
 import ProductDetail from "./ProductDetail";
 import ProductCardWithGallery from "../../../shared/Cards/CardWithGallery/ProductCardWithGallery";
 import useGetAllProducts from "../../../Hook/GetPublicDataHook/useGetAllProducts";
-import Pagination from "../../partial/Pagination/Pagination";
 import { ThreeDots } from "react-loader-spinner";
+import Modal from "../../../shared/Modal/Modal";
 
 function ProductsArea({
   slug,
@@ -19,6 +19,8 @@ function ProductsArea({
   const [isShowDetail, setIsShowDetail] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [singleData, setSingleData] = useState(null);
+  const [isShowModal, setIsShowModal] = useState(false);
 
   console.log(
     query,
@@ -41,6 +43,14 @@ function ProductsArea({
 
   console.log(products, "products", totalItems, "totalItems");
 
+  const handleProductClick = (product) => {
+    setSingleData(product);
+    setIsShowModal(true);
+    document
+      .getElementById(`modal_${product.productTitle.replace(/\s+/g, "_")}`)
+      .showModal();
+  };
+
   return (
     <>
       <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 min-h-screen">
@@ -51,6 +61,7 @@ function ProductsArea({
               product={product}
               setTargetId={setTargetId}
               setIsShowDetail={setIsShowDetail}
+              handleProductClick={handleProductClick}
             />
           ))
         ) : (
@@ -86,13 +97,29 @@ function ProductsArea({
         limit={itemsPerPage}
         setCurrentPage={setCurrentPage}
       /> */}
-      <BgBlurModal isShowModal={isShowDetail} setIsShowModal={setIsShowDetail}>
+      {/* <BgBlurModal isShowModal={isShowDetail} setIsShowModal={setIsShowDetail}>
         <ProductDetail
           targetId={targetId}
           setIsShowDetail={setIsShowDetail}
           isShowDetail={isShowDetail}
         />
-      </BgBlurModal>
+      </BgBlurModal> */}
+
+      {singleData && (
+        <Modal
+          id={`modal_${singleData.productTitle.replace(/\s+/g, "_")}`}
+          object_id={singleData._id}
+          title={singleData.productTitle}
+          sizes={singleData.productSizeValue}
+          image={`https://mgpwebaps.s3.eu-north-1.amazonaws.com/multi-sports/${singleData.thumbnail}`}
+          description={singleData.fullDescription}
+          colors={singleData.colorAndSize}
+          price={singleData.price}
+          setIsShowModal={setIsShowModal}
+          isShowModal={isShowModal}
+          product={singleData}
+        />
+      )}
     </>
   );
 }

@@ -106,26 +106,6 @@ const Modal = ({
             BDT {price}.00
           </div>
 
-          {/* Size Options */}
-          <div className="mb-4">
-            <h3 className="font-semibold mb-2">Size {sizeArray?.length}</h3>
-            <div className="flex gap-2">
-              {sizeArray.map((size) => (
-                <button
-                  key={size}
-                  className={`border text-xs md:text-sm shadow-sm w-7 h-7 md:w-10 md:h-10 hover:border-gray-500 duration-300 ease-in-out rounded-lg ${
-                    size.value === selectedSize.value
-                      ? "bg-neutral-500 text-white"
-                      : ""
-                  }`}
-                  onClick={() => setSelectedSize(size)}
-                >
-                  {size?.label}
-                </button>
-              ))}
-            </div>
-          </div>
-
           {/* Color Options */}
           <div className="mb-4">
             <h3 className="font-semibold mb-2">Color {colors?.length}</h3>
@@ -148,6 +128,26 @@ const Modal = ({
                     }}
                   ></button>
                 </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Size Options */}
+          <div className="mb-4">
+            <h3 className="font-semibold mb-2">Size {sizeArray?.length}</h3>
+            <div className="flex gap-2">
+              {sizeArray.map((size) => (
+                <button
+                  key={size}
+                  className={`border text-xs md:text-sm shadow-sm w-7 h-7 md:w-10 md:h-10 hover:border-gray-500 duration-300 ease-in-out rounded-lg ${
+                    size.value === selectedSize.value
+                      ? "bg-neutral-500 text-white"
+                      : ""
+                  }`}
+                  onClick={() => setSelectedSize(size)}
+                >
+                  {size?.label}
+                </button>
               ))}
             </div>
           </div>
