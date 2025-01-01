@@ -8,8 +8,10 @@ import { MdDeleteForever } from "react-icons/md";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
+import { useAuth } from "../../../providers/AuthProvider";
 
 export default function AccountAddress({ isShow, setIsShow }) {
+  const { user } = useAuth();
   const [isShowModal, setIsShowModal] = useState();
   const [singleData, setSingleData] = useState(null);
   const [currentAddress, setCurrentAddress] = useState(null);
@@ -19,7 +21,11 @@ export default function AccountAddress({ isShow, setIsShow }) {
   const address = useGetAllShippingAddress({
     isEdited: isShowModal,
     isDeleted,
+    param: user?._id ? `user/${user?._id}` : null,
   });
+
+  // console.log(address, "address");
+
   const axiosSecure = useAxiosSecure();
 
   const handleEdit = (data) => {
@@ -85,7 +91,7 @@ export default function AccountAddress({ isShow, setIsShow }) {
           )}
         </div>
         <div className="bg-white p-4 rounded-2xl grid grid-cols-2 gap-4 border min-h-[400px]">
-          {address.length > 0 &&
+          {address?.length > 0 &&
             address.map((item, index) => (
               <div
                 className={`border p-6 rounded-md border-r border-gray-200 hover:bg-gray-100 ${

@@ -7,6 +7,7 @@ function useGetAllShippingAddress({
   isDeleted = false,
   setLoading = () => {},
   isShowModal,
+  param,
 }) {
   const [address, setAddress] = useState([]);
 
@@ -16,7 +17,7 @@ function useGetAllShippingAddress({
     const fetchAddress = async () => {
       try {
         setLoading(true);
-        const res = await axiosSecure.get("/shipping");
+        const res = await axiosSecure.get(`/shipping${param && "/" + param}`);
 
         if (res.status === 200 || res.status === 201) {
           setAddress(res.data.data);
@@ -30,7 +31,7 @@ function useGetAllShippingAddress({
     };
 
     fetchAddress();
-  }, [axiosSecure, isDeleted, isEdited, isShowModal]);
+  }, [axiosSecure, isDeleted, isEdited, isShowModal, param]);
 
   return address;
 }
