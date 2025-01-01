@@ -6,7 +6,7 @@ const ReactSelect = ({ formatGroupLabel, options, onChange, selectOption }) => (
     options={options}
     value={selectOption}
     formatGroupLabel={formatGroupLabel}
-    onChange={onChange}
+  onChange={onChange}
   />
 );
 
