@@ -18,8 +18,14 @@ export default function PaymentMethodModal({
   const axiosCourier = useAxiosCourier();
   const router = useNavigate();
 
-  const { totalPrice, cartItems, totalCartDiscount, user, setCartItems } =
-    useContext(AuthContext);
+  const {
+    totalPrice,
+    cartItems,
+    totalCartDiscount,
+    user,
+    setCartItems,
+    totalItems,
+  } = useContext(AuthContext);
 
   // const accessToken = useCourierAccessToken()
 
@@ -80,6 +86,7 @@ export default function PaymentMethodModal({
       deliveryCharge: deliveryCharge?.charge,
       coupon: coupon,
       userId: user._id,
+      totalItems: totalItems,
     };
     try {
       const response = await axiosSecure.post("/orders", submitOrderData);

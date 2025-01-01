@@ -162,11 +162,11 @@ export default function Summary({ isCart = false, shippingAddress = null }) {
         </div>
         <div className="flex justify-between text-sm text-gray-500 mt-2">
           <b className="font-bold text-lg">Shipping</b>
-          <span className="font-medium">${deliveryCharge?.charge || 0}</span>
+          <span className="font-medium">৳{deliveryCharge?.charge || 0}</span>
         </div>
         <div className="flex justify-between text-sm text-gray-500">
           <b className="font-bold text-lg">Total</b>
-          <span className="font-medium">${totalPrice - discount}</span>
+          <span className="font-medium">৳{totalPrice - discount}</span>
         </div>
 
         <div className="flex justify-between text-sm text-gray-500 mt-2">

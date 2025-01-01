@@ -282,6 +282,7 @@ export default function AllOrders() {
           id={targetId}
           isShow={isShowDetail}
           setIsShow={setIsShowDetail}
+          isStatus={false}
         />
       </BgBlurModal>
 

@@ -8,11 +8,17 @@ import CustomImage from "../../../shared/ImageComponents/CustomImage";
 import GlobalLoading from "../../../components library/GlobalLoading";
 import toast from "react-hot-toast";
 
-export default function OrderDetail({ id, isShow, setIsShow }) {
+export default function OrderDetail({
+  id,
+  isShow,
+  setIsShow,
+  isStatus = true,
+}) {
   const axiosSecure = useAxiosSecure();
 
   const [order, setOrder] = useState(null);
   const [status, setStatus] = useState("");
+  const [orderDetail, setOrderDetail] = useState([]);
 
   useEffect(() => {
     const fetchOrder = async () => {
@@ -44,6 +50,51 @@ export default function OrderDetail({ id, isShow, setIsShow }) {
     }
   };
 
+  const handlePropertyName = (name) => {
+    switch (name) {
+      case "deliveryCharge":
+        return "delivery Charge";
+      case "itemPerDiscount":
+        return "item Per Discount";
+      case "createdAt":
+        return "created At";
+      default:
+        return name.replaceAll("_", " ");
+    }
+  };
+
+  const handleSetCurrencySymbol = (name) => {
+    switch (name) {
+      case "deliveryCharge":
+        return "৳";
+      case "itemPerDiscount":
+        return "৳";
+      case "discount":
+        return "৳";
+      case "total":
+        return "৳";
+      default:
+        return "";
+    }
+  };
+
+  useEffect(() => {
+    if (!order) return;
+    const newArrayData = Object.entries(order).map(([key, value]) => ({
+      name: key,
+      value,
+    }));
+    const itemIndex = newArrayData.findIndex((item) => item.name === "items");
+    const _idIndex = newArrayData.findIndex((item) => item.name === "_id");
+    const _vIndex = newArrayData.findIndex((item) => item.name === "__v");
+
+    delete newArrayData[itemIndex];
+    delete newArrayData[_idIndex];
+    delete newArrayData[_vIndex];
+
+    setOrderDetail(newArrayData);
+  }, [order]);
+
   if (!order) {
     return <GlobalLoading />;
   }
@@ -54,46 +105,37 @@ export default function OrderDetail({ id, isShow, setIsShow }) {
         Order Details
       </h2>
 
-      <div className="w-full grid grid-cols-2 gap-6 mb-8">
-        {/* Order Information */}
-        <div className="p-4 border rounded-lg shadow-sm bg-gray-50">
-          <h3 className="text-lg font-semibold mb-4 text-gray-700">
-            Order Information
-          </h3>
-          <p className="mb-2">
-            <strong>Order ID:</strong> {order?._id}
-          </p>
-          <p className="mb-2">
-            <strong>Total:</strong> {order?.total} BDT
-          </p>
-          {
-            order.courierMethod && 
-          <p className="mb-2">
-            <strong>Courier Method:</strong> {order?.courierMethod}
-          </p>
+      <div className="p-4 border rounded-lg shadow-sm bg-gray-50 flex flex-col flex-wrap max-h-[400px] gap-x-2">
+        {orderDetail.map((item, index) => {
+          if (item.name === "createdAt" || item.name === "updatedAt") {
+            return (
+              <p
+                className="mb-2 w-[48%] flex justify-between items-center gap-3"
+                key={index}
+              >
+                <strong className="uppercase">
+                  {handlePropertyName(item.name)}
+                </strong>{" "}
+                {moment(order?.value).format("MMMM Do YYYY, h:mm:ss a")}
+              </p>
+            );
+          } else {
+            return (
+              <p
+                className="mb-2 w-[48%] flex justify-between items-center gap-3"
+                key={index}
+              >
+                <strong className="uppercase">
+                  {handlePropertyName(item.name)}
+                </strong>{" "}
+                {handleSetCurrencySymbol(item.name) + item.value}
+              </p>
+            );
           }
+        })}
 
-          {
-            order.invoice && 
-          <p className="mb-2">
-            <strong>Invoice Id:</strong> {order?.invoice}
-          </p>
-          }
-
-          {
-            order.courier_status && 
-          <p className="mb-2">
-            <strong>Courier Status:</strong> {order?.courier_status}
-          </p>
-          }
-          <p className="mb-2">
-            <strong>Payment Method:</strong> {order?.payment_method}
-          </p>
-          <p className="mb-2">
-            <strong>Order Date:</strong>{" "}
-            {moment(order?.createdAt).format("MMMM Do YYYY, h:mm:ss a")}
-          </p>
-          <p>
+        {isStatus && (
+          <p className="mb-2 w-[48%] flex justify-between items-center  mt-3">
             <strong>Status:</strong>
             <select
               value={status}
@@ -106,46 +148,11 @@ export default function OrderDetail({ id, isShow, setIsShow }) {
               <option value="Cancelled">Cancelled</option>
             </select>
           </p>
-        </div>
-
-        {/* Shipping Address */}
-        <div className="p-4 border rounded-lg shadow-sm bg-gray-50">
-          <h3 className="text-lg font-semibold mb-4 text-gray-700">
-            Shipping Address
-          </h3>
-          <p className="mb-2">
-            <strong>Name:</strong> {order?.name}
-          </p>
-          <p className="mb-2">
-            <strong>Phone:</strong> {order?.phone}
-          </p>
-          <p className="mb-2">
-            <strong>Address:</strong> {order?.address}, {order?.area},{" "}
-            {order?.district}, {order?.postCode}
-          </p>
-          <p className="mb-2">
-            <strong>City Name:</strong> {order?.city_name}
-          </p>
-          <p className="mb-2">
-            <strong>City Id:</strong> {order?.city_id}
-          </p>
-          <p className="mb-2">
-            <strong>Zone Name:</strong> {order?.zone_name}
-          </p>
-          <p className="mb-2">
-            <strong>Zone Id:</strong> {order?.zone_id}
-          </p>
-          <p className="mb-2">
-            <strong>Area Name:</strong> {order?.area_name}
-          </p>
-          <p className="mb-2">
-            <strong>Area Id:</strong> {order?.area_id}
-          </p>
-        </div>
+        )}
       </div>
 
       {/* Products */}
-      <div>
+      <div className="mt-5">
         <h3 className="text-lg font-semibold mb-4 text-gray-700">Products</h3>
         {order?.items.map((product, idx) => (
           <div
@@ -169,16 +176,29 @@ export default function OrderDetail({ id, isShow, setIsShow }) {
                 <strong>Product Name:</strong> {product?.productTitle}
               </p>
               <p className="mb-2">
-                <strong>Color:</strong> {order?.productColorValue || "N/A"}
+                <strong>Color Name:</strong> {product?.colorName || "N/A"}
               </p>
               <p className="mb-2">
-                <strong>Size:</strong> {order?.productSizeValue || "N/A"}
+                <strong>Color:</strong>{" "}
+                <span
+                  className="w-8 h-3 rounded-sm inline-block"
+                  style={{ background: product?.color }}
+                ></span>
+              </p>
+              <p className="mb-2">
+                <strong>Size:</strong> {product?.size || "N/A"}
               </p>
               <p className="mb-2">
                 <strong>Quantity:</strong> {product?.quantity}
               </p>
-              <p className="text-gray-700 font-semibold">
-                <strong>Subtotal:</strong> ${product?.price * product?.quantity}
+              <p className="text-gray-700 font-semibold mb-2">
+                <strong>Price:</strong> ৳{product?.price}
+              </p>
+              <p className="text-gray-700 font-semibold mb-2">
+                <strong>Discount Price:</strong> ৳{product?.discountPrice}
+              </p>
+              <p className="text-gray-700 font-semibold ">
+                <strong>Subtotal:</strong> ৳{product?.price * product?.quantity}
               </p>
             </div>
           </div>
