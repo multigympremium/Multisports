@@ -5,7 +5,7 @@ import useAxiosPublic from "../../../Hook/useAxiosPublic";
 import { Link } from "react-router-dom";
 import { FaArrowRight } from "react-icons/fa";
 
-const NewArrivals = ({ limit = 8, isShowSeeAll = true }) => {
+const NewArrivals = ({ limit = 8 }) => {
   const [currentProduct, setCurrentProduct] = useState(null);
   const [loading, setLoading] = useState(false);
   const [isEdited, setIsEdited] = useState(false);
@@ -47,14 +47,15 @@ const NewArrivals = ({ limit = 8, isShowSeeAll = true }) => {
     <section className="w-[90%] md:w-full mx-auto py-6">
       <div className="flex justify-between mb-6">
         <h2 className="text-2xl font-bold mb-4">New Arrivals</h2>
-        {isShowSeeAll && (
-          <Link
-            to="/new_arrivals"
+        <Link
+            to={{
+              pathname: '/new_arrivals',
+            }}
+            state={{products}}
             className="flex hover:underline justify-between items-center gap-2 text-blue-500 font-semibold"
           >
             <span className="">See All</span> <FaArrowRight />
           </Link>
-        )}
       </div>
       {loading ? (
         <ProductSkeleton skeletons={8} />
