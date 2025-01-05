@@ -49,7 +49,7 @@ function ProductsArea({
 
   return (
     <>
-      <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-9  min-h-screen">
+      <div className="w-full grid grid-cols-2 md:grid-cols-4 lg:gap-4 gap-3  min-h-screen">
         {products && products?.length > 0 ? (
           products.map((product, index) => (
             // <ProductCardWithGallery
@@ -65,7 +65,7 @@ function ProductsArea({
             //       handleProductClick={handleProductClick}
             //       showNewArrival={true}
             //       showDiscount={true}
-            <div className="">
+            <div className="md:border rounded-lg" key={index}>
               <ProductCard
                 key={index}
                 product={product}
