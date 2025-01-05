@@ -307,7 +307,7 @@ function ProductPage() {
     setCategoryFilter(uniqueCategories);
   }, [subcategories]);
 
-  console.log(params, router, "search");
+  console.log(subcategories, "subcategories");
   return (
     <div>
       <div className="border-b hidden md:block">
@@ -383,6 +383,28 @@ function ProductPage() {
               </ul>
             </div>
           </DrawerComponent>
+        </div>
+        <div className="container mx-auto min-w-[900px] max-w-[1200px]  overflow-hidden px-8">
+          <div className="w-full flex justify-center items-baseline  gap-8 mx-auto mt-8">
+            {subcategories.length > 0 &&
+              subcategories.slice(0, 8).map((item, index) => (
+                <div
+                  className="w-full h-[220px] max-w-[220px] flex flex-col items-center justify-center gap-2 group flex-shrink-0 lg:flex-shrink  "
+                  key={index}
+                >
+                  <div className="w-full aspect-square rounded-full overflow-hidden">
+                    <img
+                      src={item.subcategoryIcon || "/no-image.png"}
+                      alt="subcategoryIcon"
+                      className="w-full h-full object-cover group-hover:scale-110 duration-300 ease-in-out"
+                    />
+                  </div>
+                  <h3 className="text-center text-lg font-bold group-hover:text-blue-400">
+                    {item.subcategoryName}
+                  </h3>
+                </div>
+              ))}
+          </div>
         </div>
         <div className="flex  flex-1 relative z-[1] ">
           <div
