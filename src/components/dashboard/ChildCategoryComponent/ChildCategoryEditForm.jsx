@@ -173,26 +173,25 @@ export default function ChildCategoryEditForm({
     setCategoryError("");
     setSubcategoryError("");
     setNameError("");
-    setSlugError(""); 
+    setSlugError("");
     setIconError("");
   };
 
   return (
-    <div className="w-[50%] bg-gray-100 p-10 rounded-2xl">
+    <div className="w-[100%] bg-gray-100 p-10 rounded-2xl">
       <div className="">
-        <h1 className="text-2xl font-semibold mb-9">Child Category Create Form</h1>
+        <h1 className="text-2xl font-semibold mb-9">
+          Child Category Create Form
+        </h1>
         {error && <p className="text-red-500 mb-4">{error}</p>}
         <form onSubmit={handleSubmit}>
           {/* Select Category */}
           <div className="mb-4">
-            <label className="block text-gray-700">
-              Select Category 
-            </label>
+            <label className="block text-gray-700">Select Category</label>
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
               className="select customInput"
-              
             >
               <option value="">Select One</option>
               {categories?.length > 0 &&
@@ -211,14 +210,11 @@ export default function ChildCategoryEditForm({
 
           {/* Select Subcategory */}
           <div className="mb-4">
-            <label className="block text-gray-700  ">
-              Select Subcategory 
-            </label>
+            <label className="block text-gray-700  ">Select Subcategory</label>
             <select
               value={subcategory}
               onChange={(e) => setSubcategory(e.target.value)}
               className="select customInput"
-              
             >
               <option value="">Select One</option>
               {subcategories?.length > 0 &&
@@ -232,7 +228,9 @@ export default function ChildCategoryEditForm({
                   </option>
                 ))}
             </select>
-            {subcategoryError && <p className="text-red-500">{subcategoryError}</p>}
+            {subcategoryError && (
+              <p className="text-red-500">{subcategoryError}</p>
+            )}
           </div>
 
           {/* Child Category Name */}
@@ -244,7 +242,6 @@ export default function ChildCategoryEditForm({
               onChange={(e) => handleSubcategoryNameInput(e.target.value)}
               className="customInput"
               placeholder="Child Category Title"
-              
             />
             {nameError && <p className="text-red-500">{nameError}</p>}
           </div>
@@ -258,7 +255,6 @@ export default function ChildCategoryEditForm({
               onChange={(e) => handleSlug(e.target.value)}
               className="customInput"
               placeholder="Slug"
-              
             />
             {slugError && <p className="text-red-500">{slugError}</p>}
           </div>
@@ -288,7 +284,7 @@ export default function ChildCategoryEditForm({
                   <p className="text-xl">Drag and drop a file here or click</p>
                 </>
               )}
-               {iconError && <p className="text-red-500">{iconError}</p>}
+              {iconError && <p className="text-red-500">{iconError}</p>}
             </div>
           </div>
 
@@ -300,10 +296,7 @@ export default function ChildCategoryEditForm({
             >
               Close
             </button>
-            <button
-              type="submit"
-              className="customSaveButton"
-            >
+            <button type="submit" className="customSaveButton">
               Save Changes
             </button>
           </div>

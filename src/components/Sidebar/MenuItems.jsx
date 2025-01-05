@@ -684,12 +684,6 @@ function MenuItemsList({ userRole }) {
       icon: <IoIosHome />, // Replace with the actual SVG icon
       list: [
         {
-          title: "Create New Page",
-          path: "create-new-page",
-          isAllowed: isAllowedRoute("create-new-page"),
-          icon: <IoIosHome />,
-        },
-        {
           title: "View All Pages",
           path: "view-all-pages",
           isAllowed: isAllowedRoute("view-all-pages"),

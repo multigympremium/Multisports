@@ -4,11 +4,7 @@ import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../../Hook/useAxiosSecure";
 
-export default function EditFAQForm({
-  targetId,
-  setIsShowModal,
-  isShowModal,
-}) {
+export default function EditFAQForm({ targetId, setIsShowModal, isShowModal }) {
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
   const axiosSecure = useAxiosSecure();
@@ -71,15 +67,13 @@ export default function EditFAQForm({
   };
 
   return (
-    <div className="w-[40%]">
+    <div className="w-full">
       <div className="w-full mx-auto bg-white p-8 shadow-md rounded-md">
         <h1 className="text-2xl font-semibold mb-7">Edit Product Color Form</h1>
         <form onSubmit={handleSubmit}>
           {/* Model Name */}
           <div className="mb-4">
-            <label className="block text-gray-700 ">
-              Question 
-            </label>
+            <label className="block text-gray-700 ">Question</label>
             <input
               type="text"
               value={question}
@@ -90,9 +84,7 @@ export default function EditFAQForm({
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700">
-              Answer 
-            </label>
+            <label className="block text-gray-700">Answer</label>
             <textarea
               type="text"
               value={answer}
@@ -111,10 +103,7 @@ export default function EditFAQForm({
             >
               Cancel
             </button>
-            <button
-              type="submit"
-              className="customSaveButton"
-            >
+            <button type="submit" className="customSaveButton">
               Update
             </button>
           </div>

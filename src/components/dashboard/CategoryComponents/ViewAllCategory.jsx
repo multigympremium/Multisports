@@ -11,6 +11,7 @@ import useAxiosSecure from "../../../Hook/useAxiosSecure";
 import { HiArrowCircleDown, HiArrowCircleUp } from "react-icons/hi";
 import EditButton from "../../../components library/EditButton";
 import DeleteButton from "../../../components library/DeleteButton";
+import BgBlurModal from "../../../shared/Modal/BgBlurModal";
 
 export default function CategoryList() {
   const [currentPage, setCurrentPage] = useState(0);
@@ -21,7 +22,6 @@ export default function CategoryList() {
   const [isDeleted, setIsDeleted] = useState(false);
   const [isEdited, setIsEdited] = useState(false);
   const [categoryId, setCategoryId] = useState("");
-
 
   const sortedCategories = useCallback(() => {
     const sortedData = [...categories];
@@ -50,8 +50,6 @@ export default function CategoryList() {
     }
     setSortConfig({ key, direction });
   };
-
-
 
   const handlePageClick = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -127,7 +125,11 @@ export default function CategoryList() {
               >
                 SL{" "}
                 {sortConfig.key === "id" &&
-                  (sortConfig.direction === "asc" ? <HiArrowCircleUp className="text-[#087D6D] " /> : <HiArrowCircleDown className="text-[#E68923]" />)}
+                  (sortConfig.direction === "asc" ? (
+                    <HiArrowCircleUp className="text-[#087D6D] " />
+                  ) : (
+                    <HiArrowCircleDown className="text-[#E68923]" />
+                  ))}
               </td>
               <td
                 className="border p-2 text-center cursor-pointer"
@@ -160,54 +162,58 @@ export default function CategoryList() {
             </tr>
           </thead>
           <tbody>
-            {paginatedData()?.length > 0 && paginatedData().map((category, index) => (
-              <tr key={category.id} className="border-b text-center">
-                <td className="border p-2 ">
-                  {index + 1 + currentPage * itemsPerPage}
-                </td>
-                <td className="border p-2">{category.categoryName}</td>
-                <td className="border p-2 flex justify-center">
-                  <div className="max-w-20 border rounded-full overflow-hidden">
-                    <CellImage
-                      width={400}
-                      height={400}
-                      src={category.categoryIcon}
-                      alt="icon"
-                    /></div>
-                </td>
-                <td className="border p-2">
-                  <div>
-                    <div className="flex justify-center">
+            {paginatedData()?.length > 0 &&
+              paginatedData().map((category, index) => (
+                <tr key={category.id} className="border-b text-center">
+                  <td className="border p-2 ">
+                    {index + 1 + currentPage * itemsPerPage}
+                  </td>
+                  <td className="border p-2">{category.categoryName}</td>
+                  <td className="border p-2 flex justify-center">
+                    <div className="max-w-20 border rounded-full overflow-hidden">
                       <CellImage
                         width={400}
                         height={400}
-                        src={category.categoryBanner}
-                        alt="banner"
+                        src={category.categoryIcon}
+                        alt="icon"
                       />
                     </div>
-                  </div>
-                </td>
-                <td className="border p-2">{category.slug}</td>
-                <td className="border p-2">
-                  {category.featureCategory === "Yes" ? (
-                    <span className="bg-green-500 text-white px-2 py-1 rounded-md">
-                      Featured
-                    </span>
-                  ) : (
-                    <span>No</span>
-                  )}
-                </td>
-                <td className="border p-2">
-                  {category.showOnNavbar ? "Yes" : "No"}
-                </td>
-                <td className="border p-2">
-                  <div className="flex justify-center space-x-2">
-                    <EditButton onClick={() => handleEdit(category._id)} />
-                    <DeleteButton onClick={() => handleDelete(category._id)} />
-                  </div>
-                </td>
-              </tr>
-            ))}
+                  </td>
+                  <td className="border p-2">
+                    <div>
+                      <div className="flex justify-center">
+                        <CellImage
+                          width={400}
+                          height={400}
+                          src={category.categoryBanner}
+                          alt="banner"
+                        />
+                      </div>
+                    </div>
+                  </td>
+                  <td className="border p-2">{category.slug}</td>
+                  <td className="border p-2">
+                    {category.featureCategory === "Yes" ? (
+                      <span className="bg-green-500 text-white px-2 py-1 rounded-md">
+                        Featured
+                      </span>
+                    ) : (
+                      <span>No</span>
+                    )}
+                  </td>
+                  <td className="border p-2">
+                    {category.showOnNavbar ? "Yes" : "No"}
+                  </td>
+                  <td className="border p-2">
+                    <div className="flex justify-center space-x-2">
+                      <EditButton onClick={() => handleEdit(category._id)} />
+                      <DeleteButton
+                        onClick={() => handleDelete(category._id)}
+                      />
+                    </div>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
 
@@ -219,23 +225,24 @@ export default function CategoryList() {
             <button
               key={pageIndex}
               onClick={() => handlePageClick(pageIndex)}
-              className={`px-3 py-1 border rounded-md ${currentPage === pageIndex
-                ? "bg-blue-500 text-white"
-                : "hover:bg-gray-200"
-                }`}
+              className={`px-3 py-1 border rounded-md ${
+                currentPage === pageIndex
+                  ? "bg-blue-500 text-white"
+                  : "hover:bg-gray-200"
+              }`}
             >
               {pageIndex + 1}
             </button>
           ))}
         </div>
       </div>
-      <Modal isShowModal={isEdited} setIsShowModal={setIsEdited}>
+      <BgBlurModal isShowModal={isEdited} setIsShowModal={setIsEdited}>
         <CategoryEditForm
           categoryId={categoryId}
           setIsShowModal={setIsEdited}
           isShowModal={isEdited}
         />
-      </Modal>
+      </BgBlurModal>
     </div>
   );
 }

@@ -1,7 +1,4 @@
 import { useState } from "react";
-import BgBlurModal from "../../../shared/Modal/BgBlurModal";
-import ProductDetail from "./ProductDetail";
-import ProductCardWithGallery from "../../../shared/Cards/CardWithGallery/ProductCardWithGallery";
 import useGetAllProducts from "../../../Hook/GetPublicDataHook/useGetAllProducts";
 import { ThreeDots } from "react-loader-spinner";
 import Modal from "../../../shared/Modal/Modal";
@@ -16,8 +13,6 @@ function ProductsArea({
   subcategoryFilter,
   categoryFilter,
 }) {
-  const [targetId, setTargetId] = useState("");
-  const [isShowDetail, setIsShowDetail] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [singleData, setSingleData] = useState(null);
@@ -35,10 +30,11 @@ function ProductsArea({
   const { products, totalItems, loading } = useGetAllProducts({
     query: `search=${slug}&color=${colorFilter.join(
       ","
-    )}&size=${sizeFilter.join(",")}&brand=${brandFilter.join(",")}&${query.includes("product=") ? "product=" + query.split("=")[1] : ""
-      }&subcategory=${subcategoryFilter.join(",")}&category=${categoryFilter.join(
-        ","
-      )}&currentPage=${currentPage}&limit=${itemsPerPage}`,
+    )}&size=${sizeFilter.join(",")}&brand=${brandFilter.join(",")}&${
+      query.includes("product=") ? "product=" + query.split("=")[1] : ""
+    }&subcategory=${subcategoryFilter.join(",")}&category=${categoryFilter.join(
+      ","
+    )}&currentPage=${currentPage}&limit=${itemsPerPage}`,
   });
 
   console.log(products, "products", totalItems, "totalItems");

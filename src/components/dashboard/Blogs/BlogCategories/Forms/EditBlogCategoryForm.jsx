@@ -68,15 +68,15 @@ export default function EditBlogCategoryForm({
   };
 
   return (
-    <div className="w-[30%] bg-gray-100 pb-8 rounded-2xl p-10">
+    <div className="w-full bg-gray-100 pb-8 rounded-2xl p-10">
       <div className="">
-        <h1 className="text-2xl font-semibold mb-5">Edit blog Category Name Form</h1>
+        <h1 className="text-2xl font-semibold mb-5">
+          Edit blog Category Name Form
+        </h1>
         <form onSubmit={handleSubmit}>
           {/* Model Name */}
           <div className="mb-4">
-            <label className="block text-gray-700 ">
-              Blog Category Name 
-            </label>
+            <label className="block text-gray-700 ">Blog Category Name</label>
             <input
               type="text"
               value={blogCategoryName}
@@ -95,10 +95,7 @@ export default function EditBlogCategoryForm({
             >
               Cancel
             </button>
-            <button
-              type="submit"
-              className="w-full customSaveButton"
-            >
+            <button type="submit" className="w-full customSaveButton">
               Update
             </button>
           </div>

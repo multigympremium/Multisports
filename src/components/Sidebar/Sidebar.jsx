@@ -58,11 +58,7 @@ const Sidebar = ({ isCollapsed }) => {
     >
       <div className="flex flex-col items-start mb-6">
         {!isCollapsed && (
-          <img
-            src="https://multisports.shop/images/site_setting/multi-sports_vi6P5.png"
-            alt="Logo"
-            className="w-[80%]  mb-4"
-          />
+          <img src="/logo.png" alt="Logo" className="w-[80%]  mb-4" />
         )}
       </div>
 
