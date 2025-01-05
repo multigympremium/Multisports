@@ -20,7 +20,8 @@ export default function CategoryEditForm({
   const [categoryIcon, setCategoryIcon] = useState(null);
   const [categoryIconImagePreview, setCategoryIconImagePreview] = useState("");
   const [categoryBanner, setCategoryBanner] = useState(null);
-  const [categoryBannerImagePreview, setCategoryBannerImagePreview] = useState("");
+  const [categoryBannerImagePreview, setCategoryBannerImagePreview] =
+    useState("");
   const [slug, setSlug] = useState("");
   const [errors, setErrors] = useState({});
 
@@ -104,7 +105,8 @@ export default function CategoryEditForm({
 
     // Validate Feature Category
     if (!featureCategory) {
-      validationErrors.featureCategory = "Feature Category selection is required.";
+      validationErrors.featureCategory =
+        "Feature Category selection is required.";
       isValid = false;
     }
 
@@ -116,13 +118,15 @@ export default function CategoryEditForm({
 
     // Validate category icon file size
     if (categoryIcon && categoryIcon.size > MAX_FILE_SIZE) {
-      validationErrors.categoryIcon = "Category Icon file size must be less than 2MB.";
+      validationErrors.categoryIcon =
+        "Category Icon file size must be less than 2MB.";
       isValid = false;
     }
 
     // Validate category banner file size
     if (categoryBanner && categoryBanner.size > MAX_FILE_SIZE) {
-      validationErrors.categoryBanner = "Category Banner file size must be less than 2MB.";
+      validationErrors.categoryBanner =
+        "Category Banner file size must be less than 2MB.";
       isValid = false;
     }
 
@@ -160,13 +164,17 @@ export default function CategoryEditForm({
     }
   };
 
-  const { getRootProps: getIconRootProps, getInputProps: getIconInputProps } = useDropzone({
-    onDrop: onDropIcon,
-    accept: "image/*",
-    multiple: false,
-  });
+  const { getRootProps: getIconRootProps, getInputProps: getIconInputProps } =
+    useDropzone({
+      onDrop: onDropIcon,
+      accept: "image/*",
+      multiple: false,
+    });
 
-  const { getRootProps: getBannerRootProps, getInputProps: getBannerInputProps } = useDropzone({
+  const {
+    getRootProps: getBannerRootProps,
+    getInputProps: getBannerInputProps,
+  } = useDropzone({
     onDrop: onDropBanner,
     accept: "image/*",
     multiple: false,
@@ -192,7 +200,7 @@ export default function CategoryEditForm({
   };
 
   return (
-    <div className="w-[50%] bg-gray-100 rounded-2xl p-10">
+    <div className="w-[100%] bg-gray-100 rounded-2xl p-10">
       <div className="w-full mx-auto ">
         <h1 className="text-2xl font-semibold mb-9">Edit Category</h1>
         <form onSubmit={handleSubmit}>
@@ -207,7 +215,9 @@ export default function CategoryEditForm({
               placeholder="Category Name"
               // required
             />
-            {errors.categoryName && <p className="text-red-500 text-xs">{errors.categoryName}</p>}
+            {errors.categoryName && (
+              <p className="text-red-500 text-xs">{errors.categoryName}</p>
+            )}
           </div>
 
           {/* Slug */}
@@ -220,12 +230,16 @@ export default function CategoryEditForm({
               placeholder="Category Slug"
               // required
             />
-            {errors.slug && <p className="text-red-500 text-xs">{errors.slug}</p>}
+            {errors.slug && (
+              <p className="text-red-500 text-xs">{errors.slug}</p>
+            )}
           </div>
 
           {/* Category Icon */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-semibold mb-2">Category Icon</label>
+            <label className="block text-gray-700 font-semibold mb-2">
+              Category Icon
+            </label>
             <div
               {...getIconRootProps()}
               className="w-full p-4 border-dashed min-h-[200px] flex flex-col items-center justify-center border-2 border-gray-300 rounded-md text-center cursor-pointer"
@@ -233,7 +247,10 @@ export default function CategoryEditForm({
               <input {...getIconInputProps()} />
               {categoryIconImagePreview ? (
                 <>
-                  <EditFormImage imageObject={categoryIcon} imagePreview={categoryIconImagePreview} />
+                  <EditFormImage
+                    imageObject={categoryIcon}
+                    imagePreview={categoryIconImagePreview}
+                  />
                   <p>{categoryIcon ? categoryIcon.name : "Current Icon"}</p>
                 </>
               ) : (
@@ -243,12 +260,16 @@ export default function CategoryEditForm({
                 </>
               )}
             </div>
-            {errors.categoryIcon && <p className="text-red-500 text-xs">{errors.categoryIcon}</p>}
+            {errors.categoryIcon && (
+              <p className="text-red-500 text-xs">{errors.categoryIcon}</p>
+            )}
           </div>
 
           {/* Category Banner */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-semibold mb-2">Category Banner</label>
+            <label className="block text-gray-700 font-semibold mb-2">
+              Category Banner
+            </label>
             <div
               {...getBannerRootProps()}
               className="w-full p-4 border-dashed min-h-[200px] flex flex-col items-center justify-center border-2 border-gray-300 rounded-md text-center cursor-pointer"
@@ -256,8 +277,13 @@ export default function CategoryEditForm({
               <input {...getBannerInputProps()} />
               {categoryBannerImagePreview ? (
                 <>
-                  <EditFormImage imageObject={categoryBanner} imagePreview={categoryBannerImagePreview} />
-                  <p>{categoryBanner ? categoryBanner.name : "Current Banner"}</p>
+                  <EditFormImage
+                    imageObject={categoryBanner}
+                    imagePreview={categoryBannerImagePreview}
+                  />
+                  <p>
+                    {categoryBanner ? categoryBanner.name : "Current Banner"}
+                  </p>
                 </>
               ) : (
                 <>
@@ -266,12 +292,16 @@ export default function CategoryEditForm({
                 </>
               )}
             </div>
-            {errors.categoryBanner && <p className="text-red-500 text-xs">{errors.categoryBanner}</p>}
+            {errors.categoryBanner && (
+              <p className="text-red-500 text-xs">{errors.categoryBanner}</p>
+            )}
           </div>
 
           {/* Feature Category */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-semibold">Feature Category </label>
+            <label className="block text-gray-700 font-semibold">
+              Feature Category{" "}
+            </label>
             <select
               value={featureCategory}
               onChange={(e) => setFeatureCategory(e.target.value)}
@@ -282,12 +312,16 @@ export default function CategoryEditForm({
               <option value="Yes">Yes</option>
               <option value="No">No</option>
             </select>
-            {errors.featureCategory && <p className="text-red-500 text-xs">{errors.featureCategory}</p>}
+            {errors.featureCategory && (
+              <p className="text-red-500 text-xs">{errors.featureCategory}</p>
+            )}
           </div>
 
           {/* Show on Navbar */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-semibold ">Show on Navbar </label>
+            <label className="block text-gray-700 font-semibold ">
+              Show on Navbar{" "}
+            </label>
             <select
               value={showOnNavbar}
               onChange={(e) => setShowOnNavbar(e.target.value)}
@@ -297,13 +331,12 @@ export default function CategoryEditForm({
               <option value="Yes">Yes</option>
               <option value="No">No</option>
             </select>
-            {errors.showOnNavbar && <p className="text-red-500 text-xs">{errors.showOnNavbar}</p>}
+            {errors.showOnNavbar && (
+              <p className="text-red-500 text-xs">{errors.showOnNavbar}</p>
+            )}
           </div>
 
-          <button
-            type="submit"
-            className="customSaveButton w-full mt-3"
-          >
+          <button type="submit" className="customSaveButton w-full mt-3">
             Save Changes
           </button>
         </form>

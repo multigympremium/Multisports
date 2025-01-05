@@ -72,7 +72,8 @@ export default function SubcategoryEditForm({
   const validateForm = () => {
     const errors = {};
     if (!category) errors.category = "Category is required";
-    if (!subcategoryName) errors.subcategoryName = "Subcategory name is required";
+    if (!subcategoryName)
+      errors.subcategoryName = "Subcategory name is required";
     if (!slug) errors.slug = "Slug is required";
 
     setErrors(errors);
@@ -166,19 +167,17 @@ export default function SubcategoryEditForm({
     setSubcategoryImage(null);
     setSubcategoryIconPreview("");
     setSubcategoryImagePreview("");
-    setErrors({})
+    setErrors({});
   };
 
   return (
-    <div className="w-[50%] rounded-2xl bg-gray-100 p-10 pb-7">
+    <div className="w-[100%] rounded-2xl bg-gray-100 p-10 pb-7">
       <div className="">
         <h1 className="text-3xl font-semibold mb-9">Edit Subcategory</h1>
         <form onSubmit={handleSubmit}>
           {/* Select Category */}
           <div className="mb-4">
-            <label className="block text-gray-700">
-              Select Category
-            </label>
+            <label className="block text-gray-700">Select Category</label>
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
@@ -198,9 +197,7 @@ export default function SubcategoryEditForm({
 
           {/* Subcategory Name */}
           <div className="mb-4">
-            <label className="block text-gray-700 ">
-              Subcategory Name
-            </label>
+            <label className="block text-gray-700 ">Subcategory Name</label>
             <input
               type="text"
               value={subcategoryName}
@@ -230,9 +227,7 @@ export default function SubcategoryEditForm({
 
           {/* Subcategory Icon */}
           <div className="mb-4">
-            <label className="block text-gray-700 mb-2">
-              Subcategory Icon
-            </label>
+            <label className="block text-gray-700 mb-2">Subcategory Icon</label>
             <div
               {...getIconRootProps()}
               className="w-full p-4 border-dashed min-h-[200px] flex flex-col items-center justify-center border-2 border-gray-300 rounded-md text-center cursor-pointer"
@@ -278,10 +273,7 @@ export default function SubcategoryEditForm({
 
           {/* Submit Button */}
           <div className="flex justify-end mt-5">
-            <button
-              type="submit"
-              className="customSaveButton"
-            >
+            <button type="submit" className="customSaveButton">
               Update Subcategory
             </button>
           </div>

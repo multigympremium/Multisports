@@ -12,6 +12,7 @@ import useAxiosSecure from "../../../Hook/useAxiosSecure";
 import EditButton from "../../../components library/EditButton";
 import DeleteButton from "../../../components library/DeleteButton";
 import { HiArrowCircleDown, HiArrowCircleUp } from "react-icons/hi";
+import BgBlurModal from "../../../shared/Modal/BgBlurModal";
 
 export default function ChildCategoryList() {
   const [currentPage, setCurrentPage] = useState(0);
@@ -50,8 +51,6 @@ export default function ChildCategoryList() {
     }
     setSortConfig({ key, direction });
   };
-
-
 
   const handlePageClick = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -101,18 +100,23 @@ export default function ChildCategoryList() {
   return (
     <div className="p-6 pt-0">
       <div className="">
-        <h1 className="text-3xl font-semibold header mb-9">Child Category List</h1>
+        <h1 className="text-3xl font-semibold header mb-9">
+          Child Category List
+        </h1>
         <table className="min-w-full table-auto border-collapse">
           <thead className="bg-gray-100">
             <tr>
-            
               <td
                 className="border flex justify-center items-center gap-2 text-lg p-2 text-center cursor-pointer"
                 onClick={() => handleSort("id")}
               >
                 SL{" "}
                 {sortConfig.key === "id" &&
-                  (sortConfig.direction === "asc" ? <HiArrowCircleUp className="text-[#087D6D] " /> : <HiArrowCircleDown className="text-[#E68923]" />)}
+                  (sortConfig.direction === "asc" ? (
+                    <HiArrowCircleUp className="text-[#087D6D] " />
+                  ) : (
+                    <HiArrowCircleDown className="text-[#E68923]" />
+                  ))}
               </td>
               <td className="border p-2 text-center text-lg">Icon</td>
               <td
@@ -123,7 +127,7 @@ export default function ChildCategoryList() {
                 {sortConfig.key === "childCategoryName" &&
                   (sortConfig.direction === "asc" ? "🔼" : "🔽")}
               </td>
-              
+
               <td
                 className="border p-2 text-center text-lg"
                 onClick={() => handleSort("category")}
@@ -154,39 +158,41 @@ export default function ChildCategoryList() {
             </tr>
           </thead>
           <tbody>
-            {paginatedData()?.length > 0 && paginatedData().map((category, index) => (
-              <tr key={category.id} className="border-b text-center">
-                
-                <td className="border p-2">
-                  {index + 1 + currentPage * itemsPerPage}
-                </td>
-                <td className="border p-2">
-                  <div className="flex justify-center ">
-                    <div className="rounded-full overflow-hidden border">
-                      <CellImage
-                        width={400}
-                        height={400}
-                        src={category.childCategoryIcon}
-                        alt="icon"
+            {paginatedData()?.length > 0 &&
+              paginatedData().map((category, index) => (
+                <tr key={category.id} className="border-b text-center">
+                  <td className="border p-2">
+                    {index + 1 + currentPage * itemsPerPage}
+                  </td>
+                  <td className="border p-2">
+                    <div className="flex justify-center ">
+                      <div className="rounded-full overflow-hidden border">
+                        <CellImage
+                          width={400}
+                          height={400}
+                          src={category.childCategoryIcon}
+                          alt="icon"
+                        />
+                      </div>
+                    </div>
+                  </td>
+
+                  <td className="border p-2">{category.childCategoryName}</td>
+
+                  <td className="border p-2">{category.category}</td>
+                  <td className="border p-2">{category.subcategory}</td>
+                  <td className="border p-2">{category.slug}</td>
+
+                  <td className="border p-2">
+                    <div className="flex justify-center space-x-2">
+                      <EditButton onClick={() => handleEdit(category._id)} />
+                      <DeleteButton
+                        onClick={() => handleDelete(category._id)}
                       />
                     </div>
-                  </div>
-                </td>
-
-                <td className="border p-2">{category.childCategoryName}</td>
-                
-                <td className="border p-2">{category.category}</td>
-                <td className="border p-2">{category.subcategory}</td>
-                <td className="border p-2">{category.slug}</td>
-
-                <td className="border p-2">
-                  <div className="flex justify-center space-x-2">
-                    <EditButton onClick={() => handleEdit(category._id)} />
-                    <DeleteButton onClick={() => handleDelete(category._id)} />
-                  </div>
-                </td>
-              </tr>
-            ))}
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
 
@@ -198,23 +204,24 @@ export default function ChildCategoryList() {
             <button
               key={pageIndex}
               onClick={() => handlePageClick(pageIndex)}
-              className={`px-3 py-1 border rounded-md ${currentPage === pageIndex
+              className={`px-3 py-1 border rounded-md ${
+                currentPage === pageIndex
                   ? "bg-blue-500 text-white"
                   : "hover:bg-gray-200"
-                }`}
+              }`}
             >
               {pageIndex + 1}
             </button>
           ))}
         </div>
       </div>
-      <Modal isShowModal={isEdited} setIsShowModal={setIsEdited}>
+      <BgBlurModal isShowModal={isEdited} setIsShowModal={setIsEdited}>
         <ChildCategoryEditForm
           targetId={targetId}
           setIsShowModal={setIsEdited}
           isShowModal={isEdited}
         />
-      </Modal>
+      </BgBlurModal>
     </div>
   );
 }

@@ -9,6 +9,7 @@ import Modal from "../../../shared/Modal/Modal";
 import SubcategoryEditForm from "./SubcategoryEditForm";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
+import BgBlurModal from "../../../shared/Modal/BgBlurModal";
 
 export default function SubcategoryList() {
   const [currentPage, setCurrentPage] = useState(0);
@@ -19,8 +20,6 @@ export default function SubcategoryList() {
   const [isDeleted, setIsDeleted] = useState(false);
   const [isEdited, setIsEdited] = useState(false);
   const [subcategoryId, setSubCategoryId] = useState("");
-
-
 
   const sortedsubCategories = useCallback(() => {
     const sortedData = [...subcategories];
@@ -36,8 +35,6 @@ export default function SubcategoryList() {
     return sortedData;
   }, [subcategories, sortConfig]);
 
-
-
   const paginatedData = useCallback(() => {
     const offset = currentPage * itemsPerPage;
     return sortedsubCategories().slice(offset, offset + itemsPerPage);
@@ -50,8 +47,6 @@ export default function SubcategoryList() {
     }
     setSortConfig({ key, direction });
   };
-
-
 
   const handlePageClick = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -128,7 +123,11 @@ export default function SubcategoryList() {
               >
                 SL{" "}
                 {sortConfig.key === "id" &&
-                  (sortConfig.direction === "asc" ? <HiArrowCircleUp className="text-[#087D6D] " /> : <HiArrowCircleDown className="text-[#E68923]" />)}
+                  (sortConfig.direction === "asc" ? (
+                    <HiArrowCircleUp className="text-[#087D6D] " />
+                  ) : (
+                    <HiArrowCircleDown className="text-[#E68923]" />
+                  ))}
               </td>
               <td
                 className="border p-2 text-center cursor-pointer"
@@ -161,57 +160,60 @@ export default function SubcategoryList() {
             </tr>
           </thead>
           <tbody>
-            {paginatedData()?.length > 0 && paginatedData().map((category, index) => (
-              <tr key={category.id} className="border-b text-center">
-                <td className="border p-2">
-                  {index + 1 + currentPage * itemsPerPage}
-                </td>
-                <td className="border p-2">{category.subcategoryName}</td>
-                <td className="border p-2">
-                  <div>
-                    <div className="border rounded-full overflow-hidden">
-                      <CellImage
-                        width={400}
-                        height={400}
-                        src={category.subcategoryIcon}
-                        alt="icon"
-                      />
-                    </div>
-                  </div>
-                </td>
-                <td className="border p-2">
-                  <div className="flex justify-center">
+            {paginatedData()?.length > 0 &&
+              paginatedData().map((category, index) => (
+                <tr key={category.id} className="border-b text-center">
+                  <td className="border p-2">
+                    {index + 1 + currentPage * itemsPerPage}
+                  </td>
+                  <td className="border p-2">{category.subcategoryName}</td>
+                  <td className="border p-2">
                     <div>
-                      <CellImage
-                        width={400}
-                        height={400}
-                        src={category.subcategoryImage}
-                        alt="banner"
+                      <div className="border rounded-full overflow-hidden">
+                        <CellImage
+                          width={400}
+                          height={400}
+                          src={category.subcategoryIcon}
+                          alt="icon"
+                        />
+                      </div>
+                    </div>
+                  </td>
+                  <td className="border p-2">
+                    <div className="flex justify-center">
+                      <div>
+                        <CellImage
+                          width={400}
+                          height={400}
+                          src={category.subcategoryImage}
+                          alt="banner"
+                        />
+                      </div>
+                    </div>
+                  </td>
+                  <td className="border p-2">{category.slug}</td>
+                  <td className="border p-2">
+                    {category.featureCategory === "Yes" ? (
+                      <span className="bg-green-500 text-white px-2 py-1 rounded-md">
+                        Featured
+                      </span>
+                    ) : (
+                      <span>No</span>
+                    )}
+                  </td>
+                  <td className="border p-2">
+                    {category.showOnNavbar ? "Yes" : "No"}
+                  </td>
+                  <td className="border p-2">
+                    <div className="flex  justify-center space-x-2">
+                      <EditButton onClick={() => handleEdit(category._id)} />
+                      <DeleteButton
+                        onClick={() => handleDelete(category._id)}
                       />
                     </div>
-                  </div>
-                </td>
-                <td className="border p-2">{category.slug}</td>
-                <td className="border p-2">
-                  {category.featureCategory === "Yes" ? (
-                    <span className="bg-green-500 text-white px-2 py-1 rounded-md">
-                      Featured
-                    </span>
-                  ) : (
-                    <span>No</span>
-                  )}
-                </td>
-                <td className="border p-2">
-                  {category.showOnNavbar ? "Yes" : "No"}
-                </td>
-                <td className="border p-2">
-                  <div className="flex  justify-center space-x-2">
-                    <EditButton onClick={() => handleEdit(category._id)} />
-                    <DeleteButton onClick={() => handleDelete(category._id)} />
-                  </div>
-                </td>
-              </tr>
-            ))}
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
 
@@ -223,23 +225,24 @@ export default function SubcategoryList() {
             <button
               key={pageIndex}
               onClick={() => handlePageClick(pageIndex)}
-              className={`px-3 py-1 border rounded-md ${currentPage === pageIndex
-                ? "bg-blue-500 text-white"
-                : "hover:bg-gray-200"
-                }`}
+              className={`px-3 py-1 border rounded-md ${
+                currentPage === pageIndex
+                  ? "bg-blue-500 text-white"
+                  : "hover:bg-gray-200"
+              }`}
             >
               {pageIndex + 1}
             </button>
           ))}
         </div>
       </div>
-      <Modal isShowModal={isEdited} setIsShowModal={setIsEdited}>
+      <BgBlurModal isShowModal={isEdited} setIsShowModal={setIsEdited}>
         <SubcategoryEditForm
           subcategoryId={subcategoryId}
           setIsShowModal={setIsEdited}
           isShowModal={isEdited}
         />
-      </Modal>
+      </BgBlurModal>
     </div>
   );
 }
