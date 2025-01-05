@@ -24,50 +24,50 @@ const SelectableList = ({
     <div className="space-y-4">
       {items.length == 0
         ? // Loading skeleton when items.length is 0
-        Array.from({ length: 8 }).map((_, index) => (
-          <div
-            key={index}
-            className="flex items-center space-x-4 animate-pulse"
-          >
-            <div className="w-5 h-5 bg-gray-200 rounded"></div>
-            <div className="h-5 bg-gray-200 rounded-full w-2/3"></div>
-          </div>
-        ))
+          Array.from({ length: 8 }).map((_, index) => (
+            <div
+              key={index}
+              className="flex items-center space-x-4 animate-pulse"
+            >
+              <div className="w-5 h-5 bg-gray-200 rounded"></div>
+              <div className="h-5 bg-gray-200 rounded-full w-2/3"></div>
+            </div>
+          ))
         : // Actual items when items.length > 0
-        items.map((item, index) => (
-          <label
-            key={index}
-            className="flex items-center cursor-pointer transition-colors group"
-          >
-            <input
-              type="checkbox"
-              className="peer hidden"
-              checked={
-                slug
-                  ? selectedItems.includes(item[slug])
-                  : selectedItems.includes(item[labelKey])
-              }
-              onChange={() =>
-                slug
-                  ? toggleSelection(item["slug"], labelKey)
-                  : toggleSelection(item[labelKey], labelKey)
-              }
-            />
-            <span className="w-5 h-5 border-2 border-gray-200 rounded mr-4 flex items-center justify-center peer-checked:bg-black peer-checked:border-black group-hover:border-gray-700 transition-all duration-300 delay-100">
-              {selectedItems.includes(item[labelKey]) && (
-                <svg className="w-4 h-4 text-white" viewBox="0 0 24 24">
-                  <path
-                    fill="currentColor"
-                    d="M9 16.2l-4.2-4.2-1.4 1.4 5.6 5.6 12-12-1.4-1.4z"
-                  />
-                </svg>
-              )}
-            </span>
-            <p className="transition-all text-sm duration-300 delay-100">
-              {item[labelKey]}
-            </p>
-          </label>
-        ))}
+          items.map((item, index) => (
+            <label
+              key={index}
+              className="flex items-center cursor-pointer transition-colors group"
+            >
+              <input
+                type="checkbox"
+                className="peer hidden"
+                checked={
+                  slug
+                    ? selectedItems.includes(item[slug])
+                    : selectedItems.includes(item[labelKey])
+                }
+                onChange={() =>
+                  slug
+                    ? toggleSelection(item["slug"], labelKey)
+                    : toggleSelection(item[labelKey], labelKey)
+                }
+              />
+              <span className="w-5 h-5 border-2 border-gray-200 rounded mr-4 flex items-center justify-center peer-checked:bg-black peer-checked:border-black group-hover:border-gray-700 transition-all duration-300 delay-100">
+                {selectedItems.includes(item[labelKey]) && (
+                  <svg className="w-4 h-4 text-white" viewBox="0 0 24 24">
+                    <path
+                      fill="currentColor"
+                      d="M9 16.2l-4.2-4.2-1.4 1.4 5.6 5.6 12-12-1.4-1.4z"
+                    />
+                  </svg>
+                )}
+              </span>
+              <p className="transition-all text-sm duration-300 delay-100">
+                {item[labelKey]}
+              </p>
+            </label>
+          ))}
     </div>
   );
 };
@@ -229,8 +229,9 @@ function ProductPage() {
   const productBrands = useGetAllProductBrands({});
   const categories = useGetAllCategories({});
   const subcategories = useGetAllSubCategories({
-    query: `slug=${categoryFilter.length > 0 ? categoryFilter.join(",") : params.id
-      }`,
+    query: `slug=${
+      categoryFilter.length > 0 ? categoryFilter.join(",") : params.id
+    }`,
   });
   const productColors = useGetAllProductColors({});
   const productSizes = useGetAllProductSizes({});
@@ -310,7 +311,7 @@ function ProductPage() {
   return (
     <div>
       <div className="border-b hidden md:block">
-      <HorizontalMenu/>
+        <HorizontalMenu />
       </div>
       <div className="flex lg:ml-12 flex-col">
         <div className="block md:hidden mt-3">
@@ -426,7 +427,6 @@ function ProductPage() {
                 </div>
               </section>
 
-
               <div className="space-y-4">
                 <ProductFilterGroup groupName="Categories">
                   <SelectableList
@@ -477,114 +477,6 @@ function ProductPage() {
               </div>
             </ul>
           </div>
-<<<<<<< HEAD
-        </DrawerComponent>
-      </div>
-      <div className="flex  flex-1 relative z-[1] ">
-        <div
-          className={`hidden md:block transition-all duration-500  overflow-auto absolute top-0 left-0 lg:relative pt-8 z-[3] w-[300px]`}
-        >
-          <ul className="menu gap-3">
-            {/* Filtering section */}
-            <section className="border-b">
-              <p className="text-sm">
-                <span className="text-gray-500">Home </span> / Products
-              </p>
-              <div className="mt-12">
-                <div className="flex justify-between items-center">
-                  <p className="text-3xl font-normal">Filters</p>
-                  <p
-                    onClick={() => {
-                      setSelectedItems([]);
-                    }}
-                    className="text-sm cursor-pointer"
-                  >
-                    Clear All
-                  </p>
-                </div>
-                {/* items here */}
-                {selectedItems && (
-                  <div className="my-7 flex flex-wrap gap-2">
-                    {/* <p className="border max-w-min py-2 px-4 rounded-2xl bg-slate-50">itfems</p> */}
-                    {selectedItems.map((item, indx) => {
-                      return (
-                        <p
-                          key={indx}
-                          onClick={() => handleRemoveItem(item)}
-                          className="border py-2 px-4 rounded-2xl bg-slate-50 hover:bg-red-500 hover:text-white cursor-pointer transition-all duration-300 ease-in-out transform active:scale-95 flex items-center gap-2"
-                        >
-                          {item}{" "}
-                          <RiDeleteBin7Line className="transition-transform duration-300 ease-in-out group-hover:rotate-12" />
-                        </p>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
-            </section>
-
-            <div className="space-y-4">
-              <ProductFilterGroup groupName="Categories">
-                <SelectableList
-                  items={categories}
-                  toggleSelection={toggleSelection}
-                  selectedItems={selectedItems}
-                  labelKey="categoryName"
-                  slug={"slug"}
-                />
-              </ProductFilterGroup>
-              <ProductFilterGroup groupName="Subcategories">
-                <SelectableList
-                  items={subcategories}
-                  toggleSelection={toggleSelection}
-                  selectedItems={selectedItems}
-                  labelKey="subcategoryName"
-                  slug={"slug"}
-                />
-              </ProductFilterGroup>
-
-              <ProductFilterGroup groupName="Brands">
-                <SelectableList
-                  items={productBrands}
-                  toggleSelection={toggleSelection}
-                  selectedItems={selectedItems}
-                  labelKey="brandName"
-                  slug={"slug"}
-                />
-              </ProductFilterGroup>
-
-              <ProductFilterGroup groupName="Colors">
-                <SelectableList
-                  items={productColors}
-                  toggleSelection={toggleSelection}
-                  selectedItems={selectedItems}
-                  labelKey="productColorName"
-                />
-              </ProductFilterGroup>
-
-              <ProductFilterGroup groupName="Sizes">
-                <SelectableList
-                  items={productSizes}
-                  toggleSelection={toggleSelection}
-                  selectedItems={selectedItems}
-                  labelKey="sizeName"
-                />
-              </ProductFilterGroup>
-            </div>
-          </ul>
-        </div>
-        <div className="flex-1 md:px-14 md:py-9 p-4 overflow-auto dark:bg-white relative">
-          <ProductsArea
-            // slug={params.id}
-            slug={""}
-            sizeFilter={sizeFilter}
-            colorFilter={colorFilter}
-            brandFilter={brandFilter}
-            query={location.search}
-            subcategoryFilter={subcategoryFilter}
-            categoryFilter={categoryFilter}
-          />
-=======
           <div className="flex-1 md:px-14 md:py-9 p-4 overflow-auto dark:bg-white relative">
             <ProductsArea
               slug={params.id}
@@ -596,7 +488,6 @@ function ProductPage() {
               categoryFilter={categoryFilter}
             />
           </div>
->>>>>>> af3ce5f7695a0284632a5af690adc0ba440dd50d
         </div>
       </div>
     </div>
