@@ -422,60 +422,6 @@ function ProductPage() {
               </div>
             </section>
 
-            {/* <GroupLink groupName="Categories" icon={<FaUser />}>
-              {subcategories.length > 0 &&
-                subcategories.map((item, index) => (
-                  <ActiveLink key={index} href={`/products/${item.slug}`}>
-                    {item.subcategoryName}
-                  </ActiveLink>
-                ))}
-            </GroupLink> */}
-
-            {/* <GroupLink groupName="Brands" icon={<FaUser />}>
-              {productBrands?.length > 0 &&
-                productBrands?.map((item, index) => (
-                  <FilterRadioInput
-                    label={item.brandName}
-                    id={item.slug}
-                    key={index}
-                    name={item.slug}
-                    value={item.slug}
-                    checked={brandFilter.includes(item.slug)}
-                    onChange={handleFilterChange}
-                    type="brand"
-                  />
-                ))}
-            </GroupLink> */}
-
-            {/* <GroupLink groupName="Colors" icon={<FaUser />}>
-              {productColors?.length > 0 &&
-                productColors?.map((item, index) => (
-                  <FilterRadioInput
-                    label={item.productColorName}
-                    id={item.productColorName}
-                    key={index}
-                    name={item.productColorName}
-                    checked={colorFilter.includes(item.productColorName)}
-                    onChange={handleFilterChange}
-                    type="color"
-                  />
-                ))}
-            </GroupLink> */}
-
-            {/* <GroupLink groupName="Sizes" icon={<FaUser />}>
-              {productSizes?.length > 0 &&
-                productSizes?.map((item, index) => (
-                  <FilterRadioInput
-                    label={item.sizeName}
-                    id={item.sizeName}
-                    key={index}
-                    name={item.sizeName}
-                    checked={sizeFilter.includes(item.sizeName)}
-                    onChange={handleFilterChange}
-                    type="size"
-                  />
-                ))}
-            </GroupLink> */}
             <div className="space-y-4">
               <ProductFilterGroup groupName="Categories">
                 <SelectableList
