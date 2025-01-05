@@ -5,10 +5,7 @@ import Swal from "sweetalert2";
 import useAxiosSecure from "../../../../Hook/useAxiosSecure";
 import { set } from "react-hook-form";
 
-export default function CreateFAQForm({
-  isShowModal,
-  setIsShowModal,
-}) {
+export default function CreateFAQForm({ isShowModal, setIsShowModal }) {
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
 
@@ -63,15 +60,13 @@ export default function CreateFAQForm({
   };
 
   return (
-    <div className="w-[40%]">
+    <div className="w-full">
       <div className="w-full mx-auto bg-white p-8 shadow-md rounded-md">
         <h1 className="text-2xl font-semibold mb-7">Create question Form</h1>
         <form onSubmit={handleSubmit}>
           {/* Model Name */}
           <div className="mb-4">
-            <label className="block text-gray-700 ">
-              Question 
-            </label>
+            <label className="block text-gray-700 ">Question</label>
             <input
               type="text"
               value={question}
@@ -82,9 +77,7 @@ export default function CreateFAQForm({
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700">
-              Answer
-            </label>
+            <label className="block text-gray-700">Answer</label>
             <textarea
               type="text"
               value={answer}
@@ -105,11 +98,8 @@ export default function CreateFAQForm({
               Cancel
             </button>
 
-            <button
-              type="submit"
-              className="customSaveButton"
-            >
-              Save 
+            <button type="submit" className="customSaveButton">
+              Save
             </button>
           </div>
         </form>

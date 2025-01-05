@@ -2,11 +2,12 @@
 import { AuthContext } from "../../providers/AuthProvider";
 import { useContext, useEffect, useState } from "react";
 import CartItemComponent from "./CartItemComponent";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import calculateDiscounts from "../../helpers/calculateDiscount";
 import useAxiosPublic from "../../Hook/useAxiosPublic";
 
 const Cart = ({ isShow, setIsShow }) => {
+  const navigate = useNavigate();
   const {
     cartItems,
     removeFromCart,
@@ -106,29 +107,29 @@ const Cart = ({ isShow, setIsShow }) => {
             </div>
           </div>
 
-          <div className="mt-4 grid grid-cols-4 gap-4 text-center">
-            <Link
-              to={"/cart"}
-              className="col-span-2"
-              onClick={() => setIsShow(false)}
+          <div className="mt-4 grid grid-cols-2 gap-4 text-center">
+            <label
+              className="  text-sm border border-black rounded-md px-5 py-2 w-full"
+              onClick={() => {
+                setIsShow(false);
+                navigate("/cart");
+              }}
+              htmlFor="my-cart"
             >
-              <button className="  text-sm border border-black rounded-md px-5 py-2 w-full">
-                View Cart
-              </button>
-            </Link>
+              View Cart
+            </label>
 
-            <Link
-              to={"/checkout"}
-              className="col-span-2"
-              onClick={() => setIsShow(false)}
+            <label
+              type="button"
+              className="px-4 py-2 bg-black text-white rounded w-full"
+              onClick={() => {
+                setIsShow(false);
+                navigate("/checkout");
+              }}
+              htmlFor="my-cart"
             >
-              <button
-                type="button"
-                className="px-4 py-2 bg-black text-white rounded w-full"
-              >
-                Checkout
-              </button>
-            </Link>
+              Checkout
+            </label>
           </div>
         </div>
       </div>

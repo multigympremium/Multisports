@@ -17,6 +17,7 @@ import EditButton from "../../../../components library/EditButton";
 import { HiArrowCircleDown, HiArrowCircleUp } from "react-icons/hi";
 import TableSkeleton from "../../../../components library/TableSkeleton";
 import Mpagination from "../../../../shared/Mpagination";
+import BgBlurModal from "../../../../shared/Modal/BgBlurModal";
 
 const BlogCategories = () => {
   // State management
@@ -183,20 +184,20 @@ const BlogCategories = () => {
       </div>
 
       {/* Modal for Adding/Editing Brand */}
-      <Modal isShowModal={isShowModal} setIsShowModal={setIsShowModal}>
+      <BgBlurModal isShowModal={isShowModal} setIsShowModal={setIsShowModal}>
         <CreateBlogCategoryForm
           isShowModal={isShowModal}
           setIsShowModal={setIsShowModal}
         />
-      </Modal>
+      </BgBlurModal>
 
-      <Modal isShowModal={isEdited} setIsShowModal={setIsEdited}>
+      <BgBlurModal isShowModal={isEdited} setIsShowModal={setIsEdited}>
         <EditBlogCategoryForm
           isShowModal={isEdited}
           setIsShowModal={setIsEdited}
           targetId={targetId}
         />
-      </Modal>
+      </BgBlurModal>
     </>
   );
 };

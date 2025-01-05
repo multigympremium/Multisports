@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CustomImage from "../ImageComponents/CustomImage";
 import { IoMdClose } from "react-icons/io";
 
@@ -27,6 +27,10 @@ const CartItemComponent = ({
       });
     }
   };
+
+  useEffect(() => {
+    setQuantity(item.quantity);
+  }, [item.quantity]);
 
   return (
     <div className="flex items-center mb-4 relative border rounded-md p-2">

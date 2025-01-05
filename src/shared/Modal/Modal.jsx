@@ -2,7 +2,6 @@ import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
 import useAxiosPublic from "../../Hook/useAxiosPublic";
-import { IoClose } from "react-icons/io5";
 
 const Modal = ({
   id,
@@ -17,7 +16,6 @@ const Modal = ({
   isShowModal,
   product,
 }) => {
-  console.log(colors, "colors");
   const [trackingProduct, setTrackingProduct] = useState({});
   const [quantity, setQuantity] = useState(0);
   // const [sizes, setSizes] = useState([]);
@@ -80,7 +78,6 @@ const Modal = ({
     console.log(currentItem, "copy_product");
   }, [selectedSize, selectedColor, product, cartItems]);
 
-  console.log(selectedSize, selectedColor, "size, color", product, "product");
   return (
     <dialog id={id} className="modal">
       <div className=" modal-box p-0 rounded max-w-4xl w-[90%] mx-auto md:w-full flex flex-col md:flex-row">

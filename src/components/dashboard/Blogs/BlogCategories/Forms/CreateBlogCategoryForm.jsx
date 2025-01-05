@@ -4,7 +4,10 @@ import { useState } from "react";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../../../Hook/useAxiosSecure";
 
-export default function CreateBlogCategoryForm({ isShowModal, setIsShowModal }) {
+export default function CreateBlogCategoryForm({
+  isShowModal,
+  setIsShowModal,
+}) {
   const [blogCategory, setBlogCategory] = useState("");
 
   const axiosSecure = useAxiosSecure();
@@ -56,15 +59,15 @@ export default function CreateBlogCategoryForm({ isShowModal, setIsShowModal }) 
   };
 
   return (
-    <div className="w-[30%] rounded-2xl bg-gray-100 pb-8 p-10">
+    <div className="w-full rounded-2xl bg-gray-100 pb-8 p-10">
       <div className="">
-        <h1 className="text-2xl font-semibold mb-5">Create blog Category Form</h1>
+        <h1 className="text-2xl font-semibold mb-5">
+          Create blog Category Form
+        </h1>
         <form onSubmit={handleSubmit}>
           {/* Model Name */}
           <div className="mb-4">
-            <label className="block text-gray-700">
-              Category Name 
-            </label>
+            <label className="block text-gray-700">Category Name</label>
             <input
               type="text"
               value={blogCategory}
@@ -85,10 +88,7 @@ export default function CreateBlogCategoryForm({ isShowModal, setIsShowModal }) 
               Cancel
             </button>
 
-            <button
-              type="submit"
-              className="customSaveButton w-full"
-            >
+            <button type="submit" className="customSaveButton w-full">
               Save blogCategory
             </button>
           </div>

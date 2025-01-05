@@ -217,9 +217,7 @@ const Navbar = () => {
                     className="w-28 mix-blend-multiply dark:mix-blend-normal"
                     width={400}
                     height={400}
-                    src={
-                      "https://multisports.shop/images/site_setting/multi-sports_vi6P5.png"
-                    }
+                    src={"/logo.png"}
                     alt="logo"
                   />{" "}
                 </Link>
