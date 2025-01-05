@@ -5,6 +5,7 @@ import ProductCardWithGallery from "../../../shared/Cards/CardWithGallery/Produc
 import useGetAllProducts from "../../../Hook/GetPublicDataHook/useGetAllProducts";
 import { ThreeDots } from "react-loader-spinner";
 import Modal from "../../../shared/Modal/Modal";
+import ProductCard from "../../partial/ProductCard/ProductCard";
 
 function ProductsArea({
   slug,
@@ -34,11 +35,10 @@ function ProductsArea({
   const { products, totalItems, loading } = useGetAllProducts({
     query: `search=${slug}&color=${colorFilter.join(
       ","
-    )}&size=${sizeFilter.join(",")}&brand=${brandFilter.join(",")}&${
-      query.includes("product=") ? "product=" + query.split("=")[1] : ""
-    }&subcategory=${subcategoryFilter.join(",")}&category=${categoryFilter.join(
-      ","
-    )}&currentPage=${currentPage}&limit=${itemsPerPage}`,
+    )}&size=${sizeFilter.join(",")}&brand=${brandFilter.join(",")}&${query.includes("product=") ? "product=" + query.split("=")[1] : ""
+      }&subcategory=${subcategoryFilter.join(",")}&category=${categoryFilter.join(
+        ","
+      )}&currentPage=${currentPage}&limit=${itemsPerPage}`,
   });
 
   console.log(products, "products", totalItems, "totalItems");
@@ -53,16 +53,31 @@ function ProductsArea({
 
   return (
     <>
-      <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 min-h-screen">
+      <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-9  min-h-screen">
         {products && products?.length > 0 ? (
           products.map((product, index) => (
-            <ProductCardWithGallery
-              key={index}
-              product={product}
-              setTargetId={setTargetId}
-              setIsShowDetail={setIsShowDetail}
-              handleProductClick={handleProductClick}
-            />
+            // <ProductCardWithGallery
+            //   key={index}
+            //   product={product}
+            //   setTargetId={setTargetId}
+            //   setIsShowDetail={setIsShowDetail}
+            //   handleProductClick={handleProductClick}
+            // />
+
+            // key={index}
+            //       product={product}
+            //       handleProductClick={handleProductClick}
+            //       showNewArrival={true}
+            //       showDiscount={true}
+            <div className="">
+              <ProductCard
+                key={index}
+                product={product}
+                showDiscount={true}
+                isPopular={true}
+                handleProductClick={handleProductClick}
+              />
+            </div>
           ))
         ) : (
           <div className="flex justify-center items-center h-screen col-span-full">
