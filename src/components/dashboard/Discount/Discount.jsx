@@ -311,9 +311,9 @@ const DiscountForm = () => {
             />
             <input
               type="number"
-              name="promoDiscount"
+              name="promoCodeDiscount"
               className="input input-bordered w-full"
-              value={discounts?.promoDiscount}
+              value={discounts?.promoCodeDiscount}
               onChange={handleChange}
               placeholder="Promo Code Discount"
             />

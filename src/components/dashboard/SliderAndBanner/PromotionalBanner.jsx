@@ -89,8 +89,9 @@ export default function PromotionalBanner() {
     submitData.append("buttonText", buttonText);
     submitData.append("buttonLink", buttonLink);
     submitData.append("isActive", isActive);
-    submitData.append("image", thumbnail);
     submitData.append("color", color);
+    if (thumbnail) submitData.append("image", thumbnail);
+    // submitData.append("image", thumbnail);
 
     try {
       const res = targetId

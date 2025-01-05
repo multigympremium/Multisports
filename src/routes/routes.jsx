@@ -42,6 +42,7 @@ import AccountAddress from "../components/Home/my-account/AccountAddress";
 import ProductDetails from "../pages/OtherPage/product-details/page";
 import NewArrivals from "../components/Home/NewArrivals/NewArrivals";
 import ViewAllProduct from "../components/partial/ViewAllProduct/ViewAllProduct";
+import MyOrder from "../components/Home/my-account/MyOrder";
 
 const AllRoutes = () => {
   // const [permissionData, setPermissionData] = useState([]);
@@ -272,6 +273,10 @@ const AllRoutes = () => {
           // path: isPermittedRoute("userpermission"),
           element: <TailoredPages />,
         },
+        {
+          path: "my-account/orders/:id",
+          element: <MyOrder />,
+        },
       ],
     },
     {
@@ -311,6 +316,7 @@ const AllRoutes = () => {
           path: "orders",
           element: <OrdersTable />,
         },
+
         {
           path: "change-password",
           element: <ChangePassword />,

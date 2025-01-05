@@ -10,14 +10,22 @@ export default function PaymentMethodModal({
   isShow,
   setIsShow,
   shippingAddress,
-  courierMethod,
-  cartItems,
+  discount,
+  deliveryCharge,
+  coupon,
 }) {
   const axiosSecure = useAxiosPublic();
   const axiosCourier = useAxiosCourier();
   const router = useNavigate();
 
-  const { totalPrice } = useContext(AuthContext);
+  const {
+    totalPrice,
+    cartItems,
+    totalCartDiscount,
+    user,
+    setCartItems,
+    totalItems,
+  } = useContext(AuthContext);
 
   // const accessToken = useCourierAccessToken()
 
@@ -54,36 +62,7 @@ export default function PaymentMethodModal({
   //   }
   // }
 
-  const items = [
-    {
-      productTitle: "MENS CASUAL SHIRT",
-      shortDescription: "Short Description",
-      fullDescription:
-        '<p><strong style="color: rgb(55, 65, 81);">Full Description</strong></p>',
-      price: 522,
-      discountPrice: 5,
-      rewardPoints: 5,
-      stock: 5,
-      productCode: "54545",
-      metaTitle: "kk",
-      metaKeywords: "hg",
-      metaDescription: "hg",
-      specialOffer: true,
-      hasVariants: true,
-      thumbnail: "1728189072154-58acca94f0313e0f56c2b0aab45c9257.webp",
-      category: "Running",
-      brandValue: "Apple",
-      productColorValue: "#2aa73be8",
-      productSizeValue: "lg",
-      productFlagValue: "Flag Name Testing",
-      modelOfBrandValue: "one_t_5",
-      store_id: 126,
-      quantity: 1,
-      weight: "0.5",
-      size: "lg",
-      color: "black",
-    },
-  ];
+  const items = cartItems;
 
   const submitOrder = async () => {
     const submitOrderData = {
@@ -99,15 +78,23 @@ export default function PaymentMethodModal({
       special_instruction: shippingAddress.special_instruction,
       items: items,
       payment_method: "cash",
-      total: totalPrice,
+      total: totalPrice + deliveryCharge?.charge - discount,
       // courierMethod: courierMethod,
       itemCount: items.length,
+      discount: discount,
+      itemPerDiscount: totalCartDiscount,
+      deliveryCharge: deliveryCharge?.charge,
+      coupon: coupon,
+      userId: user._id,
+      totalItems: totalItems,
     };
     try {
       const response = await axiosSecure.post("/orders", submitOrderData);
       console.log(response);
 
       if (response.data.success) {
+        setCartItems([]);
+        localStorage.removeItem("cartItems");
         return router("/success");
       }
 

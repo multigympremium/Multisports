@@ -1,20 +1,17 @@
 // /pages/orders/[id].js
 
 import { useState, useEffect } from "react";
-import axios from "axios";
 import moment from "moment";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
 import CustomImage from "../../../shared/ImageComponents/CustomImage";
 import GlobalLoading from "../../../components library/GlobalLoading";
-import toast from "react-hot-toast";
 
-export default function OrderDetail({
-  id,
-  isShow,
-  setIsShow,
-  isStatus = true,
-}) {
+import { useParams } from "react-router-dom";
+
+export default function MyOrder() {
   const axiosSecure = useAxiosSecure();
+  const id = useParams()?.id;
+  console.log(id, "id my order");
 
   const [order, setOrder] = useState(null);
   const [status, setStatus] = useState("");
@@ -34,21 +31,8 @@ export default function OrderDetail({
 
     if (id) {
       fetchOrder();
-      console.log(isShow, "isShow", id);
     }
-  }, [id, isShow]);
-
-  const handleStatusChange = async (e) => {
-    const newStatus = e.target.value;
-    setStatus(newStatus);
-    try {
-      await axiosSecure.put(`/orders/${id}`, { status: newStatus });
-      toast.success("Order status updated successfully!");
-      setIsShow(false);
-    } catch (error) {
-      console.error("Error updating status:", error);
-    }
-  };
+  }, [axiosSecure, id]);
 
   const handlePropertyName = (name) => {
     switch (name) {
@@ -58,6 +42,10 @@ export default function OrderDetail({
         return "item Per Discount";
       case "createdAt":
         return "created At";
+      case "totalItems":
+        return "Total Items";
+      case "updatedAt":
+        return "updated At";
       default:
         return name.replaceAll("_", " ");
     }
@@ -95,12 +83,12 @@ export default function OrderDetail({
     setOrderDetail(newArrayData);
   }, [order]);
 
-  if (!order) {
-    return <GlobalLoading />;
-  }
+  //   if (!order) {
+  //     return <GlobalLoading />;
+  //   }
 
   return (
-    <div className="w-full h-[85vh] overflow-auto mt-6 mx-auto p-6 bg-white rounded-2xl">
+    <div className="w-full  mt-6 mx-auto p-6 bg-white rounded-2xl">
       <h2 className="text-3xl font-semibold mb-6 text-center text-gray-800">
         Order Details
       </h2>
@@ -145,22 +133,6 @@ export default function OrderDetail({
             );
           }
         })}
-
-        {isStatus && (
-          <p className="mb-2 w-[48%] flex justify-between items-center  mt-3">
-            <strong>Status:</strong>
-            <select
-              value={status}
-              onChange={handleStatusChange}
-              className=" select ml-4 border-gray-200 outline-none select-sm"
-            >
-              <option value="Pending">Pending</option>
-              <option value="Accepted">Accepted</option>
-              <option value="Completed">Completed</option>
-              <option value="Cancelled">Cancelled</option>
-            </select>
-          </p>
-        )}
       </div>
 
       {/* Products */}

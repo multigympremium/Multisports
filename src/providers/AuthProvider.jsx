@@ -41,7 +41,8 @@ const AuthProvider = ({ children }) => {
   // Update cart totals whenever cart items change
   useEffect(() => {
     const cartItemData = localStorage.getItem("cartItems");
-    const parsedCartItemData = JSON.parse(cartItemData);
+
+    const parsedCartItemData = cartItemData ? JSON.parse(cartItemData) : [];
     const totalItemsInfo = parsedCartItemData.reduce(
       (acc, item) => acc + item.quantity,
       0
@@ -93,7 +94,7 @@ const AuthProvider = ({ children }) => {
   };
 
   // Add item to cart
-  const addToCart = (item, color, size) => {
+  const addToCart = (item, color, size, colorName) => {
     const product = { ...item };
     if (
       (product.specialOffer === true || product.specialOffer == "true") &&
@@ -126,7 +127,10 @@ const AuthProvider = ({ children }) => {
         );
       } else {
         // Add new item to cart
-        initialItems = [...prevItems, { ...product, color, size, quantity: 1 }];
+        initialItems = [
+          ...prevItems,
+          { ...product, color, size, quantity: 1, colorName },
+        ];
       }
 
       localStorage.setItem("cartItems", JSON.stringify(initialItems));
