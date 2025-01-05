@@ -41,6 +41,7 @@ import AccountDashboard from "../components/Home/my-account/AccountDashboard";
 import AccountAddress from "../components/Home/my-account/AccountAddress";
 import ProductDetails from "../pages/OtherPage/product-details/page";
 import NewArrivals from "../components/Home/NewArrivals/NewArrivals";
+import ViewAllProduct from "../components/partial/ViewAllProduct/ViewAllProduct";
 import MyOrder from "../components/Home/my-account/MyOrder";
 
 const AllRoutes = () => {
@@ -75,6 +76,7 @@ const AllRoutes = () => {
             // <PublicRoute>
             // </PublicRoute>
             <NewArrivals limit={40} isShowSeeAll={false} />
+            // <ViewAllProduct/>
           ),
         },
         {

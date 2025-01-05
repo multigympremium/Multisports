@@ -57,7 +57,7 @@ const PromoBanner = ({ promoData }) => {
         <p className="md:text-xl uppercase md:mb-8">{titleText}</p>
         <a
           href={buttonLink}
-          className=" text-white cursor-pointer py-2 px-6 font-medium  border-white border-[4px]  transition"
+          className=" text-white cursor-pointer py-2 px-6 font-medium  border-white md:border-[4px]  transition"
         >
           {buttonText}
         </a>

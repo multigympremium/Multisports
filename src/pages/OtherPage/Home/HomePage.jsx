@@ -20,6 +20,7 @@ import HorizontalMenu from "../../../shared/HorizontalMenu/HorizontalMenu";
 import MostPopular from "../../../components/Home/MostPopular/MostPopular";
 import BestSelling from "../../../components/Home/BestSelling/BestSelling";
 import SpecialDiscount from "../../../components/Home/SpecialDiscount/SpecialDiscount";
+import Banner4 from "../../../components/Home/Banner/Banner4";
 export const metadata = {
   title: "Universal Survey - Home",
   description:
@@ -58,6 +59,7 @@ const HomePage = () => {
         <NewArrivals />
         <Category />
         <Featured />
+        <Banner4/>
         <MostPopular/>
         <PromotionalBanner />
         <BestSelling/>
