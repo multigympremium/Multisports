@@ -299,6 +299,13 @@ function ProductPage() {
     });
   }, []);
 
+  useEffect(() => {
+    const filteredSubcategories = subcategories.map((item) => item.category);
+    const uniqueCategories = [...new Set(filteredSubcategories)];
+    console.log(uniqueCategories, "filteredSubcategories");
+    setCategoryFilter(uniqueCategories);
+  }, [subcategories]);
+
   console.log(params, router, "search");
   return (
     <div className="flex ml-12 flex-col">
@@ -521,7 +528,8 @@ function ProductPage() {
         </div>
         <div className="flex-1 md:px-14 md:py-9 p-4 overflow-auto dark:bg-white relative">
           <ProductsArea
-            slug={params.id}
+            // slug={params.id}
+            slug={""}
             sizeFilter={sizeFilter}
             colorFilter={colorFilter}
             brandFilter={brandFilter}
