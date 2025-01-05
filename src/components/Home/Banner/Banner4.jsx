@@ -9,7 +9,7 @@ import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import useGetAllBagBanners from "../../../Hook/GetPublicDataHook/useGetAllBagBanners";
 
 const SkeletonCarousel = () => (
-    <div className="relative w-full h-[150px] md:h-[800px] animate-pulse">
+    <div className="relative w-[90%] mx-auto  md:w-full h-[170px] my-4 md:my-9 md:h-[800px] animate-pulse">
         <div className="w-full h-full bg-gray-300 rounded-lg"></div>
         {/* <div className="absolute top-1/2 -translate-y-1/2 left-3 md:left-12 w-7 h-7 md:w-11 md:h-11 bg-gray-400 rounded-full"></div>
         <div className="absolute top-1/2 -translate-y-1/2 right-3 md:right-12 w-7 h-7 md:w-11 md:h-11 bg-gray-400 rounded-full"></div> */}
@@ -40,7 +40,7 @@ const CustomCarousel = ({ slides }) => {
     }, []);
 
     return (
-        <div className="relative w-full h-[150px] my-9 md:h-[800px]">
+        <div className="relative  w-[90%] mx-auto  md:w-full h-[170px] my-4 md:my-9 md:h-[800px]">
             <Swiper
                 modules={[Navigation, Autoplay]}
                 autoplay={{
@@ -55,7 +55,7 @@ const CustomCarousel = ({ slides }) => {
                 onSwiper={(swiper) => {
                     swiperRef.current = swiper;
                 }}
-                className="h-full"
+                className="h-full rounded md:rounded-none"
             >
                 {slides.map((slide) => (
                     <SwiperSlide
@@ -67,7 +67,7 @@ const CustomCarousel = ({ slides }) => {
                             backgroundRepeat: 'no-repeat',
                         }}
                     >
-                        <div className="h-full flex items-center justify-center">
+                        <div className="h-full  flex items-center justify-center">
                             {/* Add your content here if needed */}
                         </div>
                     </SwiperSlide>
@@ -95,8 +95,8 @@ const CustomCarousel = ({ slides }) => {
                     <div
                         key={index}
                         className={`transition-all duration-300 cursor-pointer ${activeIndex === index
-                                ? 'bg-white w-3 md:w-4 h-3 md:h-4 rounded-full scale-125 shadow-md '
-                                : 'bg-transparent border border-white w-2 md:w-6 h-2 md:h-4 rounded-full hover:scale-110'
+                                ? 'bg-white w-2 md:w-4 h-2 md:h-4 rounded-full scale-125 shadow-md '
+                                : 'bg-transparent border border-white w-3 md:w-6 h-2 md:h-4 rounded-full hover:scale-110'
                             }`}
                         onClick={() => swiperRef.current.slideToLoop(index)}
                     ></div>

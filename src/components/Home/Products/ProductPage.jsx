@@ -519,7 +519,7 @@ function ProductPage() {
             </div>
           </ul>
         </div>
-        <div className="flex-1 p-4 overflow-auto dark:bg-white relative">
+        <div className="flex-1 md:px-14 md:py-9 p-4 overflow-auto dark:bg-white relative">
           <ProductsArea
             slug={params.id}
             sizeFilter={sizeFilter}

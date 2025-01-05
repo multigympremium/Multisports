@@ -48,16 +48,16 @@ const PromoBanner = ({ promoData }) => {
 
   return (
     <div
-      className="flex items-center justify-between md:px-40 md:py-40 rounded-xl"
+      className="flex items-center py-16 px-5 justify-between md:px-40 md:py-40 rounded-xl"
       style={{ backgroundColor: color }}
     >
       {/* Text Section */}
       <div className="text-white">
-        <h1 className="md:text-6xl font-bold md:mb-8">{headerText}</h1>
-        <p className="md:text-xl uppercase md:mb-8">{titleText}</p>
+        <h1 className="md:text-6xl text-xl font-semibold md:font-bold md:mb-8">{headerText}</h1>
+        <p className="md:text-xl text-sm uppercase md:mb-8 ">{titleText}</p>
         <a
           href={buttonLink}
-          className=" text-white cursor-pointer py-2 px-6 font-medium  border-white md:border-[4px]  transition"
+          className=" text-white cursor-pointer md:py-2 px-2 mt-2 md:px-6 text-sm md:text-base md:font-medium  border-white border md:border-[4px]  transition"
         >
           {buttonText}
         </a>
@@ -68,7 +68,7 @@ const PromoBanner = ({ promoData }) => {
         <img
           src={`https://mgpwebaps.s3.eu-north-1.amazonaws.com/multi-sports/${image}`}
           alt="Promo"
-          className="w-64 h-auto rounded-md shadow-lg"
+          className="md:w-64 h-auto rounded-md"
         />
       </div>
     </div>
