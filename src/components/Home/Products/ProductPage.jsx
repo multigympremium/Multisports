@@ -12,6 +12,7 @@ import { IoMdArrowBack } from "react-icons/io";
 import { PiSlidersHorizontal } from "react-icons/pi";
 import useGetAllCategories from "../../../Hook/GetDataHook/useGetAllCategories";
 import HorizontalMenu from "../../../shared/HorizontalMenu/HorizontalMenu";
+import Suggestion from "./Suggestion";
 
 const SelectableList = ({
   items,
@@ -312,6 +313,10 @@ function ProductPage() {
     <div>
       <div className="border-b hidden md:block">
         <HorizontalMenu />
+      </div>
+      {/* suggestion bar */}
+      <div className="w-[90%] mx-auto bg-slate-100 px-20 py-20 ">
+        <Suggestion params={params.id}/>
       </div>
       <div className="flex lg:ml-12 flex-col">
         <div className="block md:hidden mt-3">
