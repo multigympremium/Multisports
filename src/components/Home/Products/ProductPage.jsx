@@ -312,10 +312,12 @@ function ProductPage() {
   return (
     <div>
       {/* suggestion bar */}
+
       <div className="w-[90%] mx-auto my-10">
         <div>
           <Suggestion toggleSelection={toggleSelection} subcategories={subcategories} />
         </div>
+
 
       </div>
       <div className="flex lg:ml-12 flex-col">
