@@ -1,5 +1,10 @@
-import useGetAllSubCategories from "../../../Hook/GetDataHook/useGetAllSubCategories";
-
+import 'swiper/css';
+import 'swiper/css/navigation';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation } from 'swiper/modules';
+import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
+import { useEffect, useRef, useState } from 'react';
+import { baseImageUrl } from '../../../apis/apis';
 const Suggestion = ({ subcategories, toggleSelection }) => {
     // const subcategories = useGetAllSubCategories({
     //     query: `slug=${params}`,
@@ -25,7 +30,7 @@ const Suggestion = ({ subcategories, toggleSelection }) => {
                     }}
                     spaceBetween={0}
                     slidesPerView={3}
-                    // centeredSlides={true}
+                    centeredSlides={true}
                     breakpoints={{
                         768: { slidesPerView: 3 },
                         1024: { slidesPerView: 7 },
