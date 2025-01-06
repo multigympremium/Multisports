@@ -391,6 +391,9 @@ function ProductPage() {
                 <div
                   className="w-full h-[220px] max-w-[220px] flex flex-col items-center justify-center gap-2 group flex-shrink-0 lg:flex-shrink  "
                   key={index}
+                  onClick={() =>
+                    toggleSelection(item["slug"], "subcategoryName")
+                  }
                 >
                   <div className="w-full aspect-square rounded-full overflow-hidden">
                     <img
@@ -501,7 +504,7 @@ function ProductPage() {
           </div>
           <div className="flex-1 md:px-14 md:py-9 p-4 overflow-auto dark:bg-white relative">
             <ProductsArea
-              slug={params.id}
+              slug={""}
               sizeFilter={sizeFilter}
               colorFilter={colorFilter}
               brandFilter={brandFilter}

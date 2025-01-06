@@ -28,10 +28,10 @@ const Wishlist = ({ isShow }) => {
             style={{ scrollbarWidth: "thin" }}
           >
             {wishlist?.length > 0 &&
-              wishlist?.map((item) => (
+              wishlist?.map((item, index) => (
                 <WishlistItemComponent
                   item={item}
-                  key={item._id}
+                  key={index}
                   removeFromWishlist={removeFromWishlist}
                 />
               ))}

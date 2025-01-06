@@ -177,7 +177,7 @@ const CustomPages = () => {
               <tbody>
                 {paginatedData?.length > 0 &&
                   paginatedData.map((item, index) => (
-                    <tr key={item._id} className="border-b">
+                    <tr key={index} className="border-b">
                       <td className="border p-2 text-center">
                         {index + 1 + currentPage * itemsPerPage}
                       </td>

@@ -13,12 +13,12 @@ export default function ViewCart() {
       style={{ scrollbarWidth: "thin" }}
     >
       {cartItems?.length > 0 &&
-        cartItems?.map((item) => (
+        cartItems?.map((item, index) => (
           <CartItemComponent
             item={item}
             updateCartQuantity={updateCartQuantity}
             removeFromCart={removeFromCart}
-            key={item._id}
+            key={index}
           />
         ))}
     </div>

@@ -520,7 +520,7 @@ export default function EditableTableColumn({
               {productSizeValue?.length > 0 &&
                 productSizeValue.map((item, index) => (
                   <li
-                    key={item._id}
+                    key={index}
                     className="px-3 py-1 border border-black text-sm capitalize relative rounded-lg"
                   >
                     {item?.label}
