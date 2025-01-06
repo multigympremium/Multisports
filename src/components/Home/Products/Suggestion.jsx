@@ -1,13 +1,10 @@
-import { baseImageUrl } from "../../../apis/apis";
-import useGetAllSubCategories from "../../../Hook/GetDataHook/useGetAllSubCategories";
 import 'swiper/css';
 import 'swiper/css/navigation';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import { useEffect, useRef, useState } from 'react';
-import { Link } from "react-router-dom";
-
+import { baseImageUrl } from '../../../apis/apis';
 const Suggestion = ({ subcategories, toggleSelection }) => {
     // const subcategories = useGetAllSubCategories({
     //     query: `slug=${params}`,
@@ -91,6 +88,7 @@ const Suggestion = ({ subcategories, toggleSelection }) => {
                     <IoIosArrowForward className="text-base" />
                 </button>
             </div>
+
 
         </div>
     );
