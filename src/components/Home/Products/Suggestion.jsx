@@ -8,10 +8,10 @@ import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import { useEffect, useRef, useState } from 'react';
 import { Link } from "react-router-dom";
 
-const Suggestion = ({ params }) => {
-    const subcategories = useGetAllSubCategories({
-        query: `slug=${params}`,
-    });
+const Suggestion = ({ subcategories, toggleSelection }) => {
+    // const subcategories = useGetAllSubCategories({
+    //     query: `slug=${params}`,
+    // });
     console.log("subcategories", subcategories)
     // subcategoryName , slug , category
     const prevRef = useRef(null);
@@ -33,7 +33,7 @@ const Suggestion = ({ params }) => {
                     }}
                     spaceBetween={0}
                     slidesPerView={3}
-                    centeredSlides={true}
+                    // centeredSlides={true}
                     breakpoints={{
                         768: { slidesPerView: 3 },
                         1024: { slidesPerView: 7 },
@@ -43,17 +43,17 @@ const Suggestion = ({ params }) => {
                     {subcategories && subcategories.map((item, index) => (
                         <SwiperSlide key={index}>
 
-                            <div className="bg-white rounded-lg px-2 md:px-4 cursor-pointer">
+                            <div onClick={() =>
+                                toggleSelection(item["slug"], "subcategoryName")
+                            } className="bg-white rounded-lg px-2 md:px-4 cursor-pointer">
                                 <div className="relative w-full aspect-square mb-3">
-                                    <Link to={`/products/${item.slug}`}>
-                                        <img
-                                            src={item.subcategoryIcon
-                                                ? `${baseImageUrl}/${item.subcategoryIcon}`
-                                                : `https://st.depositphotos.com/20838724/57151/v/450/depositphotos_571517100-stock-illustration-no-photography-sign-vector-icon.jpg`}
-                                            alt={item.subcategoryIcon ? "Subcategory Icon" : "No photography available"}
-                                            className="w-full border border-gray-200 h-full bg-slate-50 rounded-full object-cover transition-transform duration-300 ease-in-out hover:scale-105"
-                                        />
-                                    </Link>
+                                    <img
+                                        src={item.subcategoryIcon
+                                            ? `${baseImageUrl}/${item.subcategoryIcon}`
+                                            : `https://st.depositphotos.com/20838724/57151/v/450/depositphotos_571517100-stock-illustration-no-photography-sign-vector-icon.jpg`}
+                                        alt={item.subcategoryIcon ? "Subcategory Icon" : "No photography available"}
+                                        className="w-full border border-gray-200 h-full bg-slate-50 rounded-full object-cover transition-transform duration-300 ease-in-out hover:scale-105"
+                                    />
                                 </div>
 
                                 <h3 className="font-semibold text-xs md:text-base text-center md:mb-2">
