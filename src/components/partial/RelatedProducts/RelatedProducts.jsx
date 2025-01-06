@@ -3,9 +3,10 @@ import { Link } from "react-router-dom";
 import { FaArrowRight } from "react-icons/fa";
 import useAxiosPublic from "../../../Hook/useAxiosPublic";
 import ProductSkeleton from "../ProductCard/ProductSkeleton";
-import ProductCard from "../../../shared/Cards/ProductCard/ProductCard";
+import ProductCard from "../ProductCard/ProductCard";
+// import ProductCard from "../../../shared/Cards/ProductCard/ProductCard";
 
-const RelatedProducts = ({ limit = 30, isShowSeeAll = true, category }) => {
+const RelatedProducts = ({ limit = 4, isShowSeeAll = true, category }) => {
   const [currentProduct, setCurrentProduct] = useState(null);
   const [loading, setLoading] = useState(false);
   const [isEdited, setIsEdited] = useState(false);
@@ -55,21 +56,31 @@ const RelatedProducts = ({ limit = 30, isShowSeeAll = true, category }) => {
   return (
     <section className="w-[90%] md:w-full mx-auto py-6">
       <div className="flex justify-between mb-6">
-        <h2 className="text-2xl font-bold mb-4">Related Products</h2>
+        <h2 className="text-2xl font-semibold mb-4">You may like</h2>
       </div>
       {loading ? (
-        <ProductSkeleton />
+        <ProductSkeleton skeletons={4} />
       ) : (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6">
           {products?.length > 0 &&
             products
               .slice(0, limit)
               .map((product, index) => (
-                <ProductCard
-                  key={index}
-                  product={product}
-                  handleProductClick={handleProductClick}
-                />
+                // <ProductCard
+                //   key={index}
+                //   product={product}
+                //   handleProductClick={handleProductClick}
+                // />
+                <div key={index} className="border rounded-lg">
+                  <ProductCard
+                    product={product}
+                    // isSpecial={true}
+                    // isPopular={true}
+                    showNewArrival={true}
+                    showDiscount={true}
+                    handleProductClick={handleProductClick}
+                  />
+                </div>
               ))}
         </div>
       )}
