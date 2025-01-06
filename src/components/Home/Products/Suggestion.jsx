@@ -33,7 +33,7 @@ const Suggestion = ({ subcategories, toggleSelection }) => {
                     }}
                     spaceBetween={0}
                     slidesPerView={3}
-                    // centeredSlides={true}
+                    centeredSlides={true}
                     breakpoints={{
                         768: { slidesPerView: 3 },
                         1024: { slidesPerView: 7 },
