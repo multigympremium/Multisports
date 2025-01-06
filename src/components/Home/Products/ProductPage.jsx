@@ -304,11 +304,13 @@ function ProductPage() {
   return (
     <div>
       <div className="border-b hidden md:block">
-      <HorizontalMenu/>
+        <HorizontalMenu />
       </div>
       {/* suggestion bar */}
-      <div className="w-[90%] mx-auto bg-slate-100 px-20 py-20 ">
-        <Suggestion params={params.id}/>
+      <div className="w-[90%] mx-auto my-10">
+        <div>
+          <Suggestion params={params.id} />
+        </div>
       </div>
       <div className="flex lg:ml-12 flex-col">
         <div className="block md:hidden mt-3">
