@@ -77,24 +77,19 @@ const Suggestion = ({ params }) => {
                 </Swiper>
 
                 {/* Custom Navigation Buttons Centered Relative to Image Div */}
-                {
-                    subcategories.length > 7 &&
-                    <div>
-                        <button
-                            ref={prevRef}
-                            className="absolute top-1/3 -left-2 transform -translate-y-1/2 w-7 h-7 md:w-11 md:h-11 flex items-center justify-center bg-white text-black rounded-full shadow-lg transition-all duration-300 ease-in-out hover:bg-gray-700 hover:text-white hover:scale-110 hover:shadow-2xl z-10"
-                        >
-                            <IoIosArrowBack className="text-base" />
-                        </button>
+                <button
+                    ref={prevRef}
+                    className="absolute top-1/3 -left-2 transform -translate-y-1/2 w-7 h-7 md:w-11 md:h-11 flex items-center justify-center bg-white text-black rounded-full shadow-lg transition-all duration-300 ease-in-out hover:bg-gray-700 hover:text-white hover:scale-110 hover:shadow-2xl z-10"
+                >
+                    <IoIosArrowBack className="text-base" />
+                </button>
 
-                        <button
-                            ref={nextRef}
-                            className="absolute top-1/3 -right-2 transform -translate-y-1/2 w-7 h-7 md:w-11 md:h-11 flex items-center justify-center bg-white text-black rounded-full shadow-lg transition-all duration-300 ease-in-out hover:bg-gray-700 hover:text-white hover:scale-110 hover:shadow-2xl z-10"
-                        >
-                            <IoIosArrowForward className="text-base" />
-                        </button>
-                    </div>
-                }
+                <button
+                    ref={nextRef}
+                    className="absolute top-1/3 -right-2 transform -translate-y-1/2 w-7 h-7 md:w-11 md:h-11 flex items-center justify-center bg-white text-black rounded-full shadow-lg transition-all duration-300 ease-in-out hover:bg-gray-700 hover:text-white hover:scale-110 hover:shadow-2xl z-10"
+                >
+                    <IoIosArrowForward className="text-base" />
+                </button>
             </div>
 
         </div>
