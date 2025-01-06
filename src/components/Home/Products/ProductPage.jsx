@@ -314,6 +314,7 @@ function ProductPage() {
       <div className="border-b hidden md:block">
         <HorizontalMenu />
       </div>
+      
       {/* suggestion bar */}
       <div className="w-[90%] mx-auto my-10">
         <div>
