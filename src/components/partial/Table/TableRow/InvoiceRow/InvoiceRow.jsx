@@ -5,13 +5,13 @@ import toast from "react-hot-toast";
 import { FaRegEdit } from "react-icons/fa";
 
 import Swal from "sweetalert2";
-import { AuthContext, useAuth } from "../../../../../providers/AuthProvider";
 import {
   AiOutlinePrinter,
   AiOutlineFile,
   AiOutlineDelete,
 } from "react-icons/ai";
-import useAxiosSecure from "../../../../Hook/useAxiosSecure";
+import useAxiosSecure from "../../../../../Hook/useAxiosSecure";
+import { AuthContext } from "../../../../../providers/AuthProvider";
 
 function InvoiceRow({
   invoiceData,
@@ -32,11 +32,11 @@ function InvoiceRow({
 
   const handleInvoiceDelete = async (id, data, user) => {
     try {
-      const createdDate = moment(data.createdAt).format("YYYY-MM-DD");
+      const createdDate = moment(data?.createdAt).format("YYYY-MM-DD");
       const todayDate = moment().format("YYYY-MM-DD");
 
       const canDelete =
-        (user.email === data.login_email && createdDate === todayDate) ||
+        (user.email === data?.email && createdDate === todayDate) ||
         user.role === "admin";
 
       if (!canDelete) {
@@ -55,7 +55,7 @@ function InvoiceRow({
       }).then(async (result) => {
         if (result.isConfirmed) {
           const res = await axiosSecure.delete(
-            `/invoice/delete/${id}?branch=${data.branch}`
+            `/invoice/delete/${id}?branch=${data?.branch}`
           );
           toast.success("Invoice Deleted Successfully");
           setIsDeleteMember((prev) => !prev);

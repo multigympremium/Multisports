@@ -450,6 +450,12 @@ function MenuItemsList({ userRole }) {
           isAllowed: isAllowedRoute("sales-report"),
           icon: <IoIosHome />,
         },
+        {
+          title: "Transactions",
+          path: "transactions",
+          isAllowed: isAllowedRoute("transactions"),
+          icon: <IoIosHome />,
+        },
       ],
     },
 

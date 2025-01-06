@@ -2,6 +2,7 @@ import { lazy, Suspense } from "react";
 import GlobalLoading from "../../components library/GlobalLoading";
 import TermsCondition from "../../components/Home/(policy)/terms-and-condition/page";
 import ShippingPublicPolicy from "../../components/Home/(policy)/shipping-policy/page";
+import Transactions from "../../components/dashboard/GenerateReports/Transactions/Transactions";
 const DiscountForm = lazy(() =>
   import("../../components/dashboard/Discount/Discount")
 );
@@ -1821,6 +1822,21 @@ function DashboardChildrenRoutes() {
         <Suspense fallback={<GlobalLoading />}>
           <PrivateRoute>
             <DiscountForm />
+          </PrivateRoute>
+        </Suspense>
+      ),
+    },
+    {
+      // path: "userpermission",
+      // path: "discount",
+      path: isPermittedRoute("transactions"),
+      element: (
+        // <PrivateRoute>
+        //   <SmsGroup />
+        // </PrivateRoute>
+        <Suspense fallback={<GlobalLoading />}>
+          <PrivateRoute>
+            <Transactions />
           </PrivateRoute>
         </Suspense>
       ),
