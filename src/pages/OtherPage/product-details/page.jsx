@@ -5,8 +5,10 @@ import useAxiosCourier from "../../../Hook/useAxiosCourier";
 import useAxiosPublic from "../../../Hook/useAxiosPublic";
 import { AuthContext } from "../../../providers/AuthProvider";
 import RelatedProducts from "../../../components/partial/RelatedProducts/RelatedProducts";
+import ProductDetailsSkeleton from "./ProductDetailsSkeleton";
 
 const ProductDetails = () => {
+  const [loading , setLoading] = useState(false)
   const product_id = useParams().id;
   const axiosPublic = useAxiosPublic();
   const [product, setProduct] = useState({});
@@ -15,12 +17,14 @@ const ProductDetails = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
+        setLoading(true)
         const res = await axiosPublic.get(`/products/${product_id}`);
         setProduct(res.data.data);
       } catch (error) {
         console.log(error);
       } finally {
-        console.log("done");
+        // console.log("done");
+        setLoading(false)
       }
     };
     fetchProduct();
@@ -150,7 +154,10 @@ const ProductDetails = () => {
   return (
     <div className="w-[95%] md:max-w-[1440px] mx-auto pt-5 py-9">
       {/* If product exists */}
-      {product && (
+      {
+        loading  && <ProductDetailsSkeleton/>
+      }
+      {!loading && product && (
         <section className="flex flex-col  md:flex-row">
           {/* image div */}
           <div className="w-full p-10">
@@ -215,9 +222,9 @@ const ProductDetails = () => {
                 {sizeArray.map((size) => (
                   <button
                     key={size}
-                    className={`border text-xs md:text-sm shadow-sm w-7 h-7 md:w-10 md:h-10 hover:border-gray-500 duration-300 ease-in-out rounded-lg ${
+                    className={`border text-xs md:text-sm  w-7 h-7 md:w-10 md:h-10 hover:border-gray-500 duration-300 ease-in-out rounded-lg ${
                       size.value === selectedSize.value
-                        ? "bg-neutral-500 text-white"
+                        ? "bg-gray-600 text-white"
                         : ""
                     }`}
                     onClick={() => setSelectedSize(size)}
