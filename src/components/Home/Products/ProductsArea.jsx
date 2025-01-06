@@ -56,7 +56,7 @@ function ProductsArea({
             //       handleProductClick={handleProductClick}
             //       showNewArrival={true}
             //       showDiscount={true}
-            <div className="md:border rounded-lg" key={index}>
+            <div className="md:border max-h-min rounded-lg">
               <ProductCard
                 key={index}
                 product={product}
