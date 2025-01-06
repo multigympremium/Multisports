@@ -311,12 +311,9 @@ function ProductPage() {
   console.log(subcategories, "subcategories");
   return (
     <div>
-      <div className="border-b hidden md:block">
-        <HorizontalMenu />
-      </div>
       {/* suggestion bar */}
       <div className="w-[90%] mx-auto bg-slate-100 px-20 py-20 ">
-        <Suggestion params={params.id}/>
+        <Suggestion params={params.id} />
       </div>
       <div className="flex lg:ml-12 flex-col">
         <div className="block md:hidden mt-3">

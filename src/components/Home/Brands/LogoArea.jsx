@@ -7,18 +7,12 @@ import "./styles.css";
 import { Pagination, Navigation, Autoplay } from "swiper/modules";
 import { Link } from "react-router-dom";
 import useGetAllProductBrands from "../../../Hook/GetDataHook/useGetAllProductBrands";
+import useGetAllProductBrandsPublic from "../../../Hook/GetPublicDataHook/useGetAllProductBrandsPublic";
 
 function LogoArea() {
   const [loading, setLoading] = useState(true); // Initially loading is true
-  const [isEdited, setIsEdited] = useState(false);
-  const [isDeleted, setIsDeleted] = useState(false);
-  const [isShowModal, setIsShowModal] = useState(false);
-  const productBrands = useGetAllProductBrands({
-    isEdited,
-    isDeleted,
-    setLoading,
-    isShowModal,
-  });
+
+  const productBrands = useGetAllProductBrandsPublic({ setLoading });
 
   return (
     <div className="mx-auto">
@@ -45,7 +39,7 @@ function LogoArea() {
           : productBrands.map((product, index) => (
               <SwiperSlide key={index}>
                 <Link
-                  to={`#`}
+                  to={`/brand_products/${product.slug}`}
                   className="flex justify-center hover:scale-125 transition-all duration-300 items-center h-[100px] md:h-[200px]"
                 >
                   <img

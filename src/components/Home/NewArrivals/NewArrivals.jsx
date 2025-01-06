@@ -8,9 +8,6 @@ import { FaArrowRight } from "react-icons/fa";
 const NewArrivals = ({ limit = 8 }) => {
   const [currentProduct, setCurrentProduct] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [isEdited, setIsEdited] = useState(false);
-  const [isDeleted, setIsDeleted] = useState(false);
-  const [query, setQuery] = useState("page=1&limit=10"); // Example query parameters
   const [products, setProducts] = useState([]);
   const axiosPublic = useAxiosPublic();
 
@@ -48,14 +45,14 @@ const NewArrivals = ({ limit = 8 }) => {
       <div className="flex justify-between mb-6">
         <h2 className="text-2xl font-bold mb-4">New Arrivals</h2>
         <Link
-            to={{
-              pathname: '/new_arrivals',
-            }}
-            state={{products}}
-            className="flex hover:underline justify-between items-center gap-2 text-blue-500 font-semibold"
-          >
-            <span className="">See All</span> <FaArrowRight />
-          </Link>
+          to={{
+            pathname: "/new_arrivals",
+          }}
+          state={{ products }}
+          className="flex hover:underline justify-between items-center gap-2 text-blue-500 font-semibold"
+        >
+          <span className="">See All</span> <FaArrowRight />
+        </Link>
       </div>
       {loading ? (
         <ProductSkeleton skeletons={8} />

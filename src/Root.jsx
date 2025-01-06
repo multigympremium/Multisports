@@ -185,6 +185,9 @@ const Root = () => {
       />
       <TopBar />
       <Navbar />
+      <div className="border-b hidden md:block">
+        <HorizontalMenu />
+      </div>
       <Outlet />
       <Footer />
     </>
