@@ -170,7 +170,7 @@ const FAQList = () => {
               <tbody>
                 {paginatedData()?.length > 0 &&
                   paginatedData().map((item, index) => (
-                    <tr key={item._id} className="border-b text-center">
+                    <tr key={index} className="border-b text-center">
                       <td className="border p-2">
                         {index + 1 + currentPage * itemsPerPage}
                       </td>

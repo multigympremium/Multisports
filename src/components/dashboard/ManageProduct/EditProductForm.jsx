@@ -592,7 +592,7 @@ export default function EditProductForm({
                 <option value="">Select One</option>
                 {categories?.length > 0 &&
                   categories.map((item, index) => (
-                    <option value={item.slug} key={item._id}>
+                    <option value={item.slug} key={index}>
                       {item?.categoryName}
                     </option>
                   ))}
@@ -611,7 +611,7 @@ export default function EditProductForm({
                 <option value="">Select One</option>
                 {subcategories?.length > 0 &&
                   subcategories.map((item, index) => (
-                    <option value={item.slug} key={item._id}>
+                    <option value={item.slug} key={index}>
                       {item?.subcategoryName}
                     </option>
                   ))}
@@ -633,7 +633,7 @@ export default function EditProductForm({
                 <option value="">Select One</option>
                 {childCategories?.length > 0 &&
                   childCategories.map((item, index) => (
-                    <option value={item.slug} key={item._id}>
+                    <option value={item.slug} key={index}>
                       {item?.childCategoryName}
                     </option>
                   ))}
@@ -652,7 +652,7 @@ export default function EditProductForm({
                 <option value="">Select One</option>
                 {productBrands?.length > 0 &&
                   productBrands.map((item, index) => (
-                    <option value={item.slug} key={item._id}>
+                    <option value={item.slug} key={index}>
                       {item?.brandName}
                     </option>
                   ))}
@@ -674,7 +674,7 @@ export default function EditProductForm({
                   <option value="">Select One</option>
                   {modelOfBrand?.length > 0 &&
                     modelOfBrand.map((item, index) => (
-                      <option value={item.slug} key={item._id}>
+                      <option value={item.slug} key={index}>
                         {item?.modelName}
                       </option>
                     ))}
@@ -699,7 +699,7 @@ export default function EditProductForm({
                   <option value="">Select One</option>
                   {productColors?.length > 0 &&
                     productColors.map((item, index) => (
-                      <option value={item.productColor} key={item._id}>
+                      <option value={item.productColor} key={index}>
                         {item?.productColorName}
                       </option>
                     ))}
@@ -709,7 +709,7 @@ export default function EditProductForm({
                   {productColor?.length > 0 &&
                     productColor.map((item, index) => (
                       <li
-                        key={item._id}
+                        key={index}
                         className="px-3 py-1 border border-black text-sm capitalize relative rounded-lg"
                       >
                         {item}
@@ -738,7 +738,7 @@ export default function EditProductForm({
                   <option value="">Select One</option>
                   {productFlags?.length > 0 &&
                     productFlags.map((item, index) => (
-                      <option value={item.flagName} key={item._id}>
+                      <option value={item.flagName} key={index}>
                         {item?.flagName}
                       </option>
                     ))}
@@ -762,7 +762,7 @@ export default function EditProductForm({
                   <option value="">Select One</option>
                   {productSizes?.length > 0 &&
                     productSizes.map((item, index) => (
-                      <option value={item.sizeName} key={item._id}>
+                      <option value={item.sizeName} key={index}>
                         {item?.sizeName}
                       </option>
                     ))}
@@ -771,7 +771,7 @@ export default function EditProductForm({
                   {productSize?.length > 0 &&
                     productSize.map((item, index) => (
                       <li
-                        key={item._id}
+                        key={index}
                         className="px-3 py-1 border border-black text-sm capitalize relative rounded"
                       >
                         {item}

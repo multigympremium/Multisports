@@ -191,8 +191,8 @@ export default function EditBrandForm({
             >
               <option value="">Select One</option>
               {categories?.length > 0 &&
-                categories.map((item) => (
-                  <option value={item.slug} key={item._id}>
+                categories.map((item, index) => (
+                  <option value={item.slug} key={index}>
                     {item?.categoryName}
                   </option>
                 ))}
@@ -210,8 +210,8 @@ export default function EditBrandForm({
             >
               <option value="">Select One</option>
               {subcategories?.length > 0 &&
-                subcategories.map((item) => (
-                  <option value={item.slug} key={item._id}>
+                subcategories.map((item, index) => (
+                  <option value={item.slug} key={index}>
                     {item?.subcategoryName}
                   </option>
                 ))}

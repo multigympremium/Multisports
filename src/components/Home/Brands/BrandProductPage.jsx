@@ -1,31 +1,20 @@
-import { useState } from "react";
-import useGetAllProducts from "../../../Hook/GetPublicDataHook/useGetAllProducts";
-import { ThreeDots } from "react-loader-spinner";
+import { useParams } from "react-router-dom";
+import ProductCard from "../../../shared/Cards/ProductCard/ProductCard";
 import Modal from "../../../shared/Modal/Modal";
-import ProductCard from "../../partial/ProductCard/ProductCard";
+import { ThreeDots } from "react-loader-spinner";
+import useGetAllProducts from "../../../Hook/GetDataHook/useGetAllProducts";
+import { useState } from "react";
 
-function ProductsArea({
-  slug,
-  sizeFilter,
-  colorFilter,
-  brandFilter,
-  query,
-  subcategoryFilter,
-  categoryFilter,
-}) {
+export default function BrandProductPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [singleData, setSingleData] = useState(null);
   const [isShowModal, setIsShowModal] = useState(false);
+  const params = useParams();
+  console.log(params.id, "params");
 
   const { products, totalItems, loading } = useGetAllProducts({
-    query: `search=${slug}&color=${colorFilter.join(
-      ","
-    )}&size=${sizeFilter.join(",")}&brand=${brandFilter.join(",")}&${
-      query.includes("product=") ? "product=" + query.split("=")[1] : ""
-    }&subcategory=${subcategoryFilter.join(",")}&category=${categoryFilter.join(
-      ","
-    )}&currentPage=${currentPage}&limit=${itemsPerPage}`,
+    query: `brand=${[params.id]}`,
   });
 
   console.log(products, "products", totalItems, "totalItems");
@@ -40,22 +29,9 @@ function ProductsArea({
 
   return (
     <>
-      <div className="w-full grid grid-cols-2 md:grid-cols-4 lg:gap-4 gap-3 items-start min-h-screen">
+      <div className="w-full grid grid-cols-2 md:grid-cols-4 lg:gap-4 gap-3 items-start min-h-screen mt-10 container mx-auto">
         {products && products?.length > 0 ? (
           products.map((product, index) => (
-            // <ProductCardWithGallery
-            //   key={index}
-            //   product={product}
-            //   setTargetId={setTargetId}
-            //   setIsShowDetail={setIsShowDetail}
-            //   handleProductClick={handleProductClick}
-            // />
-
-            // key={index}
-            //       product={product}
-            //       handleProductClick={handleProductClick}
-            //       showNewArrival={true}
-            //       showDiscount={true}
             <div className="md:border rounded-lg" key={index}>
               <ProductCard
                 key={index}
@@ -93,19 +69,6 @@ function ProductsArea({
           )}
         </button>
       )}
-      {/* <Pagination
-        currentPage={currentPage}
-        totalItems={totalItems}
-        limit={itemsPerPage}
-        setCurrentPage={setCurrentPage}
-      /> */}
-      {/* <BgBlurModal isShowModal={isShowDetail} setIsShowModal={setIsShowDetail}>
-        <ProductDetail
-          targetId={targetId}
-          setIsShowDetail={setIsShowDetail}
-          isShowDetail={isShowDetail}
-        />
-      </BgBlurModal> */}
 
       {singleData && (
         <Modal
@@ -125,5 +88,3 @@ function ProductsArea({
     </>
   );
 }
-
-export default ProductsArea;

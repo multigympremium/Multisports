@@ -199,7 +199,7 @@ export default function ChildCategoryEditForm({
                   <option
                     value={item.slug}
                     selected={category === item.slug}
-                    key={item._id}
+                    key={index}
                   >
                     {item?.categoryName}
                   </option>

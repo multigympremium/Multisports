@@ -43,6 +43,7 @@ import ProductDetails from "../pages/OtherPage/product-details/page";
 import NewArrivals from "../components/Home/NewArrivals/NewArrivals";
 import ViewAllProduct from "../components/partial/ViewAllProduct/ViewAllProduct";
 import MyOrder from "../components/Home/my-account/MyOrder";
+import BrandProductPage from "../components/Home/Brands/BrandProductPage";
 
 const AllRoutes = () => {
   // const [permissionData, setPermissionData] = useState([]);
@@ -78,6 +79,10 @@ const AllRoutes = () => {
             <NewArrivals limit={40} isShowSeeAll={false} />
             // <ViewAllProduct/>
           ),
+        },
+        {
+          path: "brand_products/:id",
+          element: <BrandProductPage />,
         },
         {
           // path: "addworkout",
