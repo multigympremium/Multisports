@@ -161,7 +161,7 @@ export default function CreateBrandForm({ isShowModal, setIsShowModal }) {
               </option>
               {categories?.length > 0 &&
                 categories.map((item, index) => (
-                  <option value={item.slug} key={item._id}>
+                  <option value={item.slug} key={index}>
                     {item?.categoryName}
                   </option>
                 ))}
@@ -182,7 +182,7 @@ export default function CreateBrandForm({ isShowModal, setIsShowModal }) {
               </option>
               {subcategories?.length > 0 &&
                 subcategories.map((item, index) => (
-                  <option value={item.slug} key={item._id}>
+                  <option value={item.slug} key={index}>
                     {item?.subcategoryName}
                   </option>
                 ))}
@@ -203,7 +203,7 @@ export default function CreateBrandForm({ isShowModal, setIsShowModal }) {
               </option>
               {childCategories?.length > 0 &&
                 childCategories?.map((item, index) => (
-                  <option value={item.slug} key={item._id}>
+                  <option value={item.slug} key={index}>
                     {item?.childCategoryName}
                   </option>
                 ))}

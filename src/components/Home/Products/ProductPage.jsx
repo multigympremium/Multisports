@@ -25,50 +25,50 @@ const SelectableList = ({
     <div className="space-y-4">
       {items.length == 0
         ? // Loading skeleton when items.length is 0
-        Array.from({ length: 8 }).map((_, index) => (
-          <div
-            key={index}
-            className="flex items-center space-x-4 animate-pulse"
-          >
-            <div className="w-5 h-5 bg-gray-200 rounded"></div>
-            <div className="h-5 bg-gray-200 rounded-full w-2/3"></div>
-          </div>
-        ))
+          Array.from({ length: 8 }).map((_, index) => (
+            <div
+              key={index}
+              className="flex items-center space-x-4 animate-pulse"
+            >
+              <div className="w-5 h-5 bg-gray-200 rounded"></div>
+              <div className="h-5 bg-gray-200 rounded-full w-2/3"></div>
+            </div>
+          ))
         : // Actual items when items.length > 0
-        items.map((item, index) => (
-          <label
-            key={index}
-            className="flex items-center cursor-pointer transition-colors group"
-          >
-            <input
-              type="checkbox"
-              className="peer hidden"
-              checked={
-                slug
-                  ? selectedItems.includes(item[slug])
-                  : selectedItems.includes(item[labelKey])
-              }
-              onChange={() =>
-                slug
-                  ? toggleSelection(item["slug"], labelKey)
-                  : toggleSelection(item[labelKey], labelKey)
-              }
-            />
-            <span className="w-5 h-5 border-2 border-gray-200 rounded mr-4 flex items-center justify-center peer-checked:bg-black peer-checked:border-black group-hover:border-gray-700 transition-all duration-300 delay-100">
-              {selectedItems.includes(item[labelKey]) && (
-                <svg className="w-4 h-4 text-white" viewBox="0 0 24 24">
-                  <path
-                    fill="currentColor"
-                    d="M9 16.2l-4.2-4.2-1.4 1.4 5.6 5.6 12-12-1.4-1.4z"
-                  />
-                </svg>
-              )}
-            </span>
-            <p className="transition-all text-sm duration-300 delay-100">
-              {item[labelKey]}
-            </p>
-          </label>
-        ))}
+          items.map((item, index) => (
+            <label
+              key={index}
+              className="flex items-center cursor-pointer transition-colors group"
+            >
+              <input
+                type="checkbox"
+                className="peer hidden"
+                checked={
+                  slug
+                    ? selectedItems.includes(item[slug])
+                    : selectedItems.includes(item[labelKey])
+                }
+                onChange={() =>
+                  slug
+                    ? toggleSelection(item["slug"], labelKey)
+                    : toggleSelection(item[labelKey], labelKey)
+                }
+              />
+              <span className="w-5 h-5 border-2 border-gray-200 rounded mr-4 flex items-center justify-center peer-checked:bg-black peer-checked:border-black group-hover:border-gray-700 transition-all duration-300 delay-100">
+                {selectedItems.includes(item[labelKey]) && (
+                  <svg className="w-4 h-4 text-white" viewBox="0 0 24 24">
+                    <path
+                      fill="currentColor"
+                      d="M9 16.2l-4.2-4.2-1.4 1.4 5.6 5.6 12-12-1.4-1.4z"
+                    />
+                  </svg>
+                )}
+              </span>
+              <p className="transition-all text-sm duration-300 delay-100">
+                {item[labelKey]}
+              </p>
+            </label>
+          ))}
     </div>
   );
 };
@@ -230,8 +230,9 @@ function ProductPage() {
   const productBrands = useGetAllProductBrands({});
   const categories = useGetAllCategories({});
   const subcategories = useGetAllSubCategories({
-    query: `slug=${categoryFilter.length > 0 ? categoryFilter.join(",") : params.id
-      }`,
+    query: `slug=${
+      categoryFilter.length > 0 ? categoryFilter.join(",") : params.id
+    }`,
   });
   const productColors = useGetAllProductColors({});
   const productSizes = useGetAllProductSizes({});
@@ -300,7 +301,14 @@ function ProductPage() {
     });
   }, []);
 
-  console.log(params, router, "search");
+  useEffect(() => {
+    const filteredSubcategories = subcategories.map((item) => item.category);
+    const uniqueCategories = [...new Set(filteredSubcategories)];
+    console.log(uniqueCategories, "filteredSubcategories");
+    setCategoryFilter(uniqueCategories);
+  }, [subcategories]);
+
+  console.log(subcategories, "subcategories");
   return (
     <div>
       <div className="border-b hidden md:block">
@@ -383,6 +391,31 @@ function ProductPage() {
             </div>
           </DrawerComponent>
         </div>
+        <div className="container mx-auto min-w-[900px] max-w-[1200px]  overflow-hidden px-8">
+          <div className="w-full flex justify-center items-baseline  gap-8 mx-auto mt-8">
+            {subcategories.length > 0 &&
+              subcategories.slice(0, 8).map((item, index) => (
+                <div
+                  className="w-full h-[220px] max-w-[220px] flex flex-col items-center justify-center gap-2 group flex-shrink-0 lg:flex-shrink  "
+                  key={index}
+                  onClick={() =>
+                    toggleSelection(item["slug"], "subcategoryName")
+                  }
+                >
+                  <div className="w-full aspect-square rounded-full overflow-hidden">
+                    <img
+                      src={item.subcategoryIcon || "/no-image.png"}
+                      alt="subcategoryIcon"
+                      className="w-full h-full object-cover group-hover:scale-110 duration-300 ease-in-out"
+                    />
+                  </div>
+                  <h3 className="text-center text-lg font-bold group-hover:text-blue-400">
+                    {item.subcategoryName}
+                  </h3>
+                </div>
+              ))}
+          </div>
+        </div>
         <div className="flex  flex-1 relative z-[1] ">
           <div
             className={`hidden lg:block transition-all duration-500  overflow-auto absolute top-0 left-0 lg:relative pt-8 z-[3] w-[300px]`}
@@ -425,7 +458,6 @@ function ProductPage() {
                   )}
                 </div>
               </section>
-
 
               <div className="space-y-4">
                 <ProductFilterGroup groupName="Categories">
@@ -479,7 +511,7 @@ function ProductPage() {
           </div>
           <div className="flex-1 md:px-14 md:py-9 p-4 overflow-auto dark:bg-white relative">
             <ProductsArea
-              slug={params.id}
+              slug={""}
               sizeFilter={sizeFilter}
               colorFilter={colorFilter}
               brandFilter={brandFilter}

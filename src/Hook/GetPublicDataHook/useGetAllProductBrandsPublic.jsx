@@ -1,8 +1,7 @@
-"use client";
 import { useEffect, useState } from "react";
-import useAxiosSecure from "../useAxiosSecure";
+import useAxiosPublic from "../useAxiosPublic";
 
-function useGetAllProductBrands({
+function useGetAllProductBrandsPublic({
   isEdited = false,
   isDeleted = false,
   setLoading = () => {},
@@ -10,7 +9,7 @@ function useGetAllProductBrands({
 }) {
   const [productBrands, setProductBrands] = useState([]);
 
-  const axiosSecure = useAxiosSecure();
+  const axiosSecure = useAxiosPublic();
 
   useEffect(() => {
     const fetchProductBrands = async () => {
@@ -19,7 +18,9 @@ function useGetAllProductBrands({
         const res = await axiosSecure.get("/product-brands");
 
         if (res.status === 200 || res.status === 201) {
-          setProductBrands(res.data.data);
+          const data = res.data.data;
+          console.log(data, "res brands");
+          setProductBrands(data);
           setLoading(false);
         }
       } catch (error) {
@@ -35,4 +36,4 @@ function useGetAllProductBrands({
   return productBrands;
 }
 
-export default useGetAllProductBrands;
+export default useGetAllProductBrandsPublic;

@@ -51,24 +51,22 @@ const HomePage = () => {
         metaOgImage={content?.metaOgImage}
         metaKeywords={content?.metaKeywords}
       />
-      <div>
-        <HorizontalMenu className=" w-[90%] lg:max-w-[1440px] mx-auto" />
-      </div>
+
       <Banner />
       <div className="max-w-[1440px] mx-auto">
         <NewArrivals />
         <Category />
         <Featured />
-        <Banner4/>
-        <MostPopular/>
+        <Banner4 />
+        <MostPopular />
         <PromotionalBanner />
-        <BestSelling/>
+        <BestSelling />
         <FlashSale />
         {/* <PopularProducts /> */}
-        <Banner2 /> 
+        <Banner2 />
         {/* <ExclusiveCollection /> */}
         {/* <Footwear /> */}
-        <SpecialDiscount/>
+        <SpecialDiscount />
         <Testimonials />
         {/* <TrendyBags /> */}
         <Brands />

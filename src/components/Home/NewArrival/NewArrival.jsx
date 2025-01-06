@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 // Import Swiper styles
@@ -85,7 +84,7 @@ import useGetAllProducts from "../../../Hook/GetDataHook/useGetAllProducts";
 //   },
 // ];
 function NewArrivals() {
-  const products = useGetAllProducts({  });
+  const products = useGetAllProducts({});
   // const products = useGetAllProducts({ query: `new-arrival=true` });
   return (
     <div className="container mx-auto mt-16 mb-10">
@@ -128,11 +127,12 @@ function NewArrivals() {
         modules={[Navigation, Autoplay]}
         className="new_arrivals"
       >
-        {products?.length > 0 && products.slice(0, 6).map((product, index) => (
-          <SwiperSlide key={index}>
-            <ProductCard product={product} />
-          </SwiperSlide>
-        ))}
+        {products?.length > 0 &&
+          products.slice(0, 6).map((product, index) => (
+            <SwiperSlide key={index}>
+              <ProductCard product={product} />
+            </SwiperSlide>
+          ))}
       </Swiper>
       {/* <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 gap-4 ">
         {products.map((product) => (

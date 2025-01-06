@@ -247,7 +247,7 @@ const ProductFlag = () => {
               <tbody>
                 {products.length > 0 &&
                   products.map((item, index) => (
-                    <tr key={item._id} className="border-b">
+                    <tr key={index} className="border-b">
                       <td className="border p-2">
                         {index + 1 + (currentPage - 1) * itemsPerPage}
                       </td>
