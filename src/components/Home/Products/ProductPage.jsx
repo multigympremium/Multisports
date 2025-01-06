@@ -312,8 +312,13 @@ function ProductPage() {
   return (
     <div>
       {/* suggestion bar */}
-      <div className="w-[90%] mx-auto bg-slate-100 px-20 py-20 ">
-        <Suggestion params={params.id} />
+
+      <div className="w-[90%] mx-auto my-10">
+        <div>
+          <Suggestion toggleSelection={toggleSelection} subcategories={subcategories} />
+        </div>
+
+
       </div>
       <div className="flex lg:ml-12 flex-col">
         <div className="block md:hidden mt-3">
@@ -386,7 +391,7 @@ function ProductPage() {
             </div>
           </DrawerComponent>
         </div>
-        <div className="container mx-auto min-w-[900px] max-w-[1200px]  overflow-hidden px-8">
+        {/* <div className="container mx-auto min-w-[900px] max-w-[1200px]  overflow-hidden px-8">
           <div className="w-full flex justify-center items-baseline  gap-8 mx-auto mt-8">
             {subcategories.length > 0 &&
               subcategories.slice(0, 8).map((item, index) => (
@@ -410,7 +415,7 @@ function ProductPage() {
                 </div>
               ))}
           </div>
-        </div>
+        </div> */}
         <div className="flex  flex-1 relative z-[1] ">
           <div
             className={`hidden lg:block transition-all duration-500  overflow-auto absolute top-0 left-0 lg:relative pt-8 z-[3] w-[300px]`}
