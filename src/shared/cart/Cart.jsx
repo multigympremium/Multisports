@@ -37,7 +37,7 @@ const Cart = ({ isShow, setIsShow }) => {
   const discount = calculateDiscounts(cartItems, discounts)?.totalDiscount;
 
   return (
-    <div className="drawer drawer-end z-[99]">
+    <div className="drawer rounded-none drawer-end z-[99]">
       <input id="my-cart" type="checkbox" className="drawer-toggle" />
 
       <div className="drawer-side">
@@ -47,14 +47,14 @@ const Cart = ({ isShow, setIsShow }) => {
           className="drawer-overlay"
         ></label>
         <div
-          className={`w-full min-w-[40%] max-w-[60%] bg-white h-screen rounded-lg shadow-lg p-4 absolute top-0 right-0 z-50 transition-all duration-500 pr-10 pl-5 flex flex-col`}
+          className={`min-w-[400px] rounded-none bg-white h-screen p-4 absolute top-0 right-0 z-50 transition-all duration-500 px-5 flex flex-col`}
         >
-          <div className="text-sm text-gray-500 mb-2 border-b border-gray-300">
-            your shopping cart
+          <div className="text-2xl py-3  font-bold mb-6 border-b pb-5 border-gray-200">
+            Shopping cart
           </div>
 
           <div
-            className="border-b pb-4 h-full overflow-auto"
+            className=" pb-4 h-full overflow-auto"
             style={{ scrollbarWidth: "thin" }}
           >
             {cartItems?.length > 0 ? (
@@ -81,7 +81,7 @@ const Cart = ({ isShow, setIsShow }) => {
             )}
           </div>
 
-          <div className="border-b pb-4 mt-auto pt-2">
+          {/* <div className="border-b pb-4 mt-auto pt-2">
             <div className="flex justify-between text-sm text-gray-500">
               <span>subtotal</span>
               <span className="font-medium">৳{totalPrice}</span>
@@ -98,18 +98,18 @@ const Cart = ({ isShow, setIsShow }) => {
               <span>shipping</span>
               <span className="font-medium">free</span>
             </div>
-          </div>
+          </div> */}
 
-          <div className="border-b pb-4 mt-4">
+          {/* <div className="border-b pb-4 mt-4">
             <div className="flex justify-between text-lg font-bold">
               <span>your total</span>
               <span>৳{totalPrice - Number(discount)}</span>
             </div>
-          </div>
+          </div> */}
 
-          <div className="mt-4 grid grid-cols-2 gap-4 text-center">
+          <div className="flex gap-3">
             <label
-              className="  text-sm border border-black rounded-md px-5 py-2 w-full"
+              className=" border text-center border-black rounded-md px-4 py-3 w-full"
               onClick={() => {
                 setIsShow(false);
                 navigate("/cart");
@@ -121,14 +121,14 @@ const Cart = ({ isShow, setIsShow }) => {
 
             <label
               type="button"
-              className="px-4 py-2 bg-black text-white rounded w-full"
+              className="px-4d py-3 bg-black text-center text-white rounded-lg w-full"
               onClick={() => {
                 setIsShow(false);
                 navigate("/checkout");
               }}
               htmlFor="my-cart"
             >
-              Checkout
+              Checkout <span className="text-xl ml-2"> ৳</span> {totalPrice - Number(discount)}
             </label>
           </div>
         </div>

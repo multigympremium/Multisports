@@ -28,7 +28,7 @@ const ProductDetails = () => {
       }
     };
     fetchProduct();
-  }, [axiosPublic]);
+  }, [product_id,axiosPublic]);
 
   const {
     brandValue,
