@@ -13,7 +13,7 @@ function SubcategoryMenu({
 }) {
   return (
     <nav
-      className={`flex flex-wrap bg-slate-50 p-10 rounded justify-center md:justify-between items-center gap-x-8 gap-y-4 text-left w-[80%] absolute  left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-all duration-1000 z-[999]  ${isHover
+      className={`flex flex-wrap bg-slate-50  rounded justify-center md:justify-between items-center gap-x-8 gap-y-4 text-left w-[80%] absolute  left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-all duration-1000 z-[999]  ${isHover
         ? "opacity-100 translate-y-0 pointer-events-auto"
         : "opacity-0 translate-y-4 pointer-events-none"
         }`}
