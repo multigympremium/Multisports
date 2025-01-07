@@ -272,7 +272,7 @@ const Navbar = () => {
                 <BsCart className="md:text-2xl text-base text-gray-600 hover:text-orange-500 hover:scale-110 cursor-pointer transition-all" />
                 <span className="hidden md:block">Cart</span>
               </label>
-              <div className="badge badge-primary badge-lg absolute top-0 -right-2">
+              <div className="bg-gray-800 text-white rounded-full px-2 absolute top-1 -right-1">
                 {totalItems}
               </div>
             </button>
