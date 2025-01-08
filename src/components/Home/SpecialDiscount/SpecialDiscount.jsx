@@ -45,15 +45,18 @@ const SpecialDiscount = ({ limit = 8, isShowSeeAll = true }) => {
 
   return (
     <section className="w-[90%] md:w-full mx-auto py-6">
-      <div className="flex justify-between mb-6">
-        <h2 className="text-2xl font-bold mb-4">Special Discount</h2>
+      <div className="flex justify-between items-center my-9">
+        <h2 className="text-2xl font-semibold ">Special Discount</h2>
         {isShowSeeAll && (
           <Link
-            to="/"
-            className="flex hover:underline justify-between items-center gap-2 text-blue-500 font-semibold"
-          >
-            <span className="">See All</span> <FaArrowRight />
-          </Link>
+          to={{
+            pathname: "/see_all/discount",
+          }}
+          state={{ products }}
+          className="flex text-black rounded-lg justify-between items-center gap-2 ease-in-out transition-all  font-semibold"
+        >
+          <span className="">See All</span> <FaArrowRight />
+        </Link>
         )}
       </div>
       {loading ? (
@@ -65,6 +68,7 @@ const SpecialDiscount = ({ limit = 8, isShowSeeAll = true }) => {
               <ProductCard
                 // showDiscount={true}
                 isSpecial={true}
+                border={true}
                 key={index}
                 product={product}
                 handleProductClick={handleProductClick}

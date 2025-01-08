@@ -40,7 +40,7 @@ const CustomCarousel = ({ slides }) => {
     }, []);
 
     return (
-        <div className="relative  w-[90%] mx-auto  md:w-full h-[170px] my-4 md:my-9 md:h-[800px]">
+        <div className="relative  w-[90%] mx-auto md:w-full h-[180px] my-4 md:my-9 md:min-h-[500px]">
             <Swiper
                 modules={[Navigation, Autoplay]}
                 autoplay={{

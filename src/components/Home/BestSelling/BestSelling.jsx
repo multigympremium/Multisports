@@ -45,12 +45,15 @@ const BestSelling = ({ limit = 8, isShowSeeAll = true }) => {
 
   return (
     <section className="w-[90%] md:w-full mx-auto py-6">
-      <div className="flex justify-between mb-6">
-        <h2 className="text-2xl font-bold mb-4">Best Selling Products</h2>
+      <div className="flex justify-between items-center mb-9">
+        <h2 className="text-2xl font-semibold">Best Selling Products</h2>
         {isShowSeeAll && (
           <Link
-            to="/"
-            className="flex hover:underline justify-between items-center gap-2 text-blue-500 font-semibold"
+            to={{
+              pathname: "/see_all/best_selling",
+            }}
+            state={{ products }}
+            className="flex text-black rounded-lg justify-between items-center gap-2 ease-in-out transition-all  font-semibold"
           >
             <span className="">See All</span> <FaArrowRight />
           </Link>
@@ -65,6 +68,7 @@ const BestSelling = ({ limit = 8, isShowSeeAll = true }) => {
               .slice(0, limit)
               .map((product, index) => (
                 <ProductCard
+                  border={true}
                   showDiscount={true}
                   key={index}
                   product={product}

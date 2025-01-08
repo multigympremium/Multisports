@@ -48,7 +48,7 @@ const PromoBanner = ({ promoData }) => {
 
   return (
     <div
-      className="flex items-center py-16 px-5 justify-between md:px-40 md:py-40 rounded-xl"
+      className="flex items-center py-16 px-5 justify-between md:px-40 md:min-h-[500px] rounded-xl"
       style={{ backgroundColor: color }}
     >
       {/* Text Section */}

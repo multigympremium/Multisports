@@ -42,14 +42,14 @@ const NewArrivals = ({ limit = 8 }) => {
 
   return (
     <section className="w-[90%] md:w-full mx-auto py-6">
-      <div className="flex justify-between mb-6">
-        <h2 className="text-2xl font-bold mb-4">New Arrivals</h2>
+      <div className="flex items-center justify-between my-9">
+        <h2 className="text-2xl font-semibold">New Arrivals</h2>
         <Link
           to={{
-            pathname: "/new_arrivals",
+            pathname: "/see_all/new_arrivals",
           }}
           state={{ products }}
-          className="flex hover:underline justify-between items-center gap-2 text-blue-500 font-semibold"
+          className="flex text-black rounded-lg justify-between items-center gap-2 ease-in-out transition-all  font-semibold"
         >
           <span className="">See All</span> <FaArrowRight />
         </Link>
@@ -63,6 +63,7 @@ const NewArrivals = ({ limit = 8 }) => {
               .slice(0, limit)
               .map((product, index) => (
                 <ProductCard
+                  border={true}
                   key={index}
                   product={product}
                   handleProductClick={handleProductClick}
