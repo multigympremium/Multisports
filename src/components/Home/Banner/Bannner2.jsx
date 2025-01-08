@@ -15,7 +15,7 @@ const Banner2 = () => {
     setLoading, isShowModal, isEdited, isDeleted
   });
   return (
-    <div className="relative my-28 mx-auto md:max-w-[1920px] overflow-hidden">
+    <div className="relative  mx-auto  overflow-hidden">
       {
         !loading &&
         <Swiper
@@ -27,7 +27,7 @@ const Banner2 = () => {
           pagination={{
             clickable: true,
           }}
-          spaceBetween={20} // Space between slides
+          spaceBetween={10} // Space between slides
           slidesPerView={1.5} // Show 1.5 slides at a time
           centeredSlides={true} // Center the active slide
           centeredSlidesBounds={true} // Ensure centered slides are fully visible
@@ -36,7 +36,7 @@ const Banner2 = () => {
           {shoes.map((slide, index) => (
             <SwiperSlide key={index}>
               {console.log(slide)}
-              <div className="relative md:h-[400px]">
+              <div className="relative h-[180px] md:h-[500px]">
                 <img
                   // src={slide.image}
                   src={`${baseImageUrl}/${slide?.image}`}

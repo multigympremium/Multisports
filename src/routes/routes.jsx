@@ -44,6 +44,7 @@ import NewArrivals from "../components/Home/NewArrivals/NewArrivals";
 import ViewAllProduct from "../components/partial/ViewAllProduct/ViewAllProduct";
 import MyOrder from "../components/Home/my-account/MyOrder";
 import BrandProductPage from "../components/Home/Brands/BrandProductPage";
+import SeeAll from "../pages/SeeAll/SeeAll";
 
 const AllRoutes = () => {
   // const [permissionData, setPermissionData] = useState([]);
@@ -185,6 +186,10 @@ const AllRoutes = () => {
           path: "product_details/:id",
           // path: isPermittedRoute("addworkout"),
           element: <ProductDetails />,
+        },
+        {
+          path:"see_all/:id",
+          element:<SeeAll/>
         },
         {
           // path: "addworkout",

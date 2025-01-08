@@ -73,7 +73,7 @@ const Cart = ({ isShow, setIsShow }) => {
                 <p>Please Add Product to View</p>
                 <Link
                   to={"/products/all"}
-                  className="bg-blue-500 text-white hover:bg-neutral-800 rounded-lg py-2 px-5"
+                  className="bg-gray-900 text-white hover:bg-neutral-800 rounded-lg py-2 px-5"
                 >
                   Go To Shop
                 </Link>
