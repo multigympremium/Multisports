@@ -11,13 +11,14 @@ import Suggestion from "./Suggestion";
 import DrawerComponent from "./DrawerComponent";
 import SelectableList from "./SelectableList";
 import useGetExistQueries from "../../../Hook/GetPublicDataHook/useGetExistQueries";
+import Banner4 from "../Banner/Banner4";
 
 function ProductPage() {
   const [selectedItems, setSelectedItems] = useState([]);
 
   const params = useParams();
   const location = useLocation();
-  console.log(location, "searchParams");
+  console.log(location.search, "searchParams");
   const [brandFilter, setBrandFilter] = useState([]);
   const [colorFilter, setColorFilter] = useState([]);
   const [sizeFilter, setSizesFilter] = useState([]);
@@ -38,6 +39,17 @@ function ProductPage() {
   const productSizes = useGetAllProductSizes({});
 
   const toggleSelection = (name, labelKey) => {
+    const searchParams = location?.search?.split("?")[1];
+    const brandQuery = searchParams?.split("=")[1];
+    const isExistBrand = brands.map((item) => item?.brand).includes(brandQuery);
+    console.log(isExistBrand, "isExistBrand toggle");
+    if (isExistBrand) {
+      setBrandFilter((prev) => [...new Set([...prev, brandQuery])]);
+      setSubCategoryFilter((prev) => prev.filter((item) => item !== "all"));
+    } else {
+      setSubCategoryFilter((prev) => prev.filter((item) => item !== "all"));
+      setBrandFilter((prev) => [...prev]);
+    }
     setSelectedItems((prev) => {
       return prev.includes(name)
         ? prev.filter((item) => item !== name)
@@ -184,41 +196,37 @@ function ProductPage() {
   console.log(subcategories, "subcategories");
 
   useEffect(() => {
-    // setCategoryFilter([]);
-    // const implementParams = () => {
-    //   const isExist = categories.map((item) => item?.slug).includes(params.id);
-    //   console.log(isExist, "isExist");
-    //   if (isExist) {
-    //     setCategoryFilter([params?.id]);
-    //     setSubCategoryFilter([]);
-    //   } else {
-    //     setSubCategoryFilter([params?.id]);
-    //     const findCategory = subcategories.find(
-    //       (item) => item?.slug === params?.id
-    //     );
-    //     setCategoryFilter([findCategory?.category]);
-    //     console.log(findCategory, params.id, "categoryFilter1234");
-    //   }
-    // };
+    setPriceRange(highestPrice[0]?.highestPrice);
+    const searchParams = location?.search?.split("?")[1];
+    const brand = searchParams?.split("=")[1];
 
     const isExist = categories
       .map((item) => item?.category)
       .includes(params.id);
-    console.log(isExist, "isExist");
+    const isExistBrand = productBrands
+      .map((item) => item?.slug)
+      .includes(brand);
+
+    console.log(isExist, "isExist", isExistBrand, "parentCategory");
     if (isExist) {
       setCategoryFilter((prev) => [...new Set([...prev, params?.id])]);
       setSubCategoryFilter([]);
       // const filteredSubcat = [...new Set([...prev, ...prev2, params?.id])];
+    } else if (isExistBrand) {
+      setSubCategoryFilter((prev) => prev.filter((item) => item !== "all"));
+      setBrandFilter([brand]);
     } else {
       setSubCategoryFilter([params?.id]);
       const parentCategory = subcategories.find((category) => {
         console.log(category.slug == params.id, "parentCategory");
         return category.slug == params.id;
       });
-      console.log(parentCategory, "parentCategory");
-      setCategoryFilter([parentCategory?.category]);
+      console.log(parentCategory, isExistBrand, "parentCategory");
+      if (parentCategory?.category) {
+        setCategoryFilter([parentCategory?.category]);
+      }
     }
-    setPriceRange(highestPrice[0]?.highestPrice);
+
     console.log(params.id, "parentCategory");
   }, [params.id, categories, subcategories]);
   console.log(
@@ -231,12 +239,20 @@ function ProductPage() {
       {/* suggestion bar */}
 
       <div className="w-[90%] mx-auto my-10">
-        <div>
+        {params.id !== "all" ? (
           <Suggestion
             toggleSelection={toggleSelection}
             subcategories={subcategories}
           />
-        </div>
+        ) : (
+          <Banner4 isHomeArea={false} />
+        )}
+        {/* <div>
+          <Suggestion
+            toggleSelection={toggleSelection}
+            subcategories={subcategories}
+          />
+        </div> */}
       </div>
       <div className="flex lg:ml-12 flex-col">
         <div className="block md:hidden mt-3">

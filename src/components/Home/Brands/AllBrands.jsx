@@ -21,7 +21,7 @@ const AllBrands = () => {
               </div>
             ))
           : productBrands.map((item, index) => (
-              <Link key={index} to={`/brand_products/${item.slug}`}>
+              <Link key={index} to={`/products/all?brand=${item.slug}`}>
                 <div
                   key={item.brandName}
                   className="border rounded-lg bg-white cursor-pointer flex items-center justify-center p-4 transition-transform duration-300 hover:scale-105"

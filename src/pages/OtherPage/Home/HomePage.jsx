@@ -57,7 +57,7 @@ const HomePage = () => {
         <NewArrivals />
         <Category />
         <Featured />
-        <Banner4 />
+        {/* <Banner4 /> */}
         <MostPopular />
         <PromotionalBanner />
         <BestSelling />

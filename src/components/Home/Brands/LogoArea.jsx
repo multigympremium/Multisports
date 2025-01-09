@@ -39,7 +39,7 @@ function LogoArea() {
           : productBrands.map((product, index) => (
               <SwiperSlide key={index}>
                 <Link
-                  to={`/brand_products/${product.slug}`}
+                  to={`/products/all?brand=${product.slug}`}
                   className="flex justify-center hover:scale-125 transition-all duration-300 items-center h-[100px] md:h-[200px]"
                 >
                   <img

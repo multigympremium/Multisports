@@ -1,5 +1,3 @@
-
-
 import { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import Swal from "sweetalert2";
@@ -16,18 +14,18 @@ export default function UpdateBagBannerForm({ targetId, isShow, setIsShow }) {
   const [file_key, setFile_key] = useState(null);
   const [file_url, setFile_url] = useState(null);
   const [progress, setProgress] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   const axiosSecure = useAxiosSecure();
 
   // Dropzone for thumbnail upload
   const onDropThumbnail = (acceptedFiles) => {
     // Set the state with the URL
-  
+
     const thumbnailPreview = URL.createObjectURL(acceptedFiles[0]);
-  
+
     setThumbnailPreview(thumbnailPreview);
-  
-  
+
     setThumbnail(acceptedFiles[0]);
   };
 
@@ -43,6 +41,7 @@ export default function UpdateBagBannerForm({ targetId, isShow, setIsShow }) {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const formData = new FormData();
     formData.append("title", title);
     formData.append("subtitle", subtitle);
@@ -77,6 +76,8 @@ export default function UpdateBagBannerForm({ targetId, isShow, setIsShow }) {
         icon: "error",
         confirmButtonText: "Ok",
       });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -99,15 +100,15 @@ export default function UpdateBagBannerForm({ targetId, isShow, setIsShow }) {
       }
     };
 
-    if(isShow) {fetchTestimonial()}else {
+    if (isShow) {
+      fetchTestimonial();
+    } else {
       setTitle("");
       setSubtitle("");
       setShortDescription("");
       setThumbnail(null);
       setThumbnailPreview(null);
     }
-    
-    
 
     fetchTestimonial();
   }, [targetId, axiosSecure, isShow]);
@@ -175,8 +176,12 @@ export default function UpdateBagBannerForm({ targetId, isShow, setIsShow }) {
         <div className="col-span-2">
           <button
             type="submit"
-            className="w-full customSaveButton mt-6"
+            className="w-full customSaveButton mt-6 flex justify-center items-center gap-3"
+            disabled={loading}
           >
+            {loading && (
+              <span className="loading loading-spinner loading-sm"></span>
+            )}
             Save
           </button>
         </div>
