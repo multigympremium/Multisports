@@ -12,6 +12,7 @@ function ProductsArea({
   query,
   subcategoryFilter,
   categoryFilter,
+  priceRange,
 }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
@@ -25,7 +26,7 @@ function ProductsArea({
       ","
     )}&category=${categoryFilter.join(
       ","
-    )}&currentPage=${currentPage}&limit=${itemsPerPage}`,
+    )}&currentPage=${currentPage}&limit=${itemsPerPage}&priceRange=${priceRange}`,
   });
 
   console.log(products, "products", totalItems, "totalItems");

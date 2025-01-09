@@ -24,6 +24,7 @@ function ProductPage() {
   const [categoryFilter, setCategoryFilter] = useState([]);
   const [subcategoryFilter, setSubCategoryFilter] = useState([]);
   const productBrands = useGetAllProductBrands({});
+  const [priceRange, setPriceRange] = useState(0);
   // const categories = useGetAllCategories({});
   const { categories, brands, subcategories, colors, sizes, highestPrice } =
     useGetExistQueries({});
@@ -217,6 +218,7 @@ function ProductPage() {
       console.log(parentCategory, "parentCategory");
       setCategoryFilter([parentCategory?.category]);
     }
+    setPriceRange(highestPrice[0]?.highestPrice);
     console.log(params.id, "parentCategory");
   }, [params.id, categories, subcategories]);
   console.log(
@@ -376,6 +378,20 @@ function ProductPage() {
               </section>
 
               <div className="space-y-4">
+                <p className="transition-all text-sm duration-300 delay-100 capitalize flex justify-between items-center gap-5 w-full">
+                  <b>Price </b>
+                  <span className="text-gray-500 font-bold text-[14px] border rounded-md  items-center justify-center flex">
+                    $0.00 - ${Number(priceRange).toFixed(2)}
+                  </span>
+                </p>
+                <input
+                  type="range"
+                  min={0}
+                  max={highestPrice[0]?.highestPrice}
+                  value={priceRange}
+                  onChange={(e) => setPriceRange(e.target.value)}
+                  className="range range-xs mb-5"
+                />
                 <ProductFilterGroup groupName="Categories">
                   <SelectableList
                     // items={categories}
@@ -440,6 +456,7 @@ function ProductPage() {
               query={location.search}
               subcategoryFilter={subcategoryFilter}
               categoryFilter={categoryFilter}
+              priceRange={priceRange}
             />
           </div>
         </div>
