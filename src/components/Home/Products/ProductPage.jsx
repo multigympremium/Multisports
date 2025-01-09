@@ -73,14 +73,14 @@ function ProductPage() {
           "brandFilter"
         );
         break;
-      case "productColorName":
+      case "colorLabel":
         setColorFilter((prev2) =>
           prev2.includes(name)
             ? prev2.filter((item) => item !== name)
             : [...prev2, name]
         );
         break;
-      case "sizeName":
+      case "sizeValue":
         setSizesFilter((prev2) =>
           prev2.includes(name)
             ? prev2.filter((item) => item !== name)
