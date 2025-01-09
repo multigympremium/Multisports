@@ -1,18 +1,16 @@
 import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import useGetAllProductBrands from "../../../Hook/GetDataHook/useGetAllProductBrands";
-import useGetAllSubCategories from "../../../Hook/GetDataHook/useGetAllSubCategories";
 import useGetAllProductColors from "../../../Hook/GetDataHook/useGetAllProductColors";
 import useGetAllProductSizes from "../../../Hook/GetDataHook/useGetAllProductSizes";
 import ProductsArea from "./ProductsArea";
 
 import ProductFilterGroup from "../../../shared/ProductFilterGroup";
 import { RiDeleteBin7Line } from "react-icons/ri";
-import useGetAllCategories from "../../../Hook/GetDataHook/useGetAllCategories";
 import Suggestion from "./Suggestion";
 import DrawerComponent from "./DrawerComponent";
 import SelectableList from "./SelectableList";
-import useGetExistCategories from "../../../Hook/GetPublicDataHook/useGetExistCategories";
+import useGetExistQueries from "../../../Hook/GetPublicDataHook/useGetExistQueries";
 
 function ProductPage() {
   const [selectedItems, setSelectedItems] = useState([]);
@@ -25,16 +23,16 @@ function ProductPage() {
   const [sizeFilter, setSizesFilter] = useState([]);
   const [categoryFilter, setCategoryFilter] = useState([]);
   const [subcategoryFilter, setSubCategoryFilter] = useState([]);
-  const router = useLocation();
   const productBrands = useGetAllProductBrands({});
-  const categories = useGetAllCategories({});
-  const existCategories = useGetExistCategories({});
-  const subcategories = useGetAllSubCategories({
-    query: `slug=${
-      // categoryFilter.length > 0 ? categoryFilter.join(",") : params.id
-      categoryFilter.join(",")
-    }`,
-  });
+  // const categories = useGetAllCategories({});
+  const { categories, brands, subcategories, colors, sizes, highestPrice } =
+    useGetExistQueries({});
+  // const subcategories = useGetAllSubCategories({
+  //   query: `slug=${
+  //     // categoryFilter.length > 0 ? categoryFilter.join(",") : params.id
+  //     categoryFilter.join(",")
+  //   }`,
+  // });
   const productColors = useGetAllProductColors({});
   const productSizes = useGetAllProductSizes({});
 
@@ -45,21 +43,21 @@ function ProductPage() {
         : [...prev, name];
     });
     switch (labelKey) {
-      case "categoryName":
+      case "category":
         setCategoryFilter((prev2) =>
           prev2.includes(name)
             ? prev2.filter((item) => item !== name)
             : [...prev2, name]
         );
         break;
-      case "subcategoryName":
+      case "subcategory":
         setSubCategoryFilter((prev2) =>
           prev2.includes(name)
             ? prev2.filter((item) => item !== name)
             : [...prev2, name]
         );
         break;
-      case "brandName":
+      case "brand":
         setBrandFilter((prev2) =>
           prev2.includes(name)
             ? prev2.filter((item) => item !== name)
@@ -202,7 +200,9 @@ function ProductPage() {
     //   }
     // };
 
-    const isExist = categories.map((item) => item?.slug).includes(params.id);
+    const isExist = categories
+      .map((item) => item?.category)
+      .includes(params.id);
     console.log(isExist, "isExist");
     if (isExist) {
       setCategoryFilter((prev) => [...new Set([...prev, params?.id])]);
@@ -219,7 +219,10 @@ function ProductPage() {
     }
     console.log(params.id, "parentCategory");
   }, [params.id, categories, subcategories]);
-  console.log(existCategories, "existCategories");
+  console.log(
+    { categories, brands, subcategories, colors, sizes, highestPrice },
+    "existQueries"
+  );
 
   return (
     <div>
@@ -375,20 +378,21 @@ function ProductPage() {
               <div className="space-y-4">
                 <ProductFilterGroup groupName="Categories">
                   <SelectableList
-                    items={categories}
+                    // items={categories}
+                    items={categories || []}
                     toggleSelection={toggleSelection}
                     selectedItems={categoryFilter}
-                    labelKey="categoryName"
+                    labelKey="category"
                     slug={"slug"}
                     existingFilterItems={categoryFilter}
                   />
                 </ProductFilterGroup>
                 <ProductFilterGroup groupName="Subcategories">
                   <SelectableList
-                    items={subcategories}
+                    items={subcategories || []}
                     toggleSelection={toggleSelection}
                     selectedItems={subcategoryFilter}
-                    labelKey="subcategoryName"
+                    labelKey="subcategory"
                     slug={"slug"}
                     existingFilterItems={subcategoryFilter}
                   />
@@ -396,10 +400,10 @@ function ProductPage() {
 
                 <ProductFilterGroup groupName="Brands">
                   <SelectableList
-                    items={productBrands}
+                    items={brands || []}
                     toggleSelection={toggleSelection}
                     selectedItems={brandFilter}
-                    labelKey="brandName"
+                    labelKey="brand"
                     slug={"slug"}
                     existingFilterItems={brandFilter}
                   />
@@ -407,20 +411,20 @@ function ProductPage() {
 
                 <ProductFilterGroup groupName="Colors">
                   <SelectableList
-                    items={productColors}
+                    items={colors || []}
                     toggleSelection={toggleSelection}
                     selectedItems={colorFilter}
-                    labelKey="productColorName"
+                    labelKey="colorLabel"
                     existingFilterItems={colorFilter}
                   />
                 </ProductFilterGroup>
 
                 <ProductFilterGroup groupName="Sizes">
                   <SelectableList
-                    items={productSizes}
+                    items={sizes || []}
                     toggleSelection={toggleSelection}
                     selectedItems={sizeFilter}
-                    labelKey="sizeName"
+                    labelKey="sizeValue"
                     existingFilterItems={sizeFilter}
                   />
                 </ProductFilterGroup>

@@ -28,19 +28,11 @@ const SelectableList = ({
               <input
                 type="checkbox"
                 className="peer hidden"
-                checked={
-                  slug
-                    ? selectedItems.includes(item[slug])
-                    : selectedItems.includes(item[labelKey])
-                }
-                onChange={() =>
-                  slug
-                    ? toggleSelection(item["slug"], labelKey)
-                    : toggleSelection(item[labelKey], labelKey)
-                }
+                checked={selectedItems?.includes(item[labelKey])}
+                onChange={() => toggleSelection(item[labelKey], labelKey)}
               />
               <span className="w-5 h-5 border-2 border-gray-200 rounded mr-4 flex items-center justify-center peer-checked:bg-black peer-checked:border-black group-hover:border-gray-700 transition-all duration-300 delay-100">
-                {selectedItems.includes(item[labelKey]) && (
+                {selectedItems?.includes(item[labelKey]) && (
                   <svg className="w-4 h-4 text-white" viewBox="0 0 24 24">
                     <path
                       fill="currentColor"
@@ -49,8 +41,17 @@ const SelectableList = ({
                   </svg>
                 )}
               </span>
-              <p className="transition-all text-sm duration-300 delay-100">
-                {item[labelKey]}
+              <p className="transition-all text-sm duration-300 delay-100 capitalize flex justify-between items-center gap-5 w-full">
+                {item[labelKey]?.includes("-")
+                  ? item[labelKey]?.replaceAll("-", " ")
+                  : item[labelKey]?.replaceAll("_", " ")}
+
+                {
+                  <span className="text-gray-500 font-bold text-[10px] border rounded-md w-8 h-8 items-center justify-center flex">
+                    {" "}
+                    {item["productCount"]}
+                  </span>
+                }
               </p>
             </label>
           ))}
