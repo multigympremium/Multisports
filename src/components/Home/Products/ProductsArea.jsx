@@ -19,11 +19,11 @@ function ProductsArea({
   const [isShowModal, setIsShowModal] = useState(false);
 
   const { products, totalItems, loading } = useGetAllProducts({
-    query: `search=${slug}&color=${colorFilter.join(
+    query: `slug=${slug}&color=${colorFilter.join(",")}&size=${sizeFilter.join(
       ","
-    )}&size=${sizeFilter.join(",")}&brand=${brandFilter.join(",")}&${
-      query.includes("product=") ? "product=" + query.split("=")[1] : ""
-    }&subcategory=${subcategoryFilter.join(",")}&category=${categoryFilter.join(
+    )}&brand=${brandFilter.join(",")}&subcategory=${subcategoryFilter.join(
+      ","
+    )}&category=${categoryFilter.join(
       ","
     )}&currentPage=${currentPage}&limit=${itemsPerPage}`,
   });

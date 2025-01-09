@@ -5,130 +5,14 @@ import useGetAllSubCategories from "../../../Hook/GetDataHook/useGetAllSubCatego
 import useGetAllProductColors from "../../../Hook/GetDataHook/useGetAllProductColors";
 import useGetAllProductSizes from "../../../Hook/GetDataHook/useGetAllProductSizes";
 import ProductsArea from "./ProductsArea";
-import ReactGA from "react-ga4";
+
 import ProductFilterGroup from "../../../shared/ProductFilterGroup";
 import { RiDeleteBin7Line } from "react-icons/ri";
-import { IoMdArrowBack } from "react-icons/io";
-import { PiSlidersHorizontal } from "react-icons/pi";
 import useGetAllCategories from "../../../Hook/GetDataHook/useGetAllCategories";
-import HorizontalMenu from "../../../shared/HorizontalMenu/HorizontalMenu";
 import Suggestion from "./Suggestion";
-
-const SelectableList = ({
-  items,
-  labelKey,
-  toggleSelection,
-  selectedItems,
-  slug,
-}) => {
-  return (
-    <div className="space-y-4">
-      {items.length == 0
-        ? // Loading skeleton when items.length is 0
-          Array.from({ length: 8 }).map((_, index) => (
-            <div
-              key={index}
-              className="flex items-center space-x-4 animate-pulse"
-            >
-              <div className="w-5 h-5 bg-gray-200 rounded"></div>
-              <div className="h-5 bg-gray-200 rounded-full w-2/3"></div>
-            </div>
-          ))
-        : // Actual items when items.length > 0
-          items.map((item, index) => (
-            <label
-              key={index}
-              className="flex items-center cursor-pointer transition-colors group"
-            >
-              <input
-                type="checkbox"
-                className="peer hidden"
-                checked={
-                  slug
-                    ? selectedItems.includes(item[slug])
-                    : selectedItems.includes(item[labelKey])
-                }
-                onChange={() =>
-                  slug
-                    ? toggleSelection(item["slug"], labelKey)
-                    : toggleSelection(item[labelKey], labelKey)
-                }
-              />
-              <span className="w-5 h-5 border-2 border-gray-200 rounded mr-4 flex items-center justify-center peer-checked:bg-black peer-checked:border-black group-hover:border-gray-700 transition-all duration-300 delay-100">
-                {selectedItems.includes(item[labelKey]) && (
-                  <svg className="w-4 h-4 text-white" viewBox="0 0 24 24">
-                    <path
-                      fill="currentColor"
-                      d="M9 16.2l-4.2-4.2-1.4 1.4 5.6 5.6 12-12-1.4-1.4z"
-                    />
-                  </svg>
-                )}
-              </span>
-              <p className="transition-all text-sm duration-300 delay-100">
-                {item[labelKey]}
-              </p>
-            </label>
-          ))}
-    </div>
-  );
-};
-
-const DrawerComponent = ({ children, setSelectedItems }) => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const handleOpenDrawer = () => setIsOpen(true);
-  const handleCloseDrawer = () => setIsOpen(false);
-
-  return (
-    <div className="drawer">
-      <input
-        id="my-filter"
-        type="checkbox"
-        className="drawer-toggle"
-        checked={isOpen}
-        onChange={handleOpenDrawer}
-      />
-      <div className="drawer-content">
-        {/* Page content here */}
-        <label
-          htmlFor="my-filter"
-          className="border border-gray-300 ml-4 rounded-lg flex items-center max-w-min gap-2 px-4 py-1 font-semibold drawer-button"
-          onClick={handleOpenDrawer}
-        >
-          <PiSlidersHorizontal />
-          Filters
-        </label>
-      </div>
-      <div className="drawer-side z-50">
-        <label
-          htmlFor="my-filter"
-          aria-label="close sidebar"
-          className="drawer-overlay"
-          onClick={handleCloseDrawer}
-        ></label>
-        <ul className="menu bg-base-200 text-base-content w-full p-4 relative">
-          {/* Close Button */}
-          <div className="flex justify-between items-center">
-            <p className="text-2xl gap-3 font-normal flex items-center">
-              <IoMdArrowBack onClick={handleCloseDrawer} className="text-2xl" />{" "}
-              Filters
-            </p>
-            <p
-              onClick={() => {
-                setSelectedItems([]);
-              }}
-              className="text-sm cursor-pointer"
-            >
-              Clear All
-            </p>
-          </div>
-          {/* Sidebar content here */}
-          {children}
-        </ul>
-      </div>
-    </div>
-  );
-};
+import DrawerComponent from "./DrawerComponent";
+import SelectableList from "./SelectableList";
+import useGetExistCategories from "../../../Hook/GetPublicDataHook/useGetExistCategories";
 
 function ProductPage() {
   const [selectedItems, setSelectedItems] = useState([]);
@@ -141,6 +25,18 @@ function ProductPage() {
   const [sizeFilter, setSizesFilter] = useState([]);
   const [categoryFilter, setCategoryFilter] = useState([]);
   const [subcategoryFilter, setSubCategoryFilter] = useState([]);
+  const router = useLocation();
+  const productBrands = useGetAllProductBrands({});
+  const categories = useGetAllCategories({});
+  const existCategories = useGetExistCategories({});
+  const subcategories = useGetAllSubCategories({
+    query: `slug=${
+      // categoryFilter.length > 0 ? categoryFilter.join(",") : params.id
+      categoryFilter.join(",")
+    }`,
+  });
+  const productColors = useGetAllProductColors({});
+  const productSizes = useGetAllProductSizes({});
 
   const toggleSelection = (name, labelKey) => {
     setSelectedItems((prev) => {
@@ -197,14 +93,6 @@ function ProductPage() {
     }
   };
 
-  console.log(
-    selectedItems,
-    "selectedItems",
-    colorFilter,
-    sizeFilter,
-    brandFilter
-  );
-
   const handleRemoveItem = (itemToRemove) => {
     setSelectedItems((prevSelected) =>
       prevSelected.filter((item) => item !== itemToRemove)
@@ -225,17 +113,6 @@ function ProductPage() {
       prevSubcategory.filter((item) => item !== itemToRemove)
     );
   };
-
-  const router = useLocation();
-  const productBrands = useGetAllProductBrands({});
-  const categories = useGetAllCategories({});
-  const subcategories = useGetAllSubCategories({
-    query: `slug=${
-      categoryFilter.length > 0 ? categoryFilter.join(",") : params.id
-    }`,
-  });
-  const productColors = useGetAllProductColors({});
-  const productSizes = useGetAllProductSizes({});
 
   const handleFilterChange = (checked, value, type) => {
     console.log(value, checked, type, "value, checked");
@@ -288,37 +165,73 @@ function ProductPage() {
     }
   };
 
-  useEffect(() => {
-    ReactGA.send({
-      hitType: "pageview",
-      page: window.location.pathname,
-      title: "ProductPage.jsx",
-    });
+  // useEffect(() => {
+  //   ReactGA.send({
+  //     hitType: "pageview",
+  //     page: window.location.pathname,
+  //     title: "ProductPage.jsx",
+  //   });
 
-    ReactGA.event({
-      category: "Product Visiting",
-      action: "ProductPage ",
-    });
-  }, []);
+  //   ReactGA.event({
+  //     category: "Product Visiting",
+  //     action: "ProductPage ",
+  //   });
+  // }, []);
 
-  useEffect(() => {
-    const filteredSubcategories = subcategories.map((item) => item.category);
-    const uniqueCategories = [...new Set(filteredSubcategories)];
-    console.log(uniqueCategories, "filteredSubcategories");
-    setCategoryFilter(uniqueCategories);
-  }, [subcategories]);
+  // useEffect(() => {
+
+  // }, [subcategories]);
 
   console.log(subcategories, "subcategories");
+
+  useEffect(() => {
+    // setCategoryFilter([]);
+    // const implementParams = () => {
+    //   const isExist = categories.map((item) => item?.slug).includes(params.id);
+    //   console.log(isExist, "isExist");
+    //   if (isExist) {
+    //     setCategoryFilter([params?.id]);
+    //     setSubCategoryFilter([]);
+    //   } else {
+    //     setSubCategoryFilter([params?.id]);
+    //     const findCategory = subcategories.find(
+    //       (item) => item?.slug === params?.id
+    //     );
+    //     setCategoryFilter([findCategory?.category]);
+    //     console.log(findCategory, params.id, "categoryFilter1234");
+    //   }
+    // };
+
+    const isExist = categories.map((item) => item?.slug).includes(params.id);
+    console.log(isExist, "isExist");
+    if (isExist) {
+      setCategoryFilter((prev) => [...new Set([...prev, params?.id])]);
+      setSubCategoryFilter([]);
+      // const filteredSubcat = [...new Set([...prev, ...prev2, params?.id])];
+    } else {
+      setSubCategoryFilter([params?.id]);
+      const parentCategory = subcategories.find((category) => {
+        console.log(category.slug == params.id, "parentCategory");
+        return category.slug == params.id;
+      });
+      console.log(parentCategory, "parentCategory");
+      setCategoryFilter([parentCategory?.category]);
+    }
+    console.log(params.id, "parentCategory");
+  }, [params.id, categories, subcategories]);
+  console.log(existCategories, "existCategories");
+
   return (
     <div>
       {/* suggestion bar */}
 
       <div className="w-[90%] mx-auto my-10">
         <div>
-          <Suggestion toggleSelection={toggleSelection} subcategories={subcategories} />
+          <Suggestion
+            toggleSelection={toggleSelection}
+            subcategories={subcategories}
+          />
         </div>
-
-
       </div>
       <div className="flex lg:ml-12 flex-col">
         <div className="block md:hidden mt-3">
@@ -464,18 +377,20 @@ function ProductPage() {
                   <SelectableList
                     items={categories}
                     toggleSelection={toggleSelection}
-                    selectedItems={selectedItems}
+                    selectedItems={categoryFilter}
                     labelKey="categoryName"
                     slug={"slug"}
+                    existingFilterItems={categoryFilter}
                   />
                 </ProductFilterGroup>
                 <ProductFilterGroup groupName="Subcategories">
                   <SelectableList
                     items={subcategories}
                     toggleSelection={toggleSelection}
-                    selectedItems={selectedItems}
+                    selectedItems={subcategoryFilter}
                     labelKey="subcategoryName"
                     slug={"slug"}
+                    existingFilterItems={subcategoryFilter}
                   />
                 </ProductFilterGroup>
 
@@ -483,9 +398,10 @@ function ProductPage() {
                   <SelectableList
                     items={productBrands}
                     toggleSelection={toggleSelection}
-                    selectedItems={selectedItems}
+                    selectedItems={brandFilter}
                     labelKey="brandName"
                     slug={"slug"}
+                    existingFilterItems={brandFilter}
                   />
                 </ProductFilterGroup>
 
@@ -493,8 +409,9 @@ function ProductPage() {
                   <SelectableList
                     items={productColors}
                     toggleSelection={toggleSelection}
-                    selectedItems={selectedItems}
+                    selectedItems={colorFilter}
                     labelKey="productColorName"
+                    existingFilterItems={colorFilter}
                   />
                 </ProductFilterGroup>
 
@@ -502,8 +419,9 @@ function ProductPage() {
                   <SelectableList
                     items={productSizes}
                     toggleSelection={toggleSelection}
-                    selectedItems={selectedItems}
+                    selectedItems={sizeFilter}
                     labelKey="sizeName"
+                    existingFilterItems={sizeFilter}
                   />
                 </ProductFilterGroup>
               </div>
