@@ -30,7 +30,6 @@ export default function CreateTestimonialsForm() {
 
     setThumbnailPreview(thumbnailPreview);
 
-
     setThumbnail(acceptedFiles[0]);
   };
 
@@ -77,7 +76,6 @@ export default function CreateTestimonialsForm() {
         setDescription("");
         setThumbnailPreview("");
         setThumbnail(null);
-
       }
     } catch (err) {
       console.error(err);
@@ -140,7 +138,6 @@ export default function CreateTestimonialsForm() {
             <label className="block text-gray-700">Description </label>
             <textarea
               value={description}
-
               onChange={(e) => setDescription(e.target.value)}
               className="customInput resize-none"
               required
@@ -173,9 +170,16 @@ export default function CreateTestimonialsForm() {
         <div className="col-span-2">
           <button
             type="submit"
-            className="customSaveButton w-full"
+            className="customSaveButton w-full flex justify-center items-center gap-3"
           >
-            {!loading ? <span>Save Testimonial</span> : <span className="flex items-center gap-2">Saving .. <span className="loading loading-spinner loading-sm"></span></span>}
+            {!loading ? (
+              <span>Save Testimonial</span>
+            ) : (
+              <span className="flex items-center gap-2">
+                Saving ..{" "}
+                <span className="loading loading-spinner loading-sm"></span>
+              </span>
+            )}
           </button>
         </div>
       </form>

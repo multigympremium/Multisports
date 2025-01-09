@@ -1,7 +1,6 @@
 "use client";
 import DragEditUploadImageInput from "../../../shared/DragEditUploadImageInput";
 
-
 import { useState, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import Swal from "sweetalert2";
@@ -19,15 +18,14 @@ export default function EditTestimonialsForm({
   const [description, setDescription] = useState("");
   const [thumbnail, setThumbnail] = useState(null);
   const [thumbnailPreview, setThumbnailPreview] = useState(null);
-  const [file_key, setFile_key] = useState(null);
-  const [file_url, setFile_url] = useState(null);
-  const [progress, setProgress] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   const axiosSecure = useAxiosSecure();
 
   // Fetch existing testimonial for editing
   useEffect(() => {
     const fetchTestimonial = async () => {
+      setLoading(true);
       try {
         const res = await axiosSecure.get(`/testimonials/${testimonialId}`);
         const data = res?.data?.data;
@@ -38,10 +36,10 @@ export default function EditTestimonialsForm({
         setRating(data?.rating);
         setDescription(data?.description);
         setThumbnailPreview(data?.image); // Show the existing image
-        setFile_url(data?.image); // Use the existing image URL
-        setFile_key(data?.key);
       } catch (error) {
         console.error("Error fetching testimonial:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -55,7 +53,6 @@ export default function EditTestimonialsForm({
     const thumbnailPreview = URL.createObjectURL(acceptedFiles[0]);
 
     setThumbnailPreview(thumbnailPreview);
-
 
     setThumbnail(acceptedFiles[0]);
   };
@@ -72,17 +69,13 @@ export default function EditTestimonialsForm({
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-
 
     const formData = new FormData();
     formData.append("customerName", customerName);
     formData.append("designation", designation);
     formData.append("rating", rating);
-    formData.append("description", description);
-    formData.append("image", thumbnail);
+    if (thumbnail) formData.append("image", thumbnail);
 
-    
     try {
       const res = await axiosSecure.put(
         `/testimonials/${testimonialId}`,
@@ -98,8 +91,7 @@ export default function EditTestimonialsForm({
           icon: "success",
           confirmButtonText: "Ok",
         });
-        localStorage.removeItem("file_key");
-        setFile_key(null);
+
         setThumbnailPreview(null);
         setThumbnail(null);
         setIsShow(false);
@@ -129,20 +121,8 @@ export default function EditTestimonialsForm({
             image={thumbnail}
             imagePreview={thumbnailPreview}
           />
-
-          {progress > 0 && progress < 100 && (
-            <div className="w-full h-full absolute top-0 left-0 bg-black bg-opacity-50 font-bold text-xl flex justify-center items-center">
-              <progress
-                className="progress progress-accent w-56"
-                value={progress}
-                max="100"
-              ></progress>
-              {Math.floor(progress)}%
-            </div>
-          )}
         </div>
 
-       
         <div className="space-y-4 mt-5">
           <div>
             <label className="block text-gray-700">Customer Name </label>
@@ -195,7 +175,11 @@ export default function EditTestimonialsForm({
           <button
             type="submit"
             className="w-full customSaveButton mt-4"
+            disabled={loading}
           >
+            {loading && (
+              <span className="loading loading-spinner loading-sm"></span>
+            )}
             Save Changes
           </button>
         </div>

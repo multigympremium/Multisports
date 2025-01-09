@@ -115,7 +115,7 @@ export default function ViewAllTestimonials() {
     <div className="p-6 pt-0">
       <h1 className="text-3xl font-semibold mb-9">Testimonials</h1>
 
-      <div className="bg-white border rounded-full px-3 mb-6 md:py-2 py-1 md:gap-2 gap-1 flex-row-reverse justify-between flex">
+      {/* <div className="bg-white border rounded-full px-3 mb-6 md:py-2 py-1 md:gap-2 gap-1 flex-row-reverse justify-between flex">
         <input
           type="text"
           value={searchTerm}
@@ -124,7 +124,7 @@ export default function ViewAllTestimonials() {
           placeholder="Search by customer name..."
         />
         <IoIosSearch className="text-2xl text-gray-400" />
-      </div>
+      </div> */}
 
       {/* Testimonials Table */}
       <div className="overflow-x-auto">
