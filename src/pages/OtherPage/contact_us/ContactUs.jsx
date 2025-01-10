@@ -13,7 +13,7 @@ const ContactUs = () => {
                     <p className="text-sm md:text-3xl tracking-widest text-gray-200">Don't hesitate to ask !</p>
                 </div>
             </div>
-            <div className="flex flex-col md:flex-row items-start md:items-center justify-between px-4 py-8 mt-11  w-[90%] md:max-w-[1440px] mx-auto">
+            <div className="flex flex-col md:flex-row items-start md:items-center justify-between px-4 py-8 mt-5  w-[90%] md:max-w-[1440px] mx-auto">
 
                 {/* Left Section */}
                 <div className="w-full md:w-1/2 mb-8 md:mb-0 md:pr-4">
