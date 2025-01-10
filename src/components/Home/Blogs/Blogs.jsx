@@ -7,8 +7,9 @@ import axios from "axios";
 import blogBg from "../../../assets/blogs/blog_banner.jpg";
 import BlogCard from "../../../shared/Cards/BlogCard/BlogCard";
 import useGetAllBlogs from "../../../Hook/GetPublicDataHook/useGetAllBlogs";
-import Modal from "../../../shared/Modal/Modal";
+// import Modal from "../../../shared/Modal/Modal";
 import BlogDetail from "./BlogDetail";
+import Modal from "../../partial/Modal/Modal";
 
 const Blogs = () => {
   const [blogData, setBlogData] = useState([]);
@@ -16,6 +17,7 @@ const Blogs = () => {
   const [singleData, setSingleData] = useState({});
   const [isShowModal, setIsShowModal] = useState(false);
   //   const axiosPublic = useAxiosPublic();
+  
 
   const blogs = useGetAllBlogs({});
 
@@ -58,9 +60,10 @@ const Blogs = () => {
           )}
         </div>
       </section>
-      <Modal isShowModal={isShowModal} setIsShowModal={setIsShowModal}>
+      {/* <Modal isShowModal={isShowModal} setIsShowModal={setIsShowModal}>
         <BlogDetail data={singleData} />
-      </Modal>
+      </Modal> */}
+      <Modal isShowModal={isShowModal} children={<BlogDetail data={singleData}/>} setIsShowModal={setIsShowModal}></Modal>
     </>
   );
 };

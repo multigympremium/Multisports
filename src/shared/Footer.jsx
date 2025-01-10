@@ -182,7 +182,7 @@ const Footer = () => {
             </Link>
             <Link
               className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300"
-              to="#"
+              to="/shop_adress"
             >
               Shop Address
             </Link>
@@ -238,47 +238,33 @@ const Footer = () => {
           </div>
         </nav>
         <nav>
-          <h6 className="footer-title text-base md:text-lg font-bold mb-1 md:mb-4 text-black">
-            Social Media
-          </h6>
-          <div className="text-slate-600 flex flex-col gap-1 md:gap-3 text-sm md:text-base">
+      <h6 className="footer-title text-base md:text-lg font-bold mb-1 md:mb-4 text-black">
+        Social Media
+      </h6>
+      <div className="text-slate-600 flex flex-col gap-1 md:gap-3 text-sm md:text-base">
+        {socialLinks ? (
+          socialLinks.slice(0, 5).map((social) => (
             <Link
-              to={"https://www.facebook.com/"}
+              key={social.name}
+              to={social.link}
               target="_blank"
-              className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300"
+              className="hover:text-blue-800 capitalize hover:translate-x-3 transition-all duration-300"
             >
-              Facebook
+              {social.name}
             </Link>
-            <Link
-              to={"https://www.instagram.com/"}
-              target="_blank"
-              className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300"
-            >
-              Instagram
-            </Link>
-            <Link
-              to={"https://www.tiktok.com/"}
-              target="_blank"
-              className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300"
-            >
-              Tiktok
-            </Link>
-            <Link
-              to={"https://www.youtube.com/"}
-              target="_blank"
-              className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300"
-            >
-              Youtube
-            </Link>
-            <Link
-              to={"https://www.pinterest.com/"}
-              target="_blank"
-              className="hover:text-blue-800 hover:translate-x-3 transition-all duration-300"
-            >
-              Pinterest
-            </Link>
-          </div>
-        </nav>
+          ))
+        ) : (
+          Array(5)
+            .fill(null)
+            .map((_, index) => (
+              <div
+                key={index}
+                className="bg-slate-200 h-4 rounded-md w-32 md:w-40 animate-pulse"
+              ></div>
+            ))
+        )}
+      </div>
+    </nav>
 
         <nav>
           <h6 className="footer-title  text-base md:text-lg font-bold mb-1 md:mb-4 text-black">
