@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
-import Navbar from "./shared/Navbar";
+import Navbar from "./shared/Navbar/Navbar";
 import Footer from "./shared/Footer";
 import HorizontalMenu from "./shared/HorizontalMenu/HorizontalMenu";
 import MetaTags from "./components/Home/MetaTags/MetaTags";

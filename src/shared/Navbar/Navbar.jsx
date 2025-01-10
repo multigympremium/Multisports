@@ -1,95 +1,34 @@
-import { AuthContext } from "../providers/AuthProvider";
+import { AuthContext } from "../../providers/AuthProvider";
 import { useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { BsCart } from "react-icons/bs";
-import { IoIosSearch } from "react-icons/io";
 
 import { FaRegHeart } from "react-icons/fa";
 import { FaRegUser } from "react-icons/fa6";
 import { MdMenu, MdOutlineStore } from "react-icons/md";
-import Wishlist from "./Cards/Wishlist/Wishlist";
-import BgBlurModal from "./Modal/BgBlurModal";
-import Cart from "./cart/Cart";
+import Wishlist from "../Cards/Wishlist/Wishlist";
+import BgBlurModal from "../Modal/BgBlurModal";
+import Cart from "../cart/Cart";
 import { Link, useNavigate } from "react-router-dom";
-import ProductSearch from "../components/Home/Products/ProductSearch/ProductSearch";
-import SidebarContainer from "./SidebarContainer";
-import noUser from "../assets/user.png";
+import ProductSearch from "../../components/Home/Products/ProductSearch/ProductSearch";
+import SidebarContainer from "../SidebarContainer";
 import {
   IoCartOutline,
   IoHomeOutline,
   IoPersonOutline,
   IoSettingsOutline,
 } from "react-icons/io5";
-import CustomImage from "./ImageComponents/CustomImage";
+import CustomImage from "../ImageComponents/CustomImage";
+import SearchArea from "./SearchArea";
 const Navbar = () => {
   const { userRole, logOut, totalItems, user } = useContext(AuthContext);
   const placeholders = ["Shorts", "Watch", "Shirt"];
-  const [placeholderText, setPlaceholderText] = useState("");
-  const [placeholderIndex, setPlaceholderIndex] = useState(0);
-  const [charIndex, setCharIndex] = useState(0);
-  const [isTyping, setIsTyping] = useState(true);
+
   const [isFocused, setIsFocused] = useState(false);
   const router = useNavigate();
   const [isShowModal, setIsShowModal] = useState(false);
   const [isShowWishlist, setIsShowWishlist] = useState(false);
   const [isShowSearch, setIsShowSearch] = useState(false);
-  const SearchBar = ({ setIsShowSearch }) => {
-    useEffect(() => {
-      if (isFocused) return;
-
-      let typingTimeout;
-
-      if (isTyping) {
-        if (charIndex < placeholders[placeholderIndex].length) {
-          typingTimeout = setTimeout(() => {
-            setPlaceholderText(
-              (prev) => prev + placeholders[placeholderIndex][charIndex]
-            );
-            setCharIndex((prev) => prev + 1);
-          }, 300);
-        } else {
-          setIsTyping(false);
-          setTimeout(() => setIsTyping(false), 2000);
-        }
-      } else {
-        if (charIndex > 0) {
-          typingTimeout = setTimeout(() => {
-            setPlaceholderText((prev) => prev.slice(0, -1));
-            setCharIndex((prev) => prev - 1);
-          }, 150);
-        } else {
-          setIsTyping(true);
-          setPlaceholderIndex((prev) => (prev + 1) % placeholders.length);
-        }
-      }
-
-      return () => clearTimeout(typingTimeout);
-    }, [charIndex, isTyping, placeholderIndex, placeholders, isFocused]);
-
-    const handleFocus = () => {
-      // setIsFocused(true);
-      setIsShowSearch(true);
-    };
-
-    const handleBlur = (e) => {
-      if (e.target.value.length === 0) {
-        setIsFocused(false);
-      }
-    };
-
-    return (
-      <div className="bg-gray-100 rounded-full px-3 w-[70%] md:py-2 py-1 md:gap-2 gap-1 flex-row-reverse justify-between flex">
-        <input
-          type="text"
-          className="outline-none w-full bg-gray-100"
-          placeholder={!isFocused ? `Search for "${placeholderText}"` : ""}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-        />
-        <IoIosSearch className="text-2xl text-gray-400" />
-      </div>
-    );
-  };
 
   const handleLogOut = () => {
     const isLogOut = logOut();
@@ -235,7 +174,11 @@ const Navbar = () => {
             </button>
           </label> */}
 
-          <SearchBar setIsShowSearch={setIsShowSearch}></SearchBar>
+          <SearchArea
+            setIsShowSearch={setIsShowSearch}
+            placeholders={placeholders}
+            setIsFocused={setIsFocused}
+          />
 
           {/* Menu */}
           <div className="navbar-end flex items-center gap-1 md:gap-3">
@@ -332,7 +275,11 @@ const Navbar = () => {
       >
       </BgBlurModal> */}
       <BgBlurModal isShowModal={isShowSearch} setIsShowModal={setIsShowSearch}>
-        <ProductSearch isShow={isShowSearch} setIsShow={setIsShowSearch} />
+        <ProductSearch
+          isShow={isShowSearch}
+          setIsShow={setIsShowSearch}
+          isFocused={isFocused}
+        />
       </BgBlurModal>
     </>
   );

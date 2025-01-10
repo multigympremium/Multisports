@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 import Container from "../../../shared/Container";
 import PageHeader from "../../UI/PageHeader";
 import AccountNav from "./account-nav";
-import Navbar from "../../../shared/Navbar";
+import Navbar from "../../../shared/Navbar/Navbar";
 import Footer from "../../../shared/Footer";
 
 const AccountLayout = ({ children }) => {
