@@ -11,8 +11,9 @@ import Suggestion from "./Suggestion";
 import DrawerComponent from "./DrawerComponent";
 import SelectableList from "./SelectableList";
 import useGetExistQueries from "../../../Hook/GetPublicDataHook/useGetExistQueries";
-import Banner4 from "../Banner/Banner4";
+
 import BrandBanners from "../Banner/BrandBanners";
+import useGetAllSubCategories from "../../../Hook/GetPublicDataHook/useGetAllSubCategories";
 
 function ProductPage() {
   const [selectedItems, setSelectedItems] = useState([]);
@@ -28,14 +29,21 @@ function ProductPage() {
   const productBrands = useGetAllProductBrands({});
   const [priceRange, setPriceRange] = useState(0);
   // const categories = useGetAllCategories({});
-  const { categories, brands, subcategories, colors, sizes, highestPrice } =
-    useGetExistQueries({});
-  // const subcategories = useGetAllSubCategories({
-  //   query: `slug=${
-  //     // categoryFilter.length > 0 ? categoryFilter.join(",") : params.id
-  //     categoryFilter.join(",")
-  //   }`,
-  // });
+  const {
+    categories,
+    brands,
+    subcategories: querySubcategories,
+    colors,
+    sizes,
+    highestPrice,
+  } = useGetExistQueries({});
+  const subcategories = useGetAllSubCategories({
+    query: `slug=${
+      // categoryFilter.length > 0 ? categoryFilter.join(",") : params.id
+      categoryFilter.join(",")
+    }`,
+  });
+
   const productColors = useGetAllProductColors({});
   const productSizes = useGetAllProductSizes({});
 
@@ -194,7 +202,7 @@ function ProductPage() {
 
   // }, [subcategories]);
 
-  console.log(subcategories, "subcategories");
+  console.log(querySubcategories, "subcategories");
 
   useEffect(() => {
     setPriceRange(highestPrice[0]?.highestPrice);
@@ -218,7 +226,7 @@ function ProductPage() {
       setBrandFilter([brand]);
     } else {
       setSubCategoryFilter([params?.id]);
-      const parentCategory = subcategories.find((category) => {
+      const parentCategory = querySubcategories.find((category) => {
         console.log(category.slug == params.id, "parentCategory");
         return category.slug == params.id;
       });
@@ -229,9 +237,9 @@ function ProductPage() {
     }
 
     console.log(params.id, "parentCategory");
-  }, [params.id, categories, subcategories]);
+  }, [params.id, categories, querySubcategories]);
   console.log(
-    { categories, brands, subcategories, colors, sizes, highestPrice },
+    { categories, brands, querySubcategories, colors, sizes, highestPrice },
     "existQueries"
   );
 
@@ -288,7 +296,7 @@ function ProductPage() {
                 <div className="space-y-3 ">
                   <ProductFilterGroup groupName="Categories">
                     <SelectableList
-                      items={subcategories}
+                      items={querySubcategories}
                       toggleSelection={toggleSelection}
                       selectedItems={selectedItems}
                       labelKey="subcategoryName"
@@ -422,7 +430,7 @@ function ProductPage() {
                 </ProductFilterGroup>
                 <ProductFilterGroup groupName="Subcategories">
                   <SelectableList
-                    items={subcategories || []}
+                    items={querySubcategories || []}
                     toggleSelection={toggleSelection}
                     selectedItems={subcategoryFilter}
                     labelKey="subcategory"
