@@ -1,4 +1,3 @@
-"use client";
 import { useState } from "react";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import { IoIosSearch } from "react-icons/io";
@@ -63,7 +62,7 @@ export default function SMSTemplates() {
               className="customSaveButton"
               onClick={handleCreateNewTemplate}
             >
-              +   Create New Template
+              + Create New Template
             </button>
           </div>
         </div>
@@ -79,7 +78,6 @@ export default function SMSTemplates() {
           />
           <IoIosSearch className="text-2xl text-gray-400" />
         </div>
-
 
         {/* SMS Templates Table */}
         <table className="min-w-full table-auto border-collapse bg-white shadow-md rounded-md">
@@ -103,7 +101,7 @@ export default function SMSTemplates() {
                   <td className="p-2 border">
                     <div className="flex justify-center space-x-2">
                       <EditButton />
-                      <DeleteButton onClick={() => handleDelete(template.id)}/>
+                      <DeleteButton onClick={() => handleDelete(template.id)} />
                     </div>
                   </td>
                 </tr>

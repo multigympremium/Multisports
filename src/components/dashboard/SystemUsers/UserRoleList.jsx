@@ -1,4 +1,3 @@
-"use client";
 // pages/user-roles.js
 import { useState } from "react";
 

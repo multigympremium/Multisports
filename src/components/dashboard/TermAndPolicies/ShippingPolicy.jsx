@@ -1,4 +1,3 @@
-"use client";
 // components/ShippingPolicy.js
 import React, { useEffect, useState } from "react";
 import CustomEditor from "../../../shared/CustomEditor/CustomEditor";
@@ -55,10 +54,7 @@ const ShippingPolicy = () => {
 
   return (
     <div className="p-6 pt-0">
-      <form
-        onSubmit={handleSubmit}
-        className=""
-      >
+      <form onSubmit={handleSubmit} className="">
         <h2 className="text-3xl font-semibold mb-9">Shipping Update Form</h2>
 
         <div className="mb-6">
@@ -72,10 +68,7 @@ const ShippingPolicy = () => {
         </div>
 
         <div className="flex items-center justify-end">
-          <button
-            type="submit"
-            className="customSaveButton"
-          >
+          <button type="submit" className="customSaveButton">
             Update Terms And Condition
           </button>
         </div>

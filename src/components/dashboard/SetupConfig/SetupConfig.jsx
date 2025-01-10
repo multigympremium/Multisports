@@ -1,5 +1,3 @@
-"use client";
-
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";

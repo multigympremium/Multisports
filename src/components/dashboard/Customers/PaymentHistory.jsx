@@ -1,4 +1,3 @@
-"use client";
 import { useState } from "react";
 import { IoIosSearch } from "react-icons/io";
 
@@ -106,7 +105,11 @@ export default function PaymentHistory() {
                   <td className="p-2 border">{item.currency}</td>
                   <td className="p-2 border">{item.bankTranId}</td>
                   <td className="p-2 border">{item.datetime}</td>
-                  <td className="p-2 py-4 border"><span className="bg-[#31B349] text-white px-2 py-1 rounded-lg">{item.status}</span></td>
+                  <td className="p-2 py-4 border">
+                    <span className="bg-[#31B349] text-white px-2 py-1 rounded-lg">
+                      {item.status}
+                    </span>
+                  </td>
                 </tr>
               ))
             ) : (

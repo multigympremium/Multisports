@@ -1,4 +1,3 @@
-"use client";
 import { useState } from "react";
 import { IoIosSearch } from "react-icons/io";
 import DeleteButton from "../../../components library/DeleteButton";
@@ -51,9 +50,7 @@ export default function SubscribedUsersList() {
           <h1 className="text-3xl font-semibold">Subscribed Users List</h1>
           {/* Download as Excel Button */}
           <div className="mt-6">
-            <button className="customSaveButton">
-              Download As Excel
-            </button>
+            <button className="customSaveButton">Download As Excel</button>
           </div>
         </div>
 
@@ -123,8 +120,6 @@ export default function SubscribedUsersList() {
             Next
           </button>
         </div>
-
-
       </div>
     </div>
   );

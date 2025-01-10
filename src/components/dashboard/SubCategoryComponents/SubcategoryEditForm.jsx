@@ -1,5 +1,3 @@
-"use client";
-
 import EditFormImage from "../../../shared/ImageComponents/EditFormImage";
 import { useState, useEffect } from "react";
 import { useDropzone } from "react-dropzone";

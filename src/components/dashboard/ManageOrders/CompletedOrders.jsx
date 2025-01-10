@@ -1,4 +1,3 @@
-"use client";
 import { useEffect, useState } from "react";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import useGetAllOrders from "../../../Hook/GetDataHook/useGetAllOrders";

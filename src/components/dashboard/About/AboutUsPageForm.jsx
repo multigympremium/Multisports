@@ -1,4 +1,3 @@
-"use client";
 // pages/about.js
 import React, { useState } from "react";
 import VisionSection from "./forms/VisionSection";

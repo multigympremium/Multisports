@@ -1,4 +1,3 @@
-"use client";
 // pages/permission-routes.js
 import { useState, useEffect } from "react";
 

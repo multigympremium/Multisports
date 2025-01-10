@@ -1,4 +1,3 @@
-"use client";
 import DragUploadImageInput from "../../../../../shared/DragUploadImageInput";
 
 import { useState } from "react";

@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import { IoIosSearch } from "react-icons/io";
 

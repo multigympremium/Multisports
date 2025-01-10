@@ -1,4 +1,3 @@
-"use client";
 import { getStorage, ref, deleteObject } from "firebase/storage";
 import toast from "react-hot-toast";
 

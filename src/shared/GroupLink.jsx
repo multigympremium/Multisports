@@ -1,5 +1,4 @@
-"use client";
-import {  useState } from "react";
+import { useState } from "react";
 import { FaArrowDown, FaArrowUp } from "react-icons/fa";
 
 function GroupLink({ children, groupName, icon, ...rest }) {

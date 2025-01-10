@@ -1,4 +1,3 @@
-"use client";
 import { AuthContext } from "../../../providers/AuthProvider";
 
 import { useContext, useEffect, useState } from "react";
@@ -8,17 +7,15 @@ import Wishlist from "../Wishlist/Wishlist";
 import WishlistIcon from "../Wishlist/WishlistIcon";
 export default function RecommendedProductCard({ item = {} }) {
   const [isLike, setIsLike] = useState(false);
-  const { addToCart,  wishlist } = useContext(AuthContext);
+  const { addToCart, wishlist } = useContext(AuthContext);
 
-  
-
-  useEffect(()=> {
-    wishlist.map((item)=>{
-      if(item.id === item.id){
+  useEffect(() => {
+    wishlist.map((item) => {
+      if (item.id === item.id) {
         setIsLike(true);
       }
-    })
-  } , [wishlist])
+    });
+  }, [wishlist]);
   return (
     <div className="max-w-xs bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 p-4 relative">
       {/* Product Image */}
@@ -57,23 +54,26 @@ export default function RecommendedProductCard({ item = {} }) {
         <div>
           <h2 className="text-lg font-bold">{item?.productTitle}</h2>
 
-        {item?.shortDescription &&
-        (item?.shortDescription.length > 100) &
-          (item?.shortDescription.length < 200) ? (
+          {item?.shortDescription &&
+          (item?.shortDescription.length > 100) &
+            (item?.shortDescription.length < 200) ? (
             <p
-            className="text-sm text-gray-600"
-            dangerouslySetInnerHTML={{
-              __html: item?.shortDescription?.slice(0, 100) + "...",
-            }}
+              className="text-sm text-gray-600"
+              dangerouslySetInnerHTML={{
+                __html: item?.shortDescription?.slice(0, 100) + "...",
+              }}
             />
           ) : (
-          <p
-            className="text-sm text-gray-600"
-            dangerouslySetInnerHTML={{ __html: item?.shortDescription }}
-          />
-        )}
+            <p
+              className="text-sm text-gray-600"
+              dangerouslySetInnerHTML={{ __html: item?.shortDescription }}
+            />
+          )}
         </div>
-        <button onClick={()=> addToCart(item) } className="w-full border border-black text-black text-sm font-bold py-2 mt-2 rounded-lg hover:bg-black hover:text-white transition duration-300">
+        <button
+          onClick={() => addToCart(item)}
+          className="w-full border border-black text-black text-sm font-bold py-2 mt-2 rounded-lg hover:bg-black hover:text-white transition duration-300"
+        >
           ADD TO CART
         </button>
       </div>

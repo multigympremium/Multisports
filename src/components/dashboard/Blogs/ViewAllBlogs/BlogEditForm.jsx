@@ -1,19 +1,13 @@
-"use client";
 import CustomEditor from "../../../../shared/CustomEditor/CustomEditor";
 import DragEditUploadImageInput from "../../../../shared/DragEditUploadImageInput";
 import useGetAllBlogCategories from "../../../../Hook/GetDataHook/useGetAllBlogCategories";
-
 
 import { useState, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../../Hook/useAxiosSecure";
 
-export default function BlogEditForm({
-  BlogId,
-  setIsShowModal,
-  isShowModal,
-}) {
+export default function BlogEditForm({ BlogId, setIsShowModal, isShowModal }) {
   const axiosSecure = useAxiosSecure();
   const [writer, setWriter] = useState("");
   const [blogCategory, setBlogCategory] = useState("");
@@ -27,7 +21,7 @@ export default function BlogEditForm({
 
   const BlogCategories = useGetAllBlogCategories({});
 
-    const [thumbnail, setThumbnail] = useState(null);
+  const [thumbnail, setThumbnail] = useState(null);
   const [title, setTitle] = useState("");
 
   // Fetch Blog data when component mounts
@@ -48,9 +42,8 @@ export default function BlogEditForm({
         setMetaKeywords(resBlogData.metaKeywords);
         setMetaDescription(resBlogData.metaDescription);
         setBlogCategory(resBlogData.blogCategory);
-        
-        setSlug(resBlogData.slug);
 
+        setSlug(resBlogData.slug);
       } catch (error) {
         console.error("Error fetching Blog data:", error);
       }
@@ -71,8 +64,6 @@ export default function BlogEditForm({
     setThumbnailPreview(previewUrl);
     setThumbnail(acceptedFiles[0]);
   };
-
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -105,7 +96,6 @@ export default function BlogEditForm({
     }
   };
 
-
   const {
     getRootProps: getBannerRootProps,
     getInputProps: getBannerInputProps,
@@ -114,8 +104,6 @@ export default function BlogEditForm({
     accept: "image/*",
     multiple: false,
   });
-
-  
 
   const handleCloseModal = () => {
     setWriter("");
@@ -129,7 +117,6 @@ export default function BlogEditForm({
     setMetaDescription("");
     setThumbnail(null);
     setThumbnailPreview("");
-
   };
 
   const handleSlug = (input) => {
@@ -140,84 +127,74 @@ export default function BlogEditForm({
 
   return (
     <div className="w-full bg-white rounded-2xl p-10">
-    <div className="">
-      <h1 className="text-2xl font-semibold mb-5">Blog Edit Form</h1>
-      <form onSubmit={handleSubmit}>
-        {/* Blog Name */}
-        <div className="mb-4">
-          <label className="block text-gray-700 ">Name</label>
-          <input
-            type="text"
-            value={writer}
-            onChange={(e) => setWriter(e.target.value)}
-            className="customInput"
-            placeholder="Blog Name"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 ">title </label>
-          <input
-            type="text"
-            value={title}
-            className="customInput"
-            placeholder="Blog Name"
-            required
-            onChange={(e) => handleSlug(e.target.value)}
-          />
-        </div>
+      <div className="">
+        <h1 className="text-2xl font-semibold mb-5">Blog Edit Form</h1>
+        <form onSubmit={handleSubmit}>
+          {/* Blog Name */}
+          <div className="mb-4">
+            <label className="block text-gray-700 ">Name</label>
+            <input
+              type="text"
+              value={writer}
+              onChange={(e) => setWriter(e.target.value)}
+              className="customInput"
+              placeholder="Blog Name"
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 ">title </label>
+            <input
+              type="text"
+              value={title}
+              className="customInput"
+              placeholder="Blog Name"
+              required
+              onChange={(e) => handleSlug(e.target.value)}
+            />
+          </div>
 
+          <div className="mb-4">
+            <label className="block text-gray-700 ">Slug</label>
+            <input
+              type="text"
+              value={slug}
+              className="customInput"
+              placeholder="Slug"
+              required
+              onChange={(e) => setSlug(e.target.value)}
+            />
+          </div>
 
-        <div className="mb-4">
-          <label className="block text-gray-700 ">Slug</label>
-          <input
-            type="text"
-            value={slug}
-            className="customInput"
-            placeholder="Slug"
-            required
-            onChange={(e) => setSlug(e.target.value)}
-          />
-        </div>
+          {/*  Blog Category */}
+          <div className="mb-4">
+            <label className="block text-gray-700 ">Blog Category</label>
+            <select
+              value={blogCategory}
+              onChange={(e) => setBlogCategory(e.target.value)}
+              className="customInput select"
+            >
+              <option value="">Select One</option>
+              {BlogCategories.map((category) => (
+                <option value={category.name} key={category._id}>
+                  {category.name}
+                </option>
+              ))}
+            </select>
+          </div>
 
-        {/*  Blog Category */}
-        <div className="mb-4">
-          <label className="block text-gray-700 ">
-             Blog Category
-          </label>
-          <select
-            value={blogCategory}
-            onChange={(e) => setBlogCategory(e.target.value)}
-            className="customInput select"
-          >
-            <option value="">Select One</option>
-            {BlogCategories.map((category) => (
-              <option value={category.name} key={category._id}>
-                {category.name}
-              </option>
-            ))}
-          </select>
-           
-        </div>
+          {/* Blog Icon */}
+          <div className="mb-4">
+            <label className="block text-gray-700 ">Blog Thumbnail</label>
+            <DragEditUploadImageInput
+              getRootProps={getBannerRootProps}
+              getInputProps={getBannerInputProps}
+              image={thumbnail}
+              imagePreview={thumbnailPreview}
+            />
+          </div>
 
-        {/* Blog Icon */}
-        <div className="mb-4">
-          <label className="block text-gray-700 ">
-            Blog Thumbnail
-          </label>
-          <DragEditUploadImageInput
-          getRootProps={getBannerRootProps}
-          getInputProps={getBannerInputProps}
-          image={thumbnail}
-          imagePreview={thumbnailPreview}
-        />
-        </div>
-
-      
-
-        
-
-        <div className="mb-[4rem]">
+          <div className="mb-[4rem]">
             <label className="block text-gray-700 text-2xl  mb-4">
               Short Description
             </label>
@@ -227,7 +204,7 @@ export default function BlogEditForm({
               setValue={setShortDescription}
             />
           </div>
-        <div className="mb-[4rem]">
+          <div className="mb-[4rem]">
             <label className="block text-gray-700 text-2xl mb-4">
               Full Description
             </label>
@@ -238,60 +215,50 @@ export default function BlogEditForm({
             />
           </div>
 
-
           {/* SEO Information */}
-        <div className="mb-4 ">
-          <h2 className="text-2xl pb-4 mb-4 border-b border-gray-300">
-             SEO Information (Optional)
-          </h2>
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-gray-700 ">
-                Meta Title
-              </label>
-              <input
-                type="text"
-                value={metaTitle}
-                onChange={(e) => setMetaTitle(e.target.value)}
-                className="customInput"
-              />
-            </div>
-            <div>
-              <label className="block text-gray-700 ">
-                Meta Keywords
-              </label>
-              <input
-                type="text"
-                value={metaKeywords}
-                onChange={(e) => setMetaKeywords(e.target.value)}
-                className="customInput"
-              />
-            </div>
-            <div className="col-span-2">
-              <label className="block text-gray-700 ">
-                Meta Description
-              </label>
-              <textarea
-                value={metaDescription}
-                onChange={(e) => setMetaDescription(e.target.value)}
-                className="customInput resize-none"
-                rows="3"
-              />
+          <div className="mb-4 ">
+            <h2 className="text-2xl pb-4 mb-4 border-b border-gray-300">
+              SEO Information (Optional)
+            </h2>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-gray-700 ">Meta Title</label>
+                <input
+                  type="text"
+                  value={metaTitle}
+                  onChange={(e) => setMetaTitle(e.target.value)}
+                  className="customInput"
+                />
+              </div>
+              <div>
+                <label className="block text-gray-700 ">Meta Keywords</label>
+                <input
+                  type="text"
+                  value={metaKeywords}
+                  onChange={(e) => setMetaKeywords(e.target.value)}
+                  className="customInput"
+                />
+              </div>
+              <div className="col-span-2">
+                <label className="block text-gray-700 ">Meta Description</label>
+                <textarea
+                  value={metaDescription}
+                  onChange={(e) => setMetaDescription(e.target.value)}
+                  className="customInput resize-none"
+                  rows="3"
+                />
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Submit Button */}
-        <div className="flex justify-end">
-          <button
-            type="submit"
-            className="customSaveButton"
-          >
-            Save Blog
-          </button>
-        </div>
-      </form>
+          {/* Submit Button */}
+          <div className="flex justify-end">
+            <button type="submit" className="customSaveButton">
+              Save Blog
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
-  </div>
   );
 }

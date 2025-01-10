@@ -1,4 +1,3 @@
-"use client";
 import CustomEditor from "../../../../shared/CustomEditor/CustomEditor";
 import DragEditUploadImageInput from "../../../../shared/DragEditUploadImageInput";
 

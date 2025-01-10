@@ -1,6 +1,3 @@
-"use client";
-
-
 import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -11,18 +8,23 @@ export default function WebsiteThemeColorForm() {
   const { register, handleSubmit, getValues, setValue, watch } = useForm();
   const [targetId, setTargetId] = useState("");
   const [isExistData, setIsExistData] = useState(false);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const axiosSecure = useAxiosSecure();
 
-
-
-  console.log(watch("primaryColor"), watch("secondaryColor"), watch("tertiaryColor"), watch("titleColor"), watch("paragraphColor"), watch("borderColor"));
+  console.log(
+    watch("primaryColor"),
+    watch("secondaryColor"),
+    watch("tertiaryColor"),
+    watch("titleColor"),
+    watch("paragraphColor"),
+    watch("borderColor")
+  );
 
   function getContrastingColor(color) {
     let r, g, b;
 
     if (color) {
-      if (color.startsWith('#')) {
+      if (color.startsWith("#")) {
         // Hex format
 
         if (color.length < 4) {
@@ -32,7 +34,7 @@ export default function WebsiteThemeColorForm() {
           g = parseInt(color.slice(1, 2), 16);
           b = parseInt(color.slice(2, 3), 16);
 
-          return "#000"
+          return "#000";
         } else {
           // #rrggbb format
           color = color.slice(1);
@@ -40,29 +42,25 @@ export default function WebsiteThemeColorForm() {
           g = parseInt(color.slice(2, 4), 16);
           b = parseInt(color.slice(4, 6), 16);
         }
-      } else if (color.startsWith('rgb')) {
+      } else if (color.startsWith("rgb")) {
         // RGB format
         [r, g, b] = color.match(/\d+/g).map(Number);
       } else {
-        return "#000000"
+        return "#000000";
       }
 
       // Calculate brightness
-      const brightness = (0.2126 * r + 0.7152 * g + 0.0722 * b);
-      return brightness > 128 ? '#000000' : '#FFFFFF';
-
+      const brightness = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+      return brightness > 128 ? "#000000" : "#FFFFFF";
     } else {
-      return "#000000"
+      return "#000000";
     }
-
   }
 
-
   const onSubmit = async (data) => {
-    setLoading(true)
+    setLoading(true);
     console.log(data, "data");
     try {
-
       if (targetId) {
         const res = await axiosSecure.put(
           `/website-theme-color/${targetId}`,
@@ -76,12 +74,8 @@ export default function WebsiteThemeColorForm() {
             confirmButtonText: "Ok",
           });
         }
-
       } else {
-        const res = await axiosSecure.post(
-          `/website-theme-color`,
-          data
-        );
+        const res = await axiosSecure.post(`/website-theme-color`, data);
         if (res.status === 200 || res.status === 201) {
           Swal.fire({
             title: "Success!",
@@ -90,11 +84,7 @@ export default function WebsiteThemeColorForm() {
             confirmButtonText: "Ok",
           });
         }
-
       }
-
-
-
     } catch (err) {
       console.error(err);
       Swal.fire({
@@ -112,10 +102,11 @@ export default function WebsiteThemeColorForm() {
     const fetchTestimonial = async () => {
       try {
         const firstResData = await axiosSecure.get(`/website-theme-color`);
-        const res = await axiosSecure.get(`/website-theme-color/${firstResData?.data?.data[0]?._id}`);
+        const res = await axiosSecure.get(
+          `/website-theme-color/${firstResData?.data?.data[0]?._id}`
+        );
 
         if (res.status === 200 || res.status === 201) {
-
           const data = res?.data?.data;
 
           console.log(data, "data");
@@ -125,20 +116,17 @@ export default function WebsiteThemeColorForm() {
             console.log(key, data[key], "data[key]");
             setValue(key, data[key]);
           }
-          setTargetId(data?._id)
-
+          setTargetId(data?._id);
         } else {
-          handleDefaultColor()
+          handleDefaultColor();
         }
       } catch (error) {
-        handleDefaultColor()
+        handleDefaultColor();
         console.error("Error fetching testimonial:", error);
       }
     };
 
     fetchTestimonial();
-
-
   }, [axiosSecure, setValue]);
 
   const handleDefaultColor = useCallback(() => {
@@ -152,25 +140,38 @@ export default function WebsiteThemeColorForm() {
 
   return (
     <div className="flex justify-center">
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="w-full  p-6 pt-0"
-      >
-        <h2 className="text-3xl header font-semibold mb-9">Update Website Theme Color</h2>
+      <form onSubmit={handleSubmit(onSubmit)} className="w-full  p-6 pt-0">
+        <h2 className="text-3xl header font-semibold mb-9">
+          Update Website Theme Color
+        </h2>
         <div className="grid grid-cols-1 gap-4">
-
           {/* Color inputs */}
-          {["primaryColor", "secondaryColor", "tertiaryColor", "titleColor", "paragraphColor", "borderColor"].map((color) => (
+          {[
+            "primaryColor",
+            "secondaryColor",
+            "tertiaryColor",
+            "titleColor",
+            "paragraphColor",
+            "borderColor",
+          ].map((color) => (
             <div key={color}>
               <label className="block text-sm  font-medium  text-gray-700">
-                {color.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}:
+                {color
+                  .replace(/([A-Z])/g, " $1")
+                  .replace(/^./, (str) => str.toUpperCase())}
+                :
               </label>
               <input
                 type={"text"}
                 className="customInput"
-                style={{ background: getValues(color), color: getContrastingColor(getValues(color)) }}
+                style={{
+                  background: getValues(color),
+                  color: getContrastingColor(getValues(color)),
+                }}
                 // htmlFor={color}
-                {...register(color, { onChange: (e) => setValue(color, e.target.value) })}
+                {...register(color, {
+                  onChange: (e) => setValue(color, e.target.value),
+                })}
               />
               {/* <input
                 type="color"
@@ -179,7 +180,6 @@ export default function WebsiteThemeColorForm() {
                 hidden={true}
                 className=" block w-0 h-0 opacity-0 overflow-hidden border border-gray-300 rounded-md"
               /> */}
-
             </div>
           ))}
         </div>
@@ -192,12 +192,15 @@ export default function WebsiteThemeColorForm() {
           >
             Cancel
           </button> */}
-          <button
-            disabled={loading}
-            type="submit"
-            className="customSaveButton"
-          >
-            {loading ? <><span className="loading loading-spinner mr-2  loading-xs"></span>Updating ..</> : "Update color"}
+          <button disabled={loading} type="submit" className="customSaveButton">
+            {loading ? (
+              <>
+                <span className="loading loading-spinner mr-2  loading-xs"></span>
+                Updating ..
+              </>
+            ) : (
+              "Update color"
+            )}
           </button>
         </div>
       </form>

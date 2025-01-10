@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import Modal from "../../../shared/Modal/Modal";
 import Swal from "sweetalert2";

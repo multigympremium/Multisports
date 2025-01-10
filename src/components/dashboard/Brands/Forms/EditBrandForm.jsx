@@ -1,4 +1,3 @@
-"use client";
 import DragEditUploadImageInput from "../../../../shared/DragEditUploadImageInput";
 import SwitchInput from "../../../../shared/SwitchInput";
 

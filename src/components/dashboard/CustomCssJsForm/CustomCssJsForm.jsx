@@ -1,6 +1,3 @@
-"use client";
-
-
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
@@ -11,8 +8,7 @@ export default function CustomCSSJSForm() {
   const [footerScript, setFooterScript] = useState("");
   const [targetId, setTargetId] = useState("");
   const [loading, setLoading] = useState(false);
-  const axiosSecure = useAxiosSecure()
-
+  const axiosSecure = useAxiosSecure();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,12 +20,8 @@ export default function CustomCSSJSForm() {
     };
     console.log(data, "data");
     try {
-
       if (targetId) {
-        const res = await axiosSecure.put(
-          `/custom-css-js/${targetId}`,
-          data
-        );
+        const res = await axiosSecure.put(`/custom-css-js/${targetId}`, data);
         if (res.status === 200 || res.status === 201) {
           Swal.fire({
             title: "Success!",
@@ -38,12 +30,8 @@ export default function CustomCSSJSForm() {
             confirmButtonText: "Ok",
           });
         }
-
       } else {
-        const res = await axiosSecure.post(
-          `/custom-css-js`,
-          data
-        );
+        const res = await axiosSecure.post(`/custom-css-js`, data);
         if (res.status === 200 || res.status === 201) {
           Swal.fire({
             title: "Success!",
@@ -52,11 +40,7 @@ export default function CustomCSSJSForm() {
             confirmButtonText: "Ok",
           });
         }
-
       }
-
-
-
     } catch (err) {
       console.error(err);
       Swal.fire({
@@ -66,7 +50,7 @@ export default function CustomCSSJSForm() {
         confirmButtonText: "Ok",
       });
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   };
 
@@ -74,26 +58,26 @@ export default function CustomCSSJSForm() {
     const fetchTestimonial = async () => {
       try {
         const firstResData = await axiosSecure.get(`/custom-css-js`);
-        const res = await axiosSecure.get(`/custom-css-js/${firstResData?.data?.data[0]?._id}`);
+        const res = await axiosSecure.get(
+          `/custom-css-js/${firstResData?.data?.data[0]?._id}`
+        );
 
-        console.log(firstResData, res, "res ljlj")
+        console.log(firstResData, res, "res ljlj");
 
         if (res.status === 200 || res.status === 201) {
-
           const data = res?.data?.data;
 
           console.log(data, "data");
 
           // Set form values with the testimonial data
 
-          setCustomCSS(data.css)
-          setHeaderScript(data.headerJs)
-          setFooterScript(data.footerJs)
+          setCustomCSS(data.css);
+          setHeaderScript(data.headerJs);
+          setFooterScript(data.footerJs);
 
-          console.log(data?._id, "targetId useEffect")
+          console.log(data?._id, "targetId useEffect");
 
-          setTargetId(data?._id)
-
+          setTargetId(data?._id);
         }
       } catch (error) {
         console.error("Error fetching testimonial:", error);
@@ -101,20 +85,17 @@ export default function CustomCSSJSForm() {
     };
 
     fetchTestimonial();
-
-
   }, [axiosSecure]);
 
-  console.log(targetId, "targetId")
+  console.log(targetId, "targetId");
 
   return (
     <div className="">
       <div className="p-6 pt-0">
-        <h1 className="text-3xl font-semibold header mb-8">Custom CSS & JS Form</h1>
-        <form
-          onSubmit={handleSubmit}
-          className=""
-        >
+        <h1 className="text-3xl font-semibold header mb-8">
+          Custom CSS & JS Form
+        </h1>
+        <form onSubmit={handleSubmit} className="">
           <div className=" grid grid-cols-3 gap-6 justify-between items-center ">
             {/* Custom CSS */}
             <div>
@@ -141,7 +122,7 @@ export default function CustomCSSJSForm() {
             </div>
 
             {/* Footer Custom Script */}
-            <div >
+            <div>
               <label className="block text-gray-700 font-semibold mb-2">
                 Footer Custom Script
               </label>
@@ -174,7 +155,8 @@ export default function CustomCSSJSForm() {
               >
                 {loading ? (
                   <>
-                    <span className="loading loading-spinner mr-2  loading-xs"></span>Updating ..
+                    <span className="loading loading-spinner mr-2  loading-xs"></span>
+                    Updating ..
                   </>
                 ) : (
                   "Update Code"

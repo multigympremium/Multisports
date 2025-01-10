@@ -1,4 +1,3 @@
-"use client";
 // pages/system-users.js
 
 import { useState } from "react";

@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import { IoIosSearch } from "react-icons/io";
@@ -103,7 +101,11 @@ export default function RatingsReview() {
                   <td className="p-2 border">{review.reply}</td>
                   <td className="p-2 border">{review.customer}</td>
                   <td className="p-2 border">{review.name}</td>
-                  <td className="p-2 border"><span className="border px-2 rounded-lg pb-1 text-white bg-[#236c23a5] border-[#56ce5696]">{review.status}</span></td>
+                  <td className="p-2 border">
+                    <span className="border px-2 rounded-lg pb-1 text-white bg-[#236c23a5] border-[#56ce5696]">
+                      {review.status}
+                    </span>
+                  </td>
                   <td className="p-2 border">
                     <div className="flex justify-center space-x-2">
                       <EditButton></EditButton>
@@ -136,10 +138,11 @@ export default function RatingsReview() {
                 <button
                   key={index}
                   onClick={() => handlePageChange(index + 1)}
-                  className={`px-3 py-1 border rounded-xl ${currentPage === index + 1
+                  className={`px-3 py-1 border rounded-xl ${
+                    currentPage === index + 1
                       ? "bg-[#087D6D] text-white"
                       : "bg-gray-100"
-                    }`}
+                  }`}
                 >
                   {index + 1}
                 </button>

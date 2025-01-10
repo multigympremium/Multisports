@@ -1,4 +1,3 @@
-"use client";
 import React, { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -8,7 +7,7 @@ import "swiper/css/thumbs";
 import { FreeMode, Navigation, Thumbs, Zoom } from "swiper/modules";
 import CustomImage from "../../../ImageComponents/CustomImage";
 
-export default function CardGallerySide({ gallery, thumbnailImage = '' }) {
+export default function CardGallerySide({ gallery, thumbnailImage = "" }) {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
 
   return (
@@ -41,7 +40,7 @@ export default function CardGallerySide({ gallery, thumbnailImage = '' }) {
 
       {gallery && gallery.length > 0 && (
         <Swiper
-          onSwiper={setThumbsSwiper}  // Set the thumbsSwiper instance here
+          onSwiper={setThumbsSwiper} // Set the thumbsSwiper instance here
           spaceBetween={10}
           slidesPerView={4}
           freeMode={true}

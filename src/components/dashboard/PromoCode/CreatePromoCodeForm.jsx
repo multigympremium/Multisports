@@ -1,4 +1,3 @@
-"use client";
 import { useState } from "react";
 import { useDropzone } from "react-dropzone";
 
@@ -50,7 +49,9 @@ export default function CreatePromoCodeForm() {
   return (
     <div className="p-6 pt-0">
       <div className="">
-        <p className="text-3xl header font-semibold mb-9">Promo Code Entry Form</p>
+        <p className="text-3xl header font-semibold mb-9">
+          Promo Code Entry Form
+        </p>
 
         <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-3 gap-4">
@@ -177,14 +178,11 @@ export default function CreatePromoCodeForm() {
 
           {/* Save Button */}
           <div className="flex justify-end mt-6">
-            <button
-              type="submit"
-              className="customSaveButton"
-            >
-
+            <button type="submit" className="customSaveButton">
               {loading ? (
                 <>
-                  <span className="loading loading-spinner mr-2  loading-xs"></span>Saving Promo Code ..
+                  <span className="loading loading-spinner mr-2  loading-xs"></span>
+                  Saving Promo Code ..
                 </>
               ) : (
                 "Save Promo Code"

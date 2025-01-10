@@ -1,12 +1,7 @@
-"use client";
 import { useEffect, useState } from "react";
 import useAxiosPublic from "../useAxiosPublic";
 
-function useGetSeo({
-  isEdited = false,
-  isDeleted = false,
-  isShowModal,
-}) {
+function useGetSeo({ isEdited = false, isDeleted = false, isShowModal }) {
   const [content, setContent] = useState("");
 
   const axiosPublic = useAxiosPublic();

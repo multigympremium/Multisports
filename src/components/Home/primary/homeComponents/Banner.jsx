@@ -1,4 +1,3 @@
-"use client";
 import React, { useRef, useState } from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -11,7 +10,6 @@ import "./css/banner.module.css";
 
 // import required modules
 import { Navigation } from "swiper/modules";
-
 
 export default function Banner() {
   return (

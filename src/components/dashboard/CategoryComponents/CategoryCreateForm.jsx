@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { FiUploadCloud } from "react-icons/fi";
@@ -8,7 +6,7 @@ import useAxiosSecure from "../../../Hook/useAxiosSecure";
 
 export default function CategoryCreateForm() {
   const axiosSecure = useAxiosSecure();
-  const [loading , setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [categoryName, setCategoryName] = useState("");
   const [featureCategory, setFeatureCategory] = useState("");
   const [showOnNavbar, setShowOnNavbar] = useState("Yes");
@@ -283,17 +281,18 @@ export default function CategoryCreateForm() {
 
           <div className="mt-6 flex justify-end">
             <button
-            disabled={loading}
+              disabled={loading}
               type="submit"
               className="customSaveButton"
             >
               {loading ? (
-              <>
-                <span className="loading loading-spinner mr-2  loading-xs"></span>Creating ..
-              </>
-            ) : (
-              "Create Category"
-            )}
+                <>
+                  <span className="loading loading-spinner mr-2  loading-xs"></span>
+                  Creating ..
+                </>
+              ) : (
+                "Create Category"
+              )}
             </button>
           </div>
         </form>

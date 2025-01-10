@@ -1,4 +1,3 @@
-"use client";
 import React, { useContext } from "react";
 import CartItemComponent from "../CartItemComponent";
 import { IoHome } from "react-icons/io5";

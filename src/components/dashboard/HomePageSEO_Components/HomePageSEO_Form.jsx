@@ -1,4 +1,3 @@
-"use client";
 import DragEditUploadImageInput from "../../../shared/DragEditUploadImageInput";
 
 import { useEffect, useState } from "react";
@@ -8,7 +7,12 @@ import Swal from "sweetalert2";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
 
 export default function SeoForm() {
-  const { register, handleSubmit, setValue, formState: { errors } } = useForm();
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm();
   const [targetId, setTargetId] = useState("");
   const [thumbnail, setThumbnail] = useState(null);
   const [thumbnailPreview, setThumbnailPreview] = useState(null);
@@ -21,9 +25,6 @@ export default function SeoForm() {
     setThumbnail(acceptedFiles[0]);
   };
 
-
-
-
   const {
     getRootProps: getBannerRootProps,
     getInputProps: getBannerInputProps,
@@ -33,12 +34,10 @@ export default function SeoForm() {
     multiple: false,
   });
 
-
   const axiosSecure = useAxiosSecure();
 
-
   const onSubmit = async (data) => {
-    setLoading(true)
+    setLoading(true);
     console.log(data, "data");
 
     const formData = new FormData();
@@ -49,12 +48,8 @@ export default function SeoForm() {
     formData.append("metaOgDescription", data.metaOgDescription);
     formData.append("metaOgImage", thumbnail);
     try {
-
       if (targetId) {
-        const res = await axiosSecure.put(
-          `/website-seo/${targetId}`,
-          formData
-        );
+        const res = await axiosSecure.put(`/website-seo/${targetId}`, formData);
         if (res.status === 200 || res.status === 201) {
           Swal.fire({
             title: "Success!",
@@ -63,12 +58,8 @@ export default function SeoForm() {
             confirmButtonText: "Ok",
           });
         }
-
       } else {
-        const res = await axiosSecure.post(
-          `/website-seo`,
-          formData
-        );
+        const res = await axiosSecure.post(`/website-seo`, formData);
         if (res.status === 200 || res.status === 201) {
           Swal.fire({
             title: "Success!",
@@ -77,7 +68,6 @@ export default function SeoForm() {
             confirmButtonText: "Ok",
           });
         }
-
       }
     } catch (err) {
       console.error(err);
@@ -96,10 +86,11 @@ export default function SeoForm() {
     const fetchTestimonial = async () => {
       try {
         const firstResData = await axiosSecure.get(`/website-seo`);
-        const res = await axiosSecure.get(`/website-seo/${firstResData?.data?.data[0]?._id}`);
+        const res = await axiosSecure.get(
+          `/website-seo/${firstResData?.data?.data[0]?._id}`
+        );
 
         if (res.status === 200 || res.status === 201) {
-
           const data = res?.data?.data;
 
           console.log(data, "data");
@@ -109,21 +100,18 @@ export default function SeoForm() {
             console.log(key, data[key], "data[key]");
             setValue(key, data[key]);
           }
-          setThumbnailPreview(data?.metaOgImage)
-          setTargetId(data?._id)
-
+          setThumbnailPreview(data?.metaOgImage);
+          setTargetId(data?._id);
         } else {
-          handleDefaultColor()
+          handleDefaultColor();
         }
       } catch (error) {
-        handleDefaultColor()
+        handleDefaultColor();
         console.error("Error fetching testimonial:", error);
       }
     };
 
     fetchTestimonial();
-
-
   }, [axiosSecure, setValue]);
 
   return (
@@ -134,36 +122,41 @@ export default function SeoForm() {
       >
         {/* Meta SEO Section */}
         <div className="space-y-4">
-          <h2 className="text-3xl mb-9 header font-semibold">Search Engine Optimization for HomePage</h2>
+          <h2 className="text-3xl mb-9 header font-semibold">
+            Search Engine Optimization for HomePage
+          </h2>
 
           <div className="space-y-4">
             <div className="flex flex-col">
-              <label className="block text-sm font-medium text-gray-700">Meta Title</label>
+              <label className="block text-sm font-medium text-gray-700">
+                Meta Title
+              </label>
               <input
                 type="text"
                 {...register("metaTitle")}
                 className="customInput"
-
               />
             </div>
 
             <div className="flex flex-col">
-              <label className="block text-sm font-medium text-gray-700">Meta Keywords</label>
+              <label className="block text-sm font-medium text-gray-700">
+                Meta Keywords
+              </label>
               <input
                 type="text"
                 {...register("metaKeywords")}
                 className="customInput"
-
               />
             </div>
 
             <div className="flex flex-col">
-              <label className="block text-sm font-medium text-gray-700">Meta Description</label>
+              <label className="block text-sm font-medium text-gray-700">
+                Meta Description
+              </label>
               <textarea
                 {...register("metaDescription")}
                 className="customInput resize-none"
                 rows="4"
-
               />
             </div>
           </div>
@@ -175,27 +168,31 @@ export default function SeoForm() {
 
           <div className="space-y-4">
             <div className="flex flex-col">
-              <label className="block text-sm font-medium text-gray-700">Meta Open Graph Title</label>
+              <label className="block text-sm font-medium text-gray-700">
+                Meta Open Graph Title
+              </label>
               <input
                 type="text"
                 {...register("metaOgTitle")}
                 className="customInput"
-
               />
             </div>
 
             <div className="flex flex-col">
-              <label className="block text-sm font-medium text-gray-700">Meta Open Graph Description</label>
+              <label className="block text-sm font-medium text-gray-700">
+                Meta Open Graph Description
+              </label>
               <textarea
                 {...register("metaOgDescription")}
-
                 className="customInput resize-none"
                 rows="4"
               />
             </div>
 
             <div className="flex flex-col">
-              <label className="block text-sm font-medium text-gray-700">Meta Open Graph Image</label>
+              <label className="block text-sm font-medium text-gray-700">
+                Meta Open Graph Image
+              </label>
               <DragEditUploadImageInput
                 getRootProps={getBannerRootProps}
                 getInputProps={getBannerInputProps}
@@ -208,20 +205,14 @@ export default function SeoForm() {
 
         {/* Action Buttons */}
         <div className="flex justify-end gap-6 mt-6">
-          <button
-            type="button"
-            className="customCancelButton"
-          >
+          <button type="button" className="customCancelButton">
             Cancel
           </button>
-          <button
-            disabled={loading}
-            type="submit"
-            className="customSaveButton"
-          >
+          <button disabled={loading} type="submit" className="customSaveButton">
             {loading ? (
               <>
-                <span className="loading loading-spinner mr-2 loading-xs"></span>Updating..
+                <span className="loading loading-spinner mr-2 loading-xs"></span>
+                Updating..
               </>
             ) : (
               "Update Info"
@@ -229,7 +220,6 @@ export default function SeoForm() {
           </button>
         </div>
       </form>
-
     </div>
   );
 }

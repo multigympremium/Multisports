@@ -1,4 +1,3 @@
-"use client";
 import CustomEditor from "../../../shared/CustomEditor/CustomEditor";
 import SwitchInput from "../../../shared/SwitchInput";
 import useGetAllChildCategories from "../../../Hook/GetDataHook/useGetAllChildCategories";

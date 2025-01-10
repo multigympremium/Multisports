@@ -1,5 +1,3 @@
-"use client";
-
 import CardGallerySide from "./CardGallerySide/CardGallerySide";
 import { AuthContext } from "../../../providers/AuthProvider";
 import { useContext } from "react";

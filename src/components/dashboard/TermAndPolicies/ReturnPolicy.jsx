@@ -1,4 +1,3 @@
-"use client";
 // components/ReturnPolicy.js
 import React, { useEffect, useState } from "react";
 import CustomEditor from "../../../shared/CustomEditor/CustomEditor";
@@ -55,11 +54,10 @@ const ReturnPolicy = () => {
 
   return (
     <div className="p-6 pt-0">
-      <form
-        onSubmit={handleSubmit}
-        className=""
-      >
-        <h2 className="text-3xl font-semibold mb-9">Return Policy Update Form</h2>
+      <form onSubmit={handleSubmit} className="">
+        <h2 className="text-3xl font-semibold mb-9">
+          Return Policy Update Form
+        </h2>
 
         <div className="mb-6">
           <div className="">
@@ -72,10 +70,7 @@ const ReturnPolicy = () => {
         </div>
 
         <div className="flex items-center justify-end">
-          <button
-            type="submit"
-            className="customSaveButton"
-          >
+          <button type="submit" className="customSaveButton">
             Update Terms And Condition
           </button>
         </div>

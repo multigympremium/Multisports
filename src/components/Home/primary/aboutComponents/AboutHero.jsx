@@ -1,4 +1,3 @@
-"use client";
 import Image from "next/image";
 import about from "../../../Asset/about.png";
 import { FaPlay } from "react-icons/fa";

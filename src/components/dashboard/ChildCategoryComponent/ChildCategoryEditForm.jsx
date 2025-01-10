@@ -1,4 +1,3 @@
-"use client";
 import EditFormImage from "../../../shared/ImageComponents/EditFormImage";
 import useGetAllCategories from "../../../Hook/GetDataHook/useGetAllCategories";
 import useGetAllSubCategories from "../../../Hook/GetDataHook/useGetAllSubCategories";

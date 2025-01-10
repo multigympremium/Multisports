@@ -1,4 +1,3 @@
-"use client";
 import { useState } from "react";
 import { FiTrash2 } from "react-icons/fi";
 import { CSVLink } from "react-csv";
@@ -73,8 +72,10 @@ export default function CustomersList() {
               filename="customers_list.csv"
               className="customSaveButton"
             >
-               <span className="flex items-center gap-2"><RxDownload />
-               Download as Excel</span>
+              <span className="flex items-center gap-2">
+                <RxDownload />
+                Download as Excel
+              </span>
             </CSVLink>
           </div>
         </div>
@@ -88,7 +89,6 @@ export default function CustomersList() {
           />
           <IoIosSearch className="text-2xl text-gray-400" />
         </div>
-
 
         {/* Customers Table */}
         <table className="min-w-full table-auto border-collapse bg-white shadow rounded-md">
@@ -120,7 +120,9 @@ export default function CustomersList() {
                   <td className="p-2 border">{customer.wallet}</td>
                   <td className="p-2 border">{customer.createdAt}</td>
                   <td className="p-2 border">
-                    <DeleteButton onClick={() => handleDelete(customer.id)}></DeleteButton>
+                    <DeleteButton
+                      onClick={() => handleDelete(customer.id)}
+                    ></DeleteButton>
                   </td>
                 </tr>
               ))

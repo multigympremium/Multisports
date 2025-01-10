@@ -1,4 +1,3 @@
-"use client";
 import useAxiosPublic from "../../../Hook/useAxiosPublic";
 import { AuthContext } from "../../../providers/AuthProvider";
 import { Link, useNavigate } from "react-router-dom";

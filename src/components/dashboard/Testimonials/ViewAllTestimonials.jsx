@@ -1,4 +1,3 @@
-"use client";
 import BgBlurModal from "../../../shared/Modal/BgBlurModal";
 import useGetAllTestimonials from "../../../Hook/GetDataHook/useGetAllTestimonials";
 

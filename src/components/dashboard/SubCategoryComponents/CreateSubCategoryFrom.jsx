@@ -1,4 +1,3 @@
-"use client";
 import DragUploadImageInput from "../../../shared/DragUploadImageInput";
 import useGetAllCategories from "../../../Hook/GetDataHook/useGetAllCategories";
 import { useState } from "react";
@@ -8,7 +7,7 @@ import useAxiosSecure from "../../../Hook/useAxiosSecure";
 
 export default function SubcategoryCreateForm() {
   const [category, setCategory] = useState("");
-  const [loading , setLoading] =useState(false);
+  const [loading, setLoading] = useState(false);
   const [subcategoryName, setSubcategoryName] = useState("");
   const [subcategoryIcon, setSubcategoryIcon] = useState(null);
   const [subcategoryIconPreview, setSubcategoryIconPreview] = useState("");
@@ -39,7 +38,8 @@ export default function SubcategoryCreateForm() {
     if (!slug.trim()) {
       newErrors.slug = "Slug is required.";
     } else if (!/^[a-zA-Z0-9_-]+$/.test(slug)) {
-      newErrors.slug = "Slug can only contain letters, numbers, dashes, and underscores.";
+      newErrors.slug =
+        "Slug can only contain letters, numbers, dashes, and underscores.";
     }
 
     // Validate icon file
@@ -76,7 +76,10 @@ export default function SubcategoryCreateForm() {
     e.preventDefault();
     setLoading(true);
 
-    if (!validateFields()){ setLoading(false); return};
+    if (!validateFields()) {
+      setLoading(false);
+      return;
+    }
 
     const formData = new FormData();
     formData.append("category", category);
@@ -131,12 +134,14 @@ export default function SubcategoryCreateForm() {
   return (
     <div className="p-6 pt-0">
       <div className="">
-        <h1 className="text-3xl font-semibold header mb-9">Subcategory Create Form</h1>
+        <h1 className="text-3xl font-semibold header mb-9">
+          Subcategory Create Form
+        </h1>
         <form onSubmit={handleSubmit}>
           {/* Select Category */}
           <div className="mb-4">
             <label className="block text-gray-700 font-semibold ">
-              Select Category 
+              Select Category
             </label>
             <select
               value={category}
@@ -160,7 +165,7 @@ export default function SubcategoryCreateForm() {
           {/* Subcategory Name */}
           <div className="mb-4">
             <label className="block text-gray-700 font-semibold ">
-              Subcategory Name 
+              Subcategory Name
             </label>
             <input
               type="text"
@@ -229,12 +234,13 @@ export default function SubcategoryCreateForm() {
               className="customSaveButton"
             >
               {loading ? (
-              <>
-                <span className="loading loading-spinner mr-2  loading-xs"></span>Saving ..
-              </>
-            ) : (
-              "Save Subcategory"
-            )}
+                <>
+                  <span className="loading loading-spinner mr-2  loading-xs"></span>
+                  Saving ..
+                </>
+              ) : (
+                "Save Subcategory"
+              )}
             </button>
           </div>
         </form>

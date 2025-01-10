@@ -1,4 +1,3 @@
-"use client";
 import DragUploadImageInput from "../../../../../shared/DragUploadImageInput";
 
 import { useState } from "react";
@@ -20,19 +19,15 @@ export default function CreateBannerForm({ setIsShow }) {
   const axiosSecure = useAxiosSecure();
 
   // Dropzone for thumbnail upload
- const onDropThumbnail = (acceptedFiles) => {
-  // Set the state with the URL
+  const onDropThumbnail = (acceptedFiles) => {
+    // Set the state with the URL
 
-  const thumbnailPreview = URL.createObjectURL(acceptedFiles[0]);
+    const thumbnailPreview = URL.createObjectURL(acceptedFiles[0]);
 
-  setThumbnailPreview(thumbnailPreview);
+    setThumbnailPreview(thumbnailPreview);
 
-
-  setThumbnail(acceptedFiles[0]);
-};
-
-
-
+    setThumbnail(acceptedFiles[0]);
+  };
 
   const {
     getRootProps: getThumbnailRootProps,
@@ -46,7 +41,6 @@ export default function CreateBannerForm({ setIsShow }) {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
 
     const formData = new FormData();
     formData.append("title", title);
@@ -112,7 +106,6 @@ export default function CreateBannerForm({ setIsShow }) {
           )}
         </div>
 
-
         <div className="space-y-4 mt-5">
           <div>
             <label className="block text-gray-700">Title </label>
@@ -147,10 +140,7 @@ export default function CreateBannerForm({ setIsShow }) {
 
         {/* Save Button */}
         <div className="col-span-2">
-          <button
-            type="submit"
-            className="w-full customSaveButton mt-6"
-          >
+          <button type="submit" className="w-full customSaveButton mt-6">
             Save
           </button>
         </div>

@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 
 export default function GenerateDemoProducts() {
@@ -29,7 +27,9 @@ export default function GenerateDemoProducts() {
 
           {/* Form Section */}
           <div className="w-1/2 px-6 ">
-            <h2 className="text-3xl font-semibold mb-4">Generate Demo Products</h2>
+            <h2 className="text-3xl font-semibold mb-4">
+              Generate Demo Products
+            </h2>
             <p className="mb-6">
               {`Demo products involve showcasing the features, benefits, and
               functionality of the products in a way that helps stakeholders
@@ -40,9 +40,7 @@ export default function GenerateDemoProducts() {
             </p>
 
             <div className="mb-4">
-              <label className="block  text-gray-700">
-                Demo Products Type
-              </label>
+              <label className="block  text-gray-700">Demo Products Type</label>
               <select
                 value={productType}
                 onChange={(e) => setProductType(e.target.value)}
@@ -68,10 +66,7 @@ export default function GenerateDemoProducts() {
               />
             </div>
 
-            <button
-              onClick={handleGenerate}
-              className="customSaveButton"
-            >
+            <button onClick={handleGenerate} className="customSaveButton">
               Generate Demo Products
             </button>
           </div>

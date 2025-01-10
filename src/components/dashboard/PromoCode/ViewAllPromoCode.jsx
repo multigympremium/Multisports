@@ -1,4 +1,3 @@
-"use client";
 import { useState } from "react";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import { IoIosSearch } from "react-icons/io";
@@ -115,17 +114,24 @@ export default function ViewAllPromoCode() {
                   </td>
                   <td className="p-2 border">৳ {promo.minSpend.toFixed(2)}</td>
                   <td className="p-2 border">{promo.code}</td>
-                  <td
-
-                  >
-                    <span className={`text-white  p-2  rounded-xl py-1 ${promo.status === "Active" ? "bg-[#A8CE3A]" : "bg-red-500"
-                      }`}>{promo.status}</span>
+                  <td>
+                    <span
+                      className={`text-white  p-2  rounded-xl py-1 ${
+                        promo.status === "Active"
+                          ? "bg-[#A8CE3A]"
+                          : "bg-red-500"
+                      }`}
+                    >
+                      {promo.status}
+                    </span>
                   </td>
 
                   <td className="p-2 border py-3">
                     <div className="flex justify-center space-x-2">
                       <EditButton></EditButton>
-                      <DeleteButton onClick={() => handleDelete(promo.id)}></DeleteButton>
+                      <DeleteButton
+                        onClick={() => handleDelete(promo.id)}
+                      ></DeleteButton>
                     </div>
                   </td>
                 </tr>
@@ -154,10 +160,11 @@ export default function ViewAllPromoCode() {
                 <button
                   key={index}
                   onClick={() => handlePageChange(index + 1)}
-                  className={`px-3 py-1 border rounded-md ${currentPage === index + 1
-                    ? "bg-blue-500 text-white"
-                    : "bg-gray-100"
-                    }`}
+                  className={`px-3 py-1 border rounded-md ${
+                    currentPage === index + 1
+                      ? "bg-blue-500 text-white"
+                      : "bg-gray-100"
+                  }`}
                 >
                   {index + 1}
                 </button>

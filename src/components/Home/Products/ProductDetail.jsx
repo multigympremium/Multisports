@@ -1,4 +1,3 @@
-"use client";
 import useAxiosPublic from "../../../Hook/useAxiosPublic";
 import React, { useContext, useEffect, useState } from "react";
 import "react-inner-image-zoom/lib/InnerImageZoom/styles.min.css";

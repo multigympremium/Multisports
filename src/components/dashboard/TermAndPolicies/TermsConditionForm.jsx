@@ -1,4 +1,3 @@
-"use client";
 // components/TermsConditionForm.js
 import React, { useEffect, useState } from "react";
 import CustomEditor from "../../../shared/CustomEditor/CustomEditor";

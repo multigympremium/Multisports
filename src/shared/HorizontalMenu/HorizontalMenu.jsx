@@ -1,4 +1,3 @@
-"use client";
 import useGetAllCategories from "../../Hook/GetDataHook/useGetAllCategories";
 // import {Link} from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -20,10 +19,10 @@ function HorizontalMenu() {
   const [categoryImage, setCategoryImage] = useState("");
   const [isHover, setIsHover] = useState(false);
   const categories = useGetAllCategories({ query: `showOnNavbar=Yes` });
-  const chaiCategories = useGetAllChildCategories({ query: `showOnNavbar=Yes` });
+  const chaiCategories = useGetAllChildCategories({
+    query: `showOnNavbar=Yes`,
+  });
   const [currentSubCategories, setCurrentSubCategories] = useState([]);
-
-
 
   // const subcategories = useGetAllSubCategories({
   //   query: `category=${activeCategory}`,
@@ -48,8 +47,6 @@ function HorizontalMenu() {
     );
     setCurrentSubCategories(currentSubCategoriesData);
   }, [activeCategory]);
-  
-
 
   console.log(activeCategory, "activeCategory");
   return (
@@ -63,37 +60,39 @@ function HorizontalMenu() {
             navigation={false}
             modules={[Navigation]}
           >
-            {categories?.length > 0 && categories.map((category, index) => (
-              <SwiperSlide key={index}>
-                <button
-                  className={`py-2 md:py-3 px-2 text-xs md:text-base relative cursor-pointer 
+            {categories?.length > 0 &&
+              categories.map((category, index) => (
+                <SwiperSlide key={index}>
+                  <button
+                    className={`py-2 md:py-3 px-2 text-xs md:text-base relative cursor-pointer 
               hover:bg-white 
               before:absolute before:bottom-0 before:left-0 
               before:w-0 before:h-[2px] before:bg-gray-900 
               before:transition-all before:duration-500 
               hover:before:w-full
-              ${isHover && category?.slug === activeCategory
-                      ? "text-gray-900" // Optional for text color change
-                      : "text-gray-700"
-                    }`}
-                  onMouseEnter={() => {
-                    setActiveCategory(category.slug);
-                    setIsHover(true);
-                  }}
-                  onMouseLeave={() => {
-                    setIsHover(false);
-                  }}
-                >
-                  <Link
-                    to={`/products/${category.slug}`}
-                    className="relative z-10"
+              ${
+                isHover && category?.slug === activeCategory
+                  ? "text-gray-900" // Optional for text color change
+                  : "text-gray-700"
+              }`}
+                    onMouseEnter={() => {
+                      setActiveCategory(category.slug);
+                      setIsHover(true);
+                    }}
+                    onMouseLeave={() => {
+                      setIsHover(false);
+                    }}
                   >
-                    {category.categoryName.charAt(0).toUpperCase() + category.categoryName.slice(1).toLowerCase()}
-                  </Link>
-                </button>
-
-              </SwiperSlide>
-            ))}
+                    <Link
+                      to={`/products/${category.slug}`}
+                      className="relative z-10"
+                    >
+                      {category.categoryName.charAt(0).toUpperCase() +
+                        category.categoryName.slice(1).toLowerCase()}
+                    </Link>
+                  </button>
+                </SwiperSlide>
+              ))}
           </Swiper>
         </div>
       </header>

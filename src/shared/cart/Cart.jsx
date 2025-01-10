@@ -1,4 +1,3 @@
-"use client";
 import { AuthContext } from "../../providers/AuthProvider";
 import { useContext, useEffect, useState } from "react";
 import CartItemComponent from "./CartItemComponent";
@@ -128,7 +127,8 @@ const Cart = ({ isShow, setIsShow }) => {
               }}
               htmlFor="my-cart"
             >
-              Checkout <span className="text-xl ml-2"> ৳</span> {totalPrice - Number(discount)}
+              Checkout <span className="text-xl ml-2"> ৳</span>{" "}
+              {totalPrice - Number(discount)}
             </label>
           </div>
         </div>

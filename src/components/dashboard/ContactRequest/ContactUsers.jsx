@@ -1,4 +1,3 @@
-"use client";
 import { useState } from "react";
 import { IoIosSearch } from "react-icons/io";
 import DeleteButton from "../../../components library/DeleteButton";
@@ -73,8 +72,8 @@ export default function ContactRequestsList() {
       <div className="">
         <h1 className="text-3xl font-semibold mb-9">Contact Requests List</h1>
 
-       {/* Search Input */}
-       <div className="bg-white border rounded-full px-3 mb-6 md:py-2 py-1 md:gap-2 gap-1 flex-row-reverse justify-between flex">
+        {/* Search Input */}
+        <div className="bg-white border rounded-full px-3 mb-6 md:py-2 py-1 md:gap-2 gap-1 flex-row-reverse justify-between flex">
           <input
             type="text"
             value={searchTerm}

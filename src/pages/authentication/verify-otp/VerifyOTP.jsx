@@ -1,4 +1,3 @@
-"use client";
 import { useEffect, useState } from "react";
 import { MdOutlineKeyboardBackspace } from "react-icons/md";
 import OTPInput from "react-otp-input";

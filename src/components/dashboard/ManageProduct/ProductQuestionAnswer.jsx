@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 

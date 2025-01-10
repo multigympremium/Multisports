@@ -1,4 +1,3 @@
-"use client";
 import { useState } from "react";
 import { FiTrash2 } from "react-icons/fi";
 import { IoIosSearch } from "react-icons/io";
@@ -81,8 +80,6 @@ export default function SmsHistory() {
           />
           <IoIosSearch className="text-2xl text-gray-400" />
         </div>
-
-
 
         {/* SMS History Table */}
         <table className="min-w-full table-auto border-collapse bg-white shadow-md rounded-md">

@@ -1,4 +1,3 @@
-"use client";
 import { AuthContext } from "../providers/AuthProvider";
 import { useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";

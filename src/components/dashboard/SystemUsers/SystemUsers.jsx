@@ -1,4 +1,3 @@
-"use client";
 // pages/system-users.js
 import { useState } from "react";
 import BgBlurModal from "../../../shared/Modal/BgBlurModal";
@@ -19,13 +18,15 @@ export default function SystemUsers() {
 
   const axiosSecure = useAxiosSecure();
 
-
   const handleEdit = (id) => {
     setTargetId(id);
     setIsEditShowModel(true);
   };
 
-  const systemUsers = useGetAllSystemUsers({ isDeleted, isEdited: isEditShowModel });
+  const systemUsers = useGetAllSystemUsers({
+    isDeleted,
+    isEdited: isEditShowModel,
+  });
 
   const handleDelete = async (id) => {
     try {
@@ -61,14 +62,15 @@ export default function SystemUsers() {
     console.log(`Delete brand with ID: ${id}`);
   };
 
-
-
   return (
     <div className="p-6 pt-0">
       <div className="flex items-center justify-between  mb-9">
         <h1 className="text-3xl font-semibold">System Users List</h1>
         <div className="flex justify-between">
-          <button className="customSaveButton" onClick={() => setIsModalOpen(true)}>
+          <button
+            className="customSaveButton"
+            onClick={() => setIsModalOpen(true)}
+          >
             + Add New User
           </button>
         </div>
@@ -87,30 +89,39 @@ export default function SystemUsers() {
           </tr>
         </thead>
         <tbody>
-          {systemUsers?.length > 0 && systemUsers.map((user, index) => (
-            <tr key={user.id} className="border-b text-center">
-              <td className="p-2 border">{index + 1}</td>
-              <td className="p-2 border">{user.username}</td>
-              <td className="p-2 border">{user.email}</td>
-              <td className="p-2 border">{user.contact_no}</td>
-              <td className="p-2 border">{user.address}</td>
-              <td className="p-2 border">
-                {user.role}
-              </td>
-              <td className="p-2 py-3 border space-x-3">
-                <EditButton onClick={() => handleEdit(user._id)} />
-                <DeleteButton onClick={() => handleDelete(user._id)} />
-              </td>
-            </tr>
-          ))}
+          {systemUsers?.length > 0 &&
+            systemUsers.map((user, index) => (
+              <tr key={user.id} className="border-b text-center">
+                <td className="p-2 border">{index + 1}</td>
+                <td className="p-2 border">{user.username}</td>
+                <td className="p-2 border">{user.email}</td>
+                <td className="p-2 border">{user.contact_no}</td>
+                <td className="p-2 border">{user.address}</td>
+                <td className="p-2 border">{user.role}</td>
+                <td className="p-2 py-3 border space-x-3">
+                  <EditButton onClick={() => handleEdit(user._id)} />
+                  <DeleteButton onClick={() => handleDelete(user._id)} />
+                </td>
+              </tr>
+            ))}
         </tbody>
       </table>
 
-      <BgBlurModal isShowModal={isEditShowModel} setIsShowModal={setIsEditShowModel}>
-        <EditSystemUser isShow={isEditShowModel} setIsShow={setIsEditShowModel} targetId={targetId} />
+      <BgBlurModal
+        isShowModal={isEditShowModel}
+        setIsShowModal={setIsEditShowModel}
+      >
+        <EditSystemUser
+          isShow={isEditShowModel}
+          setIsShow={setIsEditShowModel}
+          targetId={targetId}
+        />
       </BgBlurModal>
       <BgBlurModal isShowModal={isModalOpen} setIsShowModal={setIsModalOpen}>
-        <SystemUserRegistration isShow={isModalOpen} setIsShow={setIsModalOpen} />
+        <SystemUserRegistration
+          isShow={isModalOpen}
+          setIsShow={setIsModalOpen}
+        />
       </BgBlurModal>
     </div>
   );

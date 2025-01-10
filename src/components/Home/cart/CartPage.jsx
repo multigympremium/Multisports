@@ -1,4 +1,3 @@
-"use client";
 import React, { useContext } from "react";
 import { IoHome } from "react-icons/io5";
 import { AuthContext } from "../../../providers/AuthProvider";

@@ -1,4 +1,3 @@
-"use client";
 import { useEffect, useState } from "react";
 import useGetAllDistrict from "../../../Hook/GetDataHook/useGetAllDistrict";
 import BgBlurModal from "../../../shared/Modal/BgBlurModal";

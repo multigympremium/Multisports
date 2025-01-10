@@ -1,4 +1,3 @@
-"use client";
 import FAQList from "../../../components/dashboard/FAQ/FAQList";
 
 function page() {

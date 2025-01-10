@@ -1,5 +1,3 @@
-"use client";
-
 import moment from "moment/moment";
 import { useEffect, useState } from "react";
 import {

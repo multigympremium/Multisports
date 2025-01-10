@@ -1,4 +1,3 @@
-"use client";
 import { useState } from "react";
 
 export default function SendSMS() {
@@ -68,9 +67,7 @@ export default function SendSMS() {
             {/* Customer Contact No */}
             {sendingType === "Specific Customer" && (
               <div>
-                <label className="block  ">
-                  Customer Contact No
-                </label>
+                <label className="block  ">Customer Contact No</label>
                 <input
                   type="text"
                   value={customerContactNo}
@@ -84,9 +81,7 @@ export default function SendSMS() {
 
             {/* Select SMS Template */}
             <div>
-              <label className="block  ">
-                Select SMS Template
-              </label>
+              <label className="block  ">Select SMS Template</label>
               <select
                 value={selectedTemplate}
                 onChange={(e) => {
@@ -109,9 +104,7 @@ export default function SendSMS() {
 
             {/* SMS Template Description */}
             <div>
-              <label className="block">
-                SMS Template Description
-              </label>
+              <label className="block">SMS Template Description</label>
               <textarea
                 value={smsDescription}
                 onChange={(e) => setSmsDescription(e.target.value)}
@@ -130,9 +123,7 @@ export default function SendSMS() {
               <div className="grid grid-cols-2 gap-4">
                 {/* Select Customer Type */}
                 <div className="col-span-2">
-                  <label className="block">
-                    Select Customer Type
-                  </label>
+                  <label className="block">Select Customer Type</label>
                   <select
                     value={customerType}
                     onChange={(e) => setCustomerType(e.target.value)}
@@ -146,9 +137,7 @@ export default function SendSMS() {
 
                 {/* Min. Order */}
                 <div>
-                  <label className="block ">
-                    Min. Order (Optional)
-                  </label>
+                  <label className="block ">Min. Order (Optional)</label>
                   <input
                     type="number"
                     value={minOrder}
@@ -160,9 +149,7 @@ export default function SendSMS() {
 
                 {/* Max. Order */}
                 <div>
-                  <label className="block ">
-                    Max. Order (Optional)
-                  </label>
+                  <label className="block ">Max. Order (Optional)</label>
                   <input
                     type="number"
                     value={maxOrder}
@@ -205,10 +192,7 @@ export default function SendSMS() {
 
           {/* Send SMS Button */}
           <div className="flex justify-end">
-            <button
-              type="submit"
-              className="customSaveButton mt-6"
-            >
+            <button type="submit" className="customSaveButton mt-6">
               Send SMS
             </button>
           </div>

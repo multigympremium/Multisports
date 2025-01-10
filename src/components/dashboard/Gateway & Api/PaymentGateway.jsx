@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 
 export default function PaymentGateways() {
@@ -57,7 +55,9 @@ export default function PaymentGateways() {
   return (
     <div className="p-6 pt-0">
       <div className="">
-        <h1 className="text-3xl font-semibold mb-9">SMS Gateway Configuration</h1>
+        <h1 className="text-3xl font-semibold mb-9">
+          SMS Gateway Configuration
+        </h1>
 
         <div className="grid grid-cols-3 gap-6">
           {gateways.map((gateway) => (

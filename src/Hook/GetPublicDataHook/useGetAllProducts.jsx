@@ -1,7 +1,4 @@
-"use client";
 import { useEffect, useState } from "react";
-import useAxiosSecure from "../useAxiosSecure";
-import { set } from "react-hook-form";
 import useAxiosPublic from "../useAxiosPublic";
 
 function useGetAllProducts({

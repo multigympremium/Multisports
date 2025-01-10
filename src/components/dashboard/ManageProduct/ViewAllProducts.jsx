@@ -1,4 +1,3 @@
-"use client";
 import { HiArrowCircleUp, HiArrowCircleDown } from "react-icons/hi";
 import { useState, useCallback, useEffect } from "react";
 import Swal from "sweetalert2";

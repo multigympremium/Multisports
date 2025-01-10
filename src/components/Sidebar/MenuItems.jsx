@@ -1,4 +1,3 @@
-"use client";
 import React, { useEffect, useState } from "react";
 import { IoIosHome } from "react-icons/io";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
@@ -587,6 +586,18 @@ function MenuItemsList({ userRole }) {
           title: "View All Bag Banners",
           path: "view-all-bag-banners",
           isAllowed: isAllowedRoute("view-all-bag-banners"),
+          icon: <IoIosHome />,
+        },
+        {
+          title: "View All Brand Banners",
+          path: "view-all-brand-banners",
+          isAllowed: isAllowedRoute("view-all-brand-banners"),
+          icon: <IoIosHome />,
+        },
+        {
+          title: "View New Arrivals Banners",
+          path: "new-arrival-banner",
+          isAllowed: isAllowedRoute("new-arrival-banner"),
           icon: <IoIosHome />,
         },
         {

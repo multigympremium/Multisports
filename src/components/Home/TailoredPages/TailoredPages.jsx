@@ -1,4 +1,3 @@
-"use client";
 import { useEffect, useState } from "react";
 import Modal from "../../../shared/Modal/Modal";
 import useAxiosPublic from "../../../Hook/useAxiosPublic";

@@ -1,4 +1,3 @@
-"use client";
 import { useEffect, useState } from "react";
 import useAxiosPublic from "../useAxiosPublic";
 
@@ -22,8 +21,6 @@ function useGetAllDistrict({
           setDistrict(res.data);
           setLoading(false);
         }
-
-        
       } catch (error) {
         console.error("Error fetching district:", error);
         setLoading(false);

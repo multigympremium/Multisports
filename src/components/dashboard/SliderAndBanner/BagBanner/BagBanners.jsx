@@ -1,4 +1,3 @@
-"use client";
 import BgBlurModal from "../../../../shared/Modal/BgBlurModal";
 import { useState } from "react";
 import useGetAllBanners from "../../../../Hook/GetDataHook/useGetAllBanners";

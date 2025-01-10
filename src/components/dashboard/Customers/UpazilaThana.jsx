@@ -1,4 +1,3 @@
-"use client";
 import { useEffect, useState } from "react";
 import useGetAllDistrict from "../../../Hook/GetDataHook/useGetAllDistrict";
 import BgBlurModal from "../../../shared/Modal/BgBlurModal";
@@ -12,15 +11,18 @@ import EditButton from "../../../components library/EditButton";
 import DeleteButton from "../../../components library/DeleteButton";
 
 export default function UpazilaThanaList() {
-
   const axiosSecure = useAxiosSecure();
 
-  const [isAddModel, setIsAddModel] = useState(false)
-  const [isEditModel, setIsEditModel] = useState(false)
-  const [isDeleted, setIsDeleted] = useState(false)
-  const district = useGetAllDistrict({ isShowModal: isAddModel, isEdited: isEditModel, isDeleted })
+  const [isAddModel, setIsAddModel] = useState(false);
+  const [isEditModel, setIsEditModel] = useState(false);
+  const [isDeleted, setIsDeleted] = useState(false);
+  const district = useGetAllDistrict({
+    isShowModal: isAddModel,
+    isEdited: isEditModel,
+    isDeleted,
+  });
 
-  console.log(district, "districtdf ")
+  console.log(district, "districtdf ");
 
   const [data, setData] = useState(district);
   const [currentPage, setCurrentPage] = useState(1);
@@ -35,8 +37,6 @@ export default function UpazilaThanaList() {
   const currentData = data.slice(startIdx, startIdx + itemsPerPage);
 
   console.log(district, currentData, "currentData", data);
-
-
 
   // Handle Search
   const handleSearch = (e) => {
@@ -101,13 +101,15 @@ export default function UpazilaThanaList() {
         <div className="">
           <div className="flex justify-between mb-9 items-center">
             <h1 className="text-3xl font-semibold ">Districts List</h1>
-            <button className="customSaveButton" onClick={() => setIsAddModel(true)}>
+            <button
+              className="customSaveButton"
+              onClick={() => setIsAddModel(true)}
+            >
               + Add District
             </button>
           </div>
           {/* Search Input */}
           <div className="">
-
             <div className="bg-white border rounded-full px-3 mb-6 md:py-2 py-1 md:gap-2 gap-1 flex-row-reverse justify-between flex">
               <input
                 type="text"
@@ -118,9 +120,6 @@ export default function UpazilaThanaList() {
               />
               <IoIosSearch className="text-2xl text-gray-400" />
             </div>
-
-
-
           </div>
 
           {/* Upazila Thana Table */}
@@ -139,7 +138,11 @@ export default function UpazilaThanaList() {
                   <tr key={item.id} className="border-b text-center">
                     <td className="p-2 border">{startIdx + index + 1}</td>
                     <td className="p-2 border">{item.district}</td>
-                    <td className="p-2 border">{item.subdistricts.join(",").length > 50 ? item?.subdistricts.join(",").slice(0, 50) + "..." : item.subdistricts.join(",")}</td>
+                    <td className="p-2 border">
+                      {item.subdistricts.join(",").length > 50
+                        ? item?.subdistricts.join(",").slice(0, 50) + "..."
+                        : item.subdistricts.join(",")}
+                    </td>
 
                     <td className="p-2 border space-x-2 py-4">
                       <EditButton onClick={() => handleEdit(item._id)} />
@@ -186,7 +189,11 @@ export default function UpazilaThanaList() {
         <AddDistrict setIsShowModal={setIsAddModel} isShowModal={isAddModel} />
       </BgBlurModal>
       <BgBlurModal isShowModal={isEditModel} setIsShowModal={setIsEditModel}>
-        <EditDistrict setIsShowModal={setIsEditModel} isShowModal={isEditModel} targetId={targetId} />
+        <EditDistrict
+          setIsShowModal={setIsEditModel}
+          isShowModal={isEditModel}
+          targetId={targetId}
+        />
       </BgBlurModal>
     </>
   );

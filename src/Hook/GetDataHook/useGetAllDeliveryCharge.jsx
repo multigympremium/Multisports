@@ -1,4 +1,3 @@
-"use client";
 import { useEffect, useState } from "react";
 import useAxiosSecure from "../useAxiosSecure";
 
@@ -22,8 +21,6 @@ function useGetAllDeliveryCharge({
           setDeliveryCharge(res.data);
           setLoading(false);
         }
-
-        
       } catch (error) {
         console.error("Error fetching deliveryCharge:", error);
         setLoading(false);

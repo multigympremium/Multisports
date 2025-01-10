@@ -3,6 +3,14 @@ import GlobalLoading from "../../components library/GlobalLoading";
 import TermsCondition from "../../components/Home/(policy)/terms-and-condition/page";
 import ShippingPublicPolicy from "../../components/Home/(policy)/shipping-policy/page";
 import Transactions from "../../components/dashboard/GenerateReports/Transactions/Transactions";
+const NewArrivalBanner = lazy(() =>
+  import(
+    "../../components/dashboard/SliderAndBanner/NewArrivalBanner/NewArrivalBanner"
+  )
+);
+const BrandBanner = lazy(() =>
+  import("../../components/dashboard/SliderAndBanner/BrandBanner/BrandBanner")
+);
 const DiscountForm = lazy(() =>
   import("../../components/dashboard/Discount/Discount")
 );
@@ -1467,6 +1475,21 @@ function DashboardChildrenRoutes() {
     },
     {
       // path: "userpermission",
+      // path: "view-all-bag-banners",
+      path: isPermittedRoute("view-all-brand-banners"),
+      element: (
+        // <PrivateRoute>
+        //   <SmsGroup />
+        // </PrivateRoute>
+        <Suspense fallback={<GlobalLoading />}>
+          <PrivateRoute>
+            <BrandBanner />
+          </PrivateRoute>
+        </Suspense>
+      ),
+    },
+    {
+      // path: "userpermission",
       // path: "view-all-banners",
       path: isPermittedRoute("view-all-banners"),
       element: (
@@ -1837,6 +1860,21 @@ function DashboardChildrenRoutes() {
         <Suspense fallback={<GlobalLoading />}>
           <PrivateRoute>
             <Transactions />
+          </PrivateRoute>
+        </Suspense>
+      ),
+    },
+    {
+      // path: "userpermission",
+      // path: "discount",
+      path: isPermittedRoute("new-arrival-banner"),
+      element: (
+        // <PrivateRoute>
+        //   <SmsGroup />
+        // </PrivateRoute>
+        <Suspense fallback={<GlobalLoading />}>
+          <PrivateRoute>
+            <NewArrivalBanner />
           </PrivateRoute>
         </Suspense>
       ),

@@ -1,5 +1,3 @@
-"use client";
-
 import { useState, useEffect, useCallback } from "react";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import Swal from "sweetalert2";

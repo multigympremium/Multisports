@@ -1,4 +1,3 @@
-"use client";
 import { useState } from "react";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import { IoIosSearch } from "react-icons/io";
@@ -65,10 +64,7 @@ export default function EmailConfigurations() {
         <div className="flex justify-between items-center mb-9">
           <h1 className="text-3xl font-semibold">SMTP Email Configurations</h1>
           <div className="flex justify-end">
-            <button
-              className="customSaveButton"
-              onClick={handleAddEmailServer}
-            >
+            <button className="customSaveButton" onClick={handleAddEmailServer}>
               + Add Email Server
             </button>
           </div>
@@ -84,9 +80,6 @@ export default function EmailConfigurations() {
           />
           <IoIosSearch className="text-2xl text-gray-400" />
         </div>
-
-
-
 
         {/* Email Configurations Table */}
         <table className="min-w-full table-auto border-collapse bg-white shadow rounded-md">
@@ -118,10 +111,11 @@ export default function EmailConfigurations() {
                   <td className="p-2 border">{config.encryption}</td>
                   <td className="p-2 border">
                     <span
-                      className={`px-2 py-1 rounded-md ${config.status === "Active"
-                        ? "bg-[#A8CE3A] text-white"
-                        : "bg-red-500 text-white"
-                        }`}
+                      className={`px-2 py-1 rounded-md ${
+                        config.status === "Active"
+                          ? "bg-[#A8CE3A] text-white"
+                          : "bg-red-500 text-white"
+                      }`}
                     >
                       {config.status}
                     </span>
@@ -129,7 +123,7 @@ export default function EmailConfigurations() {
                   <td className="p-2 py-3 border">
                     <div className="flex justify-center space-x-1">
                       <EditButton></EditButton>
-                      <DeleteButton  onClick={() => handleDelete(config.id)}/>
+                      <DeleteButton onClick={() => handleDelete(config.id)} />
                     </div>
                   </td>
                 </tr>

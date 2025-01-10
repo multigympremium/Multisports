@@ -1,4 +1,3 @@
-"use client";
 import { useState } from "react";
 import { IoIosSearch } from "react-icons/io";
 import DeleteButton from "../../../components library/DeleteButton";
@@ -94,10 +93,14 @@ export default function OnHoldSupport() {
                       {item.attachment}
                     </a>
                   </td>
-                  <td
-                  >
-                    <span className={`p-1 px-2 text-white border rounded-xl ${item.status === "Pending" ? "bg-red-500" : "bg-[#A8CE3A]"
-                      }`}>
+                  <td>
+                    <span
+                      className={`p-1 px-2 text-white border rounded-xl ${
+                        item.status === "Pending"
+                          ? "bg-red-500"
+                          : "bg-[#A8CE3A]"
+                      }`}
+                    >
                       {item.status}
                     </span>
                   </td>

@@ -1,4 +1,3 @@
-"use client";
 import BgBlurModal from "../../../shared/Modal/BgBlurModal";
 import useGetAllOrders from "../../../Hook/GetDataHook/useGetAllOrders";
 import { useState } from "react";

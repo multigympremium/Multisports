@@ -1,4 +1,3 @@
-"use client";
 import CustomEditor from "../../../../shared/CustomEditor/CustomEditor";
 import DragUploadImageInput from "../../../../shared/DragUploadImageInput";
 import useGetAllBlogCategories from "../../../../Hook/GetDataHook/useGetAllBlogCategories";

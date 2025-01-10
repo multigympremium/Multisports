@@ -1,4 +1,3 @@
-"use client";
 import { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import Swal from "sweetalert2";
@@ -21,12 +20,11 @@ export default function UpdateBannerForm({ targetId, isShow, setIsShow }) {
   // Dropzone for thumbnail upload
   const onDropThumbnail = (acceptedFiles) => {
     // Set the state with the URL
-  
+
     const thumbnailPreview = URL.createObjectURL(acceptedFiles[0]);
-  
+
     setThumbnailPreview(thumbnailPreview);
-  
-  
+
     setThumbnail(acceptedFiles[0]);
   };
 
@@ -98,15 +96,15 @@ export default function UpdateBannerForm({ targetId, isShow, setIsShow }) {
       }
     };
 
-    if(isShow) {fetchTestimonial()}else {
+    if (isShow) {
+      fetchTestimonial();
+    } else {
       setTitle("");
       setSubtitle("");
       setShortDescription("");
       setThumbnail(null);
       setThumbnailPreview(null);
     }
-    
-    
 
     fetchTestimonial();
   }, [targetId, axiosSecure, isShow]);
@@ -138,7 +136,6 @@ export default function UpdateBannerForm({ targetId, isShow, setIsShow }) {
           )}
         </div>
 
-        
         <div className="space-y-4 mt-5">
           <div>
             <label className="block text-gray-700">Title </label>
@@ -173,10 +170,7 @@ export default function UpdateBannerForm({ targetId, isShow, setIsShow }) {
 
         {/* Save Button */}
         <div className="col-span-2">
-          <button
-            type="submit"
-            className="w-full customSaveButton mt-5"
-          >
+          <button type="submit" className="w-full customSaveButton mt-5">
             Save
           </button>
         </div>
