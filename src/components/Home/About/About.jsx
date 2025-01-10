@@ -4,6 +4,7 @@ import { baseImageUrl } from "../../../apis/apis";
 import CustomImage from "../../../shared/ImageComponents/CustomImage";
 import useGetAboutVision from "../../../Hook/GetPublicDataHook/useGetAboutVision";
 import useGetAboutMission from "../../../Hook/GetPublicDataHook/useGetAboutMission";
+import WhyUs from "./WhyUs";
 
 export default function About() {
   const [loading, setLoading] = useState(false);
@@ -14,7 +15,8 @@ export default function About() {
   console.log(content, "content");
   return (
     <>
-      <section className="bg-primary-300 text-white pb-24" id="blog">
+      <section className="bg-primary-300 text-white" id="blog">
+
         <div
           className="w-full h-[400px] flex justify-center items-center flex-col gap-4 mb-14"
           style={{
@@ -24,10 +26,10 @@ export default function About() {
           }}
         >
           <h2 className="uppercase font-bold text-center text-4xl">
-            OUR Blogs
+            About Us
           </h2>
           <h4 className="text-center text-lg text-gray-500 mb-6">
-            LATEST BLOG POSTS
+            Know us better
           </h4>
         </div>
 
@@ -101,6 +103,7 @@ export default function About() {
             </>
           )}
         </div>
+        <WhyUs />
       </section>
     </>
   );

@@ -45,6 +45,8 @@ import ViewAllProduct from "../components/partial/ViewAllProduct/ViewAllProduct"
 import MyOrder from "../components/Home/my-account/MyOrder";
 import BrandProductPage from "../components/Home/Brands/BrandProductPage";
 import SeeAll from "../pages/SeeAll/SeeAll";
+import Career from "../pages/OtherPage/career/Career";
+import ContactUs from "../pages/OtherPage/contact_us/ContactUs";
 
 const AllRoutes = () => {
   // const [permissionData, setPermissionData] = useState([]);
@@ -264,6 +266,9 @@ const AllRoutes = () => {
           path: "blogs",
           // path: isPermittedRoute("userpermission"),
           element: <Blogs />,
+        },{
+          path:"contactus",
+          element:<ContactUs/>
         },
         {
           // path: "userpermission",
@@ -276,6 +281,10 @@ const AllRoutes = () => {
           path: "about",
           // path: isPermittedRoute("userpermission"),
           element: <About />,
+        },
+        {
+          path : "career",
+          element:<Career/>
         },
         {
           // path: "userpermission",
