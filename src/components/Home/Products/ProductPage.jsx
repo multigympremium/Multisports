@@ -12,6 +12,7 @@ import DrawerComponent from "./DrawerComponent";
 import SelectableList from "./SelectableList";
 import useGetExistQueries from "../../../Hook/GetPublicDataHook/useGetExistQueries";
 import Banner4 from "../Banner/Banner4";
+import BrandBanners from "../Banner/BrandBanners";
 
 function ProductPage() {
   const [selectedItems, setSelectedItems] = useState([]);
@@ -245,7 +246,7 @@ function ProductPage() {
             subcategories={subcategories}
           />
         ) : (
-          <Banner4 isHomeArea={false} />
+          <BrandBanners isHomeArea={false} />
         )}
         {/* <div>
           <Suggestion
