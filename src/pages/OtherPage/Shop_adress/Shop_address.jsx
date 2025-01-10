@@ -40,9 +40,9 @@ const Shop_address = () => {
                             className="w-full h-72 object-cover rounded-t-lg" 
                         />
                         <div className="p-4">
-                            <h3 className="text-xl font-bold mb-2">{shop.name}</h3>
-                            <p className="text-gray-600 mb-1"><strong>Address:</strong> {shop.address}</p>
-                            <p className="text-gray-600 mb-1"><strong>Opening:</strong> {shop.opening}</p>
+                            <h3 className="text-xl font-bold  mb-2">{shop.name}</h3>
+                            <p className="text-gray-600 mb-2"><strong>Address:</strong> {shop.address}</p>
+                            <p className="text-gray-600 mb-2"><strong>Opening:</strong> {shop.opening}</p>
                             <p className="text-gray-600"><strong>Contact:</strong> {shop.contact}</p>
                         </div>
                     </div>
