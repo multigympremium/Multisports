@@ -13,6 +13,8 @@ import SelectableList from "./SelectableList";
 import useGetExistQueries from "../../../Hook/GetPublicDataHook/useGetExistQueries";
 
 import useGetAllSubCategories from "../../../Hook/GetPublicDataHook/useGetAllSubCategories";
+import useAxiosPublic from "../../../Hook/useAxiosPublic";
+import BrandHeader from "../../UI/BrandHeader";
 
 function ProductPage() {
   const [selectedItems, setSelectedItems] = useState([]);
@@ -25,8 +27,10 @@ function ProductPage() {
   const [sizeFilter, setSizesFilter] = useState([]);
   const [categoryFilter, setCategoryFilter] = useState([]);
   const [subcategoryFilter, setSubCategoryFilter] = useState([]);
+  const [singleBrand, setSingleBrand] = useState({});
   const productBrands = useGetAllProductBrands({});
   const [priceRange, setPriceRange] = useState(0);
+  const axiosPublic = useAxiosPublic();
   // const categories = useGetAllCategories({});
   const {
     categories,
@@ -201,8 +205,6 @@ function ProductPage() {
 
   // }, [subcategories]);
 
-  console.log(querySubcategories, "subcategories");
-
   useEffect(() => {
     setPriceRange(highestPrice[0]?.highestPrice);
     const searchParams = location?.search?.split("?")[1];
@@ -237,10 +239,28 @@ function ProductPage() {
 
     console.log(params.id, "parentCategory");
   }, [params.id, categories, querySubcategories]);
-  console.log(
-    { categories, brands, querySubcategories, colors, sizes, highestPrice },
-    "existQueries"
-  );
+
+  useEffect(() => {
+    const paramsId = location.search.split("?")[1].split("=")[1];
+    console.log(paramsId, "singleBrand");
+    const fetchBrand = async () => {
+      try {
+        const res = await axiosPublic.get(`/product-brands/single/${paramsId}`);
+        console.log(res, "singleBrand");
+        if (res.status === 200 || res.status === 201) {
+          setSingleBrand(res.data.data);
+        }
+      } catch (error) {
+        console.error("Error fetching brand:", error);
+      }
+    };
+
+    if (singleBrand) {
+      fetchBrand();
+    }
+  }, [axiosPublic, location]);
+
+  console.log(singleBrand, "singleBrand");
 
   return (
     <div>
@@ -253,7 +273,14 @@ function ProductPage() {
             subcategories={subcategories}
           />
         ) : (
-          <>{/* <BrandBanners isHomeArea={false} /> */}</>
+          <>
+            {
+              <BrandHeader
+                pageHeader={singleBrand?.brandName}
+                src={singleBrand?.banner}
+              />
+            }
+          </>
         )}
         {/* <div>
           <Suggestion
