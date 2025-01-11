@@ -4,7 +4,7 @@ import "swiper/css/navigation";
 import { useRef, useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
-import useGetAllPopularBanner from "../../../Hook/GetPublicDataHook/useGetAllPopularBanner";
+import useGetAllBestSellingBanner from "../../../Hook/GetDataHook/useGetAllBestSellingBanner";
 
 const SkeletonCarousel = () => (
   <div className="relative w-[90%] mx-auto  md:w-full h-[170px] my-4 md:my-9 md:h-[800px] animate-pulse">
@@ -109,9 +109,9 @@ const CustomCarousel = ({ slides, isHomeArea = true }) => {
   );
 };
 
-const PopularBanners = ({ isHomeArea = true }) => {
+const BestSellingSliders = ({ isHomeArea = true }) => {
   const [loading, setLoading] = useState(false);
-  const banners = useGetAllPopularBanner({ setLoading });
+  const banners = useGetAllBestSellingBanner({ setLoading });
 
   return loading ? (
     <SkeletonCarousel />
@@ -120,4 +120,4 @@ const PopularBanners = ({ isHomeArea = true }) => {
   );
 };
 
-export default PopularBanners;
+export default BestSellingSliders;

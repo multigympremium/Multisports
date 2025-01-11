@@ -4,6 +4,9 @@ import useAxiosPublic from "../../Hook/useAxiosPublic";
 import ProductCard from "../../components/partial/ProductCard/ProductCard";
 import ProductSkeleton from "../../components/partial/ProductCard/ProductSkeleton";
 import NewArrivalBanners from "../../components/Home/Banner/NewArrivalBanners";
+import MostPopularSliders from "../../components/Home/Banner/MostPopularSliders";
+import BestSellingSliders from "../../components/Home/Banner/BestSellingSliders";
+import SpecialDiscountSliders from "../../components/Home/Banner/SpecialDiscountSliders";
 
 const SeeAll = () => {
   const { id } = useParams(); // Getting the id from route params
@@ -25,6 +28,7 @@ const SeeAll = () => {
         return "Products";
     }
   };
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -55,13 +59,17 @@ const SeeAll = () => {
 
   return (
     <>
-      <NewArrivalBanners />
-      <div className="p-4 mt-2 max-w-[1440px] mx-auto">
-        {/* <div className="">
-                <h1 className="text-3xl mb-10 text-center px-8 border-b-2 pb-5 border-gray-200 font-semibold text-gray-800 bg-white">
-                    {getTitle(id)}
-                </h1>
-            </div> */}
+      {id === "popular" && <MostPopularSliders />}
+      {id === "new_arrivals" && <NewArrivalBanners />}
+      {id === "best_selling" && <BestSellingSliders />}
+      {id === "discount" && <SpecialDiscountSliders />}
+
+      <div className="p-4 max-w-[1440px] mx-auto mt-4">
+        <div className="">
+          <h1 className="text-3xl mb-10 text-center px-8 border-b-2 pb-5 border-gray-200 font-semibold text-gray-800 bg-white">
+            {getTitle(id)}
+          </h1>
+        </div>
 
         {loading ? (
           <ProductSkeleton skeletons={12} />

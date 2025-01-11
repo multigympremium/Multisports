@@ -12,7 +12,6 @@ import DrawerComponent from "./DrawerComponent";
 import SelectableList from "./SelectableList";
 import useGetExistQueries from "../../../Hook/GetPublicDataHook/useGetExistQueries";
 
-import BrandBanners from "../Banner/PopularBanners";
 import useGetAllSubCategories from "../../../Hook/GetPublicDataHook/useGetAllSubCategories";
 
 function ProductPage() {
@@ -254,7 +253,7 @@ function ProductPage() {
             subcategories={subcategories}
           />
         ) : (
-          <BrandBanners isHomeArea={false} />
+          <>{/* <BrandBanners isHomeArea={false} /> */}</>
         )}
         {/* <div>
           <Suggestion
