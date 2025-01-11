@@ -10,25 +10,49 @@ export default function ContactRequestsList() {
   const [itemsPerPage] = useState(10);
   const [searchTerm, setSearchTerm] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [statusFilter, setStatusFilter] = useState("All"); // Add status filter state
+  const [hoveredMessage, setHoveredMessage] = useState(null);
 
-  // Fetch data from the hook
-  const data = useGetAllContactRequests({ setLoading: setIsLoading });
-  // Filtered data based on the search term
-  const filteredData = data.filter(
-    (item) =>
-      item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.company.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const handleMouseEnter = (message) => {
+    setHoveredMessage(message);
+  };
+
+  const handleMouseLeave = () => {
+    setHoveredMessage(null);
+  };
+
+  const { contactRequests: data, refetch } = useGetAllContactRequests({
+    searchQuery: "example",
+    setLoading: (isLoading) => console.log(isLoading),
+  });
+
+  // Filtered data based on the search term and status filter
+  const filteredData = data
+    .filter(
+      (item) =>
+        item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.company.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+    .filter((item) => {
+      if (statusFilter === "All") return true;
+      return item.status === statusFilter;
+    });
 
   // Pagination logic
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
   const startIdx = (currentPage - 1) * itemsPerPage;
   const currentData = filteredData.slice(startIdx, startIdx + itemsPerPage);
   const axiosSecure = useAxiosSecure();
+
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
     setCurrentPage(1); // Reset to the first page on search
+  };
+
+  const handleStatusFilterChange = (e) => {
+    setStatusFilter(e.target.value); // Update the status filter when dropdown changes
+    setCurrentPage(1); // Reset to the first page on filter change
   };
 
   const handleDelete = async (id) => {
@@ -43,38 +67,24 @@ export default function ContactRequestsList() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          // Call the delete API
           const response = await axiosSecure.delete(`/contact-requests/${id}`);
-          
           if (response.status === 200) {
-            Swal.fire(
-              "Deleted!",
-              "The contact request has been deleted.",
-              "success"
-            );
-            // Optionally refresh the data or update UI
+            refetch();
+            Swal.fire("Deleted!", "The contact request has been deleted.", "success");
             console.log("Item deleted successfully.");
           } else {
-            Swal.fire(
-              "Failed!",
-              "The contact request could not be deleted.",
-              "error"
-            );
+            Swal.fire("Failed!", "The contact request could not be deleted.", "error");
           }
         } catch (error) {
           console.error("Error deleting item:", error);
-          Swal.fire(
-            "Error!",
-            "Something went wrong. Please try again later.",
-            "error"
-          );
+          Swal.fire("Error!", "Something went wrong. Please try again later.", "error");
         }
       }
     });
   };
 
-  const handleServe = (id) => {
-    Swal.fire({
+  const handleServe = async (id) => {
+    const result = await Swal.fire({
       title: "Mark as Served?",
       text: "This will update the status to 'Served'.",
       icon: "question",
@@ -82,13 +92,23 @@ export default function ContactRequestsList() {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, mark as served!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        // Simulate serve status update
-        console.log(`Marking item as served with ID: ${id}`);
-        Swal.fire("Updated!", "The contact request has been marked as served.", "success");
-      }
     });
+
+    if (result.isConfirmed) {
+      try {
+        const response = await axiosSecure.put(`/contact-requests/${id}/mark-served`);
+
+        if (response.status === 200 || response.status === 201) {
+          Swal.fire("Updated!", "The contact request has been marked as served.", "success");
+          refetch();
+        } else {
+          Swal.fire("Error!", "There was an issue marking the request as served.", "error");
+        }
+      } catch (error) {
+        console.error("Error marking as served:", error);
+        Swal.fire("Error!", "There was an issue marking the request as served.", "error");
+      }
+    }
   };
 
   return (
@@ -96,16 +116,30 @@ export default function ContactRequestsList() {
       <div>
         <h1 className="text-3xl font-semibold mb-9">Contact Requests List</h1>
 
-        {/* Search Input */}
-        <div className="bg-white border rounded-full px-3 mb-6 md:py-2 py-1 md:gap-2 gap-1 flex-row-reverse justify-between flex">
-          <input
-            type="text"
-            value={searchTerm}
-            className="outline-none w-full bg-white"
-            onChange={handleSearch}
-            placeholder="Search by name, email, or company..."
-          />
-          <IoIosSearch className="text-2xl text-gray-400" />
+        {/* Search and Status Filter Dropdown */}
+        <div className="flex w-full mb-6 space-x-4">
+          {/* Search Input */}
+          <div className="bg-white flex-1 border rounded-full px-3 md:py-2 py-1 md:gap-2 gap-1 flex-row-reverse items-center justify-between flex">
+            <input
+              type="text"
+              value={searchTerm}
+              className="outline-none w-full bg-white"
+              onChange={handleSearch}
+              placeholder="Search by name, email, or company..."
+            />
+            <IoIosSearch className="text-2xl text-gray-400" />
+          </div>
+          <div className="border rounded-full">
+            <select
+              value={statusFilter}
+              onChange={handleStatusFilterChange}
+              className="bg-white px-5 pr-10 outline-none focus:outline-none select rounded-full py-2"
+            >
+              <option value="All">All</option>
+              <option value="Served">Served</option>
+              <option value="Not Served">Not Served</option>
+            </select>
+          </div>
         </div>
 
         {/* Loading State */}
@@ -148,15 +182,15 @@ export default function ContactRequestsList() {
                           {item.status}
                         </span>
                       </td>
-                      
+
                       <td className="p-2 border">
-                        <DeleteButton onClick={() => handleDelete(item._id)}/>
+                        <DeleteButton onClick={() => handleDelete(item._id)} />
                       </td>
                     </tr>
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="8" className="text-center p-4">
+                    <td colSpan="8" className="text-center p-36">
                       No data available in the table
                     </td>
                   </tr>
