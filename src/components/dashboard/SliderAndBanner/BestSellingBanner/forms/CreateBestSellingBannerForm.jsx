@@ -1,19 +1,17 @@
-import { useEffect, useState } from "react";
+import DragUploadImageInput from "../../../../../shared/DragUploadImageInput";
+
+import { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../../../Hook/useAxiosSecure";
-import DragEditUploadImageInput from "../../../../../shared/DragEditUploadImageInput";
 
-export default function UpdateBrandBannerForm({ targetId, isShow, setIsShow }) {
+export default function CreatePopularBannerForm({ setIsShow }) {
   // State management for form fields
   const [title, setTitle] = useState("");
   const [subtitle, setSubtitle] = useState("");
   const [shortDescription, setShortDescription] = useState("");
   const [thumbnail, setThumbnail] = useState(null);
   const [thumbnailPreview, setThumbnailPreview] = useState(null);
-  const [file_key, setFile_key] = useState(null);
-  const [file_url, setFile_url] = useState(null);
-  const [progress, setProgress] = useState(0);
   const [loading, setLoading] = useState(false);
 
   const axiosSecure = useAxiosSecure();
@@ -42,13 +40,14 @@ export default function UpdateBrandBannerForm({ targetId, isShow, setIsShow }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+
     const formData = new FormData();
     formData.append("title", title);
     formData.append("subtitle", subtitle);
     formData.append("shortDescription", shortDescription);
     formData.append("image", thumbnail);
     try {
-      const res = await axiosSecure.put(`/brand-banners/${targetId}`, formData);
+      const res = await axiosSecure.post("/best-selling-banners", formData);
 
       console.log(res);
 
@@ -60,13 +59,13 @@ export default function UpdateBrandBannerForm({ targetId, isShow, setIsShow }) {
           confirmButtonText: "Ok",
         });
         localStorage.removeItem("file_key");
-        setFile_key(null);
+
         setIsShow(false);
+        setThumbnail(null);
+        setThumbnailPreview(null);
         setTitle("");
         setSubtitle("");
         setShortDescription("");
-        setThumbnail(null);
-        setThumbnailPreview(null);
       }
     } catch (err) {
       console.error(err);
@@ -81,66 +80,24 @@ export default function UpdateBrandBannerForm({ targetId, isShow, setIsShow }) {
     }
   };
 
-  // Fetch existing testimonial for editing
-  useEffect(() => {
-    const fetchTestimonial = async () => {
-      try {
-        const res = await axiosSecure.get(`/brand-banners/${targetId}`);
-        const data = res?.data?.data;
-
-        // Set form values with the testimonial data
-        setTitle(data?.title);
-        setThumbnailPreview(data?.image); // Show the existing image
-        setFile_url(data?.image); // Use the existing image URL
-        setTitle(data?.title);
-        setSubtitle(data?.subtitle);
-        setShortDescription(data?.shortDescription);
-      } catch (error) {
-        console.error("Error fetching testimonial:", error);
-      }
-    };
-
-    if (isShow) {
-      fetchTestimonial();
-    } else {
-      setTitle("");
-      setSubtitle("");
-      setShortDescription("");
-      setThumbnail(null);
-      setThumbnailPreview(null);
-    }
-
-    fetchTestimonial();
-  }, [targetId, axiosSecure, isShow]);
-
   return (
-    <div className="p-8 rounded-2xl  bg-white mt-9">
-      {/* Testimonial Entry Form */}
-      <h1 className="text-3xl font-semibold mb-7">Create Banner Form</h1>
+    <div className="container mx-auto p-8 mt-9 bg-white rounded-lg shadow-md">
+      {/* Banner Entry Form */}
+      <h1 className="text-2xl font-semibold mb-7">Create Banner Form</h1>
       <form className="" onSubmit={handleSubmit}>
         {/* Left Column - Image Upload */}
         <div className="relative">
-          <label className="block text-gray-700 mb-2">Banner Image </label>
-          <DragEditUploadImageInput
+          <label className="block text-gray-700 mb-2">Banner Image</label>
+          <DragUploadImageInput
             getRootProps={getThumbnailRootProps}
             getInputProps={getThumbnailInputProps}
             image={thumbnail}
             imagePreview={thumbnailPreview}
           />
-
-          {progress > 0 && progress < 100 && (
-            <div className="w-full h-full absolute top-0 left-0 bg-black bg-opacity-50 font-bold text-xl flex justify-center items-center">
-              <progress
-                className="progress progress-accent w-56"
-                value={progress}
-                max="100"
-              ></progress>
-              {Math.floor(progress)}%
-            </div>
-          )}
         </div>
 
-        <div className="space-y-4">
+        {/* Right Column - Form Inputs */}
+        <div className="space-y-4 mt-4">
           <div>
             <label className="block text-gray-700">Title </label>
             <input
@@ -176,7 +133,7 @@ export default function UpdateBrandBannerForm({ targetId, isShow, setIsShow }) {
         <div className="col-span-2">
           <button
             type="submit"
-            className="w-full customSaveButton mt-6 flex justify-center items-center gap-3"
+            className="customSaveButton w-full mt-5 flex justify-center items-center gap-3"
             disabled={loading}
           >
             {loading && (

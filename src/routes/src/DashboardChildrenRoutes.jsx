@@ -2,14 +2,28 @@ import { lazy, Suspense } from "react";
 import GlobalLoading from "../../components library/GlobalLoading";
 import TermsCondition from "../../components/Home/(policy)/terms-and-condition/page";
 import ShippingPublicPolicy from "../../components/Home/(policy)/shipping-policy/page";
-import Transactions from "../../components/dashboard/GenerateReports/Transactions/Transactions";
+const Transactions = lazy(() =>
+  import("../../components/dashboard/GenerateReports/Transactions/Transactions")
+);
+const SpecialDiscountBanner = lazy(() =>
+  import(
+    "../../components/dashboard/SliderAndBanner/SpecialDiscount/SpecialDiscountBanner"
+  )
+);
+const BestSellingBanner = lazy(() =>
+  import(
+    "../../components/dashboard/SliderAndBanner/BestSellingBanner/BestSellingBanner"
+  )
+);
 const NewArrivalBanner = lazy(() =>
   import(
     "../../components/dashboard/SliderAndBanner/NewArrivalBanner/NewArrivalBanner"
   )
 );
-const BrandBanner = lazy(() =>
-  import("../../components/dashboard/SliderAndBanner/BrandBanner/BrandBanner")
+const PopularBanner = lazy(() =>
+  import(
+    "../../components/dashboard/SliderAndBanner/PopularBanner/PopularBanner"
+  )
 );
 const DiscountForm = lazy(() =>
   import("../../components/dashboard/Discount/Discount")
@@ -50,9 +64,7 @@ const UserPermission = lazy(() =>
 const StaffRole = lazy(() =>
   import("../../components/dashboard/UserPermission/StaffRole")
 );
-const ProductPage = lazy(() =>
-  import("../../components/Home/Products/ProductPage")
-);
+
 const PrivateRoute = lazy(() => import("./routes/PrivateRoute"));
 const CancelOrders = lazy(() =>
   import("../../components/dashboard/ManageOrders/CancelOrders")
@@ -60,9 +72,7 @@ const CancelOrders = lazy(() =>
 const Change_Password = lazy(() =>
   import("../../pages/User_Dashboard/Change_Password")
 );
-const UserRoleList = lazy(() =>
-  import("../../components/dashboard/SystemUsers/UserRoleList")
-);
+
 const ViewAllBlogs = lazy(() =>
   import("../../components/dashboard/Blogs/ViewAllBlogs/ViewAllBlogs")
 );
@@ -1476,14 +1486,44 @@ function DashboardChildrenRoutes() {
     {
       // path: "userpermission",
       // path: "view-all-bag-banners",
-      path: isPermittedRoute("view-all-brand-banners"),
+      path: isPermittedRoute("view-all-popular-banners"),
       element: (
         // <PrivateRoute>
         //   <SmsGroup />
         // </PrivateRoute>
         <Suspense fallback={<GlobalLoading />}>
           <PrivateRoute>
-            <BrandBanner />
+            <PopularBanner />
+          </PrivateRoute>
+        </Suspense>
+      ),
+    },
+    {
+      // path: "userpermission",
+      // path: "view-all-bag-banners",
+      path: isPermittedRoute("view-all-best-selling-banners"),
+      element: (
+        // <PrivateRoute>
+        //   <SmsGroup />
+        // </PrivateRoute>
+        <Suspense fallback={<GlobalLoading />}>
+          <PrivateRoute>
+            <BestSellingBanner />
+          </PrivateRoute>
+        </Suspense>
+      ),
+    },
+    {
+      // path: "userpermission",
+      // path: "view-all-bag-banners",
+      path: isPermittedRoute("view-all-special-discount-banners"),
+      element: (
+        // <PrivateRoute>
+        //   <SmsGroup />
+        // </PrivateRoute>
+        <Suspense fallback={<GlobalLoading />}>
+          <PrivateRoute>
+            <SpecialDiscountBanner />
           </PrivateRoute>
         </Suspense>
       ),

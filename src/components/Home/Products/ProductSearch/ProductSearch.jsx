@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import useAxiosSecure from "../../../../Hook/useAxiosSecure";
-import toast from "react-hot-toast";
+
 import { useAuth } from "../../../../providers/AuthProvider";
 import CustomImage from "../../../../shared/ImageComponents/CustomImage";
 import { useNavigate } from "react-router-dom";
@@ -51,7 +51,8 @@ const ProductSearch = ({ setIsShow, isShow }) => {
     if (isShow) {
       searchInput.current.focus();
     }
-  }, []);
+    document.body.style.overflow = isShow ? "hidden" : "auto";
+  }, [isShow]);
 
   const handleNavigate = (id) => {
     setIsShow(false);
@@ -65,7 +66,7 @@ const ProductSearch = ({ setIsShow, isShow }) => {
     <div className="p-6 px-0 pt-4 bg-white rounded-lg">
       <input
         type="text"
-        placeholder="Search by name or email..."
+        placeholder="Search Product ..."
         className="focus:border-gray-300 appearance-none text-gray-700 border shadow-sm rounded-xl w-[95%] mx-auto block py-3 px-3 leading-tight focus:outline-none focus:shadow-outline mb-6"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}

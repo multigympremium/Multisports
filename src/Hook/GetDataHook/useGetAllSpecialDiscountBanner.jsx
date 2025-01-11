@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import useAxiosPublic from "../useAxiosPublic";
+import useAxiosSecure from "../useAxiosSecure";
 
-function useGetAllBrandBanner({
+function useGetAllSpecialDiscountBanner({
   isEdited = false,
   isDeleted = false,
   setLoading = () => {},
@@ -9,13 +9,13 @@ function useGetAllBrandBanner({
 }) {
   const [banners, setBanners] = useState([]);
 
-  const axiosSecure = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
 
   useEffect(() => {
     const fetchBanners = async () => {
       try {
         setLoading(true);
-        const res = await axiosSecure.get("/brand-banners");
+        const res = await axiosSecure.get("/special-discount-banners");
 
         if (res.status === 200 || res.status === 201) {
           setBanners(res.data.data);
@@ -34,4 +34,4 @@ function useGetAllBrandBanner({
   return banners;
 }
 
-export default useGetAllBrandBanner;
+export default useGetAllSpecialDiscountBanner;

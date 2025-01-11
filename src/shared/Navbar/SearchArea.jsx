@@ -15,6 +15,7 @@ export default function SearchArea({
     typeSpeed: 70,
     deleteSpeed: 50,
     delaySpeed: 1000,
+    cursorBlinking: true,
   });
 
   const handleFocus = () => {
@@ -42,7 +43,7 @@ export default function SearchArea({
       <input
         type="text"
         className="outline-none w-full bg-gray-100"
-        placeholder={!isFocused ? `Search for ${text}` : ""}
+        placeholder={!isFocused ? `Search for "${text}"` : ""}
         onFocus={handleFocus}
         onBlur={handleBlur}
         id="search"

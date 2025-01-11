@@ -4,15 +4,15 @@ import { useState } from "react";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 import CellImage from "../../../../shared/ImageComponents/CellImage";
-import CreateBrandBannerForm from "./forms/CreateBrandBannerForm";
-import UpdateBrandBannerForm from "./forms/UpdateBrandBannerForm";
+import CreateSpecialDiscountBannerForm from "./forms/CreateSpecialDiscountBannerForm";
+import UpdateSpecialDiscountBannerForm from "./forms/UpdateSpecialDiscountBannerForm";
 import useAxiosSecure from "../../../../Hook/useAxiosSecure";
 import DeleteButton from "../../../../components library/DeleteButton";
 import EditButton from "../../../../components library/EditButton";
 import Mpagination from "../../../../shared/Mpagination";
-import useGetAllBrandBanner from "../../../../Hook/GetDataHook/useGetAllBrandBanner";
+import useGetAllSpecialDiscountBanner from "../../../../Hook/GetDataHook/useGetAllSpecialDiscountBanner";
 
-const BrandBanner = () => {
+const SpecialDiscountBanner = () => {
   const [showModal, setShowModal] = useState(false);
   const [targetId, setTargetId] = useState("");
   const [isEdit, setIsEdit] = useState(false);
@@ -20,7 +20,7 @@ const BrandBanner = () => {
   const [isDeleted, setIsDeleted] = useState(false);
   const axiosSecure = useAxiosSecure();
 
-  const banners = useGetAllBrandBanner({
+  const banners = useGetAllSpecialDiscountBanner({
     isShowModal: showModal,
     isDeleted,
     isEdited: isEdit,
@@ -52,7 +52,9 @@ const BrandBanner = () => {
       }).then(async (result) => {
         if (result.isConfirmed) {
           try {
-            const res = await axiosSecure.delete(`/brand-banners/${id}`);
+            const res = await axiosSecure.delete(
+              `/special-discount-banners/${id}`
+            );
             console.log(res, "res");
             if (res.status === 200 || res.status === 201) {
               setIsDeleted((prev) => !prev);
@@ -67,22 +69,24 @@ const BrandBanner = () => {
       });
     } catch (error) {
       console.log(error, "error");
-      toast.error("Error deleting brand!");
+      toast.error("Error deleting Special Discount!");
     }
-    console.log(`Delete brand with ID: ${id}`);
+    console.log(`Delete Special Discount with ID: ${id}`);
   };
 
   return (
     <div className="p-6 pt-0">
       <div className="">
         <div className="flex justify-between mb-9 items-center">
-          <h1 className="text-3xl font-semibold ">Brand Banner List</h1>
+          <h1 className="text-3xl font-semibold ">
+            Special Discount Banner List
+          </h1>
           <div>
             <button
               className="customSaveButton"
               onClick={() => setShowModal(true)}
             >
-              + Add Brand Banner
+              + Add Special Discount Banner
             </button>
           </div>
         </div>
@@ -150,10 +154,10 @@ const BrandBanner = () => {
       {paginationControls}
 
       <BgBlurModal isShowModal={showModal} setIsShowModal={setShowModal}>
-        <CreateBrandBannerForm setIsShow={setShowModal} />
+        <CreateSpecialDiscountBannerForm setIsShow={setShowModal} />
       </BgBlurModal>
       <BgBlurModal isShowModal={isEdit} setIsShowModal={setIsEdit}>
-        <UpdateBrandBannerForm
+        <UpdateSpecialDiscountBannerForm
           targetId={targetId}
           isShow={isEdit}
           setIsShow={setIsEdit}
@@ -163,4 +167,4 @@ const BrandBanner = () => {
   );
 };
 
-export default BrandBanner;
+export default SpecialDiscountBanner;

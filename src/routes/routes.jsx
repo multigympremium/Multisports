@@ -191,8 +191,8 @@ const AllRoutes = () => {
           element: <ProductDetails />,
         },
         {
-          path:"see_all/:id",
-          element:<SeeAll/>
+          path: "see_all/:id",
+          element: <SeeAll />,
         },
         {
           // path: "addworkout",
@@ -267,9 +267,10 @@ const AllRoutes = () => {
           path: "blogs",
           // path: isPermittedRoute("userpermission"),
           element: <Blogs />,
-        },{
-          path:"contactus",
-          element:<ContactUs/>
+        },
+        {
+          path: "contactus",
+          element: <ContactUs />,
         },
         {
           // path: "userpermission",
@@ -284,12 +285,12 @@ const AllRoutes = () => {
           element: <About />,
         },
         {
-          path : "career",
-          element:<Career/>
+          path: "career",
+          element: <Career />,
         },
         {
-          path : "shop_adress",
-          element:<Shop_address />
+          path: "shop_adress",
+          element: <Shop_address />,
         },
         {
           // path: "userpermission",

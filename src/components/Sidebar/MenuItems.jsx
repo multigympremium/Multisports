@@ -589,9 +589,21 @@ function MenuItemsList({ userRole }) {
           icon: <IoIosHome />,
         },
         {
-          title: "View All Brand Banners",
-          path: "view-all-brand-banners",
-          isAllowed: isAllowedRoute("view-all-brand-banners"),
+          title: "View All Popular Banners",
+          path: "view-all-popular-banners",
+          isAllowed: isAllowedRoute("view-all-popular-banners"),
+          icon: <IoIosHome />,
+        },
+        {
+          title: "View All Best Selling Banners",
+          path: "view-all-best-selling-banners",
+          isAllowed: isAllowedRoute("view-all-best-selling-banners"),
+          icon: <IoIosHome />,
+        },
+        {
+          title: "View All Special Discount Banners",
+          path: "view-all-special-discount-banners",
+          isAllowed: isAllowedRoute("view-all-special-discount-banners"),
           icon: <IoIosHome />,
         },
         {

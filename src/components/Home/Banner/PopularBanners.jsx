@@ -1,12 +1,10 @@
-import useGetAllBanners from "../../../Hook/GetPublicDataHook/useGetAllBanners";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { useRef, useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
-import useGetAllBagBanners from "../../../Hook/GetPublicDataHook/useGetAllBagBanners";
-import useGetAllBrandBanner from "../../../Hook/GetPublicDataHook/useGetAllBrandBanner";
+import useGetAllPopularBanner from "../../../Hook/GetPublicDataHook/useGetAllPopularBanner";
 
 const SkeletonCarousel = () => (
   <div className="relative w-[90%] mx-auto  md:w-full h-[170px] my-4 md:my-9 md:h-[800px] animate-pulse">
@@ -111,9 +109,9 @@ const CustomCarousel = ({ slides, isHomeArea = true }) => {
   );
 };
 
-const BrandBanners = ({ isHomeArea = true }) => {
+const PopularBanners = ({ isHomeArea = true }) => {
   const [loading, setLoading] = useState(false);
-  const banners = useGetAllBrandBanner({ setLoading });
+  const banners = useGetAllPopularBanner({ setLoading });
 
   return loading ? (
     <SkeletonCarousel />
@@ -122,4 +120,4 @@ const BrandBanners = ({ isHomeArea = true }) => {
   );
 };
 
-export default BrandBanners;
+export default PopularBanners;
