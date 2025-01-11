@@ -6,9 +6,10 @@ import useAxiosPublic from "../../../Hook/useAxiosPublic";
 import { AuthContext } from "../../../providers/AuthProvider";
 import RelatedProducts from "../../../components/partial/RelatedProducts/RelatedProducts";
 import ProductDetailsSkeleton from "./ProductDetailsSkeleton";
+import toast from "react-hot-toast";
 
 const ProductDetails = () => {
-  const [loading , setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const product_id = useParams().id;
   const axiosPublic = useAxiosPublic();
   const [product, setProduct] = useState({});
@@ -17,18 +18,18 @@ const ProductDetails = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        setLoading(true)
+        setLoading(true);
         const res = await axiosPublic.get(`/products/${product_id}`);
         setProduct(res.data.data);
       } catch (error) {
         console.log(error);
       } finally {
         // console.log("done");
-        setLoading(false)
+        setLoading(false);
       }
     };
     fetchProduct();
-  }, [product_id,axiosPublic]);
+  }, [product_id, axiosPublic]);
 
   const {
     brandValue,
@@ -54,7 +55,6 @@ const ProductDetails = () => {
     shortDescription,
     specialOffer,
     specification,
-    stock,
     subcategory,
     thumbnail,
     updatedAt,
@@ -68,6 +68,7 @@ const ProductDetails = () => {
   const [quantity, setQuantity] = useState(0);
   // const [sizes, setSizes] = useState([]);
   const [selectedImage, setSelectedImage] = useState(product?.thumbnail || "");
+  const [currentStock, setCurrentStock] = useState(0);
 
   const {
     cartItems,
@@ -84,6 +85,7 @@ const ProductDetails = () => {
   const [selectedColor, setSelectedColor] = useState({});
   const [sizeArray, setSizeArray] = useState([]);
   const [selectedSize, setSelectedSize] = useState({});
+  const [stock, setStock] = useState(0);
 
   useEffect(() => {
     setQuantity(
@@ -121,6 +123,29 @@ const ProductDetails = () => {
     console.log(currentItem, "copy_product");
   }, [selectedSize, selectedColor, product, cartItems]);
 
+  useEffect(() => {
+    const currentColorItems = cartItems.filter(
+      (item) => item.color === selectedColor?.value && item._id === product_id
+    );
+
+    const currentItemStock = currentColorItems.reduce(
+      (acc, item) => acc + item.quantity,
+      0
+    );
+
+    console.log(
+      currentItemStock,
+      "currentStock",
+      stock - currentItemStock == 0,
+      currentItemStock
+    );
+    if (currentColorItems.length > 0) {
+      setCurrentStock(currentItemStock);
+    } else {
+      setCurrentStock(0);
+    }
+  }, [selectedColor, cartItems, quantity, stock]);
+
   //   console.log(colorAndSize[0]?.size[0], "colorAndSize[0]?.size[0]");
 
   // Determine grid columns based on the total number of images
@@ -154,9 +179,7 @@ const ProductDetails = () => {
   return (
     <div className="w-[95%] md:max-w-[1440px] mx-auto pt-5 py-9">
       {/* If product exists */}
-      {
-        loading  && <ProductDetailsSkeleton/>
-      }
+      {loading && <ProductDetailsSkeleton />}
       {!loading && product && (
         <section className="flex flex-col  md:flex-row">
           {/* image div */}
@@ -215,28 +238,11 @@ const ProductDetails = () => {
               )}
             </div>
             <div className="border-b w-full" /> {/* horizontal ruler */}
-            {/* size */}
-            <div className="mt-5">
-              <p className="font-semibold text-xl">Size</p>
-              <div className="flex gap-2">
-                {sizeArray.map((size) => (
-                  <button
-                    key={size}
-                    className={`border text-xs md:text-sm  w-7 h-7 md:w-10 md:h-10 hover:border-gray-500 duration-300 ease-in-out rounded-lg ${
-                      size.value === selectedSize.value
-                        ? "bg-gray-600 text-white"
-                        : ""
-                    }`}
-                    onClick={() => setSelectedSize(size)}
-                  >
-                    {size?.label}
-                  </button>
-                ))}
-              </div>
-            </div>
             {/* color */}
             <div className="mt-5">
-              <p className="font-semibold text-xl">Color</p>
+              <p className="font-semibold text-xl">
+                Color (Total Stock : {stock})
+              </p>
               <div className="flex gap-5 mt-4">
                 {colorAndSize?.length > 0 &&
                   colorAndSize?.map((color, index) => (
@@ -254,11 +260,39 @@ const ProductDetails = () => {
                         onClick={() => {
                           setSelectedColor(color.color);
                           setSizeArray(color.size);
+                          setStock(color.quantity);
                         }}
                       ></button>
                     </div>
                   ))}
               </div>
+            </div>
+            {/* size */}
+            <div className="mt-5">
+              <p className="font-semibold text-xl">Size</p>
+              {sizeArray?.length > 0 && (
+                <div className="mb-4">
+                  <h3 className="font-semibold mb-2">
+                    Size (Stock : {stock - currentStock})
+                  </h3>
+                  <div className="flex gap-2">
+                    {sizeArray.map((size) => (
+                      <button
+                        key={size}
+                        className={`border text-xs md:text-sm shadow-sm w-7 h-7 md:w-10 md:h-10 hover:border-gray-500 duration-300 ease-in-out rounded-lg disabled:opacity-50  disabled:cursor-not-allowed ${
+                          size.value === selectedSize.value
+                            ? "shadow-lg shadow-green-500"
+                            : ""
+                        }`}
+                        onClick={() => setSelectedSize(size)}
+                        disabled={stock - currentStock == 0}
+                      >
+                        {size?.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
             <div className="border-b w-full my-6" /> {/* horizontal ruler */}
             {/* quantity and add to cart */}
@@ -288,7 +322,7 @@ const ProductDetails = () => {
                     {quantity}
                   </span>
                   <button
-                    className="w-16 text-xl"
+                    className="w-16 text-xl disabled:opacity-50 disabled:cursor-not-allowed"
                     onClick={() => {
                       if (quantity > 1) {
                         updateCartQuantity(
@@ -303,25 +337,25 @@ const ProductDetails = () => {
                           selectedColor.value,
                           selectedSize.value
                         );
+                        if (selectedSize.value) {
+                          toast.success("Product Added to Cart!");
+                        }
                       }
                     }}
-                    disabled={
-                      product?.stock <= 0
-                      // product?.quantity >= product?.stock ||
-                    }
+                    disabled={stock - currentStock == 0}
                   >
                     +
                   </button>
                 </div>
                 <button
-                  className="md:py-3 max-w-fit px-3 md:px-28 py-2 rounded-lg text-sm md:text-base font-semibold bg-black text-white w-auto md:flex-1"
+                  className="md:py-3 max-w-fit px-3 md:px-28 py-2 rounded-lg text-sm md:text-base font-semibold bg-black text-white w-auto md:flex-1 disabled:opacity-50 cursor-not-allowed"
                   onClick={() => {
                     addToCart(product, selectedColor.value, selectedSize.value);
-                    // setProduct((prev) => ({
-                    //   ...prev,
-                    //   quantity: quantity + 1,
-                    // }));
+                    if (selectedSize.value) {
+                      toast.success("Product Added to Cart!");
+                    }
                   }}
+                  disabled={stock - currentStock == 0}
                 >
                   Add To Cart
                 </button>
@@ -330,11 +364,11 @@ const ProductDetails = () => {
             <div className="border-b w-full my-6" /> {/* horizontal ruler */}
             {/* info */}
             <div>
-              <p className="font-medium mb-3">
+              <p className="font-medium mb-3 uppercase">
                 Sub Category :{" "}
-                <span className="font-light"> {subcategory}</span>
+                <span className="font-light uppercase"> {subcategory}</span>
               </p>
-              <p className="font-medium ">
+              <p className="font-medium uppercase">
                 Category : <span className="font-light"> {category}</span>
               </p>
               <p></p>
@@ -384,6 +418,11 @@ const ProductDetails = () => {
 };
 
 const HtmlText = ({ htmlContent }) => {
-  return <div dangerouslySetInnerHTML={{ __html: htmlContent }} />;
+  console.log(htmlContent, "htmlContent");
+  return htmlContent == "undefined" || htmlContent == undefined ? (
+    <div></div>
+  ) : (
+    <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
+  );
 };
 export default ProductDetails;

@@ -2,7 +2,7 @@ import { useState } from "react";
 import Modal from "../../../shared/Modal/Modal";
 
 const ProductCard = ({
-  border=false,
+  border = false,
   product,
   handleProductClick,
   isPopular = false,
@@ -17,7 +17,9 @@ const ProductCard = ({
   const renderBadge = (condition, label, bgColor) => {
     if (!condition) return null;
     return (
-      <span className={`absolute z-10 left-2 ${bgColor} text-white md:text-xs text-[10px] py-[2px] md:py-1 px-2 md:px-3 rounded-md`}>
+      <span
+        className={`absolute z-10 left-2 ${bgColor} text-white md:text-xs text-[10px] py-[2px] md:py-1 px-2 md:px-3 rounded-md`}
+      >
         {label}
       </span>
     );
@@ -30,7 +32,9 @@ const ProductCard = ({
 
   const getDiscountedPrice = () => {
     if (product.discount > 0) {
-      return (product.price - (product.price * product.discount) / 100).toFixed(2);
+      return (product.price - (product.price * product.discount) / 100).toFixed(
+        2
+      );
     }
     return null;
   };
@@ -39,15 +43,33 @@ const ProductCard = ({
     <div
       onClick={handleClick}
       key={product._id}
-      className={`bg-white relative md:hover:scale-105 cursor-pointer overflow-hidden rounded-lg md:hover:shadow-lg transition-transform duration-300 ${border && "border"}`}
+      className={`bg-white relative md:hover:scale-105 cursor-pointer overflow-hidden rounded-lg md:hover:shadow-lg transition-transform duration-300 ${
+        border && "border"
+      }`}
     >
       {console.log("product", product)}
 
       {/* Badges */}
-      {renderBadge(showDiscount && product.discount > 0, `${product.discount}% OFF`, "bg-gray-800 top-2 md:top-5 md:left-5")}
-      {renderBadge(showNewArrival, "New Arrival", "bg-[#923670] top-7 md:top-12 md:left-5")}
-      {renderBadge(isPopular, "Popular now", "bg-blue-500 top-7 md:top-12 md:left-5")}
-      {renderBadge(isSpecial, "Special", "bg-blue-500 top-7 md:top-12 md:left-5")}
+      {renderBadge(
+        showDiscount && product.discount > 0,
+        `${product.discount}% OFF`,
+        "bg-gray-800 top-2 md:top-5 md:left-5"
+      )}
+      {renderBadge(
+        showNewArrival,
+        "New Arrival",
+        "bg-[#923670] top-7 md:top-12 md:left-5"
+      )}
+      {renderBadge(
+        isPopular,
+        "Popular now",
+        "bg-blue-500 top-7 md:top-12 md:left-5"
+      )}
+      {renderBadge(
+        isSpecial,
+        "Special",
+        "bg-blue-500 top-7 md:top-12 md:left-5"
+      )}
 
       {/* Product Image */}
       <img
@@ -59,23 +81,39 @@ const ProductCard = ({
       {/* Product Details */}
       <div className="p-4">
         <h3 className="text-sm md:text-base font-semibold mb-1 block md:hidden">
-          {product.productTitle.length > 12 ? `${product.productTitle.slice(0, 12)}..` : product.productTitle}
+          {product.productTitle.length > 12
+            ? `${product.productTitle.slice(0, 12)}..`
+            : product.productTitle}
         </h3>
-        <h3 className="text-base font-semibold mb-2 hidden md:block">{product.productTitle}</h3>
+        <h3 className="text-base font-semibold mb-2 hidden md:block">
+          {product.productTitle}
+        </h3>
 
         {/* Description */}
         <p className="text-gray-500 mb-1 text-xs lg:hidden">
-          <div dangerouslySetInnerHTML={{ __html: `${product.fullDescription.slice(0, 20)}...` }} />
+          <div
+            dangerouslySetInnerHTML={{
+              __html: `${product.fullDescription.slice(0, 20)}...`,
+            }}
+          />
         </p>
         <p className="text-gray-500 mb-2 hidden lg:block">
-          <div dangerouslySetInnerHTML={{ __html: `${product.fullDescription.slice(0, 40)}...` }} />
+          <div
+            dangerouslySetInnerHTML={{
+              __html: `${product.fullDescription.slice(0, 40)}...`,
+            }}
+          />
         </p>
 
         {/* Price */}
         <div className="flex flex-col-reverse">
-          <p className="text-xs md:text-base line-through opacity-60">BDT {product.price}.00</p>
+          <p className="text-xs md:text-base line-through opacity-60">
+            BDT {product.price}.00
+          </p>
           {product.discount > 0 ? (
-            <p className="text-sm md:text-lg font-semibold">BDT {getDiscountedPrice()}</p>
+            <p className="text-sm md:text-lg font-semibold">
+              BDT {getDiscountedPrice()}
+            </p>
           ) : (
             <p className="opacity-0">3</p>
           )}

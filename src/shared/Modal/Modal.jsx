@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
 import useAxiosPublic from "../../Hook/useAxiosPublic";
+import toast from "react-hot-toast";
 
 const Modal = ({
   id,
@@ -18,9 +19,8 @@ const Modal = ({
 }) => {
   const [trackingProduct, setTrackingProduct] = useState({});
   const [quantity, setQuantity] = useState(0);
-  // const [sizes, setSizes] = useState([]);
-  const [selectedImage, setSelectedImage] = useState(product?.thumbnail || "");
-  const axiosPublic = useAxiosPublic();
+  const [stock, setStock] = useState(0);
+
   const {
     cartItems,
     removeFromCart,
@@ -31,11 +31,10 @@ const Modal = ({
   } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const [activeDescription, setActiveDescription] = useState("full_desc");
-
   const [selectedColor, setSelectedColor] = useState({});
   const [sizeArray, setSizeArray] = useState([]);
   const [selectedSize, setSelectedSize] = useState({});
+  const [currentStock, setCurrentStock] = useState(0);
 
   useEffect(() => {
     setQuantity(
@@ -78,6 +77,34 @@ const Modal = ({
     console.log(currentItem, "copy_product");
   }, [selectedSize, selectedColor, product, cartItems]);
 
+  console.log(
+    "current stock",
+    cartItems.filter((item) => item.color === selectedColor?.value)
+  );
+
+  useEffect(() => {
+    const currentColorItems = cartItems.filter(
+      (item) => item.color === selectedColor?.value && item._id === object_id
+    );
+
+    const currentItemStock = currentColorItems.reduce(
+      (acc, item) => acc + item.quantity,
+      0
+    );
+
+    console.log(
+      currentItemStock,
+      "currentStock",
+      stock - currentItemStock == 0,
+      currentItemStock
+    );
+    if (currentColorItems.length > 0) {
+      setCurrentStock(currentItemStock);
+    } else {
+      setCurrentStock(0);
+    }
+  }, [selectedColor, cartItems, quantity, stock]);
+
   return (
     <dialog id={id} className="modal">
       <div className=" modal-box p-0 rounded max-w-4xl w-[90%] mx-auto md:w-full flex flex-col md:flex-row">
@@ -105,7 +132,9 @@ const Modal = ({
 
           {/* Color Options */}
           <div className="mb-4">
-            <h3 className="font-semibold mb-2">Color {colors?.length}</h3>
+            <h3 className="font-semibold mb-2">
+              Color: (Total Stock : {stock})
+            </h3>
             <div className="flex gap-2">
               {colors.map((color, index) => (
                 <div
@@ -122,6 +151,7 @@ const Modal = ({
                     onClick={() => {
                       setSelectedColor(color.color);
                       setSizeArray(color.size);
+                      setStock(color.quantity);
                     }}
                   ></button>
                 </div>
@@ -130,24 +160,29 @@ const Modal = ({
           </div>
 
           {/* Size Options */}
-          <div className="mb-4">
-            <h3 className="font-semibold mb-2">Size {sizeArray?.length}</h3>
-            <div className="flex gap-2">
-              {sizeArray.map((size) => (
-                <button
-                  key={size}
-                  className={`border text-xs md:text-sm shadow-sm w-7 h-7 md:w-10 md:h-10 hover:border-gray-500 duration-300 ease-in-out rounded-lg ${
-                    size.value === selectedSize.value
-                      ? "bg-neutral-500 text-white"
-                      : ""
-                  }`}
-                  onClick={() => setSelectedSize(size)}
-                >
-                  {size?.label}
-                </button>
-              ))}
+          {sizeArray?.length > 0 && (
+            <div className="mb-4">
+              <h3 className="font-semibold mb-2">
+                Size (Stock : {stock - currentStock})
+              </h3>
+              <div className="flex gap-2">
+                {sizeArray.map((size) => (
+                  <button
+                    key={size}
+                    className={`border text-xs md:text-sm shadow-sm w-7 h-7 md:w-10 md:h-10 hover:border-gray-500 duration-300 ease-in-out rounded-lg disabled:opacity-50 disabled:cursor-not-allowed ${
+                      size.value === selectedSize.value
+                        ? "shadow-lg shadow-green-500"
+                        : ""
+                    }`}
+                    onClick={() => setSelectedSize(size)}
+                    disabled={stock - currentStock == 0}
+                  >
+                    {size?.label}
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
           <div className="flex md:block ">
             {/* Quantity and Actions */}
@@ -163,17 +198,13 @@ const Modal = ({
                       selectedSize.value
                     )
                   }
-                  disabled={
-                    product?.stock <= 0 || quantity == 1
-
-                    // product?.quantity >= product?.stock ||
-                  }
+                  disabled={quantity == 1}
                 >
                   -
                 </button>
                 <span className="w-10 border-x text-center">{quantity}</span>
                 <button
-                  className="w-7"
+                  className="w-7 disabled:opacity-50 disabled:cursor-not-allowed"
                   onClick={() => {
                     if (quantity > 1) {
                       updateCartQuantity(
@@ -189,25 +220,25 @@ const Modal = ({
                         selectedSize.value,
                         selectedColor.label
                       );
+                      if (selectedSize.value) {
+                        toast.success("Product Added to Cart!");
+                      }
                     }
                   }}
-                  disabled={
-                    product?.stock <= 0
-                    // product?.quantity >= product?.stock ||
-                  }
+                  disabled={stock - currentStock == 0}
                 >
                   +
                 </button>
               </div>
               <button
-                className="md:py-3 py-2 rounded-lg text-sm md:text-base font-semibold bg-black text-white w-full md:flex-1"
+                className="md:py-3 py-2 rounded-lg text-sm md:text-base font-semibold bg-black text-white w-full md:flex-1 disabled:opacity-50 disabled:cursor-not-allowed"
                 onClick={() => {
                   addToCart(product, selectedColor.value, selectedSize.value);
-                  // setProduct((prev) => ({
-                  //   ...prev,
-                  //   quantity: quantity + 1,
-                  // }));
+                  if (selectedSize.value) {
+                    toast.success("Product Added to Cart!");
+                  }
                 }}
+                disabled={stock - currentStock == 0}
               >
                 Add To Cart
               </button>

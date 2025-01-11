@@ -52,22 +52,33 @@ const CartItemComponent = ({
                     Unit price : <span className="text-xl font-bold">৳</span>
                     {item.price}
                   </span>
-                  <div
-                    className={`flex items-center  rounded-md border max-w-min mt-2`}
-                  >
+                  <div className="flex items-center gap-4 mt-2">
                     <button
-                      className="px-2 py-1 "
-                      onClick={() => decreaseQuantity(item)}
-                    >
-                      -
-                    </button>
-                    <span className="px-4 border-x-2">{item.quantity}</span>
+                      style={{ backgroundColor: item.color }}
+                      className={`md:w-8 md:h-8 w-7 h-7 rounded-md`}
+                    ></button>
                     <button
-                      className="px-2 py-1 "
-                      onClick={() => increaseQuantity(item)}
+                      className={`md:w-8 md:h-8 w-7 h-7 rounded-md border`}
                     >
-                      +
+                      {item.size}
                     </button>
+                    <div
+                      className={`flex items-center  rounded-md border max-w-min`}
+                    >
+                      <button
+                        className="px-2 py-1 "
+                        onClick={() => decreaseQuantity(item)}
+                      >
+                        -
+                      </button>
+                      <span className="px-4 border-x-2">{item.quantity}</span>
+                      <button
+                        className="px-2 py-1 "
+                        onClick={() => increaseQuantity(item)}
+                      >
+                        +
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
