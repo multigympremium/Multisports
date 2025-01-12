@@ -207,7 +207,9 @@ function ProductPage() {
 
   useEffect(() => {
     setPriceRange(highestPrice[0]?.highestPrice);
-    const searchParams = location?.search?.split("?")[1];
+    const searchParams = location?.search
+      ? location?.search?.split("?")[1]
+      : "";
     const brand = searchParams?.split("=")[1];
 
     const isExist = categories
@@ -241,7 +243,7 @@ function ProductPage() {
   }, [params.id, categories, querySubcategories]);
 
   useEffect(() => {
-    const paramsId = location.search.split("?")[1].split("=")[1];
+    const paramsId = location?.search?.split("?")[1]?.split("=")[1];
     console.log(paramsId, "singleBrand");
     const fetchBrand = async () => {
       try {

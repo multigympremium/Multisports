@@ -130,120 +130,129 @@ const Modal = ({
             BDT {price}.00
           </div>
 
-          {/* Color Options */}
-          <div className="mb-4">
-            <h3 className="font-semibold mb-2">
-              Color: (Total Stock : {stock})
-            </h3>
-            <div className="flex gap-2">
-              {colors.map((color, index) => (
-                <div
-                  key={index}
-                  className={`border flex items-center border-gray-100 duration-300 ease-in-out  hover:border-gray-400 justify-center p-[3px] md:p-1 rounded-md ${
-                    selectedColor?.value === color?.color?.value
-                      ? "bg-neutral-500 text-white"
-                      : ""
-                  }`}
-                >
-                  <button
-                    style={{ backgroundColor: color?.color?.value }}
-                    className={`md:w-8 md:h-8 w-7 h-7 rounded-md`}
-                    onClick={() => {
-                      setSelectedColor(color.color);
-                      setSizeArray(color.size);
-                      setStock(color.quantity);
-                    }}
-                  ></button>
+          {product.stock > 0 ? (
+            <>
+              {/* Color Options */}
+              <div className="mb-4">
+                <h3 className="font-semibold mb-2">
+                  Color: (Total Stock : {stock})
+                </h3>
+                <div className="flex gap-2">
+                  {colors.map((color, index) => (
+                    <div
+                      key={index}
+                      className={`border flex items-center border-gray-100 duration-300 ease-in-out  hover:border-gray-400 justify-center p-[3px] md:p-1 rounded-md ${
+                        selectedColor?.value === color?.color?.value
+                          ? "bg-neutral-500 text-white"
+                          : ""
+                      }`}
+                    >
+                      <button
+                        style={{ backgroundColor: color?.color?.value }}
+                        className={`md:w-8 md:h-8 w-7 h-7 rounded-md`}
+                        onClick={() => {
+                          setSelectedColor(color.color);
+                          setSizeArray(color.size);
+                          setStock(color.quantity);
+                        }}
+                      ></button>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Size Options */}
-          {sizeArray?.length > 0 && (
-            <div className="mb-4">
-              <h3 className="font-semibold mb-2">
-                Size (Stock : {stock - currentStock})
-              </h3>
-              <div className="flex gap-2">
-                {sizeArray.map((size) => (
-                  <button
-                    key={size}
-                    className={`border text-xs md:text-sm shadow-sm w-7 h-7 md:w-10 md:h-10 hover:border-gray-500 duration-300 ease-in-out rounded-lg disabled:opacity-50 disabled:cursor-not-allowed ${
-                      size.value === selectedSize.value
-                        ? "shadow-lg shadow-green-500"
-                        : ""
-                    }`}
-                    onClick={() => setSelectedSize(size)}
-                    disabled={stock - currentStock == 0}
-                  >
-                    {size?.label}
-                  </button>
-                ))}
               </div>
-            </div>
-          )}
-
-          <div className="flex md:block ">
-            {/* Quantity and Actions */}
-            <div className="flex flex-row w-full items-center gap-4 mb-4">
-              <div className="flex items-center border rounded-lg">
-                <button
-                  className="w-7 text-center py-2 md:h-11"
-                  onClick={() =>
-                    updateCartQuantity(
-                      trackingProduct._id,
-                      quantity - 1,
-                      selectedColor.value,
-                      selectedSize.value
-                    )
-                  }
-                  disabled={quantity == 1}
-                >
-                  -
-                </button>
-                <span className="w-10 border-x text-center">{quantity}</span>
-                <button
-                  className="w-7 disabled:opacity-50 disabled:cursor-not-allowed"
-                  onClick={() => {
-                    if (quantity > 1) {
-                      updateCartQuantity(
-                        product._id,
-                        quantity + 1,
-                        selectedColor?.value,
-                        selectedSize?.value
-                      );
-                    } else {
+              {sizeArray?.length > 0 && (
+                <div className="mb-4">
+                  <h3 className="font-semibold mb-2">
+                    Size (Stock : {stock - currentStock})
+                  </h3>
+                  <div className="flex gap-2">
+                    {sizeArray.map((size) => (
+                      <button
+                        key={size}
+                        className={`border text-xs md:text-sm shadow-sm w-7 h-7 md:w-10 md:h-10 hover:border-gray-500 duration-300 ease-in-out rounded-lg disabled:opacity-50 disabled:cursor-not-allowed ${
+                          size.value === selectedSize.value
+                            ? "shadow-lg shadow-green-500"
+                            : ""
+                        }`}
+                        onClick={() => setSelectedSize(size)}
+                        disabled={stock - currentStock == 0}
+                      >
+                        {size?.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+              <div className="flex md:block ">
+                {/* Quantity and Actions */}
+                <div className="flex flex-row w-full items-center gap-4 mb-4">
+                  <div className="flex items-center border rounded-lg">
+                    <button
+                      className="w-7 text-center py-2 md:h-11"
+                      onClick={() =>
+                        updateCartQuantity(
+                          trackingProduct._id,
+                          quantity - 1,
+                          selectedColor.value,
+                          selectedSize.value
+                        )
+                      }
+                      disabled={quantity == 1}
+                    >
+                      -
+                    </button>
+                    <span className="w-10 border-x text-center">
+                      {quantity}
+                    </span>
+                    <button
+                      className="w-7 disabled:opacity-50 disabled:cursor-not-allowed"
+                      onClick={() => {
+                        if (quantity > 1) {
+                          updateCartQuantity(
+                            product._id,
+                            quantity + 1,
+                            selectedColor?.value,
+                            selectedSize?.value
+                          );
+                        } else {
+                          addToCart(
+                            product,
+                            selectedColor.value,
+                            selectedSize.value,
+                            selectedColor.label
+                          );
+                          if (selectedSize.value) {
+                            toast.success("Product Added to Cart!");
+                          }
+                        }
+                      }}
+                      disabled={stock - currentStock == 0}
+                    >
+                      +
+                    </button>
+                  </div>
+                  <button
+                    className="md:py-3 py-2 rounded-lg text-sm md:text-base font-semibold bg-black text-white w-full md:flex-1 disabled:opacity-50 disabled:cursor-not-allowed"
+                    onClick={() => {
                       addToCart(
                         product,
                         selectedColor.value,
-                        selectedSize.value,
-                        selectedColor.label
+                        selectedSize.value
                       );
                       if (selectedSize.value) {
                         toast.success("Product Added to Cart!");
                       }
-                    }
-                  }}
-                  disabled={stock - currentStock == 0}
-                >
-                  +
-                </button>
+                    }}
+                    disabled={stock - currentStock == 0}
+                  >
+                    Add To Cart
+                  </button>
+                </div>
               </div>
-              <button
-                className="md:py-3 py-2 rounded-lg text-sm md:text-base font-semibold bg-black text-white w-full md:flex-1 disabled:opacity-50 disabled:cursor-not-allowed"
-                onClick={() => {
-                  addToCart(product, selectedColor.value, selectedSize.value);
-                  if (selectedSize.value) {
-                    toast.success("Product Added to Cart!");
-                  }
-                }}
-                disabled={stock - currentStock == 0}
-              >
-                Add To Cart
-              </button>
-            </div>
-          </div>
+            </>
+          ) : (
+            <h3 className="font-semibold mb-2">Out of Stock</h3>
+          )}
 
           <Link to={`/product_details/${object_id}`}>
             <button className="md:py-3 font-semibold text-sm py-2 md:text-base rounded-lg text-white w-full  bg-black">
