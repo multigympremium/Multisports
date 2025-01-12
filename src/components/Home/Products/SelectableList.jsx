@@ -46,13 +46,15 @@ const SelectableList = ({
                   ? item[labelKey]?.replaceAll("-", " ")
                   : item[labelKey]?.replaceAll("_", " ")}
 
-                {
+                {labelKey == "colorLabel" || labelKey == "sizeValue" ? (
+                  <></>
+                ) : (
                   <span className="text-gray-500 font-bold text-[10px] border rounded-md w-8 h-8 items-center justify-center flex">
                     {" "}
                     {/* {item["productCount"]} */}
                     {labelKey == "brand" ? item["stock"] : item["productCount"]}
                   </span>
-                }
+                )}
               </p>
             </label>
           ))}
