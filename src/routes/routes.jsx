@@ -48,6 +48,7 @@ import SeeAll from "../pages/SeeAll/SeeAll";
 import Career from "../pages/OtherPage/career/Career";
 import ContactUs from "../pages/OtherPage/contact_us/ContactUs";
 import Shop_address from "../pages/OtherPage/Shop_adress/Shop_address";
+import OrderSummeryPage from "../components/Home/checkout/OrderSummeryPage";
 
 const AllRoutes = () => {
   // const [permissionData, setPermissionData] = useState([]);
@@ -164,6 +165,17 @@ const AllRoutes = () => {
             //   <Addworkout />
             // </PrivateRoute>
             <CheckoutPage />
+          ),
+        },
+        {
+          // path: "addworkout",
+          path: "order_summary",
+          // path: isPermittedRoute("addworkout"),
+          element: (
+            // <PrivateRoute>
+            //   <Addworkout />
+            // </PrivateRoute>
+            <OrderSummeryPage />
           ),
         },
         {

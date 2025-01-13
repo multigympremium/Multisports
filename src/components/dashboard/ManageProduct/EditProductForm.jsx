@@ -838,17 +838,17 @@ export default function EditProductForm({
           </div> */}
 
           <SwitchInput
-            label="Has Variants?"
+            label="Available Variants?"
             checked={hasVariants}
             onChange={setHasVariants}
           />
           <SwitchInput
-            label="Is Featured?"
+            label="Exclusive Feature?"
             checked={isFeatured}
             setChecked={setIsFeatured}
           />
           <SwitchInput
-            label="Special Offer?"
+            label="Individualized Discount Offer?"
             checked={specialOffer}
             setChecked={setSpecialOffer}
           />
@@ -868,11 +868,15 @@ export default function EditProductForm({
           )}
 
           <SwitchInput
-            label="Is Recommended"
+            label="Best Choice"
             checked={isRecommended}
             setChecked={setIsRecommended}
           />
-          <SwitchInput label="Is New" checked={isNew} setChecked={setIsNew} />
+          <SwitchInput
+            label="New Arrival"
+            checked={isNew}
+            setChecked={setIsNew}
+          />
 
           {setupConfig?.seoInformation && (
             <div className="mb-4 mt-6">

@@ -88,31 +88,44 @@ export default function PaymentMethodModal({
       userId: user._id,
       totalItems: totalItems,
     };
-    try {
-      const response = await axiosSecure.post("/orders", submitOrderData);
-      console.log(response);
 
-      if (response.data.success) {
-        setCartItems([]);
-        localStorage.removeItem("cartItems");
-        return router("/success");
-      }
+    router("/order_summary", {
+      state: {
+        order: submitOrderData,
+      },
+    });
 
-      Swal.fire({
-        title: "Error",
-        text: response.data.message,
-        icon: "error",
-        confirmButtonText: "OK",
-      });
-    } catch (error) {
-      console.log(error);
-      Swal.fire({
-        title: "Error",
-        text: error.message,
-        icon: "error",
-        confirmButtonText: "OK",
-      });
-    }
+    // try {
+    //   const response = await axiosSecure.post("/orders", submitOrderData);
+    //   console.log(response, "response order");
+
+    //   if (response.data.success) {
+    //     setCartItems([]);
+    //     // localStorage.removeItem("cartItems");
+    //     Swal.fire({
+    //       title: "Success!",
+    //       text: "Order placed successfully",
+    //       icon: "success",
+    //       confirmButtonText: "Ok",
+    //     });
+    //     return router(`/my-account/orders/${response.data?.data?._id}`);
+    //   }
+
+    //   Swal.fire({
+    //     title: "Error",
+    //     text: response.data.message,
+    //     icon: "error",
+    //     confirmButtonText: "OK",
+    //   });
+    // } catch (error) {
+    //   console.log(error);
+    //   Swal.fire({
+    //     title: "Error",
+    //     text: error.message,
+    //     icon: "error",
+    //     confirmButtonText: "OK",
+    //   });
+    // }
   };
 
   const submitBkash = async () => {

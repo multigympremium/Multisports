@@ -10,17 +10,11 @@ import useGetAllProductFlag from "../../../Hook/GetDataHook/useGetAllProductFlag
 import useGetAllSubCategories from "../../../Hook/GetDataHook/useGetAllSubCategories";
 import { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import Switch from "react-switch";
 import ActiveDescBtn from "./productSharedComponents/ActiveDescBtn";
 import useGetAllProductSizes from "../../../Hook/GetDataHook/useGetAllProductSizes";
 import Swal from "sweetalert2";
-
-import { IoCloseCircleOutline } from "react-icons/io5";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
 import DragMultiUploadImageInput from "../../../shared/DragMultiUploadImageInput";
-import ReactSelect from "../../UI/ReactSelect";
-import { FaEdit } from "react-icons/fa";
-import { MdDeleteForever } from "react-icons/md";
 import EditableTableColumn from "./productSharedComponents/EditableTableColumn";
 
 export default function ProductCreateForm() {
@@ -717,17 +711,17 @@ export default function ProductCreateForm() {
             {/* Toggle for Special Offer */}
 
             <SwitchInput
-              label="Has Variants?"
+              label="Available Variants?"
               checked={hasVariants}
               onChange={setHasVariants}
             />
             <SwitchInput
-              label="Is Featured?"
+              label="Exclusive Feature?"
               checked={isFeatured}
               setChecked={setIsFeatured}
             />
             <SwitchInput
-              label="Special Offer?"
+              label="Individualized Discount Offer?"
               checked={specialOffer}
               setChecked={setSpecialOffer}
             />
@@ -748,11 +742,15 @@ export default function ProductCreateForm() {
             )}
 
             <SwitchInput
-              label="Is Recommended"
+              label="Best Choice"
               checked={isRecommended}
               setChecked={setIsRecommended}
             />
-            <SwitchInput label="Is New" checked={isNew} setChecked={setIsNew} />
+            <SwitchInput
+              label="New Arrival"
+              checked={isNew}
+              setChecked={setIsNew}
+            />
           </div>
 
           {/* SEO Information */}

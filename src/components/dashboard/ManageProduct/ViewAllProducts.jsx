@@ -13,6 +13,10 @@ import DeleteButton from "../../../components library/DeleteButton";
 import Pagination from "../../partial/Pagination/Pagination";
 import BgBlurModal from "../../../shared/Modal/BgBlurModal";
 import SearchBox from "../../partial/SearchBox/SearchBox";
+import SelectInput from "../../partial/Headers/FilterHeader/SelectInput/SelectInput";
+import useGetAllCategories from "../../../Hook/GetDataHook/useGetAllCategories";
+import useGetAllSubCategories from "../../../Hook/GetDataHook/useGetAllSubCategories";
+import useGetAllProductBrands from "../../../Hook/GetDataHook/useGetAllProductBrands";
 
 const ProductFlag = () => {
   // State management
@@ -25,6 +29,9 @@ const ProductFlag = () => {
   const [targetId, setTargetId] = useState("");
   const itemsPerPage = 10;
   const [searchText, setSearchText] = useState("");
+  const [selectedBrand, setSelectedBrand] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedSubcategory, setSelectedSubcategory] = useState("");
 
   const axiosSecure = useAxiosSecure();
 
@@ -50,8 +57,12 @@ const ProductFlag = () => {
     isDeleted,
     setLoading,
     isShowModal,
-    query: `search=${debouncedSearchText}&currentPage=${currentPage}&limit=${itemsPerPage}`,
+    query: `search=${debouncedSearchText}&currentPage=${currentPage}&limit=${itemsPerPage}&brand=${selectedBrand}&category=${selectedCategory}&subcategory=${selectedSubcategory}`,
   });
+
+  const categories = useGetAllCategories({});
+  const subcategories = useGetAllSubCategories({});
+  const brands = useGetAllProductBrands({});
 
   // Paginated data
   // const paginatedData = useCallback(() => {
@@ -129,7 +140,47 @@ const ProductFlag = () => {
       <div className="container  mx-auto p-6 pt-0">
         <div className="flex justify-between items-center mb-9">
           <h1 className="text-3xl font-semibold header">Product List</h1>
-          <SearchBox searchText={searchText} setSearchText={setSearchText} />
+          <div className="flex gap-4 items-center ">
+            <SelectInput
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+            >
+              <option value={""}>Filter by Category</option>
+              {categories?.length > 0 &&
+                categories.map((item, index) => (
+                  <option key={index} value={item?.slug}>
+                    {item.categoryName}
+                  </option>
+                ))}
+            </SelectInput>
+            <SelectInput
+              value={selectedSubcategory}
+              onChange={(e) => setSelectedSubcategory(e.target.value)}
+            >
+              <option value={""}>Filter by Subcategory</option>
+              {subcategories?.length > 0 &&
+                subcategories.map((item, index) => (
+                  <option key={index} value={item?.slug}>
+                    {item.subcategoryName}
+                  </option>
+                ))}
+            </SelectInput>
+            <SelectInput
+              value={selectedBrand}
+              onChange={(e) => setSelectedBrand(e.target.value)}
+            >
+              <option value={""} className="text-gray-400">
+                Filter by brand
+              </option>
+              {brands?.length > 0 &&
+                brands.map((item, index) => (
+                  <option key={index} value={item?.slug}>
+                    {item.brandName}
+                  </option>
+                ))}
+            </SelectInput>
+            <SearchBox searchText={searchText} setSearchText={setSearchText} />
+          </div>
         </div>
 
         {/* Loading Spinner */}
@@ -275,6 +326,11 @@ const ProductFlag = () => {
                   ))}
               </tbody>
             </table>
+            {products.length === 0 && (
+              <div className="text-center text-2xl py-10">
+                No Products Found
+              </div>
+            )}
           </div>
         )}
 
