@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { BsCart } from "react-icons/bs";
 
-import { FaRegHeart } from "react-icons/fa";
+import { FaFacebook, FaInstagram, FaRegHeart, FaTwitter, FaYoutube } from "react-icons/fa";
 import { FaRegUser } from "react-icons/fa6";
 import { MdMenu, MdOutlineStore } from "react-icons/md";
 import Wishlist from "../Cards/Wishlist/Wishlist";
@@ -143,8 +143,24 @@ const Navbar = () => {
                       aria-label="close sidebar"
                       className="drawer-overlay"
                     ></label>
-                    <ul className="menu bg-white text-base-content min-h-full w-96">
+                    <ul className="menu flex flex-col justify-between bg-white text-base-content min-h-full w-96">
                       <SidebarContainer />
+                      <div className="border-t py-3 pt-4 text-gray-500">
+                        <div className="flex justify-center gap-10 text-base">
+                          <Link to="https://facebook.com">
+                            <FaFacebook />
+                          </Link>
+                          <Link to="https://twitter.com">
+                            <FaTwitter />
+                          </Link>
+                          <Link to="https://instagram.com">
+                            <FaInstagram />
+                          </Link>
+                          <Link to="https://youtube.com">
+                            <FaYoutube />
+                          </Link>
+                        </div>
+                      </div>
                     </ul>
                   </div>
                 </div>
