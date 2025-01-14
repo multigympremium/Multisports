@@ -75,7 +75,7 @@ const SeeAll = () => {
           <ProductSkeleton skeletons={12} />
         ) : products.length > 0 ? (
           <>
-            <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <ul className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {products.slice(0, visibleCount).map((product, index) => (
                 <ProductCard
                   border={true}
@@ -91,7 +91,7 @@ const SeeAll = () => {
               <div className="text-center mt-4">
                 <button
                   onClick={handleLoadMore}
-                  className="px-7 py-3 bg-gray-800 rounded-xl hover:bg-slate-950 text-white font-semibold mt-4 transition"
+                  className="md:px-7 px-3 py-1 md:py-3 bg-gray-800 rounded-xl hover:bg-slate-950 text-white md:font-semibold mt-4 transition"
                 >
                   Load More
                 </button>
