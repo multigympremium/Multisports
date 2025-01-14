@@ -59,7 +59,7 @@ const SidebarContainer = () => {
                         More
                     </div>
                     <div className="collapse-content space-y-5">
-                        <p><Link to="/shop_adress">- Shops</Link></p>
+                        
                         <p><Link to="/about">- About Us</Link></p>
                         <p><Link to="/contactus">- Contact</Link></p>
                         <p><Link to="/blogs">- Blogs</Link></p>
