@@ -1,7 +1,23 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-
+import useAxiosSecure from '../Hook/useAxiosSecure';
 const SidebarContainer = () => {
+
+    const [categories, setCategories] = useState([]);
+    const axiosSecure = useAxiosSecure();
+    useEffect(() => {
+        const fetchCategories = async () => {
+            try {
+                const res = await axiosSecure.get("/categories");
+                if (res.status === 200 || res.status === 201) {
+                    setCategories(res.data.data);
+                }
+            } catch (error) {
+                console.log("error fetching categories:", error);
+            }
+        }
+        fetchCategories();
+    }, [axiosSecure]);
     return (
         <div className="text-base">
             {/* Sidebar Header */}
@@ -17,12 +33,14 @@ const SidebarContainer = () => {
                     <div className="collapse-title">
                         Categories
                     </div>
-                    <div className="collapse-content space-y-5">
-                        <p><Link to="/products/mens-wear">- Men Wear</Link></p>
-                        <p><Link to="/products/womens-wear">- Women Wear</Link></p>
-                        <p><Link to="/products/kids-wear">- Kids Wear</Link></p>
-                        <p><Link to="/products/sports-wear">- Sports Wear</Link></p>
-                        <p><Link to="/products/swim-wear">- Swim Wear</Link></p>
+                    <div className="collapse-content space-y-2">
+                        {
+                            categories && categories.map((item, index) => {
+                                return (
+                                    <p key={index}><Link to={`/products/${item.slug}`} >- {item.categoryName}</Link></p>
+                                )
+                            })
+                        }
                     </div>
                 </div>
 

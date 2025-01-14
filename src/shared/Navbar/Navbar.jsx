@@ -12,6 +12,7 @@ import Cart from "../cart/Cart";
 import { Link, useNavigate } from "react-router-dom";
 import ProductSearch from "../../components/Home/Products/ProductSearch/ProductSearch";
 import SidebarContainer from "../SidebarContainer";
+
 import {
   IoCartOutline,
   IoHomeOutline,
@@ -20,7 +21,9 @@ import {
 } from "react-icons/io5";
 import CustomImage from "../ImageComponents/CustomImage";
 import SearchArea from "./SearchArea";
+import useGetSocialLink from "../../Hook/GetPublicDataHook/useGetSocialLink";
 const Navbar = () => {
+  const content = useGetSocialLink({});
   const { userRole, logOut, totalItems, user } = useContext(AuthContext);
   const placeholders = ["Shorts", "Watch", "Shirt"];
 
@@ -147,16 +150,16 @@ const Navbar = () => {
                       <SidebarContainer />
                       <div className="border-t py-3 pt-4 text-gray-500">
                         <div className="flex justify-center gap-10 text-base">
-                          <Link to="https://facebook.com">
+                          <Link to={content?.facebook}>
                             <FaFacebook />
                           </Link>
-                          <Link to="https://twitter.com">
+                          <Link to={content?.twitter}>
                             <FaTwitter />
                           </Link>
-                          <Link to="https://instagram.com">
+                          <Link to={content?.instagram}>
                             <FaInstagram />
                           </Link>
-                          <Link to="https://youtube.com">
+                          <Link to={content?.youtube}>
                             <FaYoutube />
                           </Link>
                         </div>
