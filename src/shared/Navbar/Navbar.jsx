@@ -32,7 +32,11 @@ const Navbar = () => {
   const [isShowModal, setIsShowModal] = useState(false);
   const [isShowWishlist, setIsShowWishlist] = useState(false);
   const [isShowSearch, setIsShowSearch] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
   const handleLogOut = () => {
     const isLogOut = logOut();
     if (isLogOut) {

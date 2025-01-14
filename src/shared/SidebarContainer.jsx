@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import useAxiosSecure from '../Hook/useAxiosSecure';
+import { FaCross } from 'react-icons/fa';
+import { IoMdClose } from 'react-icons/io';
 const SidebarContainer = () => {
 
     const [categories, setCategories] = useState([]);
@@ -20,9 +22,17 @@ const SidebarContainer = () => {
     }, [axiosSecure]);
     return (
         <div className="text-base">
-            {/* Sidebar Header */}
-            <div className="px-7 py-4 text-lg border-b">
-                <p>MultiSports</p>
+            <div className='flex justify-between items-center pr-3 md:pr-6'>
+                <div className="px-7 py-4 text-lg border-b">
+                    <p>MultiSports</p>
+                </div>
+                <label
+                    htmlFor="my-drawer"
+                    className="text-lg cursor-pointer"
+                    aria-label="Close sidebar"
+                >
+                    <IoMdClose />
+                </label>
             </div>
 
             {/* Collapsible Menu */}
@@ -59,7 +69,7 @@ const SidebarContainer = () => {
                         More
                     </div>
                     <div className="collapse-content space-y-5">
-                        
+
                         <p><Link to="/about">- About Us</Link></p>
                         <p><Link to="/contactus">- Contact</Link></p>
                         <p><Link to="/blogs">- Blogs</Link></p>
