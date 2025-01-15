@@ -13,7 +13,7 @@ export default function BlogCard({ data }) {
     const cleanDescription = stripHtml(shortDescription);
 
     return (
-        <div className="border text-black poppins rounded-md hover:shadow">
+        <Link to={`/blog/${_id}`} className="border text-black poppins rounded-md hover:shadow">
             <div className="rounded-t h-48 w-full">
                 <CustomImage
                     imageKey={image}
@@ -26,7 +26,7 @@ export default function BlogCard({ data }) {
                 <div className="flex flex-col gap-2">
                     <Link
                         to={`/blog/${_id}`}
-                        className="text-sm font-medium hover:text-gray-700 cursor-pointer"
+                        className="text-base font-medium hover:text-gray-700 cursor-pointer"
                     >
                         {title}
                     </Link>
@@ -34,15 +34,9 @@ export default function BlogCard({ data }) {
                         {cleanDescription.length > 120
                             ? `${cleanDescription.slice(0, 120)} ...`
                             : cleanDescription}{" "}
-                        <Link
-                            className="text-red-600 hover:text-red-800"
-                            to={`/blog/${_id}`}
-                        >
-                            details
-                        </Link>
                     </p>
                 </div>
             </div>
-        </div>
+        </Link>
     );
 }
