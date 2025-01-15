@@ -2,6 +2,7 @@ import { lazy, Suspense } from "react";
 import GlobalLoading from "../../components library/GlobalLoading";
 import TermsCondition from "../../components/Home/(policy)/terms-and-condition/page";
 import ShippingPublicPolicy from "../../components/Home/(policy)/shipping-policy/page";
+import PersonalizedOrders from "../../components/dashboard/ManageOrders/PersonalizedOrders";
 const Transactions = lazy(() =>
   import("../../components/dashboard/GenerateReports/Transactions/Transactions")
 );
@@ -961,6 +962,21 @@ function DashboardChildrenRoutes() {
         <Suspense fallback={<GlobalLoading />}>
           <PrivateRoute>
             <PendingOrders />
+          </PrivateRoute>
+        </Suspense>
+      ),
+    },
+    {
+      // path: "manage-classes",
+      // path: "pending-orders",
+      path: isPermittedRoute("personalized-orders"),
+      element: (
+        // <PrivateRoute>
+        //   <ManageClasses />
+        // </PrivateRoute>
+        <Suspense fallback={<GlobalLoading />}>
+          <PrivateRoute>
+            <PersonalizedOrders />
           </PrivateRoute>
         </Suspense>
       ),

@@ -7,6 +7,16 @@ export default function CourierMethodModal({ setIsShow, targetId }) {
   const axiosSecure = useAxiosSecure();
   const [loading, setLoading] = useState(false);
 
+  const handleStatusChange = async () => {
+    try {
+      await axiosSecure.put(`/orders/${targetId}`, { status: "Approved" });
+      toast.success("Order status updated successfully!");
+      setIsShow(false);
+    } catch (error) {
+      console.error("Error updating status:", error);
+    }
+  };
+
   // useEffect(() => {
   //   const handleChangeStatus = async () => {
   //     try {
@@ -95,6 +105,15 @@ export default function CourierMethodModal({ setIsShow, targetId }) {
             alt="pathao"
             className="w-full h-full"
           />
+        </button>
+        <button
+          disabled={loading}
+          className="p-12 rounded-md border-2 border-gray-200  hover:bg-gray-100 bg-green-200"
+          onClick={handleStatusChange}
+        >
+          <h2 className="text-center font-bold uppercase">
+            Personalized Courier
+          </h2>
         </button>
       </div>
     </div>

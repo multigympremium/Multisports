@@ -263,6 +263,12 @@ function MenuItemsList({ userRole }) {
           icon: <IoIosHome />,
         },
         {
+          title: "Personalized Orders",
+          path: "personalized-orders",
+          isAllowed: isAllowedRoute("personalized-orders"),
+          icon: <IoIosHome />,
+        },
+        {
           title: "Accepted Orders",
           path: "approved-orders",
           isAllowed: isAllowedRoute("approved-orders"),
