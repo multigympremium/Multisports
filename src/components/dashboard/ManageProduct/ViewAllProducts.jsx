@@ -6,7 +6,6 @@ import TableSkeleton from "../../../components library/TableSkeleton";
 import CellImage from "../../../shared/ImageComponents/CellImage";
 import useGetAllProducts from "../../../Hook/GetDataHook/useGetAllProducts";
 import EditProductForm from "./EditProductForm";
-import Modal from "../../../shared/Modal/Modal";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
 import EditButton from "../../../components library/EditButton";
 import DeleteButton from "../../../components library/DeleteButton";

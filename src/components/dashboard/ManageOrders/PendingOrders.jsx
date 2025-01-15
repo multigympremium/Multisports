@@ -9,6 +9,7 @@ import { IoIosSearch } from "react-icons/io";
 import EditButton from "../../../components library/EditButton";
 import DeleteButton from "../../../components library/DeleteButton";
 import Pagination from "../../partial/Pagination/Pagination";
+import useAxiosSecure from "../../../Hook/useAxiosSecure";
 
 // Sample pending orders data (could be fetched from API)
 const initialData = [
@@ -51,6 +52,7 @@ export default function PendingOrders() {
     isDeleted,
     isShowModal: isShowDetail,
   });
+  const axiosSecure = useAxiosSecure();
 
   // const [orders, setOrders] = useState(initialData);
   console.log(orders, "orders");

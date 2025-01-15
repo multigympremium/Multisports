@@ -3,6 +3,8 @@ import ReactSelect from "../../../UI/ReactSelect";
 import { FaEdit } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
 import { IoCloseCircleOutline } from "react-icons/io5";
+import AddNewSizes from "./AddNewSizes";
+import EditSizes from "./EditSizes";
 
 export default function EditableTableColumn({
   productColors,
@@ -22,9 +24,12 @@ export default function EditableTableColumn({
   const [quantity, setQuantity] = useState(0);
   const [faceState, setFaceState] = useState("");
   const [isSizeFocus, setIsSizeFocus] = useState(false);
+  const [allSizesQuantity, setAllSizesQuantity] = useState(0);
 
   const [productColorValue, setProductColorValue] = useState(null);
   const [productSizeValue, setProductSizeValue] = useState([]);
+
+  console.log(totalQuantity, "editatble totalQuantity");
 
   const handleColorAndSize = () => {
     setColorAndSize((prev) => [
@@ -32,10 +37,15 @@ export default function EditableTableColumn({
       { color: productColorValue, size: productSizeValue, quantity: quantity },
     ]);
 
-    setTotalQuantity(totalQuantity - quantity);
+    setTotalQuantity((prev) => {
+      const total = prev - quantity;
+      console.log(prev, "editatble totalQuantity handleColorAndSize", total);
 
-    setProductColorValue(null);
-    setProductSizeValue(null);
+      return total;
+    });
+
+    setProductColorValue([]);
+    setProductSizeValue([]);
     setQuantity(0);
   };
 
@@ -50,21 +60,6 @@ export default function EditableTableColumn({
       });
     }
   };
-
-  //   const handleDeleteColorAndSize = (index) => {
-  //     setColorAndSize((prev) => {
-  //       setTotalQuantity((prevQuantity) => {
-  //         const total = prev.reduce((acc, curr) => {
-  //           if (curr._id === colorAndSize[index]._id) {
-  //             return acc + Number(curr.quantity);
-  //           }
-  //           return acc;
-  //         }, 0);
-  //         return prevQuantity + total;
-  //       });
-  //       return prev.filter((item, i) => i !== index);
-  //     });
-  //   };
 
   const handleDeleteColorAndSize = (index) => {
     // Extract the quantity to be added back to `totalQuantity`
@@ -85,12 +80,30 @@ export default function EditableTableColumn({
       newArr[index].color = editingColor;
       newArr[index].size = editingSize;
       newArr[index].quantity = editingQuantity;
+
+      const totalSizeQuantity = newArr.reduce((acc, curr) => {
+        return Number(acc) + Number(curr.quantity);
+      }, 0);
+
+      console.log(
+        totalQuantity,
+        totalSizeQuantity,
+        "editatble totalQuantity totalSizeQuantity"
+      );
+
+      setTotalQuantity(totalSizeQuantity);
       return newArr;
     });
 
-    // setEditingQuantity(0);
-    // setEditingColor(null);
-    // setEditingSize(null);
+    console.log(
+      totalQuantity,
+      "editatble totalQuantity handleUpdateColorAndSize",
+      stock
+    );
+
+    setEditingQuantity(0);
+    setEditingColor(null);
+    setEditingSize(null);
   };
 
   useEffect(() => {
@@ -101,11 +114,24 @@ export default function EditableTableColumn({
     console.log(total, "total edit", totalQuantity);
     if (isEditState) {
       setTotalQuantity(Number(stock) - total);
+      // setAllSizesQuantity(Number(stock) - total);
+      console.log(totalQuantity, "editatble totalQuantity editState", stock);
     } else {
-      setTotalQuantity(stock);
+      if (colorAndSize.length > 0) {
+        const total = colorAndSize.reduce(
+          (acc, item) => acc + Number(item.quantity),
+          0
+        );
+        setTotalQuantity(stock - total);
+        // setTotalQuantity(stock);
+        // console.log(totalQuantity, "editatble totalQuantity stock", stock);
+      } else {
+        setTotalQuantity(stock);
+        console.log(totalQuantity, "editatble totalQuantity stock", stock);
+      }
     }
     // setTotalQuantity(total + Number(stock));
-  }, [stock, setTotalQuantity, colorAndSize]);
+  }, [stock, setTotalQuantity, colorAndSize, editingSize]);
 
   const groupStyles = {
     display: "flex",
@@ -126,19 +152,6 @@ export default function EditableTableColumn({
     whiteSpace: "nowrap",
   };
 
-  console.log(
-    colorAndSize,
-    "colorAndSize",
-    productSizeValue,
-    productColorValue,
-    "productSizeValue",
-    quantity,
-    "quantity",
-    totalQuantity - Number(quantity) <= 0 ||
-      (productColorValue === null && productSizeValue === null),
-    totalQuantity - quantity
-  );
-
   useEffect(() => {
     let total = 0;
 
@@ -153,40 +166,7 @@ export default function EditableTableColumn({
     setTotalQuantity((prev) => prev - total);
   }, []);
 
-  //   useEffect(() => {
-  //     let total = 0;
-
-  //     if (colorAndSize.length > 0) {
-  //       total = colorAndSize.reduce(
-  //         (acc, item) => acc + Number(item.quantity),
-  //         0
-  //       );
-
-  //       console.log(total, "total");
-  //     }
-  //     setTotalQuantity((prev) => total - stock - editingQuantity);
-  //   }, [editingQuantity, stock]);
-
-  //   useEffect(() => {
-  //     if (isEditing) {
-  //       setProductColorValue(editingColor);
-  //       setProductSizeValue(editingSize);
-  //       setQuantity(editingQuantity);
-  //     }
-  //   }, [isEditing]);
-
-  console.log(
-    editingQuantity,
-    "isEditing",
-    totalQuantity - Number(editingQuantity) <= 0 ||
-      editingColor === null ||
-      editingSize === null,
-    "totalQuantity",
-    editingColor,
-    editingSize,
-    "editing color"
-  );
-  console.log(colorAndSize, "colorAndSize");
+  console.log(colorAndSize, "colorAndSize", editingQuantity);
 
   return (
     <div className="w-full relative ">
@@ -241,30 +221,6 @@ export default function EditableTableColumn({
                 </td>
                 <td>
                   {isEditing && editingIndex === index ? (
-                    // <ReactSelect
-                    //   options={productSizes.map((item) => {
-                    //     return {
-                    //       value: item.sizeName,
-                    //       label: item.sizeName,
-                    //     };
-                    //   })}
-                    //   formatGroupLabel={(data) => (
-                    //     <div
-                    //       style={groupStyles}
-                    //       key={data.sizeName}
-                    //       onClick={() => {
-                    //         setProductSizeValue(data);
-                    //         console.log(data, "size");
-                    //       }}
-                    //     >
-                    //       <span>{data.sizeName}</span>
-                    //       <span style={groupBadgeStyles}>
-                    //         {data.options.length}
-                    //       </span>
-                    //     </div>
-                    //   )}
-                    //   selectOption={editingSize}
-                    // />
                     <input
                       type="text"
                       className="customInput"
@@ -302,6 +258,7 @@ export default function EditableTableColumn({
                       className="customInput"
                       // max={totalQuantity}
                       // min={0}
+                      readOnly
                     />
                   ) : (
                     `${item.quantity}`
@@ -315,9 +272,6 @@ export default function EditableTableColumn({
                       onClick={() => {
                         setIsEditing(false);
                         handleUpdateColorAndSize(index);
-                        setEditingColor(item.color);
-                        setEditingSize(item.size);
-                        setEditingQuantity(Number(item.quantity));
                       }}
                       disabled={
                         totalQuantity < 0 ||
@@ -330,30 +284,24 @@ export default function EditableTableColumn({
                   ) : (
                     <button
                       type="button"
-                      className="py-1 px-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 hover:scale-110 transition-all duration-300 "
+                      className="py-1 px-2 bg-green-500 text-white rounded-md hover:bg-yellow-600 hover:scale-110 transition-all duration-300 "
                       onClick={() => {
                         setIsEditing(true);
                         setEditingIndex(index);
                         setEditingColor(item.color);
                         setEditingSize(item.size);
                         setEditingQuantity(item.quantity);
+
+                        console.log(
+                          item.quantity,
+                          "colorAndSize item.quantity"
+                        );
                       }}
                     >
                       Edit
                     </button>
                   )}
-                  {/* <button type="button"
-                  className="p-1 bg-gray-200 rounded-md hover:bg-gray-300 hover:scale-110 transition-all duration-300"
-                  onClick={() => {
-                    setIsEditing(true);
-                    setEditingIndex(index);
-                    setEditingColor(item.color);
-                    setEditingSize(item.size);
-                    setEditingQuantity(item.quantity);
-                  }}
-                >
-                  <FaEdit size={18} />
-                </button> */}
+
                   <button
                     type="button"
                     className="p-1 bg-gray-200 rounded-md hover:bg-gray-300 hover:scale-110 transition-all duration-300"
@@ -398,35 +346,6 @@ export default function EditableTableColumn({
                   />
                 </td>
                 <td>
-                  {/* <ReactSelect
-                    options={productSizes.map((item) => {
-                      return {
-                        value: item.sizeName,
-                        label: item.sizeName,
-                      };
-                    })}
-                    selectOption={productSizeValue}
-                    formatGroupLabel={(data) => (
-                      <div
-                        style={groupStyles}
-                        key={data.sizeName}
-                        onClick={() => {
-                          setProductSizeValue(data);
-                          console.log(data, "size");
-                        }}
-                      >
-                        <span>{data.sizeName}</span>
-                        <span style={groupBadgeStyles}>
-                          {data.options.length}
-                        </span>
-                      </div>
-                    )}
-                    onChange={(e) => {
-                      setProductSizeValue(e);
-                      console.log(e, "size");
-                    }}
-                  /> */}
-
                   <input
                     type="text"
                     className="customInput"
@@ -440,6 +359,7 @@ export default function EditableTableColumn({
                       setFaceState("create");
                     }}
                     placeholder="Enter Size"
+                    readOnly
                   />
                 </td>
                 <td>
@@ -481,115 +401,44 @@ export default function EditableTableColumn({
         } p-2 bg-white  pt-6 pb-2 overflow-hidden`}
       >
         {faceState === "create" ? (
-          <>
-            <ReactSelect
-              options={productSizes.map((item) => {
-                return {
-                  value: item.sizeName,
-                  label: item.sizeName,
-                };
-              })}
-              selectOption={productSizeValue}
-              formatGroupLabel={(data) => (
-                <div
-                  style={groupStyles}
-                  key={data.sizeName}
-                  onClick={() => {
-                    setProductSizeValue(data);
-                    console.log(data, "size");
-                  }}
-                >
-                  <span>{data.sizeName}</span>
-                  <span style={groupBadgeStyles}>{data.options.length}</span>
-                </div>
-              )}
-              onChange={(data) => {
-                setProductSizeValue((prev) => {
-                  return prev?.length > 0
-                    ? Array.from(
-                        new Set(
-                          [...prev, data].map((obj) => JSON.stringify(obj))
-                        )
-                      ).map((str) => JSON.parse(str))
-                    : [data];
-                });
-              }}
-            />
-
-            <ul className="flex gap-3 mt-3 items-center h-[100px]">
-              {productSizeValue?.length > 0 &&
-                productSizeValue.map((item, index) => (
-                  <li
-                    key={index}
-                    className="px-3 py-1 border border-black text-sm capitalize relative rounded-lg"
-                  >
-                    {item?.label}
-                    <span
-                      className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 "
-                      onClick={() => deleteSize(index, "create")}
-                    >
-                      <IoCloseCircleOutline size={25} />
-                    </span>
-                  </li>
-                ))}
-            </ul>
-          </>
+          <AddNewSizes
+            {...{
+              productSizes,
+              productSizeValue,
+              setProductSizeValue,
+              deleteSize,
+              groupBadgeStyles,
+              groupStyles,
+              setQuantity,
+              totalQuantity,
+              allSizesQuantity,
+              setAllSizesQuantity,
+            }}
+          />
         ) : (
-          <>
-            <ReactSelect
-              options={productSizes.map((item) => {
-                return {
-                  value: item.sizeName,
-                  label: item.sizeName,
-                };
-              })}
-              formatGroupLabel={(data) => (
-                <div
-                  style={groupStyles}
-                  key={data.sizeName}
-                  onClick={() => {
-                    // setProductSizeValue(data);
-                    console.log(data, "size");
-                  }}
-                >
-                  <span>{data.sizeName}</span>
-                  <span style={groupBadgeStyles}>{data.options.length}</span>
-                </div>
-              )}
-              selectOption={editingSize}
-              onChange={(data) => {
-                setEditingSize((prev) => {
-                  //   console.log([...editingSize, data], "prev");
-
-                  return prev?.length > 0
-                    ? Array.from(
-                        new Set(
-                          [...prev, data].map((obj) => JSON.stringify(obj))
-                        )
-                      ).map((str) => JSON.parse(str))
-                    : [data];
-                });
-              }}
-            />
-
-            <ul className="flex gap-3 mt-3 items-center h-[100px]">
-              {editingSize?.length > 0 &&
-                editingSize.map((item, index) => (
-                  <li
-                    key={index}
-                    className="px-3 py-1 border border-black text-sm capitalize relative rounded-lg"
-                  >
-                    {item?.label}
-                    <span
-                      className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 "
-                      onClick={() => deleteSize(index, "edit")}
-                    >
-                      <IoCloseCircleOutline size={25} />
-                    </span>
-                  </li>
-                ))}
-            </ul>
-          </>
+          <EditSizes
+            {...{
+              productSizes,
+              editingSize,
+              deleteSize,
+              groupStyles,
+              groupBadgeStyles,
+              setEditingSize,
+              totalQuantity,
+              setAllSizesQuantity,
+              allSizesQuantity,
+              setEditingQuantity,
+              setTotalQuantity,
+              editingColor,
+              colorAndSize,
+              editingIndex,
+              isSizeFocus,
+              editingQuantity,
+              isEditing,
+              setColorAndSize,
+              stock,
+            }}
+          />
         )}
 
         <button

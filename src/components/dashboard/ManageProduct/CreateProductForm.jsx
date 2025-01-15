@@ -41,12 +41,12 @@ export default function ProductCreateForm() {
   const [thumbnailPreview, setThumbnailPreview] = useState(null);
   const [gallery, setGallery] = useState([]);
   const [galleryPreview, setGalleryPreview] = useState([]);
-  const [category, setCategory] = useState("dfsf");
-  const [subcategory, setSubcategory] = useState("sdfds");
-  const [childCategory, setChildCategory] = useState("sdfsd");
+  const [category, setCategory] = useState("");
+  const [subcategory, setSubcategory] = useState("");
+  const [childCategory, setChildCategory] = useState("");
   const [modelOfBrandValue, setModelOfBrandValue] = useState("");
   const [productFlagValue, setProductFlagValue] = useState("");
-  const [brandValue, setBrandValue] = useState("zxcvzcxv");
+  const [brandValue, setBrandValue] = useState("");
   const [colorAndSize, setColorAndSize] = useState([]);
   const [quantity, setQuantity] = useState(1);
   const [virtualStock, setVirtualStock] = useState(10);
