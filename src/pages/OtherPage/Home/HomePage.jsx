@@ -21,6 +21,7 @@ import MostPopular from "../../../components/Home/MostPopular/MostPopular";
 import BestSelling from "../../../components/Home/BestSelling/BestSelling";
 import SpecialDiscount from "../../../components/Home/SpecialDiscount/SpecialDiscount";
 import Banner4 from "../../../components/Home/Banner/Banner4";
+import IntroVideo from "../../../components/Home/IntroVideo/IntroVideo";
 export const metadata = {
   title: "Universal Survey - Home",
   description:
@@ -68,6 +69,7 @@ const HomePage = () => {
         {/* <Footwear /> */}
         <SpecialDiscount />
         <Testimonials />
+        <IntroVideo/>
         {/* <TrendyBags /> */}
         <Brands />
         <FacebookChat />
