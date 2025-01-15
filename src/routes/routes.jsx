@@ -49,6 +49,7 @@ import Career from "../pages/OtherPage/career/Career";
 import ContactUs from "../pages/OtherPage/contact_us/ContactUs";
 import Shop_address from "../pages/OtherPage/Shop_adress/Shop_address";
 import OrderSummeryPage from "../components/Home/checkout/OrderSummeryPage";
+import BlogDetails from "../pages/OtherPage/blog-details/BlogDetails";
 
 const AllRoutes = () => {
   // const [permissionData, setPermissionData] = useState([]);
@@ -280,6 +281,11 @@ const AllRoutes = () => {
           // path: isPermittedRoute("userpermission"),
           element: <Blogs />,
         },
+        {
+          path:"blog/:id",
+          element: <BlogDetails/>
+        }
+        ,
         {
           path: "contactus",
           element: <ContactUs />,

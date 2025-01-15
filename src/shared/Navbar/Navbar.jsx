@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { BsCart } from "react-icons/bs";
 
-import { FaRegHeart } from "react-icons/fa";
+import { FaFacebook, FaInstagram, FaRegHeart, FaTwitter, FaYoutube } from "react-icons/fa";
 import { FaRegUser } from "react-icons/fa6";
 import { MdMenu, MdOutlineStore } from "react-icons/md";
 import Wishlist from "../Cards/Wishlist/Wishlist";
@@ -12,6 +12,7 @@ import Cart from "../cart/Cart";
 import { Link, useNavigate } from "react-router-dom";
 import ProductSearch from "../../components/Home/Products/ProductSearch/ProductSearch";
 import SidebarContainer from "../SidebarContainer";
+
 import {
   IoCartOutline,
   IoHomeOutline,
@@ -20,7 +21,9 @@ import {
 } from "react-icons/io5";
 import CustomImage from "../ImageComponents/CustomImage";
 import SearchArea from "./SearchArea";
+import useGetSocialLink from "../../Hook/GetPublicDataHook/useGetSocialLink";
 const Navbar = () => {
+  const content = useGetSocialLink({});
   const { userRole, logOut, totalItems, user } = useContext(AuthContext);
   const placeholders = ["Shorts", "Watch", "Shirt"];
 
@@ -29,7 +32,11 @@ const Navbar = () => {
   const [isShowModal, setIsShowModal] = useState(false);
   const [isShowWishlist, setIsShowWishlist] = useState(false);
   const [isShowSearch, setIsShowSearch] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
   const handleLogOut = () => {
     const isLogOut = logOut();
     if (isLogOut) {
@@ -143,8 +150,24 @@ const Navbar = () => {
                       aria-label="close sidebar"
                       className="drawer-overlay"
                     ></label>
-                    <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
+                    <ul className="menu flex flex-col justify-between bg-white text-base-content min-h-full w-96">
                       <SidebarContainer />
+                      <div className="border-t py-3 pt-4 text-gray-500">
+                        <div className="flex justify-center gap-10 text-base">
+                          <Link to={content?.facebook}>
+                            <FaFacebook />
+                          </Link>
+                          <Link to={content?.twitter}>
+                            <FaTwitter />
+                          </Link>
+                          <Link to={content?.instagram}>
+                            <FaInstagram />
+                          </Link>
+                          <Link to={content?.youtube}>
+                            <FaYoutube />
+                          </Link>
+                        </div>
+                      </div>
                     </ul>
                   </div>
                 </div>
