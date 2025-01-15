@@ -20,6 +20,10 @@ const SidebarContainer = () => {
         }
         fetchCategories();
     }, [axiosSecure]);
+    const closeDrawer = () => {
+        document.getElementById('my-drawer').checked = false;
+    };
+    
     return (
         <div className="text-base">
             <div className='flex justify-between items-center pr-3 md:pr-6'>
@@ -47,7 +51,7 @@ const SidebarContainer = () => {
                         {
                             categories && categories.map((item, index) => {
                                 return (
-                                    <p key={index}><Link to={`/products/${item.slug}`} >- {item.categoryName}</Link></p>
+                                    <p key={index}><Link onClick={closeDrawer} to={`/products/${item.slug}`} >- {item.categoryName}</Link></p>
                                 )
                             })
                         }
@@ -56,10 +60,10 @@ const SidebarContainer = () => {
 
                 {/* Additional Links */}
                 <div className="flex flex-col px-4 gap-4">
-                    <Link to="/shop_adress">Shops</Link>
-                    <Link to="/see_all/new_arrivals">New Arrivals</Link>
-                    <Link to="/see_all/popular">Popular</Link>
-                    <Link to="/see_all/best_selling">Best Selling</Link>
+                    <Link onClick={closeDrawer} to="/shop_adress">Shops</Link>
+                    <Link onClick={closeDrawer} to="/see_all/new_arrivals">New Arrivals</Link>
+                    <Link onClick={closeDrawer} to="/see_all/popular">Popular</Link>
+                    <Link onClick={closeDrawer} to="/see_all/best_selling">Best Selling</Link>
                 </div>
 
                 {/* More Links */}
@@ -70,10 +74,10 @@ const SidebarContainer = () => {
                     </div>
                     <div className="collapse-content space-y-5">
 
-                        <p><Link to="/about">- About Us</Link></p>
-                        <p><Link to="/contactus">- Contact</Link></p>
-                        <p><Link to="/blogs">- Blogs</Link></p>
-                        <p><Link to="/career">- Career</Link></p>
+                        <p><Link onClick={closeDrawer} to="/about">- About Us</Link></p>
+                        <p><Link onClick={closeDrawer} to="/contactus">- Contact</Link></p>
+                        <p><Link onClick={closeDrawer} to="/blogs">- Blogs</Link></p>
+                        <p><Link onClick={closeDrawer} to="/career">- Career</Link></p>
                     </div>
                 </div>
             </div>
