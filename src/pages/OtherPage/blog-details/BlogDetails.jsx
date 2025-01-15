@@ -6,6 +6,7 @@ import { FaClock } from 'react-icons/fa';
 import { CiFacebook } from "react-icons/ci";
 import { SlSocialInstagram, SlSocialReddit, SlSocialTwitter } from "react-icons/sl";
 import useGetSocialLink from "../../../Hook/GetPublicDataHook/useGetSocialLink";
+import MetaTags from "../../../components/Home/MetaTags/MetaTags";
 const BlogDetails = () => {
     const id = useParams().id
     const content = useGetSocialLink({});
@@ -28,8 +29,14 @@ const BlogDetails = () => {
     const navigate = useNavigate();
     const readingTime = Math.ceil(blog?.fullDescription?.split(' ').length / 200);
     // blogCategory , fullDescription , image , shortDescription , title , writer
+    console.log(blog)
     return (
         <div className="max-w-[1440px] mx-auto mt-4 md:mt-10 px-6">
+            <MetaTags
+            metaTitle={blog?.metaTitle}
+            metaDescription={blog?.metaDescription}
+            metaKeywords={blog?.metaKeywords}
+            />
             <div className="">
                     <h1 className="text-xl md:text-3xl  font-semibold text-gray-900 mb-2">{blog?.title}</h1>
                     <div className="flex gap-3 md:gap-4 mb-4 text-gray-600">
