@@ -29,7 +29,7 @@ const PromotionalBanner = () => {
 
   
   return (
-    <div className='w-[90%] md:w-full mx-auto my-3  md:my-9 mb-6 md:mb-16 relative overflow-hidden'>
+    <div className='w-[90%] hidden md:block md:w-full mx-auto my-3  md:my-9 mb-6 md:mb-16 relative overflow-hidden'>
       {/* <img
         src="https://chawkbazar.vercel.app/_next/image?url=%2Fassets%2Fimages%2Fbanner%2Fbanner-3.jpg&w=1920&q=100"
         className='rounded-lg h-28  object-cover md:h-full w-full'
