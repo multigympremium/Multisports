@@ -39,8 +39,8 @@ const CustomCarousel = ({ slides, isHomeArea = true }) => {
 
   return (
     <div
-      className={`relative  w-[90%] mx-auto md:w-full h-[180px] my-4 md:my-9 ${
-        isHomeArea && "md:min-h-[500px] "
+      className={`relative  w-[90%] mx-auto md:w-full h-[180px]  ${
+        isHomeArea && "md:min-h-[500px] md:my-9  my-4 "
       } `}
     >
       <Swiper
