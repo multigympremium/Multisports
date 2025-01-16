@@ -9,11 +9,16 @@ const CartItemComponent = ({
   isCartArea = false,
 }) => {
   const [quantity, setQuantity] = useState(1);
+  const [stock, setStock] = useState(0);
 
   const increaseQuantity = () => {
     setQuantity((prev) => {
-      updateCartQuantity(item._id, prev + 1, item.color, item.size);
-      return prev + 1;
+      console.log(prev, stock, prev <= stock, "currentItem");
+      if (prev < stock) {
+        updateCartQuantity(item._id, prev + 1, item.color, item.size);
+        return prev + 1;
+      }
+      return prev;
     });
   };
 
@@ -29,6 +34,29 @@ const CartItemComponent = ({
   useEffect(() => {
     setQuantity(item.quantity);
   }, [item.quantity]);
+
+  console.log(item, "item?.colorAndSize", item?.colorAndSize);
+
+  useEffect(() => {
+    const currentColorAndSize = item?.colorAndSize.find(
+      (item2) => item2.color?.value === item.color
+    );
+    console.log(currentColorAndSize, "currentItem");
+
+    if (currentColorAndSize) {
+      console.log(
+        currentColorAndSize.size.find((item2) => item2.value === item.size)
+          .quantity,
+        "currentItem size"
+      );
+      setStock(
+        currentColorAndSize.size.find((item2) => item2.value === item.size)
+          .quantity || 0
+      );
+    }
+  }, [item?.colorAndSize, item.color, item.size]);
+
+  console.log(stock, "currentItem stock");
 
   return (
     <div>
