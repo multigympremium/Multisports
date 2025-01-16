@@ -141,7 +141,7 @@ const Navbar = () => {
                   <div className="drawer-content">
                     {/* Page content here */}
                     <label htmlFor="my-drawer" className=" drawer-button">
-                      <MdMenu className="text-2xl cursor-pointer" />
+                      <MdMenu onClick={()=>{toggleSidebar()}} className="text-2xl cursor-pointer" />
                     </label>
                   </div>
                   <div className="drawer-side">
@@ -151,7 +151,7 @@ const Navbar = () => {
                       className="drawer-overlay"
                     ></label>
                     <ul className="menu flex flex-col justify-between bg-white text-base-content min-h-full w-96">
-                      <SidebarContainer />
+                      <SidebarContainer isSidebarOpen={isSidebarOpen} />
                       <div className="border-t py-3 pt-4 text-gray-500">
                         <div className="flex justify-center gap-10 text-base">
                           <Link to={content?.facebook}>

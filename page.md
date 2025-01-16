@@ -1,7 +1,7 @@
-Use "header" in every page's header
-use loading in every page and disable button while loading 
-
-
-<span className="flex items-center gap-1"><IoAddCircle />  Add New Size</span>
-<span className="flex items-center gap-1"><FaRetweet /> Rearrange Brand</span>
-<TableSkeleton></TableSkeleton>
+<!-- *Navbar auto close feature  -->
+*New Arrivals,Featured Products,Most Popular,Best Selling Products slide polish design 
+*EXPERIENCE OUR STORE set a defalt any vedio part and also show play button  
+*Fliter on product catagorie page and brand not perfect show in mobile 
+screen 
+*Login screen responsive 
+*order screen responsive

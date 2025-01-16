@@ -104,19 +104,19 @@ const AllRoutes = () => {
             </PublicRoute>
           ),
         },
-        {
-          // path: "addworkout",
-          path: "login",
-          // path: isPermittedRoute("addworkout"),
-          element: (
-            // <PrivateRoute>
-            //   <Addworkout />
-            // </PrivateRoute>
-            <PublicRoute>
-              <Login />
-            </PublicRoute>
-          ),
-        },
+        // {
+        //   // path: "addworkout",
+        //   path: "login",
+        //   // path: isPermittedRoute("addworkout"),
+        //   element: (
+        //     // <PrivateRoute>
+        //     //   <Addworkout />
+        //     // </PrivateRoute>
+        //     <PublicRoute>
+        //       <Login />
+        //     </PublicRoute>
+        //   ),
+        // },
         {
           // path: "addworkout",
           path: "forgot-password",
@@ -144,19 +144,19 @@ const AllRoutes = () => {
             </PublicRoute>
           ),
         },
-        {
-          // path: "addworkout",
-          path: "send-otp",
-          // path: isPermittedRoute("addworkout"),
-          element: (
-            // <PrivateRoute>
-            //   <Addworkout />
-            // </PrivateRoute>
-            <PublicRoute>
-              <SendOTP />
-            </PublicRoute>
-          ),
-        },
+        // {
+        //   // path: "addworkout",
+        //   path: "send-otp",
+        //   // path: isPermittedRoute("addworkout"),
+        //   element: (
+        //     // <PrivateRoute>
+        //     //   <Addworkout />
+        //     // </PrivateRoute>
+        //     <PublicRoute>
+        //       <SendOTP />
+        //     </PublicRoute>
+        //   ),
+        // },
         {
           // path: "addworkout",
           path: "checkout",
@@ -321,6 +321,32 @@ const AllRoutes = () => {
           element: <MyOrder />,
         },
       ],
+    },
+    {
+      // path: "addworkout",
+      path: "login",
+      // path: isPermittedRoute("addworkout"),
+      element: (
+        // <PrivateRoute>
+        //   <Addworkout />
+        // </PrivateRoute>
+        <PublicRoute>
+          <Login />
+        </PublicRoute>
+      ),
+    },
+    {
+      // path: "addworkout",
+      path: "send-otp",
+      // path: isPermittedRoute("addworkout"),
+      element: (
+        // <PrivateRoute>
+        //   <Addworkout />
+        // </PrivateRoute>
+        <PublicRoute>
+          <SendOTP />
+        </PublicRoute>
+      ),
     },
     {
       path: "dashboard",

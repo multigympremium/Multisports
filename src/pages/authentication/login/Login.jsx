@@ -95,7 +95,7 @@ export default function Login() {
   }, [axiosPublic]);
 
   return (
-    <div className="min-h-screen flex flex-col items-center w-[750px] relative mx-auto  ">
+    <div className="mt-20 flex flex-col items-center w-[750px] relative mx-auto  ">
       {/* Back Arrow */}
       <img
         src={"/logo.png"}
@@ -193,9 +193,9 @@ export default function Login() {
           </Link>
         </div>
 
-        {isRecaptcha && site_key && (
+        {/* {isRecaptcha && site_key && (
           <ReCAPTCHA sitekey={site_key} onChange={handleCaptcha} />
-        )}
+        )} */}
         <div className="mt-4 text-center text-sm text-gray-500  w-full flex flex-col gap-4 py-4 pb-10">
           <button
             type="submit"

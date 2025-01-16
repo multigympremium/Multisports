@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import useAxiosSecure from '../Hook/useAxiosSecure';
 import { FaCross } from 'react-icons/fa';
 import { IoMdClose } from 'react-icons/io';
-const SidebarContainer = () => {
+const SidebarContainer = ({isSidebarOpen}) => {
 
     const [categories, setCategories] = useState([]);
     const axiosSecure = useAxiosSecure();
@@ -23,11 +23,17 @@ const SidebarContainer = () => {
     const closeDrawer = () => {
         document.getElementById('my-drawer').checked = false;
     };
-    
+
+    useEffect(() => {
+        setTimeout(() => {
+            closeDrawer()
+        }, 5000);
+    }, [isSidebarOpen])
+
     return (
         <div className="text-base">
-            <div className='flex justify-between items-center pr-3 md:pr-6'>
-                <div className="px-7 py-4 text-lg border-b">
+            <div className='flex border-b justify-between items-center pr-3 md:pr-6'>
+                <div className="px-7 py-4 text-lg ">
                     <p>MultiSports</p>
                 </div>
                 <label

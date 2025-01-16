@@ -45,7 +45,7 @@ export default function SendOTP() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center w-[750px] relative mx-auto  ">
+    <div className="mt-20 flex flex-col items-center w-[750px] relative mx-auto  ">
       {/* Back Arrow */}
       <img
         src={"/logo.png"}
