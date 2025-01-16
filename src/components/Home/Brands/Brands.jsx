@@ -11,7 +11,7 @@ function Brands() {
           to="/all-brands"
           className="flex hover:underline justify-between items-center gap-2 text-blue-500 font-semibold"
         >
-          <span className="text-sm md:text-base">See More</span> <FaArrowRight className="text-sm" />
+          <span className="text-sm md:text-base">See More</span> <FaArrowRight className="text-sm md:text-base" />
         </Link>
       </div>
       <div className="mt-9">

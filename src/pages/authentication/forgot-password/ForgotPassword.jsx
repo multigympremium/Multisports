@@ -189,38 +189,37 @@ export default function ForgotPassword() {
   }, [otp]);
 
   return (
-    <div className="min-h-screen flex flex-col items-center w-[750px] relative mx-auto bg-gray-50 ">
+    <div className="min-h-screen flex flex-col items-center md:w-[750px] relative mx-auto ">
       {/* Back Arrow */}
       <img
         src={"/logo.png"}
-        width={300}
-        height={300}
+        // width={300}
+        // height={300}
         alt="dot"
-        className="mx-auto"
+        className="mx-auto md:w-96 mt-4 w-40"
       />
 
-      <div className="w-full py-5 absolute top-5 left-8">
-        <Link to="/login">
-          <button className="flex items-center justify-center rounded-full shadow-lg w-[50px] h-[50px] bg-white ml-10">
-            <MdOutlineKeyboardBackspace size={30} />
+      <div className="w-full py-5 absolute md:top-5 left-8">
+        <Link to="/">
+          <button className="flex items-center justify-center rounded-full shadow-lg md:w-[50px] w-[20px] h-[20px] md:h-[50px] bg-white mdml-10">
+            <MdOutlineKeyboardBackspace />
           </button>
         </Link>
       </div>
-
       {/* Sign Up Section */}
-      <h1 className="text-4xl font-semibold text-center">Forgot Password</h1>
-      <p className="text-center text-gray-500 mt-2 text-xl mb-5">
+      <h1 className="md:text-4xl mt-5 md:mt-0 font-semibold text-center">Forgot Password</h1>
+      <p className="text-center text-gray-500 mt-2 md:text-xl md:mb-5">
         Enter your Email to reset your password.
       </p>
       <form
         onSubmit={handleSubmit}
-        className="mt-6 bg-white shadow-lg p-3 w-[94%] mx-auto rounded-lg"
+        className="md:mt-6 bg-white md:shadow-lg p-3 w-[94%] mx-auto rounded-lg"
       >
         {!isAllowSetPassword && (
           <>
             {isSetOTP ? (
-              <div className="w-full p-10 rounded-lg  mx-auto">
-                <h2 className="text-2xl text-center font-bold mb-4">
+              <div className="md:w-full md:p-10 rounded-lg  mx-auto">
+                <h2 className="md:text-2xl text-center md:font-bold mb-4">
                   Enter Verification Code
                 </h2>
                 <form className="flex flex-col items-center gap-4">
@@ -228,15 +227,15 @@ export default function ForgotPassword() {
                     value={otp}
                     onChange={setOtp}
                     numInputs={6}
-                    renderSeparator={<span className="px-4"></span>}
+                    renderSeparator={<span className="px-2 md:px-4"></span>}
                     inputStyle={{
-                      width: "55px",
-                      height: "60px",
+                      width: "25px",
+                      height: "30px",
                       borderRadius: "6px",
-                      color: "black",
-                      fontWeight: "bold",
-                      // border: "2px solid black",
-                      boxShadow: "0 0 10px 0px rgba(0,0,0,0.4)",
+                      // color: "black",
+                      // fontWeight: "bold",
+                      border: "2px solid gray",
+                      // boxShadow: "0 0 10px 0px rgba(0,0,0,0.4)",
                     }}
                     renderInput={(props) => (
                       <input
@@ -248,13 +247,12 @@ export default function ForgotPassword() {
                       />
                     )}
                   />
-                  <div className="grid grid-cols-3 gap-2 mt-4 justify-between w-full  items-center">
+                  <div className="grid md:grid-cols-3 gap-2 mt-4 justify-between w-full  items-center">
                     <p className="col-span-2">
                       OTP Expires in
                       <span
-                        className={`countdown font-mono text-2xl px-2 ${
-                          minutes > 3 ? "text-blue-500" : "text-red-500"
-                        } font-bold`}
+                        className={`countdown font-mono text-2xl px-2 ${minutes > 3 ? "text-blue-500" : "text-red-500"
+                          } font-bold`}
                       >
                         {/* <span style={{ "--value": 10 }}></span>h */}
                         <span style={{ "--value": minutes }}></span>:
@@ -266,7 +264,7 @@ export default function ForgotPassword() {
                 </form>
               </div>
             ) : (
-              <div className="mb-4 border-b border-gray-200 pb-5">
+              <div className="mb-4 md:border-b border-gray-200 pb-5">
                 <label
                   htmlFor="email"
                   className="block text-gray-700 py-3 text-xl"
@@ -277,15 +275,15 @@ export default function ForgotPassword() {
                   type="email"
                   id="email"
                   placeholder="email"
-                  className="mt-1 block w-full p-2 border border-black bg-white rounded-lg text-xl py-3 px-4"
+                  className="mt-1 block w-full p-2 border border-gray-400 bg-white rounded-lg md:text-xl outline-none md:py-3 px-4"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
                 />
-                <div className="mt-4 text-center text-sm text-gray-500  w-full flex flex-col gap-4 py-4 ">
+                <div className="mt-4 text-center text-sm text-gray-500  w-full flex flex-col gap-4 md:py-4 ">
                   <button
                     type="submit"
-                    className="block bg-black text-white text-center text-2xl py-3 rounded-lg font-semibold mb-4 hover:scale-[0.95] transition-all duration-300 w-[94%] mx-auto"
+                    className="block bg-black text-white text-center md:text-2xl py-3 rounded-lg font-semibold md:mb-4 hover:scale-[0.95] transition-all duration-300 w-full md:w-[94%] mx-auto"
                   >
                     Submit
                   </button>

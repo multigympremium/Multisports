@@ -95,30 +95,30 @@ export default function Login() {
   }, [axiosPublic]);
 
   return (
-    <div className="mt-20 flex flex-col items-center w-[750px] relative mx-auto  ">
+    <div className="mt-5 md:mt-20 flex flex-col items-center md:w-[750px] relative mx-auto  ">
       {/* Back Arrow */}
       <img
         src={"/logo.png"}
-        width={300}
-        height={300}
+        // width={300}
+        // height={300}
         alt="dot"
-        className="mx-auto"
+        className="mx-auto md:w-96 w-40"
       />
 
-      <div className="w-full py-5 absolute top-5 left-8">
+      <div className="w-full py-5 absolute md:top-5 left-8">
         <Link to="/">
-          <button className="flex items-center justify-center rounded-full shadow-lg w-[50px] h-[50px] bg-white ml-10">
-            <MdOutlineKeyboardBackspace size={30} />
+          <button className="flex items-center justify-center rounded-full shadow-lg md:w-[50px] w-[20px] h-[20px] md:h-[50px] bg-white mdml-10">
+            <MdOutlineKeyboardBackspace  />
           </button>
         </Link>
       </div>
 
       {/* Sign Up Section */}
 
-      <div className="w-full py-5 flex justify-center items-center gap-3 mt-6">
+      <div className="w-full py-5 flex justify-center items-center gap-3 md:mt-6">
         <Link to="/login">
           <button
-            className={`flex items-center justify-center px-8 py-2 shadow-lg rounded-md border-2 border-black text-2xl  ml-10 ${
+            className={`flex items-center justify-center md:px-8 px-3 py-1 md:py-2 shadow-lg rounded-md border-2 border-black md:text-2xl  md:ml-10 ${
               pathName === "/login"
                 ? "bg-black text-white"
                 : "bg-white text-black"
@@ -129,7 +129,7 @@ export default function Login() {
         </Link>
         <Link to="/send-otp">
           <button
-            className={`flex items-center justify-center rounded-md px-8 py-2 shadow-lg border-2 border-black   ml-10 text-2xl ${
+            className={`flex items-center justify-center md:px-8 px-3 py-1 md:py-2 shadow-lg rounded-md border-2 border-black md:text-2xl  md:ml-10 ${
               pathName === "/send-otp"
                 ? "bg-black text-white"
                 : "bg-white text-black"
@@ -141,18 +141,18 @@ export default function Login() {
       </div>
       <form
         onSubmit={handleSignUp}
-        className="mt-6 bg-white shadow-lg p-3 w-[94%] mx-auto rounded-lg"
+        className="md:mt-6 bg-white md:shadow-lg p-3 w-[94%] mx-auto rounded-lg"
       >
         {/* Email Input */}
-        <div className="mb-4 border-b border-gray-200 pb-5">
-          <label htmlFor="email" className="block text-gray-700 py-3 text-xl">
+        <div className="md:mb-4  border-gray-200 md:pb-5">
+          <label htmlFor="email" className="block text-gray-700 md:py-3 py-1 md:text-xl">
             Email
           </label>
           <input
             type="email"
             id="email"
             placeholder="email"
-            className="mt-1 block w-full p-2 border border-black bg-white rounded-lg text-xl py-3 px-4"
+            className="mt-1 block w-full p-2 border border-gray-400 bg-white rounded-lg md:text-xl outline-none md:py-3 px-4"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -163,7 +163,7 @@ export default function Login() {
         <div className="mb-4 relative">
           <label
             htmlFor="password"
-            className="block text-gray-700 py-3 text-xl"
+            className="block text-gray-700 py-1 md:py-3 md:text-xl"
           >
             Password
           </label>
@@ -171,7 +171,7 @@ export default function Login() {
             type={passwordVisible ? "text" : "password"}
             id="password"
             placeholder="password"
-            className="mt-1 block w-full p-2 border bg-white border-black rounded-lg text-xl py-3 px-4"
+            className="mt-1 block w-full p-2 border border-gray-400 bg-white rounded-lg md:text-xl outline-none md:py-3 px-4"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
@@ -180,14 +180,14 @@ export default function Login() {
           <button
             type="button"
             onClick={() => setPasswordVisible(!passwordVisible)}
-            className="absolute right-2 top-[68px] text-3xl"
+            className="absolute right-3 md:right-2 top-12 md:top-[68px] text-3xl"
           >
-            {passwordVisible ? <IoEyeOffOutline /> : <IoEyeOutline />}
+            {passwordVisible ? <IoEyeOffOutline className="text-xl" /> : <IoEyeOutline  className="text-xl"/>}
           </button>
         </div>
-        <div className="flex items-center justify-end mt-6  text-lg ">
+        <div className="flex items-center justify-end  md:mt-6  text-lg ">
           <Link to="/forgot-password">
-            <button className="text-black text-xl font-semibold hover:underline">
+            <button className="text-black text-sm md:text-xl font-semibold hover:underline">
               Forgot Password?
             </button>
           </Link>
@@ -196,11 +196,11 @@ export default function Login() {
         {/* {isRecaptcha && site_key && (
           <ReCAPTCHA sitekey={site_key} onChange={handleCaptcha} />
         )} */}
-        <div className="mt-4 text-center text-sm text-gray-500  w-full flex flex-col gap-4 py-4 pb-10">
+        <div className="md:mt-4 text-center text-sm text-gray-500  w-full flex flex-col gap-4 py-4 pb-10">
           <button
             type="submit"
-            disabled={recaptcha === "" && isRecaptcha && site_key}
-            className="block bg-black text-white text-center text-2xl py-3 rounded-lg font-semibold mb-4 hover:scale-[0.95] transition-all duration-300 w-[94%] mx-auto disabled:opacity-20"
+            // disabled={recaptcha === "" && isRecaptcha && site_key}
+            className="block bg-black text-white text-center md:text-2xl py-2 md:py-3 rounded-lg font-semibold mb-4 hover:scale-[0.95] transition-all duration-300 w-[94%] mx-auto disabled:opacity-20"
           >
             Log In
           </button>
