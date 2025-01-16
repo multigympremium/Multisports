@@ -5,6 +5,8 @@ import { IoLocationSharp } from "react-icons/io5";
 const IntroVideo = () => {
     const videoURL =
         "https://mgpwebaps.s3.eu-north-1.amazonaws.com/multi-sports/Intro.mp4";
+    
+    const thumbnailUrl = "https://downloads.biamp.com/assets/images/default-source/installation-gallery/commercial-audio-retail-installations/sportland-sports-stores-sigulda-latvia-5.jpg?sfvrsn=d4daaa18_2"
     const videoRef = useRef(null); // Reference for the video element
     const [isPlaying, setIsPlaying] = useState(false); // State to toggle play button visibility
 
@@ -26,23 +28,23 @@ const IntroVideo = () => {
                 EXPERIENCE OUR STORE
             </h2>
             <div className="relative">
-                {/* Video Container */}
+                {/* Video Container with Poster */}
                 <video
                     ref={videoRef}
                     src={videoURL}
                     className="w-full border h-auto rounded-lg"
-                    poster="https://via.placeholder.com/800x400" // Replace with your actual poster URL
+                    poster={thumbnailUrl} // Your placeholder image URL
                     onClick={togglePlayPause} // Toggle play/pause when video is tapped
                 >
                     Your browser does not support the video tag.
                 </video>
 
-                {/* Overlay and Play Button */}
+                {/* Play Button Overlay */}
                 {!isPlaying && (
                     <div className="absolute inset-0 flex items-center justify-center bg-black/50">
                         <button
                             onClick={togglePlayPause}
-                            className="w-16 h-16 bg-white  rounded-full shadow-md flex items-center justify-center hover:scale-110 transition-all ease-in-out duration-200"
+                            className="w-16 h-16 bg-white rounded-full shadow-md flex items-center justify-center hover:scale-110 transition-all ease-in-out duration-200"
                         >
                             <FaPlay className="text-xl" />
                         </button>
