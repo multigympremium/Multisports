@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
-import useAxiosPublic from "../../Hook/useAxiosPublic";
 import toast from "react-hot-toast";
 
 const Modal = ({
@@ -11,9 +10,7 @@ const Modal = ({
   price,
   description,
   image,
-  sizes,
   colors,
-  setIsShowModal,
   isShowModal,
   product,
 }) => {
@@ -36,74 +33,100 @@ const Modal = ({
   const [selectedSize, setSelectedSize] = useState({});
   const [currentStock, setCurrentStock] = useState(0);
 
-  useEffect(() => {
-    setQuantity(
-      cartItems.find((item) => item._id === object_id)?.quantity || 0
-    );
+  // useEffect(() => {
+  //   setQuantity(
+  //     cartItems.find((item) => item._id === object_id)?.quantity || 0
+  //   );
 
-    if (isShowModal === false) {
-      setSelectedColor({});
-      setSelectedSize({});
-    }
-    if (isShowModal === true && cartItems.length == 0) {
-      setSelectedColor(colors[0]?.color || {});
-      setSelectedSize(colors[0]?.size[0] || {});
-      setSizeArray(colors[0]?.size || []);
-    }
-  }, [cartItems, object_id, isShowModal, colors]);
+  //   if (isShowModal === false) {
+  //     setSelectedColor({});
+  //     setSelectedSize({});
+  //   }
+  //   if (isShowModal === true && cartItems.length == 0) {
+  //     setSelectedColor(colors[0]?.color || {});
+  //     setSelectedSize(colors[0]?.size[0] || {});
+  //     setSizeArray(colors[0]?.size || []);
+  //   }
+  // }, [cartItems, object_id, isShowModal, colors]);
 
-  useEffect(() => {
-    const currentItem = cartItems.find(
-      (item) =>
-        item._id === object_id &&
-        item.color === selectedColor?.value &&
-        item.size === selectedSize?.value
-    );
-    console.log(currentItem, "currentItem");
-    if (currentItem) {
-      setTrackingProduct(currentItem);
-      setQuantity(currentItem.quantity);
-    } else {
-      const copy_product = {
-        ...product,
-        quantity: trackingProduct.quantity || 1,
-      };
-      copy_product.color = selectedColor?.value;
-      copy_product.colorName = selectedColor?.label;
-      copy_product.size = selectedSize?.value;
-      setTrackingProduct(copy_product);
-      setQuantity(0);
-    }
-    console.log(currentItem, "copy_product");
-  }, [selectedSize, selectedColor, product, cartItems]);
+  // useEffect(() => {
+  //   const currentItem = cartItems.find(
+  //     (item) =>
+  //       item._id === object_id &&
+  //       item.color === selectedColor?.value &&
+  //       item.size === selectedSize?.value
+  //   );
+  //   console.log(currentItem, "currentItem");
+  //   if (currentItem) {
+  //     setTrackingProduct(currentItem);
+  //     setQuantity(currentItem.quantity);
+  //   } else {
+  //     const copy_product = {
+  //       ...product,
+  //       quantity: trackingProduct.quantity || 1,
+  //     };
+  //     copy_product.color = selectedColor?.value;
+  //     copy_product.colorName = selectedColor?.label;
+  //     copy_product.size = selectedSize?.value;
+  //     setTrackingProduct(copy_product);
+  //     setQuantity(0);
+  //   }
+  //   console.log(currentItem, "copy_product");
+  // }, [selectedSize, selectedColor, product, cartItems]);
 
   console.log(
     "current stock",
     cartItems.filter((item) => item.color === selectedColor?.value)
   );
 
+  // useEffect(() => {
+  //   const currentColorItems = cartItems.filter(
+  //     (item) => item.color === selectedColor?.value && item._id === object_id
+  //   );
+
+  //   const currentItemStock = currentColorItems.reduce(
+  //     (acc, item) => acc + item.quantity,
+  //     0
+  //   );
+
+  //   console.log(
+  //     currentItemStock,
+  //     "currentStock",
+  //     stock - currentItemStock == 0,
+  //     currentItemStock
+  //   );
+  //   if (currentColorItems.length > 0) {
+  //     setCurrentStock(currentItemStock);
+  //   } else {
+  //     setCurrentStock(0);
+  //   }
+  // }, [selectedColor, cartItems, quantity, stock]);
+
   useEffect(() => {
-    const currentColorItems = cartItems.filter(
-      (item) => item.color === selectedColor?.value && item._id === object_id
-    );
+    if (selectedColor && selectedSize && cartItems.length > 0) {
+      const currentColorItem = cartItems.find(
+        (item) =>
+          item.color === selectedColor.value && item.size === selectedSize.value
+      );
 
-    const currentItemStock = currentColorItems.reduce(
-      (acc, item) => acc + item.quantity,
-      0
-    );
-
-    console.log(
-      currentItemStock,
-      "currentStock",
-      stock - currentItemStock == 0,
-      currentItemStock
-    );
-    if (currentColorItems.length > 0) {
-      setCurrentStock(currentItemStock);
-    } else {
-      setCurrentStock(0);
+      console.log(
+        selectedColor,
+        selectedSize,
+        "currentColorItem",
+        currentColorItem
+      );
+      // console.log(currentColorItem, "currentColorItem");
+      setQuantity(currentColorItem?.quantity || 0);
     }
-  }, [selectedColor, cartItems, quantity, stock]);
+  }, [cartItems, selectedColor, selectedSize]);
+
+  const incrementAndDecrementQuantity = ({ isIncrement }) => {
+    if (isIncrement) {
+      setQuantity(quantity + 1);
+    } else {
+      setQuantity(quantity - 1);
+    }
+  };
 
   return (
     <dialog id={id} className="modal">
@@ -134,9 +157,7 @@ const Modal = ({
             <>
               {/* Color Options */}
               <div className="mb-4">
-                <h3 className="font-semibold mb-2">
-                  Color: (Total Stock : {stock})
-                </h3>
+                <h3 className="font-semibold mb-2">Color:</h3>
                 <div className="flex gap-2">
                   {colors.map((color, index) => (
                     <div
@@ -153,6 +174,7 @@ const Modal = ({
                         onClick={() => {
                           setSelectedColor(color.color);
                           setSizeArray(color.size);
+                          setSelectedSize(color.size[0]);
                           setStock(color.quantity);
                         }}
                       ></button>
@@ -162,9 +184,7 @@ const Modal = ({
               </div>
               {sizeArray?.length > 0 && (
                 <div className="mb-4">
-                  <h3 className="font-semibold mb-2">
-                    Size (Stock : {stock - currentStock})
-                  </h3>
+                  <h3 className="font-semibold mb-2">Size:</h3>
                   <div className="flex gap-2">
                     {sizeArray.map((size) => (
                       <button
@@ -183,6 +203,9 @@ const Modal = ({
                   </div>
                 </div>
               )}
+              <h3 className="font-semibold mb-2 text-gray-400">
+                In Stock : {product.stock}
+              </h3>
               <div className="flex md:block ">
                 {/* Quantity and Actions */}
                 <div className="flex flex-row w-full items-center gap-4 mb-4">
@@ -190,12 +213,13 @@ const Modal = ({
                     <button
                       className="w-7 text-center py-2 md:h-11"
                       onClick={() =>
-                        updateCartQuantity(
-                          trackingProduct._id,
-                          quantity - 1,
-                          selectedColor.value,
-                          selectedSize.value
-                        )
+                        // updateCartQuantity(
+                        //   trackingProduct._id,
+                        //   quantity - 1,
+                        //   selectedColor.value,
+                        //   selectedSize.value
+                        // )
+                        incrementAndDecrementQuantity({ isIncrement: false })
                       }
                       disabled={quantity == 1}
                     >
@@ -207,24 +231,26 @@ const Modal = ({
                     <button
                       className="w-7 disabled:opacity-50 disabled:cursor-not-allowed"
                       onClick={() => {
-                        if (quantity > 1) {
-                          updateCartQuantity(
-                            product._id,
-                            quantity + 1,
-                            selectedColor?.value,
-                            selectedSize?.value
-                          );
-                        } else {
-                          addToCart(
-                            product,
-                            selectedColor.value,
-                            selectedSize.value,
-                            selectedColor.label
-                          );
-                          if (selectedSize.value) {
-                            toast.success("Product Added to Cart!");
-                          }
-                        }
+                        // if (quantity > 1) {
+                        //   updateCartQuantity(
+                        //     product._id,
+                        //     quantity + 1,
+                        //     selectedColor?.value,
+                        //     selectedSize?.value
+                        //   );
+                        // } else {
+                        //   addToCart(
+                        //     product,
+                        //     selectedColor.value,
+                        //     selectedSize.value,
+                        //     selectedColor.label
+                        //   );
+                        //   if (selectedSize.value) {
+                        //     toast.success("Product Added to Cart!");
+                        //   }
+                        // }
+
+                        incrementAndDecrementQuantity({ isIncrement: true });
                       }}
                       disabled={stock - currentStock == 0}
                     >
@@ -233,14 +259,40 @@ const Modal = ({
                   </div>
                   <button
                     className="md:py-3 py-2 rounded-lg text-sm md:text-base font-semibold bg-black text-white w-full md:flex-1 disabled:opacity-50 disabled:cursor-not-allowed"
+                    // onClick={() => {
+                    //   addToCart(
+                    //     product,
+                    //     selectedColor.value,
+                    //     selectedSize.value
+                    //   );
+                    //   if (selectedSize.value) {
+                    //     toast.success("Product Added to Cart!");
+                    //   }
+                    // }}
                     onClick={() => {
-                      addToCart(
-                        product,
-                        selectedColor.value,
-                        selectedSize.value
+                      const isExist = cartItems.find(
+                        (item) =>
+                          item._id === product._id &&
+                          item.color === selectedColor?.value &&
+                          item.size === selectedSize?.value
                       );
-                      if (selectedSize.value) {
-                        toast.success("Product Added to Cart!");
+                      if (isExist) {
+                        updateCartQuantity(
+                          product._id,
+                          quantity,
+                          selectedColor?.value,
+                          selectedSize?.value
+                        );
+                      } else {
+                        addToCart(
+                          product,
+                          selectedColor.value,
+                          selectedSize.value,
+                          selectedColor.label
+                        );
+                        if (selectedSize.value) {
+                          toast.success("Product Added to Cart!");
+                        }
                       }
                     }}
                     disabled={stock - currentStock == 0}
