@@ -39,8 +39,8 @@ const CustomCarousel = ({ slides, isHomeArea = true }) => {
 
   return (
     <div
-      className={`relative  w-[90%] mx-auto md:w-full h-[180px]  ${
-        isHomeArea && "md:min-h-[500px] md:my-9  my-4 "
+      className={`relative  mx-auto w-full h-[180px]  ${
+        isHomeArea && "md:min-h-[500px]  "
       } `}
     >
       <Swiper
@@ -92,7 +92,7 @@ const CustomCarousel = ({ slides, isHomeArea = true }) => {
       </button> */}
 
       {/* Custom 3 Dot Pagination */}
-      <div className="absolute bottom-4 md:bottom-10 left-1/2 z-10 -translate-x-1/2 flex gap-2 md:gap-3">
+      {/* <div className="absolute bottom-4 md:bottom-10 left-1/2 z-10 -translate-x-1/2 flex gap-2 md:gap-3">
         {slides.map((_, index) => (
           <div
             key={index}
@@ -104,7 +104,7 @@ const CustomCarousel = ({ slides, isHomeArea = true }) => {
             onClick={() => swiperRef.current.slideToLoop(index)}
           ></div>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 };
