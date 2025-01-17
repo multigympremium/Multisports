@@ -41,10 +41,12 @@ const Banner2 = () => {
           spaceBetween={10} // Space between slides
           breakpoints={breakpoints}
           centeredSlides={true} // Center the active slide
+          centeredSlidesBounds={true} // Center the active slide
           loop={true} // Enable infinite scrolling
           paginationVariant="circle"
           // buttonGroupClassName="hidden"
           // navigation={true}
+          initialSlide={1}
         >
           {shoes.map((slide, index) => (
             <SwiperSlide key={index} className="px-1.5 md:px-2.5 xl:px-3.5">
