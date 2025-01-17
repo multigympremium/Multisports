@@ -136,32 +136,39 @@ export default function VerifyOTP() {
   }, [axiosPublic, router, otp, userEmail]);
 
   return (
-    <div className="min-h-screen flex flex-col items-center w-[750px] relative mx-auto bg-gray-50 ">
+    <div className="min-h-screen flex flex-col items-center md:w-[750px] relative mx-auto ">
       {/* Back Arrow */}
       <div className="  w-full">
         <img
           src={"/logo.png"}
-          width={300}
-          height={300}
+          // width={300}
+          // height={300}
           alt="dot"
-          className="mx-auto mt-10"
+          className="mx-auto md:w-96 w-40 mt-5"
         />
 
-        <div className="w-full py-5">
+        {/* <div className="w-full py-5">
           <Link to="/">
             <button className="flex items-center justify-center rounded-full shadow-lg w-[50px] h-[50px] bg-white ml-10">
               <MdOutlineKeyboardBackspace size={30} />
             </button>
           </Link>
-        </div>
+        </div> */}
+        <div className="w-full py-5">
+        <Link to="/">
+          <button className="flex items-center justify-center rounded-full shadow-lg md:w-[50px] w-[20px] h-[20px] md:h-[50px] bg-white ml-10">
+            <MdOutlineKeyboardBackspace  />
+          </button>
+        </Link>
+      </div>
 
         {/* Sign Up Section */}
-        <h1 className="text-4xl font-semibold text-center">Verify OTP</h1>
-        <p className="text-center text-gray-500 mt-2 text-xl mb-5">
+        <h1 className="text-xl md:text-4xl font-semibold text-center">Verify OTP</h1>
+        <p className="text-center text-gray-500 mt-2 md:text-xl mb-3 md:mb-5">
           Enter your OTP to continue.
         </p>
-        <div className="backdrop-blur min-w-[600px] p-10 rounded-lg bg-white w-[95%] mx-auto shadow-lg">
-          <h2 className="text-2xl text-center font-bold mb-4">
+        <div className="backdrop-blur md:min-w-[600px] md:p-10 rounded-lg bg-white w-[95%] mx-auto md:shadow-lg">
+          <h2 className="md:text-2xl text-center font-semibold md:font-bold mb-4">
             Enter Verification Code
           </h2>
           <form className="flex flex-col items-center gap-4">
@@ -169,15 +176,15 @@ export default function VerifyOTP() {
               value={otp}
               onChange={setOtp}
               numInputs={6}
-              renderSeparator={<span className="px-4"></span>}
+              renderSeparator={<span className="px-2 md:px-4"></span>}
               inputStyle={{
-                width: "55px",
-                height: "60px",
+                width: "25px",
+                height: "30px",
                 borderRadius: "6px",
-                color: "black",
-                fontWeight: "bold",
-                // border: "2px solid black",
-                boxShadow: "0 0 10px 0px rgba(0,0,0,0.4)",
+                // color: "black",
+                // fontWeight: "bold",
+                border: "2px solid gray",
+                // boxShadow: "0 0 10px 0px rgba(0,0,0,0.4)",
               }}
               renderInput={(props) => (
                 <input
@@ -189,7 +196,7 @@ export default function VerifyOTP() {
                 />
               )}
             />
-            <div className="grid grid-cols-3 gap-2 mt-4 justify-between w-full  items-center">
+            <div className="grid md:grid-cols-3  gap-2 mt-4 justify-center md:justify-between w-full  items-center">
               <p className="col-span-2">
                 OTP Expires in
                 <span
@@ -205,7 +212,7 @@ export default function VerifyOTP() {
               </p>
 
               <button
-                className=" text-blue-500 rounded-lg px-4 py-2 font-bold hover:underline"
+                className=" text-blue-500 rounded-lg md:px-4 py-2 md:font-bold hover:underline"
                 onClick={ResendOtp}
                 type="button"
               >
