@@ -8,6 +8,7 @@ import {
 } from "react-icons/io5";
 import toast from "react-hot-toast";
 import { useAuth } from "../../../providers/AuthProvider";
+import { FaRegHeart } from "react-icons/fa";
 
 const ROUTES = {
   ACCOUNT: "/account/dashboard",
@@ -15,6 +16,7 @@ const ROUTES = {
   ACCOUNT_DETAILS: "/account/details",
   ADDRESS: "/account/address",
   CHANGE_PASSWORD: "/account/change-password",
+  WISHLIST: "/account/wishlist",
 };
 
 const accountMenu = [
@@ -42,6 +44,11 @@ const accountMenu = [
     slug: ROUTES.CHANGE_PASSWORD,
     name: "Password",
     icon: <IoSettingsOutline className="w-5 h-5" />,
+  },
+  {
+    slug: ROUTES.WISHLIST,
+    name: "Wishlist",
+    icon: <FaRegHeart className="w-5 h-5" />,
   },
 ];
 

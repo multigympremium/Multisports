@@ -170,9 +170,22 @@ const AuthProvider = ({ children }) => {
         const res = await axiosPublic.get(
           `/products/wish-count/${product?._id}`
         );
+        if (user) {
+          const res2 = await axiosPublic.post(`/wishlist/`, {
+            product_id: product?._id,
+            userId: user?._id,
+            email: user?.email,
+          });
 
-        if (res.status === 200 || res.status === 201) {
-          toast.success("Added to wishlist!");
+          console.log(res2, "res2");
+
+          if (res2.status === 200 || res2.status === 201) {
+            toast.success("Added to wishlist!");
+          }
+        } else {
+          if (res.status === 200 || res.status === 201) {
+            toast.success("Added to wishlist!");
+          }
         }
       } catch (error) {
         console.log(error);
@@ -181,12 +194,21 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  const removeFromWishlist = (productId) => {
+  const removeFromWishlist = async (productId) => {
     console.log(productId, "productId");
     const updatedWishlist = wishlist.filter((item) => item._id !== productId);
     console.log("updatedWishlist", updatedWishlist);
     setWishlist(updatedWishlist);
     localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
+
+    try {
+      const response = await axiosSecure.delete(`/wishlist/${productId}`);
+      if (response.status === 200 || response.status === 201) {
+        toast.success("Product removed from wishlist!");
+      }
+    } catch (error) {
+      toast.error("Error removing from wishlist!");
+    }
   };
 
   const createUser = (email, password) => {

@@ -3,7 +3,13 @@ import { useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { BsCart } from "react-icons/bs";
 
-import { FaFacebook, FaInstagram, FaRegHeart, FaTwitter, FaYoutube } from "react-icons/fa";
+import {
+  FaFacebook,
+  FaInstagram,
+  FaRegHeart,
+  FaTwitter,
+  FaYoutube,
+} from "react-icons/fa";
 import { FaRegUser } from "react-icons/fa6";
 import { MdMenu, MdOutlineStore } from "react-icons/md";
 import Wishlist from "../Cards/Wishlist/Wishlist";
@@ -98,6 +104,7 @@ const Navbar = () => {
     ORDERS: "/account/orders",
     ACCOUNT_DETAILS: "/account/details",
     CHANGE_PASSWORD: "/account/change-password",
+    WISHLIST: "/account/wishlist",
   };
 
   const accountMenu = [
@@ -121,6 +128,11 @@ const Navbar = () => {
       name: "Password",
       icon: <IoSettingsOutline className="w-5 h-5" />,
     },
+    {
+      slug: ROUTES.WISHLIST,
+      name: "Wishlist",
+      icon: <FaRegHeart className="w-5 h-5" />,
+    },
   ];
   return (
     <>
@@ -141,7 +153,12 @@ const Navbar = () => {
                   <div className="drawer-content">
                     {/* Page content here */}
                     <label htmlFor="my-drawer" className=" drawer-button">
-                      <MdMenu onClick={()=>{toggleSidebar()}} className="text-2xl cursor-pointer" />
+                      <MdMenu
+                        onClick={() => {
+                          toggleSidebar();
+                        }}
+                        className="text-2xl cursor-pointer"
+                      />
                     </label>
                   </div>
                   <div className="drawer-side">

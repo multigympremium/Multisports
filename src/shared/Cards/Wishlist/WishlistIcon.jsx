@@ -25,11 +25,11 @@ export default function WishlistIcon({ item }) {
   };
 
   return (
-    <button
+    <div
       className=" bg-white rounded-full p-1 shadow hover:shadow-lg absolute top-3 right-3 z-40"
       onClick={handleWishlist}
     >
       {isLike ? <FaRegHeart /> : <FaHeart />}
-    </button>
+    </div>
   );
 }

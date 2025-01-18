@@ -6,7 +6,7 @@ const Wishlist = ({ isShow }) => {
   const { wishlist, removeFromWishlist } = useContext(AuthContext);
 
   return (
-    <div className="drawer drawer-end">
+    <div className="drawer drawer-end z-[999]">
       <input id="my-wishlist" type="checkbox" className="drawer-toggle" />
 
       <div className="drawer-side">

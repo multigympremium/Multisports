@@ -50,6 +50,7 @@ import ContactUs from "../pages/OtherPage/contact_us/ContactUs";
 import Shop_address from "../pages/OtherPage/Shop_adress/Shop_address";
 import OrderSummeryPage from "../components/Home/checkout/OrderSummeryPage";
 import BlogDetails from "../pages/OtherPage/blog-details/BlogDetails";
+import MyWishlist from "../components/Home/my-account/MyWishlist";
 
 const AllRoutes = () => {
   // const [permissionData, setPermissionData] = useState([]);
@@ -282,10 +283,9 @@ const AllRoutes = () => {
           element: <Blogs />,
         },
         {
-          path:"blog/:id",
-          element: <BlogDetails/>
-        }
-        ,
+          path: "blog/:id",
+          element: <BlogDetails />,
+        },
         {
           path: "contactus",
           element: <ContactUs />,
@@ -393,6 +393,10 @@ const AllRoutes = () => {
         {
           path: "address",
           element: <AccountAddress />,
+        },
+        {
+          path: "wishlist",
+          element: <MyWishlist />,
         },
       ],
     },

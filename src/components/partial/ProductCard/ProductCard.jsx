@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Modal from "../../../shared/Modal/Modal";
+import WishlistIcon from "../../../shared/Cards/Wishlist/WishlistIcon";
 
 const ProductCard = ({
   border = false,
@@ -41,14 +42,11 @@ const ProductCard = ({
 
   return (
     <div
-      onClick={handleClick}
       key={product._id}
       className={`bg-white relative md:hover:scale-105 cursor-pointer overflow-hidden rounded-lg md:hover:shadow-lg transition-transform duration-300 ${
         border && "border"
       }`}
     >
-      {console.log("product", product)}
-
       {/* Badges */}
       {renderBadge(
         showDiscount && product.discount > 0,
@@ -77,11 +75,12 @@ const ProductCard = ({
         alt={product.productTitle}
         className="h-[170px] md:h-[340px] w-full rounded object-cover transition-transform duration-300"
       />
+      <WishlistIcon item={product} />
 
       {/* Product Details */}
-      <div className="p-4">
+      <div className="p-4" onClick={handleClick}>
         <h3 className="text-sm md:text-base font-semibold mb-1 block md:hidden">
-          {product.productTitle.length > 12
+          {product.productTitle?.length > 12
             ? `${product.productTitle.slice(0, 12)}..`
             : product.productTitle}
         </h3>
