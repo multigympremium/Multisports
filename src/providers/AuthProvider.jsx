@@ -122,7 +122,7 @@ const AuthProvider = ({ children }) => {
         // Update quantity for existing item
         initialItems = prevItems.map((item) =>
           item._id === product._id && item.color === color && item.size === size
-            ? { ...item, quantity: item.quantity + 1 }
+            ? { ...item, quantity: quantity }
             : item
         );
       } else {

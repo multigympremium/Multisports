@@ -2,14 +2,18 @@ import { useCallback, useEffect, useState } from "react";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
 import toast from "react-hot-toast";
 
-export default function CourierMethodModal({ setIsShow, targetId }) {
+export default function CourierMethodModal({
+  setIsShow,
+  targetId,
+  setIsEdited,
+}) {
   const [courierMethod, setCourierMethod] = useState("");
   const axiosSecure = useAxiosSecure();
   const [loading, setLoading] = useState(false);
 
   const handleStatusChange = async () => {
     try {
-      await axiosSecure.put(`/orders/${targetId}`, { status: "Approved" });
+      await axiosSecure.put(`/orders/${targetId}`, { status: "Packed" });
       toast.success("Order status updated successfully!");
       setIsShow(false);
     } catch (error) {
@@ -53,7 +57,7 @@ export default function CourierMethodModal({ setIsShow, targetId }) {
           setLoading(true);
           console.log(targetId, "targetId");
           const response = await axiosSecure.put(`/orders/${targetId}`, {
-            status: "Accepted",
+            status: "Packed",
             courierMethod: courier_method,
           });
 
@@ -61,6 +65,7 @@ export default function CourierMethodModal({ setIsShow, targetId }) {
             toast.success("Order status updated successfully!");
             setIsShow(false);
             setLoading(false);
+            setIsEdited((prev) => !prev);
           }
           setLoading(false);
         } catch (error) {
@@ -106,7 +111,7 @@ export default function CourierMethodModal({ setIsShow, targetId }) {
             className="w-full h-full"
           />
         </button>
-        <button
+        {/* <button
           disabled={loading}
           className="p-12 rounded-md border-2 border-gray-200  hover:bg-gray-100 bg-green-200"
           onClick={handleStatusChange}
@@ -114,7 +119,7 @@ export default function CourierMethodModal({ setIsShow, targetId }) {
           <h2 className="text-center font-bold uppercase">
             Personalized Courier
           </h2>
-        </button>
+        </button> */}
       </div>
     </div>
   );

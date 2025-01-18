@@ -104,7 +104,7 @@ export default function AllOrders() {
       .reduce((acc, order) => acc + order.total, 0)
   );
 
-  const handleAccept = (id) => {
+  const handleAccept = async (id) => {
     Swal.fire({
       title: "Are you sure?",
       text: "You want to accept this order?",
@@ -113,11 +113,14 @@ export default function AllOrders() {
       confirmButtonColor: "#087D6D",
       cancelButtonColor: "#E68923",
       confirmButtonText: "Yes, Accept it!",
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
-        console.log("delete");
-        setTargetId(id);
-        setIsShowCourier(true);
+        try {
+          await axiosSecure.put(`/orders/${id}`, { status: "Packaging" });
+          toast.success("Order status updated successfully!");
+        } catch (error) {
+          console.error("Error updating status:", error);
+        }
       }
     });
     console.log(id, "id");
@@ -199,7 +202,12 @@ export default function AllOrders() {
                     {order?.shipping_address_id?.contactNumber}
                   </td>
                   <td className="p-2 border ">
-                    {order?.status ? (
+                    {order?.status &&
+                    (order?.status === "Pending" ||
+                      order?.status === "Approved" ||
+                      order?.status === "Delivered" ||
+                      order?.status === "Cancelled" ||
+                      order?.status === "Packaging") ? (
                       <span className="bg-red-500 text-white  px-3 rounded-lg  py-1">
                         {order?.status}
                       </span>

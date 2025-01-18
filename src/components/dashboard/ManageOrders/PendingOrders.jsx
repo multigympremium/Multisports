@@ -45,12 +45,14 @@ export default function PendingOrders() {
   const [isShowDetail, setIsShowDetail] = useState(false);
   const [isDeleted, setIsDeleted] = useState(false);
   const [targetId, setTargetId] = useState(null);
+  const [isEdited, setIsEdited] = useState(false);
   const itemsPerPage = 10;
 
   const { orders, totalItems } = useGetAllOrders({
     query: `status=Pending&currentPage=${currentPage}`,
     isDeleted,
     isShowModal: isShowDetail,
+    isEdited: isEdited,
   });
   const axiosSecure = useAxiosSecure();
 
@@ -114,6 +116,29 @@ export default function PendingOrders() {
       toast.error("Error deleting category!");
     }
     console.log(`Delete category with ID: ${id}`);
+  };
+
+  const handleAccept = async (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You want to accept this order?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#087D6D",
+      cancelButtonColor: "#E68923",
+      confirmButtonText: "Yes, Accept it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await axiosSecure.put(`/orders/${id}`, { status: "Packaging" });
+          toast.success("Order status updated successfully!");
+          setIsEdited((prev) => !prev);
+        } catch (error) {
+          console.error("Error updating status:", error);
+        }
+      }
+    });
+    console.log(id, "id");
   };
 
   return (
@@ -185,6 +210,13 @@ export default function PendingOrders() {
                       <DeleteButton
                         onClick={() => handleDelete(order._id)}
                       ></DeleteButton>
+
+                      <button
+                        onClick={() => handleAccept(order._id)}
+                        className="bg-blue-500 text-white rounded-lg px-4 py-2 font-semibold"
+                      >
+                        Accept Order
+                      </button>
                     </div>
                   </td>
                 </tr>

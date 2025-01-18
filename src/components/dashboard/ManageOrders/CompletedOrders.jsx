@@ -50,7 +50,7 @@ export default function CompletedOrders() {
   const [isDeleted, setIsDeleted] = useState(false);
 
   const { orders, totalItems } = useGetAllOrders({
-    query: `status=Completed&currentPage=${currentPage}`,
+    query: `status=DeliveredToCourier&currentPage=${currentPage}`,
     isDeleted,
     isShowModal: isShowDetail,
   });

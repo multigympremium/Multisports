@@ -10,6 +10,7 @@ import { IoIosSearch } from "react-icons/io";
 import EditButton from "../../../components library/EditButton";
 import DeleteButton from "../../../components library/DeleteButton";
 import Pagination from "../../partial/Pagination/Pagination";
+import CourierMethodModal from "../../../shared/cart/viewCart/CourierMethodModal";
 
 // Sample pending orders data (could be fetched from API)
 const initialData = [
@@ -48,11 +49,14 @@ export default function ApprovedOrders() {
   const [targetId, setTargetId] = useState(null);
   const [isDeleted, setIsDeleted] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [isShowCourier, setIsShowCourier] = useState(false);
+  const [isEdited, setIsEdited] = useState(false);
 
   const { orders, totalItems } = useGetAllOrders({
-    query: `status=Accepted&currentPage=${currentPage}`,
+    query: `status=Packaging&currentPage=${currentPage}`,
     isDeleted,
     isShowModal: isShowDetail,
+    isEdited: isEdited,
   });
 
   console.log(orders, "orders");
@@ -115,10 +119,29 @@ export default function ApprovedOrders() {
     console.log(`Delete category with ID: ${id}`);
   };
 
+  const handleAccept = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You want to Send this order to courier?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#087D6D",
+      cancelButtonColor: "#E68923",
+      confirmButtonText: "Yes, Send it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        console.log("delete");
+        setTargetId(id);
+        setIsShowCourier(true);
+      }
+    });
+    console.log(id, "id");
+  };
+
   return (
     <div className="p-6 pt-0">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-3xl font-semibold mb-9">Accepted Orders</h1>
+        <h1 className="text-3xl font-semibold mb-9">Packaging Orders</h1>
 
         {/* Search Input */}
         <div className="bg-white border rounded-full px-3 mb-6 md:py-2 py-1 md:gap-2 gap-1 flex-row-reverse justify-between flex">
@@ -172,6 +195,12 @@ export default function ApprovedOrders() {
                       <DeleteButton onClick={() => handleDelete(order._id)}>
                         {" "}
                       </DeleteButton>
+                      <button
+                        onClick={() => handleAccept(order._id)}
+                        className="customAddButton rounded-lg px-4 py-2 font-semibold "
+                      >
+                        Send To Courier
+                      </button>
                     </div>
                   </td>
                 </tr>
@@ -200,6 +229,16 @@ export default function ApprovedOrders() {
           id={targetId}
           isShow={isShowDetail}
           setIsShow={setIsShowDetail}
+        />
+      </BgBlurModal>
+      <BgBlurModal
+        isShowModal={isShowCourier}
+        setIsShowModal={setIsShowCourier}
+      >
+        <CourierMethodModal
+          setIsShow={setIsShowCourier}
+          targetId={targetId}
+          setIsEdited={setIsEdited}
         />
       </BgBlurModal>
     </div>
