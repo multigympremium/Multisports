@@ -88,64 +88,64 @@ const ProductDetails = () => {
   const [selectedSize, setSelectedSize] = useState({});
   const [stock, setStock] = useState(0);
 
-  useEffect(() => {
-    setQuantity(
-      cartItems.find((item) => item._id === product_id)?.quantity || 0
-    );
+  // useEffect(() => {
+  //   setQuantity(
+  //     cartItems.find((item) => item._id === product_id)?.quantity || 0
+  //   );
 
-    if (colorAndSize && quantity == 0 && cartItems.length == 0) {
-      setSelectedColor(colorAndSize[0]?.color || {});
-      setSelectedSize(colorAndSize[0]?.size[0] || {});
-      setSizeArray(colorAndSize[0]?.size || []);
-    }
-  }, [cartItems, product_id, colorAndSize]);
+  //   if (colorAndSize && quantity == 0 && cartItems.length == 0) {
+  //     setSelectedColor(colorAndSize[0]?.color || {});
+  //     setSelectedSize(colorAndSize[0]?.size[0] || {});
+  //     setSizeArray(colorAndSize[0]?.size || []);
+  //   }
+  // }, [cartItems, product_id, colorAndSize]);
 
-  useEffect(() => {
-    const currentItem = cartItems.find(
-      (item) =>
-        item._id === product_id &&
-        item.color === selectedColor?.value &&
-        item.size === selectedSize?.value
-    );
-    console.log(currentItem, "currentItem");
-    if (currentItem) {
-      setTrackingProduct(currentItem);
-      setQuantity(currentItem.quantity);
-    } else {
-      const copy_product = {
-        ...product,
-        quantity: trackingProduct.quantity || 1,
-      };
-      copy_product.color = selectedColor?.value;
-      copy_product.size = selectedSize?.value;
-      setTrackingProduct(copy_product);
-      setQuantity(0);
-    }
-    console.log(currentItem, "copy_product");
-  }, [selectedSize, selectedColor, product, cartItems]);
+  // useEffect(() => {
+  //   const currentItem = cartItems.find(
+  //     (item) =>
+  //       item._id === product_id &&
+  //       item.color === selectedColor?.value &&
+  //       item.size === selectedSize?.value
+  //   );
+  //   console.log(currentItem, "currentItem");
+  //   if (currentItem) {
+  //     setTrackingProduct(currentItem);
+  //     setQuantity(currentItem.quantity);
+  //   } else {
+  //     const copy_product = {
+  //       ...product,
+  //       quantity: trackingProduct.quantity || 1,
+  //     };
+  //     copy_product.color = selectedColor?.value;
+  //     copy_product.size = selectedSize?.value;
+  //     setTrackingProduct(copy_product);
+  //     setQuantity(0);
+  //   }
+  //   console.log(currentItem, "copy_product");
+  // }, [selectedSize, selectedColor, product, cartItems]);
 
-  useEffect(() => {
-    const currentColorItems = cartItems.filter(
-      (item) => item.color === selectedColor?.value && item._id === product_id
-    );
+  // useEffect(() => {
+  //   const currentColorItems = cartItems.filter(
+  //     (item) => item.color === selectedColor?.value && item._id === product_id
+  //   );
 
-    const currentItemStock = currentColorItems.reduce(
-      (acc, item) => acc + item.quantity,
-      0
-    );
+  //   const currentItemStock = currentColorItems.reduce(
+  //     (acc, item) => acc + item.quantity,
+  //     0
+  //   );
 
-    console.log(
-      currentItemStock,
-      "currentStock",
-      stock - currentItemStock == 0,
-      currentItemStock
-    );
-    if (currentColorItems.length > 0) {
-      setCurrentStock(currentItemStock);
-    } else {
-      setCurrentStock(0);
-    }
-  }, [selectedColor, cartItems, quantity, stock]);
+  //   console.log(
+  //     currentItemStock,
+  //     "currentStock",
+  //     stock - currentItemStock == 0,
+  //     currentItemStock
+  //   );
+  //   if (currentColorItems.length > 0) {
+  //     setCurrentStock(currentItemStock);
+  //   } else {
+  //     setCurrentStock(0);
+  //   }
+  // }, [selectedColor, cartItems, quantity, stock]);
 
   //   console.log(colorAndSize[0]?.size[0], "colorAndSize[0]?.size[0]");
 
@@ -177,6 +177,33 @@ const ProductDetails = () => {
 
   //     fetchProducts();
   //   }, [axiosSecure, isDeleted, isEdited, isShowModal, query]);
+
+  useEffect(() => {
+    if (selectedColor && selectedSize && cartItems.length > 0) {
+      const currentColorItem = cartItems.find(
+        (item) =>
+          item.color === selectedColor.value && item.size === selectedSize.value
+      );
+
+      console.log(
+        selectedColor,
+        selectedSize,
+        "currentColorItem",
+        currentColorItem
+      );
+      // console.log(currentColorItem, "currentColorItem");
+      setQuantity(currentColorItem?.quantity || 0);
+    }
+  }, [cartItems, selectedColor, selectedSize]);
+
+  const incrementAndDecrementQuantity = ({ isIncrement }) => {
+    if (isIncrement) {
+      setQuantity(quantity + 1);
+    } else {
+      setQuantity(quantity - 1);
+    }
+  };
+
   return (
     <>
       <MetaTags
@@ -250,9 +277,7 @@ const ProductDetails = () => {
               <div className="border-b w-full" /> {/* horizontal ruler */}
               {/* color */}
               <div className="mt-5">
-                <p className="font-semibold text-xl">
-                  Color (Total Stock : {stock})
-                </p>
+                <p className="font-semibold text-xl">Color :</p>
                 <div className="flex gap-5 mt-4">
                   {colorAndSize?.length > 0 &&
                     colorAndSize?.map((color, index) => (
@@ -270,6 +295,7 @@ const ProductDetails = () => {
                           onClick={() => {
                             setSelectedColor(color.color);
                             setSizeArray(color.size);
+                            setSelectedSize(color.size[0]);
                             setStock(color.quantity);
                           }}
                         ></button>
@@ -279,12 +305,9 @@ const ProductDetails = () => {
               </div>
               {/* size */}
               <div className="mt-5">
-                <p className="font-semibold text-xl">Size</p>
                 {sizeArray?.length > 0 && (
                   <div className="mb-4">
-                    <h3 className="font-semibold mb-2">
-                      Size (Stock : {stock - currentStock})
-                    </h3>
+                    <h3 className="font-semibold mb-2">Size :</h3>
                     <div className="flex gap-2">
                       {sizeArray.map((size) => (
                         <button
@@ -304,6 +327,9 @@ const ProductDetails = () => {
                   </div>
                 )}
               </div>
+              <h3 className="font-semibold mb-2 text-gray-400">
+                In Stock : {product.stock}
+              </h3>
               <div className="border-b w-full my-6" /> {/* horizontal ruler */}
               {/* quantity and add to cart */}
               <div className="flex md:block ">
@@ -312,13 +338,22 @@ const ProductDetails = () => {
                   <div className="flex items-center border rounded-lg">
                     <button
                       className="w-16 text-center text-xl py-3 md:h-12"
+                      // onClick={() =>
+                      //   updateCartQuantity(
+                      //     trackingProduct._id,
+                      //     quantity - 1,
+                      //     selectedColor.value,
+                      //     selectedSize.value
+                      //   )
+                      // }
                       onClick={() =>
-                        updateCartQuantity(
-                          trackingProduct._id,
-                          quantity - 1,
-                          selectedColor.value,
-                          selectedSize.value
-                        )
+                        // updateCartQuantity(
+                        //   trackingProduct._id,
+                        //   quantity - 1,
+                        //   selectedColor.value,
+                        //   selectedSize.value
+                        // )
+                        incrementAndDecrementQuantity({ isIncrement: false })
                       }
                       disabled={
                         product?.stock <= 0 || quantity == 0
@@ -333,24 +368,46 @@ const ProductDetails = () => {
                     </span>
                     <button
                       className="w-16 text-xl disabled:opacity-50 disabled:cursor-not-allowed"
+                      // onClick={() => {
+                      //   if (quantity > 1) {
+                      //     updateCartQuantity(
+                      //       product._id,
+                      //       quantity + 1,
+                      //       selectedColor?.value,
+                      //       selectedSize?.value
+                      //     );
+                      //   } else {
+                      //     addToCart(
+                      //       product,
+                      //       selectedColor.value,
+                      //       selectedSize.value
+                      //     );
+                      //     if (selectedSize.value) {
+                      //       toast.success("Product Added to Cart!");
+                      //     }
+                      //   }
+                      // }}
                       onClick={() => {
-                        if (quantity > 1) {
-                          updateCartQuantity(
-                            product._id,
-                            quantity + 1,
-                            selectedColor?.value,
-                            selectedSize?.value
-                          );
-                        } else {
-                          addToCart(
-                            product,
-                            selectedColor.value,
-                            selectedSize.value
-                          );
-                          if (selectedSize.value) {
-                            toast.success("Product Added to Cart!");
-                          }
-                        }
+                        // if (quantity > 1) {
+                        //   updateCartQuantity(
+                        //     product._id,
+                        //     quantity + 1,
+                        //     selectedColor?.value,
+                        //     selectedSize?.value
+                        //   );
+                        // } else {
+                        //   addToCart(
+                        //     product,
+                        //     selectedColor.value,
+                        //     selectedSize.value,
+                        //     selectedColor.label
+                        //   );
+                        //   if (selectedSize.value) {
+                        //     toast.success("Product Added to Cart!");
+                        //   }
+                        // }
+
+                        incrementAndDecrementQuantity({ isIncrement: true });
                       }}
                       disabled={stock - currentStock == 0}
                     >
@@ -358,13 +415,40 @@ const ProductDetails = () => {
                     </button>
                   </div>
                   <button
-                    className="md:py-3 max-w-fit px-3 md:px-28 py-2 rounded-lg text-sm md:text-base font-semibold bg-black text-white w-auto md:flex-1 disabled:opacity-50 cursor-not-allowed"
+                    className="md:py-3 max-w-fit px-3 md:px-28 py-2 rounded-lg text-sm md:text-base font-semibold bg-black text-white w-auto md:flex-1 disabled:opacity-50 disabled:cursor-not-allowed"
+                    // onClick={() => {
+                    //   addToCart(
+                    //     product,
+                    //     selectedColor.value,
+                    //     selectedSize.value
+                    //   );
+                    //   if (selectedSize.value) {
+                    //     toast.success("Product Added to Cart!");
+                    //   }
+                    // }}
                     onClick={() => {
-                      addToCart(
-                        product,
-                        selectedColor.value,
-                        selectedSize.value
+                      const isExist = cartItems.find(
+                        (item) =>
+                          item._id === product._id &&
+                          item.color === selectedColor?.value &&
+                          item.size === selectedSize?.value
                       );
+                      if (isExist) {
+                        updateCartQuantity(
+                          product._id,
+                          quantity,
+                          selectedColor?.value,
+                          selectedSize?.value
+                        );
+                      } else {
+                        addToCart(
+                          product,
+                          selectedColor.value,
+                          selectedSize.value,
+                          selectedColor.label,
+                          quantity
+                        );
+                      }
                       if (selectedSize.value) {
                         toast.success("Product Added to Cart!");
                       }

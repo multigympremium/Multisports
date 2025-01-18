@@ -288,11 +288,12 @@ const Modal = ({
                           product,
                           selectedColor.value,
                           selectedSize.value,
-                          selectedColor.label
+                          selectedColor.label,
+                          quantity
                         );
-                        if (selectedSize.value) {
-                          toast.success("Product Added to Cart!");
-                        }
+                      }
+                      if (selectedSize.value) {
+                        toast.success("Product Added to Cart!");
                       }
                     }}
                     disabled={stock - currentStock == 0}

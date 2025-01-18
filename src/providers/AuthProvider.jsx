@@ -94,7 +94,7 @@ const AuthProvider = ({ children }) => {
   };
 
   // Add item to cart
-  const addToCart = (item, color, size, colorName) => {
+  const addToCart = (item, color, size, colorName, quantity = 1) => {
     const product = { ...item };
     if (
       (product.specialOffer === true || product.specialOffer == "true") &&
@@ -129,7 +129,7 @@ const AuthProvider = ({ children }) => {
         // Add new item to cart
         initialItems = [
           ...prevItems,
-          { ...product, color, size, quantity: 1, colorName },
+          { ...product, color, size, quantity: quantity, colorName },
         ];
       }
 

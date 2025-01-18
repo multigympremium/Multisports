@@ -32,8 +32,8 @@ const CartItemComponent = ({
   };
 
   useEffect(() => {
-    setQuantity(item.quantity);
-  }, [item.quantity]);
+    setQuantity(item?.quantity);
+  }, [item?.quantity]);
 
   console.log(item, "item?.colorAndSize", item?.colorAndSize);
 
@@ -46,12 +46,12 @@ const CartItemComponent = ({
     if (currentColorAndSize) {
       console.log(
         currentColorAndSize.size.find((item2) => item2.value === item.size)
-          .quantity,
+          ?.quantity,
         "currentItem size"
       );
       setStock(
         currentColorAndSize.size.find((item2) => item2.value === item.size)
-          .quantity || 0
+          ?.quantity || 0
       );
     }
   }, [item?.colorAndSize, item.color, item.size]);
@@ -99,7 +99,7 @@ const CartItemComponent = ({
                       >
                         -
                       </button>
-                      <span className="px-4 border-x-2">{item.quantity}</span>
+                      <span className="px-4 border-x-2">{item?.quantity}</span>
                       <button
                         className="px-2 py-1 "
                         onClick={() => increaseQuantity(item)}
@@ -188,7 +188,7 @@ const CartItemComponent = ({
                 >
                   -
                 </button>
-                <span className="mx-2">{item.quantity}</span>
+                <span className="mx-2">{item?.quantity}</span>
                 <button
                   className="px-2 py-1 bg-gray-300 rounded"
                   onClick={() => increaseQuantity(item)}
