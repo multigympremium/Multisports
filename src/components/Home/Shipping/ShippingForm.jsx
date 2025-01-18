@@ -274,8 +274,8 @@ const ShippingForm = ({
   console.log(errors, "errors");
 
   return (
-    <div className="w-full mx-auto p-6 border rounded-md mb-12 bg-white shadow-lg ">
-      <h2 className="text-2xl font-bold mb-6">Shipping Address</h2>
+    <div className="w-full mx-auto mt-6 md:mt-0 p-6 border rounded-md mb-12 bg-white shadow-lg ">
+      <h2 className="text-2xl font-semibold mb-6">Shipping Address</h2>
       <form onSubmit={handleSubmit}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Recipient Name */}
@@ -287,7 +287,7 @@ const ShippingForm = ({
               value={formData.recipientName}
               onChange={handleInputChange}
               placeholder="Full Name"
-              className="border p-2 w-full rounded"
+              className="border outline-none mt-2 p-2 w-full rounded-lg"
             />
             {errors.recipientName && (
               <p className="text-red-500 text-sm mt-1">
@@ -305,7 +305,7 @@ const ShippingForm = ({
               value={formData.contact_number}
               onChange={handleInputChange}
               placeholder="Mobile Number"
-              className="border p-2 w-full rounded"
+              className="border outline-none mt-2 p-2 w-full rounded-lg"
             />
             {errors.contact_number && (
               <p className="text-red-500 text-sm mt-1">
@@ -323,7 +323,7 @@ const ShippingForm = ({
               value={formData.secondaryContactNumber}
               onChange={handleInputChange}
               placeholder="Mobile Number"
-              className="border p-2 w-full rounded"
+              className="border outline-none mt-2 p-2 w-full rounded-lg"
             />
             {errors.secondaryContactNumber && (
               <p className="text-red-500 text-sm mt-1">
@@ -339,7 +339,7 @@ const ShippingForm = ({
               name="city_id"
               value={formData.city_id}
               onChange={handleInputChange}
-              className="border p-2 w-full rounded"
+              className="border outline-none mt-2 p-2 w-full rounded-lg"
             >
               <option value="">Select District/City Name</option>
               {cities.length > 0 &&
@@ -363,7 +363,7 @@ const ShippingForm = ({
                 name="zone_id"
                 value={formData.zone_id}
                 onChange={handleInputChange}
-                className="border p-2 w-full rounded"
+                className="border outline-none mt-2 p-2 w-full rounded-lg"
               >
                 <option value="">Select Zone</option>
                 {zones?.length > 0 &&
@@ -375,7 +375,7 @@ const ShippingForm = ({
                 {/* Add more options as necessary */}
               </select>
             ) : (
-              <div className="flex justify-center items-center border py-2">
+              <div className="flex justify-center items-center mt-3 rounded-lg border py-3">
                 <AiOutlineLoading className="animate-spin text-gray-500" />
               </div>
             )}
@@ -392,7 +392,7 @@ const ShippingForm = ({
                 name="area_id"
                 value={formData.area_id}
                 onChange={handleInputChange}
-                className="border p-2 w-full rounded"
+                className="border outline-none mt-2 p-2 w-full rounded-lg"
               >
                 <option value="">Select Area</option>
                 {areas?.length > 0 &&
@@ -404,7 +404,7 @@ const ShippingForm = ({
                 {/* Add more options as necessary */}
               </select>
             ) : (
-              <div className="flex justify-center items-center border py-2">
+              <div className="flex justify-center items-center border py-3 mt-3 rounded-lg">
                 <AiOutlineLoading className="animate-spin text-gray-500" />
               </div>
             )}
@@ -422,7 +422,7 @@ const ShippingForm = ({
               value={formData.postCode}
               onChange={handleInputChange}
               placeholder="Post Code"
-              className="border p-2 w-full rounded"
+              className="border outline-none mt-2 p-2 w-full rounded-lg"
             />
             {errors.postCode && (
               <p className="text-red-500 text-sm mt-1">{errors.postCode}</p>
@@ -438,7 +438,7 @@ const ShippingForm = ({
               value={formData.address}
               onChange={handleInputChange}
               placeholder="House / Building / Street"
-              className="border p-2 w-full rounded"
+              className="border outline-none mt-2 p-2 w-full rounded-lg"
             />
             {errors.address && (
               <p className="text-red-500 text-sm mt-1">{errors.address}</p>
@@ -455,7 +455,7 @@ const ShippingForm = ({
               value={formData.special_instruction}
               onChange={handleInputChange}
               placeholder=" Special Instruction"
-              className="border p-2 w-full rounded min-h-[150px]"
+              className="border outline-none mt-2 p-2 w-full rounded-lg min-h-[150px]"
             />
             {errors.special_instruction && (
               <p className="text-red-500 text-sm mt-1">
@@ -497,7 +497,7 @@ const ShippingForm = ({
         {/* Submit Button */}
         <button
           type="submit"
-          className="mt-6 bg-indigo-600 text-white px-6 py-2 rounded hover:bg-indigo-700"
+          className="mt-6 bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700"
         >
           Submit
         </button>
