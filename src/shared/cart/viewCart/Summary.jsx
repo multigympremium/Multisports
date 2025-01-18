@@ -133,7 +133,7 @@ export default function Summary({ isCart = false, shippingAddress = null }) {
   console.log(deliveryCharge, shippingAddress, "deliveryCharge");
   return (
     <>
-      <div className="border p-6 mt-auto rounded-md shadow-lg w-full max-w-[350px]">
+      <div className="border p-6 md:mt-auto rounded-md shadow-lg w-full mt-6  md:max-w-[350px]">
         <h2 className="text-xl font-bold mb-4 pb-4 border-b border-black text-nowrap">
           Order Summary
         </h2>
@@ -182,7 +182,7 @@ export default function Summary({ isCart = false, shippingAddress = null }) {
         ) : (
           <button
             onClick={() => setIsShowPaymentMethod(true)}
-            className="bg-black text-white text-sm py-2 px-4 rounded-md mt-4 disabled:bg-gray-200 disabled:text-black"
+            className="bg-green-500 text-white text-sm py-2 px-4 rounded-md mt-4 disabled:bg-gray-200 disabled:text-black"
             disabled={shippingAddress && cartItems.length > 0 ? false : true}
           >
             Go To Payment
