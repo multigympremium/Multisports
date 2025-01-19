@@ -13,6 +13,7 @@ import Pagination from "../../partial/Pagination/Pagination";
 import SelectInput from "../../partial/Headers/FilterHeader/SelectInput/SelectInput";
 import moment from "moment";
 import useDebounce from "../../../Hook/useDebounce";
+import ShowDetailButton from "../../../components library/ShowDetailButton";
 
 export default function AllOrders() {
   // const [orders, setOrders] = useState(initialData);
@@ -242,7 +243,7 @@ export default function AllOrders() {
                           Accept Order
                         </button>
                       )}
-                      <EditButton
+                      <ShowDetailButton
                         onClick={() => {
                           setIsShowDetail(true);
                           setTargetId(order._id);

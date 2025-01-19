@@ -13,6 +13,7 @@ import useAxiosSecure from "../../../Hook/useAxiosSecure";
 import SelectInput from "../../partial/Headers/FilterHeader/SelectInput/SelectInput";
 import useDebounce from "../../../Hook/useDebounce";
 import moment from "moment";
+import ShowDetailButton from "../../../components library/ShowDetailButton";
 
 // Sample pending orders data (could be fetched from API)
 const initialData = [
@@ -196,12 +197,12 @@ export default function PendingOrders() {
                   <td className="p-2 border">৳ {order?.total}</td>
                   <td className="p-2 border">
                     <div className="flex justify-center space-x-2">
-                      <EditButton
+                      <ShowDetailButton
                         onClick={() => {
                           setIsShowDetail(true);
                           setTargetId(order._id);
                         }}
-                      ></EditButton>
+                      ></ShowDetailButton>
                       <DeleteButton
                         onClick={() => handleDelete(order._id)}
                       ></DeleteButton>

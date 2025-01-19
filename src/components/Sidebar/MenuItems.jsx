@@ -276,6 +276,12 @@ function MenuItemsList({ userRole }) {
         },
         {
           title: "Delivered",
+          path: "delivered-orders",
+          isAllowed: isAllowedRoute("delivered-orders"),
+          icon: <IoIosHome />,
+        },
+        {
+          title: "Successful Orders",
           path: "completed-orders",
           isAllowed: isAllowedRoute("completed-orders"),
           icon: <IoIosHome />,

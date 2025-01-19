@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { FiEdit, FiTrash2 } from "react-icons/fi";
+import { useState } from "react";
+
 import useGetAllOrders from "../../../Hook/GetDataHook/useGetAllOrders";
 import BgBlurModal from "../../../shared/Modal/BgBlurModal";
 import OrderDetail from "./OrderDetail";
@@ -11,33 +11,6 @@ import DeleteButton from "../../../components library/DeleteButton";
 import Pagination from "../../partial/Pagination/Pagination";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
 import useDebounce from "../../../Hook/useDebounce";
-
-// Sample pending orders data (could be fetched from API)
-const initialData = [
-  {
-    id: 1,
-    orderNo: "ORD12345",
-    orderDate: "2024-09-25",
-    name: "John Doe",
-    email: "john.doe@example.com",
-    phone: "1234567890",
-    status: "Pending",
-    payment: "Unpaid",
-    total: 1500,
-  },
-  {
-    id: 2,
-    orderNo: "ORD12346",
-    orderDate: "2024-09-26",
-    name: "Jane Smith",
-    email: "jane.smith@example.com",
-    phone: "0987654321",
-    status: "Pending",
-    payment: "Unpaid",
-    total: 2500,
-  },
-  // Add more pending order data if needed
-];
 
 export default function PersonalizedOrders() {
   const [searchTerm, setSearchTerm] = useState("");

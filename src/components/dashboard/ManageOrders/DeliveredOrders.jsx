@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { FiEdit, FiTrash2 } from "react-icons/fi";
+import { useState } from "react";
 import useGetAllOrders from "../../../Hook/GetDataHook/useGetAllOrders";
 import BgBlurModal from "../../../shared/Modal/BgBlurModal";
 import OrderDetail from "./OrderDetail";
@@ -10,57 +9,27 @@ import { IoIosSearch } from "react-icons/io";
 import EditButton from "../../../components library/EditButton";
 import DeleteButton from "../../../components library/DeleteButton";
 import Pagination from "../../partial/Pagination/Pagination";
-import CourierMethodModal from "../../../shared/cart/viewCart/CourierMethodModal";
 import useDebounce from "../../../Hook/useDebounce";
 import moment from "moment";
 import ShowDetailButton from "../../../components library/ShowDetailButton";
 
-// Sample pending orders data (could be fetched from API)
-const initialData = [
-  {
-    id: 1,
-    orderNo: "ORD12345",
-    orderDate: "2024-09-25",
-    name: "John Doe",
-    email: "john.doe@example.com",
-    phone: "1234567890",
-    status: "Pending",
-    payment: "Unpaid",
-    total: 1500,
-  },
-  {
-    id: 2,
-    orderNo: "ORD12346",
-    orderDate: "2024-09-26",
-    name: "Jane Smith",
-    email: "jane.smith@example.com",
-    phone: "0987654321",
-    status: "Pending",
-    payment: "Unpaid",
-    total: 2500,
-  },
-  // Add more pending order data if needed
-];
-
-export default function ApprovedOrders() {
+export default function DeliveredOrders() {
   // const [orders, setOrders] = useState(initialData);
   const axiosSecure = useAxiosSecure();
   const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
   const [isShowDetail, setIsShowDetail] = useState(false);
   const [targetId, setTargetId] = useState(null);
   const [isDeleted, setIsDeleted] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [isShowCourier, setIsShowCourier] = useState(false);
   const [isEdited, setIsEdited] = useState(false);
   const debouncedValue = useDebounce(searchTerm, 200);
 
   const { orders, totalItems } = useGetAllOrders({
-    query: `status=Packaging&currentPage=${currentPage}&search=${debouncedValue}`,
+    query: `status=DeliveredToCourier&currentPage=${currentPage}&search=${debouncedValue}`,
     isDeleted,
     isShowModal: isShowDetail,
-    isEdited: isEdited,
   });
 
   const handleDelete = async (id) => {
@@ -96,69 +65,35 @@ export default function ApprovedOrders() {
     console.log(`Delete category with ID: ${id}`);
   };
 
-  const handleAccept = (id) => {
+  const handleAccept = async (id) => {
     Swal.fire({
       title: "Are you sure?",
-      text: "You want to Send this order to courier?",
+      text: "You want to accept this order?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#087D6D",
       cancelButtonColor: "#E68923",
-      confirmButtonText: "Yes, Send it!",
-    }).then((result) => {
+      confirmButtonText: "Yes, Accept it!",
+    }).then(async (result) => {
       if (result.isConfirmed) {
-        console.log("delete");
-        setTargetId(id);
-        setIsShowCourier(true);
+        try {
+          await axiosSecure.put(`/orders/update/${id}`, {
+            status: "Completed",
+          });
+          toast.success("Order status updated successfully!");
+          setIsEdited((prev) => !prev);
+        } catch (error) {
+          console.error("Error updating status:", error);
+        }
       }
     });
     console.log(id, "id");
-  };
-  const addWeight = (id) => {
-    Swal.fire({
-      title: "Enter Total Weight",
-      input: "text",
-      inputAttributes: {
-        autocapitalize: "off",
-        type: "number",
-      },
-      showCancelButton: true,
-      confirmButtonText: "Submit",
-      showLoaderOnConfirm: true,
-      preConfirm: async (value) => {
-        try {
-          const res = await axiosSecure.put(`/orders/add_weight/${id}`, {
-            totalWeight: value,
-          });
-          if (res.status === 200 || res.status === 201) {
-            toast.success("Order Weight added successfully!");
-            setIsEdited((prev) => !prev);
-            return { value, isConfirmed: true };
-          } else {
-            toast.error("Error adding weight!");
-            return { value, isConfirmed: false };
-          }
-        } catch (error) {
-          console.error("Error updating status:", error);
-          toast.error("Error adding weight!");
-          return { value, isConfirmed: false };
-        }
-      },
-      allowOutsideClick: () => !Swal.isLoading(),
-    }).then((result) => {
-      if (result.isConfirmed) {
-        Swal.fire({
-          title: `Modified Weight to (${result.value.value}) Kg`,
-          // imageUrl: result.value.avatar_url,
-        });
-      }
-    });
   };
 
   return (
     <div className="p-6 pt-0">
       <div className="max-w-7xl mx-auto min-h-[800px]">
-        <h1 className="text-3xl font-semibold mb-9">Packaging Orders</h1>
+        <h1 className="text-3xl font-semibold mb-9">Completed Orders</h1>
 
         {/* Search Input */}
         <div className="bg-white border rounded-full px-3 mb-6 md:py-2 py-1 md:gap-2 gap-1 flex-row-reverse justify-between flex">
@@ -180,8 +115,8 @@ export default function ApprovedOrders() {
               <td className="p-2 border">Order Date</td>
               <td className="p-2 border">Name</td>
               <td className="p-2 border">Phone</td>
+              <td className="p-2 border">Status</td>
               <td className="p-2 border">Payment</td>
-              <td className="p-2 border">Total Weight</td>
               <td className="p-2 border">Total</td>
               <td className="p-2 border">Action</td>
             </tr>
@@ -199,9 +134,12 @@ export default function ApprovedOrders() {
                   </td>
                   <td className="p-2 border">{order?.name}</td>
                   <td className="p-2 border">{order?.phone}</td>
-
+                  <td className="p-2 border ">
+                    <span className="bg-red-500 text-white  px-3 rounded-lg  py-1">
+                      {order?.status}
+                    </span>
+                  </td>
                   <td className="p-2 border">{order?.payment_method}</td>
-                  <td className="p-2 border">{order?.totalWeight || 0} Kg</td>
                   <td className="p-2 border">৳ {order?.total}</td>
                   <td className="p-2 border">
                     <div className="flex justify-center space-x-2">
@@ -215,17 +153,10 @@ export default function ApprovedOrders() {
                         {" "}
                       </DeleteButton>
                       <button
-                        onClick={() => addWeight(order._id)}
-                        className="customAddButton rounded-lg px-4 py-2 font-semibold "
-                      >
-                        Add Weight
-                      </button>
-                      <button
                         onClick={() => handleAccept(order._id)}
-                        className="bg-green-600 text-white rounded-lg px-4 py-2 font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
-                        disabled={!order?.totalWeight}
+                        className="bg-blue-500 text-white text-sm rounded-lg px-4 py-2 font-semibold"
                       >
-                        Send To Courier
+                        Success Order
                       </button>
                     </div>
                   </td>
@@ -242,29 +173,45 @@ export default function ApprovedOrders() {
         </table>
 
         {/* Pagination */}
-        <Pagination
-          currentPage={currentPage}
-          totalItems={totalItems}
-          itemsPerPage={itemsPerPage}
-          setCurrentPage={setCurrentPage}
-        />
+        {/* <div className="mt-4 flex justify-between">
+          <span>
+            Showing {indexOfFirstItem + 1} to{" "}
+            {Math.min(indexOfLastItem, filteredOrders.length)} of{" "}
+            {filteredOrders.length} entries
+          </span>
+          <div className="flex space-x-2">
+            {Array.from(
+              { length: Math.ceil(filteredOrders.length / itemsPerPage) },
+              (_, index) => (
+                <button
+                  key={index}
+                  onClick={() => handlePageChange(index + 1)}
+                  className={`px-3 py-1 border rounded-md ${
+                    currentPage === index + 1
+                      ? "bg-blue-500 text-white"
+                      : "bg-gray-100"
+                  }`}
+                >
+                  {index + 1}
+                </button>
+              )
+            )}
+          </div>
+        </div> */}
       </div>
+
+      <Pagination
+        currentPage={currentPage}
+        totalItems={totalItems}
+        itemsPerPage={itemsPerPage}
+        setCurrentPage={setCurrentPage}
+      />
 
       <BgBlurModal isShowModal={isShowDetail} setIsShowModal={setIsShowDetail}>
         <OrderDetail
           id={targetId}
           isShow={isShowDetail}
           setIsShow={setIsShowDetail}
-        />
-      </BgBlurModal>
-      <BgBlurModal
-        isShowModal={isShowCourier}
-        setIsShowModal={setIsShowCourier}
-      >
-        <CourierMethodModal
-          setIsShow={setIsShowCourier}
-          targetId={targetId}
-          setIsEdited={setIsEdited}
         />
       </BgBlurModal>
     </div>

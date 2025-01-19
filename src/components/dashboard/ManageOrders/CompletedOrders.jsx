@@ -12,6 +12,7 @@ import DeleteButton from "../../../components library/DeleteButton";
 import Pagination from "../../partial/Pagination/Pagination";
 import useDebounce from "../../../Hook/useDebounce";
 import moment from "moment";
+import ShowDetailButton from "../../../components library/ShowDetailButton";
 
 // Sample pending orders data (could be fetched from API)
 const initialData = [
@@ -53,7 +54,7 @@ export default function CompletedOrders() {
   const debouncedValue = useDebounce(searchTerm, 200);
 
   const { orders, totalItems } = useGetAllOrders({
-    query: `status=DeliveredToCourier&currentPage=${currentPage}&search=${debouncedValue}`,
+    query: `status=Completed&currentPage=${currentPage}&search=${debouncedValue}`,
     isDeleted,
     isShowModal: isShowDetail,
   });
@@ -144,12 +145,12 @@ export default function CompletedOrders() {
                   <td className="p-2 border">৳ {order?.total}</td>
                   <td className="p-2 border">
                     <div className="flex justify-center space-x-2">
-                      <EditButton
+                      <ShowDetailButton
                         onClick={() => {
                           setIsShowDetail(true);
                           setTargetId(order._id);
                         }}
-                      ></EditButton>
+                      ></ShowDetailButton>
                       <DeleteButton onClick={() => handleDelete(order._id)}>
                         {" "}
                       </DeleteButton>

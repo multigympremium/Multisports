@@ -10,6 +10,7 @@ import { IoIosSearch } from "react-icons/io";
 import EditButton from "../../../components library/EditButton";
 import DeleteButton from "../../../components library/DeleteButton";
 import Pagination from "../../partial/Pagination/Pagination";
+import ShowDetailButton from "../../../components library/ShowDetailButton";
 
 // Sample pending orders data (could be fetched from API)
 const initialData = [
@@ -162,12 +163,12 @@ export default function CancelOrders() {
                   <td className="p-2 border">৳ {order?.total}</td>
                   <td className="p-2 border">
                     <div className="flex justify-center space-x-2">
-                      <EditButton
+                      <ShowDetailButton
                         onClick={() => {
                           setIsShowDetail(true);
                           setTargetId(order._id);
                         }}
-                      ></EditButton>
+                      ></ShowDetailButton>
                       <DeleteButton
                         onClick={() => handleDelete(order._id)}
                       ></DeleteButton>

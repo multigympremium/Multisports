@@ -74,14 +74,24 @@ export default function OrderDetail({
       </h2>
 
       {/* Order Info */}
-      <div className="p-4 border rounded-lg shadow-sm bg-gray-50 flex flex-col gap-4">
+      <div className="p-4 border rounded-lg shadow-sm bg-gray-50 flex flex-col gap-2">
         {orderDetail.map((item, index) => (
           <p
-            className="flex justify-between items-center gap-3 text-gray-700"
+            className={`flex justify-between items-center gap-3 text-gray-700 ${
+              ["status", "courier_status"].includes(item.name)
+                ? "bg-green-100"
+                : "bg-gray-100"
+            } hover:bg-gray-200 px-2 py-1 rounded-md`}
             key={index}
           >
             <strong className="capitalize">{formatLabel(item.name)}:</strong>
-            <span>
+            <span
+              className={`${
+                ["status", "courier_status"].includes(item.name)
+                  ? "font-bold text-yellow-600"
+                  : "bg-gray-100"
+              }`}
+            >
               {["createdAt", "updatedAt"].includes(item.name)
                 ? moment(item.value).format("MMMM Do YYYY, h:mm:ss a")
                 : formatCurrency(item.name, item.value)}
