@@ -5,6 +5,7 @@ import axios from "axios";
 import useAxiosCourier from "../../../Hook/useAxiosCourier";
 import { AuthContext } from "../../../providers/AuthProvider";
 import { useContext } from "react";
+import moment from "moment";
 
 export default function PaymentMethodModal({
   isShow,
@@ -87,6 +88,7 @@ export default function PaymentMethodModal({
       coupon: coupon,
       userId: user._id,
       totalItems: totalItems,
+      order_date: moment().format("DD/MM/YYYY"),
     };
 
     router("/order_summary", {

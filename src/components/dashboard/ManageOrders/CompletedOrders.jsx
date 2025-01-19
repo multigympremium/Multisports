@@ -192,7 +192,7 @@ export default function CompletedOrders() {
         </table>
 
         {/* Pagination */}
-        <div className="mt-4 flex justify-between">
+        {/* <div className="mt-4 flex justify-between">
           <span>
             Showing {indexOfFirstItem + 1} to{" "}
             {Math.min(indexOfLastItem, filteredOrders.length)} of{" "}
@@ -216,7 +216,7 @@ export default function CompletedOrders() {
               )
             )}
           </div>
-        </div>
+        </div> */}
       </div>
 
       <Pagination

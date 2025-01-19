@@ -13,7 +13,7 @@ export default function CourierMethodModal({
 
   const handleStatusChange = async () => {
     try {
-      await axiosSecure.put(`/orders/${targetId}`, { status: "Packed" });
+      await axiosSecure.put(`/orders/update/${targetId}`, { status: "Packed" });
       toast.success("Order status updated successfully!");
       setIsShow(false);
     } catch (error) {
@@ -56,7 +56,7 @@ export default function CourierMethodModal({
         try {
           setLoading(true);
           console.log(targetId, "targetId");
-          const response = await axiosSecure.put(`/orders/${targetId}`, {
+          const response = await axiosSecure.put(`/orders/update/${targetId}`, {
             status: "Packed",
             courierMethod: courier_method,
           });

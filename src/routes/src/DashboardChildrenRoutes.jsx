@@ -2,7 +2,7 @@ import { lazy, Suspense } from "react";
 import GlobalLoading from "../../components library/GlobalLoading";
 import TermsCondition from "../../components/Home/(policy)/terms-and-condition/page";
 import ShippingPublicPolicy from "../../components/Home/(policy)/shipping-policy/page";
-import PersonalizedOrders from "../../components/dashboard/ManageOrders/PersonalizedOrders";
+import PersonalizedOrders from "../../components/dashboard/ManageOrders/ReadyToCourierOrders";
 const Transactions = lazy(() =>
   import("../../components/dashboard/GenerateReports/Transactions/Transactions")
 );
@@ -91,7 +91,7 @@ const AllCustomers = lazy(() =>
   import("../../pages/OtherPage/all-custormers/page")
 );
 const ApprovedOrders = lazy(() =>
-  import("../../components/dashboard/ManageOrders/ApprovedOrders")
+  import("../../components/dashboard/ManageOrders/PackagingOrders")
 );
 const AssignUserRolePermission = lazy(() =>
   import("../../components/dashboard/SystemUsers/AssignUserRolePermission")

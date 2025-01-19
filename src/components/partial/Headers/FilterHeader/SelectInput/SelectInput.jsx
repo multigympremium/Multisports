@@ -1,5 +1,3 @@
-import React from "react";
-
 function SelectInput({ children, inputClassName, ...rest }) {
   return (
     <div className="col-span-2">

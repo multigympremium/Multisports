@@ -1,5 +1,3 @@
-// /pages/orders/[id].js
-
 import { useState, useEffect } from "react";
 import axios from "axios";
 import moment from "moment";
@@ -15,207 +13,168 @@ export default function OrderDetail({
   isStatus = true,
 }) {
   const axiosSecure = useAxiosSecure();
-
   const [order, setOrder] = useState(null);
   const [status, setStatus] = useState("");
   const [orderDetail, setOrderDetail] = useState([]);
 
+  // Fetch order details
   useEffect(() => {
     const fetchOrder = async () => {
       try {
         const res = await axiosSecure.get(`/orders/single/${id}`);
         setOrder(res?.data?.data);
         setStatus(res?.data?.data?.status);
-        console.log(res?.data?.data, "res?.data?.data");
       } catch (error) {
+        toast.error("Failed to fetch order details. Please try again later.");
         console.error("Error fetching order:", error);
       }
     };
 
-    if (id) {
-      fetchOrder();
-      console.log(isShow, "isShow", id);
-    }
+    if (id) fetchOrder();
   }, [id, isShow]);
 
+  // Update order status
   const handleStatusChange = async (e) => {
     const newStatus = e.target.value;
     setStatus(newStatus);
+
     try {
       await axiosSecure.put(`/orders/${id}`, { status: newStatus });
       toast.success("Order status updated successfully!");
       setIsShow(false);
     } catch (error) {
+      toast.error("Failed to update order status. Please try again.");
       console.error("Error updating status:", error);
     }
   };
 
-  const handlePropertyName = (name) => {
-    switch (name) {
-      case "deliveryCharge":
-        return "delivery Charge";
-      case "itemPerDiscount":
-        return "item Per Discount";
-      case "createdAt":
-        return "created At";
-      default:
-        return name.replaceAll("_", " ");
-    }
-  };
-
-  const handleSetCurrencySymbol = (name) => {
-    switch (name) {
-      case "deliveryCharge":
-        return "৳";
-      case "itemPerDiscount":
-        return "৳";
-      case "discount":
-        return "৳";
-      case "total":
-        return "৳";
-      default:
-        return "";
-    }
-  };
-
+  // Process order details for rendering
   useEffect(() => {
     if (!order) return;
-    const newArrayData = Object.entries(order).map(([key, value]) => ({
-      name: key,
-      value,
-    }));
-    const itemIndex = newArrayData.findIndex((item) => item.name === "items");
-    const _idIndex = newArrayData.findIndex((item) => item.name === "_id");
-    const _vIndex = newArrayData.findIndex((item) => item.name === "__v");
 
-    delete newArrayData[itemIndex];
-    delete newArrayData[_idIndex];
-    delete newArrayData[_vIndex];
-
-    setOrderDetail(newArrayData);
+    const details = Object.entries(order)
+      .filter(([key]) => !["_id", "__v", "items"].includes(key))
+      .map(([key, value]) => ({
+        name: key,
+        value,
+      }));
+    setOrderDetail(details);
   }, [order]);
 
+  // Render Loading Spinner
   if (!order) {
     return <GlobalLoading />;
   }
 
+  // Render the UI
   return (
-    <div className="w-full h-[85vh] overflow-auto mt-6 mx-auto p-6 bg-white rounded-2xl">
-      <h2 className="text-3xl font-semibold mb-6 text-center text-gray-800">
+    <div className="w-full h-[85vh] overflow-auto mt-6 mx-auto p-6 bg-white rounded-2xl shadow-lg">
+      <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">
         Order Details
       </h2>
 
-      <div className="p-4 border rounded-lg shadow-sm bg-gray-50 flex flex-col flex-wrap max-h-[400px] gap-x-2">
-        {orderDetail.map((item, index) => {
-          if (item.name === "createdAt" || item.name === "updatedAt") {
-            return (
-              <p
-                className="mb-2 w-[48%] flex justify-between items-center gap-3"
-                key={index}
-              >
-                <strong className="uppercase">
-                  {handlePropertyName(item.name)}
-                </strong>{" "}
-                {moment(order?.value).format("MMMM Do YYYY, h:mm:ss a")}
-              </p>
-            );
-          } else {
-            return (
-              <p
-                className="mb-2 w-[48%] flex justify-between items-center gap-3"
-                key={index}
-              >
-                <strong className="uppercase">
-                  {handlePropertyName(item.name)}
-                </strong>{" "}
-                <span
-                  className={`${
-                    (item.name == "status" && "text-yellow-600 font-bold") ||
-                    (item.name == "deliveryCharge" &&
-                      "text-red-600 font-bold") ||
-                    (item.name == "itemPerDiscount" &&
-                      "text-green-600 font-bold") ||
-                    (item.name == "discount" && "text-green-600 font-bold") ||
-                    (item.name == "total" && "text-green-600 font-bold")
-                  }`}
-                >
-                  {handleSetCurrencySymbol(item.name) + item.value}
-                </span>
-              </p>
-            );
-          }
-        })}
+      {/* Order Info */}
+      <div className="p-4 border rounded-lg shadow-sm bg-gray-50 flex flex-col gap-4">
+        {orderDetail.map((item, index) => (
+          <p
+            className="flex justify-between items-center gap-3 text-gray-700"
+            key={index}
+          >
+            <strong className="capitalize">{formatLabel(item.name)}:</strong>
+            <span>
+              {["createdAt", "updatedAt"].includes(item.name)
+                ? moment(item.value).format("MMMM Do YYYY, h:mm:ss a")
+                : formatCurrency(item.name, item.value)}
+            </span>
+          </p>
+        ))}
 
-        {isStatus && (
-          <p className="mb-2 w-[48%] flex justify-between items-center  mt-3">
+        {/* {isStatus && (
+          <div className="flex justify-between items-center mt-4">
             <strong>Status:</strong>
             <select
               value={status}
               onChange={handleStatusChange}
-              className=" select ml-4 border-gray-200 outline-none select-sm"
+              className="ml-4 border-gray-300 rounded-md p-1 text-sm outline-none"
             >
               <option value="Pending">Pending</option>
               <option value="Accepted">Accepted</option>
               <option value="Completed">Completed</option>
               <option value="Cancelled">Cancelled</option>
             </select>
-          </p>
-        )}
+          </div>
+        )} */}
       </div>
 
       {/* Products */}
-      <div className="mt-5">
-        <h3 className="text-lg font-semibold mb-4 text-gray-700">Products</h3>
-        {order?.items.map((product, idx) => (
-          <div
-            key={idx}
-            className="border rounded-lg p-4 mb-6 flex gap-4 items-start shadow-sm bg-white hover:shadow-md transition-shadow"
-          >
-            {/* Product Image */}
-            <div className="relative w-[150px] h-[150px] rounded-md overflow-hidden">
-              <CustomImage
-                imageKey={product?.thumbnail}
-                alt={"Product image"}
-                className="object-cover w-full h-full"
-                width={300}
-                height={300}
-              />
-            </div>
-
-            {/* Product Details */}
-            <div className="flex-1">
-              <p className="mb-2 text-gray-800">
-                <strong>Product Name:</strong> {product?.productTitle}
-              </p>
-              <p className="mb-2">
-                <strong>Color Name:</strong> {product?.colorName || "N/A"}
-              </p>
-              <p className="mb-2">
-                <strong>Color:</strong>{" "}
-                <span
-                  className="w-8 h-3 rounded-sm inline-block"
-                  style={{ background: product?.color }}
-                ></span>
-              </p>
-              <p className="mb-2">
-                <strong>Size:</strong> {product?.size || "N/A"}
-              </p>
-              <p className="mb-2">
-                <strong>Quantity:</strong> {product?.quantity}
-              </p>
-              <p className="text-gray-700 font-semibold mb-2">
-                <strong>Price:</strong> ৳{product?.price}
-              </p>
-              <p className="text-gray-700 font-semibold mb-2">
-                <strong>Discount Price:</strong> ৳{product?.discountPrice}
-              </p>
-              <p className="text-gray-700 font-semibold ">
-                <strong>Subtotal:</strong> ৳{product?.price * product?.quantity}
-              </p>
-            </div>
-          </div>
-        ))}
+      <div className="mt-6">
+        <h3 className="text-xl font-semibold mb-4 text-gray-700">Products</h3>
+        <div className="grid gap-6">
+          {order.items.map((product, idx) => (
+            <ProductCard key={idx} product={product} />
+          ))}
+        </div>
       </div>
     </div>
   );
 }
+
+// Helper to format labels
+const formatLabel = (label) =>
+  label
+    .replace(/([A-Z])/g, " $1")
+    .replaceAll("_", " ")
+    .toLowerCase();
+
+// Helper to format currency values
+const formatCurrency = (key, value) => {
+  const currencyFields = [
+    "deliveryCharge",
+    "itemPerDiscount",
+    "discount",
+    "total",
+  ];
+  return currencyFields.includes(key) ? `৳${value}` : value;
+};
+
+// Product Card Component
+const ProductCard = ({ product }) => (
+  <div className="border rounded-lg p-4 flex gap-4 items-start shadow-sm bg-white hover:shadow-md transition-shadow">
+    <div className="relative w-[100px] h-[100px] rounded-md overflow-hidden">
+      <CustomImage
+        imageKey={product?.thumbnail}
+        alt="Product Image"
+        className="object-cover w-full h-full"
+        width={200}
+        height={200}
+      />
+    </div>
+    <div className="flex-1">
+      <p className="mb-2 text-gray-800">
+        <strong>Product Name:</strong> {product?.productTitle}
+      </p>
+      <p className="mb-2 text-gray-600">
+        <strong>Color:</strong>{" "}
+        <span
+          className="inline-block w-6 h-4 rounded-sm"
+          style={{ background: product?.color }}
+        ></span>
+      </p>
+      <p className="mb-2 text-gray-600">
+        <strong>Size:</strong> {product?.size || "N/A"}
+      </p>
+      <p className="mb-2 text-gray-600">
+        <strong>Quantity:</strong> {product?.quantity}
+      </p>
+      <p className="text-gray-700 font-semibold">
+        <strong>Price:</strong> ৳{product?.price}
+      </p>
+      <p className="text-gray-700 font-semibold">
+        <strong>Discount Price:</strong> ৳{product?.discountPrice}
+      </p>
+      <p className="text-gray-700 font-bold">
+        <strong>Subtotal:</strong> ৳{product?.price * product?.quantity}
+      </p>
+    </div>
+  </div>
+);

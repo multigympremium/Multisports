@@ -137,6 +137,46 @@ export default function ApprovedOrders() {
     });
     console.log(id, "id");
   };
+  const addWeight = (id) => {
+    Swal.fire({
+      title: "Enter Total Weight",
+      input: "text",
+      inputAttributes: {
+        autocapitalize: "off",
+        type: "number",
+      },
+      showCancelButton: true,
+      confirmButtonText: "Submit",
+      showLoaderOnConfirm: true,
+      preConfirm: async (value) => {
+        try {
+          const res = await axiosSecure.put(`/orders/add_weight/${id}`, {
+            totalWeight: value,
+          });
+          if (res.status === 200 || res.status === 201) {
+            toast.success("Order Weight added successfully!");
+            setIsEdited((prev) => !prev);
+            return { value, isConfirmed: true };
+          } else {
+            toast.error("Error adding weight!");
+            return { value, isConfirmed: false };
+          }
+        } catch (error) {
+          console.error("Error updating status:", error);
+          toast.error("Error adding weight!");
+          return { value, isConfirmed: false };
+        }
+      },
+      allowOutsideClick: () => !Swal.isLoading(),
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: `Modified Weight to (${result.value.value}) Kg`,
+          // imageUrl: result.value.avatar_url,
+        });
+      }
+    });
+  };
 
   return (
     <div className="p-6 pt-0">
@@ -196,8 +236,15 @@ export default function ApprovedOrders() {
                         {" "}
                       </DeleteButton>
                       <button
-                        onClick={() => handleAccept(order._id)}
+                        onClick={() => addWeight(order._id)}
                         className="customAddButton rounded-lg px-4 py-2 font-semibold "
+                      >
+                        Add Weight
+                      </button>
+                      <button
+                        onClick={() => handleAccept(order._id)}
+                        className="bg-green-600 text-white rounded-lg px-4 py-2 font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+                        disabled={!order?.totalWeight}
                       >
                         Send To Courier
                       </button>

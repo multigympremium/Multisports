@@ -1,7 +1,6 @@
 import BgBlurModal from "../../../shared/Modal/BgBlurModal";
 import useGetAllOrders from "../../../Hook/GetDataHook/useGetAllOrders";
 import { useState } from "react";
-import { FiEdit, FiTrash2 } from "react-icons/fi";
 import OrderDetail from "./OrderDetail";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
@@ -10,8 +9,10 @@ import { IoIosSearch } from "react-icons/io";
 import EditButton from "../../../components library/EditButton";
 import DeleteButton from "../../../components library/DeleteButton";
 import CourierMethodModal from "../../../shared/cart/viewCart/CourierMethodModal";
-import { set } from "react-hook-form";
 import Pagination from "../../partial/Pagination/Pagination";
+import SelectInput from "../../partial/Headers/FilterHeader/SelectInput/SelectInput";
+import moment from "moment";
+import useDebounce from "../../../Hook/useDebounce";
 
 export default function AllOrders() {
   // const [orders, setOrders] = useState(initialData);
@@ -24,31 +25,18 @@ export default function AllOrders() {
   const [isShowPaymentMethod, setIsShowPaymentMethod] = useState(false);
   const [isShowCourier, setIsShowCourier] = useState(false);
   const [courierMethod, setSetCourierMethod] = useState("");
+  const [date, setDate] = useState("");
   const itemsPerPage = 5;
+  const [status, setStatus] = useState("");
+  const debouncedValue = useDebounce(searchTerm, 200);
 
-  const { orders, totalItems } = useGetAllOrders({
+  const { orders, totalItems, totalPricesByStatus } = useGetAllOrders({
     isDeleted,
     isShowModal: isShowDetail,
-    query: `page=${currentPage}`,
+    query: `page=${currentPage}&status=${status}&search=${debouncedValue}&date=${
+      date ? moment(date).format("DD-MM-YYYY") : ""
+    }`,
   });
-
-  console.log(orders, "orders");
-
-  // Filter orders based on the search term
-  const filteredOrders = orders.filter((order) =>
-    order?.items.map((item) =>
-      item.productTitle.toLowerCase().includes(searchTerm.toLowerCase())
-    )
-  );
-
-  // Pagination logic
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filteredOrders.slice(indexOfFirstItem, indexOfLastItem);
-
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
 
   const handleDelete = async (id) => {
     try {
@@ -116,7 +104,9 @@ export default function AllOrders() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axiosSecure.put(`/orders/${id}`, { status: "Packaging" });
+          await axiosSecure.put(`/orders/update/${id}`, {
+            status: "Packaging",
+          });
           toast.success("Order status updated successfully!");
         } catch (error) {
           console.error("Error updating status:", error);
@@ -126,6 +116,12 @@ export default function AllOrders() {
     console.log(id, "id");
   };
 
+  const handleReset = () => {
+    setDate("");
+    setStatus("");
+    setSearchTerm("");
+  };
+
   return (
     <div className="p-6 pt-0">
       <div className="max-w-7xl mx-auto">
@@ -133,38 +129,67 @@ export default function AllOrders() {
         <div className="grid grid-cols-4 gap-4 mb-8">
           <div className="bg-[#087D6D] p-6 text-white font-semibold  rounded-2xl">
             <h3 className="text-xl ">Total Delivered Orders</h3>
-            <p className="text-2xl mt-2">৳ {totalDelivered.toFixed(2)}</p>
+            <p className="text-2xl mt-2">
+              ৳ {totalPricesByStatus?.DeliveredToCourier}
+            </p>
             {/* <p className="text-2xl mt-2">৳ 0</p> */}
           </div>
 
           <div className="bg-[#E68923] p-6 text-white font-semibold  rounded-2xl">
             <h3 className="text-xl ">Total Pending Orders</h3>
-            <p className="text-2xl mt-2">৳ {totalPending.toFixed(2)}</p>
+            <p className="text-2xl mt-2">৳ {totalPricesByStatus?.Pending}</p>
             {/* <p className="text-2xl mt-2">৳ 0</p> */}
           </div>
 
           <div className="bg-[#31B349] p-6 text-white font-semibold  rounded-2xl">
             <h3 className="text-xl ">Total Approved Orders</h3>
-            <p className="text-2xl mt-2">৳ {totalApproved.toFixed(2)}</p>
+            <p className="text-2xl mt-2">৳ {totalPricesByStatus?.Packaging}</p>
             {/* <p className="text-2xl mt-2">৳ 0</p> */}
           </div>
 
           <div className="bg-[#EB1C24] p-6 text-white font-semibold  rounded-2xl">
             <h3 className="text-xl ">Total Cancelled Orders</h3>
-            <p className="text-2xl mt-2">৳ {totalCancelled.toFixed(2)}</p>
+            <p className="text-2xl mt-2">৳ {totalPricesByStatus?.Cancelled}</p>
             {/* <p className="text-2xl mt-2">৳ 0</p> */}
           </div>
         </div>
 
         {/* Search Input */}
-        <div className="bg-white border rounded-full px-3 mb-6 md:py-2 py-1 md:gap-2 gap-1 flex-row-reverse justify-between flex">
-          <input
-            type="text"
-            className="outline-none w-full bg-white"
-            onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Search here ..."
-          />
-          <IoIosSearch className="text-2xl text-gray-400" />
+        <div className="grid grid-cols-3  items-stretch gap-4 mb-5">
+          <div className="bg-white border rounded-full px-3  md:gap-2 gap-1 flex-row-reverse justify-between flex items-center">
+            <input
+              type="text"
+              className="outline-none w-full bg-white"
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Name/Phone/Order No"
+            />
+            <IoIosSearch className="text-2xl text-gray-400" />
+          </div>
+          <div>
+            <SelectInput onChange={(e) => setStatus(e.target.value)}>
+              <option value="" disabled className="text-gray-400">
+                Order Status
+              </option>
+              <option value="">All</option>
+              <option value="Pending">Pending</option>
+              <option value="Packaging">Packaging</option>
+              <option value="Packed">Send To Courier</option>
+              <option value="DeliveredToCourier">Delivered</option>
+              <option value="Cancelled">Cancelled</option>
+              <option value="Completed">Completed</option>
+            </SelectInput>
+          </div>
+          <div className="flex gap-2 items-center">
+            <input
+              type="date"
+              placeholder="Date"
+              className="input input-bordered"
+              onChange={(e) => setDate(e.target.value)}
+            />
+            <button className="btn btn-primary" onClick={handleReset}>
+              Reset
+            </button>
+          </div>
         </div>
 
         {/* Orders Table */}
@@ -175,7 +200,6 @@ export default function AllOrders() {
               <td className="p-2 border">Order No</td>
               <td className="p-2 border">Order Date</td>
               <td className="p-2 border">Name</td>
-              <td className="p-2 border">Email</td>
               <td className="p-2 border">Phone</td>
               <td className="p-2 border">Status</td>
               <td className="p-2 border">Payment</td>
@@ -191,23 +215,13 @@ export default function AllOrders() {
                     {index + 1 + (currentPage - 1) * itemsPerPage}
                   </td>
                   <td className="p-2 border">{order._id}</td>
-                  <td className="p-2 border">{order.createdAt}</td>
                   <td className="p-2 border">
-                    {order?.shipping_address_id?.recipientName}
+                    {moment(order.createdAt).format("DD/MM/YYYY")}
                   </td>
-                  <td className="p-2 border">
-                    {order?.shipping_address_id?.email || "N/A"}
-                  </td>
-                  <td className="p-2 border">
-                    {order?.shipping_address_id?.contactNumber}
-                  </td>
+                  <td className="p-2 border">{order?.name}</td>
+                  <td className="p-2 border">{order?.phone}</td>
                   <td className="p-2 border ">
-                    {order?.status &&
-                    (order?.status === "Pending" ||
-                      order?.status === "Approved" ||
-                      order?.status === "Delivered" ||
-                      order?.status === "Cancelled" ||
-                      order?.status === "Packaging") ? (
+                    {order?.status ? (
                       <span className="bg-red-500 text-white  px-3 rounded-lg  py-1">
                         {order?.status}
                       </span>

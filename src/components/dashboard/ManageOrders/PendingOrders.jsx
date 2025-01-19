@@ -130,7 +130,9 @@ export default function PendingOrders() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axiosSecure.put(`/orders/${id}`, { status: "Packaging" });
+          await axiosSecure.put(`/orders/update/${id}`, {
+            status: "Packaging",
+          });
           toast.success("Order status updated successfully!");
           setIsEdited((prev) => !prev);
         } catch (error) {
