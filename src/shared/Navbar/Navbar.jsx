@@ -55,49 +55,47 @@ const Navbar = () => {
     }
   };
 
+  // useEffect(() => {
+  //   const header = document.getElementById("header");
+  //   window.addEventListener("scroll", () => {
+  //     const scrolling = window.scrollY;
+  //     if (scrolling > 300) {
+  //       // navbar style
+  //       header?.classList.add("sticky", "top-0");
+  //       header?.classList.remove("relative");
+  //     } else {
+  //       header?.classList.add("relative");
+  //       header?.classList.remove("sticky", "top-0");
+  //     }
+  //   });
+  // }, []);
+
+  const [isSticky, setIsSticky] = useState(false);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
   useEffect(() => {
-    const header = document.getElementById("header");
-    const nav_menu = document.getElementById("nav-menu");
-    const logo_name = document.getElementById("logo_name");
-    const menu_icon = document.getElementById("menu_icon");
-    window.addEventListener("scroll", () => {
-      const scrolling = window.scrollY;
-      if (scrolling > 300) {
-        // navbar style
-        header.classList.add(
-          "fixed",
-          "top-0",
-          "bg-[#E9F1FA]",
-          "dark:text-neutral-800"
-        );
-        header.classList.remove(
-          "relative",
-          "bg-transparent",
-          "dark:lg:text-white"
-        );
-        // navbar menu style
-        nav_menu.classList.add("dark:text-neutral-800");
-        // nav_menu.classList.remove("dark:text-white");
-        logo_name.classList.remove("dark:text-white");
-        logo_name.classList.add("dark:text-neutral-800");
-        menu_icon.classList.remove("dark:text-white");
-        menu_icon.classList.add("dark:text-neutral-800");
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+
+      // Check scroll direction
+      if (scrollY < lastScrollY) {
+        // Scrolling up
+        setIsSticky(true);
       } else {
-        header.classList.add("relative", "dark:text-white");
-        header.classList.remove(
-          "fixed",
-          "top-0",
-          "bg-blue-200",
-          "dark:text-neutral-800"
-        );
-        nav_menu.classList.add("dark:text-white");
-        logo_name.classList.add("dark:text-white");
-        logo_name.classList.remove("dark:text-neutral-800");
-        menu_icon.classList.add("dark:text-white");
-        menu_icon.classList.remove("dark:text-neutral-800");
+        // Scrolling down
+        setIsSticky(false);
       }
-    });
-  }, []);
+
+      // Update last scroll position
+      setLastScrollY(scrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [lastScrollY]);
 
   const ROUTES = {
     ACCOUNT: "/account/dashboard",
@@ -137,73 +135,76 @@ const Navbar = () => {
   return (
     <>
       <header
-        className="flex flex-wrap lg:justify-start lg:flex-nowrap w-full items-center z-50 top-0 left-0 text-sm  transition-all duration-500 relative bg-white border-b "
         id="header"
+        className={`transition-all duration-1000 ease-in-out z-50 ${
+          isSticky ? "sticky top-0 bg-white" : "relative -top-full"
+        }`}
       >
-        <div className="navbar w-[94%] mx-auto ">
-          <div className="navbar-start">
-            <div className="flex items-center gap-3">
-              <div role="button" className="" id="menu_icon">
-                <div className="drawer z-10">
-                  <input
-                    id="my-drawer"
-                    type="checkbox"
-                    className="drawer-toggle"
-                  />
-                  <div className="drawer-content">
-                    {/* Page content here */}
-                    <label htmlFor="my-drawer" className=" drawer-button">
-                      <MdMenu
-                        onClick={() => {
-                          toggleSidebar();
-                        }}
-                        className="text-2xl cursor-pointer"
-                      />
-                    </label>
-                  </div>
-                  <div className="drawer-side">
-                    <label
-                      htmlFor="my-drawer"
-                      aria-label="close sidebar"
-                      className="drawer-overlay"
-                    ></label>
-                    <ul className="menu flex flex-col justify-between bg-white text-base-content min-h-full w-96">
-                      <SidebarContainer isSidebarOpen={isSidebarOpen} />
-                      <div className="border-t py-3 pt-4 text-gray-500">
-                        <div className="flex justify-center gap-10 text-base">
-                          <Link to={content?.facebook}>
-                            <FaFacebook />
-                          </Link>
-                          <Link to={content?.twitter}>
-                            <FaTwitter />
-                          </Link>
-                          <Link to={content?.instagram}>
-                            <FaInstagram />
-                          </Link>
-                          <Link to={content?.youtube}>
-                            <FaYoutube />
-                          </Link>
+        <header className="flex flex-wrap lg:justify-start lg:flex-nowrap w-full items-center  text-sm  bg-white border-b ">
+          <div className="navbar w-[94%] mx-auto ">
+            <div className="navbar-start">
+              <div className="flex items-center gap-3">
+                <div role="button" className="">
+                  <div className="drawer z-10">
+                    <input
+                      id="my-drawer"
+                      type="checkbox"
+                      className="drawer-toggle"
+                    />
+                    <div className="drawer-content">
+                      {/* Page content here */}
+                      <label htmlFor="my-drawer" className=" drawer-button">
+                        <MdMenu
+                          onClick={() => {
+                            toggleSidebar();
+                          }}
+                          className="text-2xl cursor-pointer"
+                        />
+                      </label>
+                    </div>
+                    <div className="drawer-side">
+                      <label
+                        htmlFor="my-drawer"
+                        aria-label="close sidebar"
+                        className="drawer-overlay"
+                      ></label>
+                      <ul className="menu flex flex-col justify-between bg-white text-base-content min-h-full w-96">
+                        <SidebarContainer isSidebarOpen={isSidebarOpen} />
+                        <div className="border-t py-3 pt-4 text-gray-500">
+                          <div className="flex justify-center gap-10 text-base">
+                            <Link to={content?.facebook}>
+                              <FaFacebook />
+                            </Link>
+                            <Link to={content?.twitter}>
+                              <FaTwitter />
+                            </Link>
+                            <Link to={content?.instagram}>
+                              <FaInstagram />
+                            </Link>
+                            <Link to={content?.youtube}>
+                              <FaYoutube />
+                            </Link>
+                          </div>
                         </div>
-                      </div>
-                    </ul>
+                      </ul>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div>
-                <Link to="/" className="flex justify-center items-center ">
-                  <img
-                    className="w-28 mix-blend-multiply dark:mix-blend-normal"
-                    width={400}
-                    height={400}
-                    src={"/logo.png"}
-                    alt="logo"
-                  />{" "}
-                </Link>
+                <div>
+                  <Link to="/" className="flex justify-center items-center ">
+                    <img
+                      className="w-28 mix-blend-multiply dark:mix-blend-normal"
+                      width={400}
+                      height={400}
+                      src={"/logo.png"}
+                      alt="logo"
+                    />{" "}
+                  </Link>
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* <label class="input input-bordered flex items-center gap-2 w-full">
+            {/* <label class="input input-bordered flex items-center gap-2 w-full">
             <input
               type="text"
               class=""
@@ -214,96 +215,97 @@ const Navbar = () => {
             </button>
           </label> */}
 
-          <SearchArea
-            setIsShowSearch={setIsShowSearch}
-            placeholders={placeholders}
-            setIsFocused={setIsFocused}
-          />
+            <SearchArea
+              setIsShowSearch={setIsShowSearch}
+              placeholders={placeholders}
+              setIsFocused={setIsFocused}
+            />
 
-          {/* Menu */}
-          <div className="navbar-end flex items-center gap-1 md:gap-3">
-            {/* My Store */}
-            <button className="flex items-center justify-center flex-col gap-1 md:p-3 p-1 rounded">
-              <MdOutlineStore className="md:text-2xl text-base text-gray-600 hover:text-blue-500 hover:scale-110 cursor-pointer transition-all" />
-              <span className="hidden md:block">My Store</span>
-            </button>
+            {/* Menu */}
+            <div className="navbar-end flex items-center gap-1 md:gap-3">
+              {/* My Store */}
+              <button className="flex items-center justify-center flex-col gap-1 md:p-3 p-1 rounded">
+                <MdOutlineStore className="md:text-2xl text-base text-gray-600 hover:text-blue-500 hover:scale-110 cursor-pointer transition-all" />
+                <span className="hidden md:block">My Store</span>
+              </button>
 
-            {/* Wishlist */}
-            <button
-              className=" md:p-3 p-1 rounded"
-              onClick={() => setIsShowWishlist(true)}
-            >
-              <label
-                htmlFor="my-wishlist"
-                className=" drawer-button flex items-center justify-center flex-col gap-1"
+              {/* Wishlist */}
+              <button
+                className=" md:p-3 p-1 rounded"
+                onClick={() => setIsShowWishlist(true)}
               >
-                <FaRegHeart className="md:text-2xl text-base text-gray-600 hover:text-pink-500 hover:scale-110 cursor-pointer transition-all" />
-                <span className="hidden md:block">Wishlist</span>
-              </label>
-            </button>
+                <label
+                  htmlFor="my-wishlist"
+                  className=" drawer-button flex items-center justify-center flex-col gap-1"
+                >
+                  <FaRegHeart className="md:text-2xl text-base text-gray-600 hover:text-pink-500 hover:scale-110 cursor-pointer transition-all" />
+                  <span className="hidden md:block">Wishlist</span>
+                </label>
+              </button>
 
-            {/* Cart */}
-            <button
-              onClick={() => setIsShowModal(true)}
-              className=" md:p-3 p-1 rounded relative"
-            >
-              <label
-                htmlFor="my-cart"
-                className=" drawer-button flex items-center justify-center flex-col gap-1"
+              {/* Cart */}
+              <button
+                onClick={() => setIsShowModal(true)}
+                className=" md:p-3 p-1 rounded relative"
               >
-                <BsCart className="md:text-2xl text-base text-gray-600 hover:text-orange-500 hover:scale-110 cursor-pointer transition-all" />
-                <span className="hidden md:block">Cart</span>
-              </label>
-              <div className="bg-gray-800 text-white rounded-full px-2 absolute top-1 -right-1">
-                {totalItems}
-              </div>
-            </button>
-
-            {/* Sign In */}
-            {user ? (
-              <details className="dropdown">
-                <summary className="avatar w-16 m-1">
-                  <div className="bg-neutral text-neutral-content w-16 rounded-full !flex justify-center items-center mx-auto">
-                    {user?.photourl ? (
-                      <CustomImage imageKey={user?.photourl} />
-                    ) : (
-                      <span className="text-3xl">{user?.username[0]}</span>
-                    )}
-                  </div>
-                </summary>
-                <ul className="menu dropdown-content bg-base-200 rounded-box z-[1] w-52 p-2 shadow right-0 gap-1">
-                  {accountMenu.map((item, index) => (
-                    <li key={item.slug}>
-                      <Link
-                        to={item.slug}
-                        className="flex items-center text-[13px] gap-2 p-2 rounded-lg transition-colors  "
-                      >
-                        {item.icon}
-                        {item.name}
-                      </Link>
-                    </li>
-                  ))}
-
-                  <li>
-                    <button
-                      className="btn bg-gray-400 mt-3"
-                      onClick={handleLogOut}
-                    >
-                      Logout
-                    </button>
-                  </li>
-                </ul>
-              </details>
-            ) : (
-              <Link to="/login">
-                <div className="flex items-center justify-center flex-col gap-1 md:p-3 p-1 rounded">
-                  <FaRegUser className="md:text-2xl text-base text-gray-600 hover:text-blue-500 hover:scale-110 cursor-pointer transition-all" />
-                  <span className="hidden md:block">Sign In</span>
+                <label
+                  htmlFor="my-cart"
+                  className=" drawer-button flex items-center justify-center flex-col gap-1"
+                >
+                  <BsCart className="md:text-2xl text-base text-gray-600 hover:text-orange-500 hover:scale-110 cursor-pointer transition-all" />
+                  <span className="hidden md:block">Cart</span>
+                </label>
+                <div className="bg-gray-800 text-white rounded-full px-2 absolute top-1 -right-1">
+                  {totalItems}
                 </div>
-              </Link>
-            )}
+              </button>
+
+              {/* Sign In */}
+              {user ? (
+                <details className="dropdown">
+                  <summary className="avatar w-16 m-1">
+                    <div className="bg-neutral text-neutral-content w-16 rounded-full !flex justify-center items-center mx-auto">
+                      {user?.photourl ? (
+                        <CustomImage imageKey={user?.photourl} />
+                      ) : (
+                        <span className="text-3xl">{user?.username[0]}</span>
+                      )}
+                    </div>
+                  </summary>
+                  <ul className="menu dropdown-content bg-base-200 rounded-box z-[1] w-52 p-2 shadow right-0 gap-1">
+                    {accountMenu.map((item, index) => (
+                      <li key={item.slug}>
+                        <Link
+                          to={item.slug}
+                          className="flex items-center text-[13px] gap-2 p-2 rounded-lg transition-colors  "
+                        >
+                          {item.icon}
+                          {item.name}
+                        </Link>
+                      </li>
+                    ))}
+
+                    <li>
+                      <button
+                        className="btn bg-gray-400 mt-3"
+                        onClick={handleLogOut}
+                      >
+                        Logout
+                      </button>
+                    </li>
+                  </ul>
+                </details>
+              ) : (
+                <Link to="/login">
+                  <div className="flex items-center justify-center flex-col gap-1 md:p-3 p-1 rounded">
+                    <FaRegUser className="md:text-2xl text-base text-gray-600 hover:text-blue-500 hover:scale-110 cursor-pointer transition-all" />
+                    <span className="hidden md:block">Sign In</span>
+                  </div>
+                </Link>
+              )}
+            </div>
           </div>
-        </div>
+        </header>
       </header>
       {/* <BgBlurModal isShowModal={isShowModal} setIsShowModal={setIsShowModal}>
       </BgBlurModal> */}

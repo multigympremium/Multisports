@@ -30,7 +30,7 @@ export default function MyOrder() {
     if (!order) return;
     const newArrayData = Object.entries(order).map(([key, value]) => ({
       name: key,
-      value,
+      value: value == "DeliveredToCourier" ? "Delivered to Courier" : value,
     }));
     const excludedFields = ["items", "_id", "__v"];
     setOrderDetail(
@@ -74,12 +74,18 @@ export default function MyOrder() {
           {orderDetail.map((item, index) => (
             <div
               key={index}
-              className="flex flex-col bg-gray-100 p-4 rounded-lg shadow-sm"
+              className={`flex flex-col  p-4 rounded-lg shadow-sm ${
+                item.name == "status" ? "bg-green-100" : "bg-gray-100"
+              }`}
             >
               <strong className="text-sm text-gray-500 uppercase">
                 {formatPropertyName(item.name)}
               </strong>
-              <span className="text-lg font-medium text-gray-700">
+              <span
+                className={`text-lg font-medium  ${
+                  item.name == "status" ? "text-green-700" : "text-gray-700"
+                }`}
+              >
                 {item.name.includes("At")
                   ? moment(item.value).format("MMMM Do YYYY, h:mm:ss a")
                   : formatCurrency(item.name, item.value)}

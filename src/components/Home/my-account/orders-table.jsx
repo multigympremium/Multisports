@@ -9,11 +9,13 @@ import { useAuth } from "../../../providers/AuthProvider";
 import moment from "moment";
 import GlobalLoading from "../../../components library/GlobalLoading";
 import { ColorRing } from "react-loader-spinner";
+import SelectInput from "../../partial/Headers/FilterHeader/SelectInput/SelectInput";
 
 const OrdersTable = () => {
   const { width } = useSsrCompatible(useWindowSize(), { width: 0, height: 0 });
-  const [orders, setOrders] = useState([]);
+  const [orders, setOrders] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState("");
 
   const [isEmptyOrder, setIsEmptyOrder] = useState(false);
 
@@ -27,7 +29,9 @@ const OrdersTable = () => {
     const fetchOrders = async () => {
       try {
         setLoading(true);
-        const res = await axiosSecure.get(`/orders/user/${user?._id}`);
+        const res = await axiosSecure.get(
+          `/orders/user/${user?._id}?status=${status}`
+        );
         console.log(res, "res orders");
 
         if (res.status === 200 || res.status === 201) {
@@ -46,9 +50,9 @@ const OrdersTable = () => {
     if (user?._id) {
       fetchOrders();
     }
-  }, [axiosSecure, user?._id]);
+  }, [axiosSecure, user?._id, status]);
 
-  if (!(orders?.length > 0))
+  if (!orders)
     return (
       <div className="flex justify-center items-center w-full  py-28">
         <ColorRing
@@ -65,9 +69,24 @@ const OrdersTable = () => {
 
   return (
     <div className="w-full flex flex-col px-5">
-      <h2 className="mb-6 text-lg font-bold md:text-xl xl:text-2xl text-heading xl:mb-8">
-        Order
-      </h2>
+      <div className="flex justify-between items-center mb-9">
+        <h2 className="mb-6 text-lg font-bold md:text-xl xl:text-2xl text-heading xl:mb-8">
+          Order
+        </h2>
+
+        <SelectInput onChange={(e) => setStatus(e.target.value)}>
+          <option value="" disabled className="text-gray-400">
+            Order Status
+          </option>
+          <option value="">All</option>
+          <option value="Pending">Pending</option>
+          <option value="Packaging">Packaging</option>
+          <option value="Packed">Send To Courier</option>
+          <option value="DeliveredToCourier">Delivered</option>
+          <option value="Cancelled">Cancelled</option>
+          <option value="Completed">Completed</option>
+        </SelectInput>
+      </div>
       {orders?.length > 0 && (
         <motion.div
           layout
@@ -120,7 +139,9 @@ const OrdersTable = () => {
                         )}
                       </td>
                       <td className="px-4 py-5 ltr:text-left rtl:text-right lg:text-center text-heading">
-                        {order.status}
+                        {order.status == "DeliveredToCourier"
+                          ? "Delivered to Courier"
+                          : order.status}
                       </td>
                       <td className="px-4 py-5 ltr:text-left rtl:text-right lg:text-center text-heading">
                         ৳ {order.total} in {order.totalItems || 0} items
@@ -181,7 +202,7 @@ const OrdersTable = () => {
           )}
         </motion.div>
       )}
-      {orders?.length === 0 && isEmptyOrder && (
+      {orders?.length === 0 && (
         <div className="flex justify-center col-span-2 flex-col items-center">
           <div className="text-center text-gray-500 text-3xl">
             <img
