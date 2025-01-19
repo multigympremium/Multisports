@@ -10,6 +10,7 @@ import EditButton from "../../../components library/EditButton";
 import DeleteButton from "../../../components library/DeleteButton";
 import Pagination from "../../partial/Pagination/Pagination";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
+import useDebounce from "../../../Hook/useDebounce";
 
 // Sample pending orders data (could be fetched from API)
 const initialData = [
@@ -46,10 +47,11 @@ export default function PersonalizedOrders() {
   const [isDeleted, setIsDeleted] = useState(false);
   const [targetId, setTargetId] = useState(null);
   const [isEdited, setIsEdited] = useState(false);
+  const debouncedValue = useDebounce(searchTerm, 200);
   const itemsPerPage = 10;
 
   const { orders, totalItems } = useGetAllOrders({
-    query: `status=Packed&currentPage=${currentPage}`,
+    query: `status=Packed&currentPage=${currentPage}&search=${debouncedValue}`,
     isDeleted,
     isShowModal: isShowDetail,
     isEdited: isEdited,
@@ -60,30 +62,6 @@ export default function PersonalizedOrders() {
   console.log(orders, "orders");
 
   // Filter orders based on the search term
-
-  let filteredOrders = orders;
-
-  useEffect(() => {
-    if (searchTerm === "") {
-      // setOrders(orders);
-      return;
-    }
-    filteredOrders = orders.filter(
-      (order) =>
-        order.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        order.email.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    // setData(filteredOrders);
-  }, [orders, searchTerm]);
-
-  // Pagination logic
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filteredOrders.slice(indexOfFirstItem, indexOfLastItem);
-
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
 
   const handleDelete = async (id) => {
     try {
@@ -145,8 +123,8 @@ export default function PersonalizedOrders() {
 
   return (
     <div className="p-6 pt-0 ">
-      <div className="max-w-7xl mx-auto">
-        <h1 className="text-3xl font-semibold mb-9">Personalized Orders</h1>
+      <div className="max-w-7xl mx-auto min-h-[800px]">
+        <h1 className="text-3xl font-semibold mb-9">Ready To Courier </h1>
 
         {/* Orders Table */}
         {/* Search Input */}
@@ -161,7 +139,7 @@ export default function PersonalizedOrders() {
         </div>
 
         {/* Orders Table */}
-        <table className="min-w-full table-auto border-collapse bg-white  rounded-md">
+        <table className="min-w-full  table-auto border-collapse bg-white  rounded-md">
           <thead>
             <tr className="bg-gray-200 text-center">
               <td className="p-2 border">SL</td>

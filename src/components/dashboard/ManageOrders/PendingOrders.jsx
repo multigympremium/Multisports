@@ -10,6 +10,9 @@ import EditButton from "../../../components library/EditButton";
 import DeleteButton from "../../../components library/DeleteButton";
 import Pagination from "../../partial/Pagination/Pagination";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
+import SelectInput from "../../partial/Headers/FilterHeader/SelectInput/SelectInput";
+import useDebounce from "../../../Hook/useDebounce";
+import moment from "moment";
 
 // Sample pending orders data (could be fetched from API)
 const initialData = [
@@ -46,10 +49,12 @@ export default function PendingOrders() {
   const [isDeleted, setIsDeleted] = useState(false);
   const [targetId, setTargetId] = useState(null);
   const [isEdited, setIsEdited] = useState(false);
+  const [date, setDate] = useState("");
+  const debouncedValue = useDebounce(searchTerm, 200);
   const itemsPerPage = 10;
 
   const { orders, totalItems } = useGetAllOrders({
-    query: `status=Pending&currentPage=${currentPage}`,
+    query: `status=Pending&currentPage=${currentPage}&search=${debouncedValue}&date=${date}`,
     isDeleted,
     isShowModal: isShowDetail,
     isEdited: isEdited,
@@ -60,30 +65,6 @@ export default function PendingOrders() {
   console.log(orders, "orders");
 
   // Filter orders based on the search term
-
-  let filteredOrders = orders;
-
-  useEffect(() => {
-    if (searchTerm === "") {
-      // setOrders(orders);
-      return;
-    }
-    filteredOrders = orders.filter(
-      (order) =>
-        order.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        order.email.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    // setData(filteredOrders);
-  }, [orders, searchTerm]);
-
-  // Pagination logic
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filteredOrders.slice(indexOfFirstItem, indexOfLastItem);
-
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
 
   const handleDelete = async (id) => {
     try {
@@ -143,32 +124,49 @@ export default function PendingOrders() {
     console.log(id, "id");
   };
 
+  const handleReset = () => {
+    setDate("");
+    setSearchTerm("");
+  };
+
   return (
     <div className="p-6 pt-0 ">
-      <div className="max-w-7xl mx-auto">
-        <h1 className="text-3xl font-semibold mb-9">Pending Orders</h1>
-
+      <div className="max-w-7xl mx-auto min-h-[800px]">
         {/* Orders Table */}
         {/* Search Input */}
-        <div className="bg-white border rounded-full px-3 mb-6 md:py-2 py-1 md:gap-2 gap-1 flex-row-reverse justify-between flex">
-          <input
-            type="text"
-            className="outline-none w-full bg-white"
-            onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Search here ..."
-          />
-          <IoIosSearch className="text-2xl text-gray-400" />
+        <div className="grid grid-cols-3  items-center gap-4 mb-5">
+          <h1 className="text-3xl font-semibold ">Pending Orders</h1>
+          <div className="bg-white border rounded-full px-3 min-h-12  md:gap-2 gap-1 flex-row-reverse justify-between flex items-center">
+            <input
+              type="text"
+              className="outline-none w-full bg-white"
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Name/Phone/Order No"
+            />
+            <IoIosSearch className="text-2xl text-gray-400" />
+          </div>
+
+          <div className="flex gap-2 items-center">
+            <input
+              type="date"
+              placeholder="Date"
+              className="input input-bordered w-full"
+              onChange={(e) => setDate(e.target.value)}
+            />
+            <button className="btn btn-primary" onClick={handleReset}>
+              Reset
+            </button>
+          </div>
         </div>
 
         {/* Orders Table */}
-        <table className="min-w-full table-auto border-collapse bg-white  rounded-md">
+        <table className="min-w-full  table-auto border-collapse bg-white  rounded-md">
           <thead>
             <tr className="bg-gray-200 text-center">
               <td className="p-2 border">SL</td>
               <td className="p-2 border">Order No</td>
               <td className="p-2 border">Order Date</td>
               <td className="p-2 border">Name</td>
-              <td className="p-2 border">Email</td>
               <td className="p-2 border">Phone</td>
               <td className="p-2 border">Status</td>
               <td className="p-2 border">Payment</td>
@@ -184,16 +182,11 @@ export default function PendingOrders() {
                     {index + 1 + (currentPage - 1) * itemsPerPage}
                   </td>
                   <td className="p-2 border">{order._id}</td>
-                  <td className="p-2 border">{order.createdAt}</td>
                   <td className="p-2 border">
-                    {order?.shipping_address_id?.recipientName}
+                    {moment(order.createdAt).format("DD/MM/YYYY")}
                   </td>
-                  <td className="p-2 border">
-                    {order?.shipping_address_id?.email || "N/A"}
-                  </td>
-                  <td className="p-2 border">
-                    {order?.shipping_address_id?.contactNumber}
-                  </td>
+                  <td className="p-2 border">{order?.name}</td>
+                  <td className="p-2 border">{order?.phone}</td>
                   <td className="p-2 border ">
                     <span className="bg-red-500 text-white  px-3 rounded-lg  py-1">
                       {order?.status}

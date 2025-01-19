@@ -10,6 +10,8 @@ import { IoIosSearch } from "react-icons/io";
 import EditButton from "../../../components library/EditButton";
 import DeleteButton from "../../../components library/DeleteButton";
 import Pagination from "../../partial/Pagination/Pagination";
+import useDebounce from "../../../Hook/useDebounce";
+import moment from "moment";
 
 // Sample pending orders data (could be fetched from API)
 const initialData = [
@@ -48,39 +50,13 @@ export default function CompletedOrders() {
   const [isShowDetail, setIsShowDetail] = useState(false);
   const [targetId, setTargetId] = useState(null);
   const [isDeleted, setIsDeleted] = useState(false);
+  const debouncedValue = useDebounce(searchTerm, 200);
 
   const { orders, totalItems } = useGetAllOrders({
-    query: `status=DeliveredToCourier&currentPage=${currentPage}`,
+    query: `status=DeliveredToCourier&currentPage=${currentPage}&search=${debouncedValue}`,
     isDeleted,
     isShowModal: isShowDetail,
   });
-
-  console.log(orders, "orders");
-
-  // Filter orders based on the search term
-  let filteredOrders = orders;
-
-  useEffect(() => {
-    if (searchTerm === "") {
-      // setOrders(orders);
-      return;
-    }
-    filteredOrders = orders.filter(
-      (order) =>
-        order.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        order.email.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    // setData(filteredOrders);
-  }, [orders, searchTerm]);
-
-  // Pagination logic
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filteredOrders.slice(indexOfFirstItem, indexOfLastItem);
-
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
 
   const handleDelete = async (id) => {
     try {
@@ -117,7 +93,7 @@ export default function CompletedOrders() {
 
   return (
     <div className="p-6 pt-0">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto min-h-[800px]">
         <h1 className="text-3xl font-semibold mb-9">Completed Orders</h1>
 
         {/* Search Input */}
@@ -132,14 +108,13 @@ export default function CompletedOrders() {
         </div>
 
         {/* Orders Table */}
-        <table className="min-w-full table-auto border-collapse bg-white shadow-md rounded-md">
+        <table className="min-w-full  table-auto border-collapse bg-white shadow-md rounded-md">
           <thead>
             <tr className="bg-gray-200">
               <td className="p-2 border">SL</td>
               <td className="p-2 border">Order No</td>
               <td className="p-2 border">Order Date</td>
               <td className="p-2 border">Name</td>
-              <td className="p-2 border">Email</td>
               <td className="p-2 border">Phone</td>
               <td className="p-2 border">Status</td>
               <td className="p-2 border">Payment</td>
@@ -155,9 +130,10 @@ export default function CompletedOrders() {
                     {index + 1 + (currentPage - 1) * itemsPerPage}
                   </td>
                   <td className="p-2 border">{order._id}</td>
-                  <td className="p-2 border">{order.createdAt}</td>
+                  <td className="p-2 border">
+                    {moment(order.createdAt).format("DD/MM/YYYY")}
+                  </td>
                   <td className="p-2 border">{order?.name}</td>
-                  <td className="p-2 border">{order?.email || "N/A"}</td>
                   <td className="p-2 border">{order?.phone}</td>
                   <td className="p-2 border ">
                     <span className="bg-red-500 text-white  px-3 rounded-lg  py-1">

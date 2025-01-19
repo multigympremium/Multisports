@@ -124,7 +124,7 @@ export default function AllOrders() {
 
   return (
     <div className="p-6 pt-0">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto min-h-[800px]">
         {/* Summary Cards */}
         <div className="grid grid-cols-4 gap-4 mb-8">
           <div className="bg-[#087D6D] p-6 text-white font-semibold  rounded-2xl">
@@ -183,7 +183,7 @@ export default function AllOrders() {
             <input
               type="date"
               placeholder="Date"
-              className="input input-bordered"
+              className="input input-bordered w-full"
               onChange={(e) => setDate(e.target.value)}
             />
             <button className="btn btn-primary" onClick={handleReset}>
