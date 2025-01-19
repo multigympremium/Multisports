@@ -20,7 +20,6 @@ const CreateShippingAddress = ({
   const [formData, setFormData] = useState({
     recipient_name: "",
     contact_number: "",
-    secondaryContactNumber: "",
     city_id: "",
     city_name: "",
     zone_name: "",
@@ -118,9 +117,6 @@ const CreateShippingAddress = ({
     if (!formData.zone_id) formErrors.zone_id = "City selection is required";
     if (!formData.area_id) formErrors.area_id = "Area selection is required";
     if (!formData.address) formErrors.address = "Address is required";
-    if (!formData.secondaryContactNumber)
-      formErrors.secondaryContactNumber =
-        "Secondary Contact Number is required";
 
     setErrors(formErrors);
     return Object.keys(formErrors).length === 0;
@@ -298,7 +294,7 @@ const CreateShippingAddress = ({
               </p>
             )}
           </div>
-          <div>
+          {/* <div>
             <label className="block font-semibold mb-1">
               Secondary Contact Number *
             </label>
@@ -315,7 +311,7 @@ const CreateShippingAddress = ({
                 {errors.secondaryContactNumber}
               </p>
             )}
-          </div>
+          </div> */}
 
           {/* District/City */}
           <div>

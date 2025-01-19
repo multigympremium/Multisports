@@ -79,19 +79,10 @@ const ShippingForm = ({
     }
 
     if (name === "contact_number") {
-      console.log(formData.contact_number, value, "contact_number");
       value === formData.secondaryContactNumber &&
         setErrors((prev) => ({
           ...prev,
           contact_number:
-            "Secondary Contact Number should not be same as Primary Contact Number",
-        }));
-    } else if (name === "secondaryContactNumber") {
-      console.log(formData.contact_number, value, "contact_number");
-      value === formData.contact_number &&
-        setErrors((prev) => ({
-          ...prev,
-          secondaryContactNumber:
             "Secondary Contact Number should not be same as Primary Contact Number",
         }));
     }
@@ -313,7 +304,7 @@ const ShippingForm = ({
               </p>
             )}
           </div>
-          <div>
+          {/* <div>
             <label className="block font-semibold mb-1">
               Secondary Contact Number *
             </label>
@@ -330,7 +321,7 @@ const ShippingForm = ({
                 {errors.secondaryContactNumber}
               </p>
             )}
-          </div>
+          </div> */}
 
           {/* District/City */}
           <div>
