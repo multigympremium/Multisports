@@ -193,9 +193,11 @@ const CreateShippingAddress = ({
   useEffect(() => {
     const fetchCities = async () => {
       try {
-        const res = await axiosSecure.get("/courier/cities");
+        const res = await axiosSecure.get("/district");
+        // const res = await axiosSecure.get("/courier/cities");
         if (res.status === 200 || res.status === 201) {
-          setCities(res.data?.data?.data?.data);
+          setCities(res.data);
+          // setCities(res.data?.data?.data?.data);
         }
       } catch (error) {
         console.error("Error fetching cities:", error);
@@ -210,9 +212,11 @@ const CreateShippingAddress = ({
       if (!formData.city_id) return;
       try {
         setZoneLoading(true);
-        const res = await axiosSecure.get(`/courier/zones/${formData.city_id}`);
+        // const res = await axiosSecure.get(`/courier/zones/${formData.city_id}`);
+        const res = await axiosSecure.get(`/zones/by_city/${formData.city_id}`);
         if (res.status === 200 || res.status === 201) {
-          setZones(res.data?.data?.data?.data);
+          setZones(res.data);
+          // setZones(res.data?.data?.data?.data);
           setZoneLoading(false);
         }
         setZoneLoading(false);
@@ -230,9 +234,11 @@ const CreateShippingAddress = ({
       if (!formData.zone_id) return;
       try {
         setAreaLoading(true);
-        const res = await axiosSecure.get(`/courier/area/${formData.zone_id}`);
+        // const res = await axiosSecure.get(`/courier/area/${formData.zone_id}`);
+        const res = await axiosSecure.get(`/areas/by_zone/${formData.zone_id}`);
         if (res.status === 200 || res.status === 201) {
           setAreas(res.data?.data?.data?.data);
+          setAreas(res.data);
           setAreaLoading(false);
         }
         setAreaLoading(false);
@@ -323,7 +329,7 @@ const CreateShippingAddress = ({
               className="border p-2 w-full rounded"
             >
               <option value="">Select District/City Name</option>
-              {cities.length > 0 &&
+              {cities?.length > 0 &&
                 cities.map((item, index) => (
                   <option key={index} value={item.city_id}>
                     {item.city_name}

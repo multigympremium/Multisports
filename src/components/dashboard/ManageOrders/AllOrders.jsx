@@ -29,11 +29,13 @@ export default function AllOrders() {
   const [date, setDate] = useState("");
   const itemsPerPage = 5;
   const [status, setStatus] = useState("");
+  const [isEdited, setIsEdited] = useState(false);
   const debouncedValue = useDebounce(searchTerm, 200);
 
   const { orders, totalItems, totalPricesByStatus } = useGetAllOrders({
     isDeleted,
     isShowModal: isShowDetail,
+    isEdited: isEdited,
     query: `page=${currentPage}&status=${status}&search=${debouncedValue}&date=${
       date ? moment(date).format("DD-MM-YYYY") : ""
     }`,
@@ -109,6 +111,7 @@ export default function AllOrders() {
             status: "Packaging",
           });
           toast.success("Order status updated successfully!");
+          setIsEdited((prev) => !prev);
         } catch (error) {
           console.error("Error updating status:", error);
         }
@@ -168,8 +171,8 @@ export default function AllOrders() {
           </div>
           <div>
             <SelectInput onChange={(e) => setStatus(e.target.value)}>
-              <option value="" disabled className="text-gray-400">
-                Order Status
+              <option value="" className="text-gray-400">
+                Select Order Status
               </option>
               <option value="">All</option>
               <option value="Pending">Pending</option>

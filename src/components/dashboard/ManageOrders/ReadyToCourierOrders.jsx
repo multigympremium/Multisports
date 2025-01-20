@@ -11,6 +11,7 @@ import DeleteButton from "../../../components library/DeleteButton";
 import Pagination from "../../partial/Pagination/Pagination";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
 import useDebounce from "../../../Hook/useDebounce";
+import ShowDetailButton from "../../../components library/ShowDetailButton";
 
 export default function PersonalizedOrders() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -154,12 +155,12 @@ export default function PersonalizedOrders() {
                   <td className="p-2 border">৳ {order?.total}</td>
                   <td className="p-2 border">
                     <div className="flex justify-center space-x-2">
-                      <EditButton
+                      <ShowDetailButton
                         onClick={() => {
                           setIsShowDetail(true);
                           setTargetId(order._id);
                         }}
-                      ></EditButton>
+                      ></ShowDetailButton>
                       <DeleteButton
                         onClick={() => handleDelete(order._id)}
                       ></DeleteButton>

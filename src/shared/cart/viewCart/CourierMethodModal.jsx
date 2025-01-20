@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
 import toast from "react-hot-toast";
+import Swal from "sweetalert2";
 
 export default function CourierMethodModal({
   setIsShow,
@@ -72,6 +73,12 @@ export default function CourierMethodModal({
           console.error("Error updating status:", error);
           setLoading(false);
           setIsShow(false);
+          Swal.fire({
+            title: "Error",
+            text: error.message,
+            icon: "error",
+            confirmButtonText: "OK",
+          });
         }
       }
       handleCrud();
