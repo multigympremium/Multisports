@@ -156,8 +156,40 @@ const AuthProvider = ({ children }) => {
   // Load wishlist from localStorage on component mount
   useEffect(() => {
     const storedWishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
-    setWishlist(storedWishlist);
-  }, []);
+
+    const fetchOrder = async () => {
+      try {
+        const res = await axiosSecure.get(`/wishlist/user/${user?._id}`);
+        const fetchedData = res?.data?.data
+          ? res?.data?.data.map((item) => item.product_id)
+          : []; // Default to an empty array if no data
+
+        // Combine and deduplicate wishlist data
+        const combinedData = [
+          ...fetchedData,
+          ...storedWishlist.filter(
+            (localItem) => !fetchedData.some((item) => localItem.id === item.id)
+          ),
+        ];
+
+        console.log(combinedData, "uniqueData");
+
+        // Optionally, update localStorage with the combined data
+        // localStorage.setItem("wishlist", JSON.stringify(combinedData));
+
+        // Update state with the unique combined data
+        setWishlist(combinedData);
+      } catch (error) {
+        console.error("Error fetching order:", error);
+      }
+    };
+
+    if (user?._id) {
+      fetchOrder();
+    } else {
+      setWishlist(storedWishlist);
+    }
+  }, [user?._id, axiosSecure]);
 
   const addToWishlist = async (product) => {
     const existingProduct = wishlist.find((item) => item._id === product._id);
@@ -165,7 +197,7 @@ const AuthProvider = ({ children }) => {
     if (!existingProduct) {
       const updatedWishlist = [...wishlist, product];
       setWishlist(updatedWishlist);
-      localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
+
       try {
         const res = await axiosPublic.get(
           `/products/wish-count/${product?._id}`
@@ -181,15 +213,19 @@ const AuthProvider = ({ children }) => {
 
           if (res2.status === 200 || res2.status === 201) {
             toast.success("Added to wishlist!");
+            return true;
           }
         } else {
+          localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
           if (res.status === 200 || res.status === 201) {
             toast.success("Added to wishlist!");
+            return true;
           }
         }
       } catch (error) {
         console.log(error);
         toast.error("Error adding to wishlist!");
+        return false;
       }
     }
   };
@@ -201,13 +237,21 @@ const AuthProvider = ({ children }) => {
     setWishlist(updatedWishlist);
     localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
 
-    try {
-      const response = await axiosSecure.delete(`/wishlist/${productId}`);
-      if (response.status === 200 || response.status === 201) {
-        toast.success("Product removed from wishlist!");
+    if (!user?._id) return false;
+
+    if (user) {
+      try {
+        const response = await axiosSecure.delete(
+          `/wishlist/${productId}?userId=${user?._id}`
+        );
+        if (response.status === 200 || response.status === 201) {
+          toast.success("Product removed from wishlist!");
+          return true;
+        }
+      } catch (error) {
+        toast.error("Error removing from wishlist!");
+        return false;
       }
-    } catch (error) {
-      toast.error("Error removing from wishlist!");
     }
   };
 

@@ -8,30 +8,73 @@ import ProductCard from "../../partial/ProductCard/ProductCard";
 export default function MyWishlist() {
   const axiosSecure = useAxiosSecure();
   const { user, wishlist } = useAuth();
+  const [isDeleted, setIsDeleted] = useState(false);
+  const [isEdited, setIsEdited] = useState(false);
 
   const [products, setProducts] = useState(null);
   // const [currentProduct, setCurrentProduct] = useState({});
 
   useEffect(() => {
+    // const wishlistData = localStorage.getItem("wishlist")
+    //   ? JSON.parse(localStorage.getItem("wishlist"))
+    //   : [];
+    // const fetchOrder = async () => {
+    //   try {
+    //     const res = await axiosSecure.get(`/wishlist/user/${user?._id}`);
+    //     const data = res?.data?.data;
+    //     const uniqueData = new Set(JSON.stringify([...wishlistData, ...data]));
+    //     console.log(JSON.parse(uniqueData), "uniqueData");
+    //     setProducts(data);
+    //   } catch (error) {
+    //     console.error("Error fetching order:", error);
+    //   }
+    // };
+
+    const wishlistData = localStorage.getItem("wishlist")
+      ? JSON.parse(localStorage.getItem("wishlist"))
+      : [];
+
     const fetchOrder = async () => {
       try {
         const res = await axiosSecure.get(`/wishlist/user/${user?._id}`);
-        setProducts(res?.data?.data);
+        const fetchedData = res?.data?.data
+          ? res?.data?.data.map((item) => item.product_id)
+          : []; // Default to an empty array if no data
+
+        // Combine and deduplicate wishlist data
+        const combinedData = [
+          ...fetchedData,
+          ...wishlistData.filter(
+            (localItem) => !fetchedData.some((item) => localItem.id === item.id)
+          ),
+        ];
+
+        console.log(combinedData, "uniqueData");
+
+        // Optionally, update localStorage with the combined data
+        // localStorage.setItem("wishlist", JSON.stringify(combinedData));
+
+        // Update state with the unique combined data
+        setProducts(combinedData);
       } catch (error) {
         console.error("Error fetching order:", error);
       }
     };
 
-    if (user?._id) fetchOrder();
-
-    console.log(wishlist, "wishlist");
-  }, [axiosSecure, user, wishlist]);
+    if (user?._id) {
+      for (let i = 0; i < 2; i++) {
+        fetchOrder();
+      }
+    }
+  }, [axiosSecure, user, isDeleted, isEdited]);
   const handleProductClick = (product) => {
     // setCurrentProduct(product);
     document
       .getElementById(`modal_${product.productTitle.replace(/\s+/g, "_")}`)
       .showModal();
   };
+
+  console.log(products, "products");
 
   if (!products) return <GlobalLoading />;
 
@@ -48,10 +91,12 @@ export default function MyWishlist() {
             <ProductCard
               border={true}
               key={index}
-              product={product?.product_id}
+              product={product}
               handleProductClick={handleProductClick}
               showNewArrival={true}
               showDiscount={true}
+              setIsDeleted={setIsDeleted}
+              setIsEdited={setIsEdited}
             />
           ))}
 

@@ -11,6 +11,8 @@ const ProductCard = ({
   isSpecial = false,
   showNewArrival = false,
   varient = "classic",
+  setIsDeleted = () => {},
+  setIsEdited = () => {},
 }) => {
   const [isShowModal, setIsShowModal] = useState(false);
 
@@ -75,7 +77,11 @@ const ProductCard = ({
         alt={product.productTitle}
         className="h-[170px] md:h-[340px] w-full rounded object-cover transition-transform duration-300"
       />
-      <WishlistIcon item={product} />
+      <WishlistIcon
+        item={product}
+        setIsDeleted={setIsDeleted}
+        setIsEdited={setIsEdited}
+      />
 
       {/* Product Details */}
       <div className="p-4" onClick={handleClick}>

@@ -30,7 +30,8 @@ import SearchArea from "./SearchArea";
 import useGetSocialLink from "../../Hook/GetPublicDataHook/useGetSocialLink";
 const Navbar = () => {
   const content = useGetSocialLink({});
-  const { userRole, logOut, totalItems, user } = useContext(AuthContext);
+  const { userRole, logOut, totalItems, user, wishlist } =
+    useContext(AuthContext);
   const placeholders = ["Shorts", "Watch", "Shirt"];
 
   const [isFocused, setIsFocused] = useState(false);
@@ -231,7 +232,7 @@ const Navbar = () => {
 
               {/* Wishlist */}
               <button
-                className=" md:p-3 p-1 rounded"
+                className=" md:p-3 p-1 rounded relative"
                 onClick={() => setIsShowWishlist(true)}
               >
                 <label
@@ -241,6 +242,9 @@ const Navbar = () => {
                   <FaRegHeart className="md:text-2xl text-base text-gray-600 hover:text-pink-500 hover:scale-110 cursor-pointer transition-all" />
                   <span className="hidden md:block">Wishlist</span>
                 </label>
+                <div className="bg-gray-800 text-white rounded-full px-2 absolute top-1 -right-1">
+                  {wishlist.length}
+                </div>
               </button>
 
               {/* Cart */}

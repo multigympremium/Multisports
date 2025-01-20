@@ -1,14 +1,15 @@
 import { AuthContext } from "../../../providers/AuthProvider";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import useAxiosPublic from "../../../Hook/useAxiosPublic";
-import toast from "react-hot-toast";
-export default function WishlistIcon({ item }) {
+export default function WishlistIcon({
+  item,
+  setIsDeleted = () => {},
+  setIsEdited = () => {},
+}) {
   const { wishlist, addToWishlist, removeFromWishlist } =
     useContext(AuthContext);
-  const [isLike, setIsLike] = useState(
-    !wishlist.map((item) => item._id).includes(item._id)
-  );
+  const [isLike, setIsLike] = useState(false);
 
   const axiosPublic = useAxiosPublic();
 
@@ -16,13 +17,19 @@ export default function WishlistIcon({ item }) {
     setIsLike((prev) => {
       if (prev) {
         addToWishlist(item);
+        setIsEdited((prev) => !prev);
         return false;
       } else {
         removeFromWishlist(item._id);
+        setIsDeleted((prev) => !prev);
         return true;
       }
     });
   };
+
+  useEffect(() => {
+    setIsLike(!wishlist.map((item) => item._id).includes(item._id));
+  }, [wishlist]);
 
   return (
     <div

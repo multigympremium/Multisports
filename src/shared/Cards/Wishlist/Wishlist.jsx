@@ -1,5 +1,5 @@
 import { AuthContext } from "../../../providers/AuthProvider";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import WishlistItemComponent from "./WishlistItemComponent";
 
 const Wishlist = ({ isShow }) => {
