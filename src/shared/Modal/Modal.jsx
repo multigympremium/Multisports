@@ -109,22 +109,43 @@ const Modal = ({
           item.color === selectedColor.value && item.size === selectedSize.value
       );
 
-      console.log(
-        selectedColor,
-        selectedSize,
-        "currentColorItem",
-        currentColorItem
-      );
       // console.log(currentColorItem, "currentColorItem");
       setQuantity(currentColorItem?.quantity || 0);
     }
   }, [cartItems, selectedColor, selectedSize]);
+  console.log(selectedColor, selectedSize, "currentColorItem");
 
   const incrementAndDecrementQuantity = ({ isIncrement }) => {
+    console.log(isIncrement, "isIncrement");
+
+    if (quantity === Number(selectedSize.quantity)) {
+      toast.error("Out of Stock");
+    }
     if (isIncrement) {
-      setQuantity(quantity + 1);
+      setQuantity((prev) => {
+        console.log(
+          prev < Number(selectedSize.quantity),
+          prev === Number(selectedSize.quantity),
+          "prev < quantity",
+          prev,
+          Number(selectedSize.quantity)
+        );
+        if (prev < Number(selectedSize.quantity)) {
+          return prev + 1;
+        } else {
+          return prev;
+        }
+      });
     } else {
-      setQuantity(quantity - 1);
+      setQuantity((prev) => {
+        if (prev > 1) {
+          return prev - 1;
+        } else if (prev === 1) {
+          return -1;
+        } else {
+          return prev;
+        }
+      });
     }
   };
 
@@ -176,6 +197,7 @@ const Modal = ({
                           setSizeArray(color.size);
                           setSelectedSize(color.size[0]);
                           setStock(color.quantity);
+                          setQuantity(0);
                         }}
                       ></button>
                     </div>
