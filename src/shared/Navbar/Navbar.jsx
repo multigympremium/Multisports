@@ -225,10 +225,10 @@ const Navbar = () => {
             {/* Menu */}
             <div className="navbar-end flex items-center gap-1 md:gap-3">
               {/* My Store */}
-              <button className="flex items-center justify-center flex-col gap-1 md:p-3 p-1 rounded">
+              {/* <button className="flex items-center justify-center flex-col gap-1 md:p-3 p-1 rounded">
                 <MdOutlineStore className="md:text-2xl text-base text-gray-600 hover:text-blue-500 hover:scale-110 cursor-pointer transition-all" />
                 <span className="hidden md:block">My Store</span>
-              </button>
+              </button> */}
 
               {/* Wishlist */}
               <button
@@ -242,7 +242,7 @@ const Navbar = () => {
                   <FaRegHeart className="md:text-2xl text-base text-gray-600 hover:text-pink-500 hover:scale-110 cursor-pointer transition-all" />
                   <span className="hidden md:block">Wishlist</span>
                 </label>
-                <div className="bg-gray-800 text-white rounded-full px-2 absolute top-1 -right-1">
+                <div className="bg-gray-800 text-white rounded-full md:px-2 absolute md:top-1 md:right-2 top-0 right-0">
                   {wishlist.length}
                 </div>
               </button>
