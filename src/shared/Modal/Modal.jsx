@@ -318,7 +318,7 @@ const Modal = ({
                         toast.success("Product Added to Cart!");
                       }
                     }}
-                    disabled={stock - currentStock == 0}
+                    disabled={stock - currentStock == 0 || quantity == 0}
                   >
                     Add To Cart
                   </button>
