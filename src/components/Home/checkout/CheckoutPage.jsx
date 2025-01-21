@@ -116,10 +116,10 @@ export default function CheckoutPage() {
           <h3>Empty Cart</h3>
           <p>Please Add Product to View</p>
           <Link
-            to={"/products/all"}
+            to={"/"}
             className="bg-blue-500 text-white hover:bg-neutral-800 rounded-lg py-2 px-5"
           >
-            Go To Shop
+            Go To Home
           </Link>
 
           <PromotionalBanner />
