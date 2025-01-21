@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
 import Swal from "sweetalert2";
-import useGetAllDistrict from "../../../Hook/GetPublicDataHook/useGetAllDistrict";
-import { set } from "react-hook-form";
 import { AiOutlineLoading } from "react-icons/ai";
 
 const ShippingForm = ({
@@ -103,16 +101,13 @@ const ShippingForm = ({
     let formErrors = {};
     if (!formData.recipientName)
       formErrors.recipientName = "Recipient Name is required";
-    if (!formData.contactNumber)
-      formErrors.contactNumber = "Contact Number is required";
+    if (!formData.contact_number)
+      formErrors.contact_number = "Contact Number is required";
     if (!formData.city_id) formErrors.city_id = "City selection is required";
     if (!formData.zone_id) formErrors.zone_id = "City selection is required";
     if (!formData.area_id) formErrors.area_id = "Area selection is required";
     if (!formData.address) formErrors.address = "Address is required";
     if (!formData.postCode) formErrors.postCode = "Post Code is required";
-    if (!formData.secondaryContactNumber)
-      formErrors.secondaryContactNumber =
-        "Secondary Contact Number is required";
 
     setErrors(formErrors);
     return Object.keys(formErrors).length === 0;
@@ -124,62 +119,60 @@ const ShippingForm = ({
     console.log(formData, "formData", validateForm());
 
     if (validateForm()) {
-      if (shippingAddress) {
-        console.log(formData, "formData");
+      console.log(formData, "formData");
 
-        localStorage.setItem("shippingAddress", JSON.stringify(formData));
-        setShippingAddress(formData);
-        setFormData({
-          ...formData,
-          recipientName: "",
-          contactNumber: "",
-          district: "",
-          area: "",
-          address: "",
-          postCode: "",
-          deliveryType: "Home",
-        });
+      localStorage.setItem("shippingAddress", JSON.stringify(formData));
+      setShippingAddress(formData);
+      setFormData({
+        ...formData,
+        recipientName: "",
+        contact_number: "",
+        district: "",
+        area: "",
+        address: "",
+        postCode: "",
+        deliveryType: "Home",
+      });
 
-        setIsShowModal(false);
-        return;
-      }
+      setIsShowModal(false);
+      return;
 
       // formData.userId = user._id;
       // formData.email = user.email;
-      try {
-        const response = await axiosSecure.post("/shipping", formData);
+      // try {
+      //   const response = await axiosSecure.post("/shipping", formData);
 
-        console.log(response, "response");
+      //   console.log(response, "response");
 
-        if (response.status === 200 || response.status === 201) {
-          localStorage.setItem(
-            "shippingAddress",
-            JSON.stringify(response.data?.data)
-          );
-          setShippingAddress(response.data?.data);
-          setFormData({
-            ...formData,
-            recipientName: "",
-            contactNumber: "",
-            district: "",
-            area: "",
-            address: "",
-            postCode: "",
-            deliveryType: "Home",
-          });
-          return;
-        }
-      } catch (error) {
-        console.error("Error submitting form:", error);
-        Swal.fire({
-          title: "Error",
-          text: "There was an error submitting the form.",
-          icon: "error",
-          confirmButtonText: "Ok",
-          customClass: "border-none",
-          buttonsStyling: false,
-        });
-      }
+      //   if (response.status === 200 || response.status === 201) {
+      //     localStorage.setItem(
+      //       "shippingAddress",
+      //       JSON.stringify(response.data?.data)
+      //     );
+      //     setShippingAddress(response.data?.data);
+      //     setFormData({
+      //       ...formData,
+      //       recipientName: "",
+      //       contact_number: "",
+      //       district: "",
+      //       area: "",
+      //       address: "",
+      //       postCode: "",
+      //       deliveryType: "Home",
+      //     });
+      //     return;
+      //   }
+      // } catch (error) {
+      //   console.error("Error submitting form:", error);
+      //   Swal.fire({
+      //     title: "Error",
+      //     text: "There was an error submitting the form.",
+      //     icon: "error",
+      //     confirmButtonText: "Ok",
+      //     customClass: "border-none",
+      //     buttonsStyling: false,
+      //   });
+      // }
     }
   };
 
@@ -201,12 +194,69 @@ const ShippingForm = ({
     }
   }, [formData]);
 
+  // useEffect(() => {
+  //   const fetchCities = async () => {
+  //     try {
+  //       const res = await axiosSecure.get("/courier/cities");
+  //       if (res.status === 200 || res.status === 201) {
+  //         setCities(res.data?.data?.data?.data);
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching cities:", error);
+  //     }
+  //   };
+
+  //   fetchCities();
+  // }, [axiosSecure]);
+
+  // useEffect(() => {
+  //   const fetchZones = async () => {
+  //     if (!formData.city_id) return;
+  //     try {
+  //       setZoneLoading(true);
+  //       const res = await axiosSecure.get(`/courier/zones/${formData.city_id}`);
+  //       if (res.status === 200 || res.status === 201) {
+  //         setZones(res.data?.data?.data?.data);
+  //         setZoneLoading(false);
+  //       }
+  //       setZoneLoading(false);
+  //     } catch (error) {
+  //       console.error("Error fetching zones:", error);
+  //       setZoneLoading(false);
+  //     }
+  //   };
+
+  //   fetchZones();
+  // }, [axiosSecure, formData.city_id]);
+
+  // useEffect(() => {
+  //   const fetchAreas = async () => {
+  //     if (!formData.zone_id) return;
+  //     try {
+  //       setAreaLoading(true);
+  //       const res = await axiosSecure.get(`/courier/area/${formData.zone_id}`);
+  //       if (res.status === 200 || res.status === 201) {
+  //         setAreas(res.data?.data?.data?.data);
+  //         setAreaLoading(false);
+  //       }
+  //       setAreaLoading(false);
+  //     } catch (error) {
+  //       console.error("Error fetching areas:", error);
+  //       setAreaLoading(false);
+  //     }
+  //   };
+
+  //   fetchAreas();
+  // }, [axiosSecure, formData.zone_id]);
+
   useEffect(() => {
     const fetchCities = async () => {
       try {
-        const res = await axiosSecure.get("/courier/cities");
+        const res = await axiosSecure.get("/district");
+        // const res = await axiosSecure.get("/courier/cities");
         if (res.status === 200 || res.status === 201) {
-          setCities(res.data?.data?.data?.data);
+          setCities(res.data);
+          // setCities(res.data?.data?.data?.data);
         }
       } catch (error) {
         console.error("Error fetching cities:", error);
@@ -214,16 +264,18 @@ const ShippingForm = ({
     };
 
     fetchCities();
-  }, [axiosSecure]);
+  }, [axiosSecure, isShowModal]);
 
   useEffect(() => {
     const fetchZones = async () => {
       if (!formData.city_id) return;
       try {
         setZoneLoading(true);
-        const res = await axiosSecure.get(`/courier/zones/${formData.city_id}`);
+        // const res = await axiosSecure.get(`/courier/zones/${formData.city_id}`);
+        const res = await axiosSecure.get(`/zones/by_city/${formData.city_id}`);
         if (res.status === 200 || res.status === 201) {
-          setZones(res.data?.data?.data?.data);
+          setZones(res.data);
+          // setZones(res.data?.data?.data?.data);
           setZoneLoading(false);
         }
         setZoneLoading(false);
@@ -241,9 +293,11 @@ const ShippingForm = ({
       if (!formData.zone_id) return;
       try {
         setAreaLoading(true);
-        const res = await axiosSecure.get(`/courier/area/${formData.zone_id}`);
+        // const res = await axiosSecure.get(`/courier/area/${formData.zone_id}`);
+        const res = await axiosSecure.get(`/areas/by_zone/${formData.zone_id}`);
         if (res.status === 200 || res.status === 201) {
           setAreas(res.data?.data?.data?.data);
+          setAreas(res.data);
           setAreaLoading(false);
         }
         setAreaLoading(false);
@@ -255,7 +309,6 @@ const ShippingForm = ({
 
     fetchAreas();
   }, [axiosSecure, formData.zone_id]);
-
   useEffect(() => {
     if (isShowModal) {
       setFormData(shippingAddress);
