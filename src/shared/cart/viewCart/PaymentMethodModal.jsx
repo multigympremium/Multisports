@@ -66,6 +66,9 @@ export default function PaymentMethodModal({
   const items = cartItems;
 
   const submitOrder = async () => {
+    console.log(totalPrice, deliveryCharge?.charge, discount, "submitOrder");
+    const deliveryChargeNum = deliveryCharge?.charge | 0;
+    const discountNum = discount | 0;
     const submitOrderData = {
       name: shippingAddress?.recipientName,
       phone: shippingAddress?.contact_number,
@@ -79,7 +82,8 @@ export default function PaymentMethodModal({
       special_instruction: shippingAddress?.special_instruction,
       items: items,
       payment_method: "cash",
-      total: totalPrice + deliveryCharge?.charge - discount,
+      total:
+        Number(totalPrice) + Number(deliveryChargeNum) - Number(discountNum),
       // courierMethod: courierMethod,
       itemCount: items?.length,
       discount: discount,
