@@ -6,6 +6,7 @@ import useAxiosSecure from "../../../Hook/useAxiosSecure";
 import CustomImage from "../../../shared/ImageComponents/CustomImage";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../../providers/AuthProvider";
+import Category from "../Category/Category";
 
 export default function OrderSummeryPage() {
   const axiosSecure = useAxiosSecure();
@@ -73,21 +74,42 @@ export default function OrderSummeryPage() {
     }
   };
 
+  // useEffect(() => {
+  //   if (!order) return;
+  //   const newArrayData = Object.entries(order).map(([key, value]) => ({
+  //     name: key,
+  //     value,
+  //   }));
+  //   const itemIndex = newArrayData.findIndex((item) => item.name === "items");
+  //   const _idIndex = newArrayData.findIndex((item) => item.name === "_id");
+  //   const _vIndex = newArrayData.findIndex((item) => item.name === "__v");
+
+  //   delete newArrayData[itemIndex];
+  //   delete newArrayData[_idIndex];
+  //   delete newArrayData[_vIndex];
+
+  //   setOrderDetail(newArrayData);
+  // }, [order]);
+
   useEffect(() => {
     if (!order) return;
-    const newArrayData = Object.entries(order).map(([key, value]) => ({
-      name: key,
-      value,
-    }));
-    const itemIndex = newArrayData.findIndex((item) => item.name === "items");
-    const _idIndex = newArrayData.findIndex((item) => item.name === "_id");
-    const _vIndex = newArrayData.findIndex((item) => item.name === "__v");
 
-    delete newArrayData[itemIndex];
-    delete newArrayData[_idIndex];
-    delete newArrayData[_vIndex];
+    const filteredOrderData = Object.entries(order)
+      .filter(
+        ([key]) =>
+          ![
+            "items",
+            "_id",
+            "__v",
+            "city_id",
+            "zone_id",
+            "area_id",
+            "userId",
+          ].includes(key)
+      ) // Filter out unwanted keys
+      .map(([key, value]) => ({ name: key, value })); // Map the remaining key-value pairs to the desired structure
 
-    setOrderDetail(newArrayData);
+    setOrderDetail(filteredOrderData);
   }, [order]);
 
   const submitOrder = async () => {
@@ -133,7 +155,10 @@ export default function OrderSummeryPage() {
         });
         // return router(`/my-account/orders/${response.data?.data?._id}`);
         return router(`/success`, {
-          state: { orderId: response.data?.data?._id },
+          state: {
+            orderId: response.data?.data?._id,
+            category: location.state.order?.items[0]?.category,
+          },
         });
       }
 
@@ -176,9 +201,10 @@ export default function OrderSummeryPage() {
             key={index}
             className="flex justify-between items-center border-b pb-3 mb-3"
           >
-            <span className="text-gray-600 font-medium">
+            <span className="text-gray-600 capitalize font-bold ">
               {handlePropertyName(item.name)}
             </span>
+
             <span
               className={`font-bold ${
                 item.name === "status"
