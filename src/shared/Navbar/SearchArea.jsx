@@ -39,17 +39,19 @@ export default function SearchArea({
     //   deleteSpeed={50}
     //   delaySpeed={1000}
     // />
-    <div className="bg-gray-100 rounded-full px-3 w-[70%] md:py-2 py-1 md:gap-2 gap-1 flex-row-reverse justify-between flex">
+    <div className="bg-gray-100 ml-auto md:ml-0 rounded-full md:px-3 w-[40px]  md:w-[70%] md:py-2 py-1 md:gap-2 gap-1 flex-row-reverse justify-center md:justify-between flex">
       <input
         type="text"
-        className="outline-none w-full bg-gray-100"
+        className="outline-none w-0  md:w-full bg-gray-100  md:block"
         placeholder={!isFocused ? `Search for "${text}"` : ""}
         onFocus={handleFocus}
         onBlur={handleBlur}
         id="search"
         name="search"
       />
-      <IoIosSearch className="text-2xl text-gray-400" />
+      <label htmlFor="search" className="flex items-center justify-center">
+        <IoIosSearch className="text-2xl text-gray-400" />
+      </label>
     </div>
   );
 }

@@ -223,13 +223,7 @@ const Navbar = () => {
             />
 
             {/* Menu */}
-            <div className="navbar-end flex items-center gap-1 md:gap-3">
-              {/* My Store */}
-              <button className="flex items-center justify-center flex-col gap-1 md:p-3 p-1 rounded">
-                <MdOutlineStore className="md:text-2xl text-base text-gray-600 hover:text-blue-500 hover:scale-110 cursor-pointer transition-all" />
-                <span className="hidden md:block">My Store</span>
-              </button>
-
+            <div className="navbar-end w-fit md:w-[50%] flex items-center gap-1 md:gap-3">
               {/* Wishlist */}
               <button
                 className=" md:p-3 p-1 rounded relative"
@@ -239,7 +233,7 @@ const Navbar = () => {
                   htmlFor="my-wishlist"
                   className=" drawer-button flex items-center justify-center flex-col gap-1"
                 >
-                  <FaRegHeart className="md:text-2xl text-base text-gray-600 hover:text-pink-500 hover:scale-110 cursor-pointer transition-all" />
+                  <FaRegHeart className="text-2xl  text-gray-600 hover:text-pink-500 hover:scale-110 cursor-pointer transition-all" />
                   <span className="hidden md:block">Wishlist</span>
                 </label>
                 <div className="bg-gray-800 text-white rounded-full px-2 absolute top-1 -right-1">
@@ -256,7 +250,7 @@ const Navbar = () => {
                   htmlFor="my-cart"
                   className=" drawer-button flex items-center justify-center flex-col gap-1"
                 >
-                  <BsCart className="md:text-2xl text-base text-gray-600 hover:text-orange-500 hover:scale-110 cursor-pointer transition-all" />
+                  <BsCart className="text-2xl text-gray-600 hover:text-orange-500 hover:scale-110 cursor-pointer transition-all" />
                   <span className="hidden md:block">Cart</span>
                 </label>
                 <div className="bg-gray-800 text-white rounded-full px-2 absolute top-1 -right-1">

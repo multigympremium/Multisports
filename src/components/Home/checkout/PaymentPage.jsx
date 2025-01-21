@@ -103,12 +103,12 @@ export default function PaymentPage() {
             <div className="flex justify-between text-sm text-gray-500 mt-2">
               <span>Per-Product Total Discount</span>
               <span className="font-medium text-red-400">
-                -${totalCartDiscount}
+                -{totalCartDiscount}
               </span>
             </div>
             <div className="flex justify-between text-sm text-gray-500 mt-2">
               <b className="font-bold text-lg">Discounts</b>
-              <span className="font-medium text-red-400">-${discount}</span>
+              <span className="font-medium text-red-400">-{discount}</span>
             </div>
             <div className="flex justify-between text-sm text-gray-500 mt-2">
               <b className="font-bold text-lg">Shipping</b>

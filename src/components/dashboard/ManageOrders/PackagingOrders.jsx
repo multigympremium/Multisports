@@ -116,7 +116,7 @@ export default function ApprovedOrders() {
   };
   const addWeight = (id) => {
     Swal.fire({
-      title: "Enter Total Weight",
+      title: "Enter Total Weight (Kg)",
       input: "text",
       inputAttributes: {
         autocapitalize: "off",
@@ -176,10 +176,10 @@ export default function ApprovedOrders() {
           <thead>
             <tr className="bg-gray-200">
               <td className="p-2 border">SL</td>
-              <td className="p-2 border">Order No</td>
               <td className="p-2 border">Order Date</td>
               <td className="p-2 border">Name</td>
               <td className="p-2 border">Phone</td>
+              <td className="p-2 border">Quantity</td>
               <td className="p-2 border">Payment</td>
               <td className="p-2 border">Total Weight</td>
               <td className="p-2 border">Total</td>
@@ -193,12 +193,12 @@ export default function ApprovedOrders() {
                   <td className="p-2 border">
                     {index + 1 + (currentPage - 1) * itemsPerPage}
                   </td>
-                  <td className="p-2 border">{order._id}</td>
                   <td className="p-2 border">
                     {moment(order.createdAt).format("DD/MM/YYYY")}
                   </td>
                   <td className="p-2 border">{order?.name}</td>
                   <td className="p-2 border">{order?.phone}</td>
+                  <td className="p-2 border">{order?.totalItems}</td>
 
                   <td className="p-2 border">{order?.payment_method}</td>
                   <td className="p-2 border">{order?.totalWeight || 0} Kg</td>

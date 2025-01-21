@@ -65,10 +65,12 @@ export default function DeliveredOrders() {
     console.log(`Delete category with ID: ${id}`);
   };
 
-  const handleAccept = async (id) => {
+  const handleAccept = async (id, status) => {
     Swal.fire({
       title: "Are you sure?",
-      text: "You want to accept this order?",
+      text: `You want to ${
+        status === "Completed" ? "Complete" : "Cancel"
+      } this order?`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#087D6D",
@@ -78,7 +80,7 @@ export default function DeliveredOrders() {
       if (result.isConfirmed) {
         try {
           await axiosSecure.put(`/orders/update/${id}`, {
-            status: "Completed",
+            status: status,
           });
           toast.success("Order status updated successfully!");
           setIsEdited((prev) => !prev);
@@ -111,10 +113,10 @@ export default function DeliveredOrders() {
           <thead>
             <tr className="bg-gray-200">
               <td className="p-2 border">SL</td>
-              <td className="p-2 border">Order No</td>
               <td className="p-2 border">Order Date</td>
               <td className="p-2 border">Name</td>
               <td className="p-2 border">Phone</td>
+              <td className="p-2 border">Quantity</td>
               <td className="p-2 border">Status</td>
               <td className="p-2 border">Payment</td>
               <td className="p-2 border">Total</td>
@@ -128,12 +130,12 @@ export default function DeliveredOrders() {
                   <td className="p-2 border">
                     {index + 1 + (currentPage - 1) * itemsPerPage}
                   </td>
-                  <td className="p-2 border">{order._id}</td>
                   <td className="p-2 border">
                     {moment(order.createdAt).format("DD/MM/YYYY")}
                   </td>
                   <td className="p-2 border">{order?.name}</td>
                   <td className="p-2 border">{order?.phone}</td>
+                  <td className="p-2 border">{order?.totalItems}</td>
                   <td className="p-2 border ">
                     <span className="bg-red-500 text-white  px-3 rounded-lg  py-1">
                       {order?.status}
@@ -153,10 +155,16 @@ export default function DeliveredOrders() {
                         {" "}
                       </DeleteButton>
                       <button
-                        onClick={() => handleAccept(order._id)}
+                        onClick={() => handleAccept(order._id, "Completed")}
                         className="bg-blue-500 text-white text-sm rounded-lg px-4 py-2 font-semibold"
                       >
-                        Success Order
+                        Success
+                      </button>
+                      <button
+                        onClick={() => handleAccept(order._id, "Cancelled")}
+                        className="bg-red-500 text-white text-sm rounded-lg px-4 py-2 font-semibold"
+                      >
+                        Cancel
                       </button>
                     </div>
                   </td>

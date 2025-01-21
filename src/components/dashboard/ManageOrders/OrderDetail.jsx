@@ -53,7 +53,12 @@ export default function OrderDetail({
     if (!order) return;
 
     const details = Object.entries(order)
-      .filter(([key]) => !["_id", "__v", "items"].includes(key))
+      .filter(
+        ([key]) =>
+          !["_id", "__v", "items", "city_id", "zone_id", "area_id"].includes(
+            key
+          )
+      )
       .map(([key, value]) => ({
         name: key,
         value,

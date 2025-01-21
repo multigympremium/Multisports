@@ -12,6 +12,7 @@ import Pagination from "../../partial/Pagination/Pagination";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
 import useDebounce from "../../../Hook/useDebounce";
 import ShowDetailButton from "../../../components library/ShowDetailButton";
+import moment from "moment";
 
 export default function PersonalizedOrders() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -82,7 +83,7 @@ export default function PersonalizedOrders() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axiosSecure.put(`/orders/${id}`, {
+          await axiosSecure.put(`/orders/update/${id}`, {
             status: "DeliveredToCourier",
           });
           toast.success("Order status updated successfully!");
@@ -117,11 +118,10 @@ export default function PersonalizedOrders() {
           <thead>
             <tr className="bg-gray-200 text-center">
               <td className="p-2 border">SL</td>
-              <td className="p-2 border">Order No</td>
               <td className="p-2 border">Order Date</td>
               <td className="p-2 border">Name</td>
-              <td className="p-2 border">Email</td>
               <td className="p-2 border">Phone</td>
+              <td className="p-2 border">Quantity</td>
               <td className="p-2 border">Status</td>
               <td className="p-2 border">Payment</td>
               <td className="p-2 border">Total</td>
@@ -135,17 +135,12 @@ export default function PersonalizedOrders() {
                   <td className="p-2 border">
                     {index + 1 + (currentPage - 1) * itemsPerPage}
                   </td>
-                  <td className="p-2 border">{order._id}</td>
-                  <td className="p-2 border">{order.createdAt}</td>
                   <td className="p-2 border">
-                    {order?.shipping_address_id?.recipientName}
+                    {moment(order?.createdAt).format("DD-MM-YYYY")}
                   </td>
-                  <td className="p-2 border">
-                    {order?.shipping_address_id?.email || "N/A"}
-                  </td>
-                  <td className="p-2 border">
-                    {order?.shipping_address_id?.contactNumber}
-                  </td>
+                  <td className="p-2 border">{order?.name}</td>
+                  <td className="p-2 border">{order?.phone}</td>
+                  <td className="p-2 border">{order?.totalItems}</td>
                   <td className="p-2 border ">
                     <span className="bg-red-500 text-white  px-3 rounded-lg  py-1">
                       {order?.status}

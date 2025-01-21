@@ -191,13 +191,11 @@ export default function Summary({ isCart = false, shippingAddress = null }) {
         )}
         <div className="flex justify-between text-sm text-gray-500 mt-2">
           <span>Per-Product Total Discount</span>
-          <span className="font-medium text-red-400">
-            -${totalCartDiscount}
-          </span>
+          <span className="font-medium text-red-400">-{totalCartDiscount}</span>
         </div>
         <div className="flex justify-between text-sm text-gray-500 mt-2">
           <b className="font-bold text-lg">Discounts</b>
-          <span className="font-medium text-red-400">-${discount}</span>
+          <span className="font-medium text-red-400">-{discount}</span>
         </div>
         <div className="flex justify-between text-sm text-gray-500 mt-2">
           <b className="font-bold text-lg">Shipping</b>
@@ -205,17 +203,17 @@ export default function Summary({ isCart = false, shippingAddress = null }) {
         </div>
         <div className="flex justify-between text-sm text-gray-500">
           <b className="font-bold text-lg">Total</b>
-          <span className="font-medium">৳{totalPrice - discount}</span>
-        </div>
-
-        <div className="flex justify-between text-sm text-gray-500 mt-2">
-          <b className="font-bold text-lg">Payment Method</b>
-          <span className="font-medium">Cash</span>
+          <span className="font-medium">
+            ৳
+            {deliveryCharge?.charge
+              ? totalPrice + Number(deliveryCharge?.charge) - discount
+              : totalPrice - discount}
+          </span>
         </div>
 
         {isCart ? (
           <Link to="/checkout">
-            <button className="bg-black text-white text-sm py-2 px-4 rounded-md mt-4">
+            <button className="bg-black text-white text-sm py-2 px-4 rounded-md mt-4 w-full">
               Proceed to Checkout
             </button>
           </Link>
@@ -223,7 +221,7 @@ export default function Summary({ isCart = false, shippingAddress = null }) {
           <button
             // onClick={() => setIsShowPaymentMethod(true)}
             onClick={submitOrder}
-            className="bg-green-500 text-white text-sm py-2 px-4 rounded-md mt-4 disabled:bg-gray-200 disabled:text-black"
+            className="bg-green-500 text-white text-sm py-2 px-4 rounded-md mt-4 disabled:bg-gray-200 disabled:text-black w-full"
             disabled={shippingAddress && cartItems.length > 0 ? false : true}
           >
             Go To Payment

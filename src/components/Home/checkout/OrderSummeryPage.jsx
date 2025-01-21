@@ -199,7 +199,7 @@ export default function OrderSummeryPage() {
         {orderDetail.map((item, index) => (
           <div
             key={index}
-            className="flex justify-between items-center border-b pb-3 mb-3"
+            className="flex justify-between items-center border-b gap-4 pb-3 mb-3"
           >
             <span className="text-gray-600 capitalize font-bold ">
               {handlePropertyName(item.name)}

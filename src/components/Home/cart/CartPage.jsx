@@ -33,8 +33,8 @@ export default function CartPage() {
           <h3>Empty Cart</h3>
           <p>Please Add Product to View</p>
           <Link
-            href={"/products/all"}
-            className="bg-blue-500 text-white hover:bg-neutral-800 rounded-lg py-2 px-5"
+            href={"/"}
+            className="bg-blue-500 text-white hover:bg-neutral-800 rounded-lg py-2 px-5 "
           >
             Go To Shop
           </Link>
