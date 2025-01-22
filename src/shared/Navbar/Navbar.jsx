@@ -239,7 +239,7 @@ const Navbar = () => {
                   <FaRegHeart className="text-2xl  text-gray-600 hover:text-pink-500 hover:scale-110 cursor-pointer transition-all" />
                   <span className="hidden md:block">Wishlist</span>
                 </label>
-                <div className="bg-gray-800 text-white rounded-full px-2 absolute top-1 -right-1">
+                <div className="bg-gray-800 text-white rounded-full md:px-2 absolute md:top-1 md:right-2 top-0 right-0">
                   {wishlist.length}
                 </div>
               </button>

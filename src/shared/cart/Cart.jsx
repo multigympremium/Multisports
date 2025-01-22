@@ -4,6 +4,7 @@ import CartItemComponent from "./CartItemComponent";
 import { Link, useNavigate } from "react-router-dom";
 import calculateDiscounts from "../../helpers/calculateDiscount";
 import useAxiosPublic from "../../Hook/useAxiosPublic";
+import { IoMdClose, IoMdCloseCircle } from "react-icons/io";
 
 const Cart = ({ isShow, setIsShow }) => {
   const navigate = useNavigate();
@@ -48,10 +49,21 @@ const Cart = ({ isShow, setIsShow }) => {
         <div
           className={`min-w-[400px] rounded-none bg-white h-screen p-4 absolute top-0 right-0 z-50 transition-all duration-500 px-5 flex flex-col`}
         >
-          <div className="text-2xl py-3  font-bold mb-6 border-b pb-5 border-gray-200">
-            Shopping cart
+          <div className="flex mb-6  py-3 items-center justify-between pr-2 border-b pb-5 border-gray-200">
+            <p className="text-2xl  font-semibold">Shopping cart</p>
+            <form method="dialog">
+            <button
+              type="button"
+              onClick={() => {
+                document.getElementById("my-cart").checked = false; 
+                setIsShow(false); 
+              }}
+              className="mt-3"
+            >
+              <IoMdCloseCircle className="text-xl"/>
+            </button>
+          </form>
           </div>
-
           <div
             className=" pb-4 h-full overflow-auto"
             style={{ scrollbarWidth: "thin" }}
@@ -102,7 +114,7 @@ const Cart = ({ isShow, setIsShow }) => {
 
           <div className="flex gap-3">
             <label
-              className=" border text-center border-black rounded-md px-4 py-3 w-full"
+              className="cursor-pointer border text-center border-black rounded-md px-4 py-3 w-full"
               onClick={() => {
                 setIsShow(false);
                 navigate("/cart");
@@ -114,7 +126,7 @@ const Cart = ({ isShow, setIsShow }) => {
 
             <label
               type="button"
-              className="px-4d py-3 bg-black text-center text-white rounded-lg w-full"
+              className="px-4d py-3 cursor-pointer bg-black text-center text-white rounded-lg w-full"
               onClick={() => {
                 setIsShow(false);
                 navigate("/checkout");

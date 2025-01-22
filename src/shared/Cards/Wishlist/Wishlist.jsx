@@ -1,6 +1,7 @@
 import { AuthContext } from "../../../providers/AuthProvider";
 import { useContext, useState } from "react";
 import WishlistItemComponent from "./WishlistItemComponent";
+import { IoMdCloseCircle } from "react-icons/io";
 
 const Wishlist = ({ isShow }) => {
   const { wishlist, removeFromWishlist } = useContext(AuthContext);
@@ -16,10 +17,22 @@ const Wishlist = ({ isShow }) => {
           className="drawer-overlay"
         ></label>
         <div
-          className={`w-[450px] h-screen bg-white rounded-lg shadow-lg p-4 absolute top-0 right-0 z-50 transition-all duration-500 pr-10 pl-5 flex flex-col `}
+          className={`w-[450px] rounded-none h-screen bg-white shadow-lg p-4 absolute top-0 right-0 z-50 transition-all duration-500 pr-10 pl-5 flex flex-col `}
         >
-          <h2 className="text-2xl text-gray-500 mb-2 border-b border-gray-300">
-            Your Wishlist
+          <h2 className=" flex items-center justify-between py-3 mb-4 border-b border-gray-300">
+            <p className="text-2xl font-semibold ">
+              Your Wishlist
+            </p>
+            <button
+              type="button"
+              onClick={() => {
+                document.getElementById("my-wishlist").checked = false;
+                setIsShow(false);
+              }}
+              className=""
+            >
+              <IoMdCloseCircle className="text-xl" />
+            </button>
           </h2>
 
           <div
