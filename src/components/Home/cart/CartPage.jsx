@@ -12,12 +12,12 @@ export default function CartPage() {
     <Container>
       {cartItems.length > 0 ? (
         <>
-          <div className="text-sm text-gray-500 mb-2 border-b border-gray-300 flex gap-3 items-center mt-10 pb-4">
+          <div className="w-[90%] mx-auto md:w-full  text-sm text-gray-500 mb-2 border-b border-gray-300 flex gap-3 items-center mt-10 pb-4">
             <IoHome /> Multisports {`>`} Cart
           </div>
-          <div className="w-full grid grid-cols-4 py-6 gap-8">
+          <div className="w-[90%] mx-auto md:w-full grid-cols-1 grid md:grid-cols-4 py-6 gap-8">
             <div
-              className="col-span-3 max-h-[500px] overflow-auto"
+              className="md:col-span-3 max-h-[500px] overflow-auto"
               style={{ scrollbarWidth: "thin" }}
             >
               <ViewCart />

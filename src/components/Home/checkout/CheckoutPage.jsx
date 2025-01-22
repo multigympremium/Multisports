@@ -28,10 +28,10 @@ export default function CheckoutPage() {
     <Container>
       {cartItems.length > 0 ? (
         <div>
-          <div className="text-base text-gray-500 md:mb-8 border-b border-gray-300 flex gap-3 items-center mt-10 pb-4 ">
+          <div className="text-base md:w-full w-[90%] mx-auto text-gray-500 md:mb-8 border-b border-gray-300 flex gap-3 items-center mt-10 pb-4 ">
             <IoHome /> Multisports {`>`} Checkout
           </div>
-          <div className="w-full md:max-w-[75%] inline-block">
+          <div className="w-[90%] mx-auto md:max-w-[75%] md:inline-block">
             {shippingAddress ? (
               <div className="w-full mx-auto p-6 border rounded-md mb-12 relative">
                 <h2 className="text-2xl font-bold mb-6">Shipping Address</h2>
@@ -100,7 +100,7 @@ export default function CheckoutPage() {
               <ViewCart />
             </div>
           </div>
-          <div className="w-full md:max-w-[23%] md:sticky md:top-[150px]  md:inline-block md:float-right">
+          <div className="w-[90%] mx-auto md:max-w-[23%] md:sticky md:top-[150px]  md:inline-block md:float-right">
             <Summary shippingAddress={shippingAddress} cartItems={cartItems} />
           </div>
         </div>
