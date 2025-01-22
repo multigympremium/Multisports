@@ -165,10 +165,10 @@ export default function PendingOrders() {
           <thead>
             <tr className="bg-gray-200 text-center">
               <td className="p-2 border">SL</td>
-              <td className="p-2 border">Order No</td>
               <td className="p-2 border">Order Date</td>
               <td className="p-2 border">Name</td>
               <td className="p-2 border">Phone</td>
+              <td className="p-2 border">Quantity</td>
               <td className="p-2 border">Status</td>
               <td className="p-2 border">Payment</td>
               <td className="p-2 border">Total</td>
@@ -182,12 +182,12 @@ export default function PendingOrders() {
                   <td className="p-2 border">
                     {index + 1 + (currentPage - 1) * itemsPerPage}
                   </td>
-                  <td className="p-2 border">{order._id}</td>
                   <td className="p-2 border">
                     {moment(order.createdAt).format("DD/MM/YYYY")}
                   </td>
                   <td className="p-2 border">{order?.name}</td>
                   <td className="p-2 border">{order?.phone}</td>
+                  <td className="p-2 border">{order?.totalItems}</td>
                   <td className="p-2 border ">
                     <span className="bg-red-500 text-white  px-3 rounded-lg  py-1">
                       {order?.status}

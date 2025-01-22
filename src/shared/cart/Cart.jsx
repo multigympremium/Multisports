@@ -82,12 +82,6 @@ const Cart = ({ isShow, setIsShow }) => {
               <div className="flex flex-col items-center justify-center gap-5 h-full w-full">
                 <h3>Empty Cart</h3>
                 <p>Please Add Product to View</p>
-                <Link
-                  to={"/products/all"}
-                  className="bg-gray-900 text-white hover:bg-neutral-800 rounded-lg py-2 px-5"
-                >
-                  Go To Shop
-                </Link>
               </div>
             )}
           </div>

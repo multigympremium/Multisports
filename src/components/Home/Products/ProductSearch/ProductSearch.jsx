@@ -84,9 +84,9 @@ const ProductSearch = ({ setIsShow, isShow }) => {
             <button
               onClick={() => handleNavigate(product._id)}
               key={product._id}
-              className="hover:bg-slate-100 w-full cursor-pointer grid grid-cols-3 gap-4 items-center border-b"
+              className="hover:bg-slate-100 w-full cursor-pointer grid grid-cols-1 md:grid-cols-3 justify-center gap-1 md:gap-4 items-center border-b"
             >
-              <div className="py-2 px-4 ">
+              <div className="py-2 px-4 mx-auto">
                 <CustomImage
                   imageKey={product.thumbnail}
                   alt={product.productTitle}
@@ -94,7 +94,7 @@ const ProductSearch = ({ setIsShow, isShow }) => {
                 />
               </div>
               <div className="py-2 px-4 ">{product.productTitle}</div>
-              <div className="py-2 px-4 ">${product.price}</div>
+              <div className="py-2 px-4 hidden md:block">${product.price}</div>
             </button>
           ))
         ) : (

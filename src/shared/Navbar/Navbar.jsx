@@ -148,13 +148,16 @@ const Navbar = () => {
                 <div role="button" className="">
                   <div className="drawer z-10">
                     <input
-                      id="my-drawer"
+                      id="sidebar-drawer"
                       type="checkbox"
                       className="drawer-toggle"
                     />
                     <div className="drawer-content">
                       {/* Page content here */}
-                      <label htmlFor="my-drawer" className=" drawer-button">
+                      <label
+                        htmlFor="sidebar-drawer"
+                        className=" drawer-button"
+                      >
                         <MdMenu
                           onClick={() => {
                             toggleSidebar();
@@ -165,7 +168,7 @@ const Navbar = () => {
                     </div>
                     <div className="drawer-side">
                       <label
-                        htmlFor="my-drawer"
+                        htmlFor="sidebar-drawer"
                         aria-label="close sidebar"
                         className="drawer-overlay"
                       ></label>
@@ -223,13 +226,7 @@ const Navbar = () => {
             />
 
             {/* Menu */}
-            <div className="navbar-end flex items-center gap-1 md:gap-3">
-              {/* My Store */}
-              {/* <button className="flex items-center justify-center flex-col gap-1 md:p-3 p-1 rounded">
-                <MdOutlineStore className="md:text-2xl text-base text-gray-600 hover:text-blue-500 hover:scale-110 cursor-pointer transition-all" />
-                <span className="hidden md:block">My Store</span>
-              </button> */}
-
+            <div className="navbar-end w-fit md:w-[50%] flex items-center gap-1 md:gap-3">
               {/* Wishlist */}
               <button
                 className=" md:p-3 p-1 rounded relative"
@@ -239,7 +236,7 @@ const Navbar = () => {
                   htmlFor="my-wishlist"
                   className=" drawer-button flex items-center justify-center flex-col gap-1"
                 >
-                  <FaRegHeart className="md:text-2xl text-base text-gray-600 hover:text-pink-500 hover:scale-110 cursor-pointer transition-all" />
+                  <FaRegHeart className="text-2xl  text-gray-600 hover:text-pink-500 hover:scale-110 cursor-pointer transition-all" />
                   <span className="hidden md:block">Wishlist</span>
                 </label>
                 <div className="bg-gray-800 text-white rounded-full md:px-2 absolute md:top-1 md:right-2 top-0 right-0">
@@ -256,7 +253,7 @@ const Navbar = () => {
                   htmlFor="my-cart"
                   className=" drawer-button flex items-center justify-center flex-col gap-1"
                 >
-                  <BsCart className="md:text-2xl text-base text-gray-600 hover:text-orange-500 hover:scale-110 cursor-pointer transition-all" />
+                  <BsCart className="text-2xl text-gray-600 hover:text-orange-500 hover:scale-110 cursor-pointer transition-all" />
                   <span className="hidden md:block">Cart</span>
                 </label>
                 <div className="bg-gray-800 text-white rounded-full px-2 absolute top-1 -right-1">
@@ -268,7 +265,7 @@ const Navbar = () => {
               {user ? (
                 <details className="dropdown">
                   <summary className="avatar w-16 m-1">
-                    <div className="bg-neutral text-neutral-content w-16 rounded-full !flex justify-center items-center mx-auto">
+                    <div className="bg-neutral text-neutral-content w-12 md:w-16 rounded-full !flex justify-center items-center mx-auto">
                       {user?.photourl ? (
                         <CustomImage imageKey={user?.photourl} />
                       ) : (

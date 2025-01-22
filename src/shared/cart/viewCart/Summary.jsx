@@ -6,6 +6,7 @@ import BgBlurModal from "../../Modal/BgBlurModal";
 import PaymentMethodModal from "./PaymentMethodModal";
 import calculateDiscounts from "../../../helpers/calculateDiscount";
 import toast from "react-hot-toast";
+import moment from "moment";
 
 export default function Summary({ isCart = false, shippingAddress = null }) {
   const {
@@ -14,6 +15,8 @@ export default function Summary({ isCart = false, shippingAddress = null }) {
     updateCartQuantity,
     totalPrice,
     totalCartDiscount,
+    user,
+    totalItems,
   } = useContext(AuthContext);
 
   const [discounts, setDiscounts] = useState({});
@@ -130,6 +133,43 @@ export default function Summary({ isCart = false, shippingAddress = null }) {
     }
   }, [discounts?.promoCode, userCouponCode]);
 
+  const submitOrder = async () => {
+    console.log(totalPrice, deliveryCharge?.charge, discount, "submitOrder");
+    const deliveryChargeNum = deliveryCharge?.charge | 0;
+    const discountNum = discount | 0;
+    const submitOrderData = {
+      name: shippingAddress?.recipientName,
+      phone: shippingAddress?.contact_number,
+      // secondary_phone: shippingAddress.secondaryContactNumber,
+      address: shippingAddress?.address,
+      city_id: shippingAddress?.city_id,
+      city_name: shippingAddress?.city_name,
+      zone_id: shippingAddress?.zone_id,
+      area_id: shippingAddress?.area_id,
+      area_name: shippingAddress?.area_name,
+      special_instruction: shippingAddress?.special_instruction,
+      items: cartItems,
+      payment_method: "cash",
+      total:
+        Number(totalPrice) + Number(deliveryChargeNum) - Number(discountNum),
+      // courierMethod: courierMethod,
+      itemCount: cartItems?.length,
+      discount: discount,
+      itemPerDiscount: totalCartDiscount,
+      deliveryCharge: deliveryCharge?.charge,
+      coupon: discounts?.promoCode,
+      userId: user?._id,
+      totalItems: totalItems,
+      order_date: moment().format("DD/MM/YYYY"),
+    };
+
+    router("/payment_page", {
+      state: {
+        order: submitOrderData,
+      },
+    });
+  };
+
   console.log(deliveryCharge, shippingAddress, "deliveryCharge");
   return (
     <>
@@ -151,13 +191,11 @@ export default function Summary({ isCart = false, shippingAddress = null }) {
         )}
         <div className="flex justify-between text-sm text-gray-500 mt-2">
           <span>Per-Product Total Discount</span>
-          <span className="font-medium text-red-400">
-            -${totalCartDiscount}
-          </span>
+          <span className="font-medium text-red-400">-{totalCartDiscount}</span>
         </div>
         <div className="flex justify-between text-sm text-gray-500 mt-2">
           <b className="font-bold text-lg">Discounts</b>
-          <span className="font-medium text-red-400">-${discount}</span>
+          <span className="font-medium text-red-400">-{discount}</span>
         </div>
         <div className="flex justify-between text-sm text-gray-500 mt-2">
           <b className="font-bold text-lg">Shipping</b>
@@ -165,24 +203,25 @@ export default function Summary({ isCart = false, shippingAddress = null }) {
         </div>
         <div className="flex justify-between text-sm text-gray-500">
           <b className="font-bold text-lg">Total</b>
-          <span className="font-medium">৳{totalPrice - discount}</span>
-        </div>
-
-        <div className="flex justify-between text-sm text-gray-500 mt-2">
-          <b className="font-bold text-lg">Payment Method</b>
-          <span className="font-medium">Cash</span>
+          <span className="font-medium">
+            ৳
+            {deliveryCharge?.charge
+              ? totalPrice + Number(deliveryCharge?.charge) - discount
+              : totalPrice - discount}
+          </span>
         </div>
 
         {isCart ? (
           <Link to="/checkout">
-            <button className="bg-black text-white text-sm py-2 px-4 rounded-md mt-4">
+            <button className="bg-black text-white text-sm py-2 px-4 rounded-md mt-4 w-full">
               Proceed to Checkout
             </button>
           </Link>
         ) : (
           <button
-            onClick={() => setIsShowPaymentMethod(true)}
-            className="bg-green-500 text-white text-sm py-2 px-4 rounded-md mt-4 disabled:bg-gray-200 disabled:text-black"
+            // onClick={() => setIsShowPaymentMethod(true)}
+            onClick={submitOrder}
+            className="bg-green-500 text-white text-sm py-2 px-4 rounded-md mt-4 disabled:bg-gray-200 disabled:text-black w-full"
             disabled={shippingAddress && cartItems.length > 0 ? false : true}
           >
             Go To Payment

@@ -29,7 +29,7 @@ export default function CheckoutPage() {
       {cartItems.length > 0 ? (
         <div>
           <div className="text-base text-gray-500 md:mb-8 border-b border-gray-300 flex gap-3 items-center mt-10 pb-4 ">
-            <IoHome /> Multisports {`>`} Cart
+            <IoHome /> Multisports {`>`} Checkout
           </div>
           <div className="w-full md:max-w-[75%] inline-block">
             {shippingAddress ? (
@@ -75,12 +75,6 @@ export default function CheckoutPage() {
                         {shippingAddress.address}
                       </span>
                     </div>
-                    <div className="flex justify-between text-sm text-gray-500 ">
-                      <b className="font-bold text-lg">Secondary Number</b>
-                      <span className="font-medium">
-                        {shippingAddress.secondaryContactNumber}
-                      </span>
-                    </div>
                   </div>
 
                   <button
@@ -116,10 +110,10 @@ export default function CheckoutPage() {
           <h3>Empty Cart</h3>
           <p>Please Add Product to View</p>
           <Link
-            to={"/products/all"}
+            to={"/"}
             className="bg-blue-500 text-white hover:bg-neutral-800 rounded-lg py-2 px-5"
           >
-            Go To Shop
+            Go To Home
           </Link>
 
           <PromotionalBanner />

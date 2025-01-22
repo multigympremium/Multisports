@@ -41,7 +41,6 @@ import AccountDashboard from "../components/Home/my-account/AccountDashboard";
 import AccountAddress from "../components/Home/my-account/AccountAddress";
 import ProductDetails from "../pages/OtherPage/product-details/page";
 import NewArrivals from "../components/Home/NewArrivals/NewArrivals";
-import ViewAllProduct from "../components/partial/ViewAllProduct/ViewAllProduct";
 import MyOrder from "../components/Home/my-account/MyOrder";
 import BrandProductPage from "../components/Home/Brands/BrandProductPage";
 import SeeAll from "../pages/SeeAll/SeeAll";
@@ -51,6 +50,7 @@ import Shop_address from "../pages/OtherPage/Shop_adress/Shop_address";
 import OrderSummeryPage from "../components/Home/checkout/OrderSummeryPage";
 import BlogDetails from "../pages/OtherPage/blog-details/BlogDetails";
 import MyWishlist from "../components/Home/my-account/MyWishlist";
+import PaymentPage from "../components/Home/checkout/PaymentPage";
 
 const AllRoutes = () => {
   // const [permissionData, setPermissionData] = useState([]);
@@ -167,6 +167,17 @@ const AllRoutes = () => {
             //   <Addworkout />
             // </PrivateRoute>
             <CheckoutPage />
+          ),
+        },
+        {
+          // path: "addworkout",
+          path: "payment_page",
+          // path: isPermittedRoute("addworkout"),
+          element: (
+            // <PrivateRoute>
+            //   <Addworkout />
+            // </PrivateRoute>
+            <PaymentPage />
           ),
         },
         {

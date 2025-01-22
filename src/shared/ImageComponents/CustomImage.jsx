@@ -1,4 +1,3 @@
-
 import React from "react";
 
 function CustomImage({ imageKey, ...rest }) {
@@ -8,7 +7,7 @@ function CustomImage({ imageKey, ...rest }) {
       alt="Image"
       width={600}
       height={500}
-      className="rounded z-10"
+      className="rounded z-[9]"
       {...rest}
     />
   );
