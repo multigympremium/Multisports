@@ -187,7 +187,7 @@ const CartItemComponent = ({
               </div>
             </div>
 
-            <div>
+            <div className="hidden md:block">
               {item?.actualPrice && (
                 <p className="text-xs md:text-base line-through opacity-60">
                   <span className="font-bold text-2xl">৳</span> {item.actualPrice * quantity}
@@ -201,7 +201,7 @@ const CartItemComponent = ({
               </p>
             </div>
 
-            <div className="mr-5">
+            <div className="md:mr-5">
               <div
                 className={`flex border rounded-lg px-1 items-center mt-2 ${!isCartArea ? "" : ""
                   }`}
@@ -220,7 +220,7 @@ const CartItemComponent = ({
                   +
                 </button>
               </div>
-
+              <span className="block md:hidden mt-2 text-right mr-3">৳{item?.price * quantity}</span>
             </div>
             <button
               className="absolute top-2 right-2"
