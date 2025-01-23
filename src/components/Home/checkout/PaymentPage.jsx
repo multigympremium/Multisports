@@ -9,9 +9,11 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import BgBlurModal from "../../../shared/Modal/BgBlurModal";
 import AccountAddress from "../my-account/AccountAddress";
 import PromotionalBanner from "../../UI/PromotionalBanner";
+import Swal from "sweetalert2";
+import useAxiosPublic from "../../../Hook/useAxiosPublic";
 
 export default function PaymentPage() {
-  const { cartItems } = useContext(AuthContext);
+  const { cartItems, setCartItems } = useContext(AuthContext);
   const { user } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
@@ -19,6 +21,7 @@ export default function PaymentPage() {
   const [discount, setDiscount] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
   const [deliveryCharge, setDeliveryCharge] = useState(0);
+  const axiosPublic = useAxiosPublic();
 
   const [shippingAddress, setShippingAddress] = useState(null);
   const [isShippingEdit, setIsShippingEdit] = useState(false);
@@ -31,12 +34,79 @@ export default function PaymentPage() {
     setDeliveryCharge(location?.state?.order?.deliveryCharge);
   }, [location]);
 
+  //   const submitOrder = async () => {
+  //     navigate(`/order_summary`, {
+  //       state: {
+  //         order: location?.state?.order,
+  //       },
+  //     });
+  //   };
+
   const submitOrder = async () => {
-    navigate(`/order_summary`, {
-      state: {
-        order: location?.state?.order,
-      },
-    });
+    // const submitOrderData = {
+    //   name: shippingAddress.recipientName,
+    //   phone: shippingAddress.contact_number,
+    //   secondary_phone: shippingAddress.secondaryContactNumber,
+    //   address: shippingAddress.address,
+    //   city_id: shippingAddress.city_id,
+    //   city_name: shippingAddress.city_name,
+    //   zone_id: shippingAddress.zone_id,
+    //   area_id: shippingAddress.area_id,
+    //   area_name: shippingAddress.area_name,
+    //   special_instruction: shippingAddress.special_instruction,
+    //   items: items,
+    //   payment_method: "cash",
+    //   total: totalPrice + deliveryCharge?.charge - discount,
+    //   // courierMethod: courierMethod,
+    //   itemCount: items.length,
+    //   discount: discount,
+    //   itemPerDiscount: totalCartDiscount,
+    //   deliveryCharge: deliveryCharge?.charge,
+    //   coupon: coupon,
+    //   userId: user._id,
+    //   totalItems: totalItems,
+    // };
+
+    try {
+      const response = await axiosPublic.post(
+        "/orders",
+        location?.state?.order
+      );
+      console.log(response, "response order");
+
+      if (response.data.success) {
+        setCartItems([]);
+        localStorage.removeItem("cartItems");
+        Swal.fire({
+          title: "Success!",
+          text: "Order placed successfully",
+          icon: "success",
+          confirmButtonText: "Ok",
+        });
+        // return router(`/my-account/orders/${response.data?.data?._id}`);
+        return navigate(`/success`, {
+          state: {
+            orderId: response.data?.data?._id,
+            category: location.state.order?.items[0]?.category,
+          },
+        });
+      }
+
+      Swal.fire({
+        title: "Error",
+        text: response.data.message,
+        icon: "error",
+        confirmButtonText: "OK",
+      });
+    } catch (error) {
+      console.log(error);
+      Swal.fire({
+        title: "Error",
+        text: error.message,
+        icon: "error",
+        confirmButtonText: "OK",
+      });
+    }
   };
 
   return (
@@ -123,7 +193,7 @@ export default function PaymentPage() {
               onClick={submitOrder}
               className="bg-green-500 text-white text-sm py-2 px-4 rounded-md mt-4 disabled:bg-gray-200 disabled:text-black w-full"
             >
-              Go To Order
+              Place Order
             </button>
           </div>
         </div>

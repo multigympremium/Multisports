@@ -343,7 +343,11 @@ const CreateShippingAddress = ({
           </div>
 
           {/* Area/Thana/Upazilla */}
-          <div>
+          <div
+            className={`${
+              zones.length === 0 ? "pointer-events-none opacity-50" : ""
+            }`}
+          >
             <label className="block font-semibold mb-1">Zone *</label>
             {!zoneLoading ? (
               <select
@@ -371,36 +375,38 @@ const CreateShippingAddress = ({
             )}
           </div>
           {/* Area/Thana/Upazilla */}
-          {areas.length > 0 && (
-            <div>
-              <label className="block font-semibold mb-1">Area *</label>
+          <div
+            className={`${
+              areas.length === 0 ? "pointer-events-none opacity-50" : ""
+            }`}
+          >
+            <label className="block font-semibold mb-1">Area *</label>
 
-              {!areaLoading ? (
-                <select
-                  name="area_id"
-                  value={formData.area_id}
-                  onChange={handleInputChange}
-                  className="border p-2 w-full rounded"
-                >
-                  <option value="">Select Area</option>
-                  {areas?.length > 0 &&
-                    areas.map((item, index) => (
-                      <option key={index} value={item.area_id}>
-                        {item?.area_name}
-                      </option>
-                    ))}
-                  {/* Add more options as necessary */}
-                </select>
-              ) : (
-                <div className="flex justify-center items-center border py-2">
-                  <AiOutlineLoading className="animate-spin text-gray-500" />
-                </div>
-              )}
-              {errors.area_id && (
-                <p className="text-red-500 text-sm mt-1">{errors.area_id}</p>
-              )}
-            </div>
-          )}
+            {!areaLoading ? (
+              <select
+                name="area_id"
+                value={formData.area_id}
+                onChange={handleInputChange}
+                className="border p-2 w-full rounded"
+              >
+                <option value="">Select Area</option>
+                {areas?.length > 0 &&
+                  areas.map((item, index) => (
+                    <option key={index} value={item.area_id}>
+                      {item?.area_name}
+                    </option>
+                  ))}
+                {/* Add more options as necessary */}
+              </select>
+            ) : (
+              <div className="flex justify-center items-center border py-2">
+                <AiOutlineLoading className="animate-spin text-gray-500" />
+              </div>
+            )}
+            {errors.area_id && (
+              <p className="text-red-500 text-sm mt-1">{errors.area_id}</p>
+            )}
+          </div>
 
           {/* Post Code */}
           {/* <div> 

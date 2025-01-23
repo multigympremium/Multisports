@@ -849,43 +849,45 @@ const ShippingForm = ({
             )}
           </div>
           {/* Area/Thana/Upazilla */}
-          {areas.length > 0 && (
-            <div>
-              <label className="block font-semibold mb-1">Area *</label>
+          <div
+            className={`${
+              areas.length === 0 ? "pointer-events-none opacity-50" : ""
+            }`}
+          >
+            <label className="block font-semibold mb-1">Area *</label>
 
-              {!areaLoading ? (
-                <select
-                  name="area_id"
-                  value={area_id}
-                  onChange={(e) => {
-                    const filter_name = areas.find(
-                      (area) => area.area_id == e.target.value
-                    ).area_name;
-                    console.log(filter_name, "area name");
-                    setAreaId(e.target.value);
-                    setAreaName(filter_name);
-                  }}
-                  className="border outline-none mt-2 p-2 w-full rounded-lg"
-                >
-                  <option value="">Select Area</option>
-                  {areas?.length > 0 &&
-                    areas.map((item, index) => (
-                      <option key={index} value={item.area_id}>
-                        {item?.area_name}
-                      </option>
-                    ))}
-                  {/* Add more options as necessary */}
-                </select>
-              ) : (
-                <div className="flex justify-center items-center border py-3 mt-3 rounded-lg">
-                  <AiOutlineLoading className="animate-spin text-gray-500" />
-                </div>
-              )}
-              {errors.area_id && (
-                <p className="text-red-500 text-sm mt-1">{errors.area_id}</p>
-              )}
-            </div>
-          )}
+            {!areaLoading ? (
+              <select
+                name="area_id"
+                value={area_id}
+                onChange={(e) => {
+                  const filter_name = areas.find(
+                    (area) => area.area_id == e.target.value
+                  ).area_name;
+                  console.log(filter_name, "area name");
+                  setAreaId(e.target.value);
+                  setAreaName(filter_name);
+                }}
+                className="border outline-none mt-2 p-2 w-full rounded-lg"
+              >
+                <option value="">Select Area</option>
+                {areas?.length > 0 &&
+                  areas.map((item, index) => (
+                    <option key={index} value={item.area_id}>
+                      {item?.area_name}
+                    </option>
+                  ))}
+                {/* Add more options as necessary */}
+              </select>
+            ) : (
+              <div className="flex justify-center items-center border py-3 mt-3 rounded-lg">
+                <AiOutlineLoading className="animate-spin text-gray-500" />
+              </div>
+            )}
+            {errors.area_id && (
+              <p className="text-red-500 text-sm mt-1">{errors.area_id}</p>
+            )}
+          </div>
 
           {/* Post Code */}
           <div>
