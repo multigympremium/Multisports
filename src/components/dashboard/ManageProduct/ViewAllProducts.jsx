@@ -103,7 +103,7 @@ const ProductFlag = () => {
   const handleDelete = async (id) => {
     try {
       Swal.fire({
-        title: "Are you sure you want to delete this member?",
+        title: "Are you sure you want to delete this?",
         text: "This action cannot be undone!",
         icon: "warning",
         showCancelButton: true,
@@ -129,7 +129,7 @@ const ProductFlag = () => {
       });
     } catch (error) {
       console.log(error, "error");
-      toast.error("Error deleting brand!");
+      toast.error("Error deleting Item!");
     }
     console.log(`Delete brand with ID: ${id}`);
   };

@@ -16,6 +16,7 @@ export default function EditModelBrandForm({
   const [code, setCode] = useState("");
   const axiosSecure = useAxiosSecure();
   const productBrands = useGetAllProductBrands({});
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     async function fetchBrandData() {
@@ -51,13 +52,15 @@ export default function EditModelBrandForm({
     formData.append("modelName", modelName);
     formData.append("code", code);
 
+    setLoading(true);
+
     try {
       const res = await axiosSecure.put(`/model-brands/${targetId}`, formData);
 
       if (res.status === 200 || res.status === 201) {
         Swal.fire({
           title: "Success!",
-          text: "Brand updated successfully",
+          text: "Model of Brand updated successfully",
           icon: "success",
           confirmButtonText: "Ok",
         });
@@ -70,6 +73,8 @@ export default function EditModelBrandForm({
         icon: "error",
         confirmButtonText: "Ok",
       });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -151,7 +156,11 @@ export default function EditModelBrandForm({
             <button
               type="submit"
               className="w-full p-3 bg-blue-500 text-white font-bold rounded-md"
+              disabled={loading}
             >
+              {loading && (
+                <span className="loading loading-spinner mr-2  loading-xs"></span>
+              )}
               Update Model Of Brand
             </button>
           </div>

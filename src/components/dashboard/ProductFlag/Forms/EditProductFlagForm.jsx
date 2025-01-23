@@ -13,6 +13,7 @@ export default function EditProductFlagForm({
   const [flagName, setFlagName] = useState("");
   const [flagIcon, setFlagIcon] = useState(null);
   const [flagIconPreview, setFlagIconPreview] = useState("");
+  const [loading, setLoading] = useState(false);
   const axiosSecure = useAxiosSecure();
 
   useEffect(() => {
@@ -47,7 +48,7 @@ export default function EditProductFlagForm({
     if (!flagName) {
       Swal.fire({
         title: "Error!",
-        text: "Please fill the flag name field",
+        text: "Please fill the flag field",
         icon: "error",
         confirmButtonText: "Ok",
       });
@@ -58,13 +59,15 @@ export default function EditProductFlagForm({
       formData.append("flagIcon", flagIcon);
     }
 
+    setLoading(true);
+
     try {
       const res = await axiosSecure.put(`/product-flag/${targetId}`, formData);
 
       if (res.status === 200 || res.status === 201) {
         Swal.fire({
           title: "Success!",
-          text: "product flag updated successfully",
+          text: "Product flag updated successfully",
           icon: "success",
           confirmButtonText: "Ok",
         });
@@ -77,6 +80,8 @@ export default function EditProductFlagForm({
         icon: "error",
         confirmButtonText: "Ok",
       });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -141,7 +146,14 @@ export default function EditProductFlagForm({
             >
               Cancel
             </button>
-            <button type="submit" className="w-full customSaveButton">
+            <button
+              type="submit"
+              className="w-full customSaveButton"
+              disabled={loading}
+            >
+              {loading && (
+                <span className="loading loading-spinner mr-2  loading-xs"></span>
+              )}
               Update Flag
             </button>
           </div>

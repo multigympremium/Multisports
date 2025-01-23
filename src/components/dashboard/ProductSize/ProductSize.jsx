@@ -16,6 +16,7 @@ import EditButton from "../../../components library/EditButton";
 import TableSkeleton from "../../../components library/TableSkeleton";
 import Mpagination from "../../../shared/Mpagination";
 import BgBlurModal from "../../../shared/Modal/BgBlurModal";
+import moment from "moment";
 
 const ProductSize = () => {
   // State management
@@ -77,7 +78,7 @@ const ProductSize = () => {
   const handleDelete = async (id) => {
     try {
       Swal.fire({
-        title: "Are you sure you want to delete this member?",
+        title: "Are you sure you want to delete this?",
         text: "This action cannot be undone!",
         icon: "warning",
         showCancelButton: true,
@@ -103,7 +104,7 @@ const ProductSize = () => {
       });
     } catch (error) {
       console.log(error, "error");
-      toast.error("Error deleting brand!");
+      toast.error("Error deleting Item!");
     }
     console.log(`Delete brand with ID: ${id}`);
   };
@@ -180,7 +181,7 @@ const ProductSize = () => {
                         </span>
                       </td>
                       <td className="border p-2 text-center">
-                        {item.createdAt}
+                        {moment(item.createdAt).format("DD-MM-YYYY")}
                       </td>
                       <td className="border p-2">
                         <div className="flex justify-center gap-2">

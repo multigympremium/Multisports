@@ -47,7 +47,7 @@ export default function EditProductColorForm({
       if (res.status === 200 || res.status === 201) {
         Swal.fire({
           title: "Success!",
-          text: "productColor updated successfully",
+          text: "Product Color updated successfully",
           icon: "success",
           confirmButtonText: "Ok",
         });

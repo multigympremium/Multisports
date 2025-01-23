@@ -41,7 +41,7 @@ const SpecialDiscountBanner = () => {
     console.log(file_key, "file_key", id);
     try {
       Swal.fire({
-        title: "Are you sure you want to delete this member?",
+        title: "Are you sure you want to delete this?",
         text: "This action cannot be undone!",
         icon: "warning",
         showCancelButton: true,

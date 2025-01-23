@@ -74,7 +74,7 @@ const ProductBrands = () => {
   const handleDelete = async (id) => {
     try {
       Swal.fire({
-        title: "Are you sure you want to delete this member?",
+        title: "Are you sure you want to delete this?",
         text: "This action cannot be undone!",
         icon: "warning",
         showCancelButton: true,
@@ -100,7 +100,7 @@ const ProductBrands = () => {
       });
     } catch (error) {
       console.log(error, "error");
-      toast.error("Error deleting brand!");
+      toast.error("Error deleting Item!");
     }
     console.log(`Delete brand with ID: ${id}`);
   };
@@ -119,11 +119,11 @@ const ProductBrands = () => {
                 <IoAddCircle /> Add New Brand
               </span>
             </button>
-            <button className="customCancelButton">
+            {/* <button className="customCancelButton">
               <span className="flex items-center gap-1">
                 <FaRetweet /> Rearrange Brand
               </span>
-            </button>
+            </button> */}
           </div>
         </div>
 

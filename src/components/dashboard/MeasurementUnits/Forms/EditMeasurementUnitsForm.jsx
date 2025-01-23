@@ -47,7 +47,7 @@ export default function EditMeasurementUnitsForm({
       if (res.status === 200 || res.status === 201) {
         Swal.fire({
           title: "Success!",
-          text: "unitName updated successfully",
+          text: "Unit Name updated successfully",
           icon: "success",
           confirmButtonText: "Ok",
         });

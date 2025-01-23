@@ -44,7 +44,7 @@ export default function EditSizeForm({
       if (res.status === 200 || res.status === 201) {
         Swal.fire({
           title: "Success!",
-          text: "sizeName updated successfully",
+          text: "Size updated successfully",
           icon: "success",
           confirmButtonText: "Ok",
         });

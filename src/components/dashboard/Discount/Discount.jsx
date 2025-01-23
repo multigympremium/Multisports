@@ -51,6 +51,7 @@ const DiscountForm = () => {
   };
 
   const handleSubmit = async () => {
+    setLoading(true);
     try {
       if (targetData) {
         const response = await axiosSecure.put(
@@ -62,7 +63,7 @@ const DiscountForm = () => {
           setLoading(false);
           Swal.fire({
             title: "Success!",
-            text: "Address Created Successfully!",
+            text: "Discount Updated Successfully!",
             icon: "success",
             confirmButtonText: "Ok",
           });
@@ -75,7 +76,7 @@ const DiscountForm = () => {
           setLoading(false);
           Swal.fire({
             title: "Success!",
-            text: "Address Created Successfully!",
+            text: "Discount Created Successfully!",
             icon: "success",
             confirmButtonText: "Ok",
           });
@@ -91,9 +92,9 @@ const DiscountForm = () => {
         confirmButtonText: "Ok",
       });
       setLoading(false);
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   };
 
   useEffect(() => {
@@ -321,7 +322,14 @@ const DiscountForm = () => {
         </div>
       </div>
 
-      <button className="btn btn-primary block ml-auto" onClick={handleSubmit}>
+      <button
+        className="btn btn-primary block ml-auto"
+        onClick={handleSubmit}
+        disabled={loading}
+      >
+        {loading && (
+          <span className="loading loading-spinner mr-2  loading-xs"></span>
+        )}
         Save
       </button>
     </div>

@@ -138,17 +138,6 @@ export default function CustomCSSJSForm() {
           <div className="mt-3">
             <div className="flex gap-4 justify-end">
               <button
-                type="button"
-                className="customCancelButton"
-                onClick={() => {
-                  setCustomCSS("");
-                  setHeaderScript("");
-                  setFooterScript("");
-                }}
-              >
-                Cancel
-              </button>
-              <button
                 type="submit"
                 disabled={loading}
                 className="customSaveButton"

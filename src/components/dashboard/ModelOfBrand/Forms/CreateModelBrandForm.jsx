@@ -8,6 +8,7 @@ export default function CreateModelBrandForm({ isShowModal, setIsShowModal }) {
   const [modelName, setModelName] = useState("");
   const [code, setCode] = useState("");
   const productBrands = useGetAllProductBrands({ isShowModal });
+  const [loading, setLoading] = useState(false);
 
   const axiosSecure = useAxiosSecure();
 
@@ -29,6 +30,8 @@ export default function CreateModelBrandForm({ isShowModal, setIsShowModal }) {
     formData.append("modelName", modelName);
     formData.append("code", code);
 
+    setLoading(true);
+
     try {
       const res = await axiosSecure.post("/model-brands", formData);
 
@@ -36,7 +39,7 @@ export default function CreateModelBrandForm({ isShowModal, setIsShowModal }) {
         handleCloseModal();
         Swal.fire({
           title: "Success!",
-          text: "Brand created successfully",
+          text: "Model of Brand created successfully",
           icon: "success",
           confirmButtonText: "Ok",
         });
@@ -49,6 +52,8 @@ export default function CreateModelBrandForm({ isShowModal, setIsShowModal }) {
         icon: "error",
         confirmButtonText: "Ok",
       });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -124,7 +129,11 @@ export default function CreateModelBrandForm({ isShowModal, setIsShowModal }) {
             <button
               type="submit"
               className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+              disabled={loading}
             >
+              {loading && (
+                <span className="loading loading-spinner mr-2  loading-xs"></span>
+              )}
               Save Brand
             </button>
           </div>

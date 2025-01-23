@@ -102,11 +102,8 @@ export default function SeoForm() {
           }
           setThumbnailPreview(data?.metaOgImage);
           setTargetId(data?._id);
-        } else {
-          handleDefaultColor();
         }
       } catch (error) {
-        handleDefaultColor();
         console.error("Error fetching testimonial:", error);
       }
     };
@@ -215,7 +212,7 @@ export default function SeoForm() {
                 Updating..
               </>
             ) : (
-              "Update Info"
+              "Update"
             )}
           </button>
         </div>

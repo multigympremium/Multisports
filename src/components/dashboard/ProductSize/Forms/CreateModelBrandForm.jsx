@@ -32,7 +32,7 @@ export default function CreateSizeForm({ isShowModal, setIsShowModal }) {
         handleCloseModal();
         Swal.fire({
           title: "Success!",
-          text: "sizeName created successfully",
+          text: "Size created successfully",
           icon: "success",
           confirmButtonText: "Ok",
         });

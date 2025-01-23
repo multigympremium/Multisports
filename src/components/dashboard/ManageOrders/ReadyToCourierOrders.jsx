@@ -41,7 +41,7 @@ export default function PersonalizedOrders() {
   const handleDelete = async (id) => {
     try {
       Swal.fire({
-        title: "Are you sure you want to delete this member?",
+        title: "Are you sure you want to delete this?",
         text: "This action cannot be undone!",
         icon: "warning",
         showCancelButton: true,
@@ -56,7 +56,7 @@ export default function PersonalizedOrders() {
             console.log(res, "res");
             if (res.status === 200 || res.status === 201) {
               setIsDeleted((prev) => !prev);
-              toast.success("Category deleted successfully!");
+              toast.success("Order deleted successfully!");
             }
           } catch (error) {
             console.log(error, "error");

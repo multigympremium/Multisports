@@ -70,7 +70,7 @@ const ModelOfBrand = () => {
   const handleDelete = async (id) => {
     try {
       Swal.fire({
-        title: "Are you sure you want to delete this member?",
+        title: "Are you sure you want to delete this?",
         text: "This action cannot be undone!",
         icon: "warning",
         showCancelButton: true,
@@ -96,7 +96,7 @@ const ModelOfBrand = () => {
       });
     } catch (error) {
       console.log(error, "error");
-      toast.error("Error deleting brand!");
+      toast.error("Error deleting Item!");
     }
     console.log(`Delete brand with ID: ${id}`);
   };
@@ -113,9 +113,9 @@ const ModelOfBrand = () => {
             >
               Add New Brand
             </button>
-            <button className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+            {/* <button className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
               Rearrange Brand
-            </button>
+            </button> */}
           </div>
         </div>
 

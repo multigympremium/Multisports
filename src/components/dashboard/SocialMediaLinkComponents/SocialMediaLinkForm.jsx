@@ -42,7 +42,7 @@ export default function SocialMediaLinksForm() {
         if (res.status === 200 || res.status === 201) {
           Swal.fire({
             title: "Success!",
-            text: "Social updated successfully",
+            text: "Social media links updated successfully",
             icon: "success",
             confirmButtonText: "Ok",
           });
@@ -52,7 +52,7 @@ export default function SocialMediaLinksForm() {
         if (res.status === 200 || res.status === 201) {
           Swal.fire({
             title: "Success!",
-            text: "Social Created successfully",
+            text: "Social media links Created successfully",
             icon: "success",
             confirmButtonText: "Ok",
           });
@@ -90,11 +90,8 @@ export default function SocialMediaLinksForm() {
             setValue(key, data[key]);
           }
           setTargetId(data?._id);
-        } else {
-          handleDefaultColor();
         }
       } catch (error) {
-        handleDefaultColor();
         console.error("Error fetching testimonial:", error);
       }
     };
@@ -286,7 +283,7 @@ export default function SocialMediaLinksForm() {
                 Updating ..
               </>
             ) : (
-              "Update info"
+              "Update Links"
             )}
           </button>
         </div>

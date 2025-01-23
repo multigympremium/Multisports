@@ -12,6 +12,7 @@ import EditMeasurementUnitsForm from "./Forms/EditMeasurementUnitsForm";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
 import Mpagination from "../../../shared/Mpagination";
 import BgBlurModal from "../../../shared/Modal/BgBlurModal";
+import moment from "moment";
 
 const MeasurementUnits = () => {
   // State management
@@ -79,7 +80,7 @@ const MeasurementUnits = () => {
   const handleDelete = async (id) => {
     try {
       Swal.fire({
-        title: "Are you sure you want to delete this member?",
+        title: "Are you sure you want to delete this ?",
         text: "This action cannot be undone!",
         icon: "warning",
         showCancelButton: true,
@@ -95,7 +96,7 @@ const MeasurementUnits = () => {
             if (res.status === 200 || res.status === 201) {
               setIsDeleted((prev) => !prev);
 
-              toast.success("Brand deleted successfully!");
+              toast.success("Item deleted successfully!");
             }
           } catch (error) {
             console.log(error, "error");
@@ -105,16 +106,15 @@ const MeasurementUnits = () => {
       });
     } catch (error) {
       console.log(error, "error");
-      toast.error("Error deleting brand!");
+      toast.error("Error deleting Item!");
     }
-    console.log(`Delete brand with ID: ${id}`);
   };
 
   return (
     <>
       <div className="container mx-auto p-4">
         <div className="flex justify-between items-center mb-4">
-          <h1 className="text-2xl font-bold">unit List</h1>
+          <h1 className="text-2xl font-bold">Unit List</h1>
           <div>
             <button
               className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mr-2"
@@ -122,9 +122,9 @@ const MeasurementUnits = () => {
             >
               Add New Unit
             </button>
-            <button className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+            {/* <button className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
               Rearrange Brand
-            </button>
+            </button> */}
           </div>
         </div>
 
@@ -167,7 +167,9 @@ const MeasurementUnits = () => {
                         {index + 1 + currentPage * itemsPerPage}
                       </td>
                       <td className="border p-2">{item.unitName}</td>
-                      <td className="border p-2">{item.createdAt}</td>
+                      <td className="border p-2">
+                        {moment(item.createdAt).format("YYYY-MM-DD")}
+                      </td>
                       <td className="border p-2">
                         <div className="flex space-x-2">
                           <button

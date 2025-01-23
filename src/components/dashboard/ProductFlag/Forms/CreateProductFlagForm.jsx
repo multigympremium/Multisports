@@ -9,6 +9,7 @@ export default function CreateProductFlagForm({ isShowModal, setIsShowModal }) {
   const [flagName, setFlagName] = useState("");
   const [flagIcon, setFlagIcon] = useState(null);
   const [flagIconPreview, setFlagIconPreview] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const axiosSecure = useAxiosSecure();
 
@@ -33,7 +34,7 @@ export default function CreateProductFlagForm({ isShowModal, setIsShowModal }) {
     if (!flagName) {
       Swal.fire({
         title: "Error!",
-        text: "Please fill the flag name field",
+        text: "Please fill the flag field",
         icon: "error",
         confirmButtonText: "Ok",
       });
@@ -43,6 +44,8 @@ export default function CreateProductFlagForm({ isShowModal, setIsShowModal }) {
     if (flagIcon) {
       formData.append("flagIcon", flagIcon);
     }
+
+    setLoading(true);
 
     try {
       const res = await axiosSecure.post("/product-flag", formData);
@@ -64,6 +67,8 @@ export default function CreateProductFlagForm({ isShowModal, setIsShowModal }) {
         icon: "error",
         confirmButtonText: "Ok",
       });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -128,7 +133,14 @@ export default function CreateProductFlagForm({ isShowModal, setIsShowModal }) {
               Cancel
             </button>
 
-            <button type="submit" className="customSaveButton w-full">
+            <button
+              type="submit"
+              className="customSaveButton w-full"
+              disabled={loading}
+            >
+              {loading && (
+                <span className="loading loading-spinner mr-2  loading-xs"></span>
+              )}
               Save flag
             </button>
           </div>

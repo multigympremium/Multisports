@@ -29,6 +29,7 @@ export default function EditBrandForm({
   const [brandName, setBrandName] = useState("");
   const categories = useGetAllCategories({});
   const subcategories = useGetAllSubCategories({});
+  const [loading, setLoading] = useState(false);
 
   const axiosSecure = useAxiosSecure();
 
@@ -100,6 +101,8 @@ export default function EditBrandForm({
     if (banner) formData.append("banner", banner);
     formData.append("brandName", brandName);
 
+    setLoading(true);
+
     try {
       const res = await axiosSecure.put(
         `/product-brands/${targetId}`,
@@ -122,6 +125,8 @@ export default function EditBrandForm({
         icon: "error",
         confirmButtonText: "Ok",
       });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -300,7 +305,14 @@ export default function EditBrandForm({
             >
               Cancel
             </button>
-            <button type="submit" className="customSaveButton">
+            <button
+              type="submit"
+              className="customSaveButton"
+              disabled={loading}
+            >
+              {loading && (
+                <span className="loading loading-spinner mr-2  loading-xs"></span>
+              )}
               Update Category
             </button>
           </div>

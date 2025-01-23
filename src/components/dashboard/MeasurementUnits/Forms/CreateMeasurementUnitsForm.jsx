@@ -35,7 +35,7 @@ export default function CreateMeasurementUnitsForm({
         handleCloseModal();
         Swal.fire({
           title: "Success!",
-          text: "unitName created successfully",
+          text: "Unit Name created successfully",
           icon: "success",
           confirmButtonText: "Ok",
         });

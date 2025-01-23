@@ -78,7 +78,7 @@ const ProductFlag = () => {
   const handleDelete = async (id) => {
     try {
       Swal.fire({
-        title: "Are you sure you want to delete this member?",
+        title: "Are you sure you want to delete this?",
         text: "This action cannot be undone!",
         icon: "warning",
         showCancelButton: true,
@@ -89,12 +89,12 @@ const ProductFlag = () => {
       }).then(async (result) => {
         if (result.isConfirmed) {
           try {
-            const res = await axiosSecure.delete(`/product-size/${id}`);
+            const res = await axiosSecure.delete(`/product-flag/${id}`);
             console.log(res, "res");
             if (res.status === 200 || res.status === 201) {
               setIsDeleted((prev) => !prev);
 
-              toast.success("Brand deleted successfully!");
+              toast.success("item deleted successfully!");
             }
           } catch (error) {
             console.log(error, "error");
@@ -104,7 +104,7 @@ const ProductFlag = () => {
       });
     } catch (error) {
       console.log(error, "error");
-      toast.error("Error deleting brand!");
+      toast.error("Error deleting Item!");
     }
     console.log(`Delete brand with ID: ${id}`);
   };
@@ -113,21 +113,21 @@ const ProductFlag = () => {
     <>
       <div className="container mx-auto p-6 pt-0">
         <div className="flex justify-between items-center mb-9">
-          <h1 className="text-3xl header font-semibold">Size List</h1>
+          <h1 className="text-3xl header font-semibold">Flag List</h1>
           <div className="flex gap-4">
             <button
               className="customSaveButton"
               onClick={() => setIsShowModal(true)}
             >
               <span className="flex items-center gap-1">
-                <IoAddCircle /> Add New Size
+                <IoAddCircle /> Add New Flag
               </span>
             </button>
-            <button className="customCancelButton">
+            {/* <button className="customCancelButton">
               <span className="flex items-center gap-1">
                 <FaRetweet /> Rearrange Brand
               </span>
-            </button>
+            </button> */}
           </div>
         </div>
 

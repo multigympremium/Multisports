@@ -37,7 +37,7 @@ export default function CreateProductColorForm({
         handleCloseModal();
         Swal.fire({
           title: "Success!",
-          text: "productColor created successfully",
+          text: "Product color created successfully",
           icon: "success",
           confirmButtonText: "Ok",
         });
