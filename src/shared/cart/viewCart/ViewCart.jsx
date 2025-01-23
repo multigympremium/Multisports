@@ -14,6 +14,7 @@ export default function ViewCart() {
       {cartItems?.length > 0 &&
         cartItems?.map((item, index) => (
           <CartItemComponent
+          index = {index}
             item={item}
             updateCartQuantity={updateCartQuantity}
             removeFromCart={removeFromCart}

@@ -5,6 +5,7 @@ import { IoMdClose } from "react-icons/io";
 const CartItemComponent = ({
   updateCartQuantity,
   item,
+  index,
   removeFromCart,
   isCartArea = false,
 }) => {
@@ -127,34 +128,41 @@ const CartItemComponent = ({
         </div>
       ) : (
         <div>
-          <div className="flex items-center mb-4 relative border rounded-md p-2">
-            <div className="max-w-[100px] w-full">
-              <CustomImage
-                imageKey={item.thumbnail}
-                alt="Product Card"
-                className="w-[100px] object-cover"
-                width={100}
-                height={100}
-              />
-            </div>
-            <div className="flex w-full ml-4 ">
-              <div>
-                <div className="flex gap-3 flex-wrap flex-col ">
-                  <span className="font-bold text-black">
-                    {item.productTitle}
-                  </span>
-                  <div className="flex space-x-2">
-                    <span
-                      className="font-bold text-black w-6 h-6 rounded-sm"
-                      style={{ background: item.color }}
-                    ></span>
-                    <span className="font-bold text-black w-6 h-6 rounded-sm border text-center">
-                      {item.size}
-                    </span>
-                  </div>
-                </div>
+          <div className="flex  items-center justify-between mb-4 relative border rounded-md p-2">
+            <div className="flex  items-center gap-2">
+              <div className="md:max-w-[100px]">
+                <CustomImage
+                  imageKey={item.thumbnail}
+                  alt="Product Card"
+                  className="w-[100px] object-cover"
+                  width={100}
+                  height={100}
+                />
+              </div>
+              <div className="flex   ml-4 ">
+                <div>
+                  <div className="flex flex-wrap flex-col ">
+                    <div>
+                      <p className="font-semibold text-gray-500">Sn .{index + 1}</p>
+                      <span className="font-semibold text-black">
+                        {item.productTitle}
+                      </span></div>
+                    <div className="flex flex-col ">
+                      <div className="flex items-center gap-3">
+                        <p className="font-semibold text-gray-500">Color : </p>
+                        <div
+                          className="font-bold text-black w-6 h-6 rounded-lg"
+                          style={{ background: item.color }}
+                        ></div>
+                      </div>
+                      <p className="font-semibold text-gray-500">
+                        Size : {item.size}
+                      </p>
+                    </div>
 
-                {!isCartArea && (
+                  </div>
+
+                  {/* {!isCartArea && (
                   <>
                     {item?.shortDescription &&
                     (item?.shortDescription?.length > 100) &
@@ -174,41 +182,48 @@ const CartItemComponent = ({
                       />
                     )}
                   </>
-                )}
+                )} */}
+                </div>
               </div>
+            </div>
 
+            <div>
+              {item?.actualPrice && (
+                <p className="text-xs md:text-base line-through opacity-60">
+                  <span className="font-bold text-2xl">৳</span> {item.actualPrice * quantity}
+                </p>
+              )}
+              <p className="font-semibold  ml-auto">
+                <span className="text-gray-500 text-base">Unit Price : </span><span className="font-bold text-2xl">৳</span> {item?.price}
+              </p>
+              <p className="font-semibold   ml-auto">
+                <span className="text-gray-500 text-base">Amount : </span><span className="font-bold text-2xl">৳</span> {item?.price * quantity}
+              </p>
+            </div>
+
+            <div className="mr-5">
               <div
-                className={`flex items-center mt-2 ${
-                  !isCartArea ? "ml-14" : "ml-4"
-                }`}
+                className={`flex border rounded-lg px-1 items-center mt-2 ${!isCartArea ? "" : ""
+                  }`}
               >
                 <button
-                  className="px-2 py-1 bg-gray-300 rounded"
+                  className="px-2 py-1  rounded"
                   onClick={() => decreaseQuantity(item)}
                 >
                   -
                 </button>
                 <span className="mx-2">{item?.quantity}</span>
                 <button
-                  className="px-2 py-1 bg-gray-300 rounded"
+                  className="px-2 py-1  rounded"
                   onClick={() => increaseQuantity(item)}
                 >
                   +
                 </button>
               </div>
-            </div>
-            <div>
-              {item?.actualPrice && (
-                <p className="text-xs md:text-base line-through opacity-60">
-                  {item.actualPrice * quantity}
-                </p>
-              )}
-              <p className="font-bold text-lg ml-auto">
-                {item?.price * quantity}
-              </p>
+
             </div>
             <button
-              className="absolute top-1 right-1"
+              className="absolute top-2 right-2"
               onClick={() => removeFromCart(item._id, item.color, item.size)}
             >
               <IoMdClose />

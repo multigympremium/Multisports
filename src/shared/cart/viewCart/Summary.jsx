@@ -174,7 +174,7 @@ export default function Summary({ isCart = false, shippingAddress = null }) {
   return (
     <>
       <div className="border p-6 md:mt-auto rounded-md shadow-lg w-full mt-6  md:max-w-[350px]">
-        <h2 className="text-xl font-bold mb-4 pb-4 border-b border-black text-nowrap">
+        <h2 className="text-xl font-semibold mb-4 pb-4 border-b border-gray-300 text-nowrap">
           Order Summary
         </h2>
 
@@ -193,15 +193,15 @@ export default function Summary({ isCart = false, shippingAddress = null }) {
           <span>Per-Product Total Discount</span>
           <span className="font-medium text-red-400">-{totalCartDiscount}</span>
         </div>
-        <div className="flex justify-between text-sm text-gray-500 mt-2">
-          <b className="font-bold text-lg">Discounts</b>
-          <span className="font-medium text-red-400">-{discount}</span>
+        <div className="flex mt-2 justify-between text-sm text-gray-500 mt-2">
+          <p className="">Discounts</p>
+          <span className=" text-red-400">-{discount}</span>
         </div>
-        <div className="flex justify-between text-sm text-gray-500 mt-2">
-          <b className="font-bold text-lg">Shipping</b>
-          <span className="font-medium">৳{deliveryCharge?.charge || 0}</span>
+        <div className="flex mt-2 justify-between text-sm text-gray-500 mt-2">
+          <p className="">Shipping</p>
+          <span className="">৳{deliveryCharge?.charge || 0}</span>
         </div>
-        <div className="flex justify-between text-sm text-gray-500">
+        <div className="flex mt-3  items-center justify-between text-sm text-gray-500">
           <b className="font-bold text-lg">Total</b>
           <span className="font-medium">
             ৳
@@ -213,7 +213,7 @@ export default function Summary({ isCart = false, shippingAddress = null }) {
 
         {isCart ? (
           <Link to="/checkout">
-            <button className="bg-black text-white text-sm py-2 px-4 rounded-md mt-4 w-full">
+            <button className="bg-gray-800 text-white font-semibold py-2 px-4 rounded-md mt-4 w-full">
               Proceed to Checkout
             </button>
           </Link>
