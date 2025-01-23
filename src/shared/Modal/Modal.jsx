@@ -12,6 +12,7 @@ const Modal = ({
   image,
   colors,
   isShowModal,
+  setIsShowModal,
   product,
 }) => {
   const [trackingProduct, setTrackingProduct] = useState({});
@@ -150,7 +151,7 @@ const Modal = ({
   };
 
   return (
-    <dialog id={id} className="modal">
+    <dialog id={id} className={`modal`}>
       <div className=" modal-box p-0 rounded max-w-4xl w-[90%] mx-auto md:w-full flex flex-col md:flex-row">
         <form method="dialog">
           <button className="btn btn-sm btn-circle btn-ghost absolute focus:outline-none right-2 top-2">
@@ -183,11 +184,10 @@ const Modal = ({
                   {colors.map((color, index) => (
                     <div
                       key={index}
-                      className={`border flex items-center border-gray-100 duration-300 ease-in-out  hover:border-gray-400 justify-center p-[3px] md:p-1 rounded-md ${
-                        selectedColor?.value === color?.color?.value
+                      className={`border flex items-center border-gray-100 duration-300 ease-in-out  hover:border-gray-400 justify-center p-[3px] md:p-1 rounded-md ${selectedColor?.value === color?.color?.value
                           ? "bg-neutral-500 text-white"
                           : ""
-                      }`}
+                        }`}
                     >
                       <button
                         style={{ backgroundColor: color?.color?.value }}
@@ -211,11 +211,10 @@ const Modal = ({
                     {sizeArray.map((size) => (
                       <button
                         key={size}
-                        className={`border text-xs md:text-sm shadow-sm w-7 h-7 md:w-10 md:h-10 hover:border-gray-500 duration-300 ease-in-out rounded-lg disabled:opacity-50 disabled:cursor-not-allowed ${
-                          size.value === selectedSize.value
+                        className={`border text-xs md:text-sm shadow-sm w-7 h-7 md:w-10 md:h-10 hover:border-gray-500 duration-300 ease-in-out rounded-lg disabled:opacity-50 disabled:cursor-not-allowed ${size.value === selectedSize.value
                             ? "shadow-lg shadow-green-500"
                             : ""
-                        }`}
+                          }`}
                         onClick={() => setSelectedSize(size)}
                         disabled={stock - currentStock == 0}
                       >
@@ -279,8 +278,55 @@ const Modal = ({
                       +
                     </button>
                   </div>
+                  
+                  <form method="dialog" className="w-full md:hidden block ">
                   <button
                     className="md:py-3 py-2 rounded-lg text-sm md:text-base font-semibold bg-black text-white w-full md:flex-1 disabled:opacity-50 disabled:cursor-not-allowed"
+                    // onClick={() => {
+                    //   addToCart(
+                    //     product,
+                    //     selectedColor.value,
+                    //     selectedSize.value
+                    //   );
+                    //   if (selectedSize.value) {
+                    //     toast.success("Product Added to Cart!");
+                    //   }
+                    // }}
+                    onClick={() => {
+                      const isExist = cartItems.find(
+                        (item) =>
+                          item._id === product._id &&
+                          item.color === selectedColor?.value &&
+                          item.size === selectedSize?.value
+                      );
+                      if (isExist) {
+                        updateCartQuantity(
+                          product._id,
+                          quantity,
+                          selectedColor?.value,
+                          selectedSize?.value
+                        );
+                      } else {
+                        addToCart(
+                          product,
+                          selectedColor.value,
+                          selectedSize.value,
+                          selectedColor.label,
+                          quantity
+                        );
+                      }
+                      if (selectedSize.value) {
+                        setIsShowModal(false)
+                        toast.success("Product Added to Cart!");
+                      }
+                    }}
+                    disabled={stock - currentStock == 0 || quantity == 0}
+                  >
+                    Add To Cartt
+                  </button>
+                  </form>
+                  <button
+                    className="md:py-3 hidden md:block py-2 rounded-lg text-sm md:text-base font-semibold bg-black text-white w-full md:flex-1 disabled:opacity-50 disabled:cursor-not-allowed"
                     // onClick={() => {
                     //   addToCart(
                     //     product,
