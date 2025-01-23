@@ -11,25 +11,25 @@ export default function Success() {
 
   console.log(location, "location");
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="flex flex-col items-center">
+    <div className="flex items-center justify-center ">
+      <div className="flex flex-col-reverse md:flex-col items-center">
         <div className="container mx-auto flex flex-col items-center justify-center">
           <RelatedProducts category={category && category} />
         </div>
-        <p className="mt-4 text-gray-600 text-xl mb-5">
+        <p className="mt-4  w-[90%] mx-auto text-center text-sm text-gray-600 md:text-xl mb-5">
           Your order has been placed successfully. Please check your email for
           the order details.
         </p>
 
-        <div className="flex items-center justify-center gap-4">
+        <div className="flex w-[90%] mt-3 mx-auto items-center justify-center gap-4">
           <Link to="/">
-            <button className="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+            <button className="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-1 md:py-2 md:px-4 px-2 rounded">
               Go to Home
             </button>
           </Link>
 
           <Link to={`/my-account/orders/${location?.state?.orderId}`}>
-            <button className="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+            <button className="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-1 md:py-2 md:px-4 px-2 rounded">
               See Order Details
             </button>
           </Link>
