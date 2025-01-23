@@ -226,7 +226,7 @@ const Navbar = () => {
             />
 
             {/* Menu */}
-            <div className="navbar-end w-fit md:w-[50%] flex items-center gap-1 md:gap-3">
+            <div className="navbar-end w-fit md:w-[50%] flex items-center gap-4 md:gap-3">
               {/* Wishlist */}
               <button
                 className=" md:p-3 p-1 rounded relative"
@@ -239,7 +239,7 @@ const Navbar = () => {
                   <FaRegHeart className="text-2xl  text-gray-600 hover:text-pink-500 hover:scale-110 cursor-pointer transition-all" />
                   <span className="hidden md:block">Wishlist</span>
                 </label>
-                <div className="bg-gray-800 text-white rounded-full md:px-2 absolute md:top-1 md:right-2 top-0 right-0">
+                <div className="bg-gray-800 text-white rounded-full px-1 md:px-2 absolute md:top-1 md:right-2 top-0 -right-2">
                   {wishlist.length}
                 </div>
               </button>
@@ -256,7 +256,7 @@ const Navbar = () => {
                   <BsCart className="text-2xl text-gray-600 hover:text-orange-500 hover:scale-110 cursor-pointer transition-all" />
                   <span className="hidden md:block">Cart</span>
                 </label>
-                <div className="bg-gray-800 text-white rounded-full px-2 absolute top-1 -right-1">
+                <div className="bg-gray-800 text-white rounded-full px-1 top-0 -right-2 md:px-2 absolute md:top-1 md:-right-1">
                   {totalItems}
                 </div>
               </button>

@@ -4,7 +4,7 @@ import CustomImage from "../../ImageComponents/CustomImage";
 const WishlistItemComponent = ({ item, removeFromWishlist }) => {
   return (
     <div className="flex items-center mb-4 relative border rounded-md p-2">
-      <div className="w-full max-w-[100px]">
+      <div className="w-full hidden md:block max-w-[100px]">
         <CustomImage
           imageKey={item.thumbnail}
           alt="Card Image"

@@ -47,7 +47,7 @@ const Cart = ({ isShow, setIsShow }) => {
           className="drawer-overlay"
         ></label>
         <div
-          className={`min-w-[400px] rounded-none bg-white h-screen p-4 absolute top-0 right-0 z-50 transition-all duration-500 px-5 flex flex-col`}
+          className={`md:min-w-[400px] rounded-none bg-white h-screen p-4 absolute top-0 right-0 z-50 transition-all duration-500 px-5 flex flex-col`}
         >
           <div className="flex mb-6  py-3 items-center justify-between pr-2 border-b pb-5 border-gray-200">
             <p className="text-2xl  font-semibold">Shopping cart</p>
@@ -114,7 +114,7 @@ const Cart = ({ isShow, setIsShow }) => {
 
           <div className="flex gap-3">
             <label
-              className="cursor-pointer border text-center border-black rounded-md px-4 py-3 w-full"
+              className="cursor-pointer py-2 border text-center border-black rounded-md md:px-4 md:py-3 min-w-max px-4"
               onClick={() => {
                 setIsShow(false);
                 navigate("/cart");
@@ -126,7 +126,7 @@ const Cart = ({ isShow, setIsShow }) => {
 
             <label
               type="button"
-              className="px-4d py-3 cursor-pointer bg-black text-center text-white rounded-lg w-full"
+              className="md:px-4 md:py-3 py-2 px-2 cursor-pointer bg-black text-center text-white rounded-lg w-full"
               onClick={() => {
                 setIsShow(false);
                 navigate("/checkout");
