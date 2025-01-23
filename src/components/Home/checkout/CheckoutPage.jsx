@@ -33,58 +33,63 @@ export default function CheckoutPage() {
           </div>
           <div className="w-[90%] mx-auto md:max-w-[75%] md:inline-block">
             {shippingAddress ? (
-              <div className="w-full mx-auto p-6 border rounded-md mb-12 relative">
-                <h2 className="text-2xl font-bold mb-6">Shipping Address</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-8 rounded-md">
-                  <div className="border p-6 rounded-md border-r border-gray-200">
-                    <div className="flex justify-between text-sm text-gray-500">
-                      <b className="font-bold text-lg">Name</b>
-                      <span className="font-medium">
-                        {shippingAddress.recipientName}
-                      </span>
-                    </div>
-                    <div className="flex justify-between text-sm text-gray-500 ">
-                      <b className="font-bold text-lg">Phone</b>
-                      <span className="font-medium">
-                        {shippingAddress.contact_number}
-                      </span>
-                    </div>
-                    <div className="flex justify-between text-sm text-gray-500 ">
-                      <b className="font-bold text-lg">City</b>
-                      <span className="font-medium">
-                        {shippingAddress.city_name}
-                      </span>
-                    </div>
-                    <div className="flex justify-between text-sm text-gray-500 ">
-                      <b className="font-bold text-lg">Zone</b>
-                      <span className="font-medium">
-                        {shippingAddress.zone_name}
-                      </span>
-                    </div>
+              <div className="w-full mx-auto p-6 border rounded-lg shadow-md mb-12 bg-white relative">
+              <h2 className="text-3xl font-semibold text-gray-600 mb-6">Shipping Address</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 rounded-lg">
+                {/* Left Section */}
+                <div className="border p-6 rounded-lg bg-white shadow-sm">
+                  <div className="mb-4">
+                    <p className="text-lg font-semibold text-gray-600">Name :</p>
+                    <span className="text-xl font-medium text-gray-900">
+                      {shippingAddress.recipientName}
+                    </span>
                   </div>
-                  <div className="border p-6 rounded-md border-r border-gray-200">
-                    <div className="flex justify-between text-sm text-gray-500">
-                      <b className="font-bold text-lg">Area</b>
-                      <span className="font-medium">
-                        {shippingAddress.area_name}
-                      </span>
-                    </div>
-                    <div className="flex justify-between text-sm text-gray-500 ">
-                      <b className="font-bold text-lg">Address</b>
-                      <span className="font-medium">
-                        {shippingAddress.address}
-                      </span>
-                    </div>
+                  <div className="mb-4">
+                    <p className="text-lg font-semibold text-gray-600">Phone :</p>
+                    <span className="text-lg font-medium text-gray-900">
+                      {shippingAddress.contact_number}
+                    </span>
                   </div>
-
-                  <button
-                    className="px-3 py-1 border border-blue-400 rounded-md absolute top-5 right-5"
-                    onClick={() => setIsShippingEdit(true)}
-                  >
-                    Edit
-                  </button>
+                  <div className="mb-4">
+                    <p className="text-lg font-semibold text-gray-600">City :</p>
+                    <span className="text-lg font-medium text-gray-900">
+                      {shippingAddress.city_name}
+                    </span>
+                  </div>
+                  <div>
+                    <p className="text-lg font-semibold text-gray-600">Zone :</p>
+                    <span className="text-lg font-medium text-gray-900">
+                      {shippingAddress.zone_name}
+                    </span>
+                  </div>
+                </div>
+            
+                {/* Right Section */}
+                <div className="border p-6 rounded-lg bg-white shadow-sm">
+                  <div className="mb-4">
+                    <p className="text-lg font-semibold text-gray-600">Area :</p>
+                    <span className="text-lg font-medium text-gray-900">
+                      {shippingAddress.area_name}
+                    </span>
+                  </div>
+                  <div>
+                    <p className="text-lg font-semibold text-gray-600">Address :</p>
+                    <span className="text-lg font-medium text-gray-900">
+                      {shippingAddress.address}
+                    </span>
+                  </div>
                 </div>
               </div>
+            
+              {/* Edit Button */}
+              <button
+                className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-lg shadow-md absolute top-6 right-6"
+                onClick={() => setIsShippingEdit(true)}
+              >
+                Edit
+              </button>
+            </div>
+            
             ) : (
               <ShippingForm
                 setShippingAddress={setShippingAddress}
