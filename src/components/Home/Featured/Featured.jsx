@@ -1,61 +1,6 @@
 import { useEffect, useState } from "react";
 import useAxiosPublic from "../../../Hook/useAxiosPublic";
 import { baseImageUrl } from "../../../apis/apis";
-
-// const products = [
-//   {
-//     id: 1,
-//     name: "Nike Bag",
-//     description:
-//       "Rolex’s powerhouse calibre 3235 Perpetual movement. An upgrade from the calibre 3135 movement.",
-//     price: "$16.38",
-//     originalPrice: "$20.38",
-//     discount: "20%",
-//     imageUrl:
-//       "https://chawkbazar.vercel.app/_next/image?url=%2Fassets%2Fimages%2Fproducts%2Ffeatured%2F1.png&w=640&q=75",
-//   },
-//   {
-//     id: 2,
-//     name: "Adidas Woolen Cap",
-//     description:
-//       "Casual wear (casual attire or clothing) may be a Western code that’s relaxed, occasional, spontaneous and fitted to everyday use.",
-//     price: "$16.00",
-//     originalPrice: "$20.00",
-//     discount: "20%",
-//     imageUrl:
-//       "https://chawkbazar.vercel.app/_next/image?url=%2Fassets%2Fimages%2Fproducts%2Ffeatured%2F2.png&w=640&q=75",
-//   },
-//   {
-//     id: 3,
-//     name: "Ray Ban Aviator",
-//     description:
-//       "Polarized sunglasses reduce glare reflected off of roads, bodies of water, snow and other horizontal surfaces.",
-//     price: "$720.00",
-//     originalPrice: "$850.00",
-//     discount: "15%",
-//     imageUrl:
-//       "https://chawkbazar.vercel.app/_next/image?url=%2Fassets%2Fimages%2Fproducts%2Ffeatured%2F4.png&w=640&q=75",
-//   },
-//   {
-//     id: 4,
-//     name: "Nike Leader VT",
-//     description:
-//       "Footwear refers to garments worn on the feet, which originally serves to purpose of protection against adversities of the environment.",
-//     price: "$16.38",
-//     imageUrl:
-//       "https://chawkbazar.vercel.app/_next/image?url=%2Fassets%2Fimages%2Fproducts%2Ffeatured%2F3.png&w=640&q=75",
-//   },
-//   {
-//     id: 5,
-//     name: "Nike Leader VT",
-//     description:
-//       "Footwear refers to garments worn on the feet, which originally serves to purpose of protection against adversities of the environment.",
-//     price: "$16.38",
-//     imageUrl:
-//       "https://chawkbazar.vercel.app/_next/image?url=%2Fassets%2Fimages%2Fproducts%2Ffeatured%2F5.png&w=384&q=75",
-//   },
-// ];
-
 const Featured = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -80,6 +25,12 @@ const Featured = () => {
 
     fetchProducts();
   }, [axiosPublic]);
+  const handleProductClick = (product) => {
+    setCurrentProduct(product);
+    document
+      .getElementById(`modal_${product.productTitle.replace(/\s+/g, "_")}`)
+      .showModal();
+  };
 
   return (
     <div className=" py-6 px-5  md:w-full mx-auto">
@@ -202,6 +153,7 @@ const Featured = () => {
             ))}
         </div>
       </div>
+      
     </div>
   );
 };
