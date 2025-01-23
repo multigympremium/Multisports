@@ -53,13 +53,19 @@ const CreateShippingAddress = ({
 
       return;
     } else if (name === "zone_id") {
-      const filter_name = zones.find((zone) => zone.zone_id == value).zone_name;
+      const filter_name = zones.find(
+        (zone) => zone.zone_id == value
+      )?.zone_name;
 
-      console.log(filter_name, "zone_name");
+      console.log(
+        filter_name,
+        "zone_name",
+        Array.isArray(filter_name) ? filter_name[0] : filter_name
+      );
 
       setFormData({
         ...formData,
-        zone_name: filter_name,
+        zone_name: Array.isArray(filter_name) ? filter_name[0] : filter_name,
         zone_id: value,
       });
       return;

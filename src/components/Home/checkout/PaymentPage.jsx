@@ -11,6 +11,7 @@ import AccountAddress from "../my-account/AccountAddress";
 import PromotionalBanner from "../../UI/PromotionalBanner";
 import Swal from "sweetalert2";
 import useAxiosPublic from "../../../Hook/useAxiosPublic";
+import generateOrderOverview from "../../../helpers/generateOrderOverview";
 
 export default function PaymentPage() {
   const { cartItems, setCartItems } = useContext(AuthContext);
@@ -67,11 +68,18 @@ export default function PaymentPage() {
     //   totalItems: totalItems,
     // };
 
+    const orderOverview =
+      location?.state?.order && generateOrderOverview(location?.state?.order);
+
+    const submitData = {
+      ...location?.state?.order,
+      orderOverview,
+    };
+
+    console.log(submitData, "orderData");
+
     try {
-      const response = await axiosPublic.post(
-        "/orders",
-        location?.state?.order
-      );
+      const response = await axiosPublic.post("/orders", submitData);
       console.log(response, "response order");
 
       if (response.data.success) {
