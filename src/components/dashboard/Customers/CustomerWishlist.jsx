@@ -1,41 +1,47 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoIosSearch } from "react-icons/io";
+import useExportToExcel from "../../../config/Export/useExportToExcel";
+import useGetAllWishlist from "../../../Hook/GetDataHook/useGetAllWishlist";
+import moment from "moment";
+import useDebounce from "../../../Hook/useDebounce";
+import CellImage from "../../../shared/ImageComponents/CellImage";
+import Pagination from "../../partial/Pagination/Pagination";
+import { ColorRing } from "react-loader-spinner";
 
 export default function CustomerWishlist() {
-  const initialWishlist = [
-    {
-      id: 1,
-      category: "Electronics",
-      image: "/images/product1.jpg",
-      product: "Smartphone",
-      customerName: "John Doe",
-      email: "johndoe@mail.com",
-      contact: "1234567890",
-      createdAt: "2024-01-29 12:45:00 pm",
-    },
-    {
-      id: 2,
-      category: "Home Appliances",
-      image: "/images/product2.jpg",
-      product: "Air Conditioner",
-      customerName: "Jane Doe",
-      email: "janedoe@mail.com",
-      contact: "0987654321",
-      createdAt: "2024-01-29 12:55:00 pm",
-    },
-    // Add more wishlist items here
-  ];
-
-  const [wishlist, setWishlist] = useState(initialWishlist);
+  // const [customers, setCustomers] = useState(initialCustomers);
   const [searchTerm, setSearchTerm] = useState("");
+  const [message, setMessage] = useState("");
+  const [isShowModal, setIsShowModal] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [singleData, setSingleData] = useState(null);
+  const [itemsPerPage, setItemsPerPage] = useState(15);
 
-  // Filter wishlist based on search term
-  const filteredWishlist = wishlist.filter(
-    (item) =>
-      item.product.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.customerName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.email.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const [isDeleted, setIsDeleted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const debouncedValue = useDebounce(searchTerm, 200);
+
+  const { wishlist, totalItems } = useGetAllWishlist({
+    isShowModal: isShowModal,
+    isDeleted,
+    setLoading,
+    query: `page=${currentPage}&search=${debouncedValue}&currentPage=${currentPage}&limit=${itemsPerPage}`,
+  });
+
+  const handleEdit = (data) => {
+    setSingleData(data);
+    setIsShowModal(true);
+  };
+
+  // Handle customer deletion
+  const handleDelete = (id) => {
+    // setCustomers(customers.filter((customer) => customer.id !== id));
+    setMessage("Customer deleted successfully!");
+  };
+
+  // if (loading) {
+  //   return <GlobalLoading />;
+  // }
 
   return (
     <div className="p-6 pt-0">
@@ -68,37 +74,65 @@ export default function CustomerWishlist() {
             </tr>
           </thead>
           <tbody>
-            {filteredWishlist.length > 0 ? (
-              filteredWishlist.map((item, index) => (
+            {wishlist.length > 0 && !loading ? (
+              wishlist.map((item, index) => (
                 <tr key={item.id} className="border-b text-center">
                   <td className="p-2 border">{index + 1}</td>
-                  <td className="p-2 border">{item.category}</td>
+                  <td className="p-2 border">{item?.product_id?.category}</td>
                   <td className="p-2 border">
-                    <img
-                      width={400}
-                      height={400}
-                      src={item.image}
-                      alt={item.product}
-                      className="w-10 h-10 object-cover"
-                    />
+                    <CellImage src={item?.product_id?.thumbnail} />
                   </td>
-                  <td className="p-2 border">{item.product}</td>
-                  <td className="p-2 border">{item.customerName}</td>
+                  <td className="p-2 border">
+                    {item?.product_id?.productTitle || "-"}
+                  </td>
+                  <td className="p-2 border">{item?.userId?.username}</td>
                   <td className="p-2 border">{item.email}</td>
-                  <td className="p-2 border">{item.contact || "-"}</td>
-                  <td className="p-2 border">{item.createdAt}</td>
+                  <td className="p-2 border">
+                    {(item?.userId?.contact_no ||
+                      item?.userId?.contact_no !== "false") &&
+                      item?.userId?.contact_no}
+                    {(item?.userId?.phoneNumber ||
+                      item?.userId?.phoneNumber !== "false") &&
+                      item?.userId?.phoneNumber}
+                  </td>
+                  <td className="p-2 border">
+                    {moment(item.createdAt).format("DD-MM-YYYY")}
+                  </td>
                 </tr>
               ))
             ) : (
-              <tr>
-                <td colSpan="8" className="text-center p-4">
-                  No data available in the table
-                </td>
-              </tr>
+              <>
+                {!loading && (
+                  <tr>
+                    <td colSpan="9" className="text-center p-4">
+                      No data available in the table
+                    </td>
+                  </tr>
+                )}
+              </>
             )}
           </tbody>
         </table>
       </div>
+      {loading && (
+        <div className="flex justify-center items-center w-full py-28">
+          <ColorRing
+            visible={true}
+            height="80"
+            width="80"
+            ariaLabel="color-ring-loading"
+            wrapperStyle={{}}
+            wrapperClass="color-ring-wrapper"
+            colors={["#e15b64", "#f47e60", "#f8b26a", "#abbd81", "#849b87"]}
+          />
+        </div>
+      )}
+      <Pagination
+        currentPage={currentPage}
+        totalItems={totalItems}
+        itemsPerPage={itemsPerPage}
+        setCurrentPage={setCurrentPage}
+      />
     </div>
   );
 }

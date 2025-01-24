@@ -1,10 +1,15 @@
+import { useState } from "react";
+import useAxiosPublic from "../../../Hook/useAxiosPublic";
+import toast from "react-hot-toast";
+
 function BlogFilesBackup() {
+  const [loading, setLoading] = useState(false);
+  const axiosPublic = useAxiosPublic();
   const handleDownload = async () => {
+    setLoading(true);
     try {
       // Send a request to the backend to get the ZIP file
-      const response = await fetch(
-        "http://localhost:3000/api/backup/images/blog"
-      );
+      const response = await axiosPublic.get("/backup/images/blog");
 
       // Check if the response is OK
       if (!response.ok) {
@@ -20,7 +25,7 @@ function BlogFilesBackup() {
       // Create an anchor element to trigger the download
       const a = document.createElement("a");
       a.href = url;
-      a.download = "example.zip"; // Specify the name of the downloaded file
+      a.download = "blog.zip"; // Specify the name of the downloaded file
       document.body.appendChild(a);
       a.click();
 
@@ -29,7 +34,9 @@ function BlogFilesBackup() {
       document.body.removeChild(a);
     } catch (error) {
       console.error("Error downloading the file:", error);
-      alert("An error occurred while downloading the file.");
+      toast.error("An error occurred while downloading the file.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -44,7 +51,11 @@ function BlogFilesBackup() {
           //   target="_blank"
           className="bg-pink-500 text-white px-4 py-2 rounded-2xl"
           onClick={handleDownload}
+          disabled={loading}
         >
+          {loading && (
+            <span className="spinner-border spinner-border-sm"></span>
+          )}
           Download Backup
         </button>
       </div>

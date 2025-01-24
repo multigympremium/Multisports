@@ -29,7 +29,7 @@ function DatabaseBackup() {
       document.body.removeChild(a);
     } catch (error) {
       console.error("Error downloading the file:", error);
-      alert("An error occurred while downloading the file.");
+      toast.error("An error occurred while downloading the file.");
     }
   };
 

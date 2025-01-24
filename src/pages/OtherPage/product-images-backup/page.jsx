@@ -1,10 +1,15 @@
+import { useState } from "react";
+import useAxiosPublic from "../../../Hook/useAxiosPublic";
+import toast from "react-hot-toast";
+
 function ProductImageBackup() {
+  const [loading, setLoading] = useState(false);
+  const axiosPublic = useAxiosPublic();
   const handleDownload = async () => {
+    setLoading(true);
     try {
       // Send a request to the backend to get the ZIP file
-      const response = await fetch(
-        "http://localhost:3000/api/backup/images/product"
-      );
+      const response = await axiosPublic.get("/backup/images/product");
 
       // Check if the response is OK
       if (!response.ok) {
@@ -29,7 +34,9 @@ function ProductImageBackup() {
       document.body.removeChild(a);
     } catch (error) {
       console.error("Error downloading the file:", error);
-      alert("An error occurred while downloading the file.");
+      toast.error("An error occurred while downloading the file.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -44,7 +51,9 @@ function ProductImageBackup() {
           //   target="_blank"
           className="bg-pink-500 text-white px-4 py-2 rounded-2xl"
           onClick={handleDownload}
+          disabled={loading}
         >
+          {loading && <span className="spinner-border spinner-border-sm" />}
           Download Backup
         </button>
       </div>
