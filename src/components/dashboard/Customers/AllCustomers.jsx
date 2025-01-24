@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CSVLink } from "react-csv";
 import { IoIosSearch } from "react-icons/io";
 import { RxDownload } from "react-icons/rx";
@@ -12,6 +12,7 @@ import EditButton from "../../../components library/EditButton";
 import { baseImageUrl } from "../../../apis/apis";
 import { ColorRing } from "react-loader-spinner";
 import useExportToExcel from "../../../config/Export/useExportToExcel";
+import Pagination from "../../partial/Pagination/Pagination";
 
 export default function CustomersList() {
   // const [customers, setCustomers] = useState(initialCustomers);
@@ -19,13 +20,24 @@ export default function CustomersList() {
   const [message, setMessage] = useState("");
   const [isShowModal, setIsShowModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [targetId, setTargetId] = useState("");
   const [singleData, setSingleData] = useState(null);
   const [itemsPerPage, setItemsPerPage] = useState(15);
 
   const [isDeleted, setIsDeleted] = useState(false);
   const [loading, setLoading] = useState(false);
   const debouncedValue = useDebounce(searchTerm, 200);
+  // CSV headers for download
+  const csvHeaderss = [
+    { label: "SL", key: "id" },
+    { label: "Name", key: "name" },
+    { label: "Email", key: "email" },
+    { label: "Phone", key: "phone" },
+    { label: "Address", key: "address" },
+    { label: "Delete Request Submitted", key: "deleteRequestSubmitted" },
+    { label: "Wallet", key: "wallet" },
+    { label: "Created At", key: "createdAt" },
+  ];
+  const [csvHeaders, setCsvHeaders] = useState([]);
 
   const { customers, totalItems, totalPages } = useGetAllCustomers({
     isShowModal: isShowModal,
@@ -47,21 +59,25 @@ export default function CustomersList() {
     setMessage("Customer deleted successfully!");
   };
 
-  // CSV headers for download
-  const csvHeaders = [
-    { label: "SL", key: "id" },
-    { label: "Name", key: "name" },
-    { label: "Email", key: "email" },
-    { label: "Phone", key: "phone" },
-    { label: "Address", key: "address" },
-    { label: "Delete Request Submitted", key: "deleteRequestSubmitted" },
-    { label: "Wallet", key: "wallet" },
-    { label: "Created At", key: "createdAt" },
-  ];
-
   // if (loading) {
   //   return <GlobalLoading />;
   // }
+
+  useEffect(() => {
+    const initialCsvHeaders = [];
+
+    for (let i = 0; i < customers.length; i++) {
+      const customer = customers[i];
+      for (let key in customer) {
+        if ([...initialCsvHeaders, "_id", "__v"].includes(key)) continue;
+        initialCsvHeaders.push({
+          label: key,
+          key: key,
+        });
+      }
+    }
+    setCsvHeaders(initialCsvHeaders);
+  }, [customers]);
 
   return (
     <div className="p-6 pt-0">
@@ -180,10 +196,13 @@ export default function CustomersList() {
             />
           </div>
         )}
-
-        {/* Success/Info Message */}
-        {message && <p className="mt-4 text-green-500">{message}</p>}
       </div>
+      <Pagination
+        currentPage={currentPage}
+        totalItems={totalItems}
+        itemsPerPage={itemsPerPage}
+        setCurrentPage={setCurrentPage}
+      />
 
       <BgBlurModal isShowModal={isShowModal} setIsShowModal={setIsShowModal}>
         <CustomerDetail
