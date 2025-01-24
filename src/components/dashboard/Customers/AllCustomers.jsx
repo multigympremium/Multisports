@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { FiTrash2 } from "react-icons/fi";
 import { CSVLink } from "react-csv";
 import { IoIosSearch } from "react-icons/io";
 import { RxDownload } from "react-icons/rx";
@@ -10,36 +9,11 @@ import moment from "moment";
 import BgBlurModal from "../../../shared/Modal/BgBlurModal";
 import CustomerDetail from "./Forms/CustomerDetail";
 import EditButton from "../../../components library/EditButton";
-import CellImage from "../../../shared/ImageComponents/CellImage";
 import { baseImageUrl } from "../../../apis/apis";
-import GlobalLoading from "../../../components library/GlobalLoading";
 import { ColorRing } from "react-loader-spinner";
+import useExportToExcel from "../../../config/Export/useExportToExcel";
 
 export default function CustomersList() {
-  const initialCustomers = [
-    {
-      id: 1,
-      name: "Colette Cooke",
-      email: "vavmup@mailinator.com",
-      phone: "",
-      address: "",
-      deleteRequestSubmitted: "",
-      wallet: 0,
-      createdAt: "2024-01-29 01:59:47 pm",
-    },
-    {
-      id: 2,
-      name: "Karina Castro",
-      email: "qefobywa@mailinator.com",
-      phone: "",
-      address: "",
-      deleteRequestSubmitted: "",
-      wallet: 0,
-      createdAt: "2024-01-29 01:52:59 pm",
-    },
-    // Add more customers here
-  ];
-
   // const [customers, setCustomers] = useState(initialCustomers);
   const [searchTerm, setSearchTerm] = useState("");
   const [message, setMessage] = useState("");
@@ -59,6 +33,8 @@ export default function CustomersList() {
     setLoading,
     query: `page=${currentPage}&search=${debouncedValue}&currentPage=${currentPage}&limit=${itemsPerPage}`,
   });
+
+  const exportToExcel = useExportToExcel({ data: customers });
 
   const handleEdit = (data) => {
     setSingleData(data);
@@ -93,18 +69,29 @@ export default function CustomersList() {
         <div className="flex items-center mb-9 justify-between">
           <h1 className="text-3xl font-semibold ">Customers List</h1>
           {/* Download as Excel (CSV) Button */}
-          <div className=" flex justify-end">
-            <CSVLink
-              data={customers}
-              headers={csvHeaders}
-              filename="customers_list.csv"
-              className="customSaveButton"
-            >
-              <span className="flex items-center gap-2">
+          <div className="flex gap-4 items-center justify-center">
+            <div className=" flex justify-end">
+              <button
+                onClick={exportToExcel}
+                className="flex items-center gap-2 bg-yellow-400 py-2 px-4 rounded-full hover:bg-yellow-500"
+              >
                 <RxDownload />
                 Download as Excel
-              </span>
-            </CSVLink>
+              </button>
+            </div>
+            <div className=" flex justify-end">
+              <CSVLink
+                data={customers}
+                headers={csvHeaders}
+                filename="customers_list.csv"
+                className="customSaveButton"
+              >
+                <span className="flex items-center gap-2">
+                  <RxDownload />
+                  Download as CSV
+                </span>
+              </CSVLink>
+            </div>
           </div>
         </div>
         {/* Search Input */}
