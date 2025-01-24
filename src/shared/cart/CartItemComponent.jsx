@@ -143,7 +143,7 @@ const CartItemComponent = ({
                 <div>
                   <div className="flex flex-wrap flex-col ">
                     <div>
-                      <p className="font-semibold text-gray-500">Sn .{index + 1}</p>
+                      
                       <span className="font-semibold text-black">
                         {item.productTitle}
                       </span></div>
