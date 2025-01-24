@@ -20,6 +20,7 @@ export default function SignUpPage() {
   const [passwordError, setPasswordError] = useState("");
   const [subscribe, setSubscribe] = useState(false);
   const [recaptcha, setRecaptcha] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const [site_key, setSite_key] = useState("");
   const [isRecaptcha, setIsRecaptcha] = useState(false);
@@ -45,6 +46,7 @@ export default function SignUpPage() {
       subscribe,
       recaptcha,
     };
+    setLoading(true);
 
     try {
       const res = await axiosPublic.post("/users/signup", submitData);
@@ -69,6 +71,8 @@ export default function SignUpPage() {
         icon: "error",
         confirmButtonText: "Ok",
       });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -300,8 +304,13 @@ export default function SignUpPage() {
               type="submit"
               className="block bg-black text-white text-center text-2xl py-3 rounded-lg font-semibold mb-4 hover:scale-[0.95] transition-all duration-300 w-[90%] mx-auto disabled:opacity-20 disabled:cursor-not-allowed"
               onClick={handleSignUp}
-              disabled={isRecaptcha && site_key && recaptcha === ""}
+              disabled={
+                (isRecaptcha && site_key && recaptcha === "") || loading
+              }
             >
+              {loading && (
+                <span className="loading loading-spinner mr-2  loading-xs"></span>
+              )}
               Sign Up
             </button>
             <p>

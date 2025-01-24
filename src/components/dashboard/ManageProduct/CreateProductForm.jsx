@@ -217,27 +217,6 @@ export default function ProductCreateForm() {
     }
   };
 
-  const handleColorChange = (e) => {
-    const { name, value } = e.target;
-    setProductColorValue(value);
-
-    if (value !== "") {
-      setProductColor((prev) =>
-        prev.includes(value) ? prev : [...prev, value]
-      );
-    }
-  };
-  const handleSizeChange = (e) => {
-    const { name, value } = e.target;
-    setProductSizeValue(value);
-
-    if (value !== "") {
-      setProductSize((prev) =>
-        prev.includes(value) ? prev : [...prev, value]
-      );
-    }
-  };
-
   useEffect(() => {
     const fetchTestimonial = async () => {
       try {

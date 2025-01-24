@@ -20,6 +20,7 @@ export default function Login() {
   const axiosPublic = useAxiosPublic();
   const [site_key, setSite_key] = useState("");
   const [isRecaptcha, setIsRecaptcha] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   console.log(pathName, "pathName");
 
@@ -31,6 +32,7 @@ export default function Login() {
     console.log("Password:", password);
 
     const submitData = { email, password };
+    setLoading(true);
 
     try {
       const res = await axiosPublic.post("/users/login", submitData);
@@ -59,6 +61,8 @@ export default function Login() {
         icon: "error",
         confirmButtonText: "Ok",
       });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -108,7 +112,7 @@ export default function Login() {
       <div className="w-full py-5 absolute md:top-5 left-8">
         <Link to="/">
           <button className="flex items-center justify-center rounded-full shadow-lg md:w-[50px] w-[20px] h-[20px] md:h-[50px] bg-white mdml-10">
-            <MdOutlineKeyboardBackspace  />
+            <MdOutlineKeyboardBackspace />
           </button>
         </Link>
       </div>
@@ -145,7 +149,10 @@ export default function Login() {
       >
         {/* Email Input */}
         <div className="md:mb-4  border-gray-200 md:pb-5">
-          <label htmlFor="email" className="block text-gray-700 md:py-3 py-1 md:text-xl">
+          <label
+            htmlFor="email"
+            className="block text-gray-700 md:py-3 py-1 md:text-xl"
+          >
             Email
           </label>
           <input
@@ -182,7 +189,11 @@ export default function Login() {
             onClick={() => setPasswordVisible(!passwordVisible)}
             className="absolute right-3 md:right-2 top-12 md:top-[68px] text-3xl"
           >
-            {passwordVisible ? <IoEyeOffOutline className="text-xl" /> : <IoEyeOutline  className="text-xl"/>}
+            {passwordVisible ? (
+              <IoEyeOffOutline className="text-xl" />
+            ) : (
+              <IoEyeOutline className="text-xl" />
+            )}
           </button>
         </div>
         <div className="flex items-center justify-end  md:mt-6  text-lg ">
@@ -200,8 +211,12 @@ export default function Login() {
           <button
             type="submit"
             // disabled={recaptcha === "" && isRecaptcha && site_key}
-            className="block bg-black text-white text-center md:text-2xl py-2 md:py-3 rounded-lg font-semibold mb-4 hover:scale-[0.95] transition-all duration-300 w-[94%] mx-auto disabled:opacity-20"
+            className="flex gap-3 items-center justify-center bg-black text-white text-center md:text-2xl py-2 md:py-3 rounded-lg font-semibold mb-4 hover:scale-[0.95] transition-all duration-300 w-[94%] mx-auto disabled:opacity-20"
+            disabled={loading}
           >
+            {loading && (
+              <span className="loading loading-spinner mr-2  loading-xs"></span>
+            )}
             Log In
           </button>
         </div>

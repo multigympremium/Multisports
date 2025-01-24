@@ -277,7 +277,7 @@ export default function EditProductForm({
       if (res.status === 200 || res.status === 201) {
         Swal.fire({
           title: "Success!",
-          text: "sizeName updated successfully",
+          text: "Product updated successfully",
           icon: "success",
           confirmButtonText: "Ok",
         });
@@ -289,7 +289,7 @@ export default function EditProductForm({
     } catch (err) {
       Swal.fire({
         title: "Error!",
-        text: "Something went wrong!",
+        text: `${err.message || "Something went wrong?"}`,
         icon: "error",
         confirmButtonText: "Ok",
       });

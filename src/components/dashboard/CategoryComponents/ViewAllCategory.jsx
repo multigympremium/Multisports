@@ -1,9 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
-import { FiEdit, FiTrash2 } from "react-icons/fi";
 
 import CellImage from "../../../shared/ImageComponents/CellImage";
 import toast from "react-hot-toast";
-import Modal from "../../../shared/Modal/Modal";
 import CategoryEditForm from "./CategoryEditForm";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";

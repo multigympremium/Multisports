@@ -4,6 +4,16 @@ import { CSVLink } from "react-csv";
 import { IoIosSearch } from "react-icons/io";
 import { RxDownload } from "react-icons/rx";
 import DeleteButton from "../../../components library/DeleteButton";
+import useGetAllCustomers from "../../../Hook/GetDataHook/useGetAllCustomers";
+import useDebounce from "../../../Hook/useDebounce";
+import moment from "moment";
+import BgBlurModal from "../../../shared/Modal/BgBlurModal";
+import CustomerDetail from "./Forms/CustomerDetail";
+import EditButton from "../../../components library/EditButton";
+import CellImage from "../../../shared/ImageComponents/CellImage";
+import { baseImageUrl } from "../../../apis/apis";
+import GlobalLoading from "../../../components library/GlobalLoading";
+import { ColorRing } from "react-loader-spinner";
 
 export default function CustomersList() {
   const initialCustomers = [
@@ -30,20 +40,34 @@ export default function CustomersList() {
     // Add more customers here
   ];
 
-  const [customers, setCustomers] = useState(initialCustomers);
+  // const [customers, setCustomers] = useState(initialCustomers);
   const [searchTerm, setSearchTerm] = useState("");
   const [message, setMessage] = useState("");
+  const [isShowModal, setIsShowModal] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [targetId, setTargetId] = useState("");
+  const [singleData, setSingleData] = useState(null);
+  const [itemsPerPage, setItemsPerPage] = useState(15);
 
-  // Filter customers based on search term
-  const filteredCustomers = customers.filter(
-    (customer) =>
-      customer.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      customer.email.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const [isDeleted, setIsDeleted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const debouncedValue = useDebounce(searchTerm, 200);
+
+  const { customers, totalItems, totalPages } = useGetAllCustomers({
+    isShowModal: isShowModal,
+    isDeleted,
+    setLoading,
+    query: `page=${currentPage}&search=${debouncedValue}&currentPage=${currentPage}&limit=${itemsPerPage}`,
+  });
+
+  const handleEdit = (data) => {
+    setSingleData(data);
+    setIsShowModal(true);
+  };
 
   // Handle customer deletion
   const handleDelete = (id) => {
-    setCustomers(customers.filter((customer) => customer.id !== id));
+    // setCustomers(customers.filter((customer) => customer.id !== id));
     setMessage("Customer deleted successfully!");
   };
 
@@ -59,9 +83,13 @@ export default function CustomersList() {
     { label: "Created At", key: "createdAt" },
   ];
 
+  // if (loading) {
+  //   return <GlobalLoading />;
+  // }
+
   return (
     <div className="p-6 pt-0">
-      <div className="">
+      <div className="w-full">
         <div className="flex items-center mb-9 justify-between">
           <h1 className="text-3xl font-semibold ">Customers List</h1>
           {/* Download as Excel (CSV) Button */}
@@ -95,50 +123,88 @@ export default function CustomersList() {
           <thead>
             <tr className="bg-gray-200 text-center">
               <td className="p-2 border">SL</td>
+              <td className="p-2 border">Image</td>
               <td className="p-2 border">Name</td>
               <td className="p-2 border">Email</td>
               <td className="p-2 border">Phone</td>
-              <td className="p-2 border">Address</td>
-              <td className="p-2 border">Delete Request Submitted</td>
-              <td className="p-2 border">Wallet</td>
               <td className="p-2 border">Created At</td>
               <td className="p-2 border">Action</td>
             </tr>
           </thead>
           <tbody>
-            {filteredCustomers.length > 0 ? (
-              filteredCustomers.map((customer, index) => (
+            {customers.length > 0 && !loading ? (
+              customers.map((customer, index) => (
                 <tr key={customer.id} className="border-b">
                   <td className="p-2 border">{index + 1}</td>
-                  <td className="p-2 border">{customer.name}</td>
-                  <td className="p-2 border">{customer.email}</td>
-                  <td className="p-2 border">{customer.phone || "-"}</td>
-                  <td className="p-2 border">{customer.address || "-"}</td>
                   <td className="p-2 border">
-                    {customer.deleteRequestSubmitted || "-"}
+                    <div className="avatar w-full flex items-center justify-center mb-5 ">
+                      <div className="w-24 rounded ">
+                        <img
+                          src={
+                            customer?.photourl
+                              ? `${baseImageUrl}/${customer.photourl}`
+                              : "/no-image.png"
+                          }
+                        />
+                      </div>
+                    </div>
                   </td>
-                  <td className="p-2 border">{customer.wallet}</td>
-                  <td className="p-2 border">{customer.createdAt}</td>
+                  <td className="p-2 border">{customer.username}</td>
+                  <td className="p-2 border">{customer.email}</td>
+                  <td className="p-2 border">{customer.contact_no || "-"}</td>
                   <td className="p-2 border">
-                    <DeleteButton
-                      onClick={() => handleDelete(customer.id)}
-                    ></DeleteButton>
+                    {moment(customer.register_date).format("YYYY-MM-DD")}
+                  </td>
+                  <td className="p-2 border ">
+                    <div className="flex justify-center space-x-2">
+                      <EditButton
+                        onClick={() => handleEdit(customer)}
+                      ></EditButton>
+                      <DeleteButton
+                        onClick={() => handleDelete(customer.id)}
+                      ></DeleteButton>
+                    </div>
                   </td>
                 </tr>
               ))
             ) : (
-              <tr>
-                <td colSpan="9" className="text-center p-4">
-                  No data available in the table
-                </td>
-              </tr>
+              <>
+                {!loading && (
+                  <tr>
+                    <td colSpan="9" className="text-center p-4">
+                      No data available in the table
+                    </td>
+                  </tr>
+                )}
+              </>
             )}
           </tbody>
         </table>
+        {loading && (
+          <div className="flex justify-center items-center w-full py-28">
+            <ColorRing
+              visible={true}
+              height="80"
+              width="80"
+              ariaLabel="color-ring-loading"
+              wrapperStyle={{}}
+              wrapperClass="color-ring-wrapper"
+              colors={["#e15b64", "#f47e60", "#f8b26a", "#abbd81", "#849b87"]}
+            />
+          </div>
+        )}
 
         {/* Success/Info Message */}
         {message && <p className="mt-4 text-green-500">{message}</p>}
       </div>
+
+      <BgBlurModal isShowModal={isShowModal} setIsShowModal={setIsShowModal}>
+        <CustomerDetail
+          singleData={singleData}
+          isShow={isShowModal}
+          setIsShow={setIsShowModal}
+        />
+      </BgBlurModal>
     </div>
   );
 }
