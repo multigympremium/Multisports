@@ -156,11 +156,12 @@ export default function Summary({ isCart = false, shippingAddress = null }) {
       itemCount: cartItems?.length,
       discount: discount,
       itemPerDiscount: totalCartDiscount,
-      deliveryCharge: deliveryCharge?.charge,
+      deliveryCharge: deliveryChargeNum || 0,
       coupon: discounts?.promoCode,
-      userId: user?._id,
+      userId: user?._id || "",
       totalItems: totalItems,
       order_date: moment().format("DD/MM/YYYY"),
+      email: user?.email || "",
     };
 
     router("/payment_page", {

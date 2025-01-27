@@ -17,8 +17,8 @@ export default function Success() {
           <RelatedProducts category={category && category} />
         </div>
         <p className="mt-4  w-[90%] mx-auto text-center text-sm text-gray-600 md:text-xl mb-5">
-          Your order has been placed successfully. Please check your email for
-          the order details.
+          Your order has been placed successfully.{" "}
+          {user && "Please check your email for the order details."}
         </p>
 
         <div className="flex w-[90%] mt-3 mx-auto items-center justify-center gap-4">
