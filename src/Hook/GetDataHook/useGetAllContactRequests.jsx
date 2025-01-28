@@ -33,7 +33,7 @@ function useGetAllContactRequests({
       setLoading(false);
       throw new Error("Failed to fetch contact requests");
     }
-  }, [axiosSecure, searchQuery, setLoading]);
+  }, [axiosSecure, searchQuery]);
 
   // Automatically fetch data on dependencies change
   useEffect(() => {

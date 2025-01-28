@@ -231,18 +231,18 @@ function MenuItemsList({ userRole }) {
           isAllowed: isAllowedRoute("view-all-products"),
           icon: <IoIosHome />,
         },
-        {
-          title: "Bulk Upload",
-          path: "bulk-product",
-          isAllowed: isAllowedRoute("bulk-product"),
-          icon: <IoIosHome />,
-        },
-        {
-          title: "Product Ratings And Review",
-          path: "ratings-review",
-          isAllowed: isAllowedRoute("ratings-review"),
-          icon: <IoIosHome />,
-        },
+        // {
+        //   title: "Bulk Upload",
+        //   path: "bulk-product",
+        //   isAllowed: isAllowedRoute("bulk-product"),
+        //   icon: <IoIosHome />,
+        // },
+        // {
+        //   title: "Product Ratings And Review",
+        //   path: "ratings-review",
+        //   isAllowed: isAllowedRoute("ratings-review"),
+        //   icon: <IoIosHome />,
+        // },
       ],
     },
     // Orders
@@ -293,12 +293,12 @@ function MenuItemsList({ userRole }) {
           isAllowed: isAllowedRoute("cancelled-orders"),
           icon: <IoIosHome />,
         },
-        {
-          title: "Payment History",
-          path: "payment-history",
-          isAllowed: isAllowedRoute("payment-history"),
-          icon: <IoIosHome />,
-        },
+        // {
+        //   title: "Payment History",
+        //   path: "payment-history",
+        //   isAllowed: isAllowedRoute("payment-history"),
+        //   icon: <IoIosHome />,
+        // },
       ],
     },
     {
@@ -365,211 +365,211 @@ function MenuItemsList({ userRole }) {
           isAllowed: isAllowedRoute("upazila-thana"),
           icon: <IoIosHome />,
         },
-        {
-          title: "Payment History",
-          path: "payment-history",
-          isAllowed: isAllowedRoute("payment-history"),
-          icon: <IoIosHome />,
-        },
+        // {
+        //   title: "Payment History",
+        //   path: "payment-history",
+        //   isAllowed: isAllowedRoute("payment-history"),
+        //   icon: <IoIosHome />,
+        // },
       ],
     },
     // Customers
-    {
-      title: "Promo",
-      icon: <IoIosHome />, // Replace with the actual SVG icon
-      list: [
-        {
-          title: "Create Promo Code",
-          path: "create-promo-code",
-          isAllowed: isAllowedRoute("create-promo-code"),
-          icon: <IoIosHome />, // Replace with the actual SVG icon
-        },
-        {
-          title: "View All Promo Code",
-          path: "view-all-promo-code",
-          isAllowed: isAllowedRoute("view-all-promo-code"),
-          icon: <IoIosHome />,
-        },
-      ],
-    },
+    // {
+    //   title: "Promo",
+    //   icon: <IoIosHome />, // Replace with the actual SVG icon
+    //   list: [
+    //     {
+    //       title: "Create Promo Code",
+    //       path: "create-promo-code",
+    //       isAllowed: isAllowedRoute("create-promo-code"),
+    //       icon: <IoIosHome />, // Replace with the actual SVG icon
+    //     },
+    //     {
+    //       title: "View All Promo Code",
+    //       path: "view-all-promo-code",
+    //       isAllowed: isAllowedRoute("view-all-promo-code"),
+    //       icon: <IoIosHome />,
+    //     },
+    //   ],
+    // },
     // Sms Service
-    {
-      title: "SMS Service",
-      icon: <IoIosHome />, // Replace with the actual SVG icon
-      list: [
-        {
-          title: "Send SMS",
-          path: "send-sms",
-          isAllowed: isAllowedRoute("send-sms"),
-          icon: <IoIosHome />, // Replace with the actual SVG icon
-        },
-        {
-          title: "SMS Templates",
-          path: "sms-templates",
-          isAllowed: isAllowedRoute("sms-templates"),
-          icon: <IoIosHome />,
-        },
-        {
-          title: "SMS History",
-          path: "sms-history",
-          isAllowed: isAllowedRoute("sms-history"),
-          icon: <IoIosHome />, // Replace with the actual SVG icon
-        },
-      ],
-    },
+    // {
+    //   title: "SMS Service",
+    //   icon: <IoIosHome />, // Replace with the actual SVG icon
+    //   list: [
+    //     {
+    //       title: "Send SMS",
+    //       path: "send-sms",
+    //       isAllowed: isAllowedRoute("send-sms"),
+    //       icon: <IoIosHome />, // Replace with the actual SVG icon
+    //     },
+    //     {
+    //       title: "SMS Templates",
+    //       path: "sms-templates",
+    //       isAllowed: isAllowedRoute("sms-templates"),
+    //       icon: <IoIosHome />,
+    //     },
+    //     {
+    //       title: "SMS History",
+    //       path: "sms-history",
+    //       isAllowed: isAllowedRoute("sms-history"),
+    //       icon: <IoIosHome />, // Replace with the actual SVG icon
+    //     },
+    //   ],
+    // },
 
     //
-    {
-      title: "Gateway & API",
-      icon: <IoIosHome />, // Replace with the actual SVG icon
-      list: [
-        {
-          title: "Email Configurations",
-          path: "email-configurations",
-          isAllowed: isAllowedRoute("email-configurations"),
-          icon: <IoIosHome />,
-        },
-        {
-          title: "Email Templates",
-          path: "email-templates",
-          isAllowed: isAllowedRoute("email-templates"),
-          icon: <IoIosHome />,
-        },
-        {
-          title: "Payment Gateway",
-          path: "payment-gateway",
-          isAllowed: isAllowedRoute("payment-gateway"),
+    // {
+    //   title: "Gateway & API",
+    //   icon: <IoIosHome />, // Replace with the actual SVG icon
+    //   list: [
+    //     {
+    //       title: "Email Configurations",
+    //       path: "email-configurations",
+    //       isAllowed: isAllowedRoute("email-configurations"),
+    //       icon: <IoIosHome />,
+    //     },
+    //     {
+    //       title: "Email Templates",
+    //       path: "email-templates",
+    //       isAllowed: isAllowedRoute("email-templates"),
+    //       icon: <IoIosHome />,
+    //     },
+    //     {
+    //       title: "Payment Gateway",
+    //       path: "payment-gateway",
+    //       isAllowed: isAllowedRoute("payment-gateway"),
 
-          icon: <IoIosHome />,
-        },
-        {
-          title: "SMS Gateway",
-          path: "sms-gateway",
-          isAllowed: isAllowedRoute("sms-gateway"),
+    //       icon: <IoIosHome />,
+    //     },
+    //     {
+    //       title: "SMS Gateway",
+    //       path: "sms-gateway",
+    //       isAllowed: isAllowedRoute("sms-gateway"),
 
-          icon: <IoIosHome />,
-        },
-      ],
-    },
+    //       icon: <IoIosHome />,
+    //     },
+    //   ],
+    // },
     // Generate Report
-    {
-      title: "Generate Report",
-      icon: <IoIosHome />, // Replace with the actual SVG icon
-      list: [
-        {
-          title: "Sales Report",
-          path: "sales-report",
-          isAllowed: isAllowedRoute("sales-report"),
-          icon: <IoIosHome />,
-        },
-        {
-          title: "Transactions",
-          path: "transactions",
-          isAllowed: isAllowedRoute("transactions"),
-          icon: <IoIosHome />,
-        },
-      ],
-    },
+    // {
+    //   title: "Generate Report",
+    //   icon: <IoIosHome />, // Replace with the actual SVG icon
+    //   list: [
+    //     {
+    //       title: "Sales Report",
+    //       path: "sales-report",
+    //       isAllowed: isAllowedRoute("sales-report"),
+    //       icon: <IoIosHome />,
+    //     },
+    //     {
+    //       title: "Transactions",
+    //       path: "transactions",
+    //       isAllowed: isAllowedRoute("transactions"),
+    //       icon: <IoIosHome />,
+    //     },
+    //   ],
+    // },
 
     // Download Backup
-    {
-      title: "Download Backup",
-      icon: <IoIosHome />, // Replace with the actual SVG icon
-      list: [
-        {
-          title: "Database Backup",
-          path: "database-backup",
-          isAllowed: isAllowedRoute("database-backup"),
-          icon: <IoIosHome />,
-        },
-        {
-          title: "Product Images Backup",
-          path: "product-images-backup",
-          isAllowed: isAllowedRoute("product-images-backup"),
-          icon: <IoIosHome />,
-        },
-        {
-          title: "User Images Backup",
-          path: "user-images-backup",
-          isAllowed: isAllowedRoute("user-images-backup"),
-          icon: <IoIosHome />,
-        },
-        {
-          title: "Banner Images Backup",
-          path: "banner-images-backup",
-          isAllowed: isAllowedRoute("banner-images-backup"),
-          icon: <IoIosHome />,
-        },
-        {
-          title: "Category Icon Backup",
-          path: "category-icon-backup",
-          isAllowed: isAllowedRoute("category-icon-backup"),
-          icon: <IoIosHome />,
-        },
-        {
-          title: "Subcategory Backup",
-          path: "subcategory-backup",
-          isAllowed: isAllowedRoute("subcategory-backup"),
-          icon: <IoIosHome />,
-        },
-        {
-          title: "Flag Icon Backup",
-          path: "flag-icon-backup",
-          isAllowed: isAllowedRoute("flag-icon-backup"),
-          icon: <IoIosHome />,
-        },
-        // {
-        //   title: "Ticket Files Backup",
-        //   path: "ticket-files-backup",
-        //   isAllowed: isAllowedRoute("ticket-files-backup"),
-        //   icon: <IoIosHome />,
-        // },
-        {
-          title: "Blog Files Backup",
-          path: "blog-files-backup",
-          isAllowed: isAllowedRoute("blog-files-backup"),
-          icon: <IoIosHome />,
-        },
-        {
-          title: "Other Images Backup",
-          path: "other-images-backup",
-          isAllowed: isAllowedRoute("other-images-backup"),
-          icon: <IoIosHome />,
-        },
-      ],
-    },
+    // {
+    //   title: "Download Backup",
+    //   icon: <IoIosHome />, // Replace with the actual SVG icon
+    //   list: [
+    //     {
+    //       title: "Database Backup",
+    //       path: "database-backup",
+    //       isAllowed: isAllowedRoute("database-backup"),
+    //       icon: <IoIosHome />,
+    //     },
+    //     {
+    //       title: "Product Images Backup",
+    //       path: "product-images-backup",
+    //       isAllowed: isAllowedRoute("product-images-backup"),
+    //       icon: <IoIosHome />,
+    //     },
+    //     {
+    //       title: "User Images Backup",
+    //       path: "user-images-backup",
+    //       isAllowed: isAllowedRoute("user-images-backup"),
+    //       icon: <IoIosHome />,
+    //     },
+    //     {
+    //       title: "Banner Images Backup",
+    //       path: "banner-images-backup",
+    //       isAllowed: isAllowedRoute("banner-images-backup"),
+    //       icon: <IoIosHome />,
+    //     },
+    //     {
+    //       title: "Category Icon Backup",
+    //       path: "category-icon-backup",
+    //       isAllowed: isAllowedRoute("category-icon-backup"),
+    //       icon: <IoIosHome />,
+    //     },
+    //     {
+    //       title: "Subcategory Backup",
+    //       path: "subcategory-backup",
+    //       isAllowed: isAllowedRoute("subcategory-backup"),
+    //       icon: <IoIosHome />,
+    //     },
+    //     {
+    //       title: "Flag Icon Backup",
+    //       path: "flag-icon-backup",
+    //       isAllowed: isAllowedRoute("flag-icon-backup"),
+    //       icon: <IoIosHome />,
+    //     },
+    //     // {
+    //     //   title: "Ticket Files Backup",
+    //     //   path: "ticket-files-backup",
+    //     //   isAllowed: isAllowedRoute("ticket-files-backup"),
+    //     //   icon: <IoIosHome />,
+    //     // },
+    //     {
+    //       title: "Blog Files Backup",
+    //       path: "blog-files-backup",
+    //       isAllowed: isAllowedRoute("blog-files-backup"),
+    //       icon: <IoIosHome />,
+    //     },
+    //     {
+    //       title: "Other Images Backup",
+    //       path: "other-images-backup",
+    //       isAllowed: isAllowedRoute("other-images-backup"),
+    //       icon: <IoIosHome />,
+    //     },
+    //   ],
+    // },
 
     // CRM Modules
-    {
-      title: "Support Ticket",
-      icon: <IoIosHome />, // Replace with the actual SVG icon
-      list: [
-        {
-          title: "Pending Supports",
-          path: "pending-supports",
-          isAllowed: isAllowedRoute("pending-supports"),
-          icon: <IoIosHome />,
-        },
-        {
-          title: "Solved Supports",
-          path: "solved-supports",
-          isAllowed: isAllowedRoute("solved-supports"),
-          icon: <IoIosHome />,
-        },
-        {
-          title: "On Hold Supports",
-          path: "on-hold-supports",
-          isAllowed: isAllowedRoute("on-hold-supports"),
-          icon: <IoIosHome />,
-        },
-        {
-          title: "Rejected Supports",
-          path: "rejected-supports",
-          isAllowed: isAllowedRoute("rejected-supports"),
-          icon: <IoIosHome />,
-        },
-      ],
-    },
+    // {
+    //   title: "Support Ticket",
+    //   icon: <IoIosHome />, // Replace with the actual SVG icon
+    //   list: [
+    //     {
+    //       title: "Pending Supports",
+    //       path: "pending-supports",
+    //       isAllowed: isAllowedRoute("pending-supports"),
+    //       icon: <IoIosHome />,
+    //     },
+    //     {
+    //       title: "Solved Supports",
+    //       path: "solved-supports",
+    //       isAllowed: isAllowedRoute("solved-supports"),
+    //       icon: <IoIosHome />,
+    //     },
+    //     {
+    //       title: "On Hold Supports",
+    //       path: "on-hold-supports",
+    //       isAllowed: isAllowedRoute("on-hold-supports"),
+    //       icon: <IoIosHome />,
+    //     },
+    //     {
+    //       title: "Rejected Supports",
+    //       path: "rejected-supports",
+    //       isAllowed: isAllowedRoute("rejected-supports"),
+    //       icon: <IoIosHome />,
+    //     },
+    //   ],
+    // },
 
     {
       title: "Contact Request",
@@ -786,24 +786,24 @@ function MenuItemsList({ userRole }) {
     },
 
     // Demo Products
-    {
-      title: "Demo Products",
-      icon: <IoIosHome />, // Replace with the actual SVG icon
-      list: [
-        {
-          title: "Generate Products",
-          path: "generate-products",
-          isAllowed: isAllowedRoute("generate-products"),
-          icon: <IoIosHome />,
-        },
-        {
-          title: "Remove Demo Products",
-          path: "remove-demo-products",
-          isAllowed: isAllowedRoute("remove-demo-products"),
-          icon: <IoIosHome />,
-        },
-      ],
-    },
+    // {
+    //   title: "Demo Products",
+    //   icon: <IoIosHome />, // Replace with the actual SVG icon
+    //   list: [
+    //     {
+    //       title: "Generate Products",
+    //       path: "generate-products",
+    //       isAllowed: isAllowedRoute("generate-products"),
+    //       icon: <IoIosHome />,
+    //     },
+    //     {
+    //       title: "Remove Demo Products",
+    //       path: "remove-demo-products",
+    //       isAllowed: isAllowedRoute("remove-demo-products"),
+    //       icon: <IoIosHome />,
+    //     },
+    //   ],
+    // },
 
     // Dashboard
     // {
