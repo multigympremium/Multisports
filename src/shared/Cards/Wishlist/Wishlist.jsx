@@ -31,7 +31,7 @@ const Wishlist = ({ isShow }) => {
               }}
               className=""
             >
-              <IoMdCloseCircle className="text-xl" />
+              <IoMdCloseCircle className="text-2xl" />
             </button>
           </h2>
 

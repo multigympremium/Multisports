@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
 import toast from "react-hot-toast";
+import { IoMdCloseCircle } from "react-icons/io";
 
 const Modal = ({
   id,
@@ -75,10 +76,10 @@ const Modal = ({
   //   console.log(currentItem, "copy_product");
   // }, [selectedSize, selectedColor, product, cartItems]);
 
-  console.log(
-    "current stock",
-    cartItems.filter((item) => item.color === selectedColor?.value)
-  );
+  // console.log(
+  //   "current stock",
+  //   cartItems.filter((item) => item.color === selectedColor?.value)
+  // );
 
   // useEffect(() => {
   //   const currentColorItems = cartItems.filter(
@@ -155,7 +156,7 @@ const Modal = ({
       <div className=" modal-box p-0 rounded max-w-4xl w-[90%] mx-auto md:w-full flex flex-col md:flex-row">
         <form method="dialog">
           <button className="btn btn-sm btn-circle btn-ghost absolute focus:outline-none right-2 top-2">
-            ✕
+            <IoMdCloseCircle className="text-xl" />
           </button>
         </form>
 
