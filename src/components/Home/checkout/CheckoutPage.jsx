@@ -34,62 +34,75 @@ export default function CheckoutPage() {
           <div className="w-[90%] mx-auto md:max-w-[75%] md:inline-block">
             {shippingAddress ? (
               <div className="w-full mx-auto p-6 border rounded-lg shadow-md mb-12 bg-white relative">
-              <h2 className="text-3xl font-semibold text-gray-600 mb-6">Shipping Address</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 rounded-lg">
-                {/* Left Section */}
-                <div className="border p-6 rounded-lg bg-white shadow-sm">
-                  <div className="mb-4">
-                    <p className="text-lg font-semibold text-gray-600">Name :</p>
-                    <span className="text-xl font-medium text-gray-900">
-                      {shippingAddress.recipientName}
-                    </span>
+                <h2 className="text-3xl font-semibold text-gray-600 mb-6">
+                  Shipping Address
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 rounded-lg">
+                  {/* Left Section */}
+                  <div className="border p-6 rounded-lg bg-white shadow-sm">
+                    <div className="mb-4 flex gap-3 items-center">
+                      <p className="text-lg font-semibold text-gray-600">
+                        Name :
+                      </p>
+                      <span className="text-xl font-medium text-gray-900">
+                        {shippingAddress.recipientName}
+                      </span>
+                    </div>
+                    <div className="mb-4 flex gap-3 items-center">
+                      <p className="text-lg font-semibold text-gray-600">
+                        Phone :
+                      </p>
+                      <span className="text-lg font-medium text-gray-900">
+                        {shippingAddress.contact_number}
+                      </span>
+                    </div>
+                    <div className="mb-4 flex gap-3 items-center">
+                      <p className="text-lg font-semibold text-gray-600">
+                        City :
+                      </p>
+                      <span className="text-lg font-medium text-gray-900">
+                        {shippingAddress.city_name}
+                      </span>
+                    </div>
+                    <div className="mb-4 flex gap-3 items-center">
+                      <p className="text-lg font-semibold text-gray-600">
+                        Zone :
+                      </p>
+                      <span className="text-lg font-medium text-gray-900">
+                        {shippingAddress.zone_name}
+                      </span>
+                    </div>
                   </div>
-                  <div className="mb-4">
-                    <p className="text-lg font-semibold text-gray-600">Phone :</p>
-                    <span className="text-lg font-medium text-gray-900">
-                      {shippingAddress.contact_number}
-                    </span>
-                  </div>
-                  <div className="mb-4">
-                    <p className="text-lg font-semibold text-gray-600">City :</p>
-                    <span className="text-lg font-medium text-gray-900">
-                      {shippingAddress.city_name}
-                    </span>
-                  </div>
-                  <div>
-                    <p className="text-lg font-semibold text-gray-600">Zone :</p>
-                    <span className="text-lg font-medium text-gray-900">
-                      {shippingAddress.zone_name}
-                    </span>
+
+                  {/* Right Section */}
+                  <div className="border p-6 rounded-lg bg-white shadow-sm">
+                    <div className="mb-4 flex gap-3 items-center">
+                      <p className="text-lg font-semibold text-gray-600">
+                        Area :
+                      </p>
+                      <span className="text-lg font-medium text-gray-900">
+                        {shippingAddress.area_name || "----"}
+                      </span>
+                    </div>
+                    <div className="mb-4 flex gap-3 items-center">
+                      <p className="text-lg font-semibold text-gray-600">
+                        Address :
+                      </p>
+                      <span className="text-lg font-medium text-gray-900">
+                        {shippingAddress.address}
+                      </span>
+                    </div>
                   </div>
                 </div>
-            
-                {/* Right Section */}
-                <div className="border p-6 rounded-lg bg-white shadow-sm">
-                  <div className="mb-4">
-                    <p className="text-lg font-semibold text-gray-600">Area :</p>
-                    <span className="text-lg font-medium text-gray-900">
-                      {shippingAddress.area_name}
-                    </span>
-                  </div>
-                  <div>
-                    <p className="text-lg font-semibold text-gray-600">Address :</p>
-                    <span className="text-lg font-medium text-gray-900">
-                      {shippingAddress.address}
-                    </span>
-                  </div>
-                </div>
+
+                {/* Edit Button */}
+                <button
+                  className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-lg shadow-md absolute top-6 right-6"
+                  onClick={() => setIsShippingEdit(true)}
+                >
+                  Edit
+                </button>
               </div>
-            
-              {/* Edit Button */}
-              <button
-                className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-lg shadow-md absolute top-6 right-6"
-                onClick={() => setIsShippingEdit(true)}
-              >
-                Edit
-              </button>
-            </div>
-            
             ) : (
               <ShippingForm
                 setShippingAddress={setShippingAddress}

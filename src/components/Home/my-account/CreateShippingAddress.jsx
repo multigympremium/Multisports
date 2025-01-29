@@ -3,6 +3,7 @@ import useAxiosSecure from "../../../Hook/useAxiosSecure";
 import Swal from "sweetalert2";
 import { AiOutlineLoading } from "react-icons/ai";
 import { useAuth } from "../../../providers/AuthProvider";
+import { IoIosClose } from "react-icons/io";
 
 const CreateShippingAddress = ({
   isShowModal,
@@ -118,10 +119,9 @@ const CreateShippingAddress = ({
     if (!formData.recipientName)
       formErrors.recipientName = "Recipient Name is required";
     if (!formData.contact_number)
-      formErrors.contactNumber = "Contact Number is required";
+      formErrors.contact_number = "Contact Number is required";
     if (!formData.city_id) formErrors.city_id = "City selection is required";
     if (!formData.zone_id) formErrors.zone_id = "City selection is required";
-    if (!formData.area_id) formErrors.area_id = "Area selection is required";
     if (!formData.address) formErrors.address = "Address is required";
 
     setErrors(formErrors);
@@ -267,8 +267,14 @@ const CreateShippingAddress = ({
   }, [isShowModal, addressData]);
 
   return (
-    <div className="w-full  mx-auto p-6 rounded-md mb-12 bg-white ">
+    <div className="w-full  mx-auto p-6 rounded-md mb-12 bg-white relative">
       <h2 className="text-2xl font-bold mb-6">Shipping Address</h2>
+      <button
+        className="absolute top-4 right-4  text-gray-500 hover:text-gray-700 focus:outline-none border rounded-full"
+        onClick={() => setIsShowModal(false)}
+      >
+        <IoIosClose size={28} />
+      </button>
       <form onSubmit={handleSubmit}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Recipient Name */}
@@ -409,8 +415,10 @@ const CreateShippingAddress = ({
                 <AiOutlineLoading className="animate-spin text-gray-500" />
               </div>
             )}
-            {errors.area_id && (
-              <p className="text-red-500 text-sm mt-1">{errors.area_id}</p>
+            {areas.length === 0 && formData.zone_id && (
+              <p className="text-blue-500 text-sm mt-1 text-right">
+                No Area Found
+              </p>
             )}
           </div>
 
