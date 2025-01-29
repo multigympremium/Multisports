@@ -185,12 +185,12 @@ const ProductDetails = () => {
           item.color === selectedColor.value && item.size === selectedSize.value
       );
 
-      console.log(
-        selectedColor,
-        selectedSize,
-        "currentColorItem",
-        currentColorItem
-      );
+      // console.log(
+      //   selectedColor,
+      //   selectedSize,
+      //   "currentColorItem",
+      //   currentColorItem
+      // );
       // console.log(currentColorItem, "currentColorItem");
       setQuantity(currentColorItem?.quantity || 0);
     }
