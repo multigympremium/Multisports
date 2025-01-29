@@ -857,6 +857,7 @@ const ShippingForm = ({
             <label className="block font-semibold mb-1">Area *</label>
 
             {!areaLoading ? (
+            // {!areaLoading && areas?.length > 0 ? (
               <select
                 name="area_id"
                 value={area_id}

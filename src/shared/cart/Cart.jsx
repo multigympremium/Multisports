@@ -60,7 +60,7 @@ const Cart = ({ isShow, setIsShow }) => {
               }}
               className="mt-3"
             >
-              <IoMdCloseCircle className="text-xl"/>
+              <IoMdCloseCircle className="text-2xl"/>
             </button>
           </form>
           </div>
