@@ -131,12 +131,19 @@ export default function AboutUsSection({ testimonialId, isShow, setIsShow }) {
   return (
     <div className="">
       {/* Testimonial Edit Form */}
-      <h1 className="text-2xl font-semibold mb-7">About Section</h1>
       <form onSubmit={handleSubmit}>
+        <div className=" mb-9 flex">
+          <h1 className="text-3xl font-semibold w-full border-l-[5px] border-blue-400 pl-3">About Section</h1>
+          <div className="flex justify-end w-full">
+            <button type="submit" className="customSaveButton ">
+              Save Changes
+            </button>
+          </div>
+        </div>
         <div className="mb-4">
           {/* Left Column - Image Upload */}
           <div className="relative">
-            <label className="block text-gray-700 mb-2">Banner Image</label>
+            <label className="block font-semibold text-gray-600 mb-2">Banner Image</label>
             <DragEditUploadImageInput
               getRootProps={getBannerRootProps}
               getInputProps={getBannerInputProps}
@@ -145,7 +152,7 @@ export default function AboutUsSection({ testimonialId, isShow, setIsShow }) {
             />
           </div>
           <div className="relative">
-            <label className="block text-gray-700 mb-2 mt-3">Side Image </label>
+            <label className="block font-semibold text-gray-600 mb-2 mt-3">Side Image </label>
             <DragEditUploadImageInput
               getRootProps={getSideImageRootProps}
               getInputProps={getSideImageInputProps}
@@ -157,7 +164,7 @@ export default function AboutUsSection({ testimonialId, isShow, setIsShow }) {
           {/* Right Column - Form Inputs */}
           <div className="space-y-4 mb-6 col-span-full">
             <div>
-              <label className="block text-gray-700 mt-3">Title </label>
+              <label className="block font-semibold text-gray-600 mt-3">Title </label>
               <input
                 type="text"
                 value={title}
@@ -168,7 +175,7 @@ export default function AboutUsSection({ testimonialId, isShow, setIsShow }) {
             </div>
           </div>
           <div className="mb-8 col-span-full">
-            <label className="block text-gray-700 mb-2">Description</label>
+            <label className="block font-semibold text-gray-600 mb-2">Description</label>
             <CustomEditor
               value={description}
               setValue={setDescription}
@@ -177,12 +184,7 @@ export default function AboutUsSection({ testimonialId, isShow, setIsShow }) {
             />
           </div>
         </div>
-        <div className="flex justify-end w-full">
-          <button type="submit" className="customSaveButton">
-            Save Changes
-          </button>
-        </div>
-        {/* Save Button */}
+        
       </form>
     </div>
   );
