@@ -79,7 +79,7 @@ export default function SystemUsers() {
             <IoIosSearch className="text-2xl text-gray-400" />
           </div>
           <button
-            className="customSaveButton !bg-blue-600"
+            className="customSaveButton "
             onClick={() => setIsModalOpen(true)}
           >
             + Add New User

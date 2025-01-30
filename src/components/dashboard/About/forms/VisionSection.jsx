@@ -114,14 +114,23 @@ export default function VisionSection() {
   };
 
   return (
-    <div className="">
+    <div className="border-b-2 border-gray-300 border-dashed  pb-5 mb-9">
       {/* Testimonial Edit Form */}
-      <h1 className="text-3xl font-semibold mb-9">Vision Section</h1>
+      {/* <h1 className="text-3xl font-semibold mb-9">Vision Section</h1> */}
+
       <form onSubmit={handleSubmit}>
+        <div className=" mb-9 flex">
+          <h1 className="text-3xl font-semibold w-full border-l-[5px] border-blue-400 pl-3">Vision Section</h1>
+          <div className="flex justify-end w-full">
+            <button type="submit" className="customSaveButton ">
+              Save Changes
+            </button>
+          </div>
+        </div>
         <div className="">
           {/* Left Column - Image Upload */}
           <div className="relative">
-            <label className="block text-gray-700 mb-2">Image </label>
+            <label className="block font-semibold text-gray-600 mb-2">Image </label>
             <DragEditUploadImageInput
               getRootProps={getThumbnailRootProps}
               getInputProps={getThumbnailInputProps}
@@ -144,7 +153,7 @@ export default function VisionSection() {
           {/* Right Column - Form Inputs */}
           <div className="space-y-4 mb-6 mt-4">
             <div>
-              <label className="block text-gray-700">Title </label>
+              <label className="block font-semibold text-gray-600">Title </label>
               <input
                 type="text"
                 value={title}
@@ -155,7 +164,7 @@ export default function VisionSection() {
             </div>
 
             <div className="mb-8">
-              <label className="block text-gray-700 mb-2">Description </label>
+              <label className="block font-semibold text-gray-600 mb-2">Description </label>
               <CustomEditor
                 value={description}
                 setValue={setDescription}
@@ -165,11 +174,7 @@ export default function VisionSection() {
             </div>
           </div>
         </div>
-        <div className="flex justify-end w-full">
-          <button type="submit" className="customSaveButton">
-            Save Changes
-          </button>
-        </div>
+
         {/* Save Button */}
       </form>
     </div>

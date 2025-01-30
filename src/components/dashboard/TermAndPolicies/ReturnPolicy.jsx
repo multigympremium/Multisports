@@ -55,24 +55,23 @@ const ReturnPolicy = () => {
   return (
     <div className="p-6 pt-0">
       <form onSubmit={handleSubmit} className="">
-        <h2 className="text-3xl font-semibold mb-9">
-          Return Policy Update Form
-        </h2>
+        <div className=" mb-9 flex justify-between">
+          <h1 className="text-3xl font-semibold w-full border-l-[5px] border-blue-400 pl-3">Return Policy Update Form</h1>
+          <div className="min-w-max">
+            <button type="submit" className="customSaveButton">
+              Update Terms And Condition
+            </button>
+          </div>
+        </div>
 
         <div className="mb-6">
           <div className="">
-            <label className="block text-gray-500 text-lg  mb-4">
+            <label className="block font-semibold text-gray-600  text-lg  mb-4">
               Write Return Policy Here:
             </label>
 
             <CustomEditor value={content} setValue={setContent} />
           </div>
-        </div>
-
-        <div className="flex items-center justify-end">
-          <button type="submit" className="customSaveButton">
-            Update Terms And Condition
-          </button>
         </div>
       </form>
     </div>
