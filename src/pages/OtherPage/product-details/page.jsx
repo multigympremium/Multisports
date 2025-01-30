@@ -8,6 +8,7 @@ import RelatedProducts from "../../../components/partial/RelatedProducts/Related
 import ProductDetailsSkeleton from "./ProductDetailsSkeleton";
 import toast from "react-hot-toast";
 import MetaTags from "../../../components/Home/MetaTags/MetaTags";
+import { FaShoppingCart } from "react-icons/fa";
 
 const ProductDetails = () => {
   const [loading, setLoading] = useState(false);
@@ -260,7 +261,7 @@ const ProductDetails = () => {
               </p>
               {/* price */}
               <div className="flex items-center gap-6 my-5">
-                <p className="font-bold text-3xl">
+                <p className="font-semibold text-3xl">
                   BDT{" "}
                   {discountPrice
                     ? parseInt(price) - parseInt(discountPrice)
@@ -278,20 +279,20 @@ const ProductDetails = () => {
               {/* color */}
               <div className="mt-5">
                 <p className="font-semibold text-xl">Color :</p>
-                <div className="flex gap-5 mt-4">
+                <div className="flex gap-2 mt-4">
                   {colorAndSize?.length > 0 &&
                     colorAndSize?.map((color, index) => (
                       <div
                         key={index}
-                        className={`border flex items-center border-gray-100 duration-300 ease-in-out  hover:border-gray-400 justify-center p-[3px] md:p-1 rounded-md ${
+                        className={`border flex items-center border-gray-100 duration-300 ease-in-out  hover:border-gray-400 justify-center p-[3px] md:p-1 rounded-full ${
                           selectedColor?.value === color?.color?.value
-                            ? "border-neutral-700 text-white shadow-md"
+                            ? "border-neutral-400 text-white shadow-md"
                             : ""
                         }`}
                       >
                         <button
                           style={{ backgroundColor: color?.color?.value }}
-                          className={`md:w-8 md:h-8 w-7 h-7 rounded-md`}
+                          className={`md:w-6 md:h-6 w-7 h-7 rounded-full`}
                           onClick={() => {
                             setSelectedColor(color.color);
                             setSizeArray(color.size);
@@ -415,7 +416,7 @@ const ProductDetails = () => {
                     </button>
                   </div>
                   <button
-                    className="md:py-3 max-w-fit px-3 md:px-28 py-2 rounded-lg text-sm md:text-base font-semibold bg-black text-white w-auto md:flex-1 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="md:py-3 flex  items-center gap-4 max-w-fit px-3 md:px-28 py-2 rounded-lg text-sm md:text-base font-semibold bg-black text-white w-auto md:flex-1 disabled:opacity-50 disabled:cursor-not-allowed"
                     // onClick={() => {
                     //   addToCart(
                     //     product,
@@ -455,7 +456,7 @@ const ProductDetails = () => {
                     }}
                     disabled={stock - currentStock == 0}
                   >
-                    Add To Cart
+                    <FaShoppingCart/> Add To Cart
                   </button>
                 </div>
               </div>

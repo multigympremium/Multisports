@@ -263,7 +263,7 @@ const ProductDetail = ({ targetId, isShowDetail }) => {
               }}
               disabled={(product?.stock <= 0 && color === "") || size === ""}
             >
-              Add to Cart
+               Add to Cart
             </button>
             <button
               className="bg-blue-700 text-white px-6 py-3 rounded-md disabled:opacity-20"
