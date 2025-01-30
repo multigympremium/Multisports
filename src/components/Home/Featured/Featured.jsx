@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import useAxiosPublic from "../../../Hook/useAxiosPublic";
 import { baseImageUrl } from "../../../apis/apis";
+import { Link } from "react-router-dom";
 const Featured = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -44,11 +45,16 @@ const Featured = () => {
             </span>
           )}
           <div>{console.log(products)}</div>
-          <img
-            src={`${baseImageUrl}/${products[0]?.thumbnail}`}
-            alt={products[0]?.productTitle}
-            className="w-full cursor-pointer rounded-lg h-auto md:max-h-[600px] object-cover transition-transform duration-300 mb-4"
-          />
+
+          <Link
+            to={`/product_details/${products[0]?._id}`}
+          >
+            <img
+              src={`${baseImageUrl}/${products[0]?.thumbnail}`}
+              alt={products[0]?.productTitle}
+              className="w-full cursor-pointer rounded-lg h-auto md:max-h-[600px] object-cover transition-transform duration-300 mb-4"
+            />
+          </Link>
           <div className="flex flex-col md:flex-row justify-between items-start md:items-end">
             <div className="flex flex-col justify-end">
               <h3 className="font-semibold md:text-base text-sm mb-2 hidden lg:block">
@@ -104,12 +110,16 @@ const Featured = () => {
                   <span className="absolute left-3 top-3  md:top-4 md:left-4 bg-gray-900 text-white text-[10px] md:text-sm py-1 px-2 md:px-3 rounded-md">
                     {product?.discount} %
                   </span>
-                ) :<p></p>}
-                <img
-                  src={`${baseImageUrl}/${product?.thumbnail}`}
-                  alt={product.productTitle}
-                  className=" cursor-pointer rounded-lg w-full max-h-32 md:max-h-72 object-cover  transition-transform duration-300 mb-4"
-                />
+                ) : <p></p>}
+                <Link
+                  to={`/product_details/${products[0]?._id}`}
+                >
+                  <img
+                    src={`${baseImageUrl}/${product?.thumbnail}`}
+                    alt={product.productTitle}
+                    className=" cursor-pointer rounded-lg w-full max-h-32 md:max-h-72 object-cover  transition-transform duration-300 mb-4"
+                  />
+                </Link>
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-end">
                   <div className="flex flex-col justify-end">
                     <h3 className="font-semibold md:text-base text-sm mb-2 hidden md:block">
@@ -153,7 +163,7 @@ const Featured = () => {
             ))}
         </div>
       </div>
-      
+
     </div>
   );
 };
