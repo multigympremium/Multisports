@@ -2,10 +2,11 @@ import { AuthContext } from "../../../providers/AuthProvider";
 import { useContext, useEffect, useState } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import useAxiosPublic from "../../../Hook/useAxiosPublic";
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 export default function WishlistIcon({
   item,
-  setIsDeleted = () => {},
-  setIsEdited = () => {},
+  setIsDeleted = () => { },
+  setIsEdited = () => { },
 }) {
   const { wishlist, addToWishlist, removeFromWishlist } =
     useContext(AuthContext);
@@ -33,10 +34,11 @@ export default function WishlistIcon({
 
   return (
     <div
-      className=" bg-white rounded-full p-1 shadow hover:shadow-lg absolute top-3 right-3 z-40"
+      className=" bg-white text-xl cursor-pointer rounded-full p-1 shadow hover:shadow-lg absolute top-3 right-3 z-40"
       onClick={handleWishlist}
     >
-      {isLike ? <FaRegHeart /> : <FaHeart />}
+      {isLike ? <AiOutlineHeart />
+        : <AiFillHeart />}
     </div>
   );
 }

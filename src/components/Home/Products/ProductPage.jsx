@@ -433,7 +433,7 @@ function ProductPage() {
               <div className="space-y-4">
                 <p className="transition-all text-sm duration-300 delay-100 capitalize flex justify-between items-center gap-5 w-full">
                   <b>Price </b>
-                  <span className="text-gray-500 font-bold text-[14px] border rounded-md  items-center justify-center flex">
+                  <span className="text-gray-700 font-semibold text-[14px]  rounded-md  items-center justify-center flex">
                     $0.00 - ${Number(priceRange).toFixed(2)}
                   </span>
                 </p>

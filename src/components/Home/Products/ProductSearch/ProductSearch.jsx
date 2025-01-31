@@ -63,11 +63,11 @@ const ProductSearch = ({ setIsShow, isShow }) => {
   console.log(isShow, "isShow");
 
   return (
-    <div className="p-6 px-0 pt-4 bg-white rounded-lg">
+    <div className="p-6 px-4 pt-4 md:pt-7 bg-white rounded-lg">
       <input
         type="text"
         placeholder="Search Product ..."
-        className="focus:border-gray-300 appearance-none text-gray-700 border shadow-sm rounded-xl w-[95%] mx-auto block py-3 px-3 leading-tight focus:outline-none focus:shadow-outline mb-6"
+        className="focus:border-gray-300 appearance-none text-gray-700 border shadow-sm rounded-full w-full md:w-[95%] mx-auto block py-3 px-3 pl-5 leading-tight focus:outline-none focus:shadow-outline mb-6"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
         // autoFocus={true}
@@ -99,7 +99,7 @@ const ProductSearch = ({ setIsShow, isShow }) => {
           ))
         ) : (
           <h3 colSpan="4" className="text-center py-20">
-            No users found
+            No results found
           </h3>
         )}
       </div>
