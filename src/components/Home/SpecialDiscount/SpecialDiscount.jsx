@@ -66,7 +66,7 @@ const SpecialDiscount = ({ limit = 8, isShowSeeAll = true }) => {
           {products?.length > 0 &&
             products.slice(0, limit).map((product, index) => (
               <ProductCard
-                // showDiscount={true}
+                showDiscount={true}
                 isSpecial={true}
                 border={true}
                 key={index}

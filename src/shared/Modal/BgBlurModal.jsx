@@ -20,7 +20,7 @@ function BgBlurModal({
         isShowModal ? "opacity-100 visible" : "opacity-0 invisible"
       }`}
     >
-      <div className="relative rounded shadow-lg z-10 max-w-[70%] mx-auto mt-3">
+      <div className="relative rounded shadow-lg z-10 w-[95%] md:max-w-[70%] mx-auto mt-3">
         {children}
       </div>
     </div>

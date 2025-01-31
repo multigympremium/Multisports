@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
 import toast from "react-hot-toast";
 import { IoMdCloseCircle } from "react-icons/io";
+import { FaShoppingCart } from "react-icons/fa";
 
 const Modal = ({
   id,
@@ -323,11 +324,11 @@ const Modal = ({
                     }}
                     disabled={stock - currentStock == 0 || quantity == 0}
                   >
-                    Add To Cartt
+                    Add To Cart
                   </button>
                   </form>
                   <button
-                    className="md:py-3 hidden md:block py-2 rounded-lg text-sm md:text-base font-semibold bg-black text-white w-full md:flex-1 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="md:py-3 hidden md:flex justify-center items-center gap-3 py-2 rounded-lg text-sm md:text-base font-semibold bg-black text-white w-full md:flex-1 disabled:opacity-50 disabled:cursor-not-allowed"
                     // onClick={() => {
                     //   addToCart(
                     //     product,
@@ -367,7 +368,7 @@ const Modal = ({
                     }}
                     disabled={stock - currentStock == 0 || quantity == 0}
                   >
-                    Add To Cart
+                    <FaShoppingCart/> Add To Cart
                   </button>
                 </div>
               </div>

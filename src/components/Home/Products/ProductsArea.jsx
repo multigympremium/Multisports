@@ -75,7 +75,7 @@ function ProductsArea({
       </div>
       {totalItems > currentPage * itemsPerPage && (
         <button
-          className="w-full border py-5 flex justify-center items-center mt-10"
+          className="w-full border rounded-2xl py-4 font-semibold bg-gray-700 text-white flex justify-center items-center mt-10"
           onClick={() => setCurrentPage(currentPage + 1)}
         >
           {loading ? (
