@@ -398,7 +398,7 @@ export default function EditableTableColumn({
       <div
         className={`absolute top-0 bottom-0 transition-all duration-300 ${
           isSizeFocus ? "right-0 w-full px-8" : "right-full w-0 px-0"
-        } p-2 bg-white  pt-6 pb-2 overflow-hidden`}
+        } p-2 bg-white  pt-6 pb-2 overflow-auto`}
       >
         {faceState === "create" ? (
           <AddNewSizes

@@ -75,7 +75,8 @@ export default function EditSizes({
   ]);
 
   return (
-    <div>
+    <div className="overflow-auto">
+      <h3 className="text-2xl font-semibold mb-3">Edit Size And Quantity</h3>
       <div className="flex gap-4">
         <div className="w-full">
           <ReactSelect
@@ -121,7 +122,7 @@ export default function EditSizes({
         </span>
       </div>
 
-      <ul className="flex gap-3 mt-3 items-center h-[100px]">
+      <ul className="flex gap-3 mt-3 items-center h-[70px]">
         {editingSize?.length > 0 &&
           editingSize.map((item, index) => (
             <li

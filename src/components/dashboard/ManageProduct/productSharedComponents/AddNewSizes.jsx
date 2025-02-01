@@ -17,7 +17,8 @@ export default function AddNewSizes({
 }) {
   console.log(totalQuantity, "totalQuantity", allSizesQuantity);
   return (
-    <>
+    <div>
+      <h3 className="text-2xl font-semibold mb-3">Add Size And Quantity</h3>
       <div className="flex gap-4">
         <div className="w-full">
           <ReactSelect
@@ -78,7 +79,7 @@ export default function AddNewSizes({
         </span>
       </div>
 
-      <ul className="grid grid-cols-3 items-start gap-5 mt-3  h-[100px] ">
+      <ul className="grid grid-cols-3 items-start gap-5 mt-3 h-[70px] ">
         {productSizeValue?.length > 0 &&
           productSizeValue.map((item, index) => (
             <li
@@ -103,6 +104,6 @@ export default function AddNewSizes({
             </li>
           ))}
       </ul>
-    </>
+    </div>
   );
 }
