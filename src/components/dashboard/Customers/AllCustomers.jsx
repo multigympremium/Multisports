@@ -26,17 +26,7 @@ export default function CustomersList() {
   const [isDeleted, setIsDeleted] = useState(false);
   const [loading, setLoading] = useState(false);
   const debouncedValue = useDebounce(searchTerm, 200);
-  // CSV headers for download
-  const csvHeaderss = [
-    { label: "SL", key: "id" },
-    { label: "Name", key: "name" },
-    { label: "Email", key: "email" },
-    { label: "Phone", key: "phone" },
-    { label: "Address", key: "address" },
-    { label: "Delete Request Submitted", key: "deleteRequestSubmitted" },
-    { label: "Wallet", key: "wallet" },
-    { label: "Created At", key: "createdAt" },
-  ];
+
   const [csvHeaders, setCsvHeaders] = useState([]);
 
   const { customers, totalItems, totalPages } = useGetAllCustomers({

@@ -18,7 +18,7 @@ export default function DeliveredOrders() {
   const axiosSecure = useAxiosSecure();
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
+  const itemsPerPage = 15;
 
   const [isShowDetail, setIsShowDetail] = useState(false);
   const [targetId, setTargetId] = useState(null);
@@ -26,8 +26,8 @@ export default function DeliveredOrders() {
   const [isEdited, setIsEdited] = useState(false);
   const debouncedValue = useDebounce(searchTerm, 200);
 
-  const { orders, totalItems } = useGetAllOrders({
-    query: `status=DeliveredToCourier&currentPage=${currentPage}&search=${debouncedValue}`,
+  const { orders, totalItems, isLoading } = useGetAllOrders({
+    query: `status=DeliveredToCourier&currentPage=${currentPage}&limit=${itemsPerPage}&search=${debouncedValue}`,
     isDeleted,
     isShowModal: isShowDetail,
   });
@@ -124,7 +124,8 @@ export default function DeliveredOrders() {
             </tr>
           </thead>
           <tbody>
-            {orders?.length > 0 ? (
+            {orders?.length > 0 &&
+              !isLoading &&
               orders?.map((order, index) => (
                 <tr key={order._id} className="text-center border-b">
                   <td className="p-2 border">
@@ -169,16 +170,37 @@ export default function DeliveredOrders() {
                     </div>
                   </td>
                 </tr>
-              ))
-            ) : (
+              ))}
+
+            {!isLoading && orders?.length === 0 && (
               <tr>
-                <td colSpan="10" className="text-center p-4 py-32">
+                <td colSpan="10" className="text-center p-4">
                   No data available in table
                 </td>
               </tr>
             )}
           </tbody>
         </table>
+
+        {isLoading ? (
+          <div className="animate-pulse">
+            <div className="h-4 bg-gray-200 mt-3 mb-6 rounded"></div>
+            <div className="h-4 bg-gray-300 mb-6 rounded"></div>
+            <div className="h-4 bg-gray-200 mb-6 rounded"></div>
+            <div className="h-4 bg-gray-300 mb-6 rounded"></div>
+            <div className="h-4 bg-gray-200 mb-6 rounded"></div>
+            <div className="h-4 bg-gray-200 mb-6 rounded"></div>
+            <div className="h-4 bg-gray-200 mb-6 rounded"></div>
+            <div className="h-4 bg-gray-200 mb-6 rounded"></div>
+            <div className="h-4 bg-gray-200 mb-6 rounded"></div>
+            <div className="h-4 bg-gray-200 mb-6 rounded"></div>
+            <div className="h-4 bg-gray-200 mb-6 rounded"></div>
+            <div className="h-4 bg-gray-200 mb-6 rounded"></div>
+            <div className="h-4 bg-gray-200 mb-6 rounded"></div>
+            <div className="h-4 bg-gray-200 mb-6 rounded"></div>
+            <div className="h-4 bg-gray-200 mb-6 rounded"></div>
+          </div>
+        ) : null}
 
         {/* Pagination */}
         {/* <div className="mt-4 flex justify-between">
@@ -211,7 +233,7 @@ export default function DeliveredOrders() {
       <Pagination
         currentPage={currentPage}
         totalItems={totalItems}
-        itemsPerPage={itemsPerPage}
+        limit={itemsPerPage}
         setCurrentPage={setCurrentPage}
       />
 

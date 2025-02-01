@@ -377,12 +377,9 @@
 
 // export default PrintTemplate;
 
-
-
-
 // import React, { useEffect, useRef, useState } from "react";
 // import moment from "moment";
-import useGetCompanyData from "../../Hook/GetCompanyData/useGetCompanyData";
+// import useGetCompanyData from "../../Hook/GetCompanyData/useGetCompanyData";
 // import ReactToPrint, { useReactToPrint } from "react-to-print";
 // import { CgSpinner } from "react-icons/cg";
 
@@ -393,14 +390,18 @@ import ReceiptTemplate from "./ReceiptTemplate";
 import { set } from "react-hook-form";
 import { Oval } from "react-loader-spinner";
 
-
 import React, { forwardRef } from "react";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import useGetGeneralInfo from "../../Hook/GetPublicDataHook/useGetGeneralInfo";
+import ReactToPrint, { useReactToPrint } from "react-to-print";
 
 function PrintTemplate({ setIsShowPrint, data }) {
-  const profileData = useGetCompanyData();
+  const profileData = useGetGeneralInfo({});
   const ref = React.useRef();
+  const reactToPrintFn = useReactToPrint({
+    content: () => ref.current,
+  });
 
   const handlePrint = async () => {
     const element = ref.current;
@@ -415,9 +416,19 @@ function PrintTemplate({ setIsShowPrint, data }) {
   };
 
   return (
-    <div>
+    <div className="bg-slate-300 p-8 relative rounded-xl">
+      <ReactToPrint
+        trigger={() => (
+          <button
+            // onClick={reactToPrintFn}
+            className="btn btn-success absolute top-4 right-4"
+          >
+            Print PDF
+          </button>
+        )}
+        content={() => ref.current}
+      />
       <ReceiptTemplate ref={ref} profileData={profileData} data={data} />
-      <button onClick={handlePrint}>Print PDF</button>
     </div>
   );
 }

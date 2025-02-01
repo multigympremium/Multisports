@@ -46,15 +46,15 @@ export default function CompletedOrders() {
   const axiosSecure = useAxiosSecure();
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
+  const itemsPerPage = 15;
 
   const [isShowDetail, setIsShowDetail] = useState(false);
   const [targetId, setTargetId] = useState(null);
   const [isDeleted, setIsDeleted] = useState(false);
   const debouncedValue = useDebounce(searchTerm, 200);
 
-  const { orders, totalItems } = useGetAllOrders({
-    query: `status=Completed&currentPage=${currentPage}&search=${debouncedValue}`,
+  const { orders, totalItems, isLoading } = useGetAllOrders({
+    query: `status=Completed&currentPage=${currentPage}&limit=${itemsPerPage}&search=${debouncedValue}`,
     isDeleted,
     isShowModal: isShowDetail,
   });
@@ -94,7 +94,7 @@ export default function CompletedOrders() {
 
   return (
     <div className="p-6 pt-0">
-      <div className="max-w-7xl mx-auto min-h-[800px]">
+      <div className="max-w-7xl mx-auto ">
         <h1 className="text-3xl font-semibold mb-9">Completed Orders</h1>
 
         {/* Search Input */}
@@ -124,7 +124,8 @@ export default function CompletedOrders() {
             </tr>
           </thead>
           <tbody>
-            {orders?.length > 0 ? (
+            {orders?.length > 0 &&
+              !isLoading &&
               orders?.map((order, index) => (
                 <tr key={order._id} className="text-center border-b">
                   <td className="p-2 border">
@@ -157,49 +158,42 @@ export default function CompletedOrders() {
                     </div>
                   </td>
                 </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="10" className="text-center p-4 py-32">
-                  No data available in table
-                </td>
-              </tr>
-            )}
+              ))}
           </tbody>
+          {!isLoading && orders?.length === 0 && (
+            <tr>
+              <td colSpan="10" className="text-center p-4">
+                No data available in table
+              </td>
+            </tr>
+          )}
         </table>
-
-        {/* Pagination */}
-        {/* <div className="mt-4 flex justify-between">
-          <span>
-            Showing {indexOfFirstItem + 1} to{" "}
-            {Math.min(indexOfLastItem, filteredOrders.length)} of{" "}
-            {filteredOrders.length} entries
-          </span>
-          <div className="flex space-x-2">
-            {Array.from(
-              { length: Math.ceil(filteredOrders.length / itemsPerPage) },
-              (_, index) => (
-                <button
-                  key={index}
-                  onClick={() => handlePageChange(index + 1)}
-                  className={`px-3 py-1 border rounded-md ${
-                    currentPage === index + 1
-                      ? "bg-blue-500 text-white"
-                      : "bg-gray-100"
-                  }`}
-                >
-                  {index + 1}
-                </button>
-              )
-            )}
-          </div>
-        </div> */}
       </div>
+
+      {isLoading ? (
+        <div className="animate-pulse">
+          <div className="h-4 bg-gray-200 mt-3 mb-6 rounded"></div>
+          <div className="h-4 bg-gray-300 mb-6 rounded"></div>
+          <div className="h-4 bg-gray-200 mb-6 rounded"></div>
+          <div className="h-4 bg-gray-300 mb-6 rounded"></div>
+          <div className="h-4 bg-gray-200 mb-6 rounded"></div>
+          <div className="h-4 bg-gray-200 mb-6 rounded"></div>
+          <div className="h-4 bg-gray-200 mb-6 rounded"></div>
+          <div className="h-4 bg-gray-200 mb-6 rounded"></div>
+          <div className="h-4 bg-gray-200 mb-6 rounded"></div>
+          <div className="h-4 bg-gray-200 mb-6 rounded"></div>
+          <div className="h-4 bg-gray-200 mb-6 rounded"></div>
+          <div className="h-4 bg-gray-200 mb-6 rounded"></div>
+          <div className="h-4 bg-gray-200 mb-6 rounded"></div>
+          <div className="h-4 bg-gray-200 mb-6 rounded"></div>
+          <div className="h-4 bg-gray-200 mb-6 rounded"></div>
+        </div>
+      ) : null}
 
       <Pagination
         currentPage={currentPage}
         totalItems={totalItems}
-        itemsPerPage={itemsPerPage}
+        limit={itemsPerPage}
         setCurrentPage={setCurrentPage}
       />
 
