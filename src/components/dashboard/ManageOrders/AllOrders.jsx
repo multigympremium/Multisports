@@ -19,7 +19,7 @@ export default function AllOrders() {
   // const [orders, setOrders] = useState(initialData);
   const axiosSecure = useAxiosSecure();
   const [searchTerm, setSearchTerm] = useState("");
-  const [currentPage, setCurrentPage] = useState(2);
+  const [currentPage, setCurrentPage] = useState(1);
   const [isShowDetail, setIsShowDetail] = useState(false);
   const [targetId, setTargetId] = useState(null);
   const [isDeleted, setIsDeleted] = useState(false);
@@ -202,7 +202,37 @@ export default function AllOrders() {
             {orderData?.length > 0 &&
               !isLoading &&
               orderData.map((order, index) => {
-                console.log(order, "order");
+                let statusColor = "";
+                switch (order.status) {
+                  case "Pending":
+                    statusColor = "bg-yellow-500";
+                    break;
+                  case "Packaging":
+                    statusColor = "bg-green-500";
+                    break;
+                  case "Packed":
+                    statusColor = "bg-red-500";
+                    break;
+                  case "DeliveredToCourier":
+                    statusColor = "bg-gray-500";
+                    break;
+
+                  case "Delivered":
+                    statusColor = "bg-blue-500";
+                    break;
+
+                  case "completed":
+                    statusColor = "bg-green-500";
+                    break;
+
+                  case "Cancelled":
+                    statusColor = "bg-gray-500";
+                    break;
+
+                  default:
+                    break;
+                }
+
                 return (
                   <tr key={order._id} className="border-b text-center">
                     <td className="p-2 border">
@@ -217,7 +247,9 @@ export default function AllOrders() {
                     <td className="p-2 border">{order?.totalItems}</td>
                     <td className="p-2 border ">
                       {order?.status ? (
-                        <span className="bg-red-500 text-white  px-3 rounded-lg  py-1">
+                        <span
+                          className={`${statusColor} text-white  px-3 rounded-lg  py-1`}
+                        >
                           {order?.status}
                         </span>
                       ) : (
