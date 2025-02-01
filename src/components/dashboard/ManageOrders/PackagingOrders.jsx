@@ -6,7 +6,7 @@ import OrderDetail from "./OrderDetail";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
-import { IoIosSearch } from "react-icons/io";
+import { IoIosSearch, IoMdPrint } from "react-icons/io";
 import EditButton from "../../../components library/EditButton";
 import DeleteButton from "../../../components library/DeleteButton";
 import Pagination from "../../partial/Pagination/Pagination";
@@ -15,6 +15,8 @@ import useDebounce from "../../../Hook/useDebounce";
 import moment from "moment";
 import ShowDetailButton from "../../../components library/ShowDetailButton";
 import PrintTemplate from "../../../config/PrintTemplate/PrintTemplate";
+import PrintA4Template from "../../../config/PrintTemplate/PrintA4Template";
+import { FaPrint } from "react-icons/fa";
 
 // Sample pending orders data (could be fetched from API)
 const initialData = [
@@ -58,6 +60,7 @@ export default function ApprovedOrders() {
   const debouncedValue = useDebounce(searchTerm, 200);
   const [isShowPrint, setIsShowPrint] = useState(false);
   const [singleData, setSingleData] = useState(null);
+  const [isShowPrintA4, setIsShowPrintA4] = useState(false);
 
   const { orders, totalItems, isLoading } = useGetAllOrders({
     query: `status=Packaging&currentPage=${currentPage}&limit=${itemsPerPage}&search=${debouncedValue}`,
@@ -225,7 +228,16 @@ export default function ApprovedOrders() {
                         }}
                         className="customAddButton rounded-lg px-4 py-2 font-semibold "
                       >
-                        Print
+                        <FaPrint />
+                      </button>
+                      <button
+                        onClick={() => {
+                          setIsShowPrintA4(true);
+                          setSingleData(order);
+                        }}
+                        className="customAddButton rounded-lg px-4 py-2 font-semibold "
+                      >
+                        <IoMdPrint />
                       </button>
                       <button
                         onClick={() => addWeight(order._id)}
@@ -286,6 +298,13 @@ export default function ApprovedOrders() {
 
       <BgBlurModal isShowModal={isShowPrint} setIsShowModal={setIsShowPrint}>
         <PrintTemplate setIsShowPrint={setIsShowPrint} data={singleData} />
+      </BgBlurModal>
+
+      <BgBlurModal
+        isShowModal={isShowPrintA4}
+        setIsShowModal={setIsShowPrintA4}
+      >
+        <PrintA4Template setIsShowPrint={setIsShowPrintA4} data={singleData} />
       </BgBlurModal>
       <BgBlurModal isShowModal={isShowDetail} setIsShowModal={setIsShowDetail}>
         <OrderDetail
