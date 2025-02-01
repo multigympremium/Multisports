@@ -12,6 +12,7 @@ import PromotionalBanner from "../../UI/PromotionalBanner";
 import Swal from "sweetalert2";
 import useAxiosPublic from "../../../Hook/useAxiosPublic";
 import generateOrderOverview from "../../../helpers/generateOrderOverview";
+import { Oval } from "react-loader-spinner";
 
 export default function PaymentPage() {
   const { cartItems, setCartItems } = useContext(AuthContext);
@@ -22,6 +23,7 @@ export default function PaymentPage() {
   const [discount, setDiscount] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
   const [deliveryCharge, setDeliveryCharge] = useState(0);
+  const [loading, setLoading] = useState(false);
   const axiosPublic = useAxiosPublic();
 
   const [shippingAddress, setShippingAddress] = useState(null);
@@ -67,6 +69,8 @@ export default function PaymentPage() {
     //   userId: user._id,
     //   totalItems: totalItems,
     // };
+
+    setLoading(true);
 
     const orderOverview =
       location?.state?.order && generateOrderOverview(location?.state?.order);
@@ -114,6 +118,8 @@ export default function PaymentPage() {
         icon: "error",
         confirmButtonText: "OK",
       });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -199,8 +205,20 @@ export default function PaymentPage() {
             <button
               // onClick={() => setIsShowPaymentMethod(true)}
               onClick={submitOrder}
-              className="bg-green-500 text-white text-sm py-2 px-4 rounded-md mt-4 disabled:bg-gray-200 disabled:text-black w-full"
+              disabled={loading || cartItems.length === 0}
+              className="bg-green-500 text-white text-sm py-2 px-4 rounded-md mt-4 disabled:bg-gray-400 disabled:text-black  w-full flex justify-center gap-4 items-center"
             >
+              {loading && (
+                <Oval
+                  visible={true}
+                  color="#000"
+                  height={30}
+                  width={30}
+                  ariaLabel="oval-loading"
+                  wrapperStyle={{}}
+                  wrapperClass=""
+                />
+              )}
               Place Order
             </button>
           </div>

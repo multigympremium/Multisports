@@ -70,6 +70,7 @@ export default function EditProductForm({
 
   const [productSize, setProductSize] = useState([]);
   const [productColor, setProductColor] = useState([]);
+  const [errors, setErrors] = useState({});
 
   const categories = useGetAllCategories({});
   const subcategories = useGetAllSubCategories({});
@@ -185,9 +186,28 @@ export default function EditProductForm({
     multiple: true,
   });
 
+  const validateForm = () => {
+    let formErrors = {};
+    if (!productTitle) formErrors.productTitle = "Product Title is required";
+    if (!price) formErrors.price = "Price is required";
+    if (!stock) formErrors.stock = "Stock is required";
+
+    setErrors(formErrors);
+    return Object.keys(formErrors).length === 0;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Handle form submission here
+    if (!validateForm()) {
+      Swal.fire({
+        title: "Error!",
+        text: "Please fill all the required fields",
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+      return;
+    }
 
     // const uniqeDeletedGalleryItemIds = Array.from(new Set(deleteItemIds));
 
@@ -358,27 +378,6 @@ export default function EditProductForm({
     setGallery([]);
   }, [isShowModal]);
 
-  const handleColorChange = (e) => {
-    const { name, value } = e.target;
-    setProductColorValue(value);
-
-    if (value !== "") {
-      setProductColor((prev) =>
-        prev.includes(value) ? prev : [...prev, value]
-      );
-    }
-  };
-  const handleSizeChange = (e) => {
-    const { name, value } = e.target;
-    setProductSizeValue(value);
-
-    if (value !== "") {
-      setProductSize((prev) =>
-        prev.includes(value) ? prev : [...prev, value]
-      );
-    }
-  };
-
   useEffect(() => {
     const fetchTestimonial = async () => {
       try {
@@ -427,6 +426,9 @@ export default function EditProductForm({
               placeholder="Enter Product Name Here"
               // required
             />
+            {errors.productTitle && (
+              <p className="text-red-500 text-sm mt-1">{errors.productTitle}</p>
+            )}
           </div>
           <div className={"flex items-center  gap-6 mb-5"}>
             <ActiveDescBtn
@@ -536,6 +538,9 @@ export default function EditProductForm({
                 className="customInput"
                 // required
               />
+              {errors.price && (
+                <p className="text-red-500 text-sm mt-1">{errors.price}</p>
+              )}
             </div>
             {/* <div>
               <label className="block text-gray-70">Discount Price</label>
@@ -563,6 +568,10 @@ export default function EditProductForm({
                 onChange={(e) => setStock(e.target.value)}
                 className="customInput"
               />
+
+              {errors.stock && (
+                <p className="text-red-500 text-sm mt-1">{errors.stock}</p>
+              )}
             </div>
           </div>
 
@@ -837,11 +846,12 @@ export default function EditProductForm({
             />
           </div> */}
 
-          <SwitchInput
+          {/* <SwitchInput
             label="Available Variants?"
             checked={hasVariants}
             onChange={setHasVariants}
-          />
+          /> */}
+
           <SwitchInput
             label="Exclusive Feature?"
             checked={isFeatured}

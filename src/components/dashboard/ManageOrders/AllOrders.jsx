@@ -1,12 +1,11 @@
 import BgBlurModal from "../../../shared/Modal/BgBlurModal";
 import useGetAllOrders from "../../../Hook/GetDataHook/useGetAllOrders";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import OrderDetail from "./OrderDetail";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
 import toast from "react-hot-toast";
 import { IoIosSearch } from "react-icons/io";
-import EditButton from "../../../components library/EditButton";
 import DeleteButton from "../../../components library/DeleteButton";
 import CourierMethodModal from "../../../shared/cart/viewCart/CourierMethodModal";
 import Pagination from "../../partial/Pagination/Pagination";
@@ -14,12 +13,13 @@ import SelectInput from "../../partial/Headers/FilterHeader/SelectInput/SelectIn
 import moment from "moment";
 import useDebounce from "../../../Hook/useDebounce";
 import ShowDetailButton from "../../../components library/ShowDetailButton";
+import { Loader2 } from "lucide-react";
 
 export default function AllOrders() {
   // const [orders, setOrders] = useState(initialData);
   const axiosSecure = useAxiosSecure();
   const [searchTerm, setSearchTerm] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(2);
   const [isShowDetail, setIsShowDetail] = useState(false);
   const [targetId, setTargetId] = useState(null);
   const [isDeleted, setIsDeleted] = useState(false);
@@ -27,19 +27,26 @@ export default function AllOrders() {
   const [isShowCourier, setIsShowCourier] = useState(false);
   const [courierMethod, setSetCourierMethod] = useState("");
   const [date, setDate] = useState("");
-  const itemsPerPage = 5;
+  const itemsPerPage = 15;
   const [status, setStatus] = useState("");
   const [isEdited, setIsEdited] = useState(false);
   const debouncedValue = useDebounce(searchTerm, 200);
+  const [orderData, setOrderData] = useState([]);
 
-  const { orders, totalItems, totalPricesByStatus } = useGetAllOrders({
-    isDeleted,
-    isShowModal: isShowDetail,
-    isEdited: isEdited,
-    query: `page=${currentPage}&status=${status}&search=${debouncedValue}&date=${
-      date ? moment(date).format("DD-MM-YYYY") : ""
-    }`,
-  });
+  const { orders, totalItems, totalPricesByStatus, isLoading } =
+    useGetAllOrders({
+      isDeleted,
+      isShowModal: isShowDetail,
+      isEdited: isEdited,
+      query: `currentPage=${currentPage}&status=${status}&limit=${itemsPerPage}&search=${debouncedValue}&date=${
+        date ? moment(date).format("DD-MM-YYYY") : ""
+      }`,
+      currentPage,
+    });
+
+  useEffect(() => {
+    setOrderData(orders);
+  }, [orders]);
 
   const handleDelete = async (id) => {
     try {
@@ -73,27 +80,6 @@ export default function AllOrders() {
     }
     console.log(`Delete category with ID: ${id}`);
   };
-
-  const totalPending = parseFloat(
-    orders
-      .filter((order) => order.status === "Pending")
-      .reduce((acc, order) => acc + order.total, 0)
-  );
-  const totalApproved = parseFloat(
-    orders
-      .filter((order) => order.status === "Approved")
-      .reduce((acc, order) => acc + order.total, 0)
-  );
-  const totalDelivered = parseFloat(
-    orders
-      .filter((order) => order.status === "Delivered")
-      .reduce((acc, order) => acc + order.total, 0)
-  );
-  const totalCancelled = parseFloat(
-    orders
-      .filter((order) => order.status === "Cancelled")
-      .reduce((acc, order) => acc + order.total, 0)
-  );
 
   const handleAccept = async (id) => {
     Swal.fire({
@@ -212,54 +198,59 @@ export default function AllOrders() {
             </tr>
           </thead>
           <tbody>
-            {orders?.length > 0 ? (
-              orders?.map((order, index) => (
-                <tr key={order._id} className="border-b text-center">
-                  <td className="p-2 border">
-                    {index + 1 + (currentPage - 1) * itemsPerPage}
-                  </td>
+            {console.log(orderData, "orders")}
+            {orderData?.length > 0 &&
+              !isLoading &&
+              orderData.map((order, index) => {
+                console.log(order, "order");
+                return (
+                  <tr key={order._id} className="border-b text-center">
+                    <td className="p-2 border">
+                      {index + 1 + (currentPage - 1) * itemsPerPage}
+                    </td>
 
-                  <td className="p-2 border">
-                    {moment(order.createdAt).format("DD/MM/YYYY")}
-                  </td>
-                  <td className="p-2 border">{order?.name}</td>
-                  <td className="p-2 border">{order?.phone}</td>
-                  <td className="p-2 border">{order?.totalItems}</td>
-                  <td className="p-2 border ">
-                    {order?.status ? (
-                      <span className="bg-red-500 text-white  px-3 rounded-lg  py-1">
-                        {order?.status}
-                      </span>
-                    ) : (
-                      "N/A"
-                    )}
-                  </td>
-                  <td className="p-2 border">{order?.payment_method}</td>
-                  <td className="p-2 border">৳ {order?.total}</td>
-                  <td className="p-2 border">
-                    <div className="flex justify-center space-x-2">
-                      {(order?.status === "Pending" ||
-                        order?.status === "") && (
-                        <button
-                          onClick={() => handleAccept(order._id)}
-                          className="bg-blue-500 text-white rounded-lg px-4 py-2 font-semibold"
-                        >
-                          Accept Order
-                        </button>
+                    <td className="p-2 border">
+                      {moment(order.createdAt).format("DD/MM/YYYY")}
+                    </td>
+                    <td className="p-2 border">{order?.name}</td>
+                    <td className="p-2 border">{order?.phone}</td>
+                    <td className="p-2 border">{order?.totalItems}</td>
+                    <td className="p-2 border ">
+                      {order?.status ? (
+                        <span className="bg-red-500 text-white  px-3 rounded-lg  py-1">
+                          {order?.status}
+                        </span>
+                      ) : (
+                        "N/A"
                       )}
-                      <ShowDetailButton
-                        onClick={() => {
-                          setIsShowDetail(true);
-                          setTargetId(order._id);
-                        }}
-                      />
+                    </td>
+                    <td className="p-2 border">{order?.payment_method}</td>
+                    <td className="p-2 border">৳ {order?.total}</td>
+                    <td className="p-2 border">
+                      <div className="flex justify-center space-x-2">
+                        {(order?.status === "Pending" ||
+                          order?.status === "") && (
+                          <button
+                            onClick={() => handleAccept(order._id)}
+                            className="bg-blue-500 text-white rounded-lg px-4 py-2 font-semibold"
+                          >
+                            Accept Order
+                          </button>
+                        )}
+                        <ShowDetailButton
+                          onClick={() => {
+                            setIsShowDetail(true);
+                            setTargetId(order._id);
+                          }}
+                        />
 
-                      <DeleteButton onClick={() => handleDelete(order._id)} />
-                    </div>
-                  </td>
-                </tr>
-              ))
-            ) : (
+                        <DeleteButton onClick={() => handleDelete(order._id)} />
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
+            {!isLoading && orderData?.length === 0 && (
               <tr>
                 <td colSpan="10" className="text-center p-4">
                   No data available in table
@@ -268,6 +259,25 @@ export default function AllOrders() {
             )}
           </tbody>
         </table>
+        {isLoading ? (
+          <div className="animate-pulse">
+            <div className="h-4 bg-gray-200 mt-3 mb-6 rounded"></div>
+            <div className="h-4 bg-gray-300 mb-6 rounded"></div>
+            <div className="h-4 bg-gray-200 mb-6 rounded"></div>
+            <div className="h-4 bg-gray-300 mb-6 rounded"></div>
+            <div className="h-4 bg-gray-200 mb-6 rounded"></div>
+            <div className="h-4 bg-gray-200 mb-6 rounded"></div>
+            <div className="h-4 bg-gray-200 mb-6 rounded"></div>
+            <div className="h-4 bg-gray-200 mb-6 rounded"></div>
+            <div className="h-4 bg-gray-200 mb-6 rounded"></div>
+            <div className="h-4 bg-gray-200 mb-6 rounded"></div>
+            <div className="h-4 bg-gray-200 mb-6 rounded"></div>
+            <div className="h-4 bg-gray-200 mb-6 rounded"></div>
+            <div className="h-4 bg-gray-200 mb-6 rounded"></div>
+            <div className="h-4 bg-gray-200 mb-6 rounded"></div>
+            <div className="h-4 bg-gray-200 mb-6 rounded"></div>
+          </div>
+        ) : null}
 
         {/* Pagination */}
         {/* <div className="mt-4 flex justify-between">
@@ -298,7 +308,7 @@ export default function AllOrders() {
         <Pagination
           currentPage={currentPage}
           totalItems={totalItems}
-          itemsPerPage={itemsPerPage}
+          limit={itemsPerPage}
           setCurrentPage={setCurrentPage}
         />
       </div>

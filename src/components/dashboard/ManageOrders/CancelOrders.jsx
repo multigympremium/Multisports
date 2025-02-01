@@ -44,14 +44,14 @@ export default function CancelOrders() {
   const axiosSecure = useAxiosSecure();
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
+  const itemsPerPage = 15;
 
   const [isShowDetail, setIsShowDetail] = useState(false);
   const [targetId, setTargetId] = useState(null);
   const [isDeleted, setIsDeleted] = useState(false);
 
-  const { orders, totalItems } = useGetAllOrders({
-    query: `status=Cancelled&currentPage=${currentPage}`,
+  const { orders, totalItems, isLoading } = useGetAllOrders({
+    query: `status=Cancelled&currentPage=${currentPage}&limit=${itemsPerPage}`,
     isDeleted,
     isShowModal: isShowDetail,
   });
@@ -133,7 +133,7 @@ export default function CancelOrders() {
         </div>
 
         {/* Orders Table */}
-        <table className="min-w-full min-h-[800px] table-auto border-collapse bg-white shadow-md rounded-md">
+        <table className="min-w-full  table-auto border-collapse bg-white shadow-md rounded-md">
           <thead>
             <tr className="bg-gray-200 text-center">
               <td className="p-2 border">SL</td>
@@ -148,7 +148,8 @@ export default function CancelOrders() {
             </tr>
           </thead>
           <tbody>
-            {orders?.length > 0 ? (
+            {orders?.length > 0 &&
+              !isLoading &&
               orders?.map((order, index) => (
                 <tr key={order._id} className="border-b text-center">
                   <td className="p-2 border">
@@ -175,23 +176,42 @@ export default function CancelOrders() {
                     </div>
                   </td>
                 </tr>
-              ))
-            ) : (
+              ))}
+            {!isLoading && orders?.length === 0 && (
               <tr>
-                <td colSpan="10" className="text-center p-4 py-32">
+                <td colSpan="10" className="text-center p-4">
                   No data available in table
                 </td>
               </tr>
             )}
           </tbody>
         </table>
+        {isLoading ? (
+          <div className="animate-pulse">
+            <div className="h-4 bg-gray-200 mt-3 mb-6 rounded"></div>
+            <div className="h-4 bg-gray-300 mb-6 rounded"></div>
+            <div className="h-4 bg-gray-200 mb-6 rounded"></div>
+            <div className="h-4 bg-gray-300 mb-6 rounded"></div>
+            <div className="h-4 bg-gray-200 mb-6 rounded"></div>
+            <div className="h-4 bg-gray-200 mb-6 rounded"></div>
+            <div className="h-4 bg-gray-200 mb-6 rounded"></div>
+            <div className="h-4 bg-gray-200 mb-6 rounded"></div>
+            <div className="h-4 bg-gray-200 mb-6 rounded"></div>
+            <div className="h-4 bg-gray-200 mb-6 rounded"></div>
+            <div className="h-4 bg-gray-200 mb-6 rounded"></div>
+            <div className="h-4 bg-gray-200 mb-6 rounded"></div>
+            <div className="h-4 bg-gray-200 mb-6 rounded"></div>
+            <div className="h-4 bg-gray-200 mb-6 rounded"></div>
+            <div className="h-4 bg-gray-200 mb-6 rounded"></div>
+          </div>
+        ) : null}
 
         {/* Pagination */}
       </div>
       <Pagination
         currentPage={currentPage}
         totalItems={totalItems}
-        itemsPerPage={itemsPerPage}
+        limit={itemsPerPage}
         setCurrentPage={setCurrentPage}
       />
 

@@ -53,6 +53,7 @@ export default function ProductCreateForm() {
   const [slug, setSlug] = useState("");
   const [isFeatured, setIsFeatured] = useState(false);
   const [discount, setDiscount] = useState(0);
+  const [errors, setErrors] = useState({});
 
   const [setupConfig, setSetupConfig] = useState({});
 
@@ -119,8 +120,27 @@ export default function ProductCreateForm() {
     multiple: true,
   });
 
+  const validateForm = () => {
+    let formErrors = {};
+    if (!productTitle) formErrors.productTitle = "Product Title is required";
+    if (!price) formErrors.price = "Price is required";
+    if (!stock) formErrors.stock = "Stock is required";
+
+    setErrors(formErrors);
+    return Object.keys(formErrors).length === 0;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validateForm()) {
+      Swal.fire({
+        title: "Error!",
+        text: "Please fill all the required fields",
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+      return;
+    }
     setLoading(true);
     // Handle form submission here
     console.log({
@@ -147,6 +167,7 @@ export default function ProductCreateForm() {
       subcategory: subcategory,
       childCategory: childCategory,
     });
+
     const formData = new FormData();
     formData.append("productTitle", productTitle);
     formData.append("shortDescription", shortDescription);
@@ -161,7 +182,6 @@ export default function ProductCreateForm() {
     formData.append("metaTitle", metaTitle);
     formData.append("metaKeywords", metaKeywords);
     formData.append("metaDescription", metaDescription);
-    formData.append("specialOffer", specialOffer);
     formData.append("specialOffer", specialOffer);
     formData.append("isFeatured", isFeatured);
     formData.append("thumbnail", thumbnail); // If it's a file, ensure it's a `File` object
@@ -208,7 +228,7 @@ export default function ProductCreateForm() {
       console.error(err, "submit product error");
       Swal.fire({
         title: "Error!",
-        text: err.message,
+        text: err.response?.data?.message || err.message,
         icon: "error",
         confirmButtonText: "Ok",
       });
@@ -241,7 +261,7 @@ export default function ProductCreateForm() {
     fetchTestimonial();
   }, [axiosSecure]);
 
-  console.log(setupConfig, "setupConfig");
+  console.log(errors, "setupConfig");
 
   return (
     <div className="p-6 pt-0">
@@ -259,6 +279,9 @@ export default function ProductCreateForm() {
               placeholder="Enter Product Name Here"
               // required
             />
+            {errors.productTitle && (
+              <p className="text-red-500 text-sm mt-1">{errors.productTitle}</p>
+            )}
           </div>
           <div className={"flex items-center gap-6 mb-6 mt-5"}>
             <ActiveDescBtn
@@ -370,6 +393,9 @@ export default function ProductCreateForm() {
                 className="customInput"
                 // required
               />
+              {errors.price && (
+                <p className="text-red-500 text-sm mt-1">{errors.price}</p>
+              )}
             </div>
             {/* <div>
               <label className="block text-gray-700 font-semibold ">
@@ -409,6 +435,9 @@ export default function ProductCreateForm() {
                 }}
                 className="customInput"
               />
+              {errors.stock && (
+                <p className="text-red-500 text-sm mt-1">{errors.stock}</p>
+              )}
             </div>
             {/* Product Code */}
 
@@ -689,11 +718,11 @@ export default function ProductCreateForm() {
           <div className="border rounded-2xl p-6 bg-gray-50 pb-0">
             {/* Toggle for Special Offer */}
 
-            <SwitchInput
+            {/* <SwitchInput
               label="Available Variants?"
               checked={hasVariants}
               onChange={setHasVariants}
-            />
+            /> */}
             <SwitchInput
               label="Exclusive Feature?"
               checked={isFeatured}

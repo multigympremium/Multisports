@@ -23,10 +23,10 @@ export default function PersonalizedOrders() {
   const [targetId, setTargetId] = useState(null);
   const [isEdited, setIsEdited] = useState(false);
   const debouncedValue = useDebounce(searchTerm, 200);
-  const itemsPerPage = 10;
+  const itemsPerPage = 15;
 
-  const { orders, totalItems } = useGetAllOrders({
-    query: `status=Packed&currentPage=${currentPage}&search=${debouncedValue}`,
+  const { orders, totalItems, isLoading } = useGetAllOrders({
+    query: `status=Packed&currentPage=${currentPage}&limit=${itemsPerPage}&search=${debouncedValue}`,
     isDeleted,
     isShowModal: isShowDetail,
     isEdited: isEdited,
@@ -98,7 +98,7 @@ export default function PersonalizedOrders() {
 
   return (
     <div className="p-6 pt-0 ">
-      <div className="max-w-7xl mx-auto min-h-[800px]">
+      <div className="max-w-7xl mx-auto ">
         <h1 className="text-3xl font-semibold mb-9">Ready To Courier </h1>
 
         {/* Orders Table */}
@@ -129,7 +129,8 @@ export default function PersonalizedOrders() {
             </tr>
           </thead>
           <tbody>
-            {orders.length > 0 ? (
+            {orders.length > 0 &&
+              !isLoading &&
               orders.map((order, index) => (
                 <tr key={order._id} className="border-b text-center">
                   <td className="p-2 border">
@@ -168,8 +169,9 @@ export default function PersonalizedOrders() {
                     </div>
                   </td>
                 </tr>
-              ))
-            ) : (
+              ))}
+
+            {!isLoading && orders?.length === 0 && (
               <tr>
                 <td colSpan="10" className="text-center p-4">
                   No data available in table
@@ -180,10 +182,30 @@ export default function PersonalizedOrders() {
         </table>
       </div>
 
+      {isLoading ? (
+        <div className="animate-pulse">
+          <div className="h-4 bg-gray-200 mt-3 mb-6 rounded"></div>
+          <div className="h-4 bg-gray-300 mb-6 rounded"></div>
+          <div className="h-4 bg-gray-200 mb-6 rounded"></div>
+          <div className="h-4 bg-gray-300 mb-6 rounded"></div>
+          <div className="h-4 bg-gray-200 mb-6 rounded"></div>
+          <div className="h-4 bg-gray-200 mb-6 rounded"></div>
+          <div className="h-4 bg-gray-200 mb-6 rounded"></div>
+          <div className="h-4 bg-gray-200 mb-6 rounded"></div>
+          <div className="h-4 bg-gray-200 mb-6 rounded"></div>
+          <div className="h-4 bg-gray-200 mb-6 rounded"></div>
+          <div className="h-4 bg-gray-200 mb-6 rounded"></div>
+          <div className="h-4 bg-gray-200 mb-6 rounded"></div>
+          <div className="h-4 bg-gray-200 mb-6 rounded"></div>
+          <div className="h-4 bg-gray-200 mb-6 rounded"></div>
+          <div className="h-4 bg-gray-200 mb-6 rounded"></div>
+        </div>
+      ) : null}
+
       <Pagination
         currentPage={currentPage}
         totalItems={totalItems}
-        itemsPerPage={itemsPerPage}
+        limit={itemsPerPage}
         setCurrentPage={setCurrentPage}
       />
       <BgBlurModal isShowModal={isShowDetail} setIsShowModal={setIsShowDetail}>
