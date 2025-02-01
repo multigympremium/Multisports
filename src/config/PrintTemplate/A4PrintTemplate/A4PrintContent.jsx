@@ -44,9 +44,6 @@ const A4PrintContent = forwardRef(({ profileData, data: order }, ref) => {
             <p style={{ fontSize: "11px", margin: "3px 0" }}>
               {profileData?.address} | Tel: {profileData?.phone}
             </p>
-            <p style={{ fontSize: "11px", margin: "3px 0" }}>
-              TIN: {profileData?.tin_no} | BIN: {profileData?.bin_no}
-            </p>
           </div>
 
           <div style={{ textAlign: "right" }}>
@@ -54,11 +51,10 @@ const A4PrintContent = forwardRef(({ profileData, data: order }, ref) => {
               ORDER INVOICE
             </h2>
             <p style={{ fontSize: "12px", margin: "5px 0 0 0" }}>
-              Invoice #: {order?._id?.$oid}
+              Invoice #: {order?.invoice_id}
             </p>
             <p style={{ fontSize: "12px", margin: "2px 0" }}>
-              Date:{" "}
-              {new Date(order?.createdAt?.$date).toLocaleDateString("en-GB")}
+              Date: {order?.order_date}
             </p>
           </div>
         </div>

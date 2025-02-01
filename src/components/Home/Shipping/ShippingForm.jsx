@@ -68,7 +68,7 @@ const ShippingForm = ({
         contact_number,
         district,
         area,
-        address,
+        address: address + ", " + postCode,
         postCode,
         special_instruction,
       };
@@ -330,7 +330,7 @@ const ShippingForm = ({
           </div>
 
           {/* Post Code */}
-          {/* <div>
+          <div>
             <label className="block font-semibold mb-1">Post Code *</label>
             <input
               type="text"
@@ -343,7 +343,7 @@ const ShippingForm = ({
             {errors.postCode && (
               <p className="text-red-500 text-sm mt-1">{errors.postCode}</p>
             )}
-          </div> */}
+          </div>
 
           {/* Address */}
           <div className="md:col-span-2">

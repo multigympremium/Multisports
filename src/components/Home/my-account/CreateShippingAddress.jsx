@@ -136,6 +136,9 @@ const CreateShippingAddress = ({
     if (validateForm()) {
       formData.email = user.email;
       formData.userId = user._id;
+      formData.address = formData.address + ", " + formData.postCode;
+
+      console.log(formData, "formData");
       try {
         if (addressData) {
           const response = await axiosSecure.put(
@@ -423,8 +426,8 @@ const CreateShippingAddress = ({
           </div>
 
           {/* Post Code */}
-          {/* <div> 
-            <label className="block font-semibold mb-1">Delivery Type </label>
+          <div>
+            <label className="block font-semibold mb-1">Post Code </label>
             <input
               type="text"
               name="postCode"
@@ -436,7 +439,7 @@ const CreateShippingAddress = ({
             {errors.postCode && (
               <p className="text-red-500 text-sm mt-1">{errors.postCode}</p>
             )}
-          </div> */}
+          </div>
 
           {/* Address */}
           <div className="md:col-span-2">
