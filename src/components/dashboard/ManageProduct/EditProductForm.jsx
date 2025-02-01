@@ -846,11 +846,12 @@ export default function EditProductForm({
             />
           </div> */}
 
-          <SwitchInput
+          {/* <SwitchInput
             label="Available Variants?"
             checked={hasVariants}
             onChange={setHasVariants}
-          />
+          /> */}
+
           <SwitchInput
             label="Exclusive Feature?"
             checked={isFeatured}

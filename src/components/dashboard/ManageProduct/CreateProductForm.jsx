@@ -718,11 +718,11 @@ export default function ProductCreateForm() {
           <div className="border rounded-2xl p-6 bg-gray-50 pb-0">
             {/* Toggle for Special Offer */}
 
-            <SwitchInput
+            {/* <SwitchInput
               label="Available Variants?"
               checked={hasVariants}
               onChange={setHasVariants}
-            />
+            /> */}
             <SwitchInput
               label="Exclusive Feature?"
               checked={isFeatured}
