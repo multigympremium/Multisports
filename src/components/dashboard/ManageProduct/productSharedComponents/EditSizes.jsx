@@ -25,11 +25,10 @@ export default function EditSizes({
   setColorAndSize,
   stock,
 }) {
-  console.log(editingSize, "editingSize", totalQuantity, "totalQuantity");
   //   const [existingSizes, setEditingSize] = useState([]);
 
   //   useEffect(() => {
-  //     console.log(
+  //     (
   //       colorAndSize[editingIndex]?.size,
   //       //   "colorAndSize[editingIndex]",
   //       editingIndex,
@@ -51,7 +50,6 @@ export default function EditSizes({
       const editingSizeTotalQuantity = editingSize.reduce((acc, curr) => {
         return Number(acc) + Number(curr.quantity);
       }, 0);
-      console.log(itemsTotalQuantity, editingSize, "item.quantity all");
 
       // !isEditing && setParentQuantity(itemsTotalQuantity);
 
@@ -92,7 +90,6 @@ export default function EditSizes({
                 key={data.sizeName}
                 onClick={() => {
                   // setProductSizeValue(data);
-                  console.log(data, "size");
                 }}
               >
                 <span>{data.sizeName}</span>
@@ -102,7 +99,6 @@ export default function EditSizes({
             selectOption={editingSize}
             onChange={(data) => {
               setEditingSize((prev) => {
-                //   console.log([...editingSize, data], "prev");
                 data.quantity = 0;
 
                 return prev?.length > 0

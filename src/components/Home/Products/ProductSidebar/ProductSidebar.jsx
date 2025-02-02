@@ -19,7 +19,7 @@ export default function ProductSidebar({ query, params }) {
   const productSizes = useGetAllProductSizes({});
 
   const handleFilterChange = (checked, value, type) => {
-    console.log(value, checked, type, "value, checked");
+    value, checked, type, "value, checked";
     // setBrandFilter((prev) =>{
 
     // const   [...prev, value]
@@ -30,13 +30,10 @@ export default function ProductSidebar({ query, params }) {
       case "brand":
         setBrandFilter((prev) => {
           if (checked) {
-            console.log([...prev, value], "prev");
+            [...prev, value], "prev";
             return [...prev, value];
           } else {
-            console.log(
-              prev.filter((item) => item !== value),
-              "prev"
-            );
+            prev.filter((item) => item !== value), "prev";
             return prev.filter((item) => item !== value);
           }
         });
@@ -44,13 +41,10 @@ export default function ProductSidebar({ query, params }) {
       case "color":
         setColorFilter((prev) => {
           if (checked) {
-            console.log([...prev, value], "prev");
+            [...prev, value], "prev";
             return [...prev, value];
           } else {
-            console.log(
-              prev.filter((item) => item !== value),
-              "prev"
-            );
+            prev.filter((item) => item !== value), "prev";
             return prev.filter((item) => item !== value);
           }
         });
@@ -69,7 +63,7 @@ export default function ProductSidebar({ query, params }) {
     }
   };
 
-  console.log(query, params.id, "query");
+  query, params.id, "query";
 
   return (
     <div

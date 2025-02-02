@@ -2,7 +2,6 @@ import moment from "moment";
 import getAbsoluteDescription from "./getAbsoluteDEscription";
 
 function generateOrderOverview(order) {
-  console.log(order, "order");
   if (order) {
     const {
       name,

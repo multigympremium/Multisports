@@ -16,11 +16,19 @@ import { useAuth } from "../../../../providers/AuthProvider";
 const bloodGroups = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
 const religions = ["Islam", "Hindu", "Christian", "Buddhism", "Other"];
 
-function EditMember({ reFetch, setIsShow, setIsShowAddPackage, isShow, user_id, isActiveUserPage, setUserId = () => { } }) {
+function EditMember({
+  reFetch,
+  setIsShow,
+  setIsShowAddPackage,
+  isShow,
+  user_id,
+  isActiveUserPage,
+  setUserId = () => {},
+}) {
   const axiosSecure = useAxiosSecure();
   const [imageUrl, setImageUrl] = useState("");
   const [previewImageUrl, setPreviewImageUrl] = useState("");
-  const {branch} = useAuth();
+  const { branch } = useAuth();
 
   const {
     register,
@@ -36,7 +44,9 @@ function EditMember({ reFetch, setIsShow, setIsShowAddPackage, isShow, user_id, 
     if (user_id) {
       const fetchUserData = async () => {
         try {
-          const response = await axiosSecure.get(`/users/get-id/${user_id}?${branch}`);
+          const response = await axiosSecure.get(
+            `/users/get-id/${user_id}?${branch}`
+          );
           if (response?.status === 200) {
             const data = response.data;
             Object.keys(data).forEach((fieldName) => {
@@ -44,7 +54,7 @@ function EditMember({ reFetch, setIsShow, setIsShowAddPackage, isShow, user_id, 
             });
           }
         } catch (error) {
-          console.log(error);
+          error;
           toast.error("Failed to load user data");
         }
       };
@@ -57,7 +67,6 @@ function EditMember({ reFetch, setIsShow, setIsShowAddPackage, isShow, user_id, 
     try {
       const response = await axiosSecure.put(`/users/put/${user_id}`, data);
       if (response?.status === 200 || response.status === 201) {
-
         if (isActiveUserPage) {
           if (response.data.card_no && response.data.member_id) {
             Swal.fire({
@@ -67,7 +76,7 @@ function EditMember({ reFetch, setIsShow, setIsShowAddPackage, isShow, user_id, 
               confirmButtonText: "OK",
             }).then((result) => {
               if (result.isConfirmed) {
-                setIsShowAddPackage(true); 
+                setIsShowAddPackage(true);
                 setUserId(response.data._id);
               }
             });
@@ -106,8 +115,9 @@ function EditMember({ reFetch, setIsShow, setIsShowAddPackage, isShow, user_id, 
 
   return (
     <article
-      className={`w-[95%] md:w-[65%] rounded-xl lg:w-[80%] bg-white my-7 transition-all duration-500 ${isShow ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
-        }`}
+      className={`w-[95%] md:w-[65%] rounded-xl lg:w-[80%] bg-white my-7 transition-all duration-500 ${
+        isShow ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
+      }`}
     >
       <h2 className="px-5 py-1 pt-2 font-medium border-b border-gray-300">
         {isActiveUserPage ? "Finalize User Activation" : "Edit Member"}
@@ -138,8 +148,7 @@ function EditMember({ reFetch, setIsShow, setIsShowAddPackage, isShow, user_id, 
             name={"email"}
             isRequired={false}
           />
-          {
-            isActiveUserPage &&
+          {isActiveUserPage && (
             <MemberRegisterInput
               type={"text"}
               label={"Member Id"}
@@ -148,7 +157,7 @@ function EditMember({ reFetch, setIsShow, setIsShowAddPackage, isShow, user_id, 
               name={"member_id"}
               isRequired={false}
             />
-          }
+          )}
           <MemberRegisterInput
             type={"text"}
             label={"Contact Number"}
@@ -212,7 +221,10 @@ function EditMember({ reFetch, setIsShow, setIsShowAddPackage, isShow, user_id, 
               return Array.from({ length: 12 }, (_, inchIndex) => {
                 const inch = inchIndex;
                 return (
-                  <option value={`${feet} feet ${inch}`} key={`${feet}-${inch}`}>
+                  <option
+                    value={`${feet} feet ${inch}`}
+                    key={`${feet}-${inch}`}
+                  >
                     {`${feet} feet ${inch}`}
                   </option>
                 );
@@ -287,7 +299,7 @@ function EditMember({ reFetch, setIsShow, setIsShowAddPackage, isShow, user_id, 
             isRequired={false}
           />
 
-          {isActiveUserPage &&
+          {isActiveUserPage && (
             <MemberRegisterInput
               type={"text"}
               label={"Card Number"}
@@ -295,7 +307,8 @@ function EditMember({ reFetch, setIsShow, setIsShowAddPackage, isShow, user_id, 
               error={errors}
               name={"card_no"}
               isRequired={false}
-            />}
+            />
+          )}
 
           <MemberRegisterInput
             type={"text"}
@@ -326,7 +339,7 @@ function EditMember({ reFetch, setIsShow, setIsShowAddPackage, isShow, user_id, 
         </div>
         <div>
           <div className="flex items-center flex-col md:flex-row md:justify-between py-3 mt-2">
-            <div className="w-[95%]">
+            <div class
               <imgUpload
                 setImageUrl={setImageUrl}
                 setPreviewImageUrl={setPreviewImageUrl}
@@ -339,7 +352,7 @@ function EditMember({ reFetch, setIsShow, setIsShowAddPackage, isShow, user_id, 
                   <button
                     type="button"
                     onClick={() => {
-                      console.log("cancel button clicked")
+                      ("cancel button clicked");
                       setIsShow(false);
                       reset();
                       setUserId("");

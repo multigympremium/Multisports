@@ -19,7 +19,6 @@ const MessengerForm = ({ isShow }) => {
       setPageId(data[0]?.pageId);
       setTargetId(data[0]?._id);
       setIsEnabled(data[0]?.isEnabled);
-      console.log(data, "Messengera");
     };
 
     fetchShippingPolicy();

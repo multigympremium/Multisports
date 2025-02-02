@@ -14,8 +14,6 @@ function PublicRoute({ children }) {
         : JSON.parse(storedUser);
     };
 
-    console.log("user 654546", get_user());
-
     const user = get_user();
 
     if (user) {
@@ -25,8 +23,6 @@ function PublicRoute({ children }) {
       router("/", { scroll: true, replace: true });
     }
   }, [router, user]);
-
-  console.log("user public", user);
 
   return <>{!user && <div>{children}</div>}</>;
 }

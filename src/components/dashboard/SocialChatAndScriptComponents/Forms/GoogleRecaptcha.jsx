@@ -20,7 +20,6 @@ const GoogleRecaptcha = ({ isShow }) => {
       setSite_key(data[0]?.site_key);
       setTargetId(data[0]?._id);
       setIsRecaptcha(data[0]?.isRecaptcha);
-      console.log(data, "google recaptchaa");
     };
 
     fetchShippingPolicy();

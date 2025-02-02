@@ -25,8 +25,6 @@ const Cart = ({ isShow, setIsShow }) => {
     const fetchDiscounts = async () => {
       const response = await axiosPublic.get("discount");
 
-      console.log(response, "response");
-
       if (response?.data) {
         setDiscounts(response?.data?.data[0]);
       }
@@ -52,17 +50,17 @@ const Cart = ({ isShow, setIsShow }) => {
           <div className="flex mb-6  py-3 items-center justify-between pr-2 border-b pb-5 border-gray-200">
             <p className="text-2xl  font-semibold">Shopping cart</p>
             <form method="dialog">
-            <button
-              type="button"
-              onClick={() => {
-                document.getElementById("my-cart").checked = false; 
-                setIsShow(false); 
-              }}
-              className="mt-3"
-            >
-              <IoMdCloseCircle className="text-xl"/>
-            </button>
-          </form>
+              <button
+                type="button"
+                onClick={() => {
+                  document.getElementById("my-cart").checked = false;
+                  setIsShow(false);
+                }}
+                className="mt-3"
+              >
+                <IoMdCloseCircle className="text-xl" />
+              </button>
+            </form>
           </div>
           <div
             className=" pb-4 h-full overflow-auto"

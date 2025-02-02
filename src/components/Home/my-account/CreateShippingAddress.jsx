@@ -44,8 +44,6 @@ const CreateShippingAddress = ({
         (city) => city.city_id == value
       ).city_name;
 
-      console.log(filter_name, "city_name");
-
       setFormData({
         ...formData,
         city_name: filter_name,
@@ -58,12 +56,6 @@ const CreateShippingAddress = ({
         (zone) => zone.zone_id == value
       )?.zone_name;
 
-      console.log(
-        filter_name,
-        "zone_name",
-        Array.isArray(filter_name) ? filter_name[0] : filter_name
-      );
-
       setFormData({
         ...formData,
         zone_name: Array.isArray(filter_name) ? filter_name[0] : filter_name,
@@ -72,8 +64,6 @@ const CreateShippingAddress = ({
       return;
     } else if (name === "area_id") {
       const filter_name = areas.find((area) => area.area_id == value).area_name;
-
-      console.log(filter_name, "area_name");
 
       setFormData({
         ...formData,
@@ -85,7 +75,6 @@ const CreateShippingAddress = ({
     }
 
     if (name === "contact_number") {
-      console.log(formData.contact_number, value, "contact_number");
       value === formData.secondaryContactNumber &&
         setErrors((prev) => ({
           ...prev,
@@ -93,7 +82,6 @@ const CreateShippingAddress = ({
             "Secondary Contact Number should not be same as Primary Contact Number",
         }));
     } else if (name === "secondaryContactNumber") {
-      console.log(formData.contact_number, value, "contact_number");
       value === formData.contact_number &&
         setErrors((prev) => ({
           ...prev,
@@ -101,12 +89,6 @@ const CreateShippingAddress = ({
             "Secondary Contact Number should not be same as Primary Contact Number",
         }));
     }
-
-    console.log(name, value);
-    console.log({
-      ...formData,
-      [name]: value,
-    });
 
     setFormData({
       ...formData,
@@ -131,14 +113,11 @@ const CreateShippingAddress = ({
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(formData, "formData", validateForm());
-
     if (validateForm()) {
       formData.email = user.email;
       formData.userId = user._id;
       formData.address = formData.address + ", " + formData.postCode;
 
-      console.log(formData, "formData");
       try {
         if (addressData) {
           const response = await axiosSecure.put(
@@ -230,7 +209,6 @@ const CreateShippingAddress = ({
         }
         setZoneLoading(false);
       } catch (error) {
-        console.error("Error fetching zones:", error);
         setZoneLoading(false);
       }
     };
@@ -252,15 +230,12 @@ const CreateShippingAddress = ({
         }
         setAreaLoading(false);
       } catch (error) {
-        console.error("Error fetching areas:", error);
         setAreaLoading(false);
       }
     };
 
     fetchAreas();
   }, [axiosSecure, formData.zone_id]);
-
-  console.log(errors, "errors");
 
   useEffect(() => {
     if (isShowModal && addressData) {

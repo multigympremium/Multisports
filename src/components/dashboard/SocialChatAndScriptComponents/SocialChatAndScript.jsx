@@ -17,10 +17,6 @@ export default function SocialChatAndScript() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log({
-      selectedTab,
-      analyticID,
-    });
   };
 
   return (

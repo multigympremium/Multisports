@@ -58,8 +58,6 @@ export default function ChildCategoryList() {
   const handleEdit = (id) => {
     setTargetId(id);
     setIsEdited(true);
-
-    console.log(`Edit category with ID: ${id}`);
   };
 
   const handleDelete = async (id) => {
@@ -77,23 +75,20 @@ export default function ChildCategoryList() {
         if (result.isConfirmed) {
           try {
             const res = await axiosSecure.delete(`/child-categories/${id}`);
-            console.log(res, "res");
+
             if (res.status === 200 || res.status === 201) {
               setIsDeleted((prev) => !prev);
 
               toast.success("Child category deleted successfully!");
             }
           } catch (error) {
-            console.log(error, "error");
             toast.error("Error deleting user!");
           }
         }
       });
     } catch (error) {
-      console.log(error, "error");
       toast.error("Error deleting category!");
     }
-    console.log(`Delete category with ID: ${id}`);
   };
 
   return (
@@ -192,6 +187,14 @@ export default function ChildCategoryList() {
                   </td>
                 </tr>
               ))}
+
+            {paginatedData()?.length == 0 && (
+              <tr>
+                <td colSpan="10" className="text-center p-4">
+                  No data available in table
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
 

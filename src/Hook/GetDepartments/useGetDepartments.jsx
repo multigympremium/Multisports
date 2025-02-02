@@ -5,14 +5,14 @@ import { AuthContext } from "../../providers/AuthProvider";
 function useGetDepartments() {
   const axiosSecure = useAxiosSecure();
   const [departments, setDepartments] = useState([]);
-  const {branch} = useContext(AuthContext);
+  const { branch } = useContext(AuthContext);
 
   useEffect(() => {
     async function fetchData() {
       try {
         const res = await axiosSecure.get(`/departments/${branch}/get-all`);
 
-        console.log("res 16561", res?.data?.data);
+        "res 16561", res?.data?.data;
 
         setDepartments(res?.data);
         // setCurrentPage(res?.data?.currentPage);

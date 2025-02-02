@@ -28,7 +28,7 @@ export default function SetupConfig() {
       productCode,
       productFlags,
     };
-    console.log(data, "data");
+
     try {
       if (targetId) {
         const res = await axiosSecure.put(`/setup-config/${targetId}`, data);
@@ -69,12 +69,10 @@ export default function SetupConfig() {
       try {
         const firstResData = await axiosSecure.get(`/setup-config`);
 
-        console.log(firstResData, "res ljlj");
+        firstResData, "res ljlj";
 
         if (firstResData.status === 200 || firstResData.status === 201) {
           const data = firstResData?.data?.data[0];
-
-          console.log(data, "data");
 
           // Set form values with the testimonial data
 
@@ -87,7 +85,7 @@ export default function SetupConfig() {
           setProductCode(data.productCode);
           setProductFlags(data.productFlags);
 
-          console.log(data?._id, "targetId useEffect");
+          data?._id, "targetId useEffect";
 
           setTargetId(data?._id);
         }
@@ -98,8 +96,6 @@ export default function SetupConfig() {
 
     fetchTestimonial();
   }, [axiosSecure]);
-
-  console.log(targetId, "targetId");
 
   return (
     <div className="bg-white p-5">

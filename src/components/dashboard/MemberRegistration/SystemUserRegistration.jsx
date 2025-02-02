@@ -12,8 +12,6 @@ import DragUploadImageInput from "../../../shared/DragUploadImageInput";
 import { useDropzone } from "react-dropzone";
 import useGetDepartments from "../../../Hook/GetDepartments/useGetDepartments";
 
-
-
 const schema = z.object({
   first_name: z.string().nonempty({ message: "Please enter your first name" }),
   last_name: z.string().nonempty({ message: "Please enter your last name" }),
@@ -28,14 +26,17 @@ const schema = z.object({
   password: z
     .string()
     .min(8, { message: "Password must be at least 8 characters long" })
-    .regex(/[A-Z]/, { message: "Password must include at least one uppercase letter" })
-    .regex(/[a-z]/, { message: "Password must include at least one lowercase letter" })
+    .regex(/[A-Z]/, {
+      message: "Password must include at least one uppercase letter",
+    })
+    .regex(/[a-z]/, {
+      message: "Password must include at least one lowercase letter",
+    })
     .regex(/\d/, { message: "Password must include at least one number" })
-    .regex(/[@$!%*?&]/, { message: "Password must include at least one special character" }),
+    .regex(/[@$!%*?&]/, {
+      message: "Password must include at least one special character",
+    }),
 });
-
-
-
 
 function SystemUserRegistration({ setIsShow, isShow }) {
   const [errorMessage, setErrorMessage] = useState("");
@@ -62,8 +63,7 @@ function SystemUserRegistration({ setIsShow, isShow }) {
     // setLoading(true);
     // data.branch = branch;
 
-    console.log(data);
-
+    data;
 
     const formData = new FormData();
     formData.append("first_name", data.first_name);
@@ -77,7 +77,7 @@ function SystemUserRegistration({ setIsShow, isShow }) {
     formData.append("role", data.role);
     formData.append("photourl", image);
 
-
+    setLoading(true);
 
     try {
       const response = await axiosSecure.post(`/users/system-user`, formData);
@@ -93,9 +93,6 @@ function SystemUserRegistration({ setIsShow, isShow }) {
       setLoading(false);
     }
   };
-
-
-
 
   // Dropzone for thumbnail and gallery
   const onDropThumbnail = (acceptedFiles) => {
@@ -124,16 +121,25 @@ function SystemUserRegistration({ setIsShow, isShow }) {
       const errorMessage = error?.response?.data?.message;
       if (errorMessage.includes("email") && errorMessage.includes("mobile")) {
         setError("email", { type: "manual", message: "Email already exists." });
-        setError("contact_no", { type: "manual", message: "Mobile number already exists." });
+        setError("contact_no", {
+          type: "manual",
+          message: "Mobile number already exists.",
+        });
       } else if (errorMessage.includes("email")) {
         setError("email", { type: "manual", message: "Email already exists." });
       } else if (errorMessage.includes("mobile")) {
-        setError("contact_no", { type: "manual", message: "Mobile number already exists." });
+        setError("contact_no", {
+          type: "manual",
+          message: "Mobile number already exists.",
+        });
       }
     } else if (error?.response?.status === 401) {
       const errorMessage = error?.response?.data?.message;
       if (errorMessage === "Member ID already exists.") {
-        setError("member_id", { type: "manual", message: "Member ID already exists." });
+        setError("member_id", {
+          type: "manual",
+          message: "Member ID already exists.",
+        });
       }
     } else if (error?.response?.status === 400) {
       setErrorMessage("Invalid input, please check your data.");
@@ -142,17 +148,14 @@ function SystemUserRegistration({ setIsShow, isShow }) {
     }
   };
 
-
-
-
   return (
     <article
-      className={`w-full rounded-xl bg-white my-7 transition-all duration-500 ${isShow ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
-        }`}
+      className={`w-full rounded-xl bg-white my-7 transition-all duration-500 ${
+        isShow ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
+      }`}
     >
       <h2 className="px-5 py-1 border-b border-gray-300 flex justify-between items-center w-full">
         <span className="font-semibold mb-2 text-2xl mt-2">Add User</span>
-
       </h2>
 
       {/* Display error message */}
@@ -164,9 +167,7 @@ function SystemUserRegistration({ setIsShow, isShow }) {
 
       <form className="md:px-5 px-3 py-3" onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-4">
-          <label className="block text-gray-700  mb-2">
-            Profile Image
-          </label>
+          <label className="block text-gray-700  mb-2">Profile Image</label>
 
           <DragUploadImageInput
             getRootProps={getThumbnailRootProps}
@@ -202,7 +203,6 @@ function SystemUserRegistration({ setIsShow, isShow }) {
             name={"email"}
             isRequired={true}
           />
-
 
           <MemberRegisterInput
             type={"password"}
@@ -243,13 +243,12 @@ function SystemUserRegistration({ setIsShow, isShow }) {
             isRequired={true}
           >
             <option value={""}>Select role</option>
-            {
-              departments?.length > 0 && departments.map((item, index) => (
+            {departments?.length > 0 &&
+              departments.map((item, index) => (
                 <option key={index} value={item.Role}>
                   {item.Role}
                 </option>
-              ))
-            }
+              ))}
           </MemberRegisterSelect>
 
           <MemberRegisterInput
@@ -275,7 +274,6 @@ function SystemUserRegistration({ setIsShow, isShow }) {
             <option value={"Divorced"}>Divorced</option>
             <option value={"Don't say"}>{`Don't Say`}</option>
           </MemberRegisterSelect>
-
         </div>
 
         <div className="flex justify-end items-center gap-3 mb-5 mt-9">
@@ -295,20 +293,20 @@ function SystemUserRegistration({ setIsShow, isShow }) {
           </div>
           <div className="flex justify-end">
             <div className="customSaveButton">
-              {loading ?
+              {loading ? (
                 <>
                   <span className="loading loading-spinner loading-md"></span>
                 </>
-                :
+              ) : (
                 <>
                   <button type="submit" className="font-semibold">
                     Save
                   </button>
-                </>}
+                </>
+              )}
             </div>
           </div>
         </div>
-
       </form>
     </article>
   );

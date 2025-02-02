@@ -24,7 +24,6 @@ const TailoredPages = () => {
         if (res.status === 200 || res.status === 201) {
           setContent(res.data.data);
           setLoading(false);
-          console.log(res.data.data, "content");
         }
       } catch (error) {
         console.error("Error fetching content:", error);

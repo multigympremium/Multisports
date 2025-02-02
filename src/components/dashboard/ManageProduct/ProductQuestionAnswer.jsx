@@ -52,7 +52,6 @@ export default function ProductQuestionAnswer() {
 
   const handleEdit = (id) => {
     // Implement edit functionality here
-    console.log(`Edit question with ID: ${id}`);
   };
 
   return (

@@ -31,8 +31,6 @@ const NewArrivals = ({ limit = 8 }) => {
     fetchProducts();
   }, [axiosPublic]);
 
-  console.log(products);
-
   const handleProductClick = (product) => {
     setCurrentProduct(product);
     document

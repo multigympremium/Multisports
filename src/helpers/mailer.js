@@ -19,7 +19,7 @@ const sendMail = async (to, subject, text, html) => {
       text, // plain text body
       html, // html body
     });
-    console.log("Message sent: %s", info.messageId, info);
+    "Message sent: %s", info.messageId, info;
     return info;
     // Message sent: <d786aa62-4e0a-070a-47ed-0b0666549519@ethereal.email>
   } catch (error) {

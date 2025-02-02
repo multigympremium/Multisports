@@ -54,8 +54,6 @@ export default function UpdateSpecialDiscountBannerForm({
         formData
       );
 
-      console.log(res);
-
       if (res.status === 200 || res.status === 201) {
         Swal.fire({
           title: "Success!",

@@ -15,7 +15,6 @@ export default function AddNewSizes({
   allSizesQuantity,
   setAllSizesQuantity,
 }) {
-  console.log(totalQuantity, "totalQuantity", allSizesQuantity);
   return (
     <div>
       <h3 className="text-2xl font-semibold mb-3">Add Size And Quantity</h3>
@@ -35,7 +34,6 @@ export default function AddNewSizes({
                 key={data.sizeName}
                 onClick={() => {
                   setProductSizeValue(data);
-                  console.log(data, "size");
                 }}
               >
                 <span>{data.sizeName}</span>
@@ -48,8 +46,6 @@ export default function AddNewSizes({
                 const allQuantityCount = prev.reduce((acc, curr) => {
                   return Number(acc) + Number(curr.quantity);
                 }, 0);
-
-                console.log(allQuantityCount, "allQuantityCount");
 
                 setAllSizesQuantity(allQuantityCount);
                 return prev?.length > 0

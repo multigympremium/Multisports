@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { IoIosHome } from "react-icons/io";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
 import { useAuth } from "../../providers/AuthProvider";
@@ -29,11 +29,6 @@ function MenuItemsList({ userRole }) {
           `/permissions/${user?.role}?branch=${user.branch}`
         );
 
-        console.log(
-          "response",
-          response,
-          "response?.data?.routesData parmition"
-        );
         const permissionRoutesArray = response?.data?.routesData.map(
           (item) => item.path
         );
@@ -45,15 +40,12 @@ function MenuItemsList({ userRole }) {
 
         setPermissionData(response?.data?.routesData);
         setGroupNames(response?.data?.groupNames?.allowedGroups);
-        console.log("response", response, response?.data?.groupNames);
       } catch (error) {
         console.error("Error fetching permissions:", error);
       }
     };
     fetchPermissions();
   }, [user?.role, axiosSecure]);
-
-  console.log("permissionData", permissionData, groupNames, "groupNames");
 
   const allMenuItems = [
     // Website Config
@@ -317,24 +309,24 @@ function MenuItemsList({ userRole }) {
           isAllowed: isAllowedRoute("courier-steadfast-settings"),
           icon: <IoIosHome />,
         },
-        {
-          title: "Store",
-          path: "view-all-stores",
-          isAllowed: isAllowedRoute("view-all-stores"),
-          icon: <IoIosHome />, // Replace with the actual SVG icon
-        },
+        // {
+        //   title: "Store",
+        //   path: "view-all-stores",
+        //   isAllowed: isAllowedRoute("view-all-stores"),
+        //   icon: <IoIosHome />, // Replace with the actual SVG icon
+        // },
         {
           title: "Cities",
           path: "view-all-cities",
           isAllowed: isAllowedRoute("view-all-stores"),
           icon: <IoIosHome />, // Replace with the actual SVG icon
         },
-        {
-          title: "Create Store",
-          path: "create-store",
-          isAllowed: isAllowedRoute("create-store"),
-          icon: <IoIosHome />,
-        },
+        // {
+        //   title: "Create Store",
+        //   path: "create-store",
+        //   isAllowed: isAllowedRoute("create-store"),
+        //   icon: <IoIosHome />,
+        // },
       ],
     },
     {
@@ -359,12 +351,12 @@ function MenuItemsList({ userRole }) {
           isAllowed: isAllowedRoute("delivery-charges"),
           icon: <IoIosHome />,
         },
-        {
-          title: "Upazila & Thana",
-          path: "upazila-thana",
-          isAllowed: isAllowedRoute("upazila-thana"),
-          icon: <IoIosHome />,
-        },
+        // {
+        //   title: "Upazila & Thana",
+        //   path: "upazila-thana",
+        //   isAllowed: isAllowedRoute("upazila-thana"),
+        //   icon: <IoIosHome />,
+        // },
         // {
         //   title: "Payment History",
         //   path: "payment-history",
@@ -581,12 +573,12 @@ function MenuItemsList({ userRole }) {
           isAllowed: isAllowedRoute("contact-request"),
           icon: <IoIosHome />,
         },
-        {
-          title: "Subscribed Users",
-          path: "subscribed-users",
-          isAllowed: isAllowedRoute("subscribed-users"),
-          icon: <IoIosHome />,
-        },
+        // {
+        //   title: "Subscribed Users",
+        //   path: "subscribed-users",
+        //   isAllowed: isAllowedRoute("subscribed-users"),
+        //   icon: <IoIosHome />,
+        // },
       ],
     },
 
@@ -823,7 +815,6 @@ function MenuItemsList({ userRole }) {
     groupNames.length > 0 &&
     filterMenuData.map((item) => {
       const filteredItem = item.list.filter((item2) => {
-        console.log(item2, "item2.isAllowed");
         return item2.isAllowed === true;
       });
       return {
@@ -838,7 +829,6 @@ function MenuItemsList({ userRole }) {
   if (user?.role === "admin") {
     return allMenuItems;
   } else {
-    console.log("filterMenuData2", filterMenuData2);
     // return filterMenuData2 && filterMenuData2;
     if (filterMenuData2?.length > 0) {
       return filterMenuData2;

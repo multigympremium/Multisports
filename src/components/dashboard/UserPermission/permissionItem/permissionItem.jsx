@@ -10,7 +10,7 @@ function PermissionItem({ item, group_name, role, isAllowedRoute, path }) {
 
   const axiosSecure = useAxiosSecure();
   const handleSubmit = async (e) => {
-    if(role === "") return;
+    if (role === "") return;
     const checked = e.target.checked;
     setPermissions(checked);
 
@@ -23,7 +23,7 @@ function PermissionItem({ item, group_name, role, isAllowedRoute, path }) {
       branch: user?.branch,
     };
 
-    console.log("routeItem", routeItem);
+    "routeItem", routeItem;
     try {
       await axiosSecure.put(`/permissions`, routeItem);
       toast.success(" Permission updated successfully");

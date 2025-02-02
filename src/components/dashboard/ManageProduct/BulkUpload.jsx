@@ -48,8 +48,6 @@ export default function BulkUpload() {
   //     return;
   //   }
 
-  //   console.log("file", file);
-
   //   const reader = new FileReader();
   //   reader.onload = (e) => {
   //     const data = new Uint8Array(e.target.result);
@@ -57,7 +55,7 @@ export default function BulkUpload() {
   //     const firstSheetName = workbook.SheetNames[0];
   //     const worksheet = workbook.Sheets[firstSheetName];
   //     const jsonData = XLSX.utils.sheet_to_json(worksheet);
-  //     console.log(jsonData, "jsonData");
+  //
 
   //     setMessage("Products uploaded successfully!");
   //   };
@@ -74,8 +72,6 @@ export default function BulkUpload() {
 
       const fileExtension = file.name.split(".").pop().toLowerCase();
       const reader = new FileReader();
-
-      console.log("fileExtension", fileExtension, file);
 
       // Handle JSON files
       if (fileExtension === "json") {

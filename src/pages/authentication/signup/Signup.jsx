@@ -29,10 +29,6 @@ export default function SignUpPage() {
 
   const handleSignUp = async (e) => {
     e.preventDefault();
-    console.log("user name:", username);
-    console.log("Email:", email);
-    console.log("Password:", password);
-    console.log("Subscribed:", subscribe);
 
     if (confirmPassword.length === 0) {
       setConfirmPasswordError("Please confirm your password");
@@ -50,7 +46,7 @@ export default function SignUpPage() {
 
     try {
       const res = await axiosPublic.post("/users/signup", submitData);
-      console.log(res);
+
       if (res.status === 200 || res.status === 201) {
         localStorage.setItem("user", JSON.stringify(res.data.user));
 
@@ -63,8 +59,6 @@ export default function SignUpPage() {
         }
       }
     } catch (error) {
-      console.log(error);
-
       Swal.fire({
         title: "Oops...",
         text: error?.response?.data?.message || error?.message,
@@ -125,21 +119,17 @@ export default function SignUpPage() {
   }, [password, confirmPassword]);
 
   const handleCaptcha = async (value) => {
-    console.log(value);
-
     const submitData = {
       token: value,
     };
 
     try {
       const res = await axiosPublic.post("/users/verify-recaptcha", submitData);
-      console.log(res);
+
       if (res.status === 200 || res.status === 201) {
         setRecaptcha(value);
       }
     } catch (error) {
-      console.log(error);
-
       toast.error("Something went wrong!");
     }
   };
@@ -148,8 +138,6 @@ export default function SignUpPage() {
     const fetchShippingPolicy = async () => {
       const response = await axiosPublic.get("/google-recaptcha");
       const data = response?.data?.data;
-
-      console.log(data, "google recaptcha");
 
       setSite_key(data[0]?.site_key);
       setIsRecaptcha(data[0]?.isRecaptcha);

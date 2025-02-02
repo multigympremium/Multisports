@@ -67,8 +67,6 @@ const ProductBrands = () => {
   const handleEdit = (id) => {
     setTargetId(id);
     setIsEdited(true);
-
-    console.log(`Edit brand with ID: ${id}`);
   };
 
   const handleDelete = async (id) => {
@@ -86,23 +84,20 @@ const ProductBrands = () => {
         if (result.isConfirmed) {
           try {
             const res = await axiosSecure.delete(`/product-brands/${id}`);
-            console.log(res, "res");
+
             if (res.status === 200 || res.status === 201) {
               setIsDeleted((prev) => !prev);
 
-              toast.success("Brand deleted successfully!");
+              toast.success("Item deleted successfully!");
             }
           } catch (error) {
-            console.log(error, "error");
             toast.error("Error deleting user!");
           }
         }
       });
     } catch (error) {
-      console.log(error, "error");
       toast.error("Error deleting Item!");
     }
-    console.log(`Delete brand with ID: ${id}`);
   };
 
   return (

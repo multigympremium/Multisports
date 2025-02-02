@@ -38,7 +38,7 @@ const PopularBanner = () => {
   };
 
   const handleDelete = async (id, file_key) => {
-    console.log(file_key, "file_key", id);
+    file_key, "file_key", id;
     try {
       Swal.fire({
         title: "Are you sure you want to delete this?",
@@ -53,23 +53,21 @@ const PopularBanner = () => {
         if (result.isConfirmed) {
           try {
             const res = await axiosSecure.delete(`/popular-banners/${id}`);
-            console.log(res, "res");
+
             if (res.status === 200 || res.status === 201) {
               setIsDeleted((prev) => !prev);
 
               toast.success("Banner deleted successfully!");
             }
           } catch (error) {
-            console.log(error, "error");
             toast.error("Error deleting user!");
           }
         }
       });
     } catch (error) {
-      console.log(error, "error");
       toast.error("Error deleting Popular!");
     }
-    console.log(`Delete Popular with ID: ${id}`);
+    `Delete Popular with ID: ${id}`;
   };
 
   return (

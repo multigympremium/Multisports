@@ -13,9 +13,7 @@ const SidebarContainer = ({ isSidebarOpen }) => {
         if (res.status === 200 || res.status === 201) {
           setCategories(res.data.data);
         }
-      } catch (error) {
-        console.log("error fetching categories:", error);
-      }
+      } catch (error) {}
     };
     fetchCategories();
   }, [axiosSecure]);

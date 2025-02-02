@@ -11,23 +11,14 @@ function AddDistrict({ setIsShowModal, isShowModal }) {
   const [options, setOptions] = useState([]);
   const [optionField, setOptionField] = useState("");
 
-
-
-
-
   const handleSubmit = async () => {
-
-
     try {
-      const response = await axiosSecure.post(
-        `/district`,
-        {
-          district: nameField,
-          subdistricts: options,
+      const response = await axiosSecure.post(`/district`, {
+        district: nameField,
+        subdistricts: options,
 
-          branch: user?.branch || "shia",
-        }
-      );
+        branch: user?.branch || "shia",
+      });
       if (response.status === 200 || response.status === 201) {
         Swal.fire({
           title: "Success",
@@ -37,13 +28,11 @@ function AddDistrict({ setIsShowModal, isShowModal }) {
         });
         setIsShowModal(false);
 
-
         setNameField("");
         setOptions([]);
         setOptionField("");
       }
     } catch (error) {
-      console.log("error", error);
       Swal.fire({
         title: "Error",
         text: `Something went wrong`,
@@ -57,13 +46,14 @@ function AddDistrict({ setIsShowModal, isShowModal }) {
     e.preventDefault();
     setOptions((prev) => [...prev, optionField]);
     setOptionField("");
-  }
+  };
 
   return (
-    <div className="bg-white p-5 mt-36 md:p-8 rounded-xl w-full" >
-      <h3 className="text-2xl font-semibold mb-7 mt-3 text-nowrap">Add Question</h3>
+    <div className="bg-white p-5 mt-36 md:p-8 rounded-xl w-full">
+      <h3 className="text-2xl font-semibold mb-7 mt-3 text-nowrap">
+        Add Question
+      </h3>
       <div className="grid grid-cols-1 gap-4">
-
         <div className="flex flex-col ">
           <label htmlFor="name" className="">
             Name
@@ -93,34 +83,34 @@ function AddDistrict({ setIsShowModal, isShowModal }) {
             />
           </div>
 
-
           <ol className="list-outside pl-4" style={{ listStyle: "auto" }}>
-            {options?.length > 0 && options.map((item, index) => (
-              <li key={index} className="text-gray-500 border-b border-gray-300 py-2 px-4">
-                <div className="flex items-center gap-2 justify-between">
-                  <span className="font-semibold">{item}</span>
-                  <span
-                    className="hover:bg-blue-100 text-white p-1 rounded bg-red-100"
-                    onClick={() => {
-                      setOptionField("");
-                      setOptions((prev) => {
-                        const newOptions = prev.filter((opt) => opt !== item);
-                        console.log("newOptions", newOptions);
-                        return newOptions;
-                        // return prev
-                      });
-                    }}
-                  >
-                    <IoClose className="text-red-500 text-xl" />
-                  </span>
+            {options?.length > 0 &&
+              options.map((item, index) => (
+                <li
+                  key={index}
+                  className="text-gray-500 border-b border-gray-300 py-2 px-4"
+                >
+                  <div className="flex items-center gap-2 justify-between">
+                    <span className="font-semibold">{item}</span>
+                    <span
+                      className="hover:bg-blue-100 text-white p-1 rounded bg-red-100"
+                      onClick={() => {
+                        setOptionField("");
+                        setOptions((prev) => {
+                          const newOptions = prev.filter((opt) => opt !== item);
 
-                </div>
-              </li>
-            ))}
+                          return newOptions;
+                          // return prev
+                        });
+                      }}
+                    >
+                      <IoClose className="text-red-500 text-xl" />
+                    </span>
+                  </div>
+                </li>
+              ))}
           </ol>
-
         </form>
-
       </div>
 
       <div className="flex justify-end mt-5">

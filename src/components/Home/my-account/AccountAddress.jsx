@@ -23,7 +23,7 @@ export default function AccountAddress({ isShow, setIsShow }) {
     param: user?._id ? `user/${user?._id}` : null,
   });
 
-  // console.log(address, "address");
+  //
 
   const axiosSecure = useAxiosSecure();
 
@@ -52,22 +52,19 @@ export default function AccountAddress({ isShow, setIsShow }) {
         if (result.isConfirmed) {
           try {
             const res = await axiosSecure.delete(`/shipping/${id}`);
-            console.log(res, "res");
+
             if (res.status === 200 || res.status === 201) {
               setIsDeleted((prev) => !prev);
               toast.success("Address deleted successfully!");
             }
           } catch (error) {
-            console.log(error, "error");
             toast.error("Error deleting user!");
           }
         }
       });
     } catch (error) {
-      console.log(error, "error");
       toast.error("Error deleting Item!");
     }
-    console.log(`Delete brand with ID: ${id}`);
   };
 
   useEffect(() => {

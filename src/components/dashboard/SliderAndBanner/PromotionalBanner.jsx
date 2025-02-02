@@ -154,7 +154,7 @@ export default function PromotionalBanner() {
     const thumbnailPreview = URL.createObjectURL(file);
     setThumbnailPreview(thumbnailPreview);
     setThumbnail(file);
-    console.log(file);
+    file;
   };
 
   const {

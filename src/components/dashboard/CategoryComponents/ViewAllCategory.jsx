@@ -36,7 +36,6 @@ export default function CategoryList() {
 
   const paginatedData = useCallback(() => {
     const offset = currentPage * itemsPerPage;
-    console.log(categories, "categories", offset, offset + itemsPerPage);
     return sortedCategories().slice(offset, offset + itemsPerPage);
   }, [currentPage, itemsPerPage, categories, sortedCategories]);
 
@@ -55,8 +54,6 @@ export default function CategoryList() {
   const handleEdit = (id) => {
     setCategoryId(id);
     setIsEdited(true);
-
-    console.log(`Edit category with ID: ${id}`);
   };
 
   const handleDelete = async (id) => {
@@ -74,29 +71,26 @@ export default function CategoryList() {
         if (result.isConfirmed) {
           try {
             const res = await axiosSecure.delete(`/categories/${id}`);
-            console.log(res, "res");
+
             if (res.status === 200 || res.status === 201) {
               setIsDeleted((prev) => !prev);
               toast.success("Category deleted successfully!");
             }
           } catch (error) {
-            console.log(error, "error");
             toast.error("Error deleting Item!");
           }
         }
       });
     } catch (error) {
-      console.log(error, "error");
       toast.error("Error deleting category!");
     }
-    console.log(`Delete category with ID: ${id}`);
   };
 
   useEffect(() => {
     const fetchCategories = async () => {
       try {
         const res = await axiosSecure.get("/categories");
-        console.log(res, "res", res?.data?.data);
+
         if (res.status === 200 || res.status === 201) {
           setCategories(res.data.data);
         }

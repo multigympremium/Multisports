@@ -17,6 +17,7 @@ export default function AboutUsSection({ testimonialId, isShow, setIsShow }) {
   const [bannerImage, setBannerImage] = useState(null);
   const [bannerImagePreview, setBannerImagePreview] = useState(null);
   const [targetId, setTargetId] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const axiosSecure = useAxiosSecure();
 
@@ -87,13 +88,13 @@ export default function AboutUsSection({ testimonialId, isShow, setIsShow }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log({ title, description, thumbnail });
-
     const formData = new FormData();
     formData.append("title", title);
     formData.append("description", description);
     formData.append("sideImage", sideImage);
     formData.append("bannerImage", bannerImage);
+
+    setLoading(true);
 
     try {
       if (targetId) {
@@ -125,6 +126,8 @@ export default function AboutUsSection({ testimonialId, isShow, setIsShow }) {
         icon: "error",
         confirmButtonText: "Ok",
       });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -178,7 +181,12 @@ export default function AboutUsSection({ testimonialId, isShow, setIsShow }) {
           </div>
         </div>
         <div className="flex justify-end w-full">
-          <button type="submit" className="customSaveButton">
+          <button type="submit" className="customSaveButton" disabled={loading}>
+            {loading && (
+              <>
+                <span className="loading loading-spinner mr-2  loading-xs"></span>
+              </>
+            )}
             Save Changes
           </button>
         </div>

@@ -11,13 +11,13 @@ export default function BrandProductPage() {
   const [singleData, setSingleData] = useState(null);
   const [isShowModal, setIsShowModal] = useState(false);
   const params = useParams();
-  console.log(params.id, "params");
+  params.id, "params";
 
   const { products, totalItems, loading } = useGetAllProducts({
     query: `brand=${[params.id]}`,
   });
 
-  console.log(products, "products", totalItems, "totalItems");
+  products, "products", totalItems, "totalItems";
 
   const handleProductClick = (product) => {
     setSingleData(product);

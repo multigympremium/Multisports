@@ -1,6 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { zodResolver } from '@hookform/resolvers/zod';
+import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import logo from "../../../assets/logo.png";
 import { useAuth } from "../../../providers/AuthProvider";
@@ -14,10 +14,13 @@ const ForgotPasswordSchema = z.object({
 });
 
 function ForgotPasswordPage({ onBackToLogin }) {
-  const { register, handleSubmit, formState: { errors } } = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
     resolver: zodResolver(ForgotPasswordSchema),
   });
-
 
   const { user, setLoading, resetPasswordWithEmail } = useAuth();
 
@@ -26,7 +29,7 @@ function ForgotPasswordPage({ onBackToLogin }) {
     setLoading(true);
     resetPasswordWithEmail(email)
       .then((result) => {
-        console.log("result", result);
+        "result", result;
 
         if (result?.error) {
           throw new Error(result.error);

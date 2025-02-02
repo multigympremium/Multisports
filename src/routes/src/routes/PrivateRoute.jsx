@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useAuth } from "../../../providers/AuthProvider";
 import { useNavigate } from "react-router-dom";
 
@@ -14,8 +14,6 @@ function PrivateRoute({ children }) {
         : JSON.parse(storedUser);
     };
 
-    console.log("user 654546", get_user());
-
     const user = get_user();
 
     if (user?.role === "user") {
@@ -26,8 +24,6 @@ function PrivateRoute({ children }) {
       router("/", { scroll: true, replace: true });
     }
   }, [router, user]);
-
-  console.log("user private", user);
 
   return <>{user && <div>{children}</div>}</>;
   // return <>{<div>{children}</div>}</>;

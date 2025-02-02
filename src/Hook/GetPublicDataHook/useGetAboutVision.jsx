@@ -13,7 +13,7 @@ function useGetAboutVision({
     const fetchShippingPolicy = async () => {
       const response = await axiosPublic.get("/about-vision");
       const data = response?.data?.data[0];
-      console.log(data);
+      data;
       setContentVision(data);
     };
 

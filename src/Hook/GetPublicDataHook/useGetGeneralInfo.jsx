@@ -13,7 +13,7 @@ function useGetGeneralInfo({
     const fetchData = async () => {
       const response = await axiosPublic.get("/general-info");
       const data = response?.data?.data;
-      console.log(data[0], "social links");
+      data[0], "social links";
       setInfo(data[0]);
     };
 

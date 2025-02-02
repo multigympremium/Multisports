@@ -33,9 +33,6 @@ export default function PersonalizedOrders() {
   });
   const axiosSecure = useAxiosSecure();
 
-  // const [orders, setOrders] = useState(initialData);
-  console.log(orders, "orders");
-
   // Filter orders based on the search term
 
   const handleDelete = async (id) => {
@@ -53,22 +50,19 @@ export default function PersonalizedOrders() {
         if (result.isConfirmed) {
           try {
             const res = await axiosSecure.delete(`/orders/${id}`);
-            console.log(res, "res");
+
             if (res.status === 200 || res.status === 201) {
               setIsDeleted((prev) => !prev);
               toast.success("Order deleted successfully!");
             }
           } catch (error) {
-            console.log(error, "error");
             toast.error("Error deleting Item!");
           }
         }
       });
     } catch (error) {
-      console.log(error, "error");
       toast.error("Error deleting category!");
     }
-    console.log(`Delete category with ID: ${id}`);
   };
 
   const handleAccept = async (id) => {
@@ -93,7 +87,6 @@ export default function PersonalizedOrders() {
         }
       }
     });
-    console.log(id, "id");
   };
 
   return (

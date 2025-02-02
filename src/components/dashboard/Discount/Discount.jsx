@@ -58,7 +58,7 @@ const DiscountForm = () => {
           `/discount/${targetData._id}`,
           discounts
         );
-        console.log(response, "response");
+
         if (response.status === 200 || response.status === 201) {
           setLoading(false);
           Swal.fire({
@@ -71,7 +71,7 @@ const DiscountForm = () => {
         setLoading(false);
       } else {
         const response = await axiosSecure.post(`/discount`, discounts);
-        console.log(response, "response");
+
         if (response.status === 200 || response.status === 201) {
           setLoading(false);
           Swal.fire({
@@ -84,7 +84,6 @@ const DiscountForm = () => {
         setLoading(false);
       }
     } catch (error) {
-      console.log(error, "error");
       Swal.fire({
         title: "Oops...",
         text: error?.response?.data?.message || error?.message,
@@ -100,8 +99,6 @@ const DiscountForm = () => {
   useEffect(() => {
     const fetchDiscounts = async () => {
       const response = await axiosSecure.get("discount");
-
-      console.log(response, "response");
 
       if (response?.data) {
         setDiscounts(response?.data?.data[0]);

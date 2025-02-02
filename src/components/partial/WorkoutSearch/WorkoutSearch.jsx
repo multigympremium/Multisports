@@ -6,8 +6,7 @@ import { useAuth } from "../../../providers/AuthProvider";
 const debounce = (func, delay) => {
   let timer;
   return (...args) => {
-    console.log(args);
-    clearTimeout(timer);
+    t(timer);
     timer = setTimeout(() => {
       func(...args);
     }, delay);
@@ -18,9 +17,9 @@ const WorkoutSearch = ({ setIsShow, isShow, userId, setUserId }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   const [usersData, setUsersData] = useState([]);
-  const {branch} = useAuth();
+  const { branch } = useAuth();
 
-  console.log("userId 52454", userId);
+  "userId 52454", userId;
   const axiosSecure = useAxiosSecure();
 
   const handleSearch = useCallback(
@@ -28,7 +27,7 @@ const WorkoutSearch = ({ setIsShow, isShow, userId, setUserId }) => {
       const res = await axiosSecure.get(
         `/workout-routines/get-workout-habit-by-search?search=${searchTerm}&branch=${branch}`
       );
-      console.log("res 16561 ", res);
+      "res 16561 ", res;
       setUsersData(res?.data);
 
       setDebouncedSearchTerm(value);
@@ -42,13 +41,13 @@ const WorkoutSearch = ({ setIsShow, isShow, userId, setUserId }) => {
 
   const onSendDietPlan = async (id) => {
     const data = { workout_routine_id: id, isActive: false };
-    console.log("data", data);
+    "data", data;
     try {
       const response = await axiosSecure.put(
         `/workout-routines/update-workout-habit/${userId}?branch=${branch}`,
         data
       );
-      console.log("response", response);
+      "response", response;
       if (response?.status === 200 || response.status === 201) {
         toast.success("Sent Diet Plan successful!");
         setIsShow(false);
@@ -56,7 +55,7 @@ const WorkoutSearch = ({ setIsShow, isShow, userId, setUserId }) => {
         return response?.status;
       }
     } catch (error) {
-      console.log(error);
+      error;
       toast.error("Request failed!");
     }
   };

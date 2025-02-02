@@ -14,7 +14,7 @@ const ShippingPolicy = () => {
     const fetchShippingPolicy = async () => {
       const response = await axiosSecure.get("/shipping_policy");
       const data = response?.data?.data;
-      console.log(data);
+
       setContent(data[0]?.content);
       setTargetId(data[0]?._id);
     };
@@ -30,8 +30,6 @@ const ShippingPolicy = () => {
         content,
         id: targetId,
       });
-
-      console.log(res);
 
       if (res.status === 200 || res.status === 201) {
         Swal.fire({

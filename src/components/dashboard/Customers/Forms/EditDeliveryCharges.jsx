@@ -21,8 +21,6 @@ function EditDeliveryCharges({ setIsShowModal, isShowModal, targetId }) {
         setDistrictName(response.data?.district);
         setCharge(response.data?.charge);
         setCityId(response.data?.district_id);
-
-        console.log("response.data?.options", response.data);
       } catch (error) {
         console.error("Error fetching payment method data:", error);
       }
@@ -53,7 +51,6 @@ function EditDeliveryCharges({ setIsShowModal, isShowModal, targetId }) {
         setCharge("");
       }
     } catch (error) {
-      console.log("error", error);
       Swal.fire({
         title: "Error",
         text: `Something went wrong`,
@@ -67,12 +64,11 @@ function EditDeliveryCharges({ setIsShowModal, isShowModal, targetId }) {
     const fetchCourierCities = async () => {
       try {
         const res = await axiosSecure.get("/courier/cities");
-        console.log(res, "res", res?.data?.data);
+
         if (res.status === 200 || res.status === 201) {
           setCourierCities(res.data?.data?.data?.data);
         }
       } catch (error) {
-        console.error("Error fetching courierCities:", error);
         throw new Error("Failed to fetch courierCities");
       }
     };

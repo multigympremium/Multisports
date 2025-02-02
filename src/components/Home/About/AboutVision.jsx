@@ -6,7 +6,7 @@ import useGetAboutVision from "../../../Hook/GetPublicDataHook/useGetAboutVision
 export default function AboutVision() {
   const [loading, setLoading] = useState(false);
   const content = useGetAboutVision({ setLoading });
-  console.log(content, "content about-vision");
+  t-vision";
   return (
     <>
       <section className="bg-primary-300 text-white pb-24" id="blog">

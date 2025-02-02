@@ -28,8 +28,7 @@ const ContactUs = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log(formData);
-    emailjs
+    
       .sendForm(
         import.meta.env.VITE_service,
         import.meta.env.VITE_tamplet,
@@ -40,10 +39,10 @@ const ContactUs = () => {
       )
       .then(
         () => {
-          console.log("SUCCESS!");
+          ("SUCCESS!");
         },
         (error) => {
-          console.log("FAILED...", error.text);
+          ("FAILED...", error.text);
         }
       );
 

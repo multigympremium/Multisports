@@ -13,7 +13,7 @@ function useGetTermsCondition({
     const fetchShippingPolicy = async () => {
       const response = await axiosPublic.get("/terms_condition");
       const data = response?.data?.data;
-      console.log(data);
+      data;
       setContent(data[0]?.content);
     };
 

@@ -41,7 +41,6 @@ export default function DeliveryCharges() {
   // Handle Search
   const handleSearch = (e) => {
     const searchValue = e.target.value.toLowerCase();
-    console.log(searchValue, "searchTerm");
     setSearchTerm(searchValue);
 
     if (Array.isArray(deliveryCharge)) {
@@ -51,7 +50,6 @@ export default function DeliveryCharges() {
           item.district_id?.includes(searchValue)
         );
       });
-      // console.log(filteredData, "filteredData");
       setData(filteredData);
     } else {
       console.error("deliveryCharge is not an array:", deliveryCharge);

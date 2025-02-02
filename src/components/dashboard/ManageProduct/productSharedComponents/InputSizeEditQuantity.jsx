@@ -15,14 +15,12 @@ export default function InputSizeEditQuantity({
 }) {
   const [quantity, setQuantity] = useState(0);
 
-  console.log(totalQuantity, "item.quantity", quantity);
-
   useEffect(() => {
     // let itemsTotalQuantity = 0;
     // itemsTotalQuantity = editingSize.reduce((acc, curr) => {
     //   return Number(acc) + Number(curr.quantity);
     // }, 0);
-    // console.log(itemsTotalQuantity, editingSize, "item.quantity all");
+
     // // !isEditing && setParentQuantity(itemsTotalQuantity);
     // setAllSizesQuantity(Number(itemsTotalQuantity));
     // setEditingQuantity(itemsTotalQuantity + quantity);
@@ -42,11 +40,6 @@ export default function InputSizeEditQuantity({
     setQuantity(item?.quantity);
   }, [item]);
 
-  console.log(
-    allSizesQuantity,
-    "item.quantity",
-    allSizesQuantity < Number(totalQuantity)
-  );
   return (
     <div className="flex gap-2 items-center">
       <button

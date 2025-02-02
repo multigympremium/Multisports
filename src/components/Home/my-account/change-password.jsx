@@ -48,7 +48,7 @@ const ChangePassword = () => {
         `/users/change-password`,
         formValues
       );
-      console.log(response, "response");
+
       if (response.status === 200 || response.status === 201) {
         setIsPending(false);
         Swal.fire({
@@ -60,7 +60,6 @@ const ChangePassword = () => {
       }
       setIsPending(false);
     } catch (error) {
-      console.log(error, "error");
       Swal.fire({
         title: "Oops...",
         text: error?.response?.data?.message || error?.message,

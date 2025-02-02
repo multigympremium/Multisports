@@ -34,7 +34,7 @@ const SpecialDiscount = ({ limit = 8, isShowSeeAll = true }) => {
     fetchProducts();
   }, [axiosPublic]);
 
-  console.log(products);
+  products;
 
   const handleProductClick = (product) => {
     setCurrentProduct(product);
@@ -49,14 +49,14 @@ const SpecialDiscount = ({ limit = 8, isShowSeeAll = true }) => {
         <h2 className="text-2xl font-semibold ">Special Discount</h2>
         {isShowSeeAll && (
           <Link
-          to={{
-            pathname: "/see_all/discount",
-          }}
-          state={{ products }}
-          className="flex text-black rounded-lg justify-between items-center gap-2 ease-in-out transition-all  font-semibold"
-        >
-          <span className="">See All</span> <FaArrowRight />
-        </Link>
+            to={{
+              pathname: "/see_all/discount",
+            }}
+            state={{ products }}
+            className="flex text-black rounded-lg justify-between items-center gap-2 ease-in-out transition-all  font-semibold"
+          >
+            <span className="">See All</span> <FaArrowRight />
+          </Link>
         )}
       </div>
       {loading ? (

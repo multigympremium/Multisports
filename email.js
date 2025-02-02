@@ -190,4 +190,3 @@ const generateEmailTemplate = ({
 `;
 
 document.getElementById("root").innerHTML = generateEmailTemplate(data);
-console.log(document.getElementById("root"));

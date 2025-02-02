@@ -10,7 +10,7 @@ export default function CreateSizeForm({ isShowModal, setIsShowModal }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(sizeName, "sizeName");
+    sizeName, "sizeName";
 
     if (!sizeName) {
       Swal.fire({

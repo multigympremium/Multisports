@@ -63,22 +63,19 @@ export default function AllOrders() {
         if (result.isConfirmed) {
           try {
             const res = await axiosSecure.delete(`/orders/${id}`);
-            console.log(res, "res");
+
             if (res.status === 200 || res.status === 201) {
               setIsDeleted((prev) => !prev);
               toast.success("Order deleted successfully!");
             }
           } catch (error) {
-            console.log(error, "error");
             toast.error("Error deleting Item!");
           }
         }
       });
     } catch (error) {
-      console.log(error, "error");
       toast.error("Error deleting category!");
     }
-    console.log(`Delete category with ID: ${id}`);
   };
 
   const handleAccept = async (id) => {
@@ -103,7 +100,6 @@ export default function AllOrders() {
         }
       }
     });
-    console.log(id, "id");
   };
 
   const handleReset = () => {
@@ -198,7 +194,6 @@ export default function AllOrders() {
             </tr>
           </thead>
           <tbody>
-            {console.log(orderData, "orders")}
             {orderData?.length > 0 &&
               !isLoading &&
               orderData.map((order, index) => {

@@ -24,7 +24,7 @@ const AccountDetails = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    console.log(name, "name", value, "value");
+    name, "name", value, "value";
     setFormValues({ ...formValues, [name]: value });
   };
 
@@ -67,14 +67,14 @@ const AccountDetails = () => {
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
     } else {
-      console.log("Form submitted:", formValues);
+      "Form submitted:", formValues;
       setErrors({});
       try {
         const response = await axiosSecure.post(
           `/users/update-user/${user?.email}`,
           formValues
         );
-        console.log(response, "response");
+
         if (response.status === 200 || response.status === 201) {
           setUser(response.data.user);
           localStorage.setItem("user", JSON.stringify(response.data.user));
@@ -88,7 +88,6 @@ const AccountDetails = () => {
         }
         setIsPending(false);
       } catch (error) {
-        console.log(error, "error");
         Swal.fire({
           title: "Oops...",
           text: error?.response?.data?.message || error?.message,
@@ -113,14 +112,12 @@ const AccountDetails = () => {
     });
   }, [user]);
 
-  console.log(
-    formValues,
+  formValues,
     "formValues",
     formValues.gender === "female",
     "formValues.gender === female",
     formValues.gender === "male",
-    "formValues.gender === female"
-  );
+    "formValues.gender === female";
 
   return (
     <motion.div

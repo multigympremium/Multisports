@@ -9,7 +9,7 @@ export default function Success() {
   const location = useLocation();
   const category = location?.state?.category;
 
-  console.log(location, "location");
+  location, "location";
   return (
     <div className="flex items-center justify-center ">
       <div className="flex flex-col-reverse md:flex-col items-center">

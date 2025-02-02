@@ -18,7 +18,7 @@ export default function CustomCSSJSForm() {
       headerJs: headerScript,
       footerJs: footerScript,
     };
-    console.log(data, "data");
+
     try {
       if (targetId) {
         const res = await axiosSecure.put(`/custom-css-js/${targetId}`, data);
@@ -62,20 +62,14 @@ export default function CustomCSSJSForm() {
           `/custom-css-js/${firstResData?.data?.data[0]?._id}`
         );
 
-        console.log(firstResData, res, "res ljlj");
-
         if (res.status === 200 || res.status === 201) {
           const data = res?.data?.data;
-
-          console.log(data, "data");
 
           // Set form values with the testimonial data
 
           setCustomCSS(data.css);
           setHeaderScript(data.headerJs);
           setFooterScript(data.footerJs);
-
-          console.log(data?._id, "targetId useEffect");
 
           setTargetId(data?._id);
         }
@@ -86,8 +80,6 @@ export default function CustomCSSJSForm() {
 
     fetchTestimonial();
   }, [axiosSecure]);
-
-  console.log(targetId, "targetId");
 
   return (
     <div className="">

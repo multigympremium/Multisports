@@ -23,9 +23,9 @@ const ProductDetails = () => {
         const res = await axiosPublic.get(`/products/${product_id}`);
         setProduct(res.data.data);
       } catch (error) {
-        console.log(error);
+        error;
       } finally {
-        // console.log("done");
+        // ("done");
         setLoading(false);
       }
     };
@@ -63,7 +63,7 @@ const ProductDetails = () => {
     colorAndSize,
   } = product;
 
-  console.log(category, "category");
+  category, "category";
 
   const [trackingProduct, setTrackingProduct] = useState({});
   const [quantity, setQuantity] = useState(0);
@@ -107,7 +107,7 @@ const ProductDetails = () => {
   //       item.color === selectedColor?.value &&
   //       item.size === selectedSize?.value
   //   );
-  //   console.log(currentItem, "currentItem");
+  //   (currentItem, "currentItem");
   //   if (currentItem) {
   //     setTrackingProduct(currentItem);
   //     setQuantity(currentItem.quantity);
@@ -121,7 +121,7 @@ const ProductDetails = () => {
   //     setTrackingProduct(copy_product);
   //     setQuantity(0);
   //   }
-  //   console.log(currentItem, "copy_product");
+  //   (currentItem, "copy_product");
   // }, [selectedSize, selectedColor, product, cartItems]);
 
   // useEffect(() => {
@@ -134,7 +134,7 @@ const ProductDetails = () => {
   //     0
   //   );
 
-  //   console.log(
+  //   (
   //     currentItemStock,
   //     "currentStock",
   //     stock - currentItemStock == 0,
@@ -147,7 +147,7 @@ const ProductDetails = () => {
   //   }
   // }, [selectedColor, cartItems, quantity, stock]);
 
-  //   console.log(colorAndSize[0]?.size[0], "colorAndSize[0]?.size[0]");
+  //   (colorAndSize[0]?.size[0], "colorAndSize[0]?.size[0]");
 
   // Determine grid columns based on the total number of images
   const getGridCols = (totalImages) => {
@@ -185,18 +185,13 @@ const ProductDetails = () => {
           item.color === selectedColor.value && item.size === selectedSize.value
       );
 
-      console.log(
-        selectedColor,
-        selectedSize,
-        "currentColorItem",
-        currentColorItem
-      );
-      // console.log(currentColorItem, "currentColorItem");
+      selectedColor, selectedSize, "currentColorItem", currentColorItem;
+      // (currentColorItem, "currentColorItem");
       setQuantity(currentColorItem?.quantity || 0);
     }
   }, [cartItems, selectedColor, selectedSize]);
 
-  const incrementAndDecrementQuantity = ({ isIncrement }) => {
+  const iantity = ({ isIncrement }) => {
     if (isIncrement) {
       setQuantity(quantity + 1);
     } else {
@@ -517,7 +512,7 @@ const ProductDetails = () => {
 };
 
 const HtmlText = ({ htmlContent }) => {
-  console.log(htmlContent, "htmlContent");
+  htmlContent, "htmlContent";
   return htmlContent == "undefined" || htmlContent == undefined ? (
     <div></div>
   ) : (

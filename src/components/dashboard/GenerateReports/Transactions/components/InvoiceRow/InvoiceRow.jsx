@@ -11,7 +11,6 @@ function InvoiceRow({
   timeFrame,
   index,
 }) {
-  console.log(setIsDeleteTransaction, "setIsDeleteTransaction");
   const axiosSecure = useAxiosSecure();
   const handleInvoiceDelete = async (id) => {
     try {
@@ -25,7 +24,6 @@ function InvoiceRow({
         if (result.isConfirmed) {
           const res = await axiosSecure.delete(`/transaction/delete/${id}`);
           setIsDeleteTransaction((prev) => !prev);
-          console.log("res 16561", res);
           toast.success("Invoice Deleted Successfully");
         } else if (result.isDenied) {
           Swal.fire("Changes are not saved", "", "info");

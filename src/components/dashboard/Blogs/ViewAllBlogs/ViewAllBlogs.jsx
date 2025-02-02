@@ -40,8 +40,6 @@ export default function ViewAllBlogs() {
   const handleEdit = (id) => {
     setBlogId(id);
     setIsEdited(true);
-
-    console.log(`Edit Blog with ID: ${id}`);
   };
 
   const handleDelete = async (id) => {
@@ -58,35 +56,31 @@ export default function ViewAllBlogs() {
       }).then(async (result) => {
         if (result.isConfirmed) {
           try {
-            const res = await axiosSecure.delete(`/blogs/${id}`);
-            console.log(res, "res");
+            const res = await axiosSecure.delete(`/blog/${id}`);
+
             if (res.status === 200 || res.status === 201) {
               setIsDeleted((prev) => !prev);
               toast.success("Blog deleted successfully!");
             }
           } catch (error) {
-            console.log(error, "error");
             toast.error("Error deleting Item!");
           }
         }
       });
     } catch (error) {
-      console.log(error, "error");
       toast.error("Error deleting Blog!");
     }
-    console.log(`Delete Blog with ID: ${id}`);
   };
 
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
         const res = await axiosSecure.get("/blog");
-        console.log(res, "res", res?.data?.data);
+
         if (res.status === 200 || res.status === 201) {
           setBlogs(res.data.data);
         }
       } catch (error) {
-        console.error("Error fetching blogs:", error);
         throw new Error("Failed to fetch blogs");
       }
     };

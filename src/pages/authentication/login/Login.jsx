@@ -22,21 +22,16 @@ export default function Login() {
   const [isRecaptcha, setIsRecaptcha] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  console.log(pathName, "pathName");
-
   const navigate = useNavigate();
 
   const handleSignUp = async (e) => {
     e.preventDefault();
-    console.log("Email:", email);
-    console.log("Password:", password);
 
     const submitData = { email, password };
     setLoading(true);
 
     try {
       const res = await axiosPublic.post("/users/login", submitData);
-      console.log(res);
       if (res.status === 200 || res.status === 201) {
         localStorage.setItem("user", JSON.stringify(res?.data?.user));
 
@@ -54,7 +49,6 @@ export default function Login() {
         }
       }
     } catch (error) {
-      console.log(error);
       Swal.fire({
         title: "Oops...",
         text: error?.response?.data?.message || error?.message,
@@ -67,21 +61,16 @@ export default function Login() {
   };
 
   const handleCaptcha = async (value) => {
-    console.log(value);
-
     const submitData = {
       token: value,
     };
 
     try {
       const res = await axiosPublic.post("/users/verify-recaptcha", submitData);
-      console.log(res);
       if (res.status === 200 || res.status === 201) {
         setRecaptcha(value);
       }
     } catch (error) {
-      console.log(error);
-
       toast.error("Something went wrong!");
     }
   };

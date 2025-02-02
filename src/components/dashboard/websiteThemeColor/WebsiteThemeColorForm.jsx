@@ -11,15 +11,6 @@ export default function WebsiteThemeColorForm() {
   const [loading, setLoading] = useState(false);
   const axiosSecure = useAxiosSecure();
 
-  console.log(
-    watch("primaryColor"),
-    watch("secondaryColor"),
-    watch("tertiaryColor"),
-    watch("titleColor"),
-    watch("paragraphColor"),
-    watch("borderColor")
-  );
-
   function getContrastingColor(color) {
     let r, g, b;
 
@@ -59,7 +50,7 @@ export default function WebsiteThemeColorForm() {
 
   const onSubmit = async (data) => {
     setLoading(true);
-    console.log(data, "data");
+
     try {
       if (targetId) {
         const res = await axiosSecure.put(
@@ -109,11 +100,8 @@ export default function WebsiteThemeColorForm() {
         if (res.status === 200 || res.status === 201) {
           const data = res?.data?.data;
 
-          console.log(data, "data");
-
           // Set form values with the testimonial data
           for (let key in data) {
-            console.log(key, data[key], "data[key]");
             setValue(key, data[key]);
           }
           setTargetId(data?._id);

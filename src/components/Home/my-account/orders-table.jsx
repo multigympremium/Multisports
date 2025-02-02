@@ -21,7 +21,7 @@ const OrdersTable = () => {
 
   const { user } = useAuth();
 
-  console.log(width, "width  order 3434");
+  width, "width  order 3434";
 
   const axiosSecure = useAxiosSecure();
 
@@ -32,7 +32,7 @@ const OrdersTable = () => {
         const res = await axiosSecure.get(
           `/orders/user/${user?._id}?status=${status}`
         );
-        console.log(res, "res orders");
+        res, "res orders";
 
         if (res.status === 200 || res.status === 201) {
           setOrders(res.data.data);

@@ -12,8 +12,6 @@ export default function CreateFAQForm({ isShowModal, setIsShowModal }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(question, "question");
-
     if (!question) {
       Swal.fire({
         title: "Error!",

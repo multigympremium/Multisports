@@ -49,14 +49,13 @@ function ReportFilter({
 }) {
   const currentMonth = moment().format("MM");
   const currentYear = moment().format("YYYY");
-  console.log("currentMonth", currentMonth, "currentYear", currentYear);
+
   const [tabIndex, setTabIndex] = useState(0);
   const [year, setYear] = useState(currentYear);
   const [month, setMonth] = useState(currentMonth);
   const [detectSearch, setDetectSearch] = useState("");
   const [isAddFilter, setIsAddFilter] = useState(false);
 
-  console.log("receivers", receivers);
 
   const transaction_types = [
     { value: "Male", name: "Male" },
@@ -82,7 +81,6 @@ function ReportFilter({
       setIsAddFilterWithSearch(addFilter?.checked);
     }
 
-    console.log(
       "start_date",
       start_date,
       "end_date",
@@ -108,12 +106,10 @@ function ReportFilter({
       const firstDate = `${year}-${month}-01`;
       const lastDateNumber = new Date(year, month, 0).getDate();
       const end_Date = `${year}-${month}-${lastDateNumber}`;
-      console.log("lastDate", lastDateNumber);
       setStartDate(firstDate);
       setEndDate(end_Date);
     }
 
-    console.log("startDate", month, year);
   }, [month, year, setStartDate, setEndDate]);
 
   useEffect(() => {

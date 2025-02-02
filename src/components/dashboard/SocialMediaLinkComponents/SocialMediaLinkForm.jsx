@@ -2,18 +2,10 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
-import {
-  FaFacebookMessenger,
-  FaPinterest,
-  FaSquareFacebook,
-  FaSquareInstagram,
-  FaSquareXTwitter,
-  FaViber,
-} from "react-icons/fa6";
+import { FaFacebookMessenger, FaViber } from "react-icons/fa6";
 import {
   BsFacebook,
   BsInstagram,
-  BsLinkedin,
   BsTwitterX,
   BsWhatsapp,
 } from "react-icons/bs";
@@ -35,7 +27,7 @@ export default function SocialMediaLinksForm() {
 
   const onSubmit = async (data) => {
     setLoading(true);
-    console.log(data, "data");
+
     try {
       if (targetId) {
         const res = await axiosSecure.put(`/social-link/${targetId}`, data);
@@ -82,11 +74,8 @@ export default function SocialMediaLinksForm() {
         if (res.status === 200 || res.status === 201) {
           const data = res?.data?.data;
 
-          console.log(data, "data");
-
           // Set form values with the testimonial data
           for (let key in data) {
-            console.log(key, data[key], "data[key]");
             setValue(key, data[key]);
           }
           setTargetId(data?._id);

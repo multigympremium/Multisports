@@ -160,7 +160,6 @@ export default function EditProductForm({
 
     // Update the state by adding new previews to the gallery
     setGalleryPreview((prev) => {
-      console.log([...prev, ...previewUrls], "[...prev, ...previewUrls]");
       return [...prev, ...previewUrls];
     });
 
@@ -211,31 +210,6 @@ export default function EditProductForm({
 
     // const uniqeDeletedGalleryItemIds = Array.from(new Set(deleteItemIds));
 
-    console.log({
-      productTitle,
-      shortDescription,
-      fullDescription,
-      price,
-      discountPrice,
-      rewardPoints,
-      stock,
-      productCode,
-      metaTitle,
-      metaKeywords,
-      metaDescription,
-      specialOffer,
-      hasVariants,
-      thumbnail,
-      gallery,
-      category,
-      brand: brandValue,
-      color: productColorValue,
-      size: productSizeValue,
-      flag: productFlagValue,
-      subcategory: subcategory,
-      childCategory: childCategory,
-    });
-
     const formData = new FormData();
     formData.append("productTitle", productTitle);
     formData.append("shortDescription", shortDescription);
@@ -273,11 +247,6 @@ export default function EditProductForm({
 
     // If `gallery` is an array of files, you can loop through it and append each file:
 
-    console.log(gallery, "gallery");
-    // for (const file of gallery) {
-    //   console.log(file, "file");
-    //   formData.append(`gallery`, file);
-    // }
     if (Array.isArray(gallery)) {
       gallery.forEach((file, index) => {
         formData.append(`gallery`, file);
@@ -383,12 +352,8 @@ export default function EditProductForm({
       try {
         const firstResData = await axiosSecure.get(`/setup-config`);
 
-        console.log(firstResData, "res ljlj");
-
         if (firstResData.status === 200 || firstResData.status === 201) {
           const data = firstResData?.data?.data[0];
-
-          console.log(data, "data");
 
           setSetupConfig(data);
 
@@ -402,8 +367,6 @@ export default function EditProductForm({
     fetchTestimonial();
   }, [axiosSecure]);
 
-  console.log(deleteItemIds, "deleteItemIds");
-  console.log(galleryItemIds, "galleryItemIds");
   useEffect(() => {
     setGalleryItemIds((prev) =>
       prev.filter((item) => !deleteItemIds.includes(item))

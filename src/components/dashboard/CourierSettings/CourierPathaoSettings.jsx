@@ -31,7 +31,6 @@ const CourierPathaoSettings = () => {
 
   const onSubmit = async (data) => {
     setLoading(true);
-    console.log(data, "data");
     try {
       if (targetId) {
         const res = await axiosSecure.put(`/courier/pathao/${targetId}`, data);
@@ -74,8 +73,6 @@ const CourierPathaoSettings = () => {
 
         if (res.status === 200 || res.status === 201) {
           const data = res?.data?.data[0];
-
-          console.log(data, "data");
 
           // Set form values with the testimonial data
           for (let key in data) {

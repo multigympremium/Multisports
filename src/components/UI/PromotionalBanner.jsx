@@ -13,8 +13,6 @@ export default function PromotionalBanner() {
         if (res.status === 200 || res.status === 201) {
           const data = res?.data?.data[0];
 
-          console.log(data, "data");
-
           if (data) {
             setData(data);
           } else {
@@ -48,7 +46,7 @@ export default function PromotionalBanner() {
   //           writer.on("error", reject);
   //         });
 
-  //         console.log(`Downloaded: ${file.key}`);
+  //
   //       }
   //     } catch (error) {
   //       console.error("Error downloading images:", error);

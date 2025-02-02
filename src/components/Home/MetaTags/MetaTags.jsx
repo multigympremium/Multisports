@@ -10,7 +10,7 @@ const MetaTags = ({
   metaOgImage = "",
 }) => {
 
-    console.log(`${import.meta.env.VITE_APP_SPACES_URL}multi-sports/` + metaOgImage, "`${import.meta.env.VITE_APP_SPACES_URL}/multi-sports/` + metaOgImage")
+    (`${import.meta.env.VITE_APP_SPACES_URL}multi-sports/` + metaOgImage, "`${import.meta.env.VITE_APP_SPACES_URL}/multi-sports/` + metaOgImage")
   return (
     <Helmet>
       <title>{metaTitle}</title>

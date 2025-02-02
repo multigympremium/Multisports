@@ -37,8 +37,7 @@ const Banners = () => {
     setIsEdit(true);
   };
 
-  const handleDelete = async (id, file_key) => {
-    console.log(file_key, "file_key", id);
+  const handleDelete = async (id) => {
     try {
       Swal.fire({
         title: "Are you sure you want to delete this?",
@@ -53,14 +52,12 @@ const Banners = () => {
         if (result.isConfirmed) {
           try {
             const res = await axiosSecure.delete(`/banners/${id}`);
-            console.log(res, "res");
             if (res.status === 200 || res.status === 201) {
               setIsDeleted((prev) => !prev);
 
               toast.success("Banner deleted successfully!");
             }
           } catch (error) {
-            console.log(error, "error");
             toast.error("Error deleting user!");
           }
         }
@@ -69,7 +66,6 @@ const Banners = () => {
       console.log(error, "error");
       toast.error("Error deleting Item!");
     }
-    console.log(`Delete brand with ID: ${id}`);
   };
 
   return (

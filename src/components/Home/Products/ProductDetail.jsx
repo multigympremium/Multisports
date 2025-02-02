@@ -34,7 +34,6 @@ const ProductDetail = ({ targetId, isShowDetail }) => {
           item._id === targetId && item.color === color && item.size === size
       );
 
-      console.log(existingProduct, "existingProduct");
       if (
         existingProduct &&
         existingProduct.color === color &&
@@ -63,7 +62,7 @@ const ProductDetail = ({ targetId, isShowDetail }) => {
     const fetchSingleProduct = async () => {
       try {
         const res = await axiosPublic.get(`/products/${targetId}`);
-        console.log(res.data.data, "res.data.data");
+
         setProduct(res.data.data);
         setSelectedImage(
           `https://mgpwebaps.s3.eu-north-1.amazonaws.com/multi-sports/${res?.data?.data?.gallery[0]?.image}`
@@ -94,13 +93,6 @@ const ProductDetail = ({ targetId, isShowDetail }) => {
     copy_product.size = size;
     setProduct(copy_product);
   }, [size, color]);
-
-  console.log(
-    cartItems.map((item) => item?._id).includes(targetId),
-    "cartItems.map(item => item?._id).includes(targetId)"
-  );
-
-  console.log(size, color, "size, color", product, "product");
 
   return (
     <div

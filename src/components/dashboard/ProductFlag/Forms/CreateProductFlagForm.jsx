@@ -16,7 +16,7 @@ export default function CreateProductFlagForm({ isShowModal, setIsShowModal }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(flagName, "flagName");
+    flagName, "flagName";
 
     if (!flagName) {
       Swal.fire({
@@ -92,6 +92,8 @@ export default function CreateProductFlagForm({ isShowModal, setIsShowModal }) {
   const handleCloseModal = () => {
     setIsShowModal(false);
     setFlagName("");
+    setFlagIcon(null);
+    setFlagIconPreview("");
   };
 
   return (

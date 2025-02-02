@@ -52,8 +52,6 @@ const ShippingForm = ({
     return Object.keys(formErrors).length === 0;
   };
 
-  console.log(errors, "errors");
-
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
@@ -87,7 +85,7 @@ const ShippingForm = ({
           setCities(res.data);
         }
       } catch (error) {
-        console.error("Error fetching cities:", error);
+        console.log(error);
       }
     };
 
@@ -105,7 +103,6 @@ const ShippingForm = ({
         }
         setZoneLoading(false);
       } catch (error) {
-        console.error("Error fetching zones:", error);
         setZoneLoading(false);
       }
     };
@@ -124,7 +121,6 @@ const ShippingForm = ({
         }
         setAreaLoading(false);
       } catch (error) {
-        console.error("Error fetching areas:", error);
         setAreaLoading(false);
       }
     };
@@ -144,8 +140,6 @@ const ShippingForm = ({
       setAreaId(shippingAddress.area_id);
       setAreaName(shippingAddress.area_name);
     }
-
-    console.log(isShowModal, "formData");
   }, [isShowModal, shippingAddress]);
 
   return (
@@ -228,7 +222,6 @@ const ShippingForm = ({
                   (city) => city.city_id == e.target.value
                 ).city_name;
 
-                console.log(filter_name, "city name");
                 setCityId(e.target.value);
                 setCityName(filter_name);
               }}
@@ -259,7 +252,6 @@ const ShippingForm = ({
                   const filter_name = zones.find(
                     (zone) => zone.zone_id == e.target.value
                   ).zone_name;
-                  console.log(filter_name, "zone name");
                   setZoneName(filter_name);
                   setZoneId(e.target.value);
                 }}
@@ -299,7 +291,6 @@ const ShippingForm = ({
                   const filter_name = areas.find(
                     (area) => area.area_id == e.target.value
                   ).area_name;
-                  console.log(filter_name, "area name");
                   setAreaId(e.target.value);
                   setAreaName(filter_name);
                 }}

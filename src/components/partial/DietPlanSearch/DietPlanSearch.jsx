@@ -7,7 +7,7 @@ import useAxiosSecure from "../../../Hook/useAxiosSecure";
 const debounce = (func, delay) => {
   let timer;
   return (...args) => {
-    console.log(args);
+    args;
     clearTimeout(timer);
     timer = setTimeout(() => {
       func(...args);
@@ -19,9 +19,9 @@ const DietPlanSearch = ({ setIsShow, isShow, userId, setUserId }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   const [usersData, setUsersData] = useState([]);
-  const {branch} = useAuth();
+  const { branch } = useAuth();
 
-  console.log("userId 52454", userId);
+  "userId 52454", userId;
   const axiosSecure = useAxiosSecure();
 
   const handleSearch = useCallback(
@@ -29,7 +29,7 @@ const DietPlanSearch = ({ setIsShow, isShow, userId, setUserId }) => {
       const res = await axiosSecure.get(
         `/diet-plan/get-diet-by-search?search=${searchTerm}&brach=${branch}`
       );
-      console.log("res 16561", res);
+      "res 16561", res;
       setUsersData(res?.data);
 
       setDebouncedSearchTerm(value);
@@ -43,13 +43,13 @@ const DietPlanSearch = ({ setIsShow, isShow, userId, setUserId }) => {
 
   const onSendDietPlan = async (id) => {
     const data = { set_diet_id: id, isActive: false };
-    console.log("data", data);
+    "data", data;
     try {
       const response = await axiosSecure.put(
         `/diet-plan/update-food-habit/${userId}`,
         data
       );
-      console.log("response", response);
+      "response", response;
       if (response?.status === 200 || response.status === 201) {
         toast.success("Sent Diet Plan successful!");
         setIsShow(false);
@@ -57,7 +57,7 @@ const DietPlanSearch = ({ setIsShow, isShow, userId, setUserId }) => {
         return response?.status;
       }
     } catch (error) {
-      console.log(error);
+      error;
       toast.error("Request failed!");
     }
   };

@@ -74,22 +74,19 @@ export default function CompletedOrders() {
         if (result.isConfirmed) {
           try {
             const res = await axiosSecure.delete(`/orders/${id}`);
-            console.log(res, "res");
+
             if (res.status === 200 || res.status === 201) {
               setIsDeleted((prev) => !prev);
               toast.success("Order deleted successfully!");
             }
           } catch (error) {
-            console.log(error, "error");
             toast.error("Error deleting Item!");
           }
         }
       });
     } catch (error) {
-      console.log(error, "error");
       toast.error("Error deleting category!");
     }
-    console.log(`Delete category with ID: ${id}`);
   };
 
   return (

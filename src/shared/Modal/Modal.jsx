@@ -57,7 +57,7 @@ const Modal = ({
   //       item.color === selectedColor?.value &&
   //       item.size === selectedSize?.value
   //   );
-  //   console.log(currentItem, "currentItem");
+  //   (currentItem, "currentItem");
   //   if (currentItem) {
   //     setTrackingProduct(currentItem);
   //     setQuantity(currentItem.quantity);
@@ -72,13 +72,11 @@ const Modal = ({
   //     setTrackingProduct(copy_product);
   //     setQuantity(0);
   //   }
-  //   console.log(currentItem, "copy_product");
+  //   (currentItem, "copy_product");
   // }, [selectedSize, selectedColor, product, cartItems]);
 
-  console.log(
-    "current stock",
-    cartItems.filter((item) => item.color === selectedColor?.value)
-  );
+  "current stock",
+    cartItems.filter((item) => item.color === selectedColor?.value);
 
   // useEffect(() => {
   //   const currentColorItems = cartItems.filter(
@@ -90,9 +88,9 @@ const Modal = ({
   //     0
   //   );
 
-  //   console.log(
+  //   (
   //     currentItemStock,
-  //     "currentStock",
+  //   tock",
   //     stock - currentItemStock == 0,
   //     currentItemStock
   //   );
@@ -110,27 +108,25 @@ const Modal = ({
           item.color === selectedColor.value && item.size === selectedSize.value
       );
 
-      // console.log(currentColorItem, "currentColorItem");
+      // (currentColorItem, "currentColorItem");
       setQuantity(currentColorItem?.quantity || 0);
     }
   }, [cartItems, selectedColor, selectedSize]);
-  console.log(selectedColor, selectedSize, "currentColorItem");
+  selectedColor, selectedSize, "currentColorItem";
 
   const incrementAndDecrementQuantity = ({ isIncrement }) => {
-    console.log(isIncrement, "isIncrement");
+    isIncrement, "isIncrement";
 
     if (quantity === Number(selectedSize.quantity)) {
       toast.error("Out of Stock");
     }
     if (isIncrement) {
       setQuantity((prev) => {
-        console.log(
-          prev < Number(selectedSize.quantity),
+        prev < Number(selectedSize.quantity),
           prev === Number(selectedSize.quantity),
           "prev < quantity",
           prev,
-          Number(selectedSize.quantity)
-        );
+          Number(selectedSize.quantity);
         if (prev < Number(selectedSize.quantity)) {
           return prev + 1;
         } else {
@@ -184,10 +180,11 @@ const Modal = ({
                   {colors.map((color, index) => (
                     <div
                       key={index}
-                      className={`border flex items-center border-gray-100 duration-300 ease-in-out  hover:border-gray-400 justify-center p-[3px] md:p-1 rounded-md ${selectedColor?.value === color?.color?.value
+                      className={`border flex items-center border-gray-100 duration-300 ease-in-out  hover:border-gray-400 justify-center p-[3px] md:p-1 rounded-md ${
+                        selectedColor?.value === color?.color?.value
                           ? "bg-neutral-500 text-white"
                           : ""
-                        }`}
+                      }`}
                     >
                       <button
                         style={{ backgroundColor: color?.color?.value }}
@@ -211,10 +208,11 @@ const Modal = ({
                     {sizeArray.map((size) => (
                       <button
                         key={size}
-                        className={`border text-xs md:text-sm shadow-sm w-7 h-7 md:w-10 md:h-10 hover:border-gray-500 duration-300 ease-in-out rounded-lg disabled:opacity-50 disabled:cursor-not-allowed ${size.value === selectedSize.value
+                        className={`border text-xs md:text-sm shadow-sm w-7 h-7 md:w-10 md:h-10 hover:border-gray-500 duration-300 ease-in-out rounded-lg disabled:opacity-50 disabled:cursor-not-allowed ${
+                          size.value === selectedSize.value
                             ? "shadow-lg shadow-green-500"
                             : ""
-                          }`}
+                        }`}
                         onClick={() => setSelectedSize(size)}
                         disabled={stock - currentStock == 0}
                       >
@@ -278,52 +276,52 @@ const Modal = ({
                       +
                     </button>
                   </div>
-                  
+
                   <form method="dialog" className="w-full md:hidden block ">
-                  <button
-                    className="md:py-3 py-2 rounded-lg text-sm md:text-base font-semibold bg-black text-white w-full md:flex-1 disabled:opacity-50 disabled:cursor-not-allowed"
-                    // onClick={() => {
-                    //   addToCart(
-                    //     product,
-                    //     selectedColor.value,
-                    //     selectedSize.value
-                    //   );
-                    //   if (selectedSize.value) {
-                    //     toast.success("Product Added to Cart!");
-                    //   }
-                    // }}
-                    onClick={() => {
-                      const isExist = cartItems.find(
-                        (item) =>
-                          item._id === product._id &&
-                          item.color === selectedColor?.value &&
-                          item.size === selectedSize?.value
-                      );
-                      if (isExist) {
-                        updateCartQuantity(
-                          product._id,
-                          quantity,
-                          selectedColor?.value,
-                          selectedSize?.value
+                    <button
+                      className="md:py-3 py-2 rounded-lg text-sm md:text-base font-semibold bg-black text-white w-full md:flex-1 disabled:opacity-50 disabled:cursor-not-allowed"
+                      // onClick={() => {
+                      //   addToCart(
+                      //     product,
+                      //     selectedColor.value,
+                      //     selectedSize.value
+                      //   );
+                      //   if (selectedSize.value) {
+                      //     toast.success("Product Added to Cart!");
+                      //   }
+                      // }}
+                      onClick={() => {
+                        const isExist = cartItems.find(
+                          (item) =>
+                            item._id === product._id &&
+                            item.color === selectedColor?.value &&
+                            item.size === selectedSize?.value
                         );
-                      } else {
-                        addToCart(
-                          product,
-                          selectedColor.value,
-                          selectedSize.value,
-                          selectedColor.label,
-                          quantity
-                        );
-                      }
-                      if (selectedSize.value) {
-                        setIsShowModal(false)
-                        toast.success("Product Added to Cart!");
-                      }
-                    }}
-                    disabled={stock - currentStock == 0 || quantity == 0}
-                  >
-                    Add To Cartt
-                  </button>
+                        if (isExist) {
+                          updateCartQuantity(
+                            product._id,
+                            quantity,
+                            selectedColor?.value,
+                            selectedSize?.value
+                          );
+                        } else {
+                          addToCart(
+                            product,
+                            selectedColor.value,
+                            selectedSize.value,
+                            selectedColor.label,
+                            quantity
+                          );
+                        }
+                        if (selectedSize.value) {
+                          setIsShowModal(false);
+                          toast.success("Product Added to Cart!");
+                        }
+                      }}
+                      disabled={stock - currentStock == 0 || quantity == 0}
+                    >
+                      Add To Cartt
+                    </button>
                   </form>
                   <button
                     className="md:py-3 hidden md:block py-2 rounded-lg text-sm md:text-base font-semibold bg-black text-white w-full md:flex-1 disabled:opacity-50 disabled:cursor-not-allowed"

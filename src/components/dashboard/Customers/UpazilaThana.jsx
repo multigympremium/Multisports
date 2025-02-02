@@ -22,8 +22,6 @@ export default function UpazilaThanaList() {
     isDeleted,
   });
 
-  console.log(district, "districtdf ");
-
   const [data, setData] = useState(district);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(15);
@@ -35,8 +33,6 @@ export default function UpazilaThanaList() {
   const totalPages = Math.ceil(data.length / itemsPerPage);
   const startIdx = (currentPage - 1) * itemsPerPage;
   const currentData = data.slice(startIdx, startIdx + itemsPerPage);
-
-  console.log(district, currentData, "currentData", data);
 
   // Handle Search
   const handleSearch = (e) => {
@@ -72,23 +68,20 @@ export default function UpazilaThanaList() {
         if (result.isConfirmed) {
           try {
             const res = await axiosSecure.delete(`/district/${id}`);
-            console.log(res, "res");
+
             if (res.status === 200 || res.status === 201) {
               setIsDeleted((prev) => !prev);
 
-              toast.success("Brand deleted successfully!");
+              toast.success("Item deleted successfully!");
             }
           } catch (error) {
-            console.log(error, "error");
             toast.error("Error deleting user!");
           }
         }
       });
     } catch (error) {
-      console.log(error, "error");
       toast.error("Error deleting Item!");
     }
-    console.log(`Delete brand with ID: ${id}`);
   };
 
   useEffect(() => {

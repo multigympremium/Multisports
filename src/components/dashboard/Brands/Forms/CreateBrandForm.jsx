@@ -21,6 +21,9 @@ export default function CreateBrandForm({ isShowModal, setIsShowModal }) {
   const [slug, setSlug] = useState("");
   const [isActive, setIsActive] = useState(false);
   const [featureBrand, setFeatureBrand] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const [errors, setErrors] = useState({});
 
   const categories = useGetAllCategories({});
   const subcategories = useGetAllSubCategories({
@@ -35,12 +38,47 @@ export default function CreateBrandForm({ isShowModal, setIsShowModal }) {
     // Handle form submission logic here
 
     if (!logo || !brandName || !category || !subcategory || !slug) {
+      const newErrors = {
+        logo: "Error: The logo must be replaced with your brand's logo.",
+        brandName: "Error: Please enter a valid company name",
+        category: "Error: Please enter a valid category ",
+        subcategory: "Error: Please enter a valid subcategory ",
+        slug: "Error: Please enter a valid subcategory ",
+      };
+      setErrors(newErrors);
+      if (logo) {
+        console.log("logo", logo);
+        delete newErrors.logo;
+        setErrors(newErrors);
+      }
+      if (brandName) {
+        console.log("brandName", brandName);
+        delete newErrors.brandName;
+        setErrors(newErrors);
+      }
+      if (category) {
+        console.log("category", category);
+        delete newErrors.category;
+        setErrors(newErrors);
+      }
+      if (subcategory) {
+        console.log("errors", errors);
+        delete newErrors.subcategory;
+        setErrors(newErrors);
+      }
+      if (slug) {
+        console.log("slug", slug);
+        delete newErrors.slug;
+        setErrors(newErrors);
+      }
+
       Swal.fire({
         title: "Error!",
         text: "Please fill all the fields",
         icon: "error",
         confirmButtonText: "Ok",
       });
+
       return;
     }
 
@@ -55,10 +93,10 @@ export default function CreateBrandForm({ isShowModal, setIsShowModal }) {
     formData.append("banner", banner);
     formData.append("brandName", brandName);
 
+    setLoading(true);
+
     try {
       const res = await axiosSecure.post("/product-brands", formData);
-
-      console.log(res);
 
       if (res.status === 200 || res.status === 201) {
         handleCloseModal();
@@ -77,6 +115,8 @@ export default function CreateBrandForm({ isShowModal, setIsShowModal }) {
         icon: "error",
         confirmButtonText: "Ok",
       });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -139,7 +179,10 @@ export default function CreateBrandForm({ isShowModal, setIsShowModal }) {
     setSlug("");
     setIsActive(false);
     setFeatureBrand(false);
+    setErrors({});
   };
+
+  console.log(errors, "errors", category);
 
   return (
     <div className="w-full bg-gray-100 rounded-2xl p-10 py-6">
@@ -153,7 +196,6 @@ export default function CreateBrandForm({ isShowModal, setIsShowModal }) {
               value={category}
               onChange={(e) => setCategory(e.target.value)}
               className="customInput select"
-              required
             >
               <option value="" selected disabled>
                 Select One
@@ -165,6 +207,9 @@ export default function CreateBrandForm({ isShowModal, setIsShowModal }) {
                   </option>
                 ))}
             </select>
+            {errors.category && (
+              <p className="text-red-500 text-sm mt-1">{errors.category}</p>
+            )}
           </div>
 
           {/* Select Subcategory */}
@@ -174,7 +219,6 @@ export default function CreateBrandForm({ isShowModal, setIsShowModal }) {
               value={subcategory}
               onChange={(e) => setSubcategory(e.target.value)}
               className="customInput select"
-              required
             >
               <option value="" selected disabled>
                 Select One
@@ -187,6 +231,9 @@ export default function CreateBrandForm({ isShowModal, setIsShowModal }) {
                 ))}
               {/* Add more subcategories dynamically if needed */}
             </select>
+            {errors.subcategory && (
+              <p className="text-red-500 text-sm mt-1">{errors.subcategory}</p>
+            )}
           </div>
 
           {/* Select Subcategory */}
@@ -219,8 +266,10 @@ export default function CreateBrandForm({ isShowModal, setIsShowModal }) {
               onChange={(e) => handleBrandNameInput(e.target.value)}
               className="customInput"
               placeholder="Brand Name"
-              required
             />
+            {errors.brandName && (
+              <p className="text-red-500 text-sm mt-1">{errors.brandName}</p>
+            )}
           </div>
 
           {/* slug Name */}
@@ -232,8 +281,10 @@ export default function CreateBrandForm({ isShowModal, setIsShowModal }) {
               onChange={(e) => handleSlug(e.target.value)}
               className="customInput"
               placeholder="Brand Slug"
-              required
             />
+            {errors.slug && (
+              <p className="text-red-500 text-sm mt-1">{errors.slug}</p>
+            )}
           </div>
 
           <SwitchInput
@@ -257,6 +308,10 @@ export default function CreateBrandForm({ isShowModal, setIsShowModal }) {
               image={logo}
               imagePreview={logoPreview}
             />
+
+            {errors.logo && (
+              <p className="text-red-500 text-sm mt-1">{errors.logo}</p>
+            )}
           </div>
 
           {/* Banner */}
@@ -281,7 +336,14 @@ export default function CreateBrandForm({ isShowModal, setIsShowModal }) {
               Cancel
             </button>
 
-            <button type="submit" className="customSaveButton">
+            <button
+              type="submit"
+              className="customSaveButton"
+              disabled={loading}
+            >
+              {loading && (
+                <span className="loading loading-spinner mr-2  loading-xs"></span>
+              )}
               Save Brand
             </button>
           </div>

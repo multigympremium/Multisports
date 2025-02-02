@@ -56,8 +56,6 @@ const CustomPages = () => {
   const handleEdit = (id) => {
     setTargetId(id);
     setIsEdited(true);
-
-    console.log(`Edit brand with ID: ${id}`);
   };
 
   const handleDelete = async (id) => {
@@ -75,27 +73,23 @@ const CustomPages = () => {
         if (result.isConfirmed) {
           try {
             const res = await axiosSecure.delete(`/custom-pages/${id}`);
-            console.log(res, "res");
+
             if (res.status === 200 || res.status === 201) {
               setIsDeleted((prev) => !prev);
 
-              toast.success("Brand deleted successfully!");
+              toast.success("Item deleted successfully!");
             }
           } catch (error) {
-            console.log(error, "error");
             toast.error("Error deleting user!");
           }
         }
       });
     } catch (error) {
-      console.log(error, "error");
       toast.error("Error deleting Item!");
     }
-    console.log(`Delete brand with ID: ${id}`);
   };
 
   const handleCopyLink = async (id) => {
-    console.log(window.location.origin);
     const copyUrl = `${window.location.origin}/tailored-page/${id}`;
     try {
       await navigator.clipboard.writeText(copyUrl);
@@ -107,10 +101,8 @@ const CustomPages = () => {
         showConfirmButton: false,
       });
     } catch (error) {
-      console.log(error, "error");
       toast.error("Error deleting user!");
     }
-    console.log(`Delete brand with ID: ${id}`);
   };
 
   return (
@@ -174,6 +166,7 @@ const CustomPages = () => {
               </thead>
               <tbody>
                 {paginatedData?.length > 0 &&
+                  !loading &&
                   paginatedData.map((item, index) => (
                     <tr key={index} className="border-b">
                       <td className="border p-2 text-center">
@@ -201,6 +194,14 @@ const CustomPages = () => {
                       </td>
                     </tr>
                   ))}
+
+                {paginatedData?.length === 0 && !loading && (
+                  <tr>
+                    <td colSpan="10" className="text-center p-4">
+                      No data available in table
+                    </td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>

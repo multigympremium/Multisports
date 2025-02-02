@@ -13,7 +13,6 @@ import MemberRegisterSelect from "../MemberRegisterSelect/MemberRegisterSelect";
 import MemberRegisterInput from "../MemberRegisterInput/MemberRegisterInput";
 import useGetDepartments from "../../../../Hook/GetDepartments/useGetDepartments";
 
-
 const schema = z.object({
   first_name: z.string().nonempty({ message: "Please enter your first name" }),
   last_name: z.string().nonempty({ message: "Please enter your last name" }),
@@ -25,11 +24,9 @@ const schema = z.object({
   address: z.string().optional(),
   gender: z.string().nonempty({ message: "Please select your gender" }),
   status: z.string().optional(),
-
 });
 
-
-function EditSystemUser({ setIsShow, isShow, targetId, }) {
+function EditSystemUser({ setIsShow, isShow, targetId }) {
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [image, setImage] = useState(null);
@@ -49,14 +46,16 @@ function EditSystemUser({ setIsShow, isShow, targetId, }) {
     resolver: zodResolver(schema),
   });
 
-  console.log(errors, "errors edit");
+  errors, "errors edit";
 
   useEffect(() => {
-    const branch = ""
+    const branch = "";
     if (targetId) {
       const fetchUserData = async () => {
         try {
-          const response = await axiosSecure.get(`/users/system-user/${targetId}?${branch}`);
+          const response = await axiosSecure.get(
+            `/users/system-user/${targetId}?${branch}`
+          );
           if (response?.status === 200) {
             const data = response.data;
             Object.keys(data).forEach((fieldName) => {
@@ -66,7 +65,7 @@ function EditSystemUser({ setIsShow, isShow, targetId, }) {
 
           setImagePreview(response.data.photourl);
         } catch (error) {
-          console.log(error);
+          error;
           toast.error("Failed to load user data");
         }
       };
@@ -78,8 +77,7 @@ function EditSystemUser({ setIsShow, isShow, targetId, }) {
     // setLoading(true);
     // data.branch = branch;
 
-    console.log(data);
-
+    data;
 
     const formData = new FormData();
     formData.append("first_name", data.first_name);
@@ -92,10 +90,11 @@ function EditSystemUser({ setIsShow, isShow, targetId, }) {
     formData.append("role", data.role);
     formData.append("photourl", image ? image : imagePreview);
 
-
-
     try {
-      const response = await axiosSecure.put(`/users/system-user/${targetId}`, formData);
+      const response = await axiosSecure.put(
+        `/users/system-user/${targetId}`,
+        formData
+      );
       if (response?.status === 200 || response?.status === 201) {
         toast.success("System User Registration successful!");
         setIsShow(false);
@@ -108,8 +107,6 @@ function EditSystemUser({ setIsShow, isShow, targetId, }) {
       setLoading(false);
     }
   };
-
-
 
   // Dropzone for thumbnail and gallery
   const onDropThumbnail = (acceptedFiles) => {
@@ -138,16 +135,25 @@ function EditSystemUser({ setIsShow, isShow, targetId, }) {
       const errorMessage = error?.response?.data?.message;
       if (errorMessage.includes("email") && errorMessage.includes("mobile")) {
         setError("email", { type: "manual", message: "Email already exists." });
-        setError("contact_no", { type: "manual", message: "Mobile number already exists." });
+        setError("contact_no", {
+          type: "manual",
+          message: "Mobile number already exists.",
+        });
       } else if (errorMessage.includes("email")) {
         setError("email", { type: "manual", message: "Email already exists." });
       } else if (errorMessage.includes("mobile")) {
-        setError("contact_no", { type: "manual", message: "Mobile number already exists." });
+        setError("contact_no", {
+          type: "manual",
+          message: "Mobile number already exists.",
+        });
       }
     } else if (error?.response?.status === 401) {
       const errorMessage = error?.response?.data?.message;
       if (errorMessage === "Member ID already exists.") {
-        setError("member_id", { type: "manual", message: "Member ID already exists." });
+        setError("member_id", {
+          type: "manual",
+          message: "Member ID already exists.",
+        });
       }
     } else if (error?.response?.status === 400) {
       setErrorMessage("Invalid input, please check your data.");
@@ -156,16 +162,14 @@ function EditSystemUser({ setIsShow, isShow, targetId, }) {
     }
   };
 
-
-
   return (
     <article
-      className={`w-full rounded-xl bg-white my-7 transition-all duration-500 ${isShow ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
-        }`}
+      className={`w-full rounded-xl bg-white my-7 transition-all duration-500 ${
+        isShow ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
+      }`}
     >
       <h2 className="px-5 py-1 border-b border-gray-300 flex justify-between items-center w-full">
         <span className="font-semibold mb-2 text-2xl mt-2">Add User</span>
-
       </h2>
 
       {/* Display error message */}
@@ -216,8 +220,6 @@ function EditSystemUser({ setIsShow, isShow, targetId, }) {
             isRequired={true}
           />
 
-
-
           <MemberRegisterInput
             type={"text"}
             label={"phone number"}
@@ -249,13 +251,12 @@ function EditSystemUser({ setIsShow, isShow, targetId, }) {
             isRequired={true}
           >
             <option value={""}>Select role</option>
-            {
-              departments?.length > 0 && departments.map((item, index) => (
+            {departments?.length > 0 &&
+              departments.map((item, index) => (
                 <option key={index} value={item.Role}>
                   {item.Role}
                 </option>
-              ))
-            }
+              ))}
           </MemberRegisterSelect>
 
           <MemberRegisterInput
@@ -281,7 +282,6 @@ function EditSystemUser({ setIsShow, isShow, targetId, }) {
             <option value={"Divorced"}>Divorced</option>
             <option value={"Don't say"}>{`Don't Say`}</option>
           </MemberRegisterSelect>
-
         </div>
 
         <div className="flex justify-end items-center gap-3 mb-4 mt-9">
@@ -301,20 +301,20 @@ function EditSystemUser({ setIsShow, isShow, targetId, }) {
           </div>
           <div className="flex justify-end">
             <div className="customSaveButton">
-              {loading ?
+              {loading ? (
                 <>
                   <span className="loading loading-spinner loading-md"></span>
                 </>
-                :
+              ) : (
                 <>
                   <button type="submit" className="font-semibold">
                     Save
                   </button>
-                </>}
+                </>
+              )}
             </div>
           </div>
         </div>
-
       </form>
     </article>
   );

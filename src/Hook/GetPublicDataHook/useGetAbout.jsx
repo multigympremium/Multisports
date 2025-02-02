@@ -9,7 +9,7 @@ function useGetAbout({ isEdited = false, isDeleted = false, isShowModal }) {
     const fetchShippingPolicy = async () => {
       const response = await axiosPublic.get("/about-us");
       const data = response?.data?.data[0];
-      console.log(data);
+
       setContent(data);
     };
 

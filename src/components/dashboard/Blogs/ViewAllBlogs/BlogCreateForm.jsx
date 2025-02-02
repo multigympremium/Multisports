@@ -18,6 +18,7 @@ export default function BlogCreateForm() {
   const [metaKeywords, setMetaKeywords] = useState("");
   const [metaDescription, setMetaDescription] = useState("");
   const [slug, setSlug] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const BlogCategories = useGetAllBlogCategories({});
 
@@ -52,6 +53,33 @@ export default function BlogCreateForm() {
     e.preventDefault();
     // Handle form submission logic here
 
+    if (
+      !title ||
+      !shortDescription ||
+      !fullDescription ||
+      !thumbnail ||
+      !slug ||
+      !metaTitle ||
+      !metaDescription ||
+      !blogCategory
+    ) {
+      Swal.fire({
+        title: "Error!",
+        text: `${title ? "" : `Title is required`} ${
+          shortDescription ? "" : `Short Description is required`
+        } ${fullDescription ? "" : `Full Description is required`} ${
+          thumbnail ? "" : `Image is required`
+        } ${slug ? "" : `Slug is required`} ${
+          metaTitle ? "" : `Meta Title is required`
+        } ${metaDescription ? "" : `Meta Description is required`} ${
+          blogCategory ? "" : `Blog Category is required`
+        }`,
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+      return;
+    }
+
     const formData = new FormData();
 
     formData.append("writer", writer);
@@ -65,10 +93,11 @@ export default function BlogCreateForm() {
     formData.append("metaKeywords", metaKeywords);
     formData.append("metaDescription", metaDescription);
 
+    setIsLoading(true);
+
     try {
       const res = await axiosSecure.post("/blog", formData);
 
-      console.log(res);
       handleCloseModal();
 
       if (res.status === 200 || res.status === 201) {
@@ -87,6 +116,8 @@ export default function BlogCreateForm() {
         icon: "error",
         confirmButtonText: "Ok",
       });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -250,7 +281,14 @@ export default function BlogCreateForm() {
           </div>
 
           <div className="flex justify-end">
-            <button type="submit" className="customSaveButton">
+            <button
+              type="submit"
+              className="customSaveButton"
+              disabled={isLoading}
+            >
+              {isLoading && (
+                <span className="loading loading-spinner mr-2  loading-xs"></span>
+              )}
               Save Blog
             </button>
           </div>

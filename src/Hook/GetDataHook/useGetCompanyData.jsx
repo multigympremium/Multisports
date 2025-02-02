@@ -15,7 +15,7 @@ function useGetCompanyData() {
     axiosSecure
       .get(`/branches/${branchcode}`)
       .then((response) => {
-        console.log("Response data:", response.data);
+        "Response data:", response.data;
         if (response.data && response.data._id) {
           setProfile(response.data);
           setSelectedImage(response.data.companyLogo);

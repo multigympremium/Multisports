@@ -5,14 +5,16 @@ import { useAuth } from "../../providers/AuthProvider";
 function AllowedRoutes(role, dashboardChildrenRoutes) {
   const [permissionData, setPermissionData] = useState([]);
   const axiosSecure = UseAxiosSecure();
-  const {branch} = useAuth();
+  const { branch } = useAuth();
 
   useEffect(() => {
     const fetchPermissions = async () => {
       try {
-        const response = await axiosSecure.get(`/permissions/${role}?${branch}`);
+        const response = await axiosSecure.get(
+          `/permissions/${role}?${branch}`
+        
 
-        console.log("response", response);
+        "response", response;
 
         const permissionRoutesArray = response?.data?.routesData.map(
           (item) => item.path

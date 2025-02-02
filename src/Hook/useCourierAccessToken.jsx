@@ -18,7 +18,7 @@ function useCourierAccessToken() {
         grant_type: "password",
       };
 
-      console.log(requestData, "requestData");
+      requestData, "requestData";
 
       try {
         const res = await axiosCourier.post(url, requestData);

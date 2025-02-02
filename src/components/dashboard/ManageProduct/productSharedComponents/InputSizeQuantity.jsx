@@ -12,8 +12,6 @@ export default function InputSizeQuantity({
 }) {
   const [quantity, setQuantity] = useState(0);
 
-  console.log(totalQuantity, "item.quantity");
-
   useEffect(() => {
     let itemsTotalQuantity = 0;
     setProductSizeValue((prev) => {
@@ -30,7 +28,6 @@ export default function InputSizeQuantity({
       return newArr;
     });
 
-    console.log(itemsTotalQuantity, "itemsTotalQuantity");
     !isEditing && setParentQuantity(itemsTotalQuantity);
     setAllSizesQuantity(itemsTotalQuantity);
     isEditing && setEditingQuantity(itemsTotalQuantity);

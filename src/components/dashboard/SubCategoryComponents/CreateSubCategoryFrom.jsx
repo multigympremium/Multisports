@@ -102,7 +102,7 @@ export default function SubcategoryCreateForm() {
     } catch (err) {
       Swal.fire({
         title: "Error!",
-        text: "Something went wrong!",
+        text: err.response.data.message || "Something went wrong!",
         icon: "error",
         confirmButtonText: "Ok",
       });

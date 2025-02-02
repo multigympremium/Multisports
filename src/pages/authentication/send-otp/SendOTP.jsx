@@ -11,15 +11,12 @@ export default function SendOTP() {
   const axiosPublic = useAxiosPublic();
   const router = useNavigate();
 
-  console.log(pathName, "pathName");
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Email:", email);
 
     try {
       const res = await axiosPublic.post("/users/send-otp", { email });
-      console.log(res);
+
       if (res.status === 200 || res.status === 201) {
         sessionStorage.setItem("userEmail", email);
         sessionStorage.setItem("otp_expiry", res?.data?.otp_expiry);
@@ -34,7 +31,6 @@ export default function SendOTP() {
         });
       }
     } catch (error) {
-      console.log(error);
       Swal.fire({
         title: "Oops...",
         text: `${error?.response?.data?.error || error?.message || error}`,
@@ -68,20 +64,22 @@ export default function SendOTP() {
       <div className="w-full py-5 flex justify-center items-center md:mt-6 gap-3">
         <Link to="/login">
           <button
-            className={`flex items-center justify-center md:px-8 px-3 py-1 md:py-2 shadow-lg rounded-md border-2 border-black md:text-2xl  md:ml-10 ${pathName === "/login"
+            className={`flex items-center justify-center md:px-8 px-3 py-1 md:py-2 shadow-lg rounded-md border-2 border-black md:text-2xl  md:ml-10 ${
+              pathName === "/login"
                 ? "bg-black text-white"
                 : "bg-white text-black"
-              }`}
+            }`}
           >
             Log In
           </button>
         </Link>
         <Link to="/send-otp">
           <button
-            className={`flex items-center justify-center md:px-8 px-3 py-1 md:py-2 shadow-lg rounded-md border-2 border-black md:text-2xl  md:ml-10 ${pathName === "/send-otp"
+            className={`flex items-center justify-center md:px-8 px-3 py-1 md:py-2 shadow-lg rounded-md border-2 border-black md:text-2xl  md:ml-10 ${
+              pathName === "/send-otp"
                 ? "bg-black text-white"
                 : "bg-white text-black"
-              }`}
+            }`}
           >
             Register
           </button>
@@ -94,7 +92,10 @@ export default function SendOTP() {
       >
         {/* Email Input */}
         <div className="md:mb-4 border-gray-200 md:pb-5">
-          <label htmlFor="email" className="block text-gray-700 py-1 md:py-3 md:text-xl">
+          <label
+            htmlFor="email"
+            className="block text-gray-700 py-1 md:py-3 md:text-xl"
+          >
             Email/Phone No
           </label>
           <input

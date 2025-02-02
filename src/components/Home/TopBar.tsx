@@ -8,8 +8,6 @@ const TopBar = () => {
     const fetchDiscounts = async () => {
       const response = await axiosPublic.get("discount");
 
-      console.log(response, "response");
-
       if (response?.data) {
         setData(response?.data?.data[0]);
       }

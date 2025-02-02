@@ -17,8 +17,6 @@ export default function OrderDetail({
   const [status, setStatus] = useState("");
   const [orderDetail, setOrderDetail] = useState([]);
 
-  console.log(id, isShow, "id");
-
   // Fetch order details
   useEffect(() => {
     const fetchOrder = async () => {

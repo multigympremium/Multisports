@@ -14,6 +14,7 @@ export default function UpdateBannerForm({ targetId, isShow, setIsShow }) {
   const [file_key, setFile_key] = useState(null);
   const [file_url, setFile_url] = useState(null);
   const [progress, setProgress] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   const axiosSecure = useAxiosSecure();
 
@@ -45,10 +46,10 @@ export default function UpdateBannerForm({ targetId, isShow, setIsShow }) {
     formData.append("subtitle", subtitle);
     formData.append("shortDescription", shortDescription);
     formData.append("image", thumbnail);
+
+    setLoading(true);
     try {
       const res = await axiosSecure.put(`/banners/${targetId}`, formData);
-
-      console.log(res);
 
       if (res.status === 200 || res.status === 201) {
         Swal.fire({
@@ -74,6 +75,8 @@ export default function UpdateBannerForm({ targetId, isShow, setIsShow }) {
         icon: "error",
         confirmButtonText: "Ok",
       });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -170,7 +173,16 @@ export default function UpdateBannerForm({ targetId, isShow, setIsShow }) {
 
         {/* Save Button */}
         <div className="col-span-2">
-          <button type="submit" className="w-full customSaveButton mt-5">
+          <button
+            type="submit"
+            className="w-full customSaveButton mt-5"
+            disabled={loading}
+          >
+            {loading && (
+              <>
+                <span className="loading loading-spinner mr-2  loading-xs"></span>
+              </>
+            )}
             Save
           </button>
         </div>

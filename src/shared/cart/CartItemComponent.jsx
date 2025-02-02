@@ -14,7 +14,6 @@ const CartItemComponent = ({
 
   const increaseQuantity = () => {
     setQuantity((prev) => {
-      console.log(prev, stock, prev <= stock, "currentItem");
       if (prev < stock) {
         updateCartQuantity(item._id, prev + 1, item.color, item.size);
         return prev + 1;
@@ -36,28 +35,20 @@ const CartItemComponent = ({
     setQuantity(item?.quantity);
   }, [item?.quantity]);
 
-  console.log(item, "item?.colorAndSize", item?.colorAndSize);
-
   useEffect(() => {
     const currentColorAndSize = item?.colorAndSize.find(
       (item2) => item2.color?.value === item.color
     );
-    console.log(currentColorAndSize, "currentItem");
 
     if (currentColorAndSize) {
-      console.log(
-        currentColorAndSize.size.find((item2) => item2.value === item.size)
-          ?.quantity,
-        "currentItem size"
-      );
-      setStock(
-        currentColorAndSize.size.find((item2) => item2.value === item.size)
-          ?.quantity || 0
-      );
+      currentColorAndSize.size.find((item2) => item2.value === item.size)
+        ?.quantity,
+        setStock(
+          currentColorAndSize.size.find((item2) => item2.value === item.size)
+            ?.quantity || 0
+        );
     }
   }, [item?.colorAndSize, item.color, item.size]);
-
-  console.log(stock, "currentItem stock");
 
   return (
     <div>
@@ -143,10 +134,10 @@ const CartItemComponent = ({
                 <div>
                   <div className="flex flex-wrap flex-col ">
                     <div>
-                      
                       <span className="font-semibold text-black">
                         {item.productTitle}
-                      </span></div>
+                      </span>
+                    </div>
                     <div className="flex flex-col ">
                       <div className="flex items-center gap-3">
                         <p className="font-semibold text-gray-500">Color : </p>
@@ -159,7 +150,6 @@ const CartItemComponent = ({
                         Size : {item.size}
                       </p>
                     </div>
-
                   </div>
 
                   {/* {!isCartArea && (
@@ -190,21 +180,26 @@ const CartItemComponent = ({
             <div className="hidden md:block">
               {item?.actualPrice && (
                 <p className="text-xs md:text-base line-through opacity-60">
-                  <span className="font-bold text-2xl">৳</span> {item.actualPrice * quantity}
+                  <span className="font-bold text-2xl">৳</span>{" "}
+                  {item.actualPrice * quantity}
                 </p>
               )}
               <p className="font-semibold  ml-auto">
-                <span className="text-gray-500 text-base">Unit Price : </span><span className="font-bold text-2xl">৳</span> {item?.price}
+                <span className="text-gray-500 text-base">Unit Price : </span>
+                <span className="font-bold text-2xl">৳</span> {item?.price}
               </p>
               <p className="font-semibold   ml-auto">
-                <span className="text-gray-500 text-base">Amount : </span><span className="font-bold text-2xl">৳</span> {item?.price * quantity}
+                <span className="text-gray-500 text-base">Amount : </span>
+                <span className="font-bold text-2xl">৳</span>{" "}
+                {item?.price * quantity}
               </p>
             </div>
 
             <div className="md:mr-5">
               <div
-                className={`flex border rounded-lg px-1 items-center mt-2 ${!isCartArea ? "" : ""
-                  }`}
+                className={`flex border rounded-lg px-1 items-center mt-2 ${
+                  !isCartArea ? "" : ""
+                }`}
               >
                 <button
                   className="px-2 py-1  rounded"
@@ -220,7 +215,9 @@ const CartItemComponent = ({
                   +
                 </button>
               </div>
-              <span className="block md:hidden mt-2 text-right mr-3">৳{item?.price * quantity}</span>
+              <span className="block md:hidden mt-2 text-right mr-3">
+                ৳{item?.price * quantity}
+              </span>
             </div>
             <button
               className="absolute top-2 right-2"

@@ -42,7 +42,7 @@ export default function CreatePromoCodeForm() {
       code,
     };
 
-    console.log("Promo Data:", promoData);
+    "Promo Data:", promoData;
     setMessage("Promo Code Saved Successfully!");
   };
 

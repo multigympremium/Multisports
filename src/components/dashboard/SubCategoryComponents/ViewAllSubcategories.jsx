@@ -55,8 +55,6 @@ export default function SubcategoryList() {
   const handleEdit = (id) => {
     setSubCategoryId(id);
     setIsEdited(true);
-
-    console.log(`Edit category with ID: ${id}`);
   };
 
   const handleDelete = async (id) => {
@@ -74,30 +72,27 @@ export default function SubcategoryList() {
         if (result.isConfirmed) {
           try {
             const res = await axiosSecure.delete(`/subcategories/${id}`);
-            console.log(res, "res");
+
             if (res.status === 200 || res.status === 201) {
               setIsDeleted((prev) => !prev);
 
               toast.success("Order deleted successfully!");
             }
           } catch (error) {
-            console.log(error, "error");
             toast.error("Error deleting user!");
           }
         }
       });
     } catch (error) {
-      console.log(error, "error");
       toast.error("Error deleting category!");
     }
-    console.log(`Delete category with ID: ${id}`);
   };
 
   useEffect(() => {
     const fetchsubCategories = async () => {
       try {
         const res = await axiosSecure.get("/subcategories");
-        console.log(res, "res", res?.data?.data);
+
         if (res.status === 200 || res.status === 201) {
           setSubCategories(res.data.data);
         }

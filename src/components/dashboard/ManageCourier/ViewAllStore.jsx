@@ -25,7 +25,6 @@ export default function ViewAllStores() {
 
   const paginatedData = useCallback(() => {
     const offset = currentPage * itemsPerPage;
-    console.log(courierStore, "courierStore", offset, offset + itemsPerPage);
     return sortedcourierStore().slice(offset, offset + itemsPerPage);
   }, [currentPage, itemsPerPage, courierStore, sortedcourierStore]);
 
@@ -45,7 +44,7 @@ export default function ViewAllStores() {
     const fetchCourierStore = async () => {
       try {
         const res = await axiosSecure.get("/courier/store");
-        console.log(res, "res", res?.data?.data);
+
         if (res.status === 200 || res.status === 201) {
           setCourierStore(res.data?.data?.data?.data);
         }

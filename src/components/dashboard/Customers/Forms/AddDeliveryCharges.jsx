@@ -39,7 +39,6 @@ function AddDeliveryCharges({ setIsShowModal, isShowModal }) {
         setCharge("");
       }
     } catch (error) {
-      console.log("error", error);
       Swal.fire({
         title: "Error",
         text: `Something went wrong`,
@@ -53,12 +52,11 @@ function AddDeliveryCharges({ setIsShowModal, isShowModal }) {
     const fetchCourierCities = async () => {
       try {
         const res = await axiosSecure.get("/courier/cities");
-        console.log(res, "res", res?.data?.data);
+
         if (res.status === 200 || res.status === 201) {
           setCourierCities(res.data?.data?.data?.data);
         }
       } catch (error) {
-        console.error("Error fetching courierCities:", error);
         throw new Error("Failed to fetch courierCities");
       }
     };
@@ -71,13 +69,10 @@ function AddDeliveryCharges({ setIsShowModal, isShowModal }) {
       (item) => item.city_id == cityId
     )?.city_name;
 
-    console.log(name, "districtName");
     if (cityId) {
       setDistrictName(name);
     }
   }, [cityId, courierCities]);
-
-  console.log(cityId, districtName, "districtName");
 
   return (
     <div className="bg-white p-5 mt-36  md:p-8 rounded-xl w-full">
