@@ -29,7 +29,6 @@ export default function EditCustomPagesForm({ targetId, isShow, setIsShow }) {
 
           // Set form values with the testimonial data
 
-          console.log(data, "data");
           setTitle(data?.title);
           setDescription(data?.content);
           setImagePreview(data?.image); //
@@ -63,8 +62,6 @@ export default function EditCustomPagesForm({ targetId, isShow, setIsShow }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    console.log({ title, description, thumbnail });
 
     const formData = new FormData();
     formData.append("title", title);

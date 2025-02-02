@@ -32,7 +32,6 @@ export default function BlogEditForm({ BlogId, setIsShowModal, isShowModal }) {
         const resBlogData = res?.data?.data;
         // Populate form fields with existing Blog data
 
-        console.log(resBlogData, "resBlogData");
         setTitle(resBlogData.title);
         setWriter(resBlogData.writer);
         setThumbnailPreview(resBlogData.image);

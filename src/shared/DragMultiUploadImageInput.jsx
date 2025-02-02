@@ -10,13 +10,7 @@ function DragMultiUploadImageInput({
   setImagePreview,
   setGallery,
 }) {
-  console.log(
-    image,
-    "image",
-    imagePreview,
-    "imagePreview",
-    Array.isArray(image)
-  );
+  image, "image", imagePreview, "imagePreview", Array.isArray(image);
 
   return (
     <div className="w-full p-4 border-dashed min-h-[200px] flex flex-col items-center justify-center border-2 border-gray-300 rounded-2xl text-center cursor-pointer relative z-[1]">
@@ -44,17 +38,13 @@ function DragMultiUploadImageInput({
                   onClick={() => {
                     setImagePreview((prev) =>
                       prev.filter((item2) => {
-                        console.log(
-                          item2?.file?.name,
-                          item.file.name,
-                          "item, item2"
-                        );
+                        item2?.file?.name, item.file.name, "item, item2";
                         return item2?.file?.name !== item?.file?.name;
                       })
                     );
                     setGallery((prev) =>
                       prev.filter((item2) => {
-                        console.log(item2.name, item.file.name, "item, item2");
+                        item2.name, item.file.name, "item, item2";
                         return item2?.name !== item?.file?.name;
                       })
                     );

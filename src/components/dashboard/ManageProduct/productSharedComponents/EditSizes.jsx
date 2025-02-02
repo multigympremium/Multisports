@@ -25,11 +25,10 @@ export default function EditSizes({
   setColorAndSize,
   stock,
 }) {
-  console.log(editingSize, "editingSize", totalQuantity, "totalQuantity");
   //   const [existingSizes, setEditingSize] = useState([]);
 
   //   useEffect(() => {
-  //     console.log(
+  //     (
   //       colorAndSize[editingIndex]?.size,
   //       //   "colorAndSize[editingIndex]",
   //       editingIndex,
@@ -51,7 +50,6 @@ export default function EditSizes({
       const editingSizeTotalQuantity = editingSize.reduce((acc, curr) => {
         return Number(acc) + Number(curr.quantity);
       }, 0);
-      console.log(itemsTotalQuantity, editingSize, "item.quantity all");
 
       // !isEditing && setParentQuantity(itemsTotalQuantity);
 
@@ -75,7 +73,8 @@ export default function EditSizes({
   ]);
 
   return (
-    <div>
+    <div className="overflow-auto">
+      <h3 className="text-2xl font-semibold mb-3">Edit Size And Quantity</h3>
       <div className="flex gap-4">
         <div className="w-full">
           <ReactSelect
@@ -91,7 +90,6 @@ export default function EditSizes({
                 key={data.sizeName}
                 onClick={() => {
                   // setProductSizeValue(data);
-                  console.log(data, "size");
                 }}
               >
                 <span>{data.sizeName}</span>
@@ -101,7 +99,6 @@ export default function EditSizes({
             selectOption={editingSize}
             onChange={(data) => {
               setEditingSize((prev) => {
-                //   console.log([...editingSize, data], "prev");
                 data.quantity = 0;
 
                 return prev?.length > 0
@@ -121,7 +118,7 @@ export default function EditSizes({
         </span>
       </div>
 
-      <ul className="flex gap-3 mt-3 items-center h-[100px]">
+      <ul className="flex gap-3 mt-3 items-center h-[70px]">
         {editingSize?.length > 0 &&
           editingSize.map((item, index) => (
             <li

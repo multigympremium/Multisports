@@ -65,14 +65,11 @@ const Footer = () => {
         newObj.link = content[key];
         newObj.name = key;
 
-        console.log(newObj, "newObj");
         initialData.push(newObj);
       }
       setSocialLinks(initialData);
     }
   }, [content]);
-
-  console.log(socialLinks, "socialLinks");
 
   return (
     <div className="poppins mt-12">
@@ -238,33 +235,31 @@ const Footer = () => {
           </div>
         </nav>
         <nav>
-      <h6 className="footer-title text-base md:text-lg font-bold mb-1 md:mb-4 text-black">
-        Social Media
-      </h6>
-      <div className="text-slate-600 flex flex-col gap-1 md:gap-3 text-sm md:text-base">
-        {socialLinks ? (
-          socialLinks.slice(0, 5).map((social) => (
-            <Link
-              key={social.name}
-              to={social.link}
-              target="_blank"
-              className="hover:text-blue-800 capitalize hover:translate-x-3 transition-all duration-300"
-            >
-              {social.name}
-            </Link>
-          ))
-        ) : (
-          Array(5)
-            .fill(null)
-            .map((_, index) => (
-              <div
-                key={index}
-                className="bg-slate-200 h-4 rounded-md w-32 md:w-40 animate-pulse"
-              ></div>
-            ))
-        )}
-      </div>
-    </nav>
+          <h6 className="footer-title text-base md:text-lg font-bold mb-1 md:mb-4 text-black">
+            Social Media
+          </h6>
+          <div className="text-slate-600 flex flex-col gap-1 md:gap-3 text-sm md:text-base">
+            {socialLinks
+              ? socialLinks.slice(0, 5).map((social) => (
+                  <Link
+                    key={social.name}
+                    to={social.link}
+                    target="_blank"
+                    className="hover:text-blue-800 capitalize hover:translate-x-3 transition-all duration-300"
+                  >
+                    {social.name}
+                  </Link>
+                ))
+              : Array(5)
+                  .fill(null)
+                  .map((_, index) => (
+                    <div
+                      key={index}
+                      className="bg-slate-200 h-4 rounded-md w-32 md:w-40 animate-pulse"
+                    ></div>
+                  ))}
+          </div>
+        </nav>
 
         <nav>
           <h6 className="footer-title  text-base md:text-lg font-bold mb-1 md:mb-4 text-black">

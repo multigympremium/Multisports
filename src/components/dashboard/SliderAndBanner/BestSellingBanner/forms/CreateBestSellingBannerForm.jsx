@@ -49,8 +49,6 @@ export default function CreatePopularBannerForm({ setIsShow }) {
     try {
       const res = await axiosSecure.post("/best-selling-banners", formData);
 
-      console.log(res);
-
       if (res.status === 200 || res.status === 201) {
         Swal.fire({
           title: "Success!",

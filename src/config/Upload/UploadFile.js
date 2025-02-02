@@ -35,13 +35,13 @@ const UploadFile = ({
         (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
       setProgress(progressData); // Update progress in parent component
 
-      console.log("Upload is " + progressData + "% done");
+      "Upload is " + progressData + "% done";
       switch (snapshot.state) {
         case "paused":
-          console.log("Upload is paused");
+          "Upload is paused";
           break;
         case "running":
-          console.log("Upload is running");
+          "Upload is running";
           break;
       }
     },
@@ -50,20 +50,20 @@ const UploadFile = ({
       // Handle different Firebase storage errors
       switch (error.code) {
         case "storage/unauthorized":
-          console.log("User doesn't have permission to access the object");
+          "User doesn't have permission to access the object";
           break;
         case "storage/canceled":
-          console.log("User canceled the upload");
+          "User canceled the upload";
           break;
         case "storage/unknown":
-          console.log("Unknown error occurred");
+          "Unknown error occurred";
           break;
       }
     },
     () => {
       // Upload completed successfully, now we can get the download URL
       getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-        console.log("File available at", downloadURL);
+        "File available at", downloadURL;
         setFile_url({ key: reference, url: downloadURL }); // Update file URL in parent component
       });
     }

@@ -1,4 +1,3 @@
-// pages/system-users.js
 import { useState } from "react";
 import BgBlurModal from "../../../shared/Modal/BgBlurModal";
 import SystemUserRegistration from "../MemberRegistration/SystemUserRegistration";
@@ -27,6 +26,7 @@ export default function SystemUsers() {
   const systemUsers = useGetAllSystemUsers({
     isDeleted,
     isEdited: isEditShowModel,
+    isShowModal: isModalOpen,
   });
 
   const handleDelete = async (id) => {
@@ -44,23 +44,20 @@ export default function SystemUsers() {
         if (result.isConfirmed) {
           try {
             const res = await axiosSecure.delete(`/users/system-user/${id}`);
-            console.log(res, "res");
+
             if (res.status === 200 || res.status === 201) {
               setIsDeleted((prev) => !prev);
 
-              toast.success("Brand deleted successfully!");
+              toast.success("Item deleted successfully!");
             }
           } catch (error) {
-            console.log(error, "error");
             toast.error("Error deleting user!");
           }
         }
       });
     } catch (error) {
-      console.log(error, "error");
       toast.error("Error deleting Item!");
     }
-    console.log(`Delete brand with ID: ${id}`);
   };
 
   return (

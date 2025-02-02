@@ -44,17 +44,11 @@ const Featured = () => {
               {products[0]?.discount}%
             </span>
           )}
-          <div>{console.log(products)}</div>
-
-          <Link
-            to={`/product_details/${products[0]?._id}`}
-          >
-            <img
-              src={`${baseImageUrl}/${products[0]?.thumbnail}`}
-              alt={products[0]?.productTitle}
-              className="w-full cursor-pointer rounded-lg h-auto md:max-h-[600px] object-cover transition-transform duration-300 mb-4"
-            />
-          </Link>
+          <img
+            src={`${baseImageUrl}/${products[0]?.thumbnail}`}
+            alt={products[0]?.productTitle}
+            className="w-full cursor-pointer rounded-lg h-auto md:max-h-[600px] object-cover transition-transform duration-300 mb-4"
+          />
           <div className="flex flex-col md:flex-row justify-between items-start md:items-end">
             <div className="flex flex-col justify-end">
               <h3 className="font-semibold md:text-base text-sm mb-2 hidden lg:block">
@@ -89,7 +83,8 @@ const Featured = () => {
                 BDT {products[0]?.price}
               </span>
               <span className="md:text-lg text-sm font-semibold md:font-bold">
-                BDT {products[0]?.oldPrice
+                BDT{" "}
+                {products[0]?.oldPrice
                   ? products[0]?.oldPrice
                   : products[0]?.price + 200}
               </span>
@@ -110,20 +105,20 @@ const Featured = () => {
                   <span className="absolute left-3 top-3  md:top-4 md:left-4 bg-gray-900 text-white text-[10px] md:text-sm py-1 px-2 md:px-3 rounded-md">
                     {product?.discount} %
                   </span>
-                ) : <p></p>}
-                <Link
-                  to={`/product_details/${products[0]?._id}`}
-                >
-                  <img
-                    src={`${baseImageUrl}/${product?.thumbnail}`}
-                    alt={product.productTitle}
-                    className=" cursor-pointer rounded-lg w-full max-h-32 md:max-h-72 object-cover  transition-transform duration-300 mb-4"
-                  />
-                </Link>
+                ) : (
+                  <p></p>
+                )}
+                <img
+                  src={`${baseImageUrl}/${product?.thumbnail}`}
+                  alt={product.productTitle}
+                  className=" cursor-pointer rounded-lg w-full max-h-32 md:max-h-72 object-cover  transition-transform duration-300 mb-4"
+                />
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-end">
                   <div className="flex flex-col justify-end">
                     <h3 className="font-semibold md:text-base text-sm mb-2 hidden md:block">
-                      {product.productTitle.length > 25 ? `${product.productTitle?.slice(0, 25)}...` : product.productTitle}
+                      {product.productTitle.length > 25
+                        ? `${product.productTitle?.slice(0, 25)}...`
+                        : product.productTitle}
                     </h3>
                     <h3 className="font-semibold md:text-base text-sm md:mb-2 block md:hidden">
                       {product.productTitle?.slice(0, 15)}..
@@ -148,14 +143,16 @@ const Featured = () => {
                     />
                   </div>
                   <div className="flex items-end justify-between flex-row-reverse md:flex-col mt-2 md:mt-0 gap-2 md:gap-1">
-                    {
-                      product.discountPrice &&
+                    {product.discountPrice && (
                       <span className="text-gray-400 text-sm md:text-base   line-through">
                         BDT {product.price}
                       </span>
-                    }
+                    )}
                     <span className="md:text-lg text-sm font-semibold md:font-bold">
-                      BDT {product.discountPrice ? product.price - product.discountPrice : product.price}
+                      BDT{" "}
+                      {product.discountPrice
+                        ? product.price - product.discountPrice
+                        : product.price}
                     </span>
                   </div>
                 </div>
@@ -163,7 +160,6 @@ const Featured = () => {
             ))}
         </div>
       </div>
-
     </div>
   );
 };

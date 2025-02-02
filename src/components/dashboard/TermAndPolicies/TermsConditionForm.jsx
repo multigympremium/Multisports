@@ -14,7 +14,7 @@ const TermsConditionForm = () => {
     const fetchShippingPolicy = async () => {
       const response = await axiosSecure.get("/terms_condition");
       const data = response?.data?.data;
-      console.log(data);
+      data;
       setContent(data[0]?.content);
       setTargetId(data[0]?._id);
     };
@@ -29,8 +29,6 @@ const TermsConditionForm = () => {
       const res = await axiosSecure.put(`/terms_condition/${targetId}`, {
         content,
       });
-
-      console.log(res);
 
       if (res.status === 200 || res.status === 201) {
         Swal.fire({

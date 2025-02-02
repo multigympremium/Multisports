@@ -34,7 +34,7 @@ const BestSelling = ({ limit = 8, isShowSeeAll = true }) => {
     fetchProducts();
   }, [axiosPublic]);
 
-  console.log(products);
+  products;
 
   const handleProductClick = (product) => {
     setCurrentProduct(product);

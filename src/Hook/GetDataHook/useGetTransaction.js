@@ -34,7 +34,7 @@ function useGetTransaction({
           }${(query && "?" + query) || ""}`
         );
 
-        console.log("Raw Response:", res?.data);
+        "Raw Response:", res?.data;
 
         // Format transaction data properly
         const formattedData = Array.isArray(res?.data?.data)
@@ -43,7 +43,7 @@ function useGetTransaction({
           ? [res?.data?.data]
           : [];
 
-        console.log("Formatted Transaction Data:", formattedData);
+        "Formatted Transaction Data:", formattedData;
 
         // Set state with fetched data
         setTransactionData(formattedData);

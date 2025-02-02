@@ -69,8 +69,6 @@ const FAQList = () => {
   const handleEdit = (id) => {
     setTargetId(id);
     setIsEdited(true);
-
-    console.log(`Edit brand with ID: ${id}`);
   };
 
   const handleDelete = async (id) => {
@@ -88,23 +86,20 @@ const FAQList = () => {
         if (result.isConfirmed) {
           try {
             const res = await axiosSecure.delete(`/faq/${id}`);
-            console.log(res, "res");
+
             if (res.status === 200 || res.status === 201) {
               setIsDeleted((prev) => !prev);
 
-              toast.success("Brand deleted successfully!");
+              toast.success("Item deleted successfully!");
             }
           } catch (error) {
-            console.log(error, "error");
             toast.error("Error deleting user!");
           }
         }
       });
     } catch (error) {
-      console.log(error, "error");
       toast.error("Error deleting Item!");
     }
-    console.log(`Delete brand with ID: ${id}`);
   };
 
   return (
@@ -184,6 +179,16 @@ const FAQList = () => {
                       </td>
                     </tr>
                   ))}
+
+                {paginatedData().length == 0 && (
+                  <tr>
+                    <td className="border p-2 py-4" colSpan={5}>
+                      <p className="text-center text-xl font-bold">
+                        No FAQs Found
+                      </p>
+                    </td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>

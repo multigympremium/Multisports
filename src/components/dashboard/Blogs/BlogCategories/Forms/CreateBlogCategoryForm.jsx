@@ -13,8 +13,6 @@ export default function CreateBlogCategoryForm({
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(blogCategory, "blogCategory");
-
     if (!blogCategory) {
       Swal.fire({
         title: "Error!",

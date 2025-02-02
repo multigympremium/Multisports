@@ -39,7 +39,6 @@ export default function SendSMS() {
       maxOrderValue,
     };
 
-    console.log("Sending SMS with data:", smsData);
     setMessage("SMS Sent Successfully!");
   };
 

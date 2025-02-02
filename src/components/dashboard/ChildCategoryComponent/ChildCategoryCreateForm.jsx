@@ -65,11 +65,6 @@ export default function ChildCategoryCreateForm() {
     if (!childCategoryName)
       validationErrors.childCategoryName = "Child Category Name is required.";
     if (!slug) validationErrors.slug = "Slug is required.";
-    if (!childCategoryIcon)
-      validationErrors.childCategoryIcon = "Child Category Icon is required.";
-    if (childCategoryIcon && childCategoryIcon.size > MAX_FILE_SIZE) {
-      validationErrors.icon = "File size exceeds 5MB limit.";
-    }
 
     // If there are validation errors, update the state and prevent form submission
     if (Object.keys(validationErrors).length > 0) {

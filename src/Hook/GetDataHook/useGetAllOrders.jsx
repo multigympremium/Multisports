@@ -24,7 +24,7 @@ function useGetAllOrders({
         setIsLoading(true);
         const res = await axiosSecure.get(`/orders?${query}`);
 
-        console.log(currentPage, "currentPage", res, "res");
+        ("res");
 
         if (res.status === 200 || res.status === 201) {
           setOrders(res.data.data);

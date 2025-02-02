@@ -76,7 +76,6 @@ export default function ViewAllTestimonials() {
   };
 
   const handleDelete = async ({ id, file_key }) => {
-    console.log(file_key, "file_key", id);
     try {
       Swal.fire({
         title: "Are you sure you want to delete this?",
@@ -91,23 +90,20 @@ export default function ViewAllTestimonials() {
         if (result.isConfirmed) {
           try {
             const res = await axiosSecure.delete(`/testimonials/${id}`);
-            console.log(res, "res");
+
             if (res.status === 200 || res.status === 201) {
               setIsDeleted((prev) => !prev);
 
-              toast.success("Brand deleted successfully!");
+              toast.success("Item deleted successfully!");
             }
           } catch (error) {
-            console.log(error, "error");
             toast.error("Error deleting user!");
           }
         }
       });
     } catch (error) {
-      console.log(error, "error");
       toast.error("Error deleting Item!");
     }
-    console.log(`Delete brand with ID: ${id}`);
   };
 
   return (

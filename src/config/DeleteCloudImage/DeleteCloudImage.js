@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 const DeleteCloudImage = ({ key }) => {
   const storage = getStorage();
 
-  console.log(key, "key");
+  key, "key";
 
   // Create a reference to the file to delete
   const desertRef = ref(storage, key);
@@ -12,7 +12,7 @@ const DeleteCloudImage = ({ key }) => {
   // Delete the file
   deleteObject(desertRef)
     .then((result) => {
-      console.log(result);
+      result;
       // File deleted successfully
       toast.success(
         "previously uploaded image has been deleted successfully!",
@@ -22,10 +22,10 @@ const DeleteCloudImage = ({ key }) => {
         }
       );
 
-      console.log("File deleted successfully");
+      ("File deleted successfully");
     })
     .catch((error) => {
-      console.log(error, error);
+      error, error;
       // Uh-oh, an error occurred!
     });
 };

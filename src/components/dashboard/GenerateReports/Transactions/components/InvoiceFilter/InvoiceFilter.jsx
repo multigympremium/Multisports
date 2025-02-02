@@ -37,15 +37,6 @@ function InvoiceFilter({
     const end_date = e.target.end_date;
     const transaction_type = e.target.transaction_type.value;
 
-    console.log(
-      "start_date",
-      start_date,
-      "end_date",
-      end_date,
-      "transaction_type",
-      transaction_type
-    );
-
     setStartDate(start_date);
     if (filterByDateRange) {
       setEndDate(end_date.value);

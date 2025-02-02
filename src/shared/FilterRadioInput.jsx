@@ -2,7 +2,7 @@ import { useState } from "react";
 
 function FilterRadioInput({ label, id, name, checked, onChange, type }) {
   const [isChecked, setIsChecked] = useState(checked);
-  // console.log(isChecked, "isChecked");
+  // (isChecked, "isChecked");
   const handleChange = (e) => {
     setIsChecked(e.target.checked);
     onChange(e.target.checked, id, type);

@@ -22,7 +22,8 @@ export default function StoreCreateForm() {
   const validateForm = () => {
     const newErrors = {};
     if (!name.trim()) newErrors.name = "Name is required.";
-    if (!contact_number.trim()) newErrors.contact_number = "Contact number is required.";
+    if (!contact_number.trim())
+      newErrors.contact_number = "Contact number is required.";
     if (!address.trim()) newErrors.address = "Address is required.";
     if (!city_id.trim()) newErrors.city_id = "Please select a city.";
     if (!zone_id.trim()) newErrors.zone_id = "Please select a zone.";
@@ -138,9 +139,6 @@ export default function StoreCreateForm() {
     fetchAreas();
   }, [axiosSecure, zone_id]);
 
-
-  console.log(city_id, zone_id, area_id, "city_id, zone_id, area_id")
-
   return (
     <div className="w-full p-6 pt-0">
       <div>
@@ -156,11 +154,15 @@ export default function StoreCreateForm() {
               className="customInput"
               placeholder="Name"
             />
-            {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
+            {errors.name && (
+              <p className="text-red-500 text-sm">{errors.name}</p>
+            )}
           </div>
           {/* Name */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-semibold">Contact Name</label>
+            <label className="block text-gray-700 font-semibold">
+              Contact Name
+            </label>
             <input
               type="text"
               value={contact_name}
@@ -168,12 +170,16 @@ export default function StoreCreateForm() {
               className="customInput"
               placeholder="Name"
             />
-            {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
+            {errors.name && (
+              <p className="text-red-500 text-sm">{errors.name}</p>
+            )}
           </div>
 
           {/* Contact Number */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-semibold">Contact Number</label>
+            <label className="block text-gray-700 font-semibold">
+              Contact Number
+            </label>
             <input
               type="text"
               value={contact_number}
@@ -187,7 +193,9 @@ export default function StoreCreateForm() {
           </div>
           {/* Contact Number */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-semibold">Secondary Contact Number</label>
+            <label className="block text-gray-700 font-semibold">
+              Secondary Contact Number
+            </label>
             <input
               type="text"
               value={secondary_contact}
@@ -210,7 +218,9 @@ export default function StoreCreateForm() {
               className="customInput"
               placeholder="Address"
             />
-            {errors.address && <p className="text-red-500 text-sm">{errors.address}</p>}
+            {errors.address && (
+              <p className="text-red-500 text-sm">{errors.address}</p>
+            )}
           </div>
 
           {/* Cities */}
@@ -222,13 +232,16 @@ export default function StoreCreateForm() {
               className="customInput"
             >
               <option value="">Select One</option>
-              {cities.length > 0 && cities.map((city) => (
-                <option value={city?.city_id} key={city?.city_id}>
-                  {city?.city_name}
-                </option>
-              ))}
+              {cities.length > 0 &&
+                cities.map((city) => (
+                  <option value={city?.city_id} key={city?.city_id}>
+                    {city?.city_name}
+                  </option>
+                ))}
             </select>
-            {errors.city_id && <p className="text-red-500 text-sm">{errors.city_id}</p>}
+            {errors.city_id && (
+              <p className="text-red-500 text-sm">{errors.city_id}</p>
+            )}
           </div>
 
           {/* Zones */}
@@ -240,13 +253,16 @@ export default function StoreCreateForm() {
               className="customInput"
             >
               <option value="">Select One</option>
-              {zones.length > 0 && zones.map((zone) => (
-                <option value={zone?.zone_id} key={zone?.zone_id}>
-                  {zone?.zone_name}
-                </option>
-              ))}
+              {zones.length > 0 &&
+                zones.map((zone) => (
+                  <option value={zone?.zone_id} key={zone?.zone_id}>
+                    {zone?.zone_name}
+                  </option>
+                ))}
             </select>
-            {errors.zone_id && <p className="text-red-500 text-sm">{errors.zone_id}</p>}
+            {errors.zone_id && (
+              <p className="text-red-500 text-sm">{errors.zone_id}</p>
+            )}
           </div>
 
           {/* Areas */}
@@ -258,17 +274,24 @@ export default function StoreCreateForm() {
               className="customInput"
             >
               <option value="">Select One</option>
-              {areas.length > 0 && areas.map((area) => (
-                <option value={area?.area_id} key={area?.area_id}>
-                  {area?.area_name}
-                </option>
-              ))}
+              {areas.length > 0 &&
+                areas.map((area) => (
+                  <option value={area?.area_id} key={area?.area_id}>
+                    {area?.area_name}
+                  </option>
+                ))}
             </select>
-            {errors.area_id && <p className="text-red-500 text-sm">{errors.area_id}</p>}
+            {errors.area_id && (
+              <p className="text-red-500 text-sm">{errors.area_id}</p>
+            )}
           </div>
 
           <div className="mt-6 flex justify-end">
-            <button disabled={loading} type="submit" className="customSaveButton">
+            <button
+              disabled={loading}
+              type="submit"
+              className="customSaveButton"
+            >
               {loading ? (
                 <>
                   <span className="loading loading-spinner mr-2 loading-xs"></span>

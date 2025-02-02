@@ -14,7 +14,7 @@ export default function CreateProductColorForm({
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(productColor, "productColor");
+    productColor, "productColor";
 
     if (!productColor) {
       Swal.fire({

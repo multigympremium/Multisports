@@ -23,7 +23,7 @@ export default function VerifyOTP() {
   //     new Date().getTime() < new Date(otp_expiry).getTime()
   //       ? new Date(otp_expiry).getTime()
   //       : new Date().getTime();
-  //   console.log(
+  //   (
   //     expiryTimestamp,
   //     "expiryTimestamp",
   //     new Date(otp_expiry).getTime(),
@@ -52,22 +52,22 @@ export default function VerifyOTP() {
       if (new Date().getTime() < new Date(otp_expiryDate).getTime()) {
         setOtp_expiry(new Date(otp_expiryDate).getTime());
         restart(new Date(otp_expiryDate).getTime());
-        console.log("restart");
+        ("restart");
       } else {
         setOtp_expiry(new Date().getTime());
-        console.log("end");
+        ("end");
       }
     },
   });
 
   const ResendOtp = async (e) => {
-    console.log("Email:", userEmail);
+    "Email:", userEmail;
 
     try {
       const res = await axiosPublic.post("/users/send-otp", {
         email: userEmail,
       });
-      console.log(res);
+
       if (res.status === 200 || res.status === 201) {
         sessionStorage.setItem("otp_expiry", res?.data?.otp_expiry);
         sessionStorage.setItem(
@@ -99,13 +99,13 @@ export default function VerifyOTP() {
           otp,
           email: userEmail,
         });
-        console.log(res);
+
         if (res.status === 200 || res.status === 201) {
           sessionStorage.setItem("user", JSON.stringify(res.data.user));
           return router("/signup");
         }
       } catch (error) {
-        console.log(error);
+        error;
         Swal.fire({
           title: "Oops...",
           text: "Something went wrong!",
@@ -155,15 +155,17 @@ export default function VerifyOTP() {
           </Link>
         </div> */}
         <div className="w-full py-5">
-        <Link to="/">
-          <button className="flex items-center justify-center rounded-full shadow-lg md:w-[50px] w-[20px] h-[20px] md:h-[50px] bg-white ml-10">
-            <MdOutlineKeyboardBackspace  />
-          </button>
-        </Link>
-      </div>
+          <Link to="/">
+            <button className="flex items-center justify-center rounded-full shadow-lg md:w-[50px] w-[20px] h-[20px] md:h-[50px] bg-white ml-10">
+              <MdOutlineKeyboardBackspace />
+            </button>
+          </Link>
+        </div>
 
         {/* Sign Up Section */}
-        <h1 className="text-xl md:text-4xl font-semibold text-center">Verify OTP</h1>
+        <h1 className="text-xl md:text-4xl font-semibold text-center">
+          Verify OTP
+        </h1>
         <p className="text-center text-gray-500 mt-2 md:text-xl mb-3 md:mb-5">
           Enter your OTP to continue.
         </p>

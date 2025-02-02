@@ -40,7 +40,9 @@ function AddNewTransaction({ setIsShow, isShow }) {
   useEffect(() => {
     const fetchPaymentMethodData = async () => {
       try {
-        const response = await axiosSecure.get(`/payment-method?branch=${user?.branch}`);
+        const response = await axiosSecure.get(
+          `/payment-method?branch=${user?.branch}`
+        );
         setPaymentMethodData(response.data);
       } catch (error) {
         console.error("Error fetching payment method data:", error);
@@ -53,7 +55,9 @@ function AddNewTransaction({ setIsShow, isShow }) {
   useEffect(() => {
     const fetchPaymentMethodData = async () => {
       try {
-        const response = await axiosSecure.get(`/transaction-type?branch=${user?.branch}`);
+        const response = await axiosSecure.get(
+          `/transaction-type?branch=${user?.branch}`
+        );
         setTransactionTypeData(response?.data);
       } catch (error) {
         console.error("Error fetching payment method data:", error);
@@ -62,8 +66,6 @@ function AddNewTransaction({ setIsShow, isShow }) {
 
     fetchPaymentMethodData();
   }, [axiosSecure, isShow]);
-
-  console.log("errors 1258", errors);
 
   const onSubmit = async (data) => {
     data.login_email = user?.email;
@@ -76,22 +78,15 @@ function AddNewTransaction({ setIsShow, isShow }) {
 
     const single_transaction_type = transactionTypeData.find((item) => {
       item.label === data.transaction_name;
-      console.log(
-        "item",
-        item,
-        data.transaction_name,
-        item.label === data.transaction_name
-      );
+
       return item.label === data.transaction_name;
     });
 
-    console.log("transaction_type", single_transaction_type);
     data.transaction_type = single_transaction_type.type;
-    console.log("data +65465fgsdfg", data);
 
     try {
       const response = await axiosSecure.post(`/transaction/post`, data);
-      console.log("response", response);
+
       if (response?.status === 200 || response.status === 201) {
         toast.success("Transaction created successfully!");
         setIsShow(false);
@@ -100,8 +95,6 @@ function AddNewTransaction({ setIsShow, isShow }) {
         return response?.status;
       }
     } catch (error) {
-      console.log(error);
-
       toast.error("Request failed!");
     }
   };

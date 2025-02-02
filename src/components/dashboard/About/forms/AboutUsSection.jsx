@@ -17,6 +17,7 @@ export default function AboutUsSection({ testimonialId, isShow, setIsShow }) {
   const [bannerImage, setBannerImage] = useState(null);
   const [bannerImagePreview, setBannerImagePreview] = useState(null);
   const [targetId, setTargetId] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const axiosSecure = useAxiosSecure();
 
@@ -87,13 +88,13 @@ export default function AboutUsSection({ testimonialId, isShow, setIsShow }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log({ title, description, thumbnail });
-
     const formData = new FormData();
     formData.append("title", title);
     formData.append("description", description);
     formData.append("sideImage", sideImage);
     formData.append("bannerImage", bannerImage);
+
+    setLoading(true);
 
     try {
       if (targetId) {
@@ -125,6 +126,8 @@ export default function AboutUsSection({ testimonialId, isShow, setIsShow }) {
         icon: "error",
         confirmButtonText: "Ok",
       });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -133,7 +136,9 @@ export default function AboutUsSection({ testimonialId, isShow, setIsShow }) {
       {/* Testimonial Edit Form */}
       <form onSubmit={handleSubmit}>
         <div className=" mb-9 flex">
-          <h1 className="text-3xl font-semibold w-full border-l-[5px] border-blue-400 pl-3">About Section</h1>
+          <h1 className="text-3xl font-semibold w-full border-l-[5px] border-blue-400 pl-3">
+            About Section
+          </h1>
           <div className="flex justify-end w-full">
             <button type="submit" className="customSaveButton ">
               Save Changes
@@ -143,7 +148,9 @@ export default function AboutUsSection({ testimonialId, isShow, setIsShow }) {
         <div className="mb-4">
           {/* Left Column - Image Upload */}
           <div className="relative">
-            <label className="block font-semibold text-gray-600 mb-2">Banner Image</label>
+            <label className="block font-semibold text-gray-600 mb-2">
+              Banner Image
+            </label>
             <DragEditUploadImageInput
               getRootProps={getBannerRootProps}
               getInputProps={getBannerInputProps}
@@ -152,7 +159,9 @@ export default function AboutUsSection({ testimonialId, isShow, setIsShow }) {
             />
           </div>
           <div className="relative">
-            <label className="block font-semibold text-gray-600 mb-2 mt-3">Side Image </label>
+            <label className="block font-semibold text-gray-600 mb-2 mt-3">
+              Side Image{" "}
+            </label>
             <DragEditUploadImageInput
               getRootProps={getSideImageRootProps}
               getInputProps={getSideImageInputProps}
@@ -164,7 +173,9 @@ export default function AboutUsSection({ testimonialId, isShow, setIsShow }) {
           {/* Right Column - Form Inputs */}
           <div className="space-y-4 mb-6 col-span-full">
             <div>
-              <label className="block font-semibold text-gray-600 mt-3">Title </label>
+              <label className="block font-semibold text-gray-600 mt-3">
+                Title{" "}
+              </label>
               <input
                 type="text"
                 value={title}
@@ -175,7 +186,9 @@ export default function AboutUsSection({ testimonialId, isShow, setIsShow }) {
             </div>
           </div>
           <div className="mb-8 col-span-full">
-            <label className="block font-semibold text-gray-600 mb-2">Description</label>
+            <label className="block font-semibold text-gray-600 mb-2">
+              Description
+            </label>
             <CustomEditor
               value={description}
               setValue={setDescription}
@@ -184,7 +197,17 @@ export default function AboutUsSection({ testimonialId, isShow, setIsShow }) {
             />
           </div>
         </div>
-        
+        <div className="flex justify-end w-full">
+          <button type="submit" className="customSaveButton" disabled={loading}>
+            {loading && (
+              <>
+                <span className="loading loading-spinner mr-2  loading-xs"></span>
+              </>
+            )}
+            Save Changes
+          </button>
+        </div>
+        {/* Save Button */}
       </form>
     </div>
   );

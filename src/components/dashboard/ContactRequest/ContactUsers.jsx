@@ -70,14 +70,24 @@ export default function ContactRequestsList() {
           const response = await axiosSecure.delete(`/contact-requests/${id}`);
           if (response.status === 200) {
             refetch();
-            Swal.fire("Deleted!", "The contact request has been deleted.", "success");
-            console.log("Item deleted successfully.");
+            Swal.fire(
+              "Deleted!",
+              "The contact request has been deleted.",
+              "success"
+            );
           } else {
-            Swal.fire("Failed!", "The contact request could not be deleted.", "error");
+            Swal.fire(
+              "Failed!",
+              "The contact request could not be deleted.",
+              "error"
+            );
           }
         } catch (error) {
-          console.error("Error deleting item:", error);
-          Swal.fire("Error!", "Something went wrong. Please try again later.", "error");
+          Swal.fire(
+            "Error!",
+            "Something went wrong. Please try again later.",
+            "error"
+          );
         }
       }
     });
@@ -96,17 +106,31 @@ export default function ContactRequestsList() {
 
     if (result.isConfirmed) {
       try {
-        const response = await axiosSecure.put(`/contact-requests/${id}/mark-served`);
+        const response = await axiosSecure.put(
+          `/contact-requests/${id}/mark-served`
+        );
 
         if (response.status === 200 || response.status === 201) {
-          Swal.fire("Updated!", "The contact request has been marked as served.", "success");
+          Swal.fire(
+            "Updated!",
+            "The contact request has been marked as served.",
+            "success"
+          );
           refetch();
         } else {
-          Swal.fire("Error!", "There was an issue marking the request as served.", "error");
+          Swal.fire(
+            "Error!",
+            "There was an issue marking the request as served.",
+            "error"
+          );
         }
       } catch (error) {
         console.error("Error marking as served:", error);
-        Swal.fire("Error!", "There was an issue marking the request as served.", "error");
+        Swal.fire(
+          "Error!",
+          "There was an issue marking the request as served.",
+          "error"
+        );
       }
     }
   };
@@ -176,8 +200,11 @@ export default function ContactRequestsList() {
                           onClick={() => {
                             if (item.status !== "Served") handleServe(item._id);
                           }}
-                          className={`inline-block px-3 py-1 rounded-full text-sm ${item.status === "Served" ? "bg-[#A8CE3A] text-white" : "bg-red-500 cursor-pointer text-white"
-                            }`}
+                          className={`inline-block px-3 py-1 rounded-full text-sm ${
+                            item.status === "Served"
+                              ? "bg-[#A8CE3A] text-white"
+                              : "bg-red-500 cursor-pointer text-white"
+                          }`}
                         >
                           {item.status}
                         </span>

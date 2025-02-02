@@ -3,7 +3,7 @@ import useGetTermsCondition from "../../../../Hook/GetPublicDataHook/useGetTerms
 
 function TermsCondition() {
   const content = useGetTermsCondition({});
-  console.log(content)
+
   return (
     <>
       <div className=" py-8 min-h-[400px] pb-0 px-4  sm:px-6 lg:px-20 lg:mt-4">

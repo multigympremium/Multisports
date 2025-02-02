@@ -6,13 +6,14 @@ import { useDropzone } from "react-dropzone";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../../Hook/useAxiosSecure";
 
-export default function MissionSection({ }) {
+export default function MissionSection() {
   // State management for form fields
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [thumbnail, setThumbnail] = useState(null);
   const [thumbnailPreview, setThumbnailPreview] = useState(null);
   const [targetId, setTargetId] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const axiosSecure = useAxiosSecure();
 
@@ -63,12 +64,12 @@ export default function MissionSection({ }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log({ title, description, thumbnail });
-
     const formData = new FormData();
     formData.append("title", title);
     formData.append("description", description);
     formData.append("image", thumbnail);
+
+    setLoading(true);
 
     try {
       if (targetId) {
@@ -103,14 +104,17 @@ export default function MissionSection({ }) {
         icon: "error",
         confirmButtonText: "Ok",
       });
+    } finally {
+      setLoading(false);
     }
   };
   return (
     <div className="border-b-2 border-gray-300 border-dashed  pb-5 mb-9">
-      
       <form onSubmit={handleSubmit}>
         <div className=" mb-9 flex">
-          <h1 className="text-3xl font-semibold w-full border-l-[5px] border-blue-400 pl-3">Mission Section</h1>
+          <h1 className="text-3xl font-semibold w-full border-l-[5px] border-blue-400 pl-3">
+            Mission Section
+          </h1>
           <div className="flex justify-end w-full">
             <button type="submit" className="customSaveButton ">
               Save Changes
@@ -120,7 +124,9 @@ export default function MissionSection({ }) {
         <div className=" mb-4">
           {/* Left Column - Image Upload */}
           <div className="relative">
-            <label className="block font-semibold text-gray-600 mb-2">Image </label>
+            <label className="block font-semibold text-gray-600 mb-2">
+              Image{" "}
+            </label>
             <DragEditUploadImageInput
               getRootProps={getThumbnailRootProps}
               getInputProps={getThumbnailInputProps}
@@ -132,7 +138,9 @@ export default function MissionSection({ }) {
           {/* Right Column - Form Inputs */}
           <div className="space-y-4 mb-6">
             <div>
-              <label className="block font-semibold text-gray-600 mt-4">Title</label>
+              <label className="block font-semibold text-gray-600 mt-4">
+                Title
+              </label>
               <input
                 type="text"
                 value={title}
@@ -143,7 +151,9 @@ export default function MissionSection({ }) {
             </div>
 
             <div className="mb-8">
-              <label className="block font-semibold text-gray-600 mb-2">Description </label>
+              <label className="block font-semibold text-gray-600 mb-2">
+                Description{" "}
+              </label>
               <CustomEditor
                 value={description}
                 setValue={setDescription}
@@ -153,6 +163,17 @@ export default function MissionSection({ }) {
             </div>
           </div>
         </div>
+        <div className="flex justify-end w-full">
+          <button type="submit" className="customSaveButton" disabled={loading}>
+            {loading && (
+              <>
+                <span className="loading loading-spinner mr-2  loading-xs"></span>
+              </>
+            )}
+            Save Changes
+          </button>
+        </div>
+        {/* Save Button */}
       </form>
     </div>
   );

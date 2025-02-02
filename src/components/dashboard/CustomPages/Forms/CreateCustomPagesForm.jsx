@@ -36,8 +36,6 @@ export default function CreateCustomPagesForm({ isShow, setIsShow }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log({ title, description });
-
     const formData = new FormData();
     formData.append("title", title);
     formData.append("slug", slug);

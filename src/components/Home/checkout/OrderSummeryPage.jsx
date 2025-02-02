@@ -25,7 +25,7 @@ export default function OrderSummeryPage() {
   const [order, setOrder] = useState(null);
   const [orderDetail, setOrderDetail] = useState([]);
 
-  console.log(location, "location in ordersummery");
+  location, "location in ordersummery";
 
   useEffect(() => {
     // const fetchOrder = async () => {
@@ -142,7 +142,7 @@ export default function OrderSummeryPage() {
         "/orders",
         location?.state?.order
       );
-      console.log(response, "response order");
+      response, "response order";
 
       if (response.data.success) {
         setCartItems([]);
@@ -169,7 +169,7 @@ export default function OrderSummeryPage() {
         confirmButtonText: "OK",
       });
     } catch (error) {
-      console.log(error);
+      error;
       Swal.fire({
         title: "Error",
         text: error.message,

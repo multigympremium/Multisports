@@ -56,7 +56,7 @@ export default function CourierMethodModal({
       async function handleCrud() {
         try {
           setLoading(true);
-          console.log(targetId, "targetId");
+
           const response = await axiosSecure.put(`/orders/update/${targetId}`, {
             status: "Packed",
             courierMethod: courier_method,
@@ -85,7 +85,6 @@ export default function CourierMethodModal({
     },
     [courierMethod, targetId, axiosSecure, setIsShow]
   );
-  console.log(courierMethod, "courierMethod", targetId, "targetId");
 
   return (
     <div className="shadow-lg p-6 rounded-md mt-40 bg-white justify-center ">

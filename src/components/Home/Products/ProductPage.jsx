@@ -21,7 +21,7 @@ function ProductPage() {
 
   const params = useParams();
   const location = useLocation();
-  console.log(location.search, "searchParams");
+  location.search, "searchParams";
   const [brandFilter, setBrandFilter] = useState([]);
   const [colorFilter, setColorFilter] = useState([]);
   const [sizeFilter, setSizesFilter] = useState([]);
@@ -54,7 +54,7 @@ function ProductPage() {
     const searchParams = location?.search?.split("?")[1];
     const brandQuery = searchParams?.split("=")[1];
     const isExistBrand = brands.map((item) => item?.brand).includes(brandQuery);
-    console.log(isExistBrand, "isExistBrand toggle");
+    isExistBrand, "isExistBrand toggle";
     if (isExistBrand) {
       setBrandFilter((prev) => [...new Set([...prev, brandQuery])]);
       setSubCategoryFilter((prev) => prev.filter((item) => item !== "all"));
@@ -89,13 +89,11 @@ function ProductPage() {
             : [...prev2, name]
         );
 
-        console.log(
-          (prev2) =>
-            prev2.includes(name)
-              ? prev2.filter((item) => item !== name)
-              : [...prev2, name],
-          "brandFilter"
-        );
+        (prev2) =>
+          prev2.includes(name)
+            ? prev2.filter((item) => item !== name)
+            : [...prev2, name],
+          "brandFilter";
         break;
       case "colorLabel":
         setColorFilter((prev2) =>
@@ -138,7 +136,7 @@ function ProductPage() {
   };
 
   const handleFilterChange = (checked, value, type) => {
-    console.log(value, checked, type, "value, checked");
+    value, checked, type, "value, checked";
     // setBrandFilter((prev) =>{
 
     // const   [...prev, value]
@@ -149,13 +147,10 @@ function ProductPage() {
       case "brand":
         setBrandFilter((prev) => {
           if (checked) {
-            console.log([...prev, value], "prev");
+            [...prev, value], "prev";
             return [...prev, value];
           } else {
-            console.log(
-              prev.filter((item) => item !== value),
-              "prev"
-            );
+            prev.filter((item) => item !== value), "prev";
             return prev.filter((item) => item !== value);
           }
         });
@@ -163,13 +158,10 @@ function ProductPage() {
       case "color":
         setColorFilter((prev) => {
           if (checked) {
-            console.log([...prev, value], "prev");
+            [...prev, value], "prev";
             return [...prev, value];
           } else {
-            console.log(
-              prev.filter((item) => item !== value),
-              "prev"
-            );
+            prev.filter((item) => item !== value), "prev";
             return prev.filter((item) => item !== value);
           }
         });
@@ -219,7 +211,7 @@ function ProductPage() {
       .map((item) => item?.slug)
       .includes(brand);
 
-    console.log(isExist, "isExist", isExistBrand, "parentCategory");
+    isExist, "isExist", isExistBrand, "parentCategory";
     if (isExist) {
       setCategoryFilter((prev) => [...new Set([...prev, params?.id])]);
       setSubCategoryFilter([]);
@@ -230,25 +222,25 @@ function ProductPage() {
     } else {
       setSubCategoryFilter([params?.id]);
       const parentCategory = querySubcategories.find((category) => {
-        console.log(category.slug == params.id, "parentCategory");
+        category.slug == params.id, "parentCategory";
         return category.slug == params.id;
       });
-      console.log(parentCategory, isExistBrand, "parentCategory");
+      parentCategory, isExistBrand, "parentCategory";
       if (parentCategory?.category) {
         setCategoryFilter([parentCategory?.category]);
       }
     }
 
-    console.log(params.id, "parentCategory");
+    params.id, "parentCategory";
   }, [params.id, categories, querySubcategories]);
 
   useEffect(() => {
     const paramsId = location?.search?.split("?")[1]?.split("=")[1];
-    console.log(paramsId, "singleBrand");
+    paramsId, "singleBrand";
     const fetchBrand = async () => {
       try {
         const res = await axiosPublic.get(`/product-brands/single/${paramsId}`);
-        console.log(res, "singleBrand");
+        res, "singleBrand";
         if (res.status === 200 || res.status === 201) {
           setSingleBrand(res.data.data);
         }
@@ -262,7 +254,7 @@ function ProductPage() {
     }
   }, [axiosPublic, location]);
 
-  console.log(singleBrand, "singleBrand");
+  singleBrand, "singleBrand";
 
   return (
     <div>

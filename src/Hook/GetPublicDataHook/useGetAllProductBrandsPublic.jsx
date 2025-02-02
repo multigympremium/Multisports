@@ -19,7 +19,7 @@ function useGetAllProductBrandsPublic({
 
         if (res.status === 200 || res.status === 201) {
           const data = res.data.data;
-          console.log(data, "res brands");
+          data, "res brands";
           setProductBrands(data);
           setLoading(false);
         }

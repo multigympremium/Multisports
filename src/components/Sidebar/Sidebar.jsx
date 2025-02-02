@@ -13,7 +13,7 @@ import useAxiosSecure from "../../Hook/useAxiosSecure";
 const Sidebar = ({ isCollapsed }) => {
   const { logOut, setUser } = useContext(AuthContext);
   const location = useLocation();
-  console.log("location", location);
+
   const navigate = useNavigate();
   const [permissionData, setPermissionData] = useState([]);
   const axiosSecure = useAxiosSecure();
@@ -24,7 +24,6 @@ const Sidebar = ({ isCollapsed }) => {
       ? null
       : JSON.parse(storedUser);
   };
-  console.log("user sidebar", user());
 
   // const UserRole = user()?.role; // add later
   // const UserRole = "Coffee Shop Staff"; // add later
@@ -42,7 +41,6 @@ const Sidebar = ({ isCollapsed }) => {
 
   const isActiveLink = (pathName, currentPath) => {
     const splitPath = currentPath.split("/")[2];
-    console.log("splitPath", splitPath, pathName, currentPath);
     if (pathName === splitPath) {
       return true;
     } else {

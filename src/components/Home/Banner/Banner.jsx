@@ -1,11 +1,11 @@
 import useGetAllBanners from "../../../Hook/GetPublicDataHook/useGetAllBanners";
-import 'swiper/css';
-import 'swiper/css/pagination';
-import 'swiper/css/navigation';
-import { useRef, useEffect, useState } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Autoplay } from 'swiper/modules';
-import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import { useRef, useEffect, useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Autoplay } from "swiper/modules";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 const SkeletonCarousel = () => (
   <div className="relative w-full h-[150px] md:h-[800px] animate-pulse">
@@ -32,7 +32,7 @@ const CustomCarousel = ({ slides }) => {
   useEffect(() => {
     const swiperInstance = swiperRef.current;
     if (swiperInstance) {
-      swiperInstance.on('slideChange', () => {
+      swiperInstance.on("slideChange", () => {
         setActiveIndex(swiperInstance.realIndex);
       });
     }
@@ -61,9 +61,9 @@ const CustomCarousel = ({ slides }) => {
             key={slide.id}
             style={{
               backgroundImage: `url(https://mgpwebaps.s3.eu-north-1.amazonaws.com/multi-sports/${slide.image})`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              backgroundRepeat: 'no-repeat',
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
             }}
           >
             <div className="h-full flex items-center justify-center">
@@ -95,8 +95,8 @@ const CustomCarousel = ({ slides }) => {
             key={index}
             className={`h-2 md:h-4 rounded-full shadow-lg transition-all duration-300 cursor-pointer ${
               activeIndex === index
-                ? 'bg-black w-4 md:w-7 scale-110 shadow-md'
-                : 'bg-white w-2 md:w-4'
+                ? "bg-black w-4 md:w-7 scale-110 shadow-md"
+                : "bg-white w-2 md:w-4"
             }`}
             onClick={() => swiperRef.current.slideToLoop(index)}
           ></div>
@@ -107,8 +107,8 @@ const CustomCarousel = ({ slides }) => {
 };
 
 const Banner = () => {
-  const [loading,setLoading] = useState(false)
-  const banners = useGetAllBanners({setLoading});
+  const [loading, setLoading] = useState(false);
+  const banners = useGetAllBanners({ setLoading });
 
   return loading ? <SkeletonCarousel /> : <CustomCarousel slides={banners} />;
 };

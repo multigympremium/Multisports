@@ -13,8 +13,6 @@ export default function CreateMeasurementUnitsForm({
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(unitName, "unitName");
-
     if (!unitName) {
       Swal.fire({
         title: "Error!",

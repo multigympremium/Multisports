@@ -30,12 +30,12 @@ export default function ForgotPassword() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Email:", email);
+    "Email:", email;
 
     try {
       if (!isAllowSetPassword) {
         const res = await axiosPublic.get(`/users/is_user_exist/${email}`);
-        console.log(res?.data?.user, "res jkjkjkkkllk");
+        res?.data?.user, "res jkjkjkkkllk";
         if (res?.data?.isExist) {
           // setIsAllowSetPassword(true);
           setIsSetOTP(true);
@@ -59,7 +59,7 @@ export default function ForgotPassword() {
           password,
           email,
         });
-        console.log(res, "res jkjkjkkkllk");
+        res, "res jkjkjkkkllk";
         if (res.status === 200 || res.status === 201) {
           Swal.fire({
             title: "Success!",
@@ -72,7 +72,7 @@ export default function ForgotPassword() {
         }
       }
     } catch (error) {
-      console.log(error);
+      error;
       Swal.fire({
         title: "Oops...",
         text: "Something went wrong!",
@@ -124,7 +124,7 @@ export default function ForgotPassword() {
   //     new Date().getTime() < new Date(otp_expiry).getTime()
   //       ? new Date(otp_expiry).getTime()
   //       : new Date().getTime();
-  //   console.log(
+  //   (
   //     expiryTimestamp,
   //     "expiryTimestamp",
   //     new Date(otp_expiry).getTime(),
@@ -153,10 +153,10 @@ export default function ForgotPassword() {
       if (new Date().getTime() < new Date(otp_expiryDate).getTime()) {
         setOtp_expiry(new Date(otp_expiryDate).getTime());
         restart(new Date(otp_expiryDate).getTime());
-        console.log("restart");
+        ("restart");
       } else {
         setOtp_expiry(new Date().getTime());
-        console.log("end");
+        ("end");
       }
     },
   });
@@ -168,12 +168,12 @@ export default function ForgotPassword() {
           otp,
           email,
         });
-        console.log(res);
+
         if (res.status === 200 || res.status === 201) {
           setIsAllowSetPassword(true);
         }
       } catch (error) {
-        console.log(error);
+        error;
         Swal.fire({
           title: "Oops...",
           text: "Something went wrong!",
@@ -207,7 +207,9 @@ export default function ForgotPassword() {
         </Link>
       </div>
       {/* Sign Up Section */}
-      <h1 className="md:text-4xl mt-5 md:mt-0 font-semibold text-center">Forgot Password</h1>
+      <h1 className="md:text-4xl mt-5 md:mt-0 font-semibold text-center">
+        Forgot Password
+      </h1>
       <p className="text-center text-gray-500 mt-2 md:text-xl md:mb-5">
         Enter your Email to reset your password.
       </p>
@@ -251,8 +253,9 @@ export default function ForgotPassword() {
                     <p className="col-span-2">
                       OTP Expires in
                       <span
-                        className={`countdown font-mono text-2xl px-2 ${minutes > 3 ? "text-blue-500" : "text-red-500"
-                          } font-bold`}
+                        className={`countdown font-mono text-2xl px-2 ${
+                          minutes > 3 ? "text-blue-500" : "text-red-500"
+                        } font-bold`}
                       >
                         {/* <span style={{ "--value": 10 }}></span>h */}
                         <span style={{ "--value": minutes }}></span>:

@@ -14,7 +14,7 @@ function useGetPrivacyPolicy({
     const fetchShippingPolicy = async () => {
       const response = await axiosPublic.get("/privacy_policy");
       const data = response?.data?.data;
-      console.log(data);
+
       setContent(data[0]?.content);
     };
 

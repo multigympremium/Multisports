@@ -29,7 +29,7 @@ function ProductsArea({
     )}&currentPage=${currentPage}&limit=${itemsPerPage}&priceRange=${priceRange}`,
   });
 
-  console.log(products, "products", totalItems, "totalItems");
+  products, "products", totalItems, "totalItems";
 
   const handleProductClick = (product) => {
     setSingleData(product);

@@ -17,7 +17,6 @@ const CrispChatForm = ({ isShow }) => {
       setTargetId(data[0]?._id);
       setIsEnabled(data[0]?.isEnabled);
       setCode(data[0]?.code);
-      console.log(data, "a");
     };
 
     fetchShippingPolicy();

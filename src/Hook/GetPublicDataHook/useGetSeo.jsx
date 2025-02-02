@@ -9,7 +9,7 @@ function useGetSeo({ isEdited = false, isDeleted = false, isShowModal }) {
     const fetchData = async () => {
       const response = await axiosPublic.get("/website-seo");
       const data = response?.data?.data;
-      console.log(data[0], "social links");
+
       setContent(data[0]);
     };
 

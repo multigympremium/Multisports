@@ -38,7 +38,7 @@ function PrintTemplate({ setIsShowPrint, data }) {
             // onClick={reactToPrintFn}
             className="btn btn-success absolute top-4 right-4"
           >
-            Print PDF
+            Print
           </button>
         )}
         content={() => ref.current}

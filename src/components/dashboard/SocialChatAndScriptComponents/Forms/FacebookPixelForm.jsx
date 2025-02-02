@@ -17,7 +17,6 @@ export default function FacebookPixelForm({ isShow }) {
       setTargetId(data[0]?._id);
       setIsEnabled(data[0]?.isEnabled);
       setPixelId(data[0]?.pixelId);
-      console.log(data, "a");
     };
 
     fetchShippingPolicy();

@@ -14,7 +14,7 @@ const PrivacyPolicy = () => {
     const fetchShippingPolicy = async () => {
       const response = await axiosSecure.get("/privacy_policy");
       const data = response?.data?.data;
-      console.log(data);
+      (data);
       setContent(data[0]?.content);
       setTargetId(data[0]?._id);
     };
@@ -30,8 +30,6 @@ const PrivacyPolicy = () => {
         content,
         id: targetId,
       });
-
-      console.log(res);
 
       if (res.status === 200 || res.status === 201) {
         Swal.fire({

@@ -80,11 +80,11 @@ export default function PaymentPage() {
       orderOverview,
     };
 
-    console.log(submitData, "orderData");
+    ("orderData");
 
     try {
       const response = await axiosPublic.post("/orders", submitData);
-      console.log(response, "response order");
+      response, "response order";
 
       if (response.data.success) {
         setCartItems([]);
@@ -111,7 +111,7 @@ export default function PaymentPage() {
         confirmButtonText: "OK",
       });
     } catch (error) {
-      console.log(error);
+      error;
       Swal.fire({
         title: "Error",
         text: error.message,

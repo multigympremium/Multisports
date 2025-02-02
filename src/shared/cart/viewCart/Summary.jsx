@@ -36,7 +36,7 @@ export default function Summary({ isCart = false, shippingAddress = null }) {
         const res = await axiosPublic.get(
           `/delivery-charge/by_district_id/${Number(shippingAddress?.city_id)}`
         );
-        console.log(res, "shippingAddress");
+        res, "shippingAddress";
         if (res.status === 200 || res.status === 201) {
           setDeliveryCharge(res.data);
         }
@@ -48,14 +48,11 @@ export default function Summary({ isCart = false, shippingAddress = null }) {
     if (shippingAddress) {
       fetchDeliveryCharge();
     }
-    console.log(shippingAddress, "shippingAddress");
   }, [axiosPublic, shippingAddress]);
 
   useEffect(() => {
     const fetchDiscounts = async () => {
       const response = await axiosPublic.get("discount");
-
-      console.log(response, "response");
 
       if (response?.data) {
         setDiscounts(response?.data?.data[0]);
@@ -104,7 +101,7 @@ export default function Summary({ isCart = false, shippingAddress = null }) {
   //   };
   //   try {
   //     const response = await axiosSecure.post("/orders", submitOrderData);
-  //     console.log(response);
+  //     (response);
 
   //     if (response.data.success) {
   //       return router("/success");
@@ -117,7 +114,7 @@ export default function Summary({ isCart = false, shippingAddress = null }) {
   //       confirmButtonText: "OK",
   //     });
   //   } catch (error) {
-  //     console.log(error);
+  //     (error);
   //     Swal.fire({
   //       title: "Error",
   //       text: error.message,
@@ -134,7 +131,7 @@ export default function Summary({ isCart = false, shippingAddress = null }) {
   }, [discounts?.promoCode, userCouponCode]);
 
   const submitOrder = async () => {
-    console.log(totalPrice, deliveryCharge?.charge, discount, "submitOrder");
+    totalPrice, deliveryCharge?.charge, discount, "submitOrder";
     const deliveryChargeNum = deliveryCharge?.charge | 0;
     const discountNum = discount | 0;
     const submitOrderData = {
@@ -171,7 +168,7 @@ export default function Summary({ isCart = false, shippingAddress = null }) {
     });
   };
 
-  console.log(deliveryCharge, shippingAddress, "deliveryCharge");
+  deliveryCharge, shippingAddress, "deliveryCharge";
   return (
     <>
       <div className="border p-6 md:mt-auto rounded-md shadow-lg w-full mt-6  md:max-w-[350px]">

@@ -50,7 +50,6 @@ const Banner2 = () => {
         >
           {shoes.map((slide, index) => (
             <SwiperSlide key={index} className="px-1.5 md:px-2.5 xl:px-3.5">
-              {console.log(slide)}
               <div className="relative h-[180px] md:h-[500px]">
                 <img
                   // src={slide.image}

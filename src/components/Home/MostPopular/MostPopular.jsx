@@ -34,8 +34,6 @@ const MostPopular = ({ limit = 8, isShowSeeAll = true }) => {
     fetchProducts();
   }, [axiosPublic]);
 
-  console.log(products);
-
   const handleProductClick = (product) => {
     setCurrentProduct(product);
     document

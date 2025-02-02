@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import ReactSelect from "../../../UI/ReactSelect";
-import { FaEdit } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
-import { IoCloseCircleOutline } from "react-icons/io5";
 import AddNewSizes from "./AddNewSizes";
 import EditSizes from "./EditSizes";
 
@@ -29,8 +27,6 @@ export default function EditableTableColumn({
   const [productColorValue, setProductColorValue] = useState(null);
   const [productSizeValue, setProductSizeValue] = useState([]);
 
-  console.log(totalQuantity, "editatble totalQuantity");
-
   const handleColorAndSize = () => {
     setColorAndSize((prev) => [
       ...prev,
@@ -39,7 +35,6 @@ export default function EditableTableColumn({
 
     setTotalQuantity((prev) => {
       const total = prev - quantity;
-      console.log(prev, "editatble totalQuantity handleColorAndSize", total);
 
       return total;
     });
@@ -85,21 +80,9 @@ export default function EditableTableColumn({
         return Number(acc) + Number(curr.quantity);
       }, 0);
 
-      console.log(
-        totalQuantity,
-        totalSizeQuantity,
-        "editatble totalQuantity totalSizeQuantity"
-      );
-
       setTotalQuantity(totalSizeQuantity);
       return newArr;
     });
-
-    console.log(
-      totalQuantity,
-      "editatble totalQuantity handleUpdateColorAndSize",
-      stock
-    );
 
     setEditingQuantity(0);
     setEditingColor(null);
@@ -111,11 +94,9 @@ export default function EditableTableColumn({
       (acc, item) => acc + Number(item.quantity),
       0
     );
-    console.log(total, "total edit", totalQuantity);
     if (isEditState) {
       setTotalQuantity(Number(stock) - total);
       // setAllSizesQuantity(Number(stock) - total);
-      console.log(totalQuantity, "editatble totalQuantity editState", stock);
     } else {
       if (colorAndSize.length > 0) {
         const total = colorAndSize.reduce(
@@ -124,10 +105,8 @@ export default function EditableTableColumn({
         );
         setTotalQuantity(stock - total);
         // setTotalQuantity(stock);
-        // console.log(totalQuantity, "editatble totalQuantity stock", stock);
       } else {
         setTotalQuantity(stock);
-        console.log(totalQuantity, "editatble totalQuantity stock", stock);
       }
     }
     // setTotalQuantity(total + Number(stock));
@@ -160,13 +139,9 @@ export default function EditableTableColumn({
         (acc, item) => acc + Number(item.quantity),
         0
       );
-
-      console.log(total, "total");
     }
     setTotalQuantity((prev) => prev - total);
   }, []);
-
-  console.log(colorAndSize, "colorAndSize", editingQuantity);
 
   return (
     <div className="w-full relative ">
@@ -201,10 +176,9 @@ export default function EditableTableColumn({
                           key={data.productColor}
                           onClick={() => {
                             setProductColorValue(data);
-                            console.log(data, "color");
                           }}
                         >
-                          <span>{data.productColorName}</span>
+                          <span>{data.productColorName} </span>
                           <span style={groupBadgeStyles}>
                             {data.options.length}
                           </span>
@@ -216,7 +190,13 @@ export default function EditableTableColumn({
                       }}
                     />
                   ) : (
-                    `${item?.color?.label}`
+                    <div>
+                      {item?.color?.label}{" "}
+                      <span
+                        className="inline-block w-3 h-3 rounded-full border border-gray-300"
+                        style={{ backgroundColor: item?.color?.value }}
+                      ></span>
+                    </div>
                   )}
                 </td>
                 <td>
@@ -291,11 +271,6 @@ export default function EditableTableColumn({
                         setEditingColor(item.color);
                         setEditingSize(item.size);
                         setEditingQuantity(item.quantity);
-
-                        console.log(
-                          item.quantity,
-                          "colorAndSize item.quantity"
-                        );
                       }}
                     >
                       Edit
@@ -330,7 +305,6 @@ export default function EditableTableColumn({
                         key={data.productColor}
                         onClick={() => {
                           setProductColorValue(data);
-                          console.log(data, "color");
                         }}
                       >
                         <span>{data.productColorName}</span>
@@ -341,7 +315,6 @@ export default function EditableTableColumn({
                     )}
                     onChange={(e) => {
                       setProductColorValue(e);
-                      console.log(e, "color");
                     }}
                   />
                 </td>
@@ -398,7 +371,7 @@ export default function EditableTableColumn({
       <div
         className={`absolute top-0 bottom-0 transition-all duration-300 ${
           isSizeFocus ? "right-0 w-full px-8" : "right-full w-0 px-0"
-        } p-2 bg-white  pt-6 pb-2 overflow-hidden`}
+        } p-2 bg-white  pt-6 pb-2 overflow-auto`}
       >
         {faceState === "create" ? (
           <AddNewSizes

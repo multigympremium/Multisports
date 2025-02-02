@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import useAxiosSecure from "../../../../Hook/useAxiosSecure";
 import Swal from "sweetalert2";
-import { set } from "react-hook-form";
 
 const TawkToChatForm = ({ isShow }) => {
   const [isEnabled, setIsEnabled] = useState(false);
@@ -18,7 +17,7 @@ const TawkToChatForm = ({ isShow }) => {
       setTargetId(data[0]?._id);
       setIsEnabled(data[0]?.isEnabled);
       setCode(data[0]?.code);
-      console.log(data, "a");
+      data, "a";
     };
 
     fetchShippingPolicy();

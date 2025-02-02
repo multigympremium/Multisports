@@ -328,8 +328,6 @@ function DashboardChildrenRoutes() {
       : JSON.parse(storedUser);
   };
 
-  console.log("user routes", user());
-
   const role = user()?.role || "";
   // const role = "Front Desk Officer"; // add later
   // const role = "admin"; // add later
@@ -344,13 +342,12 @@ function DashboardChildrenRoutes() {
     // const isPermittedRoute = (pathName) => {
     const permissionRoutesArray = () => {
       const storedUser = localStorage.getItem("permissionRoutes");
-      console.log(storedUser, "storedUser");
+
       return storedUser == "undefined" || storedUser == null
         ? []
         : JSON.parse(storedUser);
     };
 
-    console.log(permissionRoutesArray(), "permissionRoutesArray");
     const isAllowed = permissionRoutesArray()
       ? permissionRoutesArray().includes(pathName)
       : false;

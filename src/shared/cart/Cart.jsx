@@ -1,10 +1,10 @@
 import { AuthContext } from "../../providers/AuthProvider";
 import { useContext, useEffect, useState } from "react";
 import CartItemComponent from "./CartItemComponent";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import calculateDiscounts from "../../helpers/calculateDiscount";
 import useAxiosPublic from "../../Hook/useAxiosPublic";
-import { IoMdClose, IoMdCloseCircle } from "react-icons/io";
+import { IoMdCloseCircle } from "react-icons/io";
 
 const Cart = ({ isShow, setIsShow }) => {
   const navigate = useNavigate();
@@ -24,8 +24,6 @@ const Cart = ({ isShow, setIsShow }) => {
   useEffect(() => {
     const fetchDiscounts = async () => {
       const response = await axiosPublic.get("discount");
-
-      console.log(response, "response");
 
       if (response?.data) {
         setDiscounts(response?.data?.data[0]);
@@ -52,17 +50,17 @@ const Cart = ({ isShow, setIsShow }) => {
           <div className="flex mb-6  py-3 items-center justify-between pr-2 border-b pb-5 border-gray-200">
             <p className="text-2xl  font-semibold">Shopping cart</p>
             <form method="dialog">
-            <button
-              type="button"
-              onClick={() => {
-                document.getElementById("my-cart").checked = false; 
-                setIsShow(false); 
-              }}
-              className="mt-3"
-            >
-              <IoMdCloseCircle className="text-2xl"/>
-            </button>
-          </form>
+              <button
+                type="button"
+                onClick={() => {
+                  document.getElementById("my-cart").checked = false;
+                  setIsShow(false);
+                }}
+                className="mt-3"
+              >
+                <IoMdCloseCircle className="text-xl" />
+              </button>
+            </form>
           </div>
           <div
             className=" pb-4 h-full overflow-auto"

@@ -59,7 +59,7 @@ function calculateDiscounts(cart, discounts, isMach) {
       .toString()
       .padStart(2, "0")}`;
 
-    console.log(currentTime, discounts.happyHourStart, discounts.happyHourEnd);
+    currentTime, discounts.happyHourStart, discounts.happyHourEnd;
     if (
       currentTime >= discounts.happyHourStart &&
       currentTime <= discounts.happyHourEnd
@@ -85,10 +85,10 @@ function calculateDiscounts(cart, discounts, isMach) {
     });
   }
 
-  // console.log(isMach, "isMach", discounts, discounts?.promoCodeDiscount);
+  // (isMach, "isMach", discounts, discounts?.promoCodeDiscount);
   // Promo Code Discount
   if (discounts.promoCodeActive && isMach && discounts?.promoCodeDiscount) {
-    // console.log(isMach, "isMach");
+    // (isMach, "isMach");
     totalDiscount += Number(discounts?.promoCodeDiscount);
     appliedDiscounts.push({
       type: "Promo Code Discount",

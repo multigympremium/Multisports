@@ -143,30 +143,6 @@ export default function ProductCreateForm() {
     }
     setLoading(true);
     // Handle form submission here
-    console.log({
-      productTitle,
-      shortDescription,
-      fullDescription,
-      price,
-      discountPrice,
-      rewardPoints,
-      stock,
-      productCode,
-      metaTitle,
-      metaKeywords,
-      metaDescription,
-      specialOffer,
-      hasVariants,
-      thumbnail,
-      gallery,
-      category,
-      brand: brandValue,
-      color: productColor.join(","),
-      size: productSize.join(","),
-      flag: productFlagValue,
-      subcategory: subcategory,
-      childCategory: childCategory,
-    });
 
     const formData = new FormData();
     formData.append("productTitle", productTitle);
@@ -197,24 +173,14 @@ export default function ProductCreateForm() {
     formData.append("galleryItemCount", gallery.length);
     formData.append("colorAndSize", JSON.stringify(colorAndSize));
 
-    // If `gallery` is an array of files, you can loop through it and append each file:
-
-    console.log(gallery, "gallery");
-    // for (const file of gallery) {
-    //   console.log(file, "file");
-    //   formData.append(`gallery`, file);
-    // }
     if (Array.isArray(gallery)) {
       gallery.forEach((file, index) => {
-        console.log(file, "file");
         formData.append(`gallery`, file);
       });
     }
 
     try {
       const res = await axiosSecure.post("/products", formData);
-
-      console.log(res);
 
       if (res.status === 200 || res.status === 201) {
         Swal.fire({
@@ -242,12 +208,8 @@ export default function ProductCreateForm() {
       try {
         const firstResData = await axiosSecure.get(`/setup-config`);
 
-        console.log(firstResData, "res ljlj");
-
         if (firstResData.status === 200 || firstResData.status === 201) {
           const data = firstResData?.data?.data[0];
-
-          console.log(data, "data");
 
           setSetupConfig(data);
 
@@ -260,8 +222,6 @@ export default function ProductCreateForm() {
 
     fetchTestimonial();
   }, [axiosSecure]);
-
-  console.log(errors, "setupConfig");
 
   return (
     <div className="p-6 pt-0">

@@ -61,7 +61,6 @@ export default function PermissionRoutes() {
 
   // Dummy function for regenerating routes
   const regenerateRoutes = () => {
-    console.log("Routes regenerated");
     // Implement route regeneration functionality here
   };
 

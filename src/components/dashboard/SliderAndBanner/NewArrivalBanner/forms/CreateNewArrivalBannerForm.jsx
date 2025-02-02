@@ -52,8 +52,6 @@ export default function CreateNewArrivalBannerForm({ setIsShow }) {
     try {
       const res = await axiosSecure.post("/new-arrival-banners", formData);
 
-      console.log(res);
-
       if (res.status === 200 || res.status === 201) {
         Swal.fire({
           title: "Success!",

@@ -52,8 +52,6 @@ export default function CreateBagBannerForm({ setIsShow }) {
     try {
       const res = await axiosSecure.post("/bag-banners", formData);
 
-      console.log(res);
-
       if (res.status === 200 || res.status === 201) {
         Swal.fire({
           title: "Success!",

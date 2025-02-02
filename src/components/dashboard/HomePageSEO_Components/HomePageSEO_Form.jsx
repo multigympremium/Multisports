@@ -38,7 +38,6 @@ export default function SeoForm() {
 
   const onSubmit = async (data) => {
     setLoading(true);
-    console.log(data, "data");
 
     const formData = new FormData();
     formData.append("metaTitle", data.metaTitle);
@@ -70,7 +69,6 @@ export default function SeoForm() {
         }
       }
     } catch (err) {
-      console.error(err);
       Swal.fire({
         title: "Error!",
         text: err.message,
@@ -93,11 +91,8 @@ export default function SeoForm() {
         if (res.status === 200 || res.status === 201) {
           const data = res?.data?.data;
 
-          console.log(data, "data");
-
           // Set form values with the testimonial data
           for (let key in data) {
-            console.log(key, data[key], "data[key]");
             setValue(key, data[key]);
           }
           setThumbnailPreview(data?.metaOgImage);

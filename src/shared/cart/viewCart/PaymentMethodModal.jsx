@@ -30,7 +30,7 @@ export default function PaymentMethodModal({
 
   // const accessToken = useCourierAccessToken()
 
-  // console.log(accessToken, "accessToken")
+  // (accessToken, "accessToken")
 
   // const submitOrder = async () => {
   //   try {
@@ -40,7 +40,7 @@ export default function PaymentMethodModal({
   //           payment_method: 'cash',
   //           total: totalPrice
   //       });
-  //       console.log(response);
+  //       (response);
 
   //       if (response.data.success) {
   //          return router("/success")
@@ -53,7 +53,7 @@ export default function PaymentMethodModal({
   //           confirmButtonText: 'OK'
   //       })
   //   } catch (error) {
-  //       console.log(error);
+  //       (error);
   //       Swal.fire({
   //           title: 'Error',
   //           text: error.message,
@@ -66,7 +66,7 @@ export default function PaymentMethodModal({
   const items = cartItems;
 
   const submitOrder = async () => {
-    console.log(totalPrice, deliveryCharge?.charge, discount, "submitOrder");
+    totalPrice, deliveryCharge?.charge, discount, "submitOrder";
     const deliveryChargeNum = deliveryCharge?.charge | 0;
     const discountNum = discount | 0;
     const submitOrderData = {
@@ -103,7 +103,7 @@ export default function PaymentMethodModal({
 
     // try {
     //   const response = await axiosSecure.post("/orders", submitOrderData);
-    //   console.log(response, "response order");
+    //   (response, "response order");
 
     //   if (response.data.success) {
     //     setCartItems([]);
@@ -124,7 +124,7 @@ export default function PaymentMethodModal({
     //     confirmButtonText: "OK",
     //   });
     // } catch (error) {
-    //   console.log(error);
+    //   (error);
     //   Swal.fire({
     //     title: "Error",
     //     text: error.message,
@@ -142,7 +142,7 @@ export default function PaymentMethodModal({
     //         payment_method: 'bkash',
     //         total: totalPrice
     //     });
-    //     console.log(response);
+    //     (response);
 
     //     if (response.data.success) {
     //        return router("/success")
@@ -155,7 +155,7 @@ export default function PaymentMethodModal({
     //         confirmButtonText: 'OK'
     //     })
     // } catch (error) {
-    //     console.log(error);
+    //     (error);
     //     Swal.fire({
     //         title: 'Error',
     //         text: error.message,
@@ -181,8 +181,8 @@ export default function PaymentMethodModal({
 
     axios
       .request(options)
-      .then((res) => console.log(res.data))
-      .catch((err) => console.log(err.message, "bkash error"));
+      .then((res) => res.data)
+      .catch((err) => (err.message, "bkash error"));
   };
   return (
     <div className="w-full shadow-lg p-6 rounded-md mt-40 bg-white">

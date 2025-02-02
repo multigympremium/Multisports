@@ -52,7 +52,7 @@ const AvatarEditorComponent = ({ image, setImage, setIsShow, isShow }) => {
         setIsPending(false);
       } catch (error) {
         setIsPending(false);
-        console.log(error, "error");
+
         Swal.fire({
           title: "Oops...",
           text: error?.response?.data?.message || error?.message,

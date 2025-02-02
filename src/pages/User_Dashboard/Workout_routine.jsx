@@ -13,11 +13,10 @@ import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 import Modal from "../../components/partial/Modal/Modal";
 
-
 const Workout_routine = () => {
   const [workoutRoutine, setWorkoutRoutine] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false); // Modal state
-  
+
   const [inputFields, setInputFields] = useState([]);
   const [radioFields, setRadioFields] = useState([]);
   const [isHasPreviousFoodHabit, setIsHasPreviousFoodHabit] = useState(false);
@@ -35,14 +34,13 @@ const Workout_routine = () => {
     cardioDuration: "",
     plankTime: "",
     bodyType: "",
-    injuries: ""
+    injuries: "",
   }); // Form state
 
   const { user } = useContext(AuthContext);
   const axiosSecure = useAxiosSecure();
   const [userId, setUserId] = useState(null);
-  const {branch} = useAuth();
-
+  const { branch } = useAuth();
 
   const {
     register,
@@ -60,8 +58,6 @@ const Workout_routine = () => {
         );
         const data = response?.data;
 
-
-
         const schema = {};
         let input_fields = [];
         let radio_fields = [];
@@ -71,7 +67,7 @@ const Workout_routine = () => {
             data[key].field_type === "number" ||
             data[key].field_type === "textarea" ||
             data[key].field_type === "date" ||
-            data[key].field_type === "option" 
+            data[key].field_type === "option"
           ) {
             input_fields.push(data[key]);
           } else if (data[key].field_type === "radio") {
@@ -88,27 +84,30 @@ const Workout_routine = () => {
           schema
         );
 
-        console.log("reslkjdflkajs  34232323", res2)
-        
+        "reslkjdflkajs  34232323", res2;
+
         if (res2?.status === 200) {
           const answerReport = res2?.data?.workoutUserAnswerModelReport;
-          const foodHabit = res2?.data?.data;
+          dHabit = res2?.data?.data;
           const workoutRoutine = foodHabit?.workout_routine_id;
-          console.log("workoutRoutine", workoutRoutine);
+          "workoutRoutine", workoutRoutine;
 
           setWorkoutRoutine(workoutRoutine);
 
-          console.log("foodHabit", foodHabit, answerReport, res2?.data?.workoutUserAnswerModelReport);
+          "foodHabit",
+            foodHabit,
+            answerReport,
+            res2?.data?.workoutUserAnswerModelReport;
 
           // Set values for all fields
           Object.keys(schema).forEach((fieldName) => {
             setValue(fieldName, answerReport[fieldName] || "");
-            console.log(answerReport[fieldName], "data[fieldName]")
+            answerReport[fieldName], "data[fieldName]";
           });
 
           setIsActiveFoodHabit(foodHabit?.isActive);
 
-          console.log(foodHabit?.isActive)
+          foodHabit?.isActive;
 
           if (Object.keys(answerReport).length > 0) {
             setIsHasPreviousFoodHabit(true);
@@ -136,10 +135,12 @@ const Workout_routine = () => {
     const fetchUserId = async () => {
       try {
         // const response = await axiosSecure.get(`/users/user_by_email/www.tanzil.hossain@gmail.com`);  Test this by email
-        const response = await axiosSecure.get(`/users/user_by_email/${user.email}?branch=${branch}`);
+        const response = await axiosSecure.get(
+          `/users/user_by_email/${user.email}?branch=${branch}`
+        );
         setUserId(response.data._id);
       } catch (error) {
-        console.error('Error fetching user ID:', error);
+        console.error("Error fetching user ID:", error);
       }
     };
 
@@ -151,10 +152,10 @@ const Workout_routine = () => {
   //   const fetchWorkoutRoutines = async () => {
   //     try {
   //       if (userId) {
-  //         const response = await axiosSecure.get(`workout-routines/user/${userId}`); 
+  //         const response = await axiosSecure.get(`workout-routines/user/${userId}`);
   //         // const response = await axiosSecure.get(`workout-routines/user/66f833a2c441d59cd0ce9b59`);
   //         setWorkoutRoutine(response.data[0]);
-  //         console.log(response.data[0]);
+  //         (response.data[0]);
   //       }
   //     } catch (error) {
   //       console.error('Error fetching workout routines:', error);
@@ -164,7 +165,6 @@ const Workout_routine = () => {
   //   fetchWorkoutRoutines();
   // }, [userId, isModalOpen]);
 
-
   // Handlers for buttons
   const handleDownloadPdf = () => {
     <PDFDownloadLink
@@ -172,9 +172,9 @@ const Workout_routine = () => {
       fileName="workout-routine.pdf"
     >
       {({ blob, url, loading, error }) =>
-        loading ? 'Loading document...' : 'Download PDF'
+        loading ? "Loading document..." : "Download PDF"
       }
-    </PDFDownloadLink>
+    </PDFDownloadLink>;
   };
 
   const handleRequestWorkout = () => {
@@ -188,10 +188,9 @@ const Workout_routine = () => {
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
-
 
   const onSubmit = async (data) => {
     data.userId = user?._id;
@@ -217,10 +216,10 @@ const Workout_routine = () => {
         localStorage.setItem("user", JSON.stringify(response?.data?.user));
         setIsShowForm(false);
         setIsModalOpen(false);
-        console.log("response diet plan", response);
+        "response diet plan", response;
       }
     } catch (error) {
-      console.log(error);
+      error;
       toast.error("Request failed!");
     }
   };
@@ -237,33 +236,36 @@ const Workout_routine = () => {
         title="Workout Routine"
         rightcontent={
           <div className="flex flex-row-reverse gap-4 mt-4">
-            {(workoutRoutine && workoutRoutine.workouts) &&
+            {workoutRoutine && workoutRoutine.workouts && (
               <>
                 <PDFDownloadLink
                   document={<WorkoutPDF workoutRoutine={workoutRoutine} />}
                   fileName="Workout routine.pdf"
                 >
                   {({ blob, url, loading, error }) =>
-                    loading ? (<p className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors">
-                      Download Routine PDF
-                    </p>) : (
+                    loading ? (
+                      <p className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors">
+                        Download Routine PDF
+                      </p>
+                    ) : (
                       <button className="bg-blue-500 flex flex-row btn text-white px-4 md:text-sm text-sm py-0 md:px-4 md:py-2 rounded-xl font-semibold hover:bg-blue-600 transition-colors">
-                        Download <LuDownload className="md:text-lg text-base md:ml-1" />
+                        Download{" "}
+                        <LuDownload className="md:text-lg text-base md:ml-1" />
                       </button>
                     )
                   }
                 </PDFDownloadLink>
-              </>}
+              </>
+            )}
             <button
               onClick={handleRequestWorkout}
-              className="bg-green-500 text-white btn rounded-xl  md:px-4 md:py-2 font-semibold hover:bg-green-600 transition-colors">
+              className="bg-green-500 text-white btn rounded-xl  md:px-4 md:py-2 font-semibold hover:bg-green-600 transition-colors"
+            >
               Request Workout
             </button>
           </div>
-
         }
       />
-
 
       <div className="">
         {/* <table className="table w-full">
@@ -314,10 +316,15 @@ const Workout_routine = () => {
         </table> */}
 
         <div className="md:space-y-6 space-y-2 md:mt-5 bg-white p-3 shadow-lg rounded-md">
-        <h3 className="text-xl font-bold border-b py-3">{workoutRoutine.routineName}</h3>
+          <h3 className="text-xl font-bold border-b py-3">
+            {workoutRoutine.routineName}
+          </h3>
           {workoutRoutine && workoutRoutine.workouts ? (
             workoutRoutine.workouts.map((dayData, dayIndex) => (
-              <div key={dayIndex} className="border shadow-sm rounded-xl p-4 md:p-6 ">
+              <div
+                key={dayIndex}
+                className="border shadow-sm rounded-xl p-4 md:p-6 "
+              >
                 {/* Day Title */}
                 <h2 className="text-lg font-bold text-center text-yellow-500 pb-3 md:mb-6">
                   {dayData.dayName}
@@ -349,7 +356,7 @@ const Workout_routine = () => {
                         {/* Sets and Reps */}
                         <div className="flex justify-between text-sm font-medium text-gray-500">
                           <span>Sets: {exercise.sets}</span>
-                          <span>Reps: {exercise.reps.join(', ')}</span>
+                          <span>Reps: {exercise.reps.join(", ")}</span>
                         </div>
                       </div>
                     </div>
@@ -363,7 +370,6 @@ const Workout_routine = () => {
             </div>
           )}
         </div>
-
       </div>
 
       {isModalOpen && (
@@ -448,8 +454,7 @@ const Workout_routine = () => {
         //   </div>
         // </div>
 
-        <Modal isShowModal={isModalOpen} setIsShowModal={setIsModalOpen} >
-          
+        <Modal isShowModal={isModalOpen} setIsShowModal={setIsModalOpen}>
           <MyWorkoutForm
             handleSubmit={handleSubmit}
             onSubmit={onSubmit}
@@ -463,13 +468,9 @@ const Workout_routine = () => {
             setValue={setValue}
           />
         </Modal>
-
       )}
     </div>
   );
 };
-
-
-
 
 export default Workout_routine;

@@ -1,12 +1,8 @@
 import { useEffect } from "react";
 import Banner from "../../../components/Home/Banner/Banner";
 import Brands from "../../../components/Home/Brands/Brands";
-import ExclusiveCollection from "../../../components/Home/ExclusiveCollection/ExclusiveCollection";
-import Footwear from "../../../components/Home/Footwear/Footwear";
 import MetaTags from "../../../components/Home/MetaTags/MetaTags";
 import NewArrivals from "../../../components/Home/NewArrivals/NewArrivals";
-import PopularProducts from "../../../components/Home/PopularProducts/PopularProducts";
-import TrendyBags from "../../../components/Home/TrendyBags/TrendyBags";
 import useGetSeo from "../../../Hook/GetPublicDataHook/useGetSeo";
 import ReactGA from "react-ga4";
 import FacebookChat from "../../../components/Home/FacebookChat/FacebookChat";
@@ -16,7 +12,6 @@ import Banner2 from "../../../components/Home/Banner/Bannner2";
 import PromotionalBanner from "../../../components/Home/Banner/PromotionalBanner";
 import Testimonials from "../../../components/Home/Testimonials/Testimonials";
 import Category from "../../../components/Home/Category/Category";
-import HorizontalMenu from "../../../shared/HorizontalMenu/HorizontalMenu";
 import MostPopular from "../../../components/Home/MostPopular/MostPopular";
 import BestSelling from "../../../components/Home/BestSelling/BestSelling";
 import SpecialDiscount from "../../../components/Home/SpecialDiscount/SpecialDiscount";
@@ -69,7 +64,7 @@ const HomePage = () => {
         {/* <Footwear /> */}
         <SpecialDiscount />
         <Testimonials />
-        <IntroVideo/>
+        <IntroVideo />
         {/* <TrendyBags /> */}
         <Brands />
         <FacebookChat />

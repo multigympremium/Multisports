@@ -51,8 +51,6 @@ const Root = () => {
       if (response.status === 200 || response.status === 201) {
         const data = await response.data.data[0];
 
-        console.log(data, "css jss");
-
         if (data) {
           // Apply Custom CSS
           const style = document.createElement("style");
@@ -93,7 +91,6 @@ const Root = () => {
       const facebookData = res?.data?.data[0];
       // const pixelId = localStorage.getItem('facebookPixelId');
       if (facebookData?.pixelId && facebookData?.isEnabled) {
-        console.log(facebookData, "facebookData");
         ReactPixel.init(facebookData?.pixelId);
         ReactPixel.pageView(); // Track a page view
       }
@@ -104,10 +101,7 @@ const Root = () => {
       const response = await axiosPublic.get("/google-analytic");
       const googleAnalyticData = response?.data?.data[0];
 
-      console.log(googleAnalyticData, "googleAnalyticData");
-
       if (googleAnalyticData?.isEnabled && googleAnalyticData?.trackingID) {
-        console.log(googleAnalyticData, "data google analytic");
         ReactGA.initialize(googleAnalyticData?.trackingID);
 
         const scriptElem = document.createElement("script");
@@ -140,8 +134,6 @@ const Root = () => {
       // setIsEnabled(data[0]?.isEnabled);
 
       if (data?.isEnabled === "true") {
-        console.log(data, "agsdfgs sfg sg  talk");
-
         const scriptElem = document.createElement("script");
         scriptElem.innerHTML = data?.code
           .replaceAll(`<script type="text/javascript">`, "")

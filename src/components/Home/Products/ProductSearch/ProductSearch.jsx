@@ -60,7 +60,7 @@ const ProductSearch = ({ setIsShow, isShow }) => {
     setSearchTerm("");
   };
 
-  console.log(isShow, "isShow");
+  isShow, "isShow";
 
   return (
     <div className="p-6 px-4 pt-4 md:pt-7 bg-white rounded-lg">

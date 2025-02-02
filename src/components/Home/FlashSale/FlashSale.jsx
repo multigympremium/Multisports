@@ -7,7 +7,6 @@ import { useEffect, useRef, useState } from "react";
 import useAxiosPublic from "../../../Hook/useAxiosPublic";
 import { baseImageUrl } from "../../../apis/apis";
 
-
 const FlashSale = () => {
   const prevRef = useRef(null);
   const nextRef = useRef(null);
@@ -23,7 +22,6 @@ const FlashSale = () => {
         const res = await axiosPublic.get(`/products/discount`);
 
         if (res.status === 200 || res.status === 201) {
-          console.log(res.data.products, "res.data.products");
           setProducts(res.data.products);
           setLoading(false);
         }

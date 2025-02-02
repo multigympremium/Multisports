@@ -13,7 +13,7 @@ function useGetSocialLink({
     const fetchShippingPolicy = async () => {
       const response = await axiosPublic.get("/social-link");
       const data = response?.data?.data;
-      console.log(data[0], "social links");
+      data[0], "social links";
       setContent(data[0]);
     };
 

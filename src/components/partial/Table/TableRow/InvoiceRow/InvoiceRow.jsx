@@ -28,7 +28,7 @@ function InvoiceRow({
 }) {
   const axiosSecure = useAxiosSecure();
   const { branch, user } = useContext(AuthContext);
-  console.log(user);
+  user;
 
   const handleInvoiceDelete = async (id, data, user) => {
     try {

@@ -28,7 +28,7 @@ export default function CategoryEditForm({
   useEffect(() => {
     async function fetchCategoryData() {
       try {
-        const res = await axiosSecure.get(`/categories/${categoryId}`);
+        const res = await axiosSecure.get(`/categories/single/${categoryId}`);
         const category = res?.data?.data;
         setCategoryName(category.categoryName);
         setFeatureCategory(category.featureCategory);

@@ -12,10 +12,8 @@ export default function VisionSection() {
   const [description, setDescription] = useState("");
   const [thumbnail, setThumbnail] = useState(null);
   const [thumbnailPreview, setThumbnailPreview] = useState(null);
-  const [file_key, setFile_key] = useState(null);
-  const [file_url, setFile_url] = useState(null);
-  const [progress, setProgress] = useState(0);
   const [targetId, setTargetId] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const axiosSecure = useAxiosSecure();
 
@@ -32,8 +30,6 @@ export default function VisionSection() {
           setTitle(data?.title);
           setDescription(data?.description);
           setThumbnailPreview(data?.image); // Show the existing image
-          setFile_url(data?.image); // Use the existing image URL
-          setFile_key(data?.key);
           setTargetId(data?._id);
         }
       } catch (error) {
@@ -68,12 +64,12 @@ export default function VisionSection() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log({ title, description, thumbnail });
-
     const formData = new FormData();
     formData.append("title", title);
     formData.append("description", description);
     formData.append("image", thumbnail);
+
+    setLoading(true);
 
     try {
       if (targetId) {
@@ -110,6 +106,8 @@ export default function VisionSection() {
         icon: "error",
         confirmButtonText: "Ok",
       });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -120,7 +118,9 @@ export default function VisionSection() {
 
       <form onSubmit={handleSubmit}>
         <div className=" mb-9 flex">
-          <h1 className="text-3xl font-semibold w-full border-l-[5px] border-blue-400 pl-3">Vision Section</h1>
+          <h1 className="text-3xl font-semibold w-full border-l-[5px] border-blue-400 pl-3">
+            Vision Section
+          </h1>
           <div className="flex justify-end w-full">
             <button type="submit" className="customSaveButton ">
               Save Changes
@@ -130,30 +130,23 @@ export default function VisionSection() {
         <div className="">
           {/* Left Column - Image Upload */}
           <div className="relative">
-            <label className="block font-semibold text-gray-600 mb-2">Image </label>
+            <label className="block font-semibold text-gray-600 mb-2">
+              Image{" "}
+            </label>
             <DragEditUploadImageInput
               getRootProps={getThumbnailRootProps}
               getInputProps={getThumbnailInputProps}
               image={thumbnail}
               imagePreview={thumbnailPreview}
             />
-
-            {progress > 0 && progress < 100 && (
-              <div className="w-full h-full absolute top-0 left-0 bg-black bg-opacity-50 font-bold text-xl flex justify-center items-center">
-                <progress
-                  className="progress progress-accent w-56"
-                  value={progress}
-                  max="100"
-                ></progress>
-                {Math.floor(progress)}%
-              </div>
-            )}
           </div>
 
           {/* Right Column - Form Inputs */}
           <div className="space-y-4 mb-6 mt-4">
             <div>
-              <label className="block font-semibold text-gray-600">Title </label>
+              <label className="block font-semibold text-gray-600">
+                Title{" "}
+              </label>
               <input
                 type="text"
                 value={title}
@@ -164,7 +157,9 @@ export default function VisionSection() {
             </div>
 
             <div className="mb-8">
-              <label className="block font-semibold text-gray-600 mb-2">Description </label>
+              <label className="block font-semibold text-gray-600 mb-2">
+                Description{" "}
+              </label>
               <CustomEditor
                 value={description}
                 setValue={setDescription}
@@ -174,7 +169,16 @@ export default function VisionSection() {
             </div>
           </div>
         </div>
-
+        <div className="flex justify-end w-full">
+          <button type="submit" className="customSaveButton" disabled={loading}>
+            {loading && (
+              <>
+                <span className="loading loading-spinner mr-2  loading-xs"></span>
+              </>
+            )}
+            Save Changes
+          </button>
+        </div>
         {/* Save Button */}
       </form>
     </div>

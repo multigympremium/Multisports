@@ -23,7 +23,7 @@ export default function MyWishlist() {
     //     const res = await axiosSecure.get(`/wishlist/user/${user?._id}`);
     //     const data = res?.data?.data;
     //     const uniqueData = new Set(JSON.stringify([...wishlistData, ...data]));
-    //     console.log(JSON.parse(uniqueData), "uniqueData");
+    //     (JSON.parse(uniqueData), "uniqueData");
     //     setProducts(data);
     //   } catch (error) {
     //     console.error("Error fetching order:", error);
@@ -49,7 +49,7 @@ export default function MyWishlist() {
           ),
         ];
 
-        console.log(combinedData, "uniqueData");
+        combinedData, "uniqueData";
 
         // Optionally, update localStorage with the combined data
         // localStorage.setItem("wishlist", JSON.stringify(combinedData));
@@ -73,8 +73,6 @@ export default function MyWishlist() {
       .getElementById(`modal_${product.productTitle.replace(/\s+/g, "_")}`)
       .showModal();
   };
-
-  console.log(products, "products");
 
   if (!products) return <GlobalLoading />;
 

@@ -13,7 +13,7 @@ function useGetAboutMission({
     const fetchShippingPolicy = async () => {
       const response = await axiosPublic.get("/about-mission");
       const data = response?.data?.data[0];
-      console.log(data);
+      data;
       setContentMission(data);
     };
 

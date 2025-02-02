@@ -13,8 +13,6 @@ export default function ViewAllZones() {
 
   const { city_id } = useParams();
 
-  console.log(city_id, "city id");
-
   const sortedcourierCities = useCallback(() => {
     const sortedData = [...courierCities];
     sortedData.sort((a, b) => {
@@ -31,7 +29,6 @@ export default function ViewAllZones() {
 
   const paginatedData = useCallback(() => {
     const offset = currentPage * itemsPerPage;
-    console.log(courierCities, "courierCities", offset, offset + itemsPerPage);
     return sortedcourierCities().slice(offset, offset + itemsPerPage);
   }, [currentPage, itemsPerPage, courierCities, sortedcourierCities]);
 
@@ -51,7 +48,7 @@ export default function ViewAllZones() {
     const fetchCourierCities = async () => {
       try {
         const res = await axiosSecure.get(`/courier/zones/${city_id}`);
-        console.log(res, "res", res?.data?.data);
+
         if (res.status === 200 || res.status === 201) {
           setCourierCities(res.data?.data?.data?.data);
         }

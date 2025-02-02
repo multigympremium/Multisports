@@ -33,7 +33,7 @@ const UserPermission = () => {
           `/permissions/${role}?branch=${user?.branch}`
         );
 
-        console.log("response", response);
+        response;
 
         setPermissionData(response?.data?.routesData);
       } catch (error) {
@@ -42,7 +42,7 @@ const UserPermission = () => {
     };
     fetchPermissions();
 
-    console.log(role, "role in permission item");
+    role, "role in permission item";
   }, [role, axiosSecure]);
 
   return (

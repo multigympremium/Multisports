@@ -51,7 +51,7 @@ const SingleCard = ({ name, price, styled }) => {
 
       router.push(session.url);
     } catch (error) {
-      console.log(error);
+      error;
     }
   };
 

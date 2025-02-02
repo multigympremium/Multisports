@@ -1,8 +1,4 @@
-
-import React from "react";
-
 function EditFormImage({ imageObject, imagePreview }) {
-  console.log(imageObject, "imageObject", imagePreview, "imagePreview");
   return (
     <img
       src={

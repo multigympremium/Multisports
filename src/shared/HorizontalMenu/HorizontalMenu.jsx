@@ -48,7 +48,7 @@ function HorizontalMenu() {
     setCurrentSubCategories(currentSubCategoriesData);
   }, [activeCategory]);
 
-  console.log(activeCategory, "activeCategory");
+  activeCategory, "activeCategory";
   return (
     <div className="relative md:block hidden">
       <header className="w-full  flex justify-center  ">

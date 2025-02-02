@@ -4,18 +4,18 @@ import { AuthContext } from "../../../providers/AuthProvider";
 import Swal from "sweetalert2";
 import { TfiSearch } from "react-icons/tfi";
 import { GoPlus } from "react-icons/go";
-import { FiEdit, FiTrash2 } from 'react-icons/fi';
+import { FiEdit, FiTrash2 } from "react-icons/fi";
 import Mtitle from "../../../shared/Mtitle";
 import Mpagination from "../../../shared/Mpagination";
 
 const StaffRole = () => {
   const axiosSecure = useAxiosSecure();
-  const {branch} = useContext(AuthContext);
+  const { branch } = useContext(AuthContext);
   const [departments, setDepartments] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [newDepartment, setNewDepartment] = useState('');
+  const [newDepartment, setNewDepartment] = useState("");
   const [editId, setEditId] = useState(null);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const [departments2, setDepartments2] = useState([]);
   useEffect(() => {
     fetchDepartments();
@@ -27,68 +27,71 @@ const StaffRole = () => {
       setDepartments(response.data);
       setDepartments2(response.data);
     } catch (error) {
-      console.error('There was an error fetching the departments!', error);
+      console.error("There was an error fetching the departments!", error);
     }
   };
-
-  
 
   const handleAddDepartment = async () => {
     if (editId) {
       // Update the department
       try {
-        await axiosSecure.put(`/departments/put/${editId}`, { Role: newDepartment });
+        await axiosSecure.put(`/departments/put/${editId}`, {
+          Role: newDepartment,
+        });
         fetchDepartments();
       } catch (error) {
-        console.error('There was an error updating the department!', error);
+        console.error("There was an error updating the department!", error);
       }
       setEditId(null);
     } else {
-
       try {
-        await axiosSecure.post('/departments/post', { Role: newDepartment, branch });
+        await axiosSecure.post("/departments/post", {
+          Role: newDepartment,
+          branch,
+        });
         fetchDepartments();
       } catch (error) {
-        console.error('There was an error adding the department!', error);
+        console.error("There was an error adding the department!", error);
       }
     }
-    setNewDepartment('');
+    setNewDepartment("");
     setIsModalOpen(false);
   };
 
   const handleEdit = (id) => {
-    const department = departments.find(dep => dep._id === id);
+    const department = departments.find((dep) => dep._id === id);
     setEditId(id);
-    setNewDepartment(department?.Role || '');
+    setNewDepartment(department?.Role || "");
     setIsModalOpen(true);
   };
 
   const handleRemove = (id) => {
     Swal.fire({
-      title: 'Are you sure?',
+      title: "Are you sure?",
       text: "You won't be able to revert this!",
-      icon: 'warning',
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axiosSecure.delete(`/departments/delete/${id}`)
+        axiosSecure
+          .delete(`/departments/delete/${id}`)
           .then(() => {
             fetchDepartments();
             Swal.fire(
-              'Deleted!',
-              'The department has been deleted.',
-              'success'
+              "Deleted!",
+              "The department has been deleted.",
+              "success"
             );
           })
-          .catch(error => {
-            console.error('There was an error deleting the department!', error);
+          .catch((error) => {
+            console.error("There was an error deleting the department!", error);
             Swal.fire(
-              'Error!',
-              'There was an error deleting the department.',
-              'error'
+              "Error!",
+              "There was an error deleting the department.",
+              "error"
             );
           });
       }
@@ -98,56 +101,57 @@ const StaffRole = () => {
   const handleSearchChange = (event) => {
     const value = event.target.value;
     setSearchTerm(value);
-    console.log('Search term:', value);
-    const filteredDepartments = departments.filter(department =>
+    "Search term:", value;
+    const filteredDepartments = departments.filter((department) =>
       department.Role.toLowerCase().includes(value.toLowerCase())
     );
 
     setDepartments2(filteredDepartments);
-
   };
 
-  const { paginatedData, paginationControls, rowsPerPageAndTotal } = Mpagination({ totalData: departments2 });
+  const { paginatedData, paginationControls, rowsPerPageAndTotal } =
+    Mpagination({ totalData: departments2 });
 
   return (
     <div className="md:p-6 px-5  min-h-screen">
-      <Mtitle title="Staff Role" rightcontent={
-        <div className='flex mt-3 md:mt-0 justify-between'>
-          <div className="flex justify-end gap-4 items-center md:mb-4">
-            {/* Search bar */}
-            <div className='md:w-64 border shadow-sm py-2 px-3 bg-white rounded-xl'>
-              <div className='flex items-center gap-2'>
-                <TfiSearch className='text-2xl font-bold text-gray-500' />
-                <input
-                  type="text"
-                  className='outline-none w-full'
-                  placeholder='Search here'
-                  value={searchTerm}
-                  onChange={handleSearchChange}
-                />
+      <Mtitle
+        title="Staff Role"
+        rightcontent={
+          <div className="flex mt-3 md:mt-0 justify-between">
+            <div className="flex justify-end gap-4 items-center md:mb-4">
+              {/* Search bar */}
+              <div className="md:w-64 border shadow-sm py-2 px-3 bg-white rounded-xl">
+                <div className="flex items-center gap-2">
+                  <TfiSearch className="text-2xl font-bold text-gray-500" />
+                  <input
+                    type="text"
+                    className="outline-none w-full"
+                    placeholder="Search here"
+                    value={searchTerm}
+                    onChange={handleSearchChange}
+                  />
+                </div>
+              </div>
+              {/* Add new button */}
+              <div className="flex gap-2 cursor-pointer items-center bg-yellow-500 text-white py-2 px-4 rounded-xl shadow hover:bg-yellow-600 transition duration-300">
+                <button
+                  onClick={() => setIsModalOpen(true)}
+                  className="font-semibold"
+                >
+                  New
+                </button>
+                <GoPlus className="text-xl text-white" />
               </div>
             </div>
-            {/* Add new button */}
-            <div className="flex gap-2 cursor-pointer items-center bg-yellow-500 text-white py-2 px-4 rounded-xl shadow hover:bg-yellow-600 transition duration-300">
-              <button
-                onClick={() => setIsModalOpen(true)}
-                className="font-semibold"
-              >
-                New
-              </button>
-              <GoPlus className="text-xl text-white" />
-            </div>
           </div>
-        </div>
-      } ></Mtitle>
+        }
+      ></Mtitle>
 
-      <div className="text-sm">
-        {rowsPerPageAndTotal}
-      </div>
+      <div className="text-sm">{rowsPerPageAndTotal}</div>
 
       <section className="overflow-x-auto border shadow-sm rounded-xl p-4 pb- mt-5">
         <table className="table w-full">
-          <thead className='bg-yellow-500 '>
+          <thead className="bg-yellow-500 ">
             <tr className="text-sm  font-medium  text-white text-left">
               <td className="p-3 rounded-l-xl">Departments</td>
               <td className="p-3 rounded-r-xl text-right px-8">Action</td>
@@ -182,7 +186,9 @@ const StaffRole = () => {
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
           <div className="bg-white p-6 rounded-lg shadow-lg">
-            <h2 className="text-2xl mb-4">{editId !== null ? 'Edit' : 'Add'} Department</h2>
+            <h2 className="text-2xl mb-4">
+              {editId !== null ? "Edit" : "Add"} Department
+            </h2>
             <input
               type="text"
               value={newDepartment}
@@ -194,7 +200,7 @@ const StaffRole = () => {
               <button
                 onClick={() => {
                   setIsModalOpen(false);
-                  setNewDepartment('');
+                  setNewDepartment("");
                   setEditId(null);
                 }}
                 className="bg-yellow-500 text-white py-2 px-4 rounded-lg hover:bg-yellow-700 transition duration-150"
@@ -205,7 +211,7 @@ const StaffRole = () => {
                 onClick={handleAddDepartment}
                 className="bg-yellow-500 text-white py-2 px-4 rounded-lg hover:bg-yellow-700 transition duration-150"
               >
-                {editId !== null ? 'Save' : 'Add'}
+                {editId !== null ? "Save" : "Add"}
               </button>
             </div>
           </div>

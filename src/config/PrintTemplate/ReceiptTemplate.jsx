@@ -38,10 +38,10 @@ const ReceiptTemplate = forwardRef(({ profileData, data: order }, ref) => {
       {/* Order Info */}
       <div style={{ marginBottom: "8px" }}>
         <p style={{ margin: "2px 0" }}>
-          <strong>Invoice :</strong> {order?._id}
+          <strong>Invoice :</strong> {order?.invoice_id}
         </p>
         <p style={{ margin: "2px 0" }}>
-          <strong>Date:</strong> {moment(order?.createdAt).format("YYYY-MM-DD")}
+          <strong>Date:</strong> {order?.order_date}
         </p>
         <hr style={{ margin: "8px 0", borderTop: "1px dashed #626262" }} />
       </div>
