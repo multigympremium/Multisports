@@ -56,7 +56,6 @@ function ReportFilter({
   const [detectSearch, setDetectSearch] = useState("");
   const [isAddFilter, setIsAddFilter] = useState(false);
 
-
   const transaction_types = [
     { value: "Male", name: "Male" },
     { value: "Female", name: "Female" },
@@ -81,13 +80,6 @@ function ReportFilter({
       setIsAddFilterWithSearch(addFilter?.checked);
     }
 
-      "start_date",
-      start_date,
-      "end_date",
-      end_date,
-      "gender",
-      receiver
-    );
     if (start_date) {
       setStartDate(start_date?.value);
       setEndDate(start_date?.value);
@@ -109,7 +101,6 @@ function ReportFilter({
       setStartDate(firstDate);
       setEndDate(end_Date);
     }
-
   }, [month, year, setStartDate, setEndDate]);
 
   useEffect(() => {
