@@ -109,6 +109,7 @@ export default function ProductCreateForm() {
     onDrop: onDropThumbnail,
     accept: "image/*",
     multiple: false,
+    maxSize: 5 * 1024 * 1024,
   });
 
   const {
@@ -118,6 +119,7 @@ export default function ProductCreateForm() {
     onDrop: onDropGallery,
     accept: "image/*",
     multiple: true,
+    maxSize: 5 * 1024 * 1024,
   });
 
   const validateForm = () => {
@@ -636,7 +638,7 @@ export default function ProductCreateForm() {
           {/* File Upload for Thumbnail */}
           <div className="mb-4">
             <label className="block text-gray-700 font-semibold mb-2">
-              Product Thumbnail Image
+              Product Thumbnail Image (5MB max file size)
             </label>
 
             <DragUploadImageInput
@@ -650,7 +652,7 @@ export default function ProductCreateForm() {
           {/* Gallery */}
           <div className="mb-4">
             <label className="block text-gray-700 font-semibold mb-2">
-              Product Image Gallery
+              Product Image Gallery (5MB max file size per image)
             </label>
 
             <DragMultiUploadImageInput
