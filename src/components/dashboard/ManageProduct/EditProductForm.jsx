@@ -174,6 +174,7 @@ export default function EditProductForm({
     onDrop: onDropThumbnail,
     accept: "image/*",
     multiple: false,
+    maxSize: 5 * 1024 * 1024,
   });
 
   const {
@@ -183,6 +184,7 @@ export default function EditProductForm({
     onDrop: onDropGallery,
     accept: "image/*",
     multiple: true,
+    maxSize: 5 * 1024 * 1024,
   });
 
   const validateForm = () => {
@@ -769,7 +771,7 @@ export default function EditProductForm({
           {/* File Upload for Thumbnail */}
           <div className="mb-4">
             <label className="block text-gray-70">
-              Product Thumbnail Image
+              Product Thumbnail Image (5MB max file size)
             </label>
 
             <DragEditUploadImageInput
@@ -782,7 +784,9 @@ export default function EditProductForm({
 
           {/* Gallery */}
           <div className="mb-4">
-            <label className="block text-gray-70">Product Image Gallery</label>
+            <label className="block text-gray-70">
+              Product Image Gallery (5MB max file size per image)
+            </label>
 
             <DragMultiEditUploadImageInput
               getRootProps={getGalleryRootProps}
