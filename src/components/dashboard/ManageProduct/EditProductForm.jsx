@@ -17,6 +17,7 @@ import useAxiosSecure from "../../../Hook/useAxiosSecure";
 import DragMultiEditUploadImageInput from "../../../shared/DragMultiEditUploadImageInput";
 import useGetAllModelOfBrands from "../../../Hook/GetDataHook/useGetAllModelOfBrands";
 import EditableTableColumn from "./productSharedComponents/EditableTableColumn";
+import toast from "react-hot-toast";
 
 export default function EditProductForm({
   targetId,
@@ -143,6 +144,11 @@ export default function EditProductForm({
   const onDropThumbnail = (acceptedFiles) => {
     const file = acceptedFiles[0]; // Assuming one file for simplicity
 
+    if ((file.size / (1024 * 1024)).toFixed(2) > 5) {
+      toast.error("File size exceeds 5 MB");
+      return;
+    }
+
     // Create a local URL for the dropped image
     const previewUrl = URL.createObjectURL(file);
 
@@ -174,7 +180,6 @@ export default function EditProductForm({
     onDrop: onDropThumbnail,
     accept: "image/*",
     multiple: false,
-    maxSize: 5 * 1024 * 1024,
   });
 
   const {
@@ -185,6 +190,13 @@ export default function EditProductForm({
     accept: "image/*",
     multiple: true,
     maxSize: 5 * 1024 * 1024,
+    onDropRejected: () => {
+      // Get first error message
+      // const error = rejectedFiles[0]?.errors[0]?.message;
+      // setErrorMessage(error || "File size exceeds 5 MB");
+
+      toast.error("File size exceeds 5 MB");
+    },
   });
 
   const validateForm = () => {

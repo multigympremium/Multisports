@@ -16,6 +16,7 @@ import Swal from "sweetalert2";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
 import DragMultiUploadImageInput from "../../../shared/DragMultiUploadImageInput";
 import EditableTableColumn from "./productSharedComponents/EditableTableColumn";
+import toast from "react-hot-toast";
 
 export default function ProductCreateForm() {
   // States for the form fields
@@ -80,6 +81,13 @@ export default function ProductCreateForm() {
   const onDropThumbnail = (acceptedFiles) => {
     const file = acceptedFiles[0]; // Assuming one file for simplicity
 
+    console.log((file.size / (1024 * 1024)).toFixed(2), "size");
+
+    if ((file.size / (1024 * 1024)).toFixed(2) > 5) {
+      toast.error("File size exceeds 5 MB");
+      return;
+    }
+
     // Create a local URL for the dropped image
     const previewUrl = URL.createObjectURL(file);
 
@@ -90,10 +98,13 @@ export default function ProductCreateForm() {
   };
   const onDropGallery = (acceptedFiles) => {
     // Generate preview URLs for all accepted files
-    const previewUrls = acceptedFiles.map((file) => ({
-      file, // Store file reference
-      preview: URL.createObjectURL(file), // Create preview URL
-    }));
+
+    const previewUrls = acceptedFiles.map((file) => {
+      return {
+        file, // Store file reference
+        preview: URL.createObjectURL(file), // Create preview URL
+      };
+    });
 
     // Update the state by adding new previews to the gallery
     setGalleryPreview((prev) => [...prev, ...previewUrls]);
@@ -109,7 +120,14 @@ export default function ProductCreateForm() {
     onDrop: onDropThumbnail,
     accept: "image/*",
     multiple: false,
-    maxSize: 5 * 1024 * 1024,
+    // maxSize: 5 * 1024 * 1024,
+    onDropRejected: (rejectedFiles) => {
+      // Get first error message
+      const error = rejectedFiles[0]?.errors[0]?.message;
+      // setErrorMessage(error || "File size exceeds 5 MB");
+
+      toast.error(error || "File size exceeds 5 MB");
+    },
   });
 
   const {
@@ -120,6 +138,13 @@ export default function ProductCreateForm() {
     accept: "image/*",
     multiple: true,
     maxSize: 5 * 1024 * 1024,
+    onDropRejected: () => {
+      // Get first error message
+      // const error = rejectedFiles[0]?.errors[0]?.message;
+      // setErrorMessage(error || "File size exceeds 5 MB");
+
+      toast.error("File size exceeds 5 MB");
+    },
   });
 
   const validateForm = () => {
