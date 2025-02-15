@@ -42,8 +42,8 @@ export default function SocialChatAndScript() {
                   key={tab}
                   className={`cursor-pointer p-3 rounded-2xl text-gray-700 transition-colors duration-200 ${
                     selectedTab === tab
-                      ? "bg-[#087D6D] text-white font-semibold"
-                      : "hover:bg-[#087d6d1a]"
+                      ? "bg-[#2563eb] text-white font-semibold"
+                      : "hover:bg-[#1b52c91f]"
                   }`}
                   onClick={() => handleTabClick(tab)}
                 >

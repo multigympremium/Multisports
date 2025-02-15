@@ -41,7 +41,7 @@ const Mpagination = ({ totalData }) => {
             key={i}
             className={`px-3 join-item text-sm py-2 focus:outline-none transition-colors duration-300 ease-in-out ${
               currentPage === i
-                ? "bg-yellow-500 rounded-xl text-white hover:bg-yellow-700"
+                ? "bg-blue-500 rounded-xl text-white hover:bg-blue-700"
                 : "bg-transparent hover:bg-gray-200"
             }`}
             onClick={() => setCurrentPage(i)}
@@ -60,7 +60,7 @@ const Mpagination = ({ totalData }) => {
               key={i}
               className={`px-3 join-item text-sm py-2 focus:outline-none transition-colors duration-300 ease-in-out ${
                 currentPage === i
-                  ? "bg-yellow-500 rounded-xl text-white hover:bg-yellow-600"
+                  ? "bg-blue-500 rounded-xl text-white hover:bg-blue-600"
                   : "bg-transparent hover:bg-gray-200"
               }`}
               onClick={() => setCurrentPage(i)}
@@ -75,7 +75,7 @@ const Mpagination = ({ totalData }) => {
             key={numberOfPages - 1}
             className={`px-3 join-item text-sm py-2 focus:outline-none transition-colors duration-300 ease-in-out ${
               currentPage === numberOfPages - 1
-                ? "bg-yellow-500 rounded-xl text-white hover:bg-yellow-600"
+                ? "bg-blue-500 rounded-xl text-white hover:bg-blue-600"
                 : "bg-transparent hover:bg-gray-200"
             }`}
             onClick={() => setCurrentPage(numberOfPages - 1)}
@@ -90,7 +90,7 @@ const Mpagination = ({ totalData }) => {
             key={0}
             className={`px-3 join-item text-sm py-2 focus:outline-none transition-colors duration-300 ease-in-out ${
               currentPage === 0
-                ? "bg-yellow-500 rounded-xl text-white hover:bg-yellow-600"
+                ? "bg-blue-500 rounded-xl text-white hover:bg-blue-600"
                 : "bg-transparent hover:bg-gray-200"
             }`}
             onClick={() => setCurrentPage(0)}
@@ -105,7 +105,7 @@ const Mpagination = ({ totalData }) => {
               key={i}
               className={`px-3 join-item text-sm py-2 focus:outline-none transition-colors duration-300 ease-in-out ${
                 currentPage === i
-                  ? "bg-yellow-500 rounded-xl text-white hover:bg-yellow-600"
+                  ? "bg-blue-500 rounded-xl text-white hover:bg-blue-600"
                   : "bg-transparent hover:bg-gray-200"
               }`}
               onClick={() => setCurrentPage(i)}
@@ -121,7 +121,7 @@ const Mpagination = ({ totalData }) => {
             key={0}
             className={`px-3 join-item text-sm py-2 focus:outline-none transition-colors duration-300 ease-in-out ${
               currentPage === 0
-                ? "bg-yellow-500 rounded-xl text-white hover:bg-yellow-600"
+                ? "bg-blue-500 rounded-xl text-white hover:bg-blue-600"
                 : "bg-transparent hover:bg-gray-200"
             }`}
             onClick={() => setCurrentPage(0)}
@@ -136,7 +136,7 @@ const Mpagination = ({ totalData }) => {
               key={i}
               className={`px-3 join-item text-sm py-2 focus:outline-none transition-colors duration-300 ease-in-out ${
                 currentPage === i
-                  ? "bg-yellow-500 rounded-xl text-white hover:bg-yellow-600"
+                  ? "bg-blue-500 rounded-xl text-white hover:bg-blue-600"
                   : "bg-transparent hover:bg-gray-200"
               }`}
               onClick={() => setCurrentPage(i)}
@@ -151,7 +151,7 @@ const Mpagination = ({ totalData }) => {
             key={numberOfPages - 1}
             className={`px-3 join-item text-sm py-2 focus:outline-none transition-colors duration-300 ease-in-out ${
               currentPage === numberOfPages - 1
-                ? "bg-yellow-500 rounded-xl text-white hover:bg-yellow-600"
+                ? "bg-blue-500 rounded-xl text-white hover:bg-blue-600"
                 : "bg-transparent hover:bg-gray-200"
             }`}
             onClick={() => setCurrentPage(numberOfPages - 1)}

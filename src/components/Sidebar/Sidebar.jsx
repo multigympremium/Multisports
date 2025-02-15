@@ -51,7 +51,7 @@ const Sidebar = ({ isCollapsed }) => {
   return (
     <div
       className={`sidebar border-r border-gray-400 border-dashed h-dvh overflow-auto p-4 poppins text-[#737373] ${
-        isCollapsed ? "w-[80px] hidden md:block" : "w-[280px] md:w-[270px]"
+        isCollapsed ? "w-[80px] hidden md:block" : "w-[280px] md:w-[300px]"
       } bg-white shadow-lg transition-all duration-300`}
     >
       <div className="flex flex-col items-start mb-6">
@@ -122,7 +122,7 @@ const Sidebar = ({ isCollapsed }) => {
       <div className="mt-auto">
         <button
           onClick={handleLogOut}
-          className="w-full p-3 flex font-semibold items-center justify-center gap-2 rounded-lg bg-[#E68923] text-white hover:bg-[#c7751e] transition-colors"
+          className="w-full p-3 flex font-semibold items-center justify-center gap-2 rounded-xl mt-6 bg-[#dc2626] text-white hover:bg-[#a61e1e] transition-colors"
         >
           <CiLogout size={24} />
           {!isCollapsed && <span>Log Out</span>}
