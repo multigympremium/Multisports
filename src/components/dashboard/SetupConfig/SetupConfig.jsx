@@ -110,7 +110,7 @@ export default function SetupConfig() {
               checked={isProductSize}
               setChecked={setIsProductSize}
               offColor="#ccc"
-              onColor="#00b894"
+              onColor="#2563eb"
               checkedIcon={false}
               uncheckedIcon={false}
               handleDiameter={25}
@@ -122,7 +122,7 @@ export default function SetupConfig() {
               checked={modelOfBrand}
               setChecked={setModelOfBrand}
               offColor="#ccc"
-              onColor="#00b894"
+              onColor="#2563eb"
               checkedIcon={false}
               uncheckedIcon={false}
               handleDiameter={25}
@@ -134,7 +134,7 @@ export default function SetupConfig() {
               checked={productColor}
               setChecked={setProductColor}
               offColor="#ccc"
-              onColor="#00b894"
+              onColor="#2563eb"
               checkedIcon={false}
               uncheckedIcon={false}
               handleDiameter={25}
@@ -147,7 +147,7 @@ export default function SetupConfig() {
               checked={measurementUnit}
               setChecked={setMeasurementUnit}
               offColor="#ccc"
-              onColor="#00b894"
+              onColor="#2563eb"
               checkedIcon={false}
               uncheckedIcon={false}
               handleDiameter={25}
@@ -160,7 +160,7 @@ export default function SetupConfig() {
               checked={seoInformation}
               setChecked={setSeoInformation}
               offColor="#ccc"
-              onColor="#00b894"
+              onColor="#2563eb"
               checkedIcon={false}
               uncheckedIcon={false}
               handleDiameter={25}
@@ -173,7 +173,7 @@ export default function SetupConfig() {
               checked={rewardPoints}
               setChecked={setRewardPoints}
               offColor="#ccc"
-              onColor="#00b894"
+              onColor="#2563eb"
               checkedIcon={false}
               uncheckedIcon={false}
               handleDiameter={25}
@@ -186,7 +186,7 @@ export default function SetupConfig() {
               checked={productCode}
               setChecked={setProductCode}
               offColor="#ccc"
-              onColor="#00b894"
+              onColor="#2563eb"
               checkedIcon={false}
               uncheckedIcon={false}
               handleDiameter={25}
@@ -199,7 +199,7 @@ export default function SetupConfig() {
               checked={productFlags}
               setChecked={setProductFlags}
               offColor="#ccc"
-              onColor="#00b894"
+              onColor="#2563eb"
               checkedIcon={false}
               uncheckedIcon={false}
               handleDiameter={25}
