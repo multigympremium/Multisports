@@ -145,7 +145,7 @@ export default function EditableTableColumn({
 
   return (
     <div className="w-full relative ">
-      <div className=" border mb-4 rounded-xl bg-gray-50 min-h-[250px]">
+      <div className="overflow-x-scroll  border mb-4 rounded-xl bg-gray-50 min-h-[250px]">
         <table className="table table-zebra">
           {/* head */}
           <thead>

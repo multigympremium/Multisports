@@ -106,65 +106,67 @@ export default function CompletedOrders() {
         </div>
 
         {/* Orders Table */}
-        <table className="min-w-full  table-auto border-collapse bg-white shadow-md rounded-md">
-          <thead>
-            <tr  className="bg-[#2563eb] text-center text-white">
-              <td className="p-2 border">SL</td>
-              <td className="p-2 border">Order Date</td>
-              <td className="p-2 border">Name</td>
-              <td className="p-2 border">Phone</td>
-              <td className="p-2 border">Quantity</td>
-              <td className="p-2 border">Status</td>
-              <td className="p-2 border">Payment</td>
-              <td className="p-2 border">Total</td>
-              <td className="p-2 border">Action</td>
-            </tr>
-          </thead>
-          <tbody>
-            {orders?.length > 0 &&
-              !isLoading &&
-              orders?.map((order, index) => (
-                <tr key={order._id} className="text-center border-b">
-                  <td className="p-2 border">
-                    {index + 1 + (currentPage - 1) * itemsPerPage}
-                  </td>
-                  <td className="p-2 border">
-                    {moment(order.createdAt).format("DD/MM/YYYY")}
-                  </td>
-                  <td className="p-2 border">{order?.name}</td>
-                  <td className="p-2 border">{order?.phone}</td>
-                  <td className="p-2 border">{order?.totalItems}</td>
-                  <td className="p-2 border ">
-                    <span className="bg-green-500 text-white  px-3 rounded-lg  py-1">
-                      {order?.status}
-                    </span>
-                  </td>
-                  <td className="p-2 border">{order?.payment_method}</td>
-                  <td className="p-2 border">৳ {order?.total}</td>
-                  <td className="p-2 border">
-                    <div className="flex justify-center space-x-2">
-                      <ShowDetailButton
-                        onClick={() => {
-                          setIsShowDetail(true);
-                          setTargetId(order._id);
-                        }}
-                      ></ShowDetailButton>
-                      <DeleteButton onClick={() => handleDelete(order._id)}>
-                        {" "}
-                      </DeleteButton>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-          {!isLoading && orders?.length === 0 && (
-            <tr>
-              <td colSpan="10" className="text-center p-4">
-                No data available in table
-              </td>
-            </tr>
-          )}
-        </table>
+        <div className="overflow-x-auto">
+          <table className="min-w-full  table-auto border-collapse bg-white shadow-md rounded-md">
+            <thead>
+              <tr className="bg-[#2563eb] text-center text-white">
+                <td className="p-2 border">SL</td>
+                <td className="p-2 border">Order Date</td>
+                <td className="p-2 border">Name</td>
+                <td className="p-2 border">Phone</td>
+                <td className="p-2 border">Quantity</td>
+                <td className="p-2 border">Status</td>
+                <td className="p-2 border">Payment</td>
+                <td className="p-2 border">Total</td>
+                <td className="p-2 border">Action</td>
+              </tr>
+            </thead>
+            <tbody>
+              {orders?.length > 0 &&
+                !isLoading &&
+                orders?.map((order, index) => (
+                  <tr key={order._id} className="text-center border-b">
+                    <td className="p-2 border">
+                      {index + 1 + (currentPage - 1) * itemsPerPage}
+                    </td>
+                    <td className="p-2 border">
+                      {moment(order.createdAt).format("DD/MM/YYYY")}
+                    </td>
+                    <td className="p-2 border">{order?.name}</td>
+                    <td className="p-2 border">{order?.phone}</td>
+                    <td className="p-2 border">{order?.totalItems}</td>
+                    <td className="p-2 border ">
+                      <span className="bg-green-500 text-white  px-3 rounded-lg  py-1">
+                        {order?.status}
+                      </span>
+                    </td>
+                    <td className="p-2 border">{order?.payment_method}</td>
+                    <td className="p-2 border">৳ {order?.total}</td>
+                    <td className="p-2 border">
+                      <div className="flex justify-center space-x-2">
+                        <ShowDetailButton
+                          onClick={() => {
+                            setIsShowDetail(true);
+                            setTargetId(order._id);
+                          }}
+                        ></ShowDetailButton>
+                        <DeleteButton onClick={() => handleDelete(order._id)}>
+                          {" "}
+                        </DeleteButton>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+            {!isLoading && orders?.length === 0 && (
+              <tr>
+                <td colSpan="10" className="text-center p-4">
+                  No data available in table
+                </td>
+              </tr>
+            )}
+          </table>
+        </div>
       </div>
 
       {isLoading ? (

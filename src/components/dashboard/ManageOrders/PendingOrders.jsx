@@ -128,7 +128,7 @@ export default function PendingOrders() {
       <div className=" mx-auto">
         {/* Orders Table */}
         {/* Search Input */}
-        <div className="grid grid-cols-3  items-center gap-4 mb-5">
+        <div className="md:grid flex flex-wrap md:grid-cols-3  items-center gap-4 mb-5">
           <h1 className="text-3xl font-semibold ">Pending Orders</h1>
           <div className="bg-white border rounded-full px-3 min-h-12  md:gap-2 gap-1 flex-row-reverse justify-between flex items-center">
             <input
@@ -154,73 +154,75 @@ export default function PendingOrders() {
         </div>
 
         {/* Orders Table */}
-        <table className="min-w-full  table-auto border-collapse bg-white  rounded-md">
-          <thead>
-            <tr  className="bg-[#2563eb]  text-white text-center">
-              <td className="p-2 border">SL</td>
-              <td className="p-2 border">Order Date</td>
-              <td className="p-2 border">Name</td>
-              <td className="p-2 border">Phone</td>
-              <td className="p-2 border">Quantity</td>
-              <td className="p-2 border">Status</td>
-              <td className="p-2 border">Payment</td>
-              <td className="p-2 border">Total</td>
-              <td className="p-2 border">Action</td>
-            </tr>
-          </thead>
-          <tbody>
-            {orders.length > 0 &&
-              !isLoading &&
-              orders.map((order, index) => (
-                <tr key={order._id} className="border-b text-center">
-                  <td className="p-2 border">
-                    {index + 1 + (currentPage - 1) * itemsPerPage}
-                  </td>
-                  <td className="p-2 border">
-                    {moment(order.createdAt).format("DD/MM/YYYY")}
-                  </td>
-                  <td className="p-2 border">{order?.name}</td>
-                  <td className="p-2 border">{order?.phone}</td>
-                  <td className="p-2 border">{order?.totalItems}</td>
-                  <td className="p-2 border ">
-                    <span className="bg-red-500 text-white  px-3 rounded-lg  py-1">
-                      {order?.status}
-                    </span>
-                  </td>
-                  <td className="p-2 border">{order?.payment_method}</td>
-                  <td className="p-2 border">৳ {order?.total}</td>
-                  <td className="p-2 border">
-                    <div className="flex justify-center space-x-2">
-                      <ShowDetailButton
-                        onClick={() => {
-                          setIsShowDetail(true);
-                          setTargetId(order._id);
-                        }}
-                      ></ShowDetailButton>
-                      <DeleteButton
-                        onClick={() => handleDelete(order._id)}
-                      ></DeleteButton>
+        <div className="overflow-x-auto">
+          <table className="min-w-full  table-auto border-collapse bg-white  rounded-md">
+            <thead>
+              <tr className="bg-[#2563eb]  text-white text-center">
+                <td className="p-2 border">SL</td>
+                <td className="p-2 border">Order Date</td>
+                <td className="p-2 border">Name</td>
+                <td className="p-2 border">Phone</td>
+                <td className="p-2 border">Quantity</td>
+                <td className="p-2 border">Status</td>
+                <td className="p-2 border">Payment</td>
+                <td className="p-2 border">Total</td>
+                <td className="p-2 border">Action</td>
+              </tr>
+            </thead>
+            <tbody>
+              {orders.length > 0 &&
+                !isLoading &&
+                orders.map((order, index) => (
+                  <tr key={order._id} className="border-b text-center">
+                    <td className="p-2 border">
+                      {index + 1 + (currentPage - 1) * itemsPerPage}
+                    </td>
+                    <td className="p-2 border">
+                      {moment(order.createdAt).format("DD/MM/YYYY")}
+                    </td>
+                    <td className="p-2 border">{order?.name}</td>
+                    <td className="p-2 border">{order?.phone}</td>
+                    <td className="p-2 border">{order?.totalItems}</td>
+                    <td className="p-2 border ">
+                      <span className="bg-red-500 text-white  px-3 rounded-lg  py-1">
+                        {order?.status}
+                      </span>
+                    </td>
+                    <td className="p-2 border">{order?.payment_method}</td>
+                    <td className="p-2 border">৳ {order?.total}</td>
+                    <td className="p-2 border">
+                      <div className="flex justify-center space-x-2">
+                        <ShowDetailButton
+                          onClick={() => {
+                            setIsShowDetail(true);
+                            setTargetId(order._id);
+                          }}
+                        ></ShowDetailButton>
+                        <DeleteButton
+                          onClick={() => handleDelete(order._id)}
+                        ></DeleteButton>
 
-                      <button
-                        onClick={() => handleAccept(order._id)}
-                        className="bg-blue-500 text-white rounded-lg px-4 py-2 font-semibold"
-                      >
-                        Accept Order
-                      </button>
-                    </div>
+                        <button
+                          onClick={() => handleAccept(order._id)}
+                          className="bg-blue-500 text-white rounded-lg px-4 py-2 font-semibold"
+                        >
+                          Accept Order
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+
+              {!isLoading && orders?.length === 0 && (
+                <tr>
+                  <td colSpan="10" className="text-center p-4">
+                    No data available in table
                   </td>
                 </tr>
-              ))}
-
-            {!isLoading && orders?.length === 0 && (
-              <tr>
-                <td colSpan="10" className="text-center p-4">
-                  No data available in table
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       {isLoading ? (

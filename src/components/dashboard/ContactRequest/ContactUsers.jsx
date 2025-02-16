@@ -170,60 +170,61 @@ export default function ContactRequestsList() {
         {isLoading ? (
           <div className="text-center text-gray-500">Loading...</div>
         ) : (
-          <div>
+          <div className="overflow-x-auto">
             {/* Contact Requests Table */}
-            <table className="min-w-full table-auto border-collapse bg-white shadow rounded-md">
-              <thead>
-                <tr className="bg-[#2563eb] text-center text-white">
-                  <td className="p-2 border">SL</td>
-                  <td className="p-2 border">Name</td>
-                  <td className="p-2 border">Email</td>
-                  <td className="p-2 border">Phone</td>
-                  <td className="p-2 border">Company</td>
-                  <td className="p-2 border">Message</td>
-                  <td className="p-2 border">Status</td>
-                  <td className="p-2 border">Actions</td>
-                </tr>
-              </thead>
-              <tbody>
-                {currentData.length > 0 ? (
-                  currentData.map((item, index) => (
-                    <tr key={index} className="border-b text-center">
-                      <td className="p-2 border">{startIdx + index + 1}</td>
-                      <td className="p-2 border">{item.name}</td>
-                      <td className="p-2 border">{item.email}</td>
-                      <td className="p-2 border">{item.phone}</td>
-                      <td className="p-2 border">{item.company}</td>
-                      <td className="p-2 border">{item.message}</td>
-                      <td className="p-2 border">
-                        <span
-                          onClick={() => {
-                            if (item.status !== "Served") handleServe(item._id);
-                          }}
-                          className={`inline-block px-3 py-1 rounded-full text-sm ${
-                            item.status === "Served"
-                              ? "bg-[#A8CE3A] text-white"
-                              : "bg-red-500 cursor-pointer text-white"
-                          }`}
-                        >
-                          {item.status}
-                        </span>
-                      </td>
+            <div className="overflow-x-auto">
+              <table className="min-w-full table-auto border-collapse bg-white shadow rounded-md">
+                <thead>
+                  <tr className="bg-[#2563eb] text-center text-white">
+                    <td className="p-2 border">SL</td>
+                    <td className="p-2 border">Name</td>
+                    <td className="p-2 border">Email</td>
+                    <td className="p-2 border">Phone</td>
+                    <td className="p-2 border">Company</td>
+                    <td className="p-2 border">Message</td>
+                    <td className="p-2 border">Status</td>
+                    <td className="p-2 border">Actions</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  {currentData.length > 0 ? (
+                    currentData.map((item, index) => (
+                      <tr key={index} className="border-b text-center">
+                        <td className="p-2 border">{startIdx + index + 1}</td>
+                        <td className="p-2 border">{item.name}</td>
+                        <td className="p-2 border">{item.email}</td>
+                        <td className="p-2 border">{item.phone}</td>
+                        <td className="p-2 border">{item.company}</td>
+                        <td className="p-2 border">{item.message}</td>
+                        <td className="p-2 border">
+                          <span
+                            onClick={() => {
+                              if (item.status !== "Served") handleServe(item._id);
+                            }}
+                            className={`inline-block px-3 py-1 rounded-full text-sm ${item.status === "Served"
+                                ? "bg-[#A8CE3A] text-white"
+                                : "bg-red-500 cursor-pointer text-white"
+                              }`}
+                          >
+                            {item.status}
+                          </span>
+                        </td>
 
-                      <td className="p-2 border">
-                        <DeleteButton onClick={() => handleDelete(item._id)} />
+                        <td className="p-2 border">
+                          <DeleteButton onClick={() => handleDelete(item._id)} />
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="8" className="text-center p-36">
+                        No data available in the table
                       </td>
                     </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan="8" className="text-center p-36">
-                      No data available in the table
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
+                  )}
+                </tbody>
+              </table>
+            </div>
 
             {/* Pagination */}
             <div className="flex justify-between items-center mt-6">

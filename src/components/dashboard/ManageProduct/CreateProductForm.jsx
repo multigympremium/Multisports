@@ -270,7 +270,7 @@ export default function ProductCreateForm() {
               <p className="text-red-500 text-sm mt-1">{errors.productTitle}</p>
             )}
           </div>
-          <div className={"flex items-center gap-6 mb-6 mt-5"}>
+          <div className={"flex flex-wrap md:flex-row items-center gap-6 mb-6 mt-5"}>
             <ActiveDescBtn
               activeDescription={activeDescription}
               setActiveDescription={setActiveDescription}

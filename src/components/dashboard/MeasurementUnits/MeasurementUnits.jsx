@@ -108,12 +108,12 @@ const MeasurementUnits = () => {
 
   return (
     <>
-      <div className="container mx-auto p-4">
+      <div className=" w-full mx-auto p-4">
         <div className="flex justify-between items-center mb-4">
           <h1 className="text-2xl font-bold">Unit List</h1>
           <div>
             <button
-              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mr-2"
+              className="bg-[#2563eb] text-white px-4 py-2 rounded hover:bg-blue-600 mr-2"
               onClick={() => setIsShowModal(true)}
             >
               Add New Unit
@@ -128,7 +128,7 @@ const MeasurementUnits = () => {
         {loading ? (
           <div className="text-center">Loading...</div>
         ) : (
-          <div className="overflow-x-auto relative shadow-md sm:rounded-lg">
+          <div className="overflow-x-auto relative">
             <table className="w-full text-sm text-left text-gray-500">
               <thead className="bg-gray-100">
                 <tr className="bg-[#2563eb]  text-white">

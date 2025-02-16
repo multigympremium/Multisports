@@ -71,7 +71,7 @@ const ShoesBanners = () => {
   return (
     <div className="p-6 pt-0">
       <div className="flex justify-between items-center mb-9">
-        <h1 className="text-3xl font-semibold">Shoes Banner List</h1>
+        <h1 className="text-xl md:text-3xl font-semibold">Shoes Banner List</h1>
         <div>
           <button
             className="customSaveButton"

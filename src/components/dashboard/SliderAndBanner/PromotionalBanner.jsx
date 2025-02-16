@@ -168,7 +168,7 @@ export default function PromotionalBanner() {
 
   return (
     <div className="container mx-auto p-4">
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Form Section */}
         <div className="p-6 border-gray-300 border rounded-2xl">
           <h2 className="text-2xl font-semibold mb-7 flex justify-between items-center">

@@ -134,7 +134,7 @@ const ProductFlag = () => {
       <div className="container  mx-auto p-6 pt-0">
         <div className="flex justify-between items-center mb-9">
           <h1 className="text-3xl font-semibold header">Product List</h1>
-          <div className="flex gap-4 items-center ">
+          <div className="md:flex hidden gap-4 items-center ">
             <SelectInput
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}

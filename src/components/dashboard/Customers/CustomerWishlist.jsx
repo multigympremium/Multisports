@@ -60,59 +60,61 @@ export default function CustomerWishlist() {
         </div>
 
         {/* Wishlist Table */}
-        <table className="min-w-full table-auto border-collapse bg-white shadow rounded-md">
-          <thead>
-            <tr className="bg-[#2563eb] text-center text-white">
-              <td className="p-2 border">SL</td>
-              <td className="p-2 border">Category</td>
-              <td className="p-2 border">Image</td>
-              <td className="p-2 border">Product</td>
-              <td className="p-2 border">Customer Name</td>
-              <td className="p-2 border">Email</td>
-              <td className="p-2 border">Contact</td>
-              <td className="p-2 border">Created At</td>
-            </tr>
-          </thead>
-          <tbody>
-            {wishlist.length > 0 && !loading ? (
-              wishlist.map((item, index) => (
-                <tr key={item.id} className="border-b text-center">
-                  <td className="p-2 border">{index + 1}</td>
-                  <td className="p-2 border">{item?.product_id?.category}</td>
-                  <td className="p-2 border">
-                    <CellImage src={item?.product_id?.thumbnail} />
-                  </td>
-                  <td className="p-2 border">
-                    {item?.product_id?.productTitle || "-"}
-                  </td>
-                  <td className="p-2 border">{item?.userId?.username}</td>
-                  <td className="p-2 border">{item.email}</td>
-                  <td className="p-2 border">
-                    {(item?.userId?.contact_no ||
-                      item?.userId?.contact_no !== "false") &&
-                      item?.userId?.contact_no}
-                    {(item?.userId?.phoneNumber ||
-                      item?.userId?.phoneNumber !== "false") &&
-                      item?.userId?.phoneNumber}
-                  </td>
-                  <td className="p-2 border">
-                    {moment(item.createdAt).format("DD-MM-YYYY")}
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <>
-                {!loading && (
-                  <tr>
-                    <td colSpan="9" className="text-center p-4">
-                      No data available in the table
+        <div className="overflow-x-auto">
+          <table className="min-w-full table-auto border-collapse bg-white shadow rounded-md">
+            <thead>
+              <tr className="bg-[#2563eb] text-center text-white">
+                <td className="p-2 border">SL</td>
+                <td className="p-2 border">Category</td>
+                <td className="p-2 border">Image</td>
+                <td className="p-2 border">Product</td>
+                <td className="p-2 border">Customer Name</td>
+                <td className="p-2 border">Email</td>
+                <td className="p-2 border">Contact</td>
+                <td className="p-2 border">Created At</td>
+              </tr>
+            </thead>
+            <tbody>
+              {wishlist.length > 0 && !loading ? (
+                wishlist.map((item, index) => (
+                  <tr key={item.id} className="border-b text-center">
+                    <td className="p-2 border">{index + 1}</td>
+                    <td className="p-2 border">{item?.product_id?.category}</td>
+                    <td className="p-2 border">
+                      <CellImage src={item?.product_id?.thumbnail} />
+                    </td>
+                    <td className="p-2 border">
+                      {item?.product_id?.productTitle || "-"}
+                    </td>
+                    <td className="p-2 border">{item?.userId?.username}</td>
+                    <td className="p-2 border">{item.email}</td>
+                    <td className="p-2 border">
+                      {(item?.userId?.contact_no ||
+                        item?.userId?.contact_no !== "false") &&
+                        item?.userId?.contact_no}
+                      {(item?.userId?.phoneNumber ||
+                        item?.userId?.phoneNumber !== "false") &&
+                        item?.userId?.phoneNumber}
+                    </td>
+                    <td className="p-2 border">
+                      {moment(item.createdAt).format("DD-MM-YYYY")}
                     </td>
                   </tr>
-                )}
-              </>
-            )}
-          </tbody>
-        </table>
+                ))
+              ) : (
+                <>
+                  {!loading && (
+                    <tr>
+                      <td colSpan="9" className="text-center p-4">
+                        No data available in the table
+                      </td>
+                    </tr>
+                  )}
+                </>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
       {loading && (
         <div className="flex justify-center items-center w-full py-28">

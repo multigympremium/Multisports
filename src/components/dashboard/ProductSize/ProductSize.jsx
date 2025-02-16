@@ -107,8 +107,8 @@ const ProductSize = () => {
   return (
     <>
       <div className="container mx-auto p-6 pt-0">
-        <div className="flex justify-between mb-9 items-center">
-          <h1 className="text-3xl header font-semibold ">Size List</h1>
+        <div className="flex justify-between mb-9 items-center flex-col md:flex-row ">
+          <h1 className="text-xl md:text-3xl header  md:font-semibold mb-4 md:mb-0">Size List</h1>
           <div className="flex gap-4">
             <button
               className="customSaveButton"

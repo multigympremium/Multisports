@@ -72,10 +72,10 @@ export default function CustomersList() {
   return (
     <div className="p-6 pt-0">
       <div className="w-full">
-        <div className="flex items-center mb-9 justify-between">
-          <h1 className="text-3xl font-semibold ">Customers List</h1>
+        <div className="flex  items-center mb-9 justify-between">
+          <h1 className="text-xl md:text-3xl font-semibold ">Customers List</h1>
           {/* Download as Excel (CSV) Button */}
-          <div className="flex gap-4 items-center justify-center">
+          <div className="flex  flex-wrap gap-4 items-center justify-center">
             <div className=" flex justify-end">
               <button
                 onClick={exportToExcel}
@@ -112,67 +112,69 @@ export default function CustomersList() {
         </div>
 
         {/* Customers Table */}
-        <table className="min-w-full table-auto border-collapse bg-white shadow rounded-md">
-          <thead>
-            <tr className="bg-[#2563eb] text-center text-white">
-              <td className="p-2 border">SL</td>
-              <td className="p-2 border">Image</td>
-              <td className="p-2 border">Name</td>
-              <td className="p-2 border">Email</td>
-              <td className="p-2 border">Phone</td>
-              <td className="p-2 border">Created At</td>
-              <td className="p-2 border">Action</td>
-            </tr>
-          </thead>
-          <tbody>
-            {customers.length > 0 && !loading ? (
-              customers.map((customer, index) => (
-                <tr key={customer.id} className="border-b">
-                  <td className="p-2 border">{index + 1}</td>
-                  <td className="p-2 border">
-                    <div className="avatar w-full flex items-center justify-center mb-5 ">
-                      <div className="w-24 rounded ">
-                        <img
-                          src={
-                            customer?.photourl
-                              ? `${baseImageUrl}/${customer.photourl}`
-                              : "/no-image.png"
-                          }
-                        />
+        <div className="overflow-x-auto">
+          <table className="min-w-full table-auto border-collapse bg-white shadow rounded-md">
+            <thead>
+              <tr className="bg-[#2563eb] text-center text-white">
+                <td className="p-2 border">SL</td>
+                <td className="p-2 border">Image</td>
+                <td className="p-2 border">Name</td>
+                <td className="p-2 border">Email</td>
+                <td className="p-2 border">Phone</td>
+                <td className="p-2 border">Created At</td>
+                <td className="p-2 border">Action</td>
+              </tr>
+            </thead>
+            <tbody>
+              {customers.length > 0 && !loading ? (
+                customers.map((customer, index) => (
+                  <tr key={customer.id} className="border-b">
+                    <td className="p-2 border">{index + 1}</td>
+                    <td className="p-2 border">
+                      <div className="avatar w-full flex items-center justify-center mb-5 ">
+                        <div className="w-24 rounded ">
+                          <img
+                            src={
+                              customer?.photourl
+                                ? `${baseImageUrl}/${customer.photourl}`
+                                : "/no-image.png"
+                            }
+                          />
+                        </div>
                       </div>
-                    </div>
-                  </td>
-                  <td className="p-2 border">{customer.username}</td>
-                  <td className="p-2 border">{customer.email}</td>
-                  <td className="p-2 border">{customer.contact_no || "-"}</td>
-                  <td className="p-2 border">
-                    {moment(customer.register_date).format("YYYY-MM-DD")}
-                  </td>
-                  <td className="p-2 border ">
-                    <div className="flex justify-center space-x-2">
-                      <EditButton
-                        onClick={() => handleEdit(customer)}
-                      ></EditButton>
-                      <DeleteButton
-                        onClick={() => handleDelete(customer.id)}
-                      ></DeleteButton>
-                    </div>
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <>
-                {!loading && (
-                  <tr>
-                    <td colSpan="9" className="text-center p-4">
-                      No data available in the table
+                    </td>
+                    <td className="p-2 border">{customer.username}</td>
+                    <td className="p-2 border">{customer.email}</td>
+                    <td className="p-2 border">{customer.contact_no || "-"}</td>
+                    <td className="p-2 border">
+                      {moment(customer.register_date).format("YYYY-MM-DD")}
+                    </td>
+                    <td className="p-2 border ">
+                      <div className="flex justify-center space-x-2">
+                        <EditButton
+                          onClick={() => handleEdit(customer)}
+                        ></EditButton>
+                        <DeleteButton
+                          onClick={() => handleDelete(customer.id)}
+                        ></DeleteButton>
+                      </div>
                     </td>
                   </tr>
-                )}
-              </>
-            )}
-          </tbody>
-        </table>
+                ))
+              ) : (
+                <>
+                  {!loading && (
+                    <tr>
+                      <td colSpan="9" className="text-center p-4">
+                        No data available in the table
+                      </td>
+                    </tr>
+                  )}
+                </>
+              )}
+            </tbody>
+          </table>
+        </div>
         {loading && (
           <div className="flex justify-center items-center w-full py-28">
             <ColorRing

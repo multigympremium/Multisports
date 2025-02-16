@@ -65,9 +65,8 @@ export default function DeliveredOrders() {
   const handleAccept = async (id, status) => {
     Swal.fire({
       title: "Are you sure?",
-      text: `You want to ${
-        status === "Completed" ? "Complete" : "Cancel"
-      } this order?`,
+      text: `You want to ${status === "Completed" ? "Complete" : "Cancel"
+        } this order?`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#087D6D",
@@ -105,78 +104,80 @@ export default function DeliveredOrders() {
         </div>
 
         {/* Orders Table */}
-        <table className="min-w-full  table-auto border-collapse bg-white shadow-md rounded-md">
-          <thead>
-            <tr  className="bg-[#2563eb]  text-white">
-              <td className="p-2 border">SL</td>
-              <td className="p-2 border">Order Date</td>
-              <td className="p-2 border">Name</td>
-              <td className="p-2 border">Phone</td>
-              <td className="p-2 border">Quantity</td>
-              <td className="p-2 border">Status</td>
-              <td className="p-2 border">Payment</td>
-              <td className="p-2 border">Total</td>
-              <td className="p-2 border">Action</td>
-            </tr>
-          </thead>
-          <tbody>
-            {orders?.length > 0 &&
-              !isLoading &&
-              orders?.map((order, index) => (
-                <tr key={order._id} className="text-center border-b">
-                  <td className="p-2 border">
-                    {index + 1 + (currentPage - 1) * itemsPerPage}
-                  </td>
-                  <td className="p-2 border">
-                    {moment(order.createdAt).format("DD/MM/YYYY")}
-                  </td>
-                  <td className="p-2 border">{order?.name}</td>
-                  <td className="p-2 border">{order?.phone}</td>
-                  <td className="p-2 border">{order?.totalItems}</td>
-                  <td className="p-2 border ">
-                    <span className="bg-red-500 text-white  px-3 rounded-lg  py-1">
-                      {order?.status}
-                    </span>
-                  </td>
-                  <td className="p-2 border">{order?.payment_method}</td>
-                  <td className="p-2 border">৳ {order?.total}</td>
-                  <td className="p-2 border">
-                    <div className="flex justify-center space-x-2">
-                      <ShowDetailButton
-                        onClick={() => {
-                          setIsShowDetail(true);
-                          setTargetId(order._id);
-                        }}
-                      ></ShowDetailButton>
-                      <DeleteButton onClick={() => handleDelete(order._id)}>
-                        {" "}
-                      </DeleteButton>
-                      <button
-                        onClick={() => handleAccept(order._id, "Completed")}
-                        className="bg-blue-500 text-white text-sm rounded-lg px-4 py-2 font-semibold"
-                      >
-                        Success
-                      </button>
-                      <button
-                        onClick={() => handleAccept(order._id, "Cancelled")}
-                        className="bg-red-500 text-white text-sm rounded-lg px-4 py-2 font-semibold"
-                      >
-                        Cancel
-                      </button>
-                    </div>
+        <div className="overflow-x-auto">
+          <table className="min-w-full  table-auto border-collapse bg-white shadow-md rounded-md">
+            <thead>
+              <tr className="bg-[#2563eb]  text-white">
+                <td className="p-2 border">SL</td>
+                <td className="p-2 border">Order Date</td>
+                <td className="p-2 border">Name</td>
+                <td className="p-2 border">Phone</td>
+                <td className="p-2 border">Quantity</td>
+                <td className="p-2 border">Status</td>
+                <td className="p-2 border">Payment</td>
+                <td className="p-2 border">Total</td>
+                <td className="p-2 border">Action</td>
+              </tr>
+            </thead>
+            <tbody>
+              {orders?.length > 0 &&
+                !isLoading &&
+                orders?.map((order, index) => (
+                  <tr key={order._id} className="text-center border-b">
+                    <td className="p-2 border">
+                      {index + 1 + (currentPage - 1) * itemsPerPage}
+                    </td>
+                    <td className="p-2 border">
+                      {moment(order.createdAt).format("DD/MM/YYYY")}
+                    </td>
+                    <td className="p-2 border">{order?.name}</td>
+                    <td className="p-2 border">{order?.phone}</td>
+                    <td className="p-2 border">{order?.totalItems}</td>
+                    <td className="p-2 border ">
+                      <span className="bg-red-500 text-white  px-3 rounded-lg  py-1">
+                        {order?.status}
+                      </span>
+                    </td>
+                    <td className="p-2 border">{order?.payment_method}</td>
+                    <td className="p-2 border">৳ {order?.total}</td>
+                    <td className="p-2 border">
+                      <div className="flex justify-center space-x-2">
+                        <ShowDetailButton
+                          onClick={() => {
+                            setIsShowDetail(true);
+                            setTargetId(order._id);
+                          }}
+                        ></ShowDetailButton>
+                        <DeleteButton onClick={() => handleDelete(order._id)}>
+                          {" "}
+                        </DeleteButton>
+                        <button
+                          onClick={() => handleAccept(order._id, "Completed")}
+                          className="bg-blue-500 text-white text-sm rounded-lg px-4 py-2 font-semibold"
+                        >
+                          Success
+                        </button>
+                        <button
+                          onClick={() => handleAccept(order._id, "Cancelled")}
+                          className="bg-red-500 text-white text-sm rounded-lg px-4 py-2 font-semibold"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+
+              {!isLoading && orders?.length === 0 && (
+                <tr>
+                  <td colSpan="10" className="text-center p-4">
+                    No data available in table
                   </td>
                 </tr>
-              ))}
-
-            {!isLoading && orders?.length === 0 && (
-              <tr>
-                <td colSpan="10" className="text-center p-4">
-                  No data available in table
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+              )}
+            </tbody>
+          </table>
+        </div>
 
         {isLoading ? (
           <div className="animate-pulse">

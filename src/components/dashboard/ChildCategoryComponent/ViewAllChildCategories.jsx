@@ -97,106 +97,108 @@ export default function ChildCategoryList() {
         <h1 className="text-3xl font-semibold header mb-9">
           Child Category List
         </h1>
-        <table className="min-w-full table-auto border-collapse">
-          <thead className="bg-gray-100">
-            <tr className="bg-[#2563eb]  text-white">
-              <td
-                className="border flex justify-center items-center gap-2 text-lg p-2 text-center cursor-pointer"
-                onClick={() => handleSort("id")}
-              >
-                SL{" "}
-                {sortConfig.key === "id" &&
-                  (sortConfig.direction === "asc" ? (
-                    <HiArrowCircleUp className="text-green-500 " />
-                  ) : (
-                    <HiArrowCircleDown className="text-[#E68923]" />
-                  ))}
-              </td>
-              <td className="border p-2 text-center text-lg">Icon</td>
-              <td
-                className="border p-2 text-center text-lg cursor-pointer"
-                onClick={() => handleSort("childCategoryName")}
-              >
-                Name{" "}
-                {sortConfig.key === "childCategoryName" &&
-                  (sortConfig.direction === "asc" ? "🔼" : "🔽")}
-              </td>
+        <div className="overflow-x-auto"> 
+          <table className="min-w-full table-auto border-collapse">
+            <thead className="bg-gray-100">
+              <tr className="bg-[#2563eb]  text-white">
+                <td
+                  className="border flex justify-center items-center gap-2 text-lg p-2 text-center cursor-pointer"
+                  onClick={() => handleSort("id")}
+                >
+                  SL{" "}
+                  {sortConfig.key === "id" &&
+                    (sortConfig.direction === "asc" ? (
+                      <HiArrowCircleUp className="text-green-500 " />
+                    ) : (
+                      <HiArrowCircleDown className="text-[#E68923]" />
+                    ))}
+                </td>
+                <td className="border p-2 text-center text-lg">Icon</td>
+                <td
+                  className="border p-2 text-center text-lg cursor-pointer"
+                  onClick={() => handleSort("childCategoryName")}
+                >
+                  Name{" "}
+                  {sortConfig.key === "childCategoryName" &&
+                    (sortConfig.direction === "asc" ? "🔼" : "🔽")}
+                </td>
 
-              <td
-                className="border p-2 text-center text-lg"
-                onClick={() => handleSort("category")}
-              >
-                Category
-                {sortConfig.key === "category" &&
-                  (sortConfig.direction === "asc" ? "🔼" : "🔽")}
-              </td>
-              <td
-                className="border p-2 text-center text-lg"
-                onClick={() => handleSort("subcategory")}
-              >
-                Subcategory
-                {sortConfig.key === "subcategory" &&
-                  (sortConfig.direction === "asc" ? "🔼" : "🔽")}
-              </td>
+                <td
+                  className="border p-2 text-center text-lg"
+                  onClick={() => handleSort("category")}
+                >
+                  Category
+                  {sortConfig.key === "category" &&
+                    (sortConfig.direction === "asc" ? "🔼" : "🔽")}
+                </td>
+                <td
+                  className="border p-2 text-center text-lg"
+                  onClick={() => handleSort("subcategory")}
+                >
+                  Subcategory
+                  {sortConfig.key === "subcategory" &&
+                    (sortConfig.direction === "asc" ? "🔼" : "🔽")}
+                </td>
 
-              <td
-                className="border p-2 text-center text-lg cursor-pointer"
-                onClick={() => handleSort("slug")}
-              >
-                Slug{" "}
-                {sortConfig.key === "slug" &&
-                  (sortConfig.direction === "asc" ? "🔼" : "🔽")}
-              </td>
+                <td
+                  className="border p-2 text-center text-lg cursor-pointer"
+                  onClick={() => handleSort("slug")}
+                >
+                  Slug{" "}
+                  {sortConfig.key === "slug" &&
+                    (sortConfig.direction === "asc" ? "🔼" : "🔽")}
+                </td>
 
-              <td className="border p-2 text-center text-lg">Action</td>
-            </tr>
-          </thead>
-          <tbody>
-            {paginatedData()?.length > 0 &&
-              paginatedData().map((category, index) => (
-                <tr key={category.id} className="border-b text-center">
-                  <td className="border p-2">
-                    {index + 1 + currentPage * itemsPerPage}
-                  </td>
-                  <td className="border p-2">
-                    <div className="flex justify-center ">
-                      <div className="rounded-full overflow-hidden border">
-                        <CellImage
-                          width={400}
-                          height={400}
-                          src={category.childCategoryIcon}
-                          alt="icon"
+                <td className="border p-2 text-center text-lg">Action</td>
+              </tr>
+            </thead>
+            <tbody>
+              {paginatedData()?.length > 0 &&
+                paginatedData().map((category, index) => (
+                  <tr key={category.id} className="border-b text-center">
+                    <td className="border p-2">
+                      {index + 1 + currentPage * itemsPerPage}
+                    </td>
+                    <td className="border p-2">
+                      <div className="flex justify-center ">
+                        <div className="rounded-full overflow-hidden border">
+                          <CellImage
+                            width={400}
+                            height={400}
+                            src={category.childCategoryIcon}
+                            alt="icon"
+                          />
+                        </div>
+                      </div>
+                    </td>
+
+                    <td className="border p-2">{category.childCategoryName}</td>
+
+                    <td className="border p-2">{category.category}</td>
+                    <td className="border p-2">{category.subcategory}</td>
+                    <td className="border p-2">{category.slug}</td>
+
+                    <td className="border p-2">
+                      <div className="flex justify-center space-x-2">
+                        <EditButton onClick={() => handleEdit(category._id)} />
+                        <DeleteButton
+                          onClick={() => handleDelete(category._id)}
                         />
                       </div>
-                    </div>
-                  </td>
+                    </td>
+                  </tr>
+                ))}
 
-                  <td className="border p-2">{category.childCategoryName}</td>
-
-                  <td className="border p-2">{category.category}</td>
-                  <td className="border p-2">{category.subcategory}</td>
-                  <td className="border p-2">{category.slug}</td>
-
-                  <td className="border p-2">
-                    <div className="flex justify-center space-x-2">
-                      <EditButton onClick={() => handleEdit(category._id)} />
-                      <DeleteButton
-                        onClick={() => handleDelete(category._id)}
-                      />
-                    </div>
+              {paginatedData()?.length == 0 && (
+                <tr>
+                  <td colSpan="10" className="text-center p-4">
+                    No data available in table
                   </td>
                 </tr>
-              ))}
-
-            {paginatedData()?.length == 0 && (
-              <tr>
-                <td colSpan="10" className="text-center p-4">
-                  No data available in table
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+              )}
+            </tbody>
+          </table>
+        </div>
 
         {/* Pagination */}
         <div className="mt-5 flex justify-center space-x-2">
@@ -206,11 +208,10 @@ export default function ChildCategoryList() {
             <button
               key={pageIndex}
               onClick={() => handlePageClick(pageIndex)}
-              className={`px-3 py-1 border rounded-md ${
-                currentPage === pageIndex
+              className={`px-3 py-1 border rounded-md ${currentPage === pageIndex
                   ? "bg-blue-500 text-white"
                   : "hover:bg-gray-200"
-              }`}
+                }`}
             >
               {pageIndex + 1}
             </button>
