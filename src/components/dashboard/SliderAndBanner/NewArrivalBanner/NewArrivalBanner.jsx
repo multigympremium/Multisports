@@ -89,7 +89,7 @@ const NewArrivalBanner = () => {
       <div className="">
         <table className="min-w-full table-auto border-collapse bg-white shadow-md rounded-md">
           <thead className="bg-gray-200 text-center">
-            <tr>
+            <tr className="bg-[#2563eb] text-center text-white">
               <td scope="col" className="py-3 px-6">
                 SL
               </td>

@@ -111,7 +111,7 @@ export default function SubcategoryList() {
         <h1 className="text-3xl font-semibold mb-9">Category List</h1>
         <table className="min-w-full table-auto border-collapse">
           <thead className="bg-gray-100 text-lg">
-            <tr>
+            <tr className="bg-[#2563eb]  text-white">
               <td
                 className="border flex justify-center items-center gap-2 text-lg p-2 text-center cursor-pointer"
                 onClick={() => handleSort("id")}
@@ -119,7 +119,7 @@ export default function SubcategoryList() {
                 SL{" "}
                 {sortConfig.key === "id" &&
                   (sortConfig.direction === "asc" ? (
-                    <HiArrowCircleUp className="text-[#087D6D] " />
+                    <HiArrowCircleUp className="text-green-500 " />
                   ) : (
                     <HiArrowCircleDown className="text-[#E68923]" />
                   ))}

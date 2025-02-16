@@ -158,7 +158,7 @@ export default function ApprovedOrders() {
 
   return (
     <div className="p-6 pt-0">
-      <div className="max-w-7xl mx-auto min-h-[800px]">
+      <div className=" mx-auto min-h-[800px]">
         <h1 className="text-3xl font-semibold mb-9">Packaging Orders</h1>
         <div className="bg-white border mb-4 rounded-full px-3 col-span-3  md:py-2 py-1 md:gap-2 gap-1 flex-row-reverse justify-between flex">
           <input
@@ -175,7 +175,7 @@ export default function ApprovedOrders() {
         {/* Orders Table */}
         <table className="min-w-full  table-auto border-collapse bg-white shadow-md rounded-md">
           <thead>
-            <tr className="bg-gray-200">
+            <tr  className="bg-[#2563eb]  text-white">
               <td className="p-2 border">SL</td>
               <td className="p-2 border">Order Date</td>
               <td className="p-2 border">Name</td>

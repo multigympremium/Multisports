@@ -125,7 +125,7 @@ export default function PendingOrders() {
 
   return (
     <div className="p-6 pt-0 ">
-      <div className="max-w-7xl mx-auto">
+      <div className=" mx-auto">
         {/* Orders Table */}
         {/* Search Input */}
         <div className="grid grid-cols-3  items-center gap-4 mb-5">
@@ -147,7 +147,7 @@ export default function PendingOrders() {
               className="input input-bordered w-full"
               onChange={(e) => setDate(e.target.value)}
             />
-            <button className="btn btn-primary" onClick={handleReset}>
+            <button className="btn bg-[#2563eb] text-white hover:bg-[#2564ebdc]" onClick={handleReset}>
               Reset
             </button>
           </div>
@@ -156,7 +156,7 @@ export default function PendingOrders() {
         {/* Orders Table */}
         <table className="min-w-full  table-auto border-collapse bg-white  rounded-md">
           <thead>
-            <tr className="bg-gray-200 text-center">
+            <tr  className="bg-[#2563eb]  text-white text-center">
               <td className="p-2 border">SL</td>
               <td className="p-2 border">Order Date</td>
               <td className="p-2 border">Name</td>

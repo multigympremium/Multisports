@@ -86,7 +86,7 @@ export default function SystemUsers() {
 
       <table className="min-w-full table-auto">
         <thead>
-          <tr className="bg-white text-left font-semibold">
+          <tr className="bg-[#2563eb] text-left font-semibold text-white">
             {/* <td className="p-3 border">Serial</td> */}
             <td className="p-3 pl-5 border border-gray-100 ">Name</td>
             <td className="p-3 pl-5 border border-gray-100">Email</td>

@@ -103,7 +103,7 @@ const ModelOfBrand = () => {
           <h1 className="text-2xl font-bold">Brand List</h1>
           <div>
             <button
-              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mr-2"
+              className="bg-[#2563eb] text-white px-4 py-2 rounded hover:bg-blue-600 mr-2"
               onClick={() => setIsShowModal(true)}
             >
               Add New Brand
@@ -121,7 +121,7 @@ const ModelOfBrand = () => {
           <div className="overflow-x-auto relative shadow-md sm:rounded-lg">
             <table className="w-full text-sm text-left text-gray-500">
               <thead className="bg-gray-100">
-                <tr>
+                <tr className="bg-[#2563eb]  text-white">
                   <th
                     className="border p-2 text-left cursor-pointer"
                     onClick={() => handleSort("id")}

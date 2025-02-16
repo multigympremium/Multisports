@@ -136,7 +136,7 @@ const CustomPages = () => {
           <div className="overflow-x-auto relative shadow-sm sm:rounded-lg">
             <table className="w-full text-sm text-left text-gray-500">
               <thead className="bg-gray-100">
-                <tr>
+                <tr className="bg-[#2563eb] text-center text-white">
                   <td
                     className="border flex justify-center items-center gap-2 text-lg p-2 text-center cursor-pointer"
                     onClick={() => handleSort("id")}
@@ -144,7 +144,7 @@ const CustomPages = () => {
                     Serial no {"   "}
                     {sortConfig.key === "id" &&
                       (sortConfig.direction === "asc" ? (
-                        <HiArrowCircleUp className="text-[#087D6D] " />
+                        <HiArrowCircleUp className="text-green-500" />
                       ) : (
                         <HiArrowCircleDown className="text-[#E68923]" />
                       ))}

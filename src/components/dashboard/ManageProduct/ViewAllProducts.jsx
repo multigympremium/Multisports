@@ -186,7 +186,7 @@ const ProductFlag = () => {
           <div className="overflow-x-auto relative shadow sm:rounded-lg">
             <table className="w-full text-center text-lg text-gray-500">
               <thead className="bg-gray-100">
-                <tr>
+                <tr  className="bg-[#2563eb]  text-white">
                   <td
                     className="border p-2 text-center text-base cursor-pointer"
                     onClick={() => handleSort("_id")}
@@ -195,7 +195,7 @@ const ProductFlag = () => {
                       SL
                       {sortConfig.key === "_id" &&
                         (sortConfig.direction === "asc" ? (
-                          <HiArrowCircleUp className="text-[#087D6D] " />
+                          <HiArrowCircleUp className="text-green-500 " />
                         ) : (
                           <HiArrowCircleDown className="text-[#E68923]" />
                         ))}

@@ -78,13 +78,13 @@ export default function ViewAllCities() {
             placeholder="Filter by city name or ID"
             value={filterText}
             onChange={(e) => setFilterText(e.target.value)}
-            className="border p-2 rounded-md w-full"
+            className="border  p-2 px-4 rounded-full w-full"
           />
         </div>
 
         <table className="min-w-full shadow table-auto border-collapse">
           <thead className="text-lg">
-            <tr>
+            <tr   className="bg-[#2563eb] text-center text-white">
               <td className="border p-2 text-center cursor-pointer">SL</td>
               <td
                 className="border p-2 text-center cursor-pointer"

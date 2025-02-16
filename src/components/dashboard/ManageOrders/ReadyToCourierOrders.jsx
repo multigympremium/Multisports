@@ -91,7 +91,7 @@ export default function PersonalizedOrders() {
 
   return (
     <div className="p-6 pt-0 ">
-      <div className="max-w-7xl mx-auto ">
+      <div className=" mx-auto ">
         <h1 className="text-3xl font-semibold mb-9">Ready To Courier </h1>
 
         {/* Orders Table */}
@@ -109,7 +109,7 @@ export default function PersonalizedOrders() {
         {/* Orders Table */}
         <table className="min-w-full  table-auto border-collapse bg-white  rounded-md">
           <thead>
-            <tr className="bg-gray-200 text-center">
+            <tr  className="bg-[#2563eb]  text-white text-center">
               <td className="p-2 border">SL</td>
               <td className="p-2 border">Order Date</td>
               <td className="p-2 border">Name</td>

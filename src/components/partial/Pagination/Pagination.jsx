@@ -88,7 +88,7 @@ function Pagination({
               onClick={() => handlePageClick(page)}
               className={`join-item px-3 py-2 text-sm focus:outline-none transition-colors duration-300 ease-in-out ${
                 currentPage === page
-                  ? "bg-gray-700 text-white rounded-xl hover:bg-gray-700"
+                  ? "bg-[#2563eb] text-white rounded-xl hover:bg-[#2563eb]"
                   : "bg-transparent hover:bg-gray-200"
               }`}
             >

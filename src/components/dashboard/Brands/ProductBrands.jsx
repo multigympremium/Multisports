@@ -131,7 +131,7 @@ const ProductBrands = () => {
           <div className="overflow-x-auto relative shadow-md sm:rounded-lg">
             <table className="w-full text-sm text-center text-gray-500">
               <thead className="bg-gray-100 text-lg">
-                <tr>
+                <tr className="bg-[#2563eb]  text-white">
                   <td
                     className="border flex justify-center items-center gap-2 text-lg p-2 text-center cursor-pointer"
                     onClick={() => handleSort("id")}
@@ -139,7 +139,7 @@ const ProductBrands = () => {
                     SL{" "}
                     {sortConfig.key === "id" &&
                       (sortConfig.direction === "asc" ? (
-                        <HiArrowCircleUp className="text-[#087D6D] " />
+                        <HiArrowCircleUp className="text-green-500 " />
                       ) : (
                         <HiArrowCircleDown className="text-[#E68923]" />
                       ))}
