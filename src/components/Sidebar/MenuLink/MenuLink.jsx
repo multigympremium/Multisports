@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const MenuLink = ({ item, location, isCollapsed }) => {
+const MenuLink = ({ item, location, isCollapsed , setIsCollapsed}) => {
   const isActive = location.pathname === item.path;
 
   const isActiveLink = (pathName, currentPath) => {

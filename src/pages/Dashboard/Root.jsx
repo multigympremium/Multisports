@@ -57,7 +57,7 @@ const Root_Dashboard = () => {
         metaKeywords={content?.metaKeywords}
       />
 
-      <Sidebar isCollapsed={isCollapsed} />
+      <Sidebar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
       {/* <Header/> */}
       <div className="md:p-8 bg-slate-50 h-dvh overflow-auto relative">
         <ToggleSidebarBtn
