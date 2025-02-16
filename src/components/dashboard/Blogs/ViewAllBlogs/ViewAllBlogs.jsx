@@ -94,7 +94,7 @@ export default function ViewAllBlogs() {
         <h1 className="text-3xl font-semibold mb-9">Blog List</h1>
         <table className="min-w-full table-auto border-collapse">
           <thead className="bg-gray-100 text-center">
-            <tr>
+            <tr className="bg-[#2563eb] text-center text-white">
               <td
                 className="border p-2  cursor-pointer"
                 onClick={() => handleSort("id")}

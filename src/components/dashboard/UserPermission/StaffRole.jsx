@@ -133,7 +133,7 @@ const StaffRole = () => {
                 </div>
               </div>
               {/* Add new button */}
-              <div className="flex gap-2 cursor-pointer items-center bg-yellow-500 text-white py-2 px-4 rounded-xl shadow hover:bg-yellow-600 transition duration-300">
+              <div className="flex gap-2 cursor-pointer items-center bg-[#2563eb] text-white py-2 px-4 rounded-xl shadow hover:bg-yellow-600 transition duration-300">
                 <button
                   onClick={() => setIsModalOpen(true)}
                   className="font-semibold"
@@ -151,7 +151,7 @@ const StaffRole = () => {
 
       <section className="overflow-x-auto border shadow-sm rounded-xl p-4 pb- mt-5">
         <table className="table w-full">
-          <thead className="bg-yellow-500 ">
+          <thead className="bg-[#2563eb] ">
             <tr className="text-sm  font-medium  text-white text-left">
               <td className="p-3 rounded-l-xl">Departments</td>
               <td className="p-3 rounded-r-xl text-right px-8">Action</td>

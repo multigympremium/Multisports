@@ -79,7 +79,7 @@ export default function CustomersList() {
             <div className=" flex justify-end">
               <button
                 onClick={exportToExcel}
-                className="flex items-center gap-2 bg-yellow-400 py-2 px-4 rounded-full hover:bg-yellow-500"
+                className="flex items-center gap-2 bg-green-500 text-white font-semibold py-2 px-4 rounded-2xl hover:bg-yellow-500"
               >
                 <RxDownload />
                 Download as Excel
@@ -114,7 +114,7 @@ export default function CustomersList() {
         {/* Customers Table */}
         <table className="min-w-full table-auto border-collapse bg-white shadow rounded-md">
           <thead>
-            <tr className="bg-gray-200 text-center">
+            <tr className="bg-[#2563eb] text-center text-white">
               <td className="p-2 border">SL</td>
               <td className="p-2 border">Image</td>
               <td className="p-2 border">Name</td>

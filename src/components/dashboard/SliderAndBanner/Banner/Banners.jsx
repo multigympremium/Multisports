@@ -85,7 +85,7 @@ const Banners = () => {
       <div className="overflow-x-auto relative shadow sm:rounded-lg">
         <table className="w-full text-sm text-left text-gray-500">
           <thead className="text-xs text-gray-700 uppercase bg-gray-200">
-            <tr className="text-center">
+            <tr className="bg-[#2563eb] text-center text-white">
               <td scope="col" className="py-3 px-6">
                 SL
               </td>

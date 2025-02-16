@@ -131,7 +131,7 @@ const MeasurementUnits = () => {
           <div className="overflow-x-auto relative shadow-md sm:rounded-lg">
             <table className="w-full text-sm text-left text-gray-500">
               <thead className="bg-gray-100">
-                <tr>
+                <tr className="bg-[#2563eb]  text-white">
                   <th
                     className="border p-2 text-left cursor-pointer"
                     onClick={() => handleSort("id")}

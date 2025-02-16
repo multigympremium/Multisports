@@ -126,7 +126,7 @@ export default function ViewAllTestimonials() {
         <div className=" rounded-xl py-1">
           <table className="min-w-full table-auto border-collapse bg-white shadow rounded-md">
             <thead className="bg-gray-200 text-center">
-              <tr className=" border-b">
+              <tr className="bg-[#2563eb] text-center text-white">
                 <td className="p-2 pl-4">SL</td>
                 <td className="p-2">Image</td>
                 <td className="p-2">Customer</td>

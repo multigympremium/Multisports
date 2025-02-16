@@ -90,7 +90,7 @@ export default function DeliveredOrders() {
 
   return (
     <div className="p-6 pt-0">
-      <div className="max-w-7xl mx-auto min-h-[800px]">
+      <div className="mx-auto min-h-[800px]">
         <h1 className="text-3xl font-semibold mb-9">Completed Orders</h1>
 
         {/* Search Input */}
@@ -107,7 +107,7 @@ export default function DeliveredOrders() {
         {/* Orders Table */}
         <table className="min-w-full  table-auto border-collapse bg-white shadow-md rounded-md">
           <thead>
-            <tr className="bg-gray-200">
+            <tr  className="bg-[#2563eb]  text-white">
               <td className="p-2 border">SL</td>
               <td className="p-2 border">Order Date</td>
               <td className="p-2 border">Name</td>

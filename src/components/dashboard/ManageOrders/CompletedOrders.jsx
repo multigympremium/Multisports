@@ -91,7 +91,7 @@ export default function CompletedOrders() {
 
   return (
     <div className="p-6 pt-0">
-      <div className="max-w-7xl mx-auto ">
+      <div className=" mx-auto ">
         <h1 className="text-3xl font-semibold mb-9">Completed Orders</h1>
 
         {/* Search Input */}
@@ -108,7 +108,7 @@ export default function CompletedOrders() {
         {/* Orders Table */}
         <table className="min-w-full  table-auto border-collapse bg-white shadow-md rounded-md">
           <thead>
-            <tr className="bg-gray-200">
+            <tr  className="bg-[#2563eb] text-center text-white">
               <td className="p-2 border">SL</td>
               <td className="p-2 border">Order Date</td>
               <td className="p-2 border">Name</td>
@@ -135,7 +135,7 @@ export default function CompletedOrders() {
                   <td className="p-2 border">{order?.phone}</td>
                   <td className="p-2 border">{order?.totalItems}</td>
                   <td className="p-2 border ">
-                    <span className="bg-red-500 text-white  px-3 rounded-lg  py-1">
+                    <span className="bg-green-500 text-white  px-3 rounded-lg  py-1">
                       {order?.status}
                     </span>
                   </td>

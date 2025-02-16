@@ -174,7 +174,7 @@ export default function ContactRequestsList() {
             {/* Contact Requests Table */}
             <table className="min-w-full table-auto border-collapse bg-white shadow rounded-md">
               <thead>
-                <tr className="bg-gray-200 text-center">
+                <tr className="bg-[#2563eb] text-center text-white">
                   <td className="p-2 border">SL</td>
                   <td className="p-2 border">Name</td>
                   <td className="p-2 border">Email</td>

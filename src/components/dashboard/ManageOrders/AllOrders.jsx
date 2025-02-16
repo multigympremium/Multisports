@@ -172,7 +172,7 @@ export default function AllOrders() {
               className="input input-bordered w-full"
               onChange={(e) => setDate(e.target.value)}
             />
-            <button className="btn btn-primary" onClick={handleReset}>
+            <button className="btn text-white bg-[#2563eb] hover:bg-[#2564ebce]" onClick={handleReset}>
               Reset
             </button>
           </div>
@@ -181,7 +181,7 @@ export default function AllOrders() {
         {/* Orders Table */}
         <table className="min-w-full table-auto border-collapse bg-white  rounded-md">
           <thead>
-            <tr className="bg-gray-200 text-center">
+            <tr className="bg-[#2563eb]  text-white">
               <td className="p-2 border">SL</td>
               <td className="p-2 border">Order Date</td>
               <td className="p-2 border">Name</td>

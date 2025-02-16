@@ -713,11 +713,13 @@ export default function ProductCreateForm() {
             <SwitchInput
               label="Exclusive Feature?"
               checked={isFeatured}
+              onColor="#2563eb"
               setChecked={setIsFeatured}
             />
             <SwitchInput
               label="Individualized Discount Offer?"
               checked={specialOffer}
+              onColor="#2563eb"
               setChecked={setSpecialOffer}
             />
 
@@ -739,11 +741,13 @@ export default function ProductCreateForm() {
             <SwitchInput
               label="Best Choice"
               checked={isRecommended}
+              onColor="#2563eb"
               setChecked={setIsRecommended}
             />
             <SwitchInput
               label="New Arrival"
               checked={isNew}
+              onColor="#2563eb"
               setChecked={setIsNew}
             />
           </div>
@@ -794,7 +798,7 @@ export default function ProductCreateForm() {
           )}
 
           {/* Buttons */}
-          <div className="flex justify-end gap-5">
+          <div className="flex justify-end mt-7 gap-5">
             <button type="button" className="customCancelButton">
               Discard
             </button>
