@@ -9,8 +9,10 @@ import toast from "react-hot-toast";
 
 import MenuItems from "./MenuItems";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
+import { IoCloseSharp } from "react-icons/io5";
+import { FaAngleLeft } from "react-icons/fa";
 
-const Sidebar = ({ isCollapsed }) => {
+const Sidebar = ({ isCollapsed, setIsCollapsed }) => {
   const { logOut, setUser } = useContext(AuthContext);
   const location = useLocation();
 
@@ -50,14 +52,18 @@ const Sidebar = ({ isCollapsed }) => {
 
   return (
     <div
-      className={`sidebar border-r border-gray-400 border-dashed h-dvh overflow-auto p-4 poppins text-[#737373] ${
-        isCollapsed ? "w-[80px] hidden md:block" : "w-[280px] md:w-[300px]"
-      } bg-white shadow-lg transition-all duration-300`}
+      className={`sidebar border-r border-gray-400 border-dashed h-dvh overflow-auto p-4 poppins text-[#737373] ${isCollapsed ? "w-[80px] hidden md:block" : "w-full md:w-[300px]"
+        } bg-white shadow-lg transition-all duration-300`}
     >
-      <div className="flex flex-col items-start mb-6">
-        {!isCollapsed && (
-          <img src="/logo.png" alt="Logo" className="w-[80%]  mb-4" />
-        )}
+      <div className="flex items-start">
+        <div className="flex flex-col items-start mb-6">
+          {!isCollapsed && (
+            <img src="/logo.png" alt="Logo" className="w-[80%]  mb-4" />
+          )}
+        </div>
+        <div className="mt-3 block md:hidden" onClick={()=>{setIsCollapsed(!isCollapsed)}}>
+          <FaAngleLeft />
+        </div>
       </div>
 
       {/* Menu */}
@@ -65,56 +71,56 @@ const Sidebar = ({ isCollapsed }) => {
         <ul>
           {MenuItems(UserRole)?.length > 1
             ? MenuItems(UserRole).map((cat) => (
-                <li key={cat.title} className="mb-2">
-                  <div className="collapse focus:border bg-gray-50 p-1 pt-3 hover:shadow rounded-xl">
-                    <input
-                      type="checkbox"
-                      id={`collapse-${cat.title}`}
-                      className="hidden"
-                    />
-                    <label
-                      htmlFor={`collapse-${cat.title}`}
-                      className="font-medium flex items-center gap-2 cursor-pointer pl-4"
-                    >
-                      {!isCollapsed && cat.icon}
-                      {!isCollapsed && cat.title}
-                    </label>
-                    <div className="collapse-content px-1 pt-2">
-                      {cat.list &&
-                        cat.list.map((item) => (
-                          <MenuLink
-                            item={item}
-                            key={item.title}
-                            location={location}
-                            isCollapsed={isCollapsed}
-                          />
-                        ))}
-                    </div>
-                  </div>
-                </li>
-              ))
-            : MenuItems(UserRole).map((cat) => (
-                <li key={cat.title} className="mb-2">
-                  <div className=" px-1 pt-2">
+              <li key={cat.title} className="mb-2">
+                <div className="collapse focus:border bg-gray-50 p-1 pt-3 hover:shadow rounded-xl">
+                  <input
+                    type="checkbox"
+                    id={`collapse-${cat.title}`}
+                    className="hidden"
+                  />
+                  <label
+                    htmlFor={`collapse-${cat.title}`}
+                    className="font-medium flex items-center gap-2 cursor-pointer pl-4"
+                  >
+                    {!isCollapsed && cat.icon}
+                    {!isCollapsed && cat.title}
+                  </label>
+                  <div className="collapse-content px-1 pt-2">
                     {cat.list &&
                       cat.list.map((item) => (
-                        <Link
+                        <MenuLink
+                          setIsCollapsed={setIsCollapsed}
+                          item={item}
                           key={item.title}
-                          to={"/dashboard/" + item.path}
-                          className={`flex items-center text-[24px] gap-2 p-2 rounded-lg transition-colors mb-3 ${
-                            isActiveLink(item.path, location.pathname)
-                              ? "bg-red-300 text-white shadow"
-                              : "text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-                          }`}
-                        >
-                          {/* <span className="text-2xl">{item.icon}</span> */}
-                          {item.icon}
-                          {!isCollapsed && <span>{item.title}</span>}
-                        </Link>
+                          location={location}
+                          isCollapsed={isCollapsed}
+                        />
                       ))}
                   </div>
-                </li>
-              ))}
+                </div>
+              </li>
+            ))
+            : MenuItems(UserRole).map((cat) => (
+              <li key={cat.title} className="mb-2">
+                <div className=" px-1 pt-2">
+                  {cat.list &&
+                    cat.list.map((item) => (
+                      <Link
+                        key={item.title}
+                        to={"/dashboard/" + item.path}
+                        className={`flex items-center text-[24px] gap-2 p-2 rounded-lg transition-colors mb-3 ${isActiveLink(item.path, location.pathname)
+                          ? "bg-red-300 text-white shadow"
+                          : "text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                          }`}
+                      >
+                        {/* <span className="text-2xl">{item.icon}</span> */}
+                        {item.icon}
+                        {!isCollapsed && <span>{item.title}</span>}
+                      </Link>
+                    ))}
+                </div>
+              </li>
+            ))}
         </ul>
       </nav>
 
