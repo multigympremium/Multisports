@@ -88,14 +88,14 @@ export default function CustomCSSJSForm() {
           Custom CSS & JS Form
         </h1>
         <form onSubmit={handleSubmit} className="">
-          <div className=" grid grid-cols-3 gap-6 justify-between items-center ">
+          <div className=" grid grid-cols-1 md:grid-cols-3 gap-6 justify-between items-center ">
             {/* Custom CSS */}
             <div>
               <label className="block text-gray-700 font-semibold mb-2">
                 Write Custom CSS
               </label>
               <textarea
-                className="w-full  p-4 resize-none border rounded-lg bg-gray-800 text-white min-h-[600px]"
+                className="w-full  p-4 resize-none border rounded-lg bg-gray-800 text-white min-h-40 md:min-h-[600px]"
                 value={customCSS}
                 onChange={(e) => setCustomCSS(e.target.value)}
               ></textarea>
@@ -107,7 +107,7 @@ export default function CustomCSSJSForm() {
                 Header Custom Script
               </label>
               <textarea
-                className="w-full  p-4 resize-none border rounded-lg bg-gray-800 text-white min-h-[600px]"
+                className="w-full  p-4 resize-none border rounded-lg bg-gray-800 text-white min-h-40 md:min-h-[600px]"
                 value={headerScript}
                 onChange={(e) => setHeaderScript(e.target.value)}
               ></textarea>
@@ -119,7 +119,7 @@ export default function CustomCSSJSForm() {
                 Footer Custom Script
               </label>
               <textarea
-                className="w-full h-40 p-4 resize-none border rounded-lg bg-gray-800 text-white min-h-[600px]"
+                className="w-full h-40 p-4 resize-none border rounded-lg bg-gray-800 text-white min-h-40 md:min-h-[600px]"
                 value={footerScript}
                 onChange={(e) => setFooterScript(e.target.value)}
               ></textarea>

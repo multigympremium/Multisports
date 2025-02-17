@@ -173,94 +173,96 @@ export default function ApprovedOrders() {
         {/* Search Input */}
 
         {/* Orders Table */}
-        <table className="min-w-full  table-auto border-collapse bg-white shadow-md rounded-md">
-          <thead>
-            <tr  className="bg-[#2563eb]  text-white">
-              <td className="p-2 border">SL</td>
-              <td className="p-2 border">Order Date</td>
-              <td className="p-2 border">Name</td>
-              <td className="p-2 border">Phone</td>
-              <td className="p-2 border">Quantity</td>
-              <td className="p-2 border">Payment</td>
-              <td className="p-2 border">Total Weight</td>
-              <td className="p-2 border">Total</td>
-              <td className="p-2 border">Action</td>
-            </tr>
-          </thead>
-          <tbody>
-            {orders?.length > 0 &&
-              !isLoading &&
-              orders?.map((order, index) => (
-                <tr key={order._id} className="text-center border-b">
-                  <td className="p-2 border">
-                    {index + 1 + (currentPage - 1) * itemsPerPage}
-                  </td>
-                  <td className="p-2 border">
-                    {moment(order.createdAt).format("DD/MM/YYYY")}
-                  </td>
-                  <td className="p-2 border">{order?.name}</td>
-                  <td className="p-2 border">{order?.phone}</td>
-                  <td className="p-2 border">{order?.totalItems}</td>
+        <div className="overflow-x-auto">
+          <table className="min-w-full  table-auto border-collapse bg-white shadow-md rounded-md">
+            <thead>
+              <tr className="bg-[#2563eb]  text-white">
+                <td className="p-2 border">SL</td>
+                <td className="p-2 border">Order Date</td>
+                <td className="p-2 border">Name</td>
+                <td className="p-2 border">Phone</td>
+                <td className="p-2 border">Quantity</td>
+                <td className="p-2 border">Payment</td>
+                <td className="p-2 border">Total Weight</td>
+                <td className="p-2 border">Total</td>
+                <td className="p-2 border">Action</td>
+              </tr>
+            </thead>
+            <tbody>
+              {orders?.length > 0 &&
+                !isLoading &&
+                orders?.map((order, index) => (
+                  <tr key={order._id} className="text-center border-b">
+                    <td className="p-2 border">
+                      {index + 1 + (currentPage - 1) * itemsPerPage}
+                    </td>
+                    <td className="p-2 border">
+                      {moment(order.createdAt).format("DD/MM/YYYY")}
+                    </td>
+                    <td className="p-2 border">{order?.name}</td>
+                    <td className="p-2 border">{order?.phone}</td>
+                    <td className="p-2 border">{order?.totalItems}</td>
 
-                  <td className="p-2 border">{order?.payment_method}</td>
-                  <td className="p-2 border">{order?.totalWeight || 0} Kg</td>
-                  <td className="p-2 border">৳ {order?.total}</td>
-                  <td className="p-2 border">
-                    <div className="flex justify-center space-x-2">
-                      <ShowDetailButton
-                        onClick={() => {
-                          setIsShowDetail(true);
-                          setTargetId(order._id);
-                        }}
-                      ></ShowDetailButton>
-                      <DeleteButton onClick={() => handleDelete(order._id)}>
-                        {" "}
-                      </DeleteButton>
-                      <button
-                        onClick={() => {
-                          setIsShowPrint(true);
-                          setSingleData(order);
-                        }}
-                        className="customAddButton rounded-lg px-4 py-2 font-semibold "
-                      >
-                        <FaPrint />
-                      </button>
-                      <button
-                        onClick={() => {
-                          setIsShowPrintA4(true);
-                          setSingleData(order);
-                        }}
-                        className="customAddButton rounded-lg px-4 py-2 font-semibold "
-                      >
-                        <IoMdPrint />
-                      </button>
-                      <button
-                        onClick={() => addWeight(order._id)}
-                        className="customAddButton rounded-lg px-4 py-2 font-semibold "
-                      >
-                        Add Weight
-                      </button>
-                      <button
-                        onClick={() => handleAccept(order._id)}
-                        className="bg-green-600 text-white rounded-lg px-4 py-2 font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
-                        disabled={!order?.totalWeight}
-                      >
-                        Send To Courier
-                      </button>
-                    </div>
+                    <td className="p-2 border">{order?.payment_method}</td>
+                    <td className="p-2 border">{order?.totalWeight || 0} Kg</td>
+                    <td className="p-2 border">৳ {order?.total}</td>
+                    <td className="p-2 border">
+                      <div className="flex justify-center space-x-2">
+                        <ShowDetailButton
+                          onClick={() => {
+                            setIsShowDetail(true);
+                            setTargetId(order._id);
+                          }}
+                        ></ShowDetailButton>
+                        <DeleteButton onClick={() => handleDelete(order._id)}>
+                          {" "}
+                        </DeleteButton>
+                        <button
+                          onClick={() => {
+                            setIsShowPrint(true);
+                            setSingleData(order);
+                          }}
+                          className="customAddButton rounded-lg px-4 py-2 font-semibold "
+                        >
+                          <FaPrint />
+                        </button>
+                        <button
+                          onClick={() => {
+                            setIsShowPrintA4(true);
+                            setSingleData(order);
+                          }}
+                          className="customAddButton rounded-lg px-4 py-2 font-semibold "
+                        >
+                          <IoMdPrint />
+                        </button>
+                        <button
+                          onClick={() => addWeight(order._id)}
+                          className="customAddButton rounded-lg px-4 py-2 font-semibold "
+                        >
+                          Add Weight
+                        </button>
+                        <button
+                          onClick={() => handleAccept(order._id)}
+                          className="bg-green-600 text-white rounded-lg px-4 py-2 font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+                          disabled={!order?.totalWeight}
+                        >
+                          Send To Courier
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+
+              {!isLoading && orders?.length === 0 && (
+                <tr>
+                  <td colSpan="10" className="text-center p-4">
+                    No data available in table
                   </td>
                 </tr>
-              ))}
-
-            {!isLoading && orders?.length === 0 && (
-              <tr>
-                <td colSpan="10" className="text-center p-4">
-                  No data available in table
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+              )}
+            </tbody>
+          </table>
+        </div>
 
         {isLoading ? (
           <div className="animate-pulse">

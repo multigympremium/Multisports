@@ -109,108 +109,110 @@ export default function SubcategoryList() {
     <div className="p-6 pt-0">
       <div className="">
         <h1 className="text-3xl font-semibold mb-9">Category List</h1>
-        <table className="min-w-full table-auto border-collapse">
-          <thead className="bg-gray-100 text-lg">
-            <tr className="bg-[#2563eb]  text-white">
-              <td
-                className="border flex justify-center items-center gap-2 text-lg p-2 text-center cursor-pointer"
-                onClick={() => handleSort("id")}
-              >
-                SL{" "}
-                {sortConfig.key === "id" &&
-                  (sortConfig.direction === "asc" ? (
-                    <HiArrowCircleUp className="text-green-500 " />
-                  ) : (
-                    <HiArrowCircleDown className="text-[#E68923]" />
-                  ))}
-              </td>
-              <td
-                className="border p-2 text-center cursor-pointer"
-                onClick={() => handleSort("subcategoryName")}
-              >
-                Name{" "}
-                {sortConfig.key === "subcategoryName" &&
-                  (sortConfig.direction === "asc" ? "🔼" : "🔽")}
-              </td>
-              <td className="border p-2 text-center">Icon</td>
-              <td className="border p-2 text-center">Banner Image</td>
-              <td
-                className="border p-2 text-center cursor-pointer"
-                onClick={() => handleSort("slug")}
-              >
-                Slug{" "}
-                {sortConfig.key === "slug" &&
-                  (sortConfig.direction === "asc" ? "🔼" : "🔽")}
-              </td>
-              <td
-                className="border p-2 text-center cursor-pointer"
-                onClick={() => handleSort("featureCategory")}
-              >
-                Featured{" "}
-                {sortConfig.key === "featureCategory" &&
-                  (sortConfig.direction === "asc" ? "🔼" : "🔽")}
-              </td>
-              <td className="border p-2 text-center">Show On Navbar</td>
-              <td className="border p-2 text-center">Action</td>
-            </tr>
-          </thead>
-          <tbody>
-            {paginatedData()?.length > 0 &&
-              paginatedData().map((category, index) => (
-                <tr key={category.id} className="border-b text-center">
-                  <td className="border p-2">
-                    {index + 1 + currentPage * itemsPerPage}
-                  </td>
-                  <td className="border p-2">{category.subcategoryName}</td>
-                  <td className="border p-2">
-                    <div>
-                      <div className="border rounded-full overflow-hidden">
-                        <CellImage
-                          width={400}
-                          height={400}
-                          src={category.subcategoryIcon}
-                          alt="icon"
-                        />
-                      </div>
-                    </div>
-                  </td>
-                  <td className="border p-2">
-                    <div className="flex justify-center">
-                      <div>
-                        <CellImage
-                          width={400}
-                          height={400}
-                          src={category.subcategoryImage}
-                          alt="banner"
-                        />
-                      </div>
-                    </div>
-                  </td>
-                  <td className="border p-2">{category.slug}</td>
-                  <td className="border p-2">
-                    {category.featureCategory === "Yes" ? (
-                      <span className="bg-green-500 text-white px-2 py-1 rounded-md">
-                        Featured
-                      </span>
+        <div className="overflow-x-auto">
+          <table className="min-w-full table-auto border-collapse">
+            <thead className="bg-gray-100 text-lg">
+              <tr className="bg-[#2563eb]  text-white">
+                <td
+                  className="border flex justify-center items-center gap-2 text-lg p-2 text-center cursor-pointer"
+                  onClick={() => handleSort("id")}
+                >
+                  SL{" "}
+                  {sortConfig.key === "id" &&
+                    (sortConfig.direction === "asc" ? (
+                      <HiArrowCircleUp className="text-green-500 " />
                     ) : (
-                      <span>No</span>
-                    )}
-                  </td>
-                  <td className="border p-2">
-                    {category.showOnNavbar ? "Yes" : "No"}
-                  </td>
-                  <td className="border p-2">
-                    <div className="flex  justify-center space-x-2">
-                      <EditButton onClick={() => handleEdit(category._id)} />
-                      <DeleteButton
-                        onClick={() => handleDelete(category._id)}
-                      />
-                    </div>
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
+                      <HiArrowCircleDown className="text-[#E68923]" />
+                    ))}
+                </td>
+                <td
+                  className="border p-2 text-center cursor-pointer"
+                  onClick={() => handleSort("subcategoryName")}
+                >
+                  Name{" "}
+                  {sortConfig.key === "subcategoryName" &&
+                    (sortConfig.direction === "asc" ? "🔼" : "🔽")}
+                </td>
+                <td className="border p-2 text-center">Icon</td>
+                <td className="border p-2 text-center">Banner Image</td>
+                <td
+                  className="border p-2 text-center cursor-pointer"
+                  onClick={() => handleSort("slug")}
+                >
+                  Slug{" "}
+                  {sortConfig.key === "slug" &&
+                    (sortConfig.direction === "asc" ? "🔼" : "🔽")}
+                </td>
+                <td
+                  className="border p-2 text-center cursor-pointer"
+                  onClick={() => handleSort("featureCategory")}
+                >
+                  Featured{" "}
+                  {sortConfig.key === "featureCategory" &&
+                    (sortConfig.direction === "asc" ? "🔼" : "🔽")}
+                </td>
+                <td className="border p-2 text-center">Show On Navbar</td>
+                <td className="border p-2 text-center">Action</td>
+              </tr>
+            </thead>
+            <tbody>
+              {paginatedData()?.length > 0 &&
+                paginatedData().map((category, index) => (
+                  <tr key={category.id} className="border-b text-center">
+                    <td className="border p-2">
+                      {index + 1 + currentPage * itemsPerPage}
+                    </td>
+                    <td className="border p-2">{category.subcategoryName}</td>
+                    <td className="border p-2">
+                      <div>
+                        <div className="border rounded-full overflow-hidden">
+                          <CellImage
+                            width={400}
+                            height={400}
+                            src={category.subcategoryIcon}
+                            alt="icon"
+                          />
+                        </div>
+                      </div>
+                    </td>
+                    <td className="border p-2">
+                      <div className="flex justify-center">
+                        <div>
+                          <CellImage
+                            width={400}
+                            height={400}
+                            src={category.subcategoryImage}
+                            alt="banner"
+                          />
+                        </div>
+                      </div>
+                    </td>
+                    <td className="border p-2">{category.slug}</td>
+                    <td className="border p-2">
+                      {category.featureCategory === "Yes" ? (
+                        <span className="bg-green-500 text-white px-2 py-1 rounded-md">
+                          Featured
+                        </span>
+                      ) : (
+                        <span>No</span>
+                      )}
+                    </td>
+                    <td className="border p-2">
+                      {category.showOnNavbar ? "Yes" : "No"}
+                    </td>
+                    <td className="border p-2">
+                      <div className="flex  justify-center space-x-2">
+                        <EditButton onClick={() => handleEdit(category._id)} />
+                        <DeleteButton
+                          onClick={() => handleDelete(category._id)}
+                        />
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        </div>
 
         {/* Pagination */}
         <div className="mt-5 flex justify-center space-x-2">
@@ -220,11 +222,10 @@ export default function SubcategoryList() {
             <button
               key={pageIndex}
               onClick={() => handlePageClick(pageIndex)}
-              className={`px-3 py-1 border rounded-md ${
-                currentPage === pageIndex
+              className={`md:px-3 px-1 py-1 border rounded-md ${currentPage === pageIndex
                   ? "bg-blue-500 text-white"
                   : "hover:bg-gray-200"
-              }`}
+                }`}
             >
               {pageIndex + 1}
             </button>

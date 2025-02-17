@@ -128,59 +128,61 @@ export default function CancelOrders() {
         </div>
 
         {/* Orders Table */}
-        <table className="min-w-full  table-auto border-collapse bg-white shadow-md rounded-md">
-          <thead>
-            <tr  className="bg-[#2563eb] text-center text-white">
-              <td className="p-2 border">SL</td>
-              <td className="p-2 border">Order Date</td>
-              <td className="p-2 border">Name</td>
-              <td className="p-2 border">Phone</td>
-              <td className="p-2 border">Quantity</td>
-              <td className="p-2 border">Status</td>
-              <td className="p-2 border">Payment</td>
-              <td className="p-2 border">Total</td>
-              <td className="p-2 border">Action</td>
-            </tr>
-          </thead>
-          <tbody>
-            {orders?.length > 0 &&
-              !isLoading &&
-              orders?.map((order, index) => (
-                <tr key={order._id} className="border-b text-center">
-                  <td className="p-2 border">
-                    {index + 1 + (currentPage - 1) * itemsPerPage}
-                  </td>
-                  <td className="p-2 border">{order.createdAt}</td>
-                  <td className="p-2 border">{order?.name}</td>
-                  <td className="p-2 border">{order?.phone}</td>
-                  <td className="p-2 border">{order?.totalItems}</td>
-                  <td className="p-2 border">{order?.status}</td>
-                  <td className="p-2 border">{order?.payment_method}</td>
-                  <td className="p-2 border">৳ {order?.total}</td>
-                  <td className="p-2 border">
-                    <div className="flex justify-center space-x-2">
-                      <ShowDetailButton
-                        onClick={() => {
-                          setIsShowDetail(true);
-                          setTargetId(order._id);
-                        }}
-                      ></ShowDetailButton>
-                      <DeleteButton
-                        onClick={() => handleDelete(order._id)}
-                      ></DeleteButton>
-                    </div>
+        <div className="overflow-x-auto">
+          <table className="min-w-full  table-auto border-collapse bg-white shadow-md rounded-md">
+            <thead>
+              <tr className="bg-[#2563eb] text-center text-white">
+                <td className="p-2 border">SL</td>
+                <td className="p-2 border">Order Date</td>
+                <td className="p-2 border">Name</td>
+                <td className="p-2 border">Phone</td>
+                <td className="p-2 border">Quantity</td>
+                <td className="p-2 border">Status</td>
+                <td className="p-2 border">Payment</td>
+                <td className="p-2 border">Total</td>
+                <td className="p-2 border">Action</td>
+              </tr>
+            </thead>
+            <tbody>
+              {orders?.length > 0 &&
+                !isLoading &&
+                orders?.map((order, index) => (
+                  <tr key={order._id} className="border-b text-center">
+                    <td className="p-2 border">
+                      {index + 1 + (currentPage - 1) * itemsPerPage}
+                    </td>
+                    <td className="p-2 border">{order.createdAt}</td>
+                    <td className="p-2 border">{order?.name}</td>
+                    <td className="p-2 border">{order?.phone}</td>
+                    <td className="p-2 border">{order?.totalItems}</td>
+                    <td className="p-2 border">{order?.status}</td>
+                    <td className="p-2 border">{order?.payment_method}</td>
+                    <td className="p-2 border">৳ {order?.total}</td>
+                    <td className="p-2 border">
+                      <div className="flex justify-center space-x-2">
+                        <ShowDetailButton
+                          onClick={() => {
+                            setIsShowDetail(true);
+                            setTargetId(order._id);
+                          }}
+                        ></ShowDetailButton>
+                        <DeleteButton
+                          onClick={() => handleDelete(order._id)}
+                        ></DeleteButton>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              {!isLoading && orders?.length === 0 && (
+                <tr>
+                  <td colSpan="10" className="text-center p-4">
+                    No data available in table
                   </td>
                 </tr>
-              ))}
-            {!isLoading && orders?.length === 0 && (
-              <tr>
-                <td colSpan="10" className="text-center p-4">
-                  No data available in table
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+              )}
+            </tbody>
+          </table>
+        </div>
         {isLoading ? (
           <div className="animate-pulse">
             <div className="h-4 bg-gray-200 mt-3 mb-6 rounded"></div>

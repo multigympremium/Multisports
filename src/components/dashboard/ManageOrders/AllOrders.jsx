@@ -38,9 +38,8 @@ export default function AllOrders() {
       isDeleted,
       isShowModal: isShowDetail,
       isEdited: isEdited,
-      query: `currentPage=${currentPage}&status=${status}&limit=${itemsPerPage}&search=${debouncedValue}&date=${
-        date ? moment(date).format("DD-MM-YYYY") : ""
-      }`,
+      query: `currentPage=${currentPage}&status=${status}&limit=${itemsPerPage}&search=${debouncedValue}&date=${date ? moment(date).format("DD-MM-YYYY") : ""
+        }`,
       currentPage,
     });
 
@@ -112,40 +111,40 @@ export default function AllOrders() {
     <div className="p-6 pt-0">
       <div className="max-w-7xl mx-auto min-h-[800px]">
         {/* Summary Cards */}
-        <div className="grid grid-cols-4 gap-4 mb-8">
-          <div className="bg-[#087D6D] p-6 text-white font-semibold  rounded-2xl">
-            <h3 className="text-xl ">Total Delivered Orders</h3>
-            <p className="text-2xl mt-2">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+          <div className="bg-[#087D6D] p-3 md:p-6 text-white font-semibold  rounded-2xl">
+            <h3 className="md:text-xl ">Total Delivered Orders</h3>
+            <p className="md:text-2xl mt-2">
               ৳ {totalPricesByStatus?.DeliveredToCourier}
             </p>
             {/* <p className="text-2xl mt-2">৳ 0</p> */}
           </div>
 
-          <div className="bg-[#E68923] p-6 text-white font-semibold  rounded-2xl">
-            <h3 className="text-xl ">Total Pending Orders</h3>
-            <p className="text-2xl mt-2">৳ {totalPricesByStatus?.Pending}</p>
+          <div className="bg-[#E68923] p-3 md:p-6 text-white font-semibold  rounded-2xl">
+            <h3 className="md:text-xl ">Total Pending Orders</h3>
+            <p className="md:text-2xl mt-2">৳ {totalPricesByStatus?.Pending}</p>
             {/* <p className="text-2xl mt-2">৳ 0</p> */}
           </div>
 
-          <div className="bg-[#31B349] p-6 text-white font-semibold  rounded-2xl">
-            <h3 className="text-xl ">Total Approved Orders</h3>
-            <p className="text-2xl mt-2">৳ {totalPricesByStatus?.Packaging}</p>
+          <div className="bg-[#31B349] p-3 md:p-6 text-white font-semibold  rounded-2xl">
+            <h3 className="md:text-xl ">Total Approved Orders</h3>
+            <p className="md:text-2xl mt-2">৳ {totalPricesByStatus?.Packaging}</p>
             {/* <p className="text-2xl mt-2">৳ 0</p> */}
           </div>
 
-          <div className="bg-[#EB1C24] p-6 text-white font-semibold  rounded-2xl">
-            <h3 className="text-xl ">Total Cancelled Orders</h3>
-            <p className="text-2xl mt-2">৳ {totalPricesByStatus?.Cancelled}</p>
+          <div className="bg-[#EB1C24] p-3 md:p-6 text-white font-semibold  rounded-2xl">
+            <h3 className="md:text-xl ">Total Cancelled Orders</h3>
+            <p className="md:text-2xl mt-2">৳ {totalPricesByStatus?.Cancelled}</p>
             {/* <p className="text-2xl mt-2">৳ 0</p> */}
           </div>
         </div>
 
         {/* Search Input */}
-        <div className="grid grid-cols-3  items-stretch gap-4 mb-5">
-          <div className="bg-white border rounded-full px-3  md:gap-2 gap-1 flex-row-reverse justify-between flex items-center">
+        <div className="md:grid flex-wrap flex md:grid-cols-3  items-stretch gap-4 mb-5">
+          <div className="bg-white border rounded-xl px-3  md:gap-2 gap-1 flex-row-reverse justify-between flex items-center">
             <input
               type="text"
-              className="outline-none w-full bg-white"
+              className="outline-none py-2 w-full bg-white"
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Name/Phone/Order No"
             />
@@ -179,113 +178,115 @@ export default function AllOrders() {
         </div>
 
         {/* Orders Table */}
-        <table className="min-w-full table-auto border-collapse bg-white  rounded-md">
-          <thead>
-            <tr className="bg-[#2563eb]  text-white">
-              <td className="p-2 border">SL</td>
-              <td className="p-2 border">Order Date</td>
-              <td className="p-2 border">Name</td>
-              <td className="p-2 border">Phone</td>
-              <td className="p-2 border">Quantity</td>
-              <td className="p-2 border">Status</td>
-              <td className="p-2 border">Payment</td>
-              <td className="p-2 border">Total</td>
-              <td className="p-2 border">Action</td>
-            </tr>
-          </thead>
-          <tbody>
-            {orderData?.length > 0 &&
-              !isLoading &&
-              orderData.map((order, index) => {
-                let statusColor = "";
-                switch (order.status) {
-                  case "Pending":
-                    statusColor = "bg-yellow-500";
-                    break;
-                  case "Packaging":
-                    statusColor = "bg-green-500";
-                    break;
-                  case "Packed":
-                    statusColor = "bg-red-500";
-                    break;
-                  case "DeliveredToCourier":
-                    statusColor = "bg-gray-500";
-                    break;
-
-                  case "Delivered":
-                    statusColor = "bg-blue-500";
-                    break;
-
-                  case "completed":
-                    statusColor = "bg-green-500";
-                    break;
-
-                  case "Cancelled":
-                    statusColor = "bg-gray-500";
-                    break;
-
-                  default:
-                    break;
-                }
-
-                return (
-                  <tr key={order._id} className="border-b text-center">
-                    <td className="p-2 border">
-                      {index + 1 + (currentPage - 1) * itemsPerPage}
-                    </td>
-
-                    <td className="p-2 border">
-                      {moment(order.createdAt).format("DD/MM/YYYY")}
-                    </td>
-                    <td className="p-2 border">{order?.name}</td>
-                    <td className="p-2 border">{order?.phone}</td>
-                    <td className="p-2 border">{order?.totalItems}</td>
-                    <td className="p-2 border ">
-                      {order?.status ? (
-                        <span
-                          className={`${statusColor} text-white  px-3 rounded-lg  py-1`}
-                        >
-                          {order?.status}
-                        </span>
-                      ) : (
-                        "N/A"
-                      )}
-                    </td>
-                    <td className="p-2 border">{order?.payment_method}</td>
-                    <td className="p-2 border">৳ {order?.total}</td>
-                    <td className="p-2 border">
-                      <div className="flex justify-center space-x-2">
-                        {(order?.status === "Pending" ||
-                          order?.status === "") && (
-                          <button
-                            onClick={() => handleAccept(order._id)}
-                            className="bg-blue-500 text-white rounded-lg px-4 py-2 font-semibold"
-                          >
-                            Accept Order
-                          </button>
-                        )}
-                        <ShowDetailButton
-                          onClick={() => {
-                            setIsShowDetail(true);
-                            setTargetId(order._id);
-                          }}
-                        />
-
-                        <DeleteButton onClick={() => handleDelete(order._id)} />
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })}
-            {!isLoading && orderData?.length === 0 && (
-              <tr>
-                <td colSpan="10" className="text-center p-4">
-                  No data available in table
-                </td>
+        <div className="overflow-x-auto">
+          <table className="min-w-full table-auto border-collapse bg-white  rounded-md">
+            <thead>
+              <tr className="bg-[#2563eb]  text-white">
+                <td className="p-2 border">SL</td>
+                <td className="p-2 border">Order Date</td>
+                <td className="p-2 border">Name</td>
+                <td className="p-2 border">Phone</td>
+                <td className="p-2 border">Quantity</td>
+                <td className="p-2 border">Status</td>
+                <td className="p-2 border">Payment</td>
+                <td className="p-2 border">Total</td>
+                <td className="p-2 border">Action</td>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {orderData?.length > 0 &&
+                !isLoading &&
+                orderData.map((order, index) => {
+                  let statusColor = "";
+                  switch (order.status) {
+                    case "Pending":
+                      statusColor = "bg-yellow-500";
+                      break;
+                    case "Packaging":
+                      statusColor = "bg-green-500";
+                      break;
+                    case "Packed":
+                      statusColor = "bg-red-500";
+                      break;
+                    case "DeliveredToCourier":
+                      statusColor = "bg-gray-500";
+                      break;
+
+                    case "Delivered":
+                      statusColor = "bg-blue-500";
+                      break;
+
+                    case "completed":
+                      statusColor = "bg-green-500";
+                      break;
+
+                    case "Cancelled":
+                      statusColor = "bg-gray-500";
+                      break;
+
+                    default:
+                      break;
+                  }
+
+                  return (
+                    <tr key={order._id} className="border-b text-center">
+                      <td className="p-2 border">
+                        {index + 1 + (currentPage - 1) * itemsPerPage}
+                      </td>
+
+                      <td className="p-2 border">
+                        {moment(order.createdAt).format("DD/MM/YYYY")}
+                      </td>
+                      <td className="p-2 border">{order?.name}</td>
+                      <td className="p-2 border">{order?.phone}</td>
+                      <td className="p-2 border">{order?.totalItems}</td>
+                      <td className="p-2 border ">
+                        {order?.status ? (
+                          <span
+                            className={`${statusColor} text-white  px-3 rounded-lg  py-1`}
+                          >
+                            {order?.status}
+                          </span>
+                        ) : (
+                          "N/A"
+                        )}
+                      </td>
+                      <td className="p-2 border">{order?.payment_method}</td>
+                      <td className="p-2 border">৳ {order?.total}</td>
+                      <td className="p-2 border">
+                        <div className="flex justify-center space-x-2">
+                          {(order?.status === "Pending" ||
+                            order?.status === "") && (
+                              <button
+                                onClick={() => handleAccept(order._id)}
+                                className="bg-blue-500 text-white rounded-lg px-4 py-2 font-semibold"
+                              >
+                                Accept Order
+                              </button>
+                            )}
+                          <ShowDetailButton
+                            onClick={() => {
+                              setIsShowDetail(true);
+                              setTargetId(order._id);
+                            }}
+                          />
+
+                          <DeleteButton onClick={() => handleDelete(order._id)} />
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
+              {!isLoading && orderData?.length === 0 && (
+                <tr>
+                  <td colSpan="10" className="text-center p-4">
+                    No data available in table
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
         {isLoading ? (
           <div className="animate-pulse">
             <div className="h-4 bg-gray-200 mt-3 mb-6 rounded"></div>

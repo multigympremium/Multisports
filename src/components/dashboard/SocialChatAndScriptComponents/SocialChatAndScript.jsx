@@ -25,9 +25,9 @@ export default function SocialChatAndScript() {
         <h2 className="text-3xl header font-semibold mb-9">
           Social Login & Chat Scripts
         </h2>
-        <div className="flex">
+        <div className="flex flex-col md:flex-row">
           {/* Left-side Tabs */}
-          <div className="w-1/4 pr-5 border-r border-gray-300">
+          <div className="md:w-1/4 md:pr-5 md:border-r mb-9 md:mb-0 border-gray-300">
             <ul>
               {[
                 "Google Analytic",
@@ -54,7 +54,7 @@ export default function SocialChatAndScript() {
           </div>
 
           {/* Right-side Form */}
-          <div className="w-3/4 pl-8 pt-0">
+          <div className="md:w-3/4 md:pl-8 pt-0">
             {selectedTab === "Google Analytic" && (
               <GoogleAnalyticForm isShow={selectedTab === "Google Analytic"} />
             )}

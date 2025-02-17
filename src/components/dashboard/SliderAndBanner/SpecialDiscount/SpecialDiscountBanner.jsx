@@ -76,7 +76,7 @@ const SpecialDiscountBanner = () => {
     <div className="p-6 pt-0">
       <div className="">
         <div className="flex justify-between mb-9 items-center">
-          <h1 className="text-3xl font-semibold ">
+          <h1 className="text-2xl md:text-3xl font-semibold ">
             Special Discount Banner List
           </h1>
           <div>
@@ -90,7 +90,7 @@ const SpecialDiscountBanner = () => {
         </div>
       </div>
 
-      <div className="">
+      <div className="overflow-x-auto">
         <table className="min-w-full table-auto border-collapse bg-white shadow-md rounded-md">
           <thead className="bg-gray-200 text-center">
             <tr className="bg-[#2563eb] text-center text-white">

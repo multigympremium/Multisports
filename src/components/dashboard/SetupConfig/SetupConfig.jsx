@@ -98,13 +98,13 @@ export default function SetupConfig() {
   }, [axiosSecure]);
 
   return (
-    <div className="bg-white p-5">
+    <div className=" p-5">
       <div className="p-6 pt-0">
         <h1 className="text-3xl font-semibold header mb-8">
           Setup Your Config
         </h1>
         <form onSubmit={handleSubmit} className="">
-          <div className="mb-4 flex gap-14 flex-wrap">
+          <div className="mb-4 flex md:gap-14 flex-wrap">
             <SwitchInput
               label="Product Size"
               checked={isProductSize}

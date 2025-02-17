@@ -116,7 +116,7 @@ export default function DeliveryCharges() {
           <div className="bg-white border rounded-full px-3 mb-6 flex-row-reverse flex items-center">
             <input
               type="text"
-              className="outline-none w-full bg-white"
+              className="outline-none py-2 w-full bg-white"
               onChange={handleSearch}
               placeholder="Search here ..."
             />
@@ -124,41 +124,43 @@ export default function DeliveryCharges() {
           </div>
 
           {/* Table */}
-          <table className="min-w-full table-auto border-collapse bg-white shadow rounded-md">
-            <thead>
-              <tr  className="bg-[#2563eb] text-center text-white">
-                <td className="p-2 border">SL</td>
-                <td className="p-2 border">District</td>
-                <td className="p-2 border">District ID</td>
-                <td className="p-2 border">Charges</td>
-                <td className="p-2 border">Action</td>
-              </tr>
-            </thead>
-            <tbody>
-              {currentData.length > 0 ? (
-                currentData.map((item, index) => (
-                  <tr key={item.id} className="border-b text-center">
-                    <td className="p-2 border">{startIdx + index + 1}</td>
-                    <td className="p-2 border">{item.district}</td>
-                    <td className="p-2 border">{item.district_id}</td>
-                    <td className="p-2 border text-green-600 font-bold">
-                      {item.charge}
-                    </td>
-                    <td className="p-2 border space-x-2">
-                      <EditButton onClick={() => handleEdit(item._id)} />
-                      <DeleteButton onClick={() => handleDelete(item._id)} />
+          <div className="overflow-x-auto">
+            <table className="min-w-full table-auto border-collapse bg-white shadow rounded-md">
+              <thead>
+                <tr className="bg-[#2563eb] text-center text-white">
+                  <td className="p-2 border">SL</td>
+                  <td className="p-2 border">District</td>
+                  <td className="p-2 border">District ID</td>
+                  <td className="p-2 border">Charges</td>
+                  <td className="p-2 border">Action</td>
+                </tr>
+              </thead>
+              <tbody>
+                {currentData.length > 0 ? (
+                  currentData.map((item, index) => (
+                    <tr key={item.id} className="border-b text-center">
+                      <td className="p-2 border">{startIdx + index + 1}</td>
+                      <td className="p-2 border">{item.district}</td>
+                      <td className="p-2 border">{item.district_id}</td>
+                      <td className="p-2 border text-green-600 font-bold">
+                        {item.charge}
+                      </td>
+                      <td className="p-2 border space-x-2">
+                        <EditButton onClick={() => handleEdit(item._id)} />
+                        <DeleteButton onClick={() => handleDelete(item._id)} />
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="5" className="text-center p-4">
+                      No data available
                     </td>
                   </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan="5" className="text-center p-4">
-                    No data available
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
+                )}
+              </tbody>
+            </table>
+          </div>
 
           {/* Pagination */}
           <div className="flex justify-between items-center mt-6">
