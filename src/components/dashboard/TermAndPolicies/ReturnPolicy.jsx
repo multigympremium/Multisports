@@ -53,8 +53,8 @@ const ReturnPolicy = () => {
   return (
     <div className="p-6 pt-0">
       <form onSubmit={handleSubmit} className="">
-        <div className=" mb-9 flex justify-between">
-          <h1 className="text-3xl font-semibold w-full border-l-[5px] border-blue-400 pl-3">Return Policy Update Form</h1>
+        <div className=" mb-9 flex flex-wrap md:flex-nowrap justify-between">
+          <h1 className="text-2xl mb-5 md:mb-0 md:text-3xl font-semibold w-full md:border-l-[5px] border-blue-400 pl-3">Return Policy Update Form</h1>
           <div className="min-w-max">
             <button type="submit" className="customSaveButton">
               Update Terms And Condition

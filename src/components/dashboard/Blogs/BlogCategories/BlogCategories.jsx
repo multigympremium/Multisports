@@ -95,8 +95,8 @@ const BlogCategories = () => {
   return (
     <>
       <div className="p-6 pt-0">
-        <div className="flex justify-between items-center mb-9">
-          <h1 className="text-3xl font-semibold">Blog Category List</h1>
+        <div className="flex flex-wrap justify-between items-center mb-9">
+          <h1 className="text-3xl font-semibold mb-5 md:mb-0">Blog Category List</h1>
           <div className="flex gap-4">
             <button
               className="customSaveButton"

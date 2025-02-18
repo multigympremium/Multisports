@@ -47,7 +47,7 @@ const Root_Dashboard = () => {
   }, [axiosPublic]);
 
   return (
-    <div className="grid grid-cols-[auto_1fr]">
+    <div className="flex md:grid grid-cols-[auto_1fr]">
       <MetaTags
         metaTitle={content?.metaTitle}
         metaDescription={content?.metaDescription}
@@ -57,9 +57,13 @@ const Root_Dashboard = () => {
         metaKeywords={content?.metaKeywords}
       />
 
-      <Sidebar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
-      {/* <Header/> */}
-      <div className="md:p-8 bg-slate-50 h-dvh overflow-auto relative">
+      <Sidebar
+        isCollapsed={isCollapsed}
+        setIsCollapsed={setIsCollapsed}
+        className={isCollapsed ? 'hidden md:block' : 'block'}
+      />
+
+      <div className="flex-1 md:p-8 bg-slate-50 h-dvh overflow-auto relative">
         <ToggleSidebarBtn
           setIsCollapsed={setIsCollapsed}
           isCollapsed={isCollapsed}
@@ -67,6 +71,7 @@ const Root_Dashboard = () => {
         <Outlet />
       </div>
     </div>
+
   );
 };
 

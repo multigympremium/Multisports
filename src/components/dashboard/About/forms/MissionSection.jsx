@@ -112,7 +112,7 @@ export default function MissionSection() {
     <div className="border-b-2 border-gray-300 border-dashed  pb-5 mb-9">
       <form onSubmit={handleSubmit}>
         <div className=" mb-9 flex">
-          <h1 className="text-3xl font-semibold w-full border-l-[5px] border-blue-400 pl-3">
+          <h1 className="text-2xl md:text-3xl font-semibold w-full md:border-l-[5px] border-blue-400 md:pl-3">
             Mission Section
           </h1>
           <div className="flex justify-end w-full">
