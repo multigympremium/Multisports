@@ -92,70 +92,72 @@ export default function ViewAllBlogs() {
     <div className="p-6 pt-0">
       <div className="">
         <h1 className="text-3xl font-semibold mb-9">Blog List</h1>
-        <table className="min-w-full table-auto border-collapse">
-          <thead className="bg-gray-100 text-center">
-            <tr className="bg-[#2563eb] text-center text-white">
-              <td
-                className="border p-2  cursor-pointer"
-                onClick={() => handleSort("id")}
-              >
-                SL{" "}
-                {sortConfig.key === "_id" &&
-                  (sortConfig.direction === "asc" ? "🔼" : "🔽")}
-              </td>
-              <td
-                className="border p-2  cursor-pointer"
-                onClick={() => handleSort("writer")}
-              >
-                Name{" "}
-                {sortConfig.key === "writer" &&
-                  (sortConfig.direction === "asc" ? "🔼" : "🔽")}
-              </td>
-              <td
-                className="border p-2  cursor-pointer"
-                onClick={() => handleSort("title")}
-              >
-                Title{" "}
-                {sortConfig.key === "title" &&
-                  (sortConfig.direction === "asc" ? "🔼" : "🔽")}
-              </td>
-              <td className="border p-2 ">Image</td>
+        <div className="overflow-x-auto">
+          <table className="min-w-full table-auto border-collapse">
+            <thead className="bg-gray-100 text-center">
+              <tr className="bg-[#2563eb] text-center text-white">
+                <td
+                  className="border p-2  cursor-pointer"
+                  onClick={() => handleSort("id")}
+                >
+                  SL{" "}
+                  {sortConfig.key === "_id" &&
+                    (sortConfig.direction === "asc" ? "🔼" : "🔽")}
+                </td>
+                <td
+                  className="border p-2  cursor-pointer"
+                  onClick={() => handleSort("writer")}
+                >
+                  Name{" "}
+                  {sortConfig.key === "writer" &&
+                    (sortConfig.direction === "asc" ? "🔼" : "🔽")}
+                </td>
+                <td
+                  className="border p-2  cursor-pointer"
+                  onClick={() => handleSort("title")}
+                >
+                  Title{" "}
+                  {sortConfig.key === "title" &&
+                    (sortConfig.direction === "asc" ? "🔼" : "🔽")}
+                </td>
+                <td className="border p-2 ">Image</td>
 
-              <td className="border p-2 ">Action</td>
-            </tr>
-          </thead>
-          <tbody>
-            {paginatedData?.length > 0 &&
-              paginatedData.map((item, index) => (
-                <tr key={item.id} className="border-b text-center">
-                  <td className="border p-2">
-                    {index + 1 + currentPage * itemsPerPage}
-                  </td>
-                  <td className="border p-2">{item.writer}</td>
-                  <td className="border p-2">{item.title}</td>
-                  <td className="border p-2">
-                    <div className="flex justify-center">
-                      <div>
-                        <CellImage
-                          width={400}
-                          height={400}
-                          src={item.image}
-                          alt="icon"
-                        />
+                <td className="border p-2 ">Action</td>
+              </tr>
+            </thead>
+            <tbody>
+              {paginatedData?.length > 0 &&
+                paginatedData.map((item, index) => (
+                  <tr key={item.id} className="border-b text-center">
+                    <td className="border p-2">
+                      {index + 1 + currentPage * itemsPerPage}
+                    </td>
+                    <td className="border p-2">{item.writer}</td>
+                    <td className="border p-2">{item.title}</td>
+                    <td className="border p-2">
+                      <div className="flex justify-center">
+                        <div>
+                          <CellImage
+                            width={400}
+                            height={400}
+                            src={item.image}
+                            alt="icon"
+                          />
+                        </div>
                       </div>
-                    </div>
-                  </td>
+                    </td>
 
-                  <td className="border p-2">
-                    <div className="flex justify-center gap-2">
-                      <EditButton onClick={() => handleEdit(item._id)} />
-                      <DeleteButton onClick={() => handleDelete(item._id)} />
-                    </div>
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
+                    <td className="border p-2">
+                      <div className="flex justify-center gap-2">
+                        <EditButton onClick={() => handleEdit(item._id)} />
+                        <DeleteButton onClick={() => handleDelete(item._id)} />
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       {paginationControls}
